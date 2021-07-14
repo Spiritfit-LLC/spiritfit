@@ -1,0 +1,31 @@
+image: ubuntu:16.04
+
+pipelines:
+  branches:
+    test:
+      - step:
+          name: Deploy to test environment
+          deployment: test
+          script:
+            - apt-get update -y
+            - apt-get install -y -qq ssh
+            - apt-get install -y -qq sshpass
+            - sshpass -V
+            - export SSHPASS=$SSH_PASS_TEST
+            - sshpass -p $SSH_PASS_TEST ssh -o StrictHostKeyChecking=no $SSH_USER_TEST@$TEST_HOST "cd $TEST_PATH; git pull origin test;"
+    master:
+       - step:
+           name: Build
+           script:
+             - apt-get update -y
+       - step:
+           name: Deploy to production
+           deployment: production
+           trigger: manual
+           script:
+             - apt-get update -y
+             - apt-get install -y -qq ssh
+             - apt-get install -y -qq sshpass
+             - sshpass -V
+             - export SSHPASS=$SSH_PASS_PROD
+             - sshpass -p $SSH_PASS_PROD ssh -o StrictHostKeyChecking=no $SSH_USER_PROD@$PROD_HOST "cd $PROD_PATH; git pull origin master;"
