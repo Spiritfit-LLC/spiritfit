@@ -1,0 +1,15 @@
+<?
+$PERM["media"]["2"]="R";
+$PERM["media"]["3"]="D";
+$PERM["media"]["4"]="D";
+$PERM["media"]["6"]="D";
+$PERM["media"]["5"]="D";
+$PERM["media"]["*"]="R";
+$PERM["old"]["2"]="D";
+$PERM["old"]["3"]="D";
+$PERM["old"]["4"]="D";
+$PERM["old"]["5"]="D";
+$PERM["bitrix"]["5"]="R";
+$PERM["/"]["5"]="W";
+$PERM["/"]["*"]="R";
+?>

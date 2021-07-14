@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>FAQ</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <style type="text/css">
+      @font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro-Light.eot');src:local("Gotham Pro Medium"),local("GothamPro-Medium");src:url('../fonts/Gotham/ Pro/GothamPro-Light.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro-Light.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro-Light.ttf') format("truetype");font-weight:100}@font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro.eot');src:local("Gotham Pro Medium"),local("GothamPro");src:url('../fonts/Gotham/ Pro/GothamPro.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro.ttf') format("truetype");font-weight:300}@font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro-Medium.eot');src:local("Gotham Pro Medium"),local("GothamPro-Medium");src:url('../fonts/Gotham/ Pro/GothamPro-Medium.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro-Medium.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro-Medium.ttf') format("truetype");font-weight:500}@font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro-Bold.eot');src:local("Gotham Pro Bold"),local("GothamPro-Bold");src:url('../fonts/Gotham/ Pro/GothamPro-Bold.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro-Bold.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro-Bold.ttf') format("truetype");font-weight:700}*{box-sizing:border-box}body{overflow-x:hidden;min-height:100vh;margin:0;line-height:1.2;background-image:url(../img/background.jpg);background-color:#171717;background-size:100%;background-repeat:no-repeat;font-family:Gotham Pro,sans-serif;font-size:14px;font-weight:300}.page-wrapper{max-width:1920px;width:100%;margin:0 auto;padding:40px 40px 0}.page-wrapper main{min-height:calc(100vh - 280px)}.btn{display:inline-block;padding:20px 60px;padding-top:20px;padding-bottom:20px;text-align:center;text-transform:uppercase;color:#ff6000;border:1px solid #ff6000;border-radius:6px;text-decoration:none;background-color:transparent;outline:0;font-size:16px;font-weight:500}.btn--white{border-color:#fff;color:#fff}.btn--gray{border-color:#777;color:#777}.input{display:block;width:230px;border:none;border-bottom:2px solid #000;outline:0;border-radius:0;padding:20px 30px 20px 2px;background-color:transparent;box-shadow:none;font-family:Gotham,sans-serif;font-size:18px}.input:-webkit-autofill{background-color:transparent}.input--select{color:#757575}.header{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:stretch;align-items:stretch;height:70px;margin-bottom:40px;background-color:#fff}.header__logo{margin-left:40px;padding-top:20px}.header__logo-img{width:94px;height:38px}.header__nav{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:center;align-items:center;max-width:1000px;width:100%}.header__nav-footer{display:none}.header__nav-link{display:inline-block;height:70px;padding:28px 0;color:#000;letter-spacing:.1em;text-decoration:none;text-transform:uppercase;font-weight:500}.header__nav-link--enroll{margin-left:25px;margin-right:0;padding-left:60px;padding-right:60px;background-color:#ff6000;color:#fff}.header__burger{display:none}.popup{position:relative;z-index:5;display:none;position:fixed;top:0;left:0;width:100vw;height:100vh}.popup__bg{position:absolute;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.7)}.popup__window{position:absolute;top:50%;left:50%;padding:70px 75px 60px;transform:translate(-50%,-50%);background-color:#fff}.popup__close{position:absolute;display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center;top:20px;right:20px;width:54px;height:54px;border-radius:6px;border:1px solid #777}.popup__close div{width:20px;height:2px;background-color:#1d1e1e;transform:translateX(10px) rotate(45deg)}.popup__close div:last-child{transform:translateX(-10px) rotate(-45deg)}.popup__heading{margin-top:-15px;margin-bottom:60px;font-size:30px;font-weight:500}.popup__form-row{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:start;justify-content:flex-start;-ms-flex-align:start;align-items:flex-start;margin-bottom:70px}.popup__form-row input{margin-right:45px}.popup__btn{display:block;margin:0 auto;letter-spacing:.1em;font-family:Gotham,sans-serif}.faq{display:-ms-flexbox;display:flex;flex-fow:row nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:start;align-items:flex-start;padding:30px 30px 30px 40px;background-color:#fff}.faq__aside{width:470px;padding:40px 100px;margin-top:-45px;background-color:#ff6000}.faq__aside-buttons-caret{display:none}.faq__aside-heading{margin-bottom:35px;color:#fff;font-size:58px;font-weight:400}.faq__aside-btn{width:100%;margin-bottom:25px}.faq__aside-btn--active{background-color:#fff;color:#000}.faq__main{position:relative;width:calc(100% - 580px);padding-top:80px;padding-right:50px}.faq__main-title,.faq__main-top{display:none}.faq__main-close{position:absolute;display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center;top:0;right:0;width:54px;height:54px;border-radius:6px;border:1px solid #a7a7a7}.faq__main-close div{width:20px;height:2px;background-color:#1d1e1e;transform:translateX(10px) rotate(45deg)}.faq__main-close div:last-child{transform:translateX(-10px) rotate(-45deg)}.faq__main-content{display:none}.faq__main-content[data-faq="1"]{display:block}.faq__block{margin-bottom:30px}.faq__block-title{font-size:30px;font-weight:400}.faq__block-title span{text-decoration:underline;-webkit-text-decoration-color:#c2c2c2;text-decoration-color:#c2c2c2}.faq__block-content{display:none;margin-top:20px;padding-left:25px;font-size:18px;font-weight:400}.faq__block-content ul{margin:0;padding:0}.faq__block-content ul li{position:relative;display:block;margin-bottom:30px;padding-left:15px}.faq__block-content ul li:before{content:"";display:block;position:absolute;top:10px;left:0;width:5px;height:5px;border-radius:50%;background-color:#ff6000}@media screen and (max-width:1260px),screen and (min-aspect-ratio:76/35) and (min-width:1260px){body{max-width:100%;width:100%}.page-wrapper{overflow:hidden;max-width:100%;min-height:100vh;padding:20px 20px 0}.page-wrapper main{min-height:none;margin-bottom:50px}.btn{font-size:14px;padding:15px 40px}.header{margin-bottom:20px;position:relative}.header__logo{margin-left:25px}.header__nav{z-index:5;position:absolute;top:70px;left:0;display:none;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:start;align-items:flex-start;max-width:none;width:100%;height:calc(100vh - 120px);padding-top:50px;padding-bottom:50px;padding-left:60px;background-color:#fff}.header__nav-link{height:auto;padding:0;font-size:30px}.header__nav-link--enroll{width:calc(100% - 60px);height:auto;margin-left:0;margin-bottom:70px;padding:40px 0;text-align:center;font-size:24px;font-weight:100}.header__nav-footer{-ms-flex-pack:justify;justify-content:space-between;width:calc(100% - 60px);height:60px}.header__nav-footer,.header__nav-footer-inst{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-align:center;align-items:center}.header__nav-footer-inst{-ms-flex-pack:start;justify-content:flex-start;text-decoration:none}.header__nav-footer-inst-icon{width:30px;height:30px;margin-right:16px;background-image:url(../img/inst-black.png);background-size:contain;background-position:50%;background-repeat:no-repeat}.header__nav-footer-inst-text{color:#000;font-size:16px;font-weight:500}.header__burger{display:-ms-flexbox;display:flex;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:end;align-items:flex-end;width:35px;height:30px;margin-top:20px;margin-right:25px}.header__burger div{width:100%;height:3px;background-color:#000}.header__burger div:nth-child(2){width:25px;background-color:#ff6000}.popup__window{display:-ms-flexbox;display:flex;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex-align:start;align-items:flex-start;width:calc(100% - 40px);height:calc(100% - 40px)}.popup__close{transform:scale(2);border:none}.popup__form,.popup__heading{max-width:660px;width:100%;margin:0 auto}.popup__form{position:relative}.popup__form-row{-ms-flex-flow:row wrap;flex-flow:row wrap;-ms-flex-pack:justify;justify-content:space-between;margin-bottom:0}.popup__form-row .input,.popup__form-row input{width:calc(50% - 30px);margin-right:0;margin-top:60px}.popup__btn{position:absolute;right:0;bottom:0;width:calc(50% - 30px);height:63px}.faq{padding:30px 25px 30px 35px;border-left:10px solid #ff6000}.faq__aside{display:none}.faq__aside-buttons{position:absolute;top:calc(100% - 65px);right:0;width:222px;border:1px solid #ff6000;border-radius:6px;border-top-right-radius:0;border-bottom-right-radius:0;background-color:#fff;margin-right:53px}.faq__aside-buttons-caret{position:absolute;display:block;top:-1px;right:-53px;width:53px;height:51px;border-top-right-radius:6px;border-bottom-right-radius:6px;background-color:#ff6000;background-image:url(../img/icons/caret.png);background-size:auto;background-position:50%;background-repeat:no-repeat}.faq__aside-btn{display:none;margin-bottom:0;color:#000;border:none;border-radius:0;font-size:16px;font-weight:400}.faq__aside-btn,.faq__aside-btn--active{background-color:transparent!important}.faq__aside-btn--active{display:block!important}.faq__main{padding:0;width:100%}.faq__main-top{display:block;margin-top:25px;margin-bottom:70px;color:#181818}.faq__main-title{display:block;position:relative}.faq__main-title span{display:block;width:290px;margin-bottom:60px;font-size:60px;font-weight:400}.faq__block{width:620px}.faq__block-title{font-size:36px}.faq__block-content{padding-left:15px;font-size:20px}}@media screen and (max-width:768px){.page-wrapper{max-width:100%}.btn{font-size:10px;padding:12px 20px}.input{padding:10px 0 5px;font-size:15px;border-bottom:1px solid #000}.header{height:auto;margin-bottom:30px;background-color:transparent}.header__logo{display:none}.header__logo--white{display:block}.header__logo--white img{width:120px;height:46px}.header__burger{margin:0}.header__burger div{background-color:#fff}.header__nav{padding:45px 0 0;background-color:transparent}.header__nav-link{color:#fff;font-size:19px;font-weight:300}.header__nav-link--enroll{width:100%;margin-bottom:40px;padding:15px 0;font-size:15px}.header__nav-footer{width:100%}.header__nav-footer-inst-icon{width:20px;height:20px;margin-right:10px;background-image:url(../img/inst.png)}.header__nav-footer-inst-text{color:#777;font-size:10px}.popup__window{width:100%;height:100%;padding:40px}.popup__heading{margin-bottom:30px;font-size:26px}.popup__form{width:100%}.popup__form-row{-ms-flex-flow:column nowrap;flex-flow:column nowrap}.popup__form-row .input,.popup__form-row input{width:100%;margin-top:0;margin-bottom:20px}.popup__btn{position:static;width:100%;margin-top:30px;font-size:15px}.faq{width:100vw;margin-left:-20px;padding:25px 12px 16px 27px;border-left-width:5px}.faq__main-close{transform:scale(.5) translate(50%,-50%)}.faq__main-top{margin-top:10px;margin-bottom:30px;font-size:10px}.faq__main-title span{width:145px;margin-bottom:15px;font-size:30px;line-height:1.2em}.faq__block{width:100%}.faq__block-title{font-size:18px}.faq__block-content{margin-top:15px;padding-left:15px;font-size:12px}.faq__block-content ul li{margin-bottom:10px;line-height:1.2em}.faq__block-content ul li:before{top:4px}.faq__aside-buttons{transform:translateY(-33px);top:100%;width:95px;margin-right:28px}.faq__aside-buttons-caret{width:24px;height:24px;right:-24px;background-size:12px}.faq__aside-btn{width:100%;padding:5px 0}}
+    </style>
+    <link rel="preload" href="css/style.min.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/style.min.css"></noscript>
+    <script>!function(u){"use strict";var e=function(e,t,n){var r,o=u.document,a=o.createElement("link");if(t)r=t;else{var l=(o.body||o.getElementsByTagName("head")[0]).childNodes;r=l[l.length-1]}var i=o.styleSheets;a.rel="stylesheet",a.href=e,a.media="only x",function e(t){if(o.body)return t();setTimeout(function(){e(t)})}(function(){r.parentNode.insertBefore(a,t?r:r.nextSibling)});var d=function(e){for(var t=a.href,n=i.length;n--;)if(i[n].href===t)return e();setTimeout(function(){d(e)})};function s(){a.addEventListener&&a.removeEventListener("load",s),a.media=n||"all"}return a.addEventListener&&a.addEventListener("load",s),(a.onloadcssdefined=d)(s),a};"undefined"!=typeof exports?exports.loadCSS=e:u.loadCSS=e}("undefined"!=typeof global?global:this),function(r){if(r.loadCSS){var e=loadCSS.relpreload={};if(e.support=function(){try{return r.document.createElement("link").relList.supports("preload")}catch(e){return!1}},e.poly=function(){for(var e=r.document.getElementsByTagName("link"),t=0;t<e.length;t++){var n=e[t];"preload"===n.rel&&"style"===n.getAttribute("as")&&(r.loadCSS(n.href,n,n.getAttribute("media")),n.rel=null)}},!e.support()){e.poly();var t=r.setInterval(e.poly,300);r.addEventListener&&r.addEventListener("load",function(){e.poly(),r.clearInterval(t)}),r.attachEvent&&r.attachEvent("onload",function(){r.clearInterval(t)})}}}(this);</script>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <header class="header"><a class="header__logo" href="main.html"><img class="header__logo-img" src="img/logo.png" alt="logo"></a><a class="header__logo--white" href="main.html"><img class="header__logo-img" src="img/logo-white.png" alt="logo"></a>
+        <nav class="header__nav"><a class="header__nav-link" href="actions.html">Акции</a><a class="header__nav-link" href="products.html">Продукты</a><a class="header__nav-link" href="clubs.html">Клубы</a><a class="header__nav-link" href="subscriptions.html">Абонемент</a><a class="header__nav-link" href="application.html">Приложение</a><a class="header__nav-link header__nav-link--enroll" href="#">Попробовать</a>
+          <div class="header__nav-footer"><a class="header__nav-footer-inst" href="#">
+              <div class="header__nav-footer-inst-icon"></div>
+              <div class="header__nav-footer-inst-text">instagram</div></a><a class="header__nav-footer-btn btn btn--gray" href="#">Перезвоните мне</a></div>
+        </nav>
+        <div class="header__burger">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </header>
+      <main>
+        <div class="faq">
+          <div class="faq__aside">
+            <div class="faq__aside-heading">Вопросы и ответы</div>
+            <div class="faq__aside-buttons">
+              <div class="faq__aside-buttons-caret"></div>
+              <div class="faq__aside-btn faq__aside-btn--active btn btn--white" data-faq="1">Абонемент</div>
+              <div class="faq__aside-btn btn btn--white" data-faq="2">Оплата</div>
+              <div class="faq__aside-btn btn btn--white" data-faq="3">Тренировки</div>
+              <div class="faq__aside-btn btn btn--white" data-faq="4">Приложение</div>
+              <div class="faq__aside-btn btn btn--white" data-faq="5">Прочее</div>
+            </div>
+          </div>
+          <div class="faq__main">
+            <div class="faq__main-close">
+              <div></div>
+              <div></div>
+            </div>
+            <div class="faq__main-top">FAQ</div>
+            <div class="faq__main-title"> <span>Вопросы и ответы</span></div>
+            <div class="faq__main-content" data-faq="1">
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Что входит в абонемент?</span></div>
+                <div class="faq__block-content">
+                  <ul>
+                    <li>посещение клуба без ограничений</li>
+                    <li>групповые занятия Les Mills</li>
+                    <li>исследование состава тела</li>
+                    <li>мобильное приложение с библиотекой программ и упражнений</li>
+                    <li>персональный браслет</li>
+                    <li>шкаф в раздевалке</li>
+                    <li>сейфовая ячейка</li>
+                    <li>питьевая вода</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Есть ли ограничения по времени и количеству посещений?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>С какого возраста можно посещать клуб?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Сколько стоит абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Как оплатить абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Когда начнет действовать абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Как приостановить срок действия абонемента?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Как осуществляется доступ в клуб по абонементу?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Когда можно получить браслет?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Можно ли попасть в клуб без браслета?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Можно ли переоформить абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+            </div>
+            <div class="faq__main-content" data-faq="2">
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Что входит в абонемент?</span></div>
+                <div class="faq__block-content">
+                  <ul>
+                    <li>посещение клуба без ограничений</li>
+                    <li>групповые занятия Les Mills</li>
+                    <li>исследование состава тела</li>
+                    <li>мобильное приложение с библиотекой программ и упражнений</li>
+                    <li>персональный браслет</li>
+                    <li>шкаф в раздевалке</li>
+                    <li>сейфовая ячейка</li>
+                    <li>питьевая вода</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Есть ли ограничения по времени и количеству посещений?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>С какого возраста можно посещать клуб?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Сколько стоит абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Как оплатить абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Когда начнет действовать абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Как приостановить срок действия абонемента?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Как осуществляется доступ в клуб по абонементу?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Когда можно получить браслет?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Можно ли попасть в клуб без браслета?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Можно ли переоформить абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+            </div>
+            <div class="faq__main-content" data-faq="3">
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Что входит в абонемент?</span></div>
+                <div class="faq__block-content">
+                  <ul>
+                    <li>посещение клуба без ограничений</li>
+                    <li>групповые занятия Les Mills</li>
+                    <li>исследование состава тела</li>
+                    <li>мобильное приложение с библиотекой программ и упражнений</li>
+                    <li>персональный браслет</li>
+                    <li>шкаф в раздевалке</li>
+                    <li>сейфовая ячейка</li>
+                    <li>питьевая вода</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Есть ли ограничения по времени и количеству посещений?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>С какого возраста можно посещать клуб?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Сколько стоит абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Как оплатить абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Когда начнет действовать абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Как приостановить срок действия абонемента?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Как осуществляется доступ в клуб по абонементу?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Когда можно получить браслет?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Можно ли попасть в клуб без браслета?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Можно ли переоформить абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+            </div>
+            <div class="faq__main-content" data-faq="4">
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Что входит в абонемент?</span></div>
+                <div class="faq__block-content">
+                  <ul>
+                    <li>посещение клуба без ограничений</li>
+                    <li>групповые занятия Les Mills</li>
+                    <li>исследование состава тела</li>
+                    <li>мобильное приложение с библиотекой программ и упражнений</li>
+                    <li>персональный браслет</li>
+                    <li>шкаф в раздевалке</li>
+                    <li>сейфовая ячейка</li>
+                    <li>питьевая вода</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Есть ли ограничения по времени и количеству посещений?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>С какого возраста можно посещать клуб?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Сколько стоит абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Как оплатить абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Когда начнет действовать абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Как приостановить срок действия абонемента?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Как осуществляется доступ в клуб по абонементу?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Когда можно получить браслет?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Можно ли попасть в клуб без браслета?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Можно ли переоформить абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+            </div>
+            <div class="faq__main-content" data-faq="5">
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Что входит в абонемент?</span></div>
+                <div class="faq__block-content">
+                  <ul>
+                    <li>посещение клуба без ограничений</li>
+                    <li>групповые занятия Les Mills</li>
+                    <li>исследование состава тела</li>
+                    <li>мобильное приложение с библиотекой программ и упражнений</li>
+                    <li>персональный браслет</li>
+                    <li>шкаф в раздевалке</li>
+                    <li>сейфовая ячейка</li>
+                    <li>питьевая вода</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Есть ли ограничения по времени и количеству посещений?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>С какого возраста можно посещать клуб?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Сколько стоит абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Как оплатить абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Когда начнет действовать абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Как приостановить срок действия абонемента?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Как осуществляется доступ в клуб по абонементу?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Когда можно получить браслет?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Можно ли попасть в клуб без браслета?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+              <div class="faq__block">
+                <div class="faq__block-title"> <span>Можно ли переоформить абонемент?</span></div>
+                <div class="faq__block-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius iste vel corrupti eveniet facilis rerum incidunt quae! Dolorem ipsam incidunt est perspiciatis, mollitia voluptate sapiente id quaerat earum porro soluta quam error vel? Magnam odio ipsum velit eum eius maxime harum, voluptas perferendis ea veniam. Veniam voluptates atque neque id.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer class="footer"><a class="footer__inst" href="#">
+          <div class="footer__inst-icon"></div>
+          <div class="footer__inst-text">instagram</div></a><a class="footer__btn btn btn--gray" href="#">Перезвоните мне</a></footer>
+    </div>
+    <div class="popup popup--call">
+      <div class="popup__bg"></div>
+      <div class="popup__window">
+        <div class="popup__close">
+          <div></div>
+          <div></div>
+        </div>
+        <div class="popup__heading">Перезвоните мне</div>
+        <form class="popup__form" action="">
+          <div class="popup__form-row">
+            <input class="input input--name input--text" type="text" placeholder="Ваше имя" name="name" maxlength="20" required="required">
+            <input class="input input--tel" type="tel" placeholder="Ваш телефон" name="tel" required="required">
+            <select class="input input--select" name="dpt">
+              <option disabled="disabled" selected="selected">Выберите клуб</option>
+              <option>Spirit. Юго-Западная</option>
+              <option>Spirit. Крымская</option>
+              <option>Spirit. Чертановская</option>
+            </select>
+          </div>
+          <button class="popup__btn btn" type="submit">Отправить</button>
+        </form>
+      </div>
+    </div>
+    <script src="js/libs.min.js"></script>
+    <script src="js/common.min.js"></script>
+  </body>
+</html>

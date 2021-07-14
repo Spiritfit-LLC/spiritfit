@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>Абонемент</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <style type="text/css">
+      @font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro-Light.eot');src:local("Gotham Pro Medium"),local("GothamPro-Medium");src:url('../fonts/Gotham/ Pro/GothamPro-Light.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro-Light.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro-Light.ttf') format("truetype");font-weight:100}@font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro.eot');src:local("Gotham Pro Medium"),local("GothamPro");src:url('../fonts/Gotham/ Pro/GothamPro.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro.ttf') format("truetype");font-weight:300}@font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro-Medium.eot');src:local("Gotham Pro Medium"),local("GothamPro-Medium");src:url('../fonts/Gotham/ Pro/GothamPro-Medium.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro-Medium.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro-Medium.ttf') format("truetype");font-weight:500}@font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro-Bold.eot');src:local("Gotham Pro Bold"),local("GothamPro-Bold");src:url('../fonts/Gotham/ Pro/GothamPro-Bold.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro-Bold.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro-Bold.ttf') format("truetype");font-weight:700}*{box-sizing:border-box}body{overflow-x:hidden;min-height:100vh;margin:0;line-height:1.2;background-image:url(../img/background.jpg);background-color:#171717;background-size:100%;background-repeat:no-repeat;font-family:Gotham Pro,sans-serif;font-size:14px;font-weight:300}.page-wrapper{max-width:1920px;width:100%;margin:0 auto;padding:40px 40px 0}.page-wrapper main{min-height:calc(100vh - 280px)}.btn{display:inline-block;padding:20px 60px;padding-top:20px;padding-bottom:20px;text-align:center;text-transform:uppercase;color:#ff6000;border:1px solid #ff6000;border-radius:6px;text-decoration:none;background-color:transparent;outline:0;font-size:16px;font-weight:500}.btn--white{border-color:#fff;color:#fff}.btn--gray{border-color:#777;color:#777}.input{display:block;width:230px;border:none;border-bottom:2px solid #000;outline:0;border-radius:0;padding:20px 30px 20px 2px;background-color:transparent;box-shadow:none;font-family:Gotham,sans-serif;font-size:18px}.input:-webkit-autofill{background-color:transparent}.input--light{color:#fff!important}.input--light::-webkit-input-placeholder{color:#fff;opacity:.5}.input--light::-moz-placeholder{color:#fff;opacity:.5}.input--light:-ms-input-placeholder{color:#fff;opacity:.5}.input--light:-moz-placeholder{color:#fff;opacity:.5}.input-label{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:start;justify-content:flex-start;-ms-flex-align:center;align-items:center}.input-label__text{margin-left:20px;opacity:.7;color:#fff;font-size:12px}.input-label__text a{color:#fff}.input--checkbox{min-width:20px;width:20px;height:20px;padding:0;border:1px solid #000;background-color:transparent}.input--long{width:375px}.input--num{width:50px;padding:15px 5px;text-align:center;-moz-appearance:textfield;font-size:36px;font-weight:500}.input--num::-webkit-inner-spin-button,.input--num::-webkit-outer-spin-button{display:none;-webkit-appearance:none;margin:0}.input--short{width:180px;padding-right:10px}.input--select{color:#757575}.header{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:stretch;align-items:stretch;height:70px;margin-bottom:40px;background-color:#fff}.header__logo{margin-left:40px;padding-top:20px}.header__logo-img{width:94px;height:38px}.header__nav{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:center;align-items:center;max-width:1000px;width:100%}.header__nav-footer{display:none}.header__nav-link{display:inline-block;height:70px;padding:28px 0;color:#000;letter-spacing:.1em;text-decoration:none;text-transform:uppercase;font-weight:500}.header__nav-link--active{position:relative;color:#ff6000}.header__nav-link--active:after{content:"";display:block;position:absolute;left:0;bottom:19px;width:100%;height:3px;background-color:#ff6000}.header__nav-link--enroll{margin-left:25px;margin-right:0;padding-left:60px;padding-right:60px;background-color:#ff6000;color:#fff}.header__burger{display:none}.popup{position:relative;z-index:4;display:none;position:fixed;top:0;left:0;width:100vw;height:100vh}.popup__bg{position:absolute;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.7)}.popup__window{position:absolute;top:50%;left:50%;padding:70px 75px 60px;transform:translate(-50%,-50%);background-color:#fff}.popup__close{position:absolute;display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center;top:20px;right:20px;width:54px;height:54px;border-radius:6px;border:1px solid #777}.popup__close div{width:20px;height:2px;background-color:#1d1e1e;transform:translateX(10px) rotate(45deg)}.popup__close div:last-child{transform:translateX(-10px) rotate(-45deg)}.popup__heading{margin-top:-15px;margin-bottom:60px;font-size:30px;font-weight:500}.popup__form-row{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:start;justify-content:flex-start;-ms-flex-align:start;align-items:flex-start;margin-bottom:70px}.popup__form-row input{margin-right:45px}.popup__btn{display:block;margin:0 auto;letter-spacing:.1em;font-family:Gotham,sans-serif}.subscription{position:relative;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:start;align-items:flex-start;padding:55px 135px 10px 130px;background-color:#fff}.subscription,.subscription__close{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap}.subscription__close{position:absolute;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center;top:40px;right:40px;width:54px;height:54px;border-radius:6px;border:1px solid #777}.subscription__close div{width:20px;height:2px;background-color:#1d1e1e;transform:translateX(10px) rotate(45deg)}.subscription__close div:last-child{transform:translateX(-10px) rotate(-45deg)}.subscription__main{width:560px;margin-bottom:70px;padding-right:40px}.subscription__ready{display:none}.subscription__stage{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:start;justify-content:flex-start;-ms-flex-align:center;align-items:center;margin-bottom:55px;font-size:16px;font-weight:400}.subscription__stage-item{margin-right:35px;opacity:.3}.subscription__stage-item:last-child{margin-right:0}.subscription__stage-item--done{opacity:1}.subscription__title{margin-bottom:30px;font-size:50px;font-weight:500}.subscription__desc{margin-bottom:45px;font-size:20px}.subscription__label{margin-bottom:50px}.subscription__label-item{display:inline-block;margin-bottom:20px;padding:10px 15px;background-color:#f1f1f1;border-radius:10px;font-size:18px}.subscription__subheading{margin-bottom:35px;font-size:30px;font-weight:500}.subscription__include{width:450px;margin:0 0 45px;padding:0}.subscription__include-item{position:relative;display:block;margin-bottom:25px;padding:0 0 0 40px;font-size:16px}.subscription__include-item:before{content:"";display:block;position:absolute;top:0;left:0;width:20px;height:17px;background-image:url(../img/icons/list-check.png);background-size:contain;background-position:50%;background-repeat:no-repeat}.subscription__aside-stage{display:none}.subscription__aside-form{margin-bottom:35px}.subscription__aside-form-row{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:start;align-items:flex-start;margin-bottom:20px}.subscription__aside-form-row--code{width:230px;margin-left:auto;margin-right:auto}.subscription__aside-form-row--last{margin-top:50px;margin-bottom:50px}.subscription__bottom{position:relative;padding-top:35px}.subscription__bottom:before{position:absolute;content:"";display:block;top:0;left:-50px;width:calc(100% + 100px);height:1px;background-color:#fff;opacity:.4}.subscription__total{overflow:auto;height:115px}.subscription__total-text{margin-bottom:15px;text-align:center;text-transform:uppercase;font-size:16px;font-weight:500}.subscription__total-value{margin-bottom:15px;text-align:center;font-size:30px;font-weight:500}.subscription__total-value-old{position:relative;display:inline-block;margin-right:40px;color:#451800}.subscription__total-value-old span{opacity:.4}.subscription__total-value-old:before{content:"";display:block;position:absolute;left:0;top:calc(50% - 1px);width:100%;height:2px;background-color:#000}.subscription__total-subtext{margin-bottom:15px;text-align:center;font-size:12px;font-weight:400}.subscription__total-btn{position:relative;display:block;width:230px;margin:0 auto;padding-right:70px}.subscription__total-btn:after{content:"";display:block;position:absolute;top:20px;right:65px;width:11px;height:19px;background-image:url(../img/icons/arrow-next.png);background-size:contain;background-position:50%;background-repeat:no-repeat}.subscription__total-btn--form:after{right:50px}.subscription__total-btn--pay:after{display:none}.subscription__sent{text-align:center;color:#fff;font-weight:400}.subscription__sent-text{margin-bottom:15px;font-size:18px}.subscription__sent-tel{margin-bottom:20px;font-size:24px}.subscription__code{display:table;margin:0 auto 50px;opacity:.7;color:#451800;font-size:12px;font-weight:500}.subscription__promo{position:relative}.subscription__promo-input{width:375px;margin-bottom:40px;padding-right:100px}.subscription__promo-btn{position:absolute;right:0;top:22px;border:none;background-color:transparent;opacity:.7;color:#451800;text-decoration:none;font-size:16px;font-weight:500}.subscription__info{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:start;justify-content:flex-start;-ms-flex-align:end;align-items:flex-end;margin-top:157px;padding-top:105px;border-top:1px solid #ccc}.subscription__info-img{display:block;min-width:105px;width:105px;height:85px;margin-right:35px}.subscription__info-text{opacity:.8;margin-bottom:-4px;font-size:15px;font-weight:500}@media screen and (max-width:1260px),screen and (min-aspect-ratio:76/35) and (min-width:1260px){body{max-width:100%;width:100%}.page-wrapper{overflow:hidden;max-width:100%;min-height:100vh;padding:20px 20px 0}.page-wrapper main{min-height:none;margin-bottom:50px}.btn{font-size:14px;padding:15px 40px}.header{margin-bottom:20px;position:relative}.header__logo{margin-left:25px}.header__nav{z-index:4;position:absolute;top:70px;left:0;display:none;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:start;align-items:flex-start;max-width:none;width:100%;height:calc(100vh - 120px);padding-top:50px;padding-bottom:50px;padding-left:60px;background-color:#fff}.header__nav-link{height:auto;padding:0;font-size:30px}.header__nav-link--active{color:#ff6000!important}.header__nav-link--active:after{display:none}.header__nav-link--enroll{width:calc(100% - 60px);height:auto;margin-left:0;margin-bottom:70px;padding:40px 0;text-align:center;font-size:24px;font-weight:100}.header__nav-footer{-ms-flex-pack:justify;justify-content:space-between;width:calc(100% - 60px);height:60px}.header__nav-footer,.header__nav-footer-inst{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-align:center;align-items:center}.header__nav-footer-inst{-ms-flex-pack:start;justify-content:flex-start;text-decoration:none}.header__nav-footer-inst-icon{width:30px;height:30px;margin-right:16px;background-image:url(../img/inst-black.png);background-size:contain;background-position:50%;background-repeat:no-repeat}.header__nav-footer-inst-text{color:#000;font-size:16px;font-weight:500}.header__burger{display:-ms-flexbox;display:flex;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:end;align-items:flex-end;width:35px;height:30px;margin-top:20px;margin-right:25px}.header__burger div{width:100%;height:3px;background-color:#000}.header__burger div:nth-child(2){width:25px;background-color:#ff6000}.popup__window{display:-ms-flexbox;display:flex;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex-align:start;align-items:flex-start;width:calc(100% - 40px);height:calc(100% - 40px)}.popup__close{transform:scale(2);border:none}.popup__form,.popup__heading{max-width:660px;width:100%;margin:0 auto}.popup__form{position:relative}.popup__form-row{-ms-flex-flow:row wrap;flex-flow:row wrap;-ms-flex-pack:justify;justify-content:space-between;margin-bottom:0}.popup__form-row .input,.popup__form-row input{width:calc(50% - 30px);margin-right:0;margin-top:60px}.popup__btn{position:absolute;right:0;bottom:0;width:calc(50% - 30px);height:63px}.subscription{padding:55px 55px 10px 50px;-ms-flex-flow:column nowrap;flex-flow:column nowrap}.subscription__close{display:none}.subscription__main{width:100%;padding-right:0}.subscription__stage{-ms-flex-pack:justify;justify-content:space-between;margin-bottom:70px}.subscription__title{margin-bottom:45px;font-size:60px}.subscription__desc{padding-right:120px;font-size:22px}.subscription__label{display:-ms-flexbox;display:flex;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-ms-flex-pack:distribute;justify-content:space-around;-ms-flex-align:start;align-items:flex-start;margin-bottom:40px}.subscription__label-item{margin-bottom:15px}.subscription__subheading{font-size:36px}.subscription__aside-form-row{max-width:500px;margin-left:auto;margin-right:auto}.subscription__aside-form-row input.input{width:calc(50% - 20px)}.subscription__aside-form-row input.input--num{width:50px!important}.subscription__bottom:before{left:-130px;width:calc(100% + 260px)}.subscription__promo{max-width:375px;margin-left:auto;margin-right:auto}.subscription__total-btn:after{top:15px;width:8px;height:16px}.subscription__ready .subscription__title{display:none}.subscription__ready .subscription__info{margin:0 0 70px;padding:0;border:none}.subscription__ready .subscription__info-text{max-width:380px;font-size:15px}}@media screen and (max-width:768px){.page-wrapper{max-width:100%;padding:40px 30px 0}.btn{font-size:10px;padding:12px 20px}.input{padding:10px 0 5px;font-size:15px;border-bottom:1px solid #000}.input--num{width:26px!important;margin-bottom:23px;padding:0;font-size:36px}.input--checkbox{min-width:17px;width:17px!important;height:15px}.input-label{-ms-flex-align:start;align-items:flex-start}.input-label__text{margin-left:9px;padding-top:3px;font-size:10px}.header{height:auto;margin-bottom:30px;background-color:transparent}.header__logo{display:none}.header__logo--white{display:block}.header__logo--white img{width:120px;height:46px}.header__burger{margin:0}.header__burger div{background-color:#fff}.header__nav{padding:45px 0 0;background-color:transparent}.header__nav-link{color:#fff;font-size:19px;font-weight:300}.header__nav-link--enroll{width:100%;margin-bottom:40px;padding:15px 0;font-size:15px}.header__nav-footer{width:100%}.header__nav-footer-inst-icon{width:20px;height:20px;margin-right:10px;background-image:url(../img/inst.png)}.header__nav-footer-inst-text{color:#777;font-size:10px}.popup__window{width:100%;height:100%;padding:40px}.popup__heading{margin-bottom:30px;font-size:26px}.popup__form{width:100%}.popup__form-row{-ms-flex-flow:column nowrap;flex-flow:column nowrap}.popup__form-row .input,.popup__form-row input{width:100%;margin-top:0;margin-bottom:20px}.popup__btn{position:static;width:100%;margin-top:30px;font-size:15px}.subscription{width:100vw;margin-left:-30px;padding:35px 30px}.subscription__main{margin-bottom:0}.subscription__stage{margin-bottom:25px}.subscription__stage-item{margin-right:0;font-size:10px}.subscription__title{margin-bottom:25px;font-size:36px}.subscription__desc{margin-bottom:25px;padding-right:0;font-size:15px}.subscription__label{margin-bottom:20px}.subscription__label-item{font-size:12px}.subscription__subheading{margin-bottom:20px;font-size:24px}.subscription__include{width:100%}.subscription__include-item{font-size:14px}.subscription__aside-form{margin-bottom:10px}.subscription__aside-form-row{-ms-flex-flow:column nowrap;flex-flow:column nowrap;max-width:320px;width:100%;margin:0 auto}.subscription__aside-form-row--last{margin:30px auto}.subscription__aside-form-row--code{-ms-flex-flow:row nowrap;flex-flow:row nowrap;width:140px;margin:0 auto}.subscription__aside-form-row .input,.subscription__aside-form-row input.input{width:100%;margin-bottom:15px}.subscription__aside-form-row .input--num,.subscription__aside-form-row input.input--num{width:30px!important}.subscription__total{height:85px}.subscription__total-btn{max-width:210px;margin:0 auto;padding:16px 0;width:100%;font-size:12px}.subscription__total-btn:after{top:14px;width:8px;height:16px}.subscription__total-btn--form:after{right:50px}.subscription__sent{padding-top:35px}.subscription__sent-text{margin-bottom:10px;font-size:12px;font-weight:400}.subscription__sent-tel{margin-bottom:40px;font-size:18px;font-weight:400}.subscription__bottom{height:190px}.subscription__total{overflow:hidden}.subscription__total-text{font-size:12px}.subscription__total-value{font-size:18px}.subscription__total-subtext{font-size:8px}.subscription__code{margin-bottom:76px}.subscription__promo{max-width:320px;width:100%;margin:0 auto 40px}.subscription__promo-input{width:100%;font-size:12px}.subscription__promo-btn{top:10px;font-size:12px}.subscription__info{margin-bottom:35px!important}.subscription__info-img{width:55px;height:auto;margin-right:20px}.subscription__info-text{font-size:11px!important}}
+    </style>
+    <link rel="preload" href="css/style.min.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/style.min.css"></noscript>
+    <script>!function(u){"use strict";var e=function(e,t,n){var r,o=u.document,a=o.createElement("link");if(t)r=t;else{var l=(o.body||o.getElementsByTagName("head")[0]).childNodes;r=l[l.length-1]}var i=o.styleSheets;a.rel="stylesheet",a.href=e,a.media="only x",function e(t){if(o.body)return t();setTimeout(function(){e(t)})}(function(){r.parentNode.insertBefore(a,t?r:r.nextSibling)});var d=function(e){for(var t=a.href,n=i.length;n--;)if(i[n].href===t)return e();setTimeout(function(){d(e)})};function s(){a.addEventListener&&a.removeEventListener("load",s),a.media=n||"all"}return a.addEventListener&&a.addEventListener("load",s),(a.onloadcssdefined=d)(s),a};"undefined"!=typeof exports?exports.loadCSS=e:u.loadCSS=e}("undefined"!=typeof global?global:this),function(r){if(r.loadCSS){var e=loadCSS.relpreload={};if(e.support=function(){try{return r.document.createElement("link").relList.supports("preload")}catch(e){return!1}},e.poly=function(){for(var e=r.document.getElementsByTagName("link"),t=0;t<e.length;t++){var n=e[t];"preload"===n.rel&&"style"===n.getAttribute("as")&&(r.loadCSS(n.href,n,n.getAttribute("media")),n.rel=null)}},!e.support()){e.poly();var t=r.setInterval(e.poly,300);r.addEventListener&&r.addEventListener("load",function(){e.poly(),r.clearInterval(t)}),r.attachEvent&&r.attachEvent("onload",function(){r.clearInterval(t)})}}}(this);</script>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <header class="header"><a class="header__logo" href="main.html"><img class="header__logo-img" src="img/logo.png" alt="logo"></a><a class="header__logo--white" href="main.html"><img class="header__logo-img" src="img/logo-white.png" alt="logo"></a>
+        <nav class="header__nav"><a class="header__nav-link" href="actions.html">Акции</a><a class="header__nav-link" href="products.html">Продукты</a><a class="header__nav-link" href="clubs.html">Клубы</a><a class="header__nav-link header__nav-link--active" href="subscriptions.html">Абонемент</a><a class="header__nav-link" href="application.html">Приложение</a><a class="header__nav-link header__nav-link--enroll" href="#">Попробовать</a>
+          <div class="header__nav-footer"><a class="header__nav-footer-inst" href="#">
+              <div class="header__nav-footer-inst-icon"></div>
+              <div class="header__nav-footer-inst-text">instagram</div></a><a class="header__nav-footer-btn btn btn--gray" href="#">Перезвоните мне</a></div>
+        </nav>
+        <div class="header__burger">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </header>
+      <main>
+        <div class="subscription">
+          <div class="subscription__close">
+            <div></div>
+            <div></div>
+          </div>
+          <div class="subscription__main">
+            <div class="subscription__stage">
+              <div class="subscription__stage-item subscription__stage-item--done" data-stage="1">1. Регистрация</div>
+              <div class="subscription__stage-item" data-stage="2">2. Оформление</div>
+              <div class="subscription__stage-item" data-stage="3">3. Оплата</div>
+            </div>
+            <div class="subscription__common">
+              <div class="subscription__title">Месяц фитнеса</div>
+              <div class="subscription__desc">Абонемент с комфортной помесячной оплатой услуг, свободный доступ ко всем услугам клуба ежедневно с 7.00 до 24.00</div>
+              <div class="subscription__label">
+                <div class="subscription__label-item">Первый месяц - <b>3900 &#8381;</b></div>
+                <div class="subscription__label-item">Второй месяц и далее - <b>1950 &#8381;</b></div>
+              </div>
+              <div class="subscription__subheading">Включено в абонемент:</div>
+              <ul class="subscription__include">
+                <li class="subscription__include-item">Тренажёрный зал, кардио-зона, зона функционального тренинга и боевых искусств</li>
+                <li class="subscription__include-item">Групповые программы Les Mills</li>
+                <li class="subscription__include-item">Регулярные исследования состава тела InBody</li>
+                <li class="subscription__include-item">Вводный инструктаж</li>
+                <li class="subscription__include-item">Мобильное приложение Spirit. Fitness c библиотекой упражнений и программами тренировок</li>
+                <li class="subscription__include-item">Скидка на стартовый блок персональных тренировок 20%</li>
+                <li class="subscription__include-item">Шкафчик в раздевалке</li>
+                <li class="subscription__include-item">Сейфовая ячейка</li>
+                <li class="subscription__include-item">Питьевая вода</li>
+              </ul>
+              <div class="subscription__subheading">Услуги в подарок:</div>
+              <ul class="subscription__gift">
+                <li class="subscription__gift-item">Комфортная помесячная оплата</li>
+              </ul>
+            </div>
+            <div class="subscription__ready">
+              <div class="subscription__title">Абонемент готов</div>
+              <div class="subscription__desc">Для оплаты ежемесячного абонемента вы будете перенаправлены на сервисную страницу. C банковской карты будет списана сумма за ежемесячный абонемент. </div>
+              <div class="subscription__info"><img class="subscription__info-img" src="img/cloud-logo.png" alt="cloud logo">
+                <div class="subscription__info-text">Для оплаты абонемента мы используем сервис CloudPayments, защищенный по технологии 3D secure. Это надежно и безопасно.</div>
+              </div>
+            </div>
+          </div>
+          <div class="subscription__aside">
+            <div class="subscription__aside-stage" data-stage="1">
+              <form class="subscription__aside-form" action="">
+                <div class="subscription__aside-form-row">
+                  <select class="input input--light input--long input--select" name="dpt">
+                    <option disabled="disabled" selected="selected">Выберите клуб</option>
+                    <option>Spirit. Юго-Западная</option>
+                    <option>Spirit. Крымская</option>
+                    <option>Spirit. Чертановская</option>
+                  </select>
+                </div>
+                <div class="subscription__aside-form-row">
+                  <input class="input input--light input--short input--text" type="text" placeholder="Имя" name="name" required="required">
+                  <input class="input input--light input--short input--text" type="text" placeholder="Фамилия" name="surname" required="required">
+                </div>
+                <div class="subscription__aside-form-row">
+                  <input class="input input--light input--short input--tel" type="tel" placeholder=" Телефон" name="tel" required="required">
+                  <input class="input input--light input--short input--text" type="email" placeholder="Email" name="email" required="required">
+                </div>
+                <div class="subscription__aside-form-row">
+                  <label class="input-label">
+                    <input class="input input--checkbox" type="checkbox" name="agreement1" checked="checked">
+                    <div class="input-label__text">Cогласен на <a href="#">обработку персональных данных</a></div>
+                  </label>
+                </div>
+                <div class="subscription__aside-form-row">
+                  <label class="input-label">
+                    <input class="input input--checkbox" type="checkbox" name="agreement2" checked="checked">
+                    <div class="input-label__text">С <a href="#">Офертой</a> и <a href="#">Правилами клуба</a> ознакомлен</div>
+                  </label>
+                </div>
+              </form>
+              <div class="subscription__bottom">
+                <div class="subscription__total">
+                  <div class="subscription__total-text">Итого к оплате</div>
+                  <div class="subscription__total-value">3900 &#8381;</div>
+                </div>
+                <div class="subscription__total-btn subscription__total-btn--reg btn btn--white" data-stage="1">Купить</div>
+              </div>
+            </div>
+            <div class="subscription__aside-stage" data-stage="2">
+              <form class="subscription__aside-form" action="">
+                <div class="subscription__sent">
+                  <div class="subscription__sent-text">Код отправлен на номер</div>
+                  <div class="subscription__sent-tel">+7 960-920-55-55</div>
+                </div>
+                <div class="subscription__aside-form-row subscription__aside-form-row--code">
+                  <input class="input input--num input--light" type="text" name="num1" placeholder="0" maxlength="1" required="required">
+                  <input class="input input--num input--light" type="text" name="num2" placeholder="0" maxlength="1" required="required">
+                  <input class="input input--num input--light" type="text" name="num3" placeholder="0" maxlength="1" required="required">
+                  <input class="input input--num input--light" type="text" name="num4" placeholder="0" maxlength="1" required="required">
+                </div><a class="subscription__code" href="#">Получить код повторно</a>
+                <div class="subscription__promo">
+                  <input class="subscription__promo-input input input--light input--short input--text" type="text" placeholder="Подарочный промокод" name="promo"><a class="subscription__promo-btn" href="#">Применить</a>
+                </div>
+              </form>
+              <div class="subscription__bottom">
+                <div class="subscription__total">
+                  <div class="subscription__total-text">Итого к оплате</div>
+                  <div class="subscription__total-value"> 
+                    <div class="subscription__total-value-old"> <span>3900 &#8381;</span></div>3000 &#8381;
+                  </div>
+                  <div class="subscription__total-subtext">Предложение действительно до 30.10.2018</div>
+                </div>
+                <div class="subscription__total-btn subscription__total-btn--form btn btn--white" data-stage="2">Оформить</div>
+              </div>
+            </div>
+            <div class="subscription__aside-stage" data-stage="3">
+              <form class="subscription__aside-form" action="">
+                <div class="subscription__aside-form-row">
+                  <select class="input input--light input--white input--long input--select" name="dpt">
+                    <option disabled="disabled">Выберите клуб</option>
+                    <option selected="selected">Spirit. Юго-Западная</option>
+                    <option>Spirit. Крымская</option>
+                    <option>Spirit. Чертановская</option>
+                  </select>
+                </div>
+                <div class="subscription__aside-form-row">
+                  <input class="input input--light input--short input--text" type="text" placeholder="Имя" name="name" required="required" disabled="disabled" value="Иван">
+                  <input class="input input--light input--short input--text" type="text" placeholder="Фамилия" name="surname" required="required" disabled="disabled" value="Иванов">
+                </div>
+                <div class="subscription__aside-form-row">
+                  <input class="input input--light input--short input--tel" type="tel" placeholder=" Телефон" name="tel" required="required" disabled="disabled" value="+7 (999) 999-99-99">
+                  <input class="input input--light input--short input--text" type="email" placeholder="Email" name="email" required="required" disabled="disabled" value="Name@gmail.com">
+                </div>
+                <div class="subscription__aside-form-row subscription__aside-form-row--last">
+                  <label class="input-label">
+                    <input class="input input--checkbox" type="checkbox" name="agreement3" checked="checked">
+                    <div class="input-label__text">Cогласен с <a href="#">Договором афферты</a>,<a href="#">Правилами клуба</a>, <a href="#">Списанием денежных средств</a></div>
+                  </label>
+                </div>
+              </form>
+              <div class="subscription__bottom">
+                <div class="subscription__total">
+                  <div class="subscription__total-text">Итого к оплате</div>
+                  <div class="subscription__total-value">3000 &#8381;</div>
+                </div>
+                <div class="subscription__total-btn subscription__total-btn--pay btn btn--white" data-stage="3">Оплатить</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer class="footer"><a class="footer__inst" href="#">
+          <div class="footer__inst-icon"></div>
+          <div class="footer__inst-text">instagram</div></a><a class="footer__btn btn btn--gray" href="#">Перезвоните мне</a></footer>
+    </div>
+    <div class="popup popup--call">
+      <div class="popup__bg"></div>
+      <div class="popup__window">
+        <div class="popup__close">
+          <div></div>
+          <div></div>
+        </div>
+        <div class="popup__heading">Перезвоните мне</div>
+        <form class="popup__form" action="">
+          <div class="popup__form-row">
+            <input class="input input--name input--text" type="text" placeholder="Ваше имя" name="name" maxlength="20" required="required">
+            <input class="input input--tel" type="tel" placeholder="Ваш телефон" name="tel" required="required">
+            <select class="input input--select" name="dpt">
+              <option disabled="disabled" selected="selected">Выберите клуб</option>
+              <option>Spirit. Юго-Западная</option>
+              <option>Spirit. Крымская</option>
+              <option>Spirit. Чертановская</option>
+            </select>
+          </div>
+          <button class="popup__btn btn" type="submit">Отправить</button>
+        </form>
+      </div>
+    </div>
+    <script src="js/libs.min.js"></script>
+    <script src="js/common.min.js"></script>
+  </body>
+</html>

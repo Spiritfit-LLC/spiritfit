@@ -1,0 +1,30 @@
+<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+/** @var array $arParams */
+/** @var array $arResult */
+/** @global CMain $APPLICATION */
+/** @global CUser $USER */
+/** @global CDatabase $DB */
+/** @var CBitrixComponentTemplate $this */
+/** @var string $templateName */
+/** @var string $templateFile */
+/** @var string $templateFolder */
+/** @var string $componentPath */
+/** @var CBitrixComponent $component */
+$this->setFrameMode(true);?>
+
+
+<?foreach($arResult["ITEMS"] as $arItem){?>
+	<?
+	$this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
+	$this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
+	?>
+	<div class="header-banner">
+
+	    <a class="header-banner__href" href="<?=$arItem['PROPERTIES']['BANER_URL']['VALUE']?>">
+	        <img class="header-banner__img header-banner__img--small" src="<?=$arItem['PROPERTIES']['SMALL_IMG']['SRC']?>">
+	        <img class="header-banner__img header-banner__img--medium" src="<?=$arItem['PROPERTIES']['MIDDLE_IMG']['SRC']?>">
+	        <img class="header-banner__img header-banner__img--large" src="<?=$arItem['PROPERTIES']['BIG_IMG']['SRC']?>">
+	    </a>
+	</div>
+
+<?}?>

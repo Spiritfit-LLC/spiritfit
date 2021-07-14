@@ -1,0 +1,46 @@
+/*.bx-breadcrumb {
+	margin: 10px 0;
+}
+.bx-breadcrumb i {
+	color: #b5bdc2;
+	line-height: 13px;
+	font-size: 12px;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+.bx-breadcrumb .bx-breadcrumb-item {
+	float: left;
+	margin-bottom: 10px;
+	white-space: nowrap;
+	line-height: 13px;
+	vertical-align: middle;
+	margin-right: 10px;
+}
+.bx-breadcrumb .bx-breadcrumb-item span {
+	font-family: "Open Sans", Arial, "Helvetica Neue", Helvetica, sans-serif;
+	font-size: 16px;
+	white-space: normal;
+	opacity: .3;
+}
+.breadcrumb__block .bx-breadcrumb-item a span {
+	font-size: 16px;
+	color: #171717;
+	opacity: 1;
+}
+
+.bx-breadcrumb .bx-breadcrumb-item a {border-bottom: none;text-decoration: none;}
+.bx-breadcrumb .bx-breadcrumb-item a:hover span,
+.block__section-breadcrumb .bx-breadcrumb .bx-breadcrumb-item a:hover span
+ {color: #ff6000;}
+.block__detail-breadcrumb {
+	margin-bottom: 15px;
+}
+.block__section-breadcrumb .bx-breadcrumb .bx-breadcrumb-item span {
+	color: #fff;
+	opacity: .6;
+}
+.block__section-breadcrumb .breadcrumb__block .bx-breadcrumb-item a span {
+	font-size: 16px;
+	color: #fff;
+	opacity: 1;
+}*/

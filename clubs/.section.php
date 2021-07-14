@@ -1,0 +1,6 @@
+<?
+$sSectionName = "Клубы";
+$arDirProperties = Array(
+
+);
+?>

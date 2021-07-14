@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>Расписание</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <style type="text/css">
+      @font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro-Light.eot');src:local("Gotham Pro Medium"),local("GothamPro-Medium");src:url('../fonts/Gotham/ Pro/GothamPro-Light.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro-Light.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro-Light.ttf') format("truetype");font-weight:100}@font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro.eot');src:local("Gotham Pro Medium"),local("GothamPro");src:url('../fonts/Gotham/ Pro/GothamPro.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro.ttf') format("truetype");font-weight:300}@font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro-Medium.eot');src:local("Gotham Pro Medium"),local("GothamPro-Medium");src:url('../fonts/Gotham/ Pro/GothamPro-Medium.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro-Medium.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro-Medium.ttf') format("truetype");font-weight:500}@font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro-Bold.eot');src:local("Gotham Pro Bold"),local("GothamPro-Bold");src:url('../fonts/Gotham/ Pro/GothamPro-Bold.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro-Bold.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro-Bold.ttf') format("truetype");font-weight:700}*{box-sizing:border-box}body{overflow-x:hidden;min-height:100vh;margin:0;line-height:1.2;background-image:url(../img/background.jpg);background-color:#171717;background-size:100%;background-repeat:no-repeat;font-family:Gotham Pro,sans-serif;font-size:14px;font-weight:300}.page-wrapper{max-width:1920px;width:100%;margin:0 auto;padding:40px 40px 0}.page-wrapper main{min-height:calc(100vh - 280px)}.btn{display:inline-block;padding:20px 60px;padding-top:20px;padding-bottom:20px;text-align:center;text-transform:uppercase;color:#ff6000;border:1px solid #ff6000;border-radius:6px;text-decoration:none;background-color:transparent;outline:0;font-size:16px;font-weight:500}.btn--download{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center;width:170px;height:54px;margin-left:20px;padding:0;border:1px solid #a7a7a7;border-radius:6px}.btn--gray{border-color:#777;color:#777}.input{display:block;width:230px;border:none;border-bottom:2px solid #000;outline:0;border-radius:0;padding:20px 30px 20px 2px;background-color:transparent;box-shadow:none;font-family:Gotham,sans-serif;font-size:18px}.input:-webkit-autofill{background-color:transparent}.input--select{color:#757575}.header{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:stretch;align-items:stretch;height:70px;margin-bottom:40px;background-color:#fff}.header__logo{margin-left:40px;padding-top:20px}.header__logo-img{width:94px;height:38px}.header__nav{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:center;align-items:center;max-width:1000px;width:100%}.header__nav-footer{display:none}.header__nav-link{display:inline-block;height:70px;padding:28px 0;color:#000;letter-spacing:.1em;text-decoration:none;text-transform:uppercase;font-weight:500}.header__nav-link--enroll{margin-left:25px;margin-right:0;padding-left:60px;padding-right:60px;background-color:#ff6000;color:#fff}.header__burger{display:none}.popup{position:relative;z-index:5;display:none;position:fixed;top:0;left:0;width:100vw;height:100vh}.popup__bg{position:absolute;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.7)}.popup__window{position:absolute;top:50%;left:50%;padding:70px 75px 60px;transform:translate(-50%,-50%);background-color:#fff}.popup__close{position:absolute;display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center;top:20px;right:20px;width:54px;height:54px;border-radius:6px;border:1px solid #777}.popup__close div{width:20px;height:2px;background-color:#1d1e1e;transform:translateX(10px) rotate(45deg)}.popup__close div:last-child{transform:translateX(-10px) rotate(-45deg)}.popup__heading{margin-top:-15px;margin-bottom:60px;font-size:30px;font-weight:500}.popup__form-row{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:start;justify-content:flex-start;-ms-flex-align:start;align-items:flex-start;margin-bottom:70px}.popup__form-row input{margin-right:45px}.popup__btn{display:block;margin:0 auto;letter-spacing:.1em;font-family:Gotham,sans-serif}.application__cta{padding-top:120px;padding-bottom:100px;background-color:#f1f1f1}.application__cta-text{width:575px;margin:0 auto 70px;text-align:center;font-size:24px;font-weight:500}.application__cta-buttons{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center}.application__cta-buttons .btn{margin:0 10px}.timetable{position:relative;padding:70px 0 0 170px;background-color:#fff;overflow:hidden}.timetable__title{width:740px;margin-bottom:35px;font-size:72px;font-weight:400}.timetable__close{position:absolute;display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center;top:30px;right:30px;width:54px;height:54px;border-radius:6px;border:1px solid #777}.timetable__close div{width:20px;height:2px;background-color:#1d1e1e;transform:translateX(10px) rotate(45deg)}.timetable__close div:last-child{transform:translateX(-10px) rotate(-45deg)}.timetable__filter{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:center;align-items:center;margin-bottom:30px;padding-right:170px;font-size:22px;font-weight:400}.timetable__filter-dept{border-bottom:none;width:275px;color:#181818;font-size:22px;font-weight:400}.timetable__table{position:relative}.timetable__table .timetable__container{display:none}.timetable__table .timetable__container[data-timetable="1"]{display:-ms-flexbox;display:flex}.timetable__table-less{display:none;left:0;background:linear-gradient(270deg,hsla(0,0%,100%,0) 0,#fff)}.timetable__table-less,.timetable__table-more{z-index:3;position:absolute;top:5px;width:120px;height:calc(100% - 10px)}.timetable__table-more{right:0;background:linear-gradient(90deg,hsla(0,0%,100%,0) 0,#fff)}.timetable__container{position:relative;overflow:hidden;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:start;justify-content:flex-start;-ms-flex-align:start;align-items:flex-start;width:100%;margin-bottom:20px;padding:40px 0 30px;border-bottom:1px solid #ccc;border-top:1px solid #ccc}.timetable__column{min-width:220px;width:220px;padding-right:10px}.timetable__column-head{margin-bottom:35px;font-size:16px;font-weight:400}.timetable__column-head--current{color:#ff6000}.timetable__column-item{margin-bottom:10px;padding:15px 10px 15px 20px;border-radius:6px;background-color:#f5f5f5}.timetable__column-item-name{margin-bottom:5px;text-transform:uppercase;font-size:22px;font-weight:700}.timetable__column-item-time{font-size:18px}.timetable__arrows{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:center;align-items:center;margin-bottom:60px;padding-right:170px}.timetable__arrows-item{width:19px;height:35px;background-size:contain;background-position:50%;background-repeat:no-repeat}.timetable__arrows-item--disabled{opacity:.2}.timetable__arrows-item--left{background-image:url(../img/icons/arrow-prev-black.png)}.timetable__arrows-item--right{background-image:url(../img/icons/arrow-next-black.png)}.timetable__list{margin:0 0 70px;padding-left:60px;padding-right:170px;color:#5e5e5e}.timetable__list-item{position:relative;display:block;width:100%;max-width:800px;margin-bottom:25px;font-size:16px;font-weight:400}.timetable__list-item:before{content:"!";display:block;position:absolute;top:-1px;left:-55px;color:#ff6000;font-size:20px;font-weight:400}.timetable .application__cta{width:calc(100% + 170px);margin-left:-170px}@media screen and (max-width:1260px),screen and (min-aspect-ratio:76/35) and (min-width:1260px){body{max-width:100%;width:100%}.page-wrapper{overflow:hidden;max-width:100%;min-height:100vh;padding:20px 20px 0}.page-wrapper main{min-height:none;margin-bottom:50px}.btn{font-size:14px;padding:15px 40px}.header{margin-bottom:20px;position:relative}.header__logo{margin-left:25px}.header__nav{z-index:5;position:absolute;top:70px;left:0;display:none;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:start;align-items:flex-start;max-width:none;width:100%;height:calc(100vh - 120px);padding-top:50px;padding-bottom:50px;padding-left:60px;background-color:#fff}.header__nav-link{height:auto;padding:0;font-size:30px}.header__nav-link--enroll{width:calc(100% - 60px);height:auto;margin-left:0;margin-bottom:70px;padding:40px 0;text-align:center;font-size:24px;font-weight:100}.header__nav-footer{-ms-flex-pack:justify;justify-content:space-between;width:calc(100% - 60px);height:60px}.header__nav-footer,.header__nav-footer-inst{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-align:center;align-items:center}.header__nav-footer-inst{-ms-flex-pack:start;justify-content:flex-start;text-decoration:none}.header__nav-footer-inst-icon{width:30px;height:30px;margin-right:16px;background-image:url(../img/inst-black.png);background-size:contain;background-position:50%;background-repeat:no-repeat}.header__nav-footer-inst-text{color:#000;font-size:16px;font-weight:500}.header__burger{display:-ms-flexbox;display:flex;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:end;align-items:flex-end;width:35px;height:30px;margin-top:20px;margin-right:25px}.header__burger div{width:100%;height:3px;background-color:#000}.header__burger div:nth-child(2){width:25px;background-color:#ff6000}.popup__window{display:-ms-flexbox;display:flex;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex-align:start;align-items:flex-start;width:calc(100% - 40px);height:calc(100% - 40px)}.popup__close{transform:scale(2);border:none}.popup__form,.popup__heading{max-width:660px;width:100%;margin:0 auto}.popup__form{position:relative}.popup__form-row{-ms-flex-flow:row wrap;flex-flow:row wrap;-ms-flex-pack:justify;justify-content:space-between;margin-bottom:0}.popup__form-row .input,.popup__form-row input{width:calc(50% - 30px);margin-right:0;margin-top:60px}.popup__btn{position:absolute;right:0;bottom:0;width:calc(50% - 30px);height:63px}.timetable{padding:85px 0 0 60px}.timetable__title{width:500px;font-size:48px}.timetable__filter{padding-right:60px}.timetable__arrows{margin-bottom:50px;padding-right:60px}.timetable__arrows-item{width:16px;height:30px}.timetable__list{margin-bottom:50px;padding:0 60px 0 55px;font-size:14px}.timetable .application__cta{width:calc(100% + 60px);margin-left:-60px}}@media screen and (max-width:768px){.page-wrapper{max-width:100%}.btn{font-size:10px;padding:12px 20px}.input{padding:10px 0 5px;font-size:15px;border-bottom:1px solid #000}.header{height:auto;margin-bottom:30px;background-color:transparent}.header__logo{display:none}.header__logo--white{display:block}.header__logo--white img{width:120px;height:46px}.header__burger{margin:0}.header__burger div{background-color:#fff}.header__nav{padding:45px 0 0;background-color:transparent}.header__nav-link{color:#fff;font-size:19px;font-weight:300}.header__nav-link--enroll{width:100%;margin-bottom:40px;padding:15px 0;font-size:15px}.header__nav-footer{width:100%}.header__nav-footer-inst-icon{width:20px;height:20px;margin-right:10px;background-image:url(../img/inst.png)}.header__nav-footer-inst-text{color:#777;font-size:10px}.popup__window{width:100%;height:100%;padding:40px}.popup__heading{margin-bottom:30px;font-size:26px}.popup__form{width:100%}.popup__form-row{-ms-flex-flow:column nowrap;flex-flow:column nowrap}.popup__form-row .input,.popup__form-row input{width:100%;margin-top:0;margin-bottom:20px}.popup__btn{position:static;width:100%;margin-top:30px;font-size:15px}.application__cta{padding:50px 30px}.application__cta-text{width:auto;margin-bottom:30px;font-size:14px}.application__cta-buttons .btn{width:115px;height:35px;margin:0 12px;padding:8px 2px}.application__cta-buttons .btn img{width:70px;height:auto}.timetable{width:100vw;margin-left:-20px;padding:30px 0 0 30px}.timetable__close{border:none;right:15px}.timetable__close div{transform:translateX(10px) rotate(45deg) scale(2)}.timetable__close div:last-child{transform:translateX(-10px) rotate(-45deg) scale(2)}.timetable__title{max-width:245px;width:calc(100% - 70px);margin-bottom:27px;font-size:24px}.timetable__filter{padding-right:20px;font-size:11px}.timetable__filter-dept{width:130px;border-bottom:none}.timetable__table-more{width:50px}.timetable__container{margin-bottom:10px;padding:20px 0 15px}.timetable__column{width:115px;padding-right:5px}.timetable__column-head{margin-bottom:15px;font-size:9px}.timetable__column-item{padding:8px 4px 8px 10px}.timetable__column-item-name{font-size:11px}.timetable__column-item-time{font-size:9px}.timetable__arrows{margin-bottom:27px;padding-right:20px}.timetable__arrows-item{width:10px;height:18px}.timetable__list{padding-right:20px;padding-left:28px}.timetable__list-item{margin-bottom:10px;font-size:10px}.timetable__list-item:before{left:-25px;font-size:10px}.timetable .application__cta{width:calc(100% + 30px);margin-left:-30px}}
+    </style>
+    <link rel="preload" href="css/style.min.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/style.min.css"></noscript>
+    <script>!function(u){"use strict";var e=function(e,t,n){var r,o=u.document,a=o.createElement("link");if(t)r=t;else{var l=(o.body||o.getElementsByTagName("head")[0]).childNodes;r=l[l.length-1]}var i=o.styleSheets;a.rel="stylesheet",a.href=e,a.media="only x",function e(t){if(o.body)return t();setTimeout(function(){e(t)})}(function(){r.parentNode.insertBefore(a,t?r:r.nextSibling)});var d=function(e){for(var t=a.href,n=i.length;n--;)if(i[n].href===t)return e();setTimeout(function(){d(e)})};function s(){a.addEventListener&&a.removeEventListener("load",s),a.media=n||"all"}return a.addEventListener&&a.addEventListener("load",s),(a.onloadcssdefined=d)(s),a};"undefined"!=typeof exports?exports.loadCSS=e:u.loadCSS=e}("undefined"!=typeof global?global:this),function(r){if(r.loadCSS){var e=loadCSS.relpreload={};if(e.support=function(){try{return r.document.createElement("link").relList.supports("preload")}catch(e){return!1}},e.poly=function(){for(var e=r.document.getElementsByTagName("link"),t=0;t<e.length;t++){var n=e[t];"preload"===n.rel&&"style"===n.getAttribute("as")&&(r.loadCSS(n.href,n,n.getAttribute("media")),n.rel=null)}},!e.support()){e.poly();var t=r.setInterval(e.poly,300);r.addEventListener&&r.addEventListener("load",function(){e.poly(),r.clearInterval(t)}),r.attachEvent&&r.attachEvent("onload",function(){r.clearInterval(t)})}}}(this);</script>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <header class="header"><a class="header__logo" href="main.html"><img class="header__logo-img" src="img/logo.png" alt="logo"></a><a class="header__logo--white" href="main.html"><img class="header__logo-img" src="img/logo-white.png" alt="logo"></a>
+        <nav class="header__nav"><a class="header__nav-link" href="actions.html">Акции</a><a class="header__nav-link" href="products.html">Продукты</a><a class="header__nav-link" href="clubs.html">Клубы</a><a class="header__nav-link" href="subscriptions.html">Абонемент</a><a class="header__nav-link" href="application.html">Приложение</a><a class="header__nav-link header__nav-link--enroll" href="#">Попробовать</a>
+          <div class="header__nav-footer"><a class="header__nav-footer-inst" href="#">
+              <div class="header__nav-footer-inst-icon"></div>
+              <div class="header__nav-footer-inst-text">instagram</div></a><a class="header__nav-footer-btn btn btn--gray" href="#">Перезвоните мне</a></div>
+        </nav>
+        <div class="header__burger">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </header>
+      <main>
+        <div class="timetable">
+          <div class="timetable__close">
+            <div></div>
+            <div></div>
+          </div>
+          <div class="timetable__title">Расписание групповых занятий</div>
+          <div class="timetable__filter">
+            <div class="timetable__filter-date">22 - 28 октября</div>
+            <select class="timetable__filter-dept input input--select">
+              <option selected="selected" data-timetable="1">Spirit. Юго-Западная</option>
+              <option data-timetable="2">Spirit. Крымская</option>
+              <option data-timetable="3">Spirit. Чертановская</option>
+            </select>
+          </div>
+          <div class="timetable__table">
+            <div class="timetable__table-less"></div>
+            <div class="timetable__container" data-timetable="1">
+              <div class="timetable__wrapper">
+              <div class="timetable__column">
+                <div class="timetable__column-head timetable__column-head--current">Пн, 22 </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">08:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">09:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodystep</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">18:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">19:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:30, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Grit Cardio</div>
+                  <div class="timetable__column-item-time">21:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Вт, 23</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:30, Иван</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">18:30, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">18:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">18:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodystep</div>
+                  <div class="timetable__column-item-time">20:00, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Ср, 24</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">Александра К.</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:30, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">21:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Наталья</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Чт, 25</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">08:30, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:30, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">11:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:00, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Пт, 26</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">Александра К.</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">11:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">21:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Наталья</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Сб, 27</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">Александра К.</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">11:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">21:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Наталья</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head timetable__column-head--current">Пн, 22 </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">08:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">09:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodystep</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">18:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">19:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:30, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Grit Cardio</div>
+                  <div class="timetable__column-item-time">21:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Вт, 23</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:30, Иван</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">18:30, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">18:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">18:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodystep</div>
+                  <div class="timetable__column-item-time">20:00, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Ср, 24</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">Александра К.</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:30, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">21:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Наталья</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Чт, 25</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">08:30, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:30, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">11:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:00, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Пт, 26</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">Александра К.</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">11:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">21:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Наталья</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Сб, 27</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">Александра К.</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">11:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">21:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Наталья</div>
+                </div>
+              </div>
+              </div>
+            </div>
+            <div class="timetable__container" data-timetable="2">
+              <div class="timetable__column">
+                <div class="timetable__column-head timetable__column-head--current">Пн, 22 </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">08:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">09:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodystep</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">18:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">19:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:30, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Grit Cardio</div>
+                  <div class="timetable__column-item-time">21:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Вт, 23</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:30, Иван</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">18:30, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">18:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">18:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodystep</div>
+                  <div class="timetable__column-item-time">20:00, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Ср, 24</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">Александра К.</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:30, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">21:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Наталья</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Чт, 25</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">08:30, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:30, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">11:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:00, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Пт, 26</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">Александра К.</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">11:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">21:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Наталья</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Сб, 27</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">Александра К.</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">11:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">21:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Наталья</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head timetable__column-head--current">Пн, 22 </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">08:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">09:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodystep</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">18:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">19:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:30, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Grit Cardio</div>
+                  <div class="timetable__column-item-time">21:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Вт, 23</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:30, Иван</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">18:30, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">18:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">18:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodystep</div>
+                  <div class="timetable__column-item-time">20:00, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Ср, 24</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">Александра К.</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:30, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">21:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Наталья</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Чт, 25</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">08:30, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:30, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">11:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:00, Александра</div>
+                </div>
+              </div>
+            </div>
+            <div class="timetable__container" data-timetable="3">
+              <div class="timetable__column">
+                <div class="timetable__column-head timetable__column-head--current">Пн, 22 </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">08:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">09:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodystep</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">18:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">19:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:30, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Grit Cardio</div>
+                  <div class="timetable__column-item-time">21:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Вт, 23</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:30, Иван</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">18:30, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">18:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">18:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodystep</div>
+                  <div class="timetable__column-item-time">20:00, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Ср, 24</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">Александра К.</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:30, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">21:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Наталья</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Чт, 25</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">08:30, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:30, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">11:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:00, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Пт, 26</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">Александра К.</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">11:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">21:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Наталья</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Сб, 27</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">Александра К.</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">11:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">21:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Наталья</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head timetable__column-head--current">Пн, 22 </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">08:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">09:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodystep</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">18:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">19:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:30, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Grit Cardio</div>
+                  <div class="timetable__column-item-time">21:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Вт, 23</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:30, Иван</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Анастасия</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">18:30, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">18:30, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">18:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodystep</div>
+                  <div class="timetable__column-item-time">20:00, Александра</div>
+                </div>
+              </div>
+              <div class="timetable__column">
+                <div class="timetable__column-head">Ср, 24</div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">08:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">09:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">10:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">Александра К.</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">19:00, Александра</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Sh'Bam</div>
+                  <div class="timetable__column-item-time">20:00, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodypump</div>
+                  <div class="timetable__column-item-time">20:30, Филипп</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodycombat</div>
+                  <div class="timetable__column-item-time">21:00, Наталья</div>
+                </div>
+                <div class="timetable__column-item">
+                  <div class="timetable__column-item-name">Bodybalance</div>
+                  <div class="timetable__column-item-time">21:30, Наталья</div>
+                </div>
+              </div>
+            </div>
+            <div class="timetable__table-more"></div>
+          </div>
+          <div class="timetable__arrows">
+            <div class="timetable__arrows-item timetable__arrows-item--left timetable__arrows-item--disabled"></div>
+            <div class="timetable__arrows-item timetable__arrows-item--right"></div>
+          </div>
+          <ul class="timetable__list">
+            <li class="timetable__list-item">Клуб оставляет за собой право вносить изменения в текущее расписание без уведомления членов клуба: при замене ведущего инструктора, с сохранением кол-ва и формата занятий.</li>
+            <li class="timetable__list-item">В случае опоздания на занятия более чем на 5 минут, инструктор в праве не допустить члена клуба к занятиям.</li>
+            <li class="timetable__list-item">Во время групповых программ запрещается пользоваться мобильным телефоном.</li>
+          </ul>
+          <div class="application__cta">
+            <div class="application__cta-text">С нашим приложением вы добьетесь любых поставленных спортивных целей!</div>
+            <div class="application__cta-buttons"><a class="btn btn--download" href="#"><img src="img/appstore.png" alt="appstore logo"></a><a class="btn btn--download" href="#"><img src="img/googleplay.png" alt="google play logo"></a></div>
+          </div>
+        </div>
+      </main>
+      <footer class="footer"><a class="footer__inst" href="#">
+          <div class="footer__inst-icon"></div>
+          <div class="footer__inst-text">instagram</div></a><a class="footer__btn btn btn--gray" href="#">Перезвоните мне</a></footer>
+    </div>
+    <div class="popup popup--call">
+      <div class="popup__bg"></div>
+      <div class="popup__window">
+        <div class="popup__close">
+          <div></div>
+          <div></div>
+        </div>
+        <div class="popup__heading">Перезвоните мне</div>
+        <form class="popup__form" action="">
+          <div class="popup__form-row">
+            <input class="input input--name input--text" type="text" placeholder="Ваше имя" name="name" maxlength="20" required="required">
+            <input class="input input--tel" type="tel" placeholder="Ваш телефон" name="tel" required="required">
+            <select class="input input--select" name="dpt">
+              <option disabled="disabled" selected="selected">Выберите клуб</option>
+              <option>Spirit. Юго-Западная</option>
+              <option>Spirit. Крымская</option>
+              <option>Spirit. Чертановская</option>
+            </select>
+          </div>
+          <button class="popup__btn btn" type="submit">Отправить</button>
+        </form>
+      </div>
+    </div>
+    <script src="js/libs.min.js"></script>
+    <script src="js/common.min.js"></script>
+  </body>
+</html>

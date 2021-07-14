@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>Приложение</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <style type="text/css">
+      @font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro-Light.eot');src:local("Gotham Pro Medium"),local("GothamPro-Medium");src:url('../fonts/Gotham/ Pro/GothamPro-Light.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro-Light.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro-Light.ttf') format("truetype");font-weight:100}@font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro.eot');src:local("Gotham Pro Medium"),local("GothamPro");src:url('../fonts/Gotham/ Pro/GothamPro.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro.ttf') format("truetype");font-weight:300}@font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro-Medium.eot');src:local("Gotham Pro Medium"),local("GothamPro-Medium");src:url('../fonts/Gotham/ Pro/GothamPro-Medium.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro-Medium.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro-Medium.ttf') format("truetype");font-weight:500}@font-face{font-family:Gotham Pro;src:url('../fonts/Gotham/ Pro/GothamPro-Bold.eot');src:local("Gotham Pro Bold"),local("GothamPro-Bold");src:url('../fonts/Gotham/ Pro/GothamPro-Bold.eot?#iefix') format("emb/edded-opentype");src:url('../fonts/Gotham/ Pro/GothamPro-Bold.woff') format("woff");src:url('../fonts/Gotham/ Pro/GothamPro-Bold.ttf') format("truetype");font-weight:700}*{box-sizing:border-box}body{overflow-x:hidden;min-height:100vh;margin:0;line-height:1.2;background-image:url(../img/background.jpg);background-color:#171717;background-size:100%;background-repeat:no-repeat;font-family:Gotham Pro,sans-serif;font-size:14px;font-weight:300}.page-wrapper{max-width:1920px;width:100%;margin:0 auto;padding:40px 40px 0}.page-wrapper main{min-height:calc(100vh - 280px)}.btn{display:inline-block;padding:20px 60px;padding-top:20px;padding-bottom:20px;text-align:center;text-transform:uppercase;color:#ff6000;border:1px solid #ff6000;border-radius:6px;text-decoration:none;background-color:transparent;outline:0;font-size:16px;font-weight:500}.btn--download{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center;width:170px;height:54px;margin-left:20px;padding:0;border:1px solid #a7a7a7;border-radius:6px}.btn--gray{border-color:#777;color:#777}.input{display:block;width:230px;border:none;border-bottom:2px solid #000;outline:0;border-radius:0;padding:20px 30px 20px 2px;background-color:transparent;box-shadow:none;font-family:Gotham,sans-serif;font-size:18px}.input:-webkit-autofill{background-color:transparent}.input--select{color:#757575}.header{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:stretch;align-items:stretch;height:70px;margin-bottom:40px;background-color:#fff}.header__logo{margin-left:40px;padding-top:20px}.header__logo-img{width:94px;height:38px}.header__nav{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:center;align-items:center;max-width:1000px;width:100%}.header__nav-footer{display:none}.header__nav-link{display:inline-block;height:70px;padding:28px 0;color:#000;letter-spacing:.1em;text-decoration:none;text-transform:uppercase;font-weight:500}.header__nav-link--active{position:relative;color:#ff6000}.header__nav-link--active:after{content:"";display:block;position:absolute;left:0;bottom:19px;width:100%;height:3px;background-color:#ff6000}.header__nav-link--enroll{margin-left:25px;margin-right:0;padding-left:60px;padding-right:60px;background-color:#ff6000;color:#fff}.header__burger{display:none}.popup{position:relative;z-index:4;display:none;position:fixed;top:0;left:0;width:100vw;height:100vh}.popup--video .popup__window{padding:90px;background-color:transparent}.popup--video .popup__close{border:none;background-color:#fff}.popup__bg{position:absolute;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.7)}.popup__window{position:absolute;top:50%;left:50%;padding:70px 75px 60px;transform:translate(-50%,-50%);background-color:#fff}.popup__close{position:absolute;display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center;top:20px;right:20px;width:54px;height:54px;border-radius:6px;border:1px solid #777}.popup__close div{width:20px;height:2px;background-color:#1d1e1e;transform:translateX(10px) rotate(45deg)}.popup__close div:last-child{transform:translateX(-10px) rotate(-45deg)}.popup__heading{margin-top:-15px;margin-bottom:60px;font-size:30px;font-weight:500}.popup__form-row{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:start;justify-content:flex-start;-ms-flex-align:start;align-items:flex-start;margin-bottom:70px}.popup__form-row input{margin-right:45px}.popup__btn{display:block;margin:0 auto;letter-spacing:.1em;font-family:Gotham,sans-serif}.video{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center;width:auto;height:auto;margin-bottom:100px;margin-left:165px;margin-right:170px;padding:20% 0;text-decoration:none;background-image:url(../img/video-bg.jpg);background-size:cover;background-position:50%;background-repeat:no-repeat}.video--application{margin-right:165px;background-image:url(../img/video-bg-2.jpg)}.video__info{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:start;justify-content:flex-start;-ms-flex-align:center;align-items:center}.video__info-icon{position:relative;width:85px;height:85px;margin-right:40px;border:1px solid #abafb4;border-radius:6px}.video__info-icon:before{content:"";display:block;position:absolute;top:50%;left:50%;width:0;height:0;border-style:solid;border-width:12px 0 12px 12px;border-color:transparent transparent transparent #fff;transform:translate(-50%,-50%)}.video__info-text{color:#fff;font-size:24px}.application{background-color:#fff;padding-top:45px}.application__top{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:start;align-items:flex-start;margin-bottom:40px;padding-left:165px;padding-right:40px}.application__top-type{font-size:16px}.application__close,.application__top-buttons{display:-ms-flexbox;display:flex}.application__close{-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center;top:20px;right:20px;width:54px;height:54px;margin-left:70px;border-radius:6px;border:1px solid #a7a7a7}.application__close div{width:20px;height:2px;background-color:#1d1e1e;transform:translateX(10px) rotate(45deg)}.application__close div:last-child{transform:translateX(-10px) rotate(-45deg)}.application__heading{margin-top:0;margin-bottom:45px;padding-left:165px;padding-right:40px;line-height:1;font-size:72px;font-weight:500}.application__desc{margin-bottom:100px;padding-left:165px;padding-right:165px;font-size:20px;font-weight:500}.application__subheading{margin-bottom:40px;padding-left:165px;padding-right:170px;font-size:48px;font-weight:500}.application__possibilities{margin-top:-50px;margin-bottom:110px}.application__possibilities-slide{outline:0;height:485px;display:-ms-flexbox!important;display:flex!important;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-ms-flex-pack:end;justify-content:flex-end;-ms-flex-align:center;align-items:center}.application__possibilities-slide-inner{position:relative;max-width:1000px;width:calc(100% - 24px);height:410px;margin:0 12px;padding:30px 400px 20px 75px;border-radius:10px;background-color:#f5f5f5}.application__possibilities-slide-pic{position:absolute;bottom:0;right:60px}.application__possibilities-info{height:100%}.application__possibilities-info-num{margin-bottom:30px;color:#fff;font-size:72px;font-weight:500}.application__possibilities-info-title{margin-bottom:15px;line-height:30px;font-size:24px;font-weight:500}.application__possibilities-info-desc{font-size:19px}@media screen and (max-width:1260px),screen and (min-aspect-ratio:76/35) and (min-width:1260px){body{max-width:100%;width:100%}.page-wrapper{overflow:hidden;max-width:100%;min-height:100vh;padding:20px 20px 0}.page-wrapper main{min-height:none;margin-bottom:50px}.btn{font-size:14px;padding:15px 40px}.header{margin-bottom:20px;position:relative}.header__logo{margin-left:25px}.header__nav{z-index:4;position:absolute;top:70px;left:0;display:none;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:start;align-items:flex-start;max-width:none;width:100%;height:calc(100vh - 120px);padding-top:50px;padding-bottom:50px;padding-left:60px;background-color:#fff}.header__nav-link{height:auto;padding:0;font-size:30px}.header__nav-link--active{color:#ff6000!important}.header__nav-link--active:after{display:none}.header__nav-link--enroll{width:calc(100% - 60px);height:auto;margin-left:0;margin-bottom:70px;padding:40px 0;text-align:center;font-size:24px;font-weight:100}.header__nav-footer{-ms-flex-pack:justify;justify-content:space-between;width:calc(100% - 60px);height:60px}.header__nav-footer,.header__nav-footer-inst{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-align:center;align-items:center}.header__nav-footer-inst{-ms-flex-pack:start;justify-content:flex-start;text-decoration:none}.header__nav-footer-inst-icon{width:30px;height:30px;margin-right:16px;background-image:url(../img/inst-black.png);background-size:contain;background-position:50%;background-repeat:no-repeat}.header__nav-footer-inst-text{color:#000;font-size:16px;font-weight:500}.header__burger{display:-ms-flexbox;display:flex;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-ms-flex-pack:justify;justify-content:space-between;-ms-flex-align:end;align-items:flex-end;width:35px;height:30px;margin-top:20px;margin-right:25px}.header__burger div{width:100%;height:3px;background-color:#000}.header__burger div:nth-child(2){width:25px;background-color:#ff6000}.popup--video .popup__close{transform:scale(1.5)}.popup--video .popup__window{-ms-flex-align:center;align-items:center}.popup__window{display:-ms-flexbox;display:flex;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex-align:start;align-items:flex-start;width:calc(100% - 40px);height:calc(100% - 40px)}.popup__close{transform:scale(2);border:none}.popup__form,.popup__heading{max-width:660px;width:100%;margin:0 auto}.popup__form{position:relative}.popup__form-row{-ms-flex-flow:row wrap;flex-flow:row wrap;-ms-flex-pack:justify;justify-content:space-between;margin-bottom:0}.popup__form-row .input,.popup__form-row input{width:calc(50% - 30px);margin-right:0;margin-top:60px}.popup__btn{position:absolute;right:0;bottom:0;width:calc(50% - 30px);height:63px}.video{margin-left:0;margin-right:0;margin-bottom:40px}.application__top{padding-left:50px;padding-right:50px}.application__close{display:none}.application__heading{margin-bottom:40px;padding-left:50px;padding-right:50px;font-size:60px}.application__top-buttons{margin-bottom:55px;padding-left:50px;padding-right:50px}.application__top-buttons .btn{margin-left:0;margin-right:20px}.application__desc{margin-bottom:80px}.application__desc,.application__subheading{padding-left:50px;padding-right:50px}.application__possibilities{margin-top:0}.application__possibilities-slide{height:auto}.application__possibilities-slide-inner{padding:30px 300px 20px 50px}.application__possibilities-slide-pic{right:30px}.application__possibilities-slide-pic img{width:230px;height:auto}.application__possibilities-info-num{margin-bottom:10px;font-size:60px}.application__possibilities-info-title{margin-bottom:1px;font-size:22px}.application__possibilities-info-desc{font-size:16px}}@media screen and (max-width:768px){.page-wrapper{max-width:100%;padding:40px 30px 0}.btn{font-size:10px;padding:12px 20px}.input{padding:10px 0 5px;font-size:15px;border-bottom:1px solid #000}.header{height:auto;margin-bottom:30px;background-color:transparent}.header__logo{display:none}.header__logo--white{display:block}.header__logo--white img{width:120px;height:46px}.header__burger{margin:0}.header__burger div{background-color:#fff}.header__nav{padding:45px 0 0;background-color:transparent}.header__nav-link{color:#fff;font-size:19px;font-weight:300}.header__nav-link--enroll{width:100%;margin-bottom:40px;padding:15px 0;font-size:15px}.header__nav-footer{width:100%}.header__nav-footer-inst-icon{width:20px;height:20px;margin-right:10px;background-image:url(../img/inst.png)}.header__nav-footer-inst-text{color:#777;font-size:10px}.popup--video .popup__window{padding:20px}.popup--video .popup__window iframe{max-width:100%;max-height:315px;height:50vw}.popup__window{width:100%;height:100%;padding:40px}.popup__heading{margin-bottom:30px;font-size:26px}.popup__form{width:100%}.popup__form-row{-ms-flex-flow:column nowrap;flex-flow:column nowrap}.popup__form-row .input,.popup__form-row input{width:100%;margin-top:0;margin-bottom:20px}.popup__btn{position:static;width:100%;margin-top:30px;font-size:15px}.video{margin-bottom:40px}.video__info-icon{width:42px;height:42px;margin-right:20px;border-color:#fff}.video__info-icon:before{transform:translate(-50%,-50%) scale(.5)}.video__info-text{font-size:12px}.application{width:100vw;margin-left:-30px;padding-top:35px}.application__top{margin-bottom:30px;padding-left:30px;padding-right:30px;font-size:10px}.application__top-buttons{margin-bottom:25px;padding-left:30px;padding-right:30px}.application__top-buttons .btn{width:115px;height:35px;margin-right:10px;padding:8px 2px}.application__top-buttons .btn img{width:70px;height:auto}.application__heading{margin-bottom:20px;padding-left:30px;padding-right:30px;font-size:36px}.application__desc{margin-bottom:35px;padding-left:30px;padding-right:30px;font-size:15px}.application__subheading{margin-bottom:20px;padding-left:30px;padding-right:30px;font-size:24px}.application__possibilities{margin-bottom:50px}.application__possibilities-slide{width:100%;margin:0 12px}.application__possibilities-slide-inner{width:calc(100% + 12px);height:450px;padding:25px 35px 0}.application__possibilities-slide-pic{left:50%;right:auto;transform:translateX(-50%)}.application__possibilities-slide-pic img{width:auto;height:240px}.application__possibilities-info-num{position:absolute;top:210px;left:30px;font-size:36px}.application__possibilities-info-title{margin-bottom:18px;line-height:1.4;font-size:17px}.application__possibilities-info-desc{height:145px;font-size:11px}}
+    </style>
+    <link rel="preload" href="css/style.min.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/style.min.css"></noscript>
+    <script>!function(u){"use strict";var e=function(e,t,n){var r,o=u.document,a=o.createElement("link");if(t)r=t;else{var l=(o.body||o.getElementsByTagName("head")[0]).childNodes;r=l[l.length-1]}var i=o.styleSheets;a.rel="stylesheet",a.href=e,a.media="only x",function e(t){if(o.body)return t();setTimeout(function(){e(t)})}(function(){r.parentNode.insertBefore(a,t?r:r.nextSibling)});var d=function(e){for(var t=a.href,n=i.length;n--;)if(i[n].href===t)return e();setTimeout(function(){d(e)})};function s(){a.addEventListener&&a.removeEventListener("load",s),a.media=n||"all"}return a.addEventListener&&a.addEventListener("load",s),(a.onloadcssdefined=d)(s),a};"undefined"!=typeof exports?exports.loadCSS=e:u.loadCSS=e}("undefined"!=typeof global?global:this),function(r){if(r.loadCSS){var e=loadCSS.relpreload={};if(e.support=function(){try{return r.document.createElement("link").relList.supports("preload")}catch(e){return!1}},e.poly=function(){for(var e=r.document.getElementsByTagName("link"),t=0;t<e.length;t++){var n=e[t];"preload"===n.rel&&"style"===n.getAttribute("as")&&(r.loadCSS(n.href,n,n.getAttribute("media")),n.rel=null)}},!e.support()){e.poly();var t=r.setInterval(e.poly,300);r.addEventListener&&r.addEventListener("load",function(){e.poly(),r.clearInterval(t)}),r.attachEvent&&r.attachEvent("onload",function(){r.clearInterval(t)})}}}(this);</script>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <header class="header"><a class="header__logo" href="main.html"><img class="header__logo-img" src="img/logo.png" alt="logo"></a><a class="header__logo--white" href="main.html"><img class="header__logo-img" src="img/logo-white.png" alt="logo"></a>
+        <nav class="header__nav"><a class="header__nav-link" href="actions.html">Акции</a><a class="header__nav-link" href="products.html">Продукты</a><a class="header__nav-link" href="clubs.html">Клубы</a><a class="header__nav-link" href="subscriptions.html">Абонемент</a><a class="header__nav-link header__nav-link--active" href="application.html">Приложение</a><a class="header__nav-link header__nav-link--enroll" href="#">Попробовать</a>
+          <div class="header__nav-footer"><a class="header__nav-footer-inst" href="#">
+              <div class="header__nav-footer-inst-icon"></div>
+              <div class="header__nav-footer-inst-text">instagram</div></a><a class="header__nav-footer-btn btn btn--gray" href="#">Перезвоните мне</a></div>
+        </nav>
+        <div class="header__burger">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </header>
+      <main>
+        <div class="application">
+          <div class="application__top">
+            <div class="application__top-type">App</div>
+            <div class="application__top-buttons"><a class="btn btn--download" href="#"><img src="img/appstore.png" alt="appstore logo"></a><a class="btn btn--download" href="#"><img src="img/googleplay.png" alt="google play logo"></a>
+              <div class="application__close">
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+          <h1 class="application__heading">Мобильное<br>приложение</h1>
+          <div class="application__desc">Наше приложение созданно для того, чтобы вы легко управляли изменениями своего тела!<br><br>Официальное мобильное приложение сети фитнес-клубов Spirit, личный кабинет члена клуба для оформления контракта, оплаты абонемента и дополнительных услуг, доступа к расписанию клуба и персональному расписанию, дневнику тренировок, а также инструкция по построению и контролю тренировочного процесса, максимально эффективному пользованию всеми услугами.</div><a class="video video--application" href="#">
+            <div class="video__info">
+              <div class="video__info-icon"></div>
+              <div class="video__info-text">Видео о приложении</div>
+            </div></a>
+          <div class="application__subheading">Возможности</div>
+          <div class="application__possibilities">
+            <div class="application__possibilities-slide">
+              <div class="application__possibilities-slide-inner">
+                <div class="application__possibilities-info">
+                  <div class="application__possibilities-info-num">1</div>
+                  <div class="application__possibilities-info-title">Личный кабинет</div>
+                  <div class="application__possibilities-info-desc">Оплачивайте абонемент в один клик, настраивайте автоплатеж, делайте заморозку, приобретайте дополнительные услуги или подарочный сертификат для друзей.</div>
+                </div>
+                <div class="application__possibilities-slide-pic"><img class="application__possibilities-slide-pic-img" src="img/possibilities-imgs/possibilities-1.png" alt="possibilities slider img"></div>
+              </div>
+            </div>
+            <div class="application__possibilities-slide">
+              <div class="application__possibilities-slide-inner">
+                <div class="application__possibilities-info">
+                  <div class="application__possibilities-info-num">2</div>
+                  <div class="application__possibilities-info-title">Расписание тренировок</div>
+                  <div class="application__possibilities-info-desc">Вы всегда в курсе в какое время будет ваше любимый урок Les Mills. А также можете составить свое персональное расписание тренировок и следовать ему.</div>
+                </div>
+                <div class="application__possibilities-slide-pic"><img class="application__possibilities-slide-pic-img" src="img/possibilities-imgs/possibilities-2.png" alt="possibilities slider img"></div>
+              </div>
+            </div>
+            <div class="application__possibilities-slide">
+              <div class="application__possibilities-slide-inner">
+                <div class="application__possibilities-info">
+                  <div class="application__possibilities-info-num">3</div>
+                  <div class="application__possibilities-info-title">Программы тренировок</div>
+                  <div class="application__possibilities-info-desc">Программы тренировок 4 направления: жиросжигание, выносливость, силовая выносливость, сила. Для каждого уровня подготовки более 50 видов тренировок, содержащие перечень упражнений с указанием начального веса, количества подходов, повторений и время отдыха.</div>
+                </div>
+                <div class="application__possibilities-slide-pic"><img class="application__possibilities-slide-pic-img" src="img/possibilities-imgs/possibilities-3.png" alt="possibilities slider img"></div>
+              </div>
+            </div>
+            <div class="application__possibilities-slide">
+              <div class="application__possibilities-slide-inner">
+                <div class="application__possibilities-info">
+                  <div class="application__possibilities-info-num">4</div>
+                  <div class="application__possibilities-info-title">Библиотека упражнений</div>
+                  <div class="application__possibilities-info-desc">Возможность выбирать любые упражнения и составлять свои программы. Возможность выбирать любые упражнения и составлять свои программы. Для тех, кто занимается сам. </div>
+                </div>
+                <div class="application__possibilities-slide-pic"><img class="application__possibilities-slide-pic-img" src="img/possibilities-imgs/possibilities-4.png" alt="possibilities slider img"></div>
+              </div>
+            </div>
+            <div class="application__possibilities-slide">
+              <div class="application__possibilities-slide-inner">
+                <div class="application__possibilities-info">
+                  <div class="application__possibilities-info-num">5</div>
+                  <div class="application__possibilities-info-title">Дневник тренировок</div>
+                  <div class="application__possibilities-info-desc">Составляйте и ведите свой дневник тренировок. Просто и удобно. Составляйте и ведите свой дневник тренировок. Просто и удобно. Составляйте и ведите свой дневник тренировок. Просто и удобно.</div>
+                </div>
+                <div class="application__possibilities-slide-pic"><img class="application__possibilities-slide-pic-img" src="img/possibilities-imgs/possibilities-5.png" alt="possibilities slider img"></div>
+              </div>
+            </div>
+            <div class="application__possibilities-slide">
+              <div class="application__possibilities-slide-inner">
+                <div class="application__possibilities-info">
+                  <div class="application__possibilities-info-num">6</div>
+                  <div class="application__possibilities-info-title">Прогресс тренировок</div>
+                  <div class="application__possibilities-info-desc">Специальная функция позволяет вам фиксировать и отслеживать свой прогресс. Просто проходите исследования InBody на ежемесячной основе и программа покажет ваши изменения.</div>
+                </div>
+                <div class="application__possibilities-slide-pic"><img class="application__possibilities-slide-pic-img" src="img/possibilities-imgs/possibilities-6.png" alt="possibilities slider img"></div>
+              </div>
+            </div>
+          </div>
+          <div class="application__cta">
+            <div class="application__cta-text">С нашим приложением вы добьетесь любых поставленных спортивных целей!</div>
+            <div class="application__cta-buttons"><a class="btn btn--download" href="#"><img src="img/appstore.png" alt="appstore logo"></a><a class="btn btn--download" href="#"><img src="img/googleplay.png" alt="google play logo"></a></div>
+          </div>
+          <div class="application__links"><a class="application__links-item" href="#">
+              <div class="application__links-item-text application__links-item-text--choose">Выбрать клуб</div></a><a class="application__links-item" href="#">
+              <div class="application__links-item-text">Купить абонемент</div></a></div>
+        </div>
+      </main>
+      <footer class="footer"><a class="footer__inst" href="#">
+          <div class="footer__inst-icon"></div>
+          <div class="footer__inst-text">instagram</div></a><a class="footer__btn btn btn--gray" href="#">Перезвоните мне</a></footer>
+    </div>
+    <div class="popup popup--video">
+      <div class="popup__bg"></div>
+      <div class="popup__window">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="allowfullscreen"></iframe>
+        <div class="popup__close">
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+    <div class="popup popup--call">
+      <div class="popup__bg"></div>
+      <div class="popup__window">
+        <div class="popup__close">
+          <div></div>
+          <div></div>
+        </div>
+        <div class="popup__heading">Перезвоните мне</div>
+        <form class="popup__form" action="">
+          <div class="popup__form-row">
+            <input class="input input--name input--text" type="text" placeholder="Ваше имя" name="name" maxlength="20" required="required">
+            <input class="input input--tel" type="tel" placeholder="Ваш телефон" name="tel" required="required">
+            <select class="input input--select" name="dpt">
+              <option disabled="disabled" selected="selected">Выберите клуб</option>
+              <option>Spirit. Юго-Западная</option>
+              <option>Spirit. Крымская</option>
+              <option>Spirit. Чертановская</option>
+            </select>
+          </div>
+          <button class="popup__btn btn" type="submit">Отправить</button>
+        </form>
+      </div>
+    </div>
+    <script src="js/libs.min.js"></script>
+    <script src="js/common.min.js"></script>
+  </body>
+</html>

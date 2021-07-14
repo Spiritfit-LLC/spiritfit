@@ -1,0 +1,25 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Клубы", 
+		"/clubs/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Тренировки", 
+		"/trenirovki/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Приложение", 
+		"/mobilnoe-prilozheniya/", 
+		Array(), 
+		Array(), 
+		"" 
+	)
+);
+?>
