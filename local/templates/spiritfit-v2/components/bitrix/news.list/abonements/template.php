@@ -55,7 +55,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                                     <div class="b-twoside-card__text"><?=$arItem["PREVIEW_TEXT"]?></div>
 
                                     <div class="b-twoside-card__prices">
-                                        <?if (strlen($arItem["BASE_PRICE"]["PRICE"]) > 0){?>
+                                        <?if (false && strlen($arItem["BASE_PRICE"]["PRICE"]) > 0){?>
                                             <? foreach ($arItem["PRICES"] as $key => $price):?>
                                                 <div class="b-twoside-card__prices-item">
                                                     <div class="b-twoside-card__prices-title"><?= $price["SIGN"] ?></div>
