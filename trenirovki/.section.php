@@ -1,0 +1,6 @@
+<?
+$sSectionName = "Тренировки";
+$arDirProperties = Array(
+
+);
+?>
