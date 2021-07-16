@@ -1,0 +1,6 @@
+<?
+$sSectionName = "Атмосфера";
+$arDirProperties = Array(
+
+);
+?>
