@@ -21,6 +21,22 @@ class Utils
                 if ($props["SVG_WHITE"]) {
                     $props["SVG_WHITE"] = CFile::ResizeImageGet($props["SVG_WHITE"]["VALUE"], array("width"=>"120", "height"=>"50", BX_RESIZE_IMAGE_PROPORTIONAL));
                 }
+
+                if( !empty($props["LOGO_PNG_SRC"]["VALUE"]) ) {
+                	$fields["PREVIEW_PICTURE"]["SRC"] = $props["LOGO_PNG_SRC"]["VALUE"];
+                }
+                if( !empty($props["LOGO_PNG_WHITE_SRC"]["VALUE"]) ) {
+                	$props["LOGO_WHITE"] = [];
+                	$props["LOGO_WHITE"]["src"] = $props["LOGO_PNG_WHITE_SRC"]["VALUE"];
+                }
+                if( !empty($props["LOGO_SVG_SRC"]["VALUE"]) ) {
+                	$props["SVG"] = [];
+                	$props["SVG"]["src"] = $props["LOGO_SVG_SRC"]["VALUE"];
+                }
+                if( !empty($props["LOGO_SVG_WHITE_SRC"]["VALUE"]) ) {
+                	$props["SVG_WHITE"] = [];
+                	$props["SVG_WHITE"]["src"] = $props["LOGO_SVG_WHITE_SRC"]["VALUE"];
+                }
 				
 				if (!empty($props["ERROR_MESSAGE"]["VALUE"])) {
 					$errorMessageArray = array();
