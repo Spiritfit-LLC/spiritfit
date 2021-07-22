@@ -450,3 +450,51 @@ main.b-page__main {
 .b-image-plate-block.small-bottom-margin {
 	margin-bottom: 0;
 }
+
+.wrapper-preimushchestva {
+	display: block;
+	position: relative;
+	margin: 80px 0px 50px;
+}
+
+.h2-title,
+h2.h2-title {
+	margin-bottom: 52px;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 40px;
+	line-height: 1.2;
+}
+
+.resume-table {
+	display: table;
+    position: relative;
+    table-layout: fixed;
+    margin: 50px 0px 0px;
+	width: 100%;
+}
+.resume-table .table-cell {
+	display: table-cell;
+    position: relative;
+	vertical-align: middle;
+}
+.resume-table .table-cell:nth-child(1) {
+	width: 70%;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 19pt;
+	box-sizing: border-box;
+	padding-right: 30px;
+}
+.resume-table .table-cell:nth-child(2) {
+	width: 30%;
+}
+@media only screen and (max-width: 560px) {
+	.resume-table .table-cell:nth-child(1) {
+		width: 50%;
+		font-size: 15pt;
+	}
+	.resume-table .table-cell:nth-child(2) {
+		width: 50%;
+	}
+}

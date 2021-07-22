@@ -15,6 +15,7 @@ $this->setFrameMode(true);
 global $settings;
 
 $text = $arResult['PROPERTIES']['BLOCK_TEXT']['VALUE'];
+$title = $arResult['PROPERTIES']['BLOCK_TEXT']['DESCRIPTION'];
 $video = $arResult['PROPERTIES']['BLOCK_VIDEO_YOUTUBE']['VALUE'];
 $videoPreview = $arResult['PROPERTIES']['BLOCK_PREVIEW']['VALUE'];
 $photos = $arResult['PROPERTIES']['BLOCK_PHOTO']['VALUE'];
@@ -127,11 +128,13 @@ switch ($view) {
 			<? } ?>
             <div class="<?=$class?>__text-content text-center">
                 <div class="<?=$class?>__text-content-inner">
-                    <h2><a href="<?=(!empty($linkTitle) ? $linkTitle : $link)?>"><?=$arResult['NAME']?></a></h2>
 					<div class="<?=$class?>__text">
 						<? if(!empty($text)){ ?>
-							<? foreach ($text as $itemText) { ?>
-								<div class="<?=$class?>__text-item"><?=$itemText['TEXT']?></div>
+							<? foreach ($text as $key => $itemText) { ?>
+								<div class="<?=$class?>__text-item">
+									<h2 class="h2-title"><a href="<?=(!empty($linkTitle) ? $linkTitle : $link)?>"><?=(!empty($title[$key])) ? $title[$key] : $arResult['NAME']?></a></h2>
+									<?=$itemText['TEXT']?>
+								</div>
 							<? } ?>
 						<? } ?>
                     </div>

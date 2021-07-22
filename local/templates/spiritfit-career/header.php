@@ -6,8 +6,8 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 global $settings;
 $settings = Utils::getInfo();
 $page = $APPLICATION->GetCurPage();
-?>
 
+?>
 <!DOCTYPE html>
 <html class="no-js" lang="ru">
 <head>

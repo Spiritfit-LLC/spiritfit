@@ -642,6 +642,15 @@ $(document).ready(function(){
 
         setScrollFormModal();
     })
+	
+	$('.js-form-vacancy').click(function(e){
+        e.preventDefault();
+		
+		formPopup = $( $(this).attr("href") );
+        formPopup.show();
+        formPopup.find('.form-standart').show();
+        setScrollFormModal();
+    });
 
     // popup form
     $('.js-form-abonement').click(function(e){
@@ -719,7 +728,7 @@ $(document).ready(function(){
         formPopup.show();
         formPopup.find('.form-standart').show();
         setScrollFormModal();
-    })
+    });
 
     // resend sms code
     $(document).on("click", ".subscription__code_v2", function(e) {
