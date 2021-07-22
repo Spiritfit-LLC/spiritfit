@@ -3,7 +3,7 @@ global $USER;
 
 use \Bitrix\Main\Loader;
 
-class FormAbonimentComponent extends CBitrixComponent{
+class FormRequestComponent extends CBitrixComponent{
 
     function onPrepareComponentParams($arParams){
         if(!$arParams["WEB_FORM_ID"]){
@@ -299,8 +299,6 @@ class FormAbonimentComponent extends CBitrixComponent{
     function executeComponent(){
         Loader::IncludeModule("form");
         Loader::IncludeModule("iblock");
-
-        
         
         $this->getFields();
         $this->getElement();

@@ -80,6 +80,10 @@ $page = $APPLICATION->GetCurPage();
             $page = $page[0];
         }
     ?>
+	<script src="<?=SITE_TEMPLATE_PATH."/js/sourcebuster.min.js"?>" id="sbjs"></script>
+	<script>
+		sbjs.init();
+	</script>
     <link rel="canonical" href="<?= 'https://' . $_SERVER['HTTP_HOST'] . $page; ?>"/>
 </head>
 <? $APPLICATION->ShowPanel(); ?>
@@ -149,14 +153,28 @@ $page = $APPLICATION->GetCurPage();
     </header>
     <main class="b-page__main" role="main">
         <?if (!defined('HIDE_SLIDER')){?>
-            <? if(strpos($page, '/clubs/') !== false){ 
-                $GLOBALS['arFilterSlider'] = ['PROPERTY_BANNER_PAGES' => $page];
-            }else{ 
-                $GLOBALS['arFilterSlider'] = [[
-                    'LOGIC' => 'OR',
-                    ['PROPERTY_BANNER_PAGES' => false],
-                    ['PROPERTY_BANNER_PAGES' => $page],
-                ]];
+            <? if(strpos($page, '/clubs/') !== false) {
+                $GLOBALS['arFilterSlider'] = [
+					[
+						'LOGIC' => 'AND',
+						['PROPERTY_BANNER_PAGES' => $page],
+						['PROPERTY_SITE' => 41],
+					]
+				];
+            }else{
+				$GLOBALS['arFilterSlider'] = [
+					[
+						'LOGIC' => 'AND',
+						[
+							'LOGIC' => 'OR',
+							['PROPERTY_BANNER_PAGES' => false],
+							['PROPERTY_BANNER_PAGES' => $page],
+						],
+						[
+							['PROPERTY_SITE' => 41]
+						]
+					]
+				];
             }?>
 
             <?$APPLICATION->IncludeComponent(

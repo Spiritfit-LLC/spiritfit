@@ -1,23 +1,10 @@
 <?
 define('HIDE_BREADCRUMB', true);
+define('HIDE_SLIDER', true);
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Качество обслуживания");
 ?>
 <div class="quality">
-    <div class="block__detail-breadcrumb quality__top">
-        <? $APPLICATION->IncludeComponent(
-            "bitrix:breadcrumb",
-            "custom",
-            array(
-                "START_FROM" => "0",
-                "PATH" => "",
-                "SITE_ID" => "s1"
-            )
-        ); ?>
-    </div>
-    <div class="quality__head">
-        <h1 class="quality__heading"><? $APPLICATION->ShowTitle(false) ?></h1>
-    </div>
     <div class="quality__questionary">
         <?//<h2 class="quality__subheading">Оценка качества обслуживания</h2>?>
         <div class="primary-form quality__form" id="body_quality">
