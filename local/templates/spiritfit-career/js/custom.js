@@ -1028,7 +1028,29 @@ $(document).ready(function(){
         });
         
     }
-
+	
+	$(document).on('pjax:success', function(data, status, xhr, options) {
+		/*console.log(data);*/
+		initFormSubmit();
+	});
+	function initFormSubmit() {
+		$(".popup__resume-form").submit(function(e) {
+			
+			e.preventDefault();
+			window.oldTitleDocument = document.title;
+			
+			$.pjax.submit(e, '#js-pjax-container-vacancies', {
+				push: false,
+				timeout: false,
+				dataType: 'html',
+				fragment: '#js-pjax-container-vacancies'
+			});
+		
+			return false;
+		});
+	}
+	initFormSubmit();
+	
     // $('.subscription__aside-form:not(.is-ready)').each(function () {
     //     initFormFields($(this));
     // });

@@ -58,19 +58,6 @@ $settings = Utils::getInfo();
             </div>
         </div>
     </div>
-	
-	<div id="modalFormVacancies" class="popup modalForm" style="display: none;">
-        <div class="popup__bg"></div>
-        <div class="popup__window popup__window--modal-form">
-            <div class="popup__close">
-                <div></div>
-                <div></div>
-            </div>
-            <div id="js-pjax-container-vacancies" class="popup__wrapper-form">
-                TEST CONTENT
-            </div>
-        </div>
-    </div>
 
     <script src='/local/templates/spiritfit-career/js/cookieAllowAccess.js' async></script>
 </body>

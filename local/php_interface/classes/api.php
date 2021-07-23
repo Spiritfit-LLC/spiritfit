@@ -100,6 +100,12 @@ class Api
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
+			case 'web_site_resume':
+                $this->web_site_resume($post['params']);
+                AddMessage2Log('web_site_resume');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
         }
     }
 
@@ -130,6 +136,59 @@ class Api
 			$this->_result = false;
         }
 	}
+	
+	/**
+     * does request to website/contact
+     *
+     * @param  array $params
+     */
+    private function web_site_resume($params) {
+        
+		$name = !empty($params['name']) ? $params['name'] : false;
+		$surname = !empty($params['surname']) ? $params['surname'] : false;
+		$phone = !empty($params['phone']) ? $params['phone'] : false;
+		$email = !empty($params['email']) ? $params['email'] : false;
+		$position = !empty($params['position']) ? $params['position'] : false;
+		$salary = !empty($params['salary']) ? $params['salary'] : false; 
+		$metro= !empty($params['metro']) ? $params['metro'] : false;
+        $client_id   = !empty($params['client_id']) ? $params['client_id'] : false;
+        $code   = !empty($params['code']) ? $params['code'] : false;
+
+        if(strpos($client_id, '.')){
+            $client_id = explode('.', $client_id);
+            $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
+        }
+
+        if(empty($name) || empty($surname) || empty($phone) || empty($email)){
+            return false;
+        }
+       
+        $type = $params["type"] ? $params["type"] : 0;
+        
+		$trafic = $GLOBALS['arTraficAnswer'][$_REQUEST["WEB_FORM_ID"]];
+		$arParams = array(
+			"type" => $type,
+			"name" => $name . " " . $surname,
+            "phone" => substr($phone, 1),
+			"email" => $email,
+			"position" => $position,
+			"salary" => $salary,
+			"metro" => $metro,
+            "cid" => $client_id,
+			'source' => $_REQUEST[$trafic['src']],
+        	'channel' => $_REQUEST[$trafic['mdm']],
+        	'campania' => $_REQUEST[$trafic['cnt']],
+        	'message' => $_REQUEST[$trafic['cmp']],
+        	'kword' => $_REQUEST[$trafic['trm']],
+		);
+		
+		$additionFields = $GLOBALS['arAdditionAnswer'][$_REQUEST["WEB_FORM_ID"]];
+        
+        $this->_send($this->apiUrl."resume", $arParams);
+        
+        if ($this->_data['result']['errorCode'] == 0)
+            $this->_result = true;
+    }
 
     /**
      * @param $params
