@@ -105,7 +105,7 @@ if ($_REQUEST["ajax_menu"] == 'true' && isset($_SERVER['HTTP_X_PJAX']) && $_SERV
 		<meta itemprop="brand" content="Spirit.Fitness">
 		<div itemprop="description"><?=$element['META']['ELEMENT_META_DESCRIPTION']?></div>
 		
-		<? if( !empty($club) ) { ?>
+		<? if( false && !empty($club) ) { ?>
 			<?
 				foreach($element['PRICES'] as $item) {
 					if( !$item['IS_SELECTED'] ) continue;
