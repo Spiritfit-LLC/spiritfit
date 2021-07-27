@@ -9,6 +9,62 @@ if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 global $USER;
 $trial = strpos($APPLICATION->GetCurPage(), "probnaya-trenirovka");
 
+use Bitrix\Iblock\InheritedProperty;
+
+CModule::IncludeModule("iblock");
+
+$url = strtok($_SERVER['REQUEST_URI'], '?');
+$urlArr = explode('/', $url);
+$elementCode = !empty($urlArr[2]) ? $urlArr[2] : false;
+$element = [];
+$club = [];
+if( $elementCode ) {
+	$clubs = [];
+	$clubsRes = CIBlockElement::GetList(array(), array('IBLOCK_ID' => 6, 'ACTIVE' => 'Y'), false, false, array('ID', 'NAME', 'CODE'));
+	while($arRes = $clubsRes->GetNext()) {
+		$clubs[$arRes['ID']] = $arRes['NAME'];
+	}
+	
+	$res = CIBlockElement::GetList(array(), array('IBLOCK_ID' => 9, 'CODE' => $elementCode), false, false);
+	if($ob = $res->GetNextElement()) {
+		$element = $ob->GetFields();
+		$element['PROPERTIES'] = $ob->GetProperties();
+		
+		$ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues( 9, $element['ID'] );
+		$element['META'] = $ipropValues->getValues();
+	}
+	$element['IMAGES'] = [];
+	if( $element['PROPERTIES']['PHOTO_GALLERY']['VALUE'] ) {
+		foreach( $element['PROPERTIES']['PHOTO_GALLERY']['VALUE'] as $id ) {
+			$element['IMAGES'][] = CFile::GetPath($id);
+		}
+	} else if( !empty($element['PREVIEW_PICTURE']) ) {
+		$element['IMAGES'][] = CFile::GetPath($element['PREVIEW_PICTURE']);
+	}
+	
+	if( !empty($_SESSION['CLUB_NUMBER']) ) {
+		$club = Utils::getClub($_SESSION['CLUB_NUMBER']); 
+	}
+	$element['PRICES'] = [];
+	$element['MIN_PRICE'] = 0;
+	$element['MAX_PRICE'] = 0;
+	foreach($element['PROPERTIES']['BASE_PRICE']['VALUE'] as $key => $arPrice) {
+		$price = $arPrice['PRICE'];
+		foreach( $element['PROPERTIES']['PRICE']['VALUE'] as $item ) {
+			if( $item['LIST'] == $arPrice['LIST'] && $price != $item['PRICE'] && $arPrice["NUMBER"] == $item['NUMBER'] ) {
+				$price = $item['PRICE'];
+				break;
+			}
+		}
+		if( $element['MIN_PRICE'] == 0 || $price < $element['MIN_PRICE']  ) {
+			$element['MIN_PRICE'] = $price;
+		}
+		if( $element['MAX_PRICE'] == 0 || $price > $element['MAX_PRICE']  ) {
+			$element['MAX_PRICE'] = $price;
+		}
+		$element['PRICES'][] = [ 'NAME' => (isset($clubs[$arPrice['LIST']])) ? $clubs[$arPrice['LIST']] : '', 'PRICE' => $price, 'CLUB_ID' => $arPrice['LIST'], 'IS_SELECTED' => (!empty($club) && $club['ID'] == $arPrice['LIST']) ? true : false ];
+	}
+}
 if ($_REQUEST["ajax_menu"] == 'true' && isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true'): ?>
 	<? 
 
@@ -38,8 +94,64 @@ if ($_REQUEST["ajax_menu"] == 'true' && isset($_SERVER['HTTP_X_PJAX']) && $_SERV
 				);
 			}?>
 		</div>
-<?endif;
-
+<? endif; ?>
+<? if( !empty($element) ) { ?>
+	<div itemscope itemtype="http://schema.org/Product" style="display: none;">
+		<div itemprop="name"><?=strip_tags($element['~NAME'])?></div>
+		<link itemprop="url" href="<?=$url?>">
+		<? foreach($element['IMAGES'] as $image) { ?>
+			<img itemprop="image" src="<?=$_SERVER['REQUEST_SCHEME']?>://<?=$_SERVER['SERVER_NAME']?><?=$image?>">
+		<? } ?>
+		<meta itemprop="brand" content="Spirit.Fitness">
+		<div itemprop="description"><?=$element['META']['ELEMENT_META_DESCRIPTION']?></div>
+		
+		<? if( !empty($club) ) { ?>
+			<?
+				foreach($element['PRICES'] as $item) {
+					if( !$item['IS_SELECTED'] ) continue;
+					
+					?>
+					<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+						<meta itemprop="price" content="<?=$item['PRICE']?>" id="offer_current">
+						<meta itemprop="priceCurrency" content="RUB">
+						<link itemprop="availability" href="http://schema.org/InStock">
+						<link itemprop="url" href="<?=$_SERVER['REQUEST_SCHEME']?>://<?=$_SERVER['SERVER_NAME']?><?=$url?>">
+					</div>	
+					<?
+					break;
+				}
+			?>
+			<script>
+				$( document ).ready(function() {
+					$('select[name=form_text_5]').change(function() {
+						setTimeout(function() {
+							$('#offer_current').attr('content', $('.subscription__bottom input[name=form_hidden_10]').val());
+						}, 1000);
+					});
+				});
+			</script>
+		<? } else { ?>
+			<div itemprop="offers" itemscope itemtype="https://schema.org/AggregateOffer">
+				<span itemprop="lowPrice"><?=$element['MIN_PRICE']?></span>
+				<span itemprop="highPrice"><?=$element['MAX_PRICE']?></span>
+				<span itemprop="offerCount"><?=count($element['PRICES'])?></span>
+				<?
+					foreach($element['PRICES'] as $item) {
+						?>
+						<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+							<meta itemprop="price" content="<?=$item['PRICE']?>">
+							<meta itemprop="priceCurrency" content="RUB">
+							<link itemprop="availability" href="http://schema.org/InStock">
+							<link itemprop="url" href="<?=$_SERVER['REQUEST_SCHEME']?>://<?=$_SERVER['SERVER_NAME']?><?=$url?>">
+						</div>	
+						<?
+					}
+				?>
+			</div>
+		<? } ?>
+	</div>
+<? } ?>
+<?
 if (!isset($_SERVER['HTTP_X_PJAX'])) {
     require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");
 }

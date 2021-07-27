@@ -78,10 +78,10 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 															<div class="b-twoside-card__prices-old"><?= $price["PRICE"] ?> <span class="rub">₽</span></div>
 															<div class="b-twoside-card__prices-current"><?=$abonement["SALE"]?> <span class="rub">₽</span></div>
 														<?}elseif($key == 1 && $abonement["SALE_TWO_MONTH"]){?>
-															<div class="b-twoside-card__prices-current"><?= $abonement["SALE_TWO_MONTH"] ?> <span class="rub">₽</span></div>
+															<div class="b-twoside-card__prices-current"><?=$abonement["SALE_TWO_MONTH"] ?> <span class="rub">₽</span></div>
 														<?}else{?>
 															<? if ($price["PRICE"]  && $price["PRICE"] != " "): ?>
-																<div class="b-twoside-card__prices-current"><?= $price["PRICE"] ?> <span class="rub">₽</span></div>
+																<div class="b-twoside-card__prices-current"><?=$price["PRICE"] ?> <span class="rub">₽</span></div>
 															<? endif; ?>
 														<?}?>
 													</div>
@@ -317,4 +317,28 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 			</div>
 		</div>
 	<? } ?>
+	<div itemscope itemtype="http://schema.org/ExerciseGym" style="display: none;">
+		<span itemprop="name">Spirit.Fitness</span>
+		<meta itemprop="legalName" content="ООО Рекорд Фитнес">
+		<link itemprop="url" href="https://spiritfit.ru/">
+		<? if( !empty($arResult['PREVIEW_PICTURE']['SRC']) ) { ?>
+			<span itemprop="image"><?=$_SERVER['REQUEST_SCHEME']?>://<?=$_SERVER['SERVER_NAME']?><?=$arResult['PREVIEW_PICTURE']['SRC']?></span>
+		<? } ?>
+		<span itemprop="priceRange"><?=$arResult['ABONEMENTS_MIN_PRICE']?>-<?=$arResult['ABONEMENTS_MAX_PRICE']?></span>  
+		<img itemprop="logo" src=" http://spiritfit.ru/images/logo.svg ">
+		<div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+			<meta itemprop="addressCountry" content="Россия">
+			<span itemprop="streetAddress"><?=$arResult['ADDRESS_SHORT']?></span>
+			<? if( !empty($arResult['PROPERTIES']['INDEX']['VALUE']) ) { ?>	
+				<span itemprop="postalCode"><?=$arResult['PROPERTIES']['INDEX']['VALUE']?></span>
+			<? } ?>
+			<span itemprop="addressLocality">Москва</span>
+		</div>
+		<span itemprop="telephone">+7(495)266-40-95</span>
+		<? if( !empty($arResult['PROPERTIES']['EMAIL']['VALUE']) ) { ?>	
+			<span itemprop="email"><?=$arResult['PROPERTIES']['EMAIL']['VALUE']?></span>
+		<? } ?>
+		<meta itemprop="openingHours" content="Mo-Su 07:00-24:00">
+  </div>
+
 <? } ?>

@@ -130,6 +130,8 @@ while ($res = $dbElements->GetNextElement()) {
 
 $selectedClub["ID"] = $arResult['ID'];
 
+$arResult["ABONEMENTS_MIN_PRICE"] = 0;
+$arResult["ABONEMENTS_MAX_PRICE"] = 0;
 foreach ($arResult["ABONEMENTS"] as $key => $arItem) {
     $club = false;  
     
@@ -166,6 +168,14 @@ foreach ($arResult["ABONEMENTS"] as $key => $arItem) {
     }
     
     foreach ($arResult["ABONEMENTS"][$key]["PRICES"] as $keyP => $arPrice) {
+	
+		if( $arResult["ABONEMENTS_MIN_PRICE"] == 0 || floatval($arPrice['PRICE']) < $arResult["ABONEMENTS_MIN_PRICE"] ) {
+			$arResult["ABONEMENTS_MIN_PRICE"] = floatval($arPrice['PRICE']);
+		}
+		if( $arResult["ABONEMENTS_MAX_PRICE"] == 0 || floatval($arPrice['PRICE']) > $arResult["ABONEMENTS_MAX_PRICE"] ) {
+			$arResult["ABONEMENTS_MAX_PRICE"] = floatval($arPrice['PRICE']);
+		}
+		
         if ($arPrice["PRICE"] != $arResult["ABONEMENTS"][$key]["BASE_PRICE"]["PRICE"] && $arPrice["NUMBER"] == $arResult["ABONEMENTS"][$key]["BASE_PRICE"]["NUMBER"]) {
             $arResult["ABONEMENTS"][$key]["SALE"] = $arPrice["PRICE"];
 
@@ -188,8 +198,40 @@ foreach ($arResult["ABONEMENTS"] as $key => $arItem) {
     };
 
     array_multisort(array_column($arResult["ABONEMENTS"][$key]["PRICES"], "NUMBER"), SORT_ASC, $arResult["ABONEMENTS"][$key]["PRICES"]);
+	
+	if( $arResult["ABONEMENTS_MIN_PRICE"] == 0 || ($arResult["ABONEMENTS"][$key]['SALE_TWO_MONTH'] != 0 && floatval($arResult["ABONEMENTS"][$key]['SALE_TWO_MONTH']) < $arResult["ABONEMENTS_MIN_PRICE"]) ) {
+		$arResult["ABONEMENTS_MIN_PRICE"] = floatval($arResult["ABONEMENTS"][$key]['SALE_TWO_MONTH']);
+	}
+	if( $arResult["ABONEMENTS_MAX_PRICE"] == 0 || ($arResult["ABONEMENTS"][$key]['SALE_TWO_MONTH'] != 0 && floatval($arResult["ABONEMENTS"][$key]['SALE_TWO_MONTH']) > $arResult["ABONEMENTS_MAX_PRICE"]) ) {
+		$arResult["ABONEMENTS_MAX_PRICE"] = floatval($arResult["ABONEMENTS"][$key]['SALE_TWO_MONTH']);
+	}
+	if( $arResult["ABONEMENTS_MIN_PRICE"] == 0 || ($arResult["ABONEMENTS"][$key]['SALE'] != 0 &&  floatval($arResult["ABONEMENTS"][$key]['SALE']) < $arResult["ABONEMENTS_MIN_PRICE"]) ) {
+		$arResult["ABONEMENTS_MIN_PRICE"] = floatval($arResult["ABONEMENTS"][$key]['SALE']);
+	}
+	if( $arResult["ABONEMENTS_MAX_PRICE"] == 0 || ($arResult["ABONEMENTS"][$key]['SALE'] != 0 &&  floatval($arResult["ABONEMENTS"][$key]['SALE']) > $arResult["ABONEMENTS_MAX_PRICE"]) ) {
+		$arResult["ABONEMENTS_MAX_PRICE"] = floatval($arResult["ABONEMENTS"][$key]['SALE']);
+	}
 
     if (!$club&&!$arResult["PROPERTIES"]["SOON"]["VALUE"]) {
         unset($arResult["ABONEMENTS"][$key]);
     }
+}
+
+$denyInAdddress = ['этаж', 'г.', 'город', 'м.', 'метро', 'эт.', 'ТРЦ', 'трц', 'к.', 'корп', 'корпус', '"'];
+if( !empty($arResult['PROPERTIES']['ADRESS']['VALUE']['TEXT']) ) {
+	$addressArr = explode(',', $arResult['PROPERTIES']['ADRESS']['VALUE']['TEXT']);
+	$clearAddress = [];
+	foreach($addressArr as $aStr) {
+		$needAdd = true;
+		foreach($denyInAdddress as $dStr) {
+			if( strpos($aStr, $dStr) !== false ) {
+				$needAdd = false;
+				break;
+			}
+		}
+		if( $needAdd ) {
+			$clearAddress[] = $aStr;
+		}
+	}
+	$arResult['ADDRESS_SHORT'] = implode(',', $clearAddress);
 }

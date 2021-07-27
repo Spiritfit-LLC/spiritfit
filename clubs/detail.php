@@ -42,7 +42,7 @@ if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 			"ELEMENT_CODE" => $_REQUEST["ELEMENT_CODE"],
 			"CHECK_DATES" => "Y",
 			"FIELD_CODE" => array(
-				0 => "",
+				0 => "PREVIEW_PICTURE",
 				1 => "",
 			),
 			"PROPERTY_CODE" => array(
@@ -55,7 +55,8 @@ if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 				6 => "PHONE",
 				6 => "TEXT_FORM",
 				7 => "WORK",
-				8 => "",
+				8 => "INDEX",
+				9 => "",
 			),
 			"IBLOCK_URL" => "",
 			"DETAIL_URL" => "",
