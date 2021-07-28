@@ -15,7 +15,7 @@ $this->setFrameMode(true);
 ?>
 <section class="b-faq">
     <div class="content-center">
-        <div class="b-faq__content">
+        <div id="faq" class="b-faq__content">
             <h2>FAQ</h2>
             <div class="b-faq__tabs js-tabs-parent">
                 <ul class="b-faq__tab-links is-hide-mobile">
