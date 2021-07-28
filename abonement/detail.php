@@ -104,33 +104,13 @@ if ($_REQUEST["ajax_menu"] == 'true' && isset($_SERVER['HTTP_X_PJAX']) && $_SERV
 		<? } ?>
 		<meta itemprop="brand" content="Spirit.Fitness">
 		<div itemprop="description"><?=$element['META']['ELEMENT_META_DESCRIPTION']?></div>
-		
-		<? if( false && !empty($club) ) { ?>
-			<?
-				foreach($element['PRICES'] as $item) {
-					if( !$item['IS_SELECTED'] ) continue;
-					
-					?>
-					<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-						<meta itemprop="price" content="<?=$item['PRICE']?>" id="offer_current">
-						<meta itemprop="priceCurrency" content="RUB">
-						<link itemprop="availability" href="http://schema.org/InStock">
-						<link itemprop="url" href="<?=$_SERVER['REQUEST_SCHEME']?>://<?=$_SERVER['SERVER_NAME']?><?=$url?>">
-					</div>	
-					<?
-					break;
-				}
-			?>
-			<script>
-				$( document ).ready(function() {
-					$('select[name=form_text_5]').change(function() {
-						setTimeout(function() {
-							$('#offer_current').attr('content', $('.subscription__bottom input[name=form_hidden_10]').val());
-						}, 1000);
-					});
-				});
-			</script>
-		<? } else { ?>
+		<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+			<meta itemprop="price" content="<?=$element['MIN_PRICE']?>" id="offer_current">
+			<meta itemprop="priceCurrency" content="RUB">
+			<link itemprop="availability" href="http://schema.org/InStock">
+			<link itemprop="url" href="<?=$_SERVER['REQUEST_SCHEME']?>://<?=$_SERVER['SERVER_NAME']?><?=$url?>">
+		</div>
+		<? if(false) { ?>
 			<div itemprop="offers" itemscope itemtype="https://schema.org/AggregateOffer">
 				<span itemprop="lowPrice"><?=$element['MIN_PRICE']?></span>
 				<span itemprop="highPrice"><?=$element['MAX_PRICE']?></span>
@@ -148,7 +128,7 @@ if ($_REQUEST["ajax_menu"] == 'true' && isset($_SERVER['HTTP_X_PJAX']) && $_SERV
 					}
 				?>
 			</div>
-		<? } ?>
+		<? } ?>	
 	</div>
 <? } ?>
 <?
