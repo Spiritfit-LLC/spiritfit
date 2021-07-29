@@ -257,7 +257,7 @@ class FormRequestComponent extends CBitrixComponent{
         array_multisort(array_column($this->arResult["ELEMENT"]["PRICES"], "NUMBER"), SORT_ASC, $this->arResult["ELEMENT"]["PRICES"]);
     }
 
-    private function checkSms($num){
+    private function checkSms($num) {
         global $APPLICATION;
 
         $arParam = $this->getFormatFields();
@@ -280,6 +280,16 @@ class FormRequestComponent extends CBitrixComponent{
             if ($this->arResult["ELEMENT"]["CODE"] == "probnaya-trenirovka" || $this->arResult["ELEMENT"]["ID"] == "226") {
                 $arParam["type"] = 3;
             }
+			if ( $this->arResult["ELEMENT"]["CODE"] == "metro-br-rasskazovka" || $this->arResult["ELEMENT"]["ID"] == "798" ) {
+                $arParam["type"] = 10;
+            }
+			if ( $this->arResult["ELEMENT"]["CODE"] == "rogozhskiy-br-val" || $this->arResult["ELEMENT"]["ID"] == "797" ) {
+                $arParam["type"] = 10;
+            }
+			if ( $this->arResult["ELEMENT"]["CODE"] == "metro-marino" || $this->arResult["ELEMENT"]["ID"] == "787" ) {
+                $arParam["type"] = 10;
+            }
+			
             $api = new Api(array(
                 "action" => "request2",
                 "params" => $arParam
