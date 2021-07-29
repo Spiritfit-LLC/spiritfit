@@ -275,18 +275,21 @@ class FormRequestComponent extends CBitrixComponent{
         }
         
         if ($this->request["form_hidden_10"] == 0) {
+			
         // if ($this->request["form_hidden_10"] == 0 || $this->request["form_hidden_21"] == 0) {
             $arParam["type"] = 5;
+			$elementCode = $this->request->getQuery("ELEMENT_CODE");
             if ($this->arResult["ELEMENT"]["CODE"] == "probnaya-trenirovka" || $this->arResult["ELEMENT"]["ID"] == "226") {
                 $arParam["type"] = 3;
             }
-			if ( $this->arResult["ELEMENT"]["CODE"] == "metro-br-rasskazovka" || $this->arResult["ELEMENT"]["ID"] == "798" ) {
+			
+			if ( !empty($elementCode) && $elementCode == "metro-br-rasskazovka" ) {
                 $arParam["type"] = 10;
             }
-			if ( $this->arResult["ELEMENT"]["CODE"] == "rogozhskiy-br-val" || $this->arResult["ELEMENT"]["ID"] == "797" ) {
+			if ( !empty($elementCode) && $elementCode == "rogozhskiy-br-val" ) {
                 $arParam["type"] = 10;
             }
-			if ( $this->arResult["ELEMENT"]["CODE"] == "metro-marino" || $this->arResult["ELEMENT"]["ID"] == "787" ) {
+			if ( !empty($elementCode) && $elementCode == "metro-marino" ) {
                 $arParam["type"] = 10;
             }
 			
@@ -295,7 +298,7 @@ class FormRequestComponent extends CBitrixComponent{
                 "params" => $arParam
             ));
         } else {
-            $api = new Api(array(
+			$api = new Api(array(
                 "action" => "request",
                 "params" => $arParam
             ));
