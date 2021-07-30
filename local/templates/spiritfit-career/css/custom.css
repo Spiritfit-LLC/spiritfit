@@ -470,7 +470,6 @@ h2.h2-title {
 	display: table;
     position: relative;
     table-layout: fixed;
-    margin: 50px 0px 0px;
 	width: 100%;
 }
 .resume-table .table-cell {
@@ -479,7 +478,7 @@ h2.h2-title {
 	vertical-align: middle;
 }
 .resume-table .table-cell:nth-child(1) {
-	width: 70%;
+	width: 460px;
     text-transform: uppercase;
     font-weight: 900;
     font-size: 19pt;
@@ -487,14 +486,72 @@ h2.h2-title {
 	padding-right: 30px;
 }
 .resume-table .table-cell:nth-child(2) {
-	width: 30%;
 }
-@media only screen and (max-width: 560px) {
-	.resume-table .table-cell:nth-child(1) {
-		width: 50%;
+.resume-wrapper {
+	display: block;
+    position: relative;
+	margin: 30px 0px 0px;
+}
+.resume-wrapper-text {
+	display: block;
+    position: relative;
+	text-transform: uppercase;
+    font-weight: 900;
+    font-size: 19pt;
+	box-sizing: border-box;
+	padding-right: 30px;
+	margin-bottom: 30px;
+}
+.resume-wrapper .b-twoside-card__prices-button {
+	max-width: 460px;
+}
+
+@media only screen and (max-width: 960px) {
+	.resume-wrapper-text {
 		font-size: 15pt;
 	}
-	.resume-table .table-cell:nth-child(2) {
-		width: 50%;
+	.resume-table .table,
+	.resume-table .table-cell {
+		display: block;
+		position: relative;
+		width: 100%;
 	}
+	.resume-table .table-cell:nth-child(1) {
+		margin-bottom: 15px;
+	}
+	.resume-table .table-cell:nth-child(1),
+	.resume-table .table-cell:nth-child(2) {
+		width: 100%;
+	}
+}
+
+.wrapper-preimushchestva h2, 
+.wrapper-preimushchestva h2 > a {
+	color: #fff;
+}
+.wrapper-preimushchestva .b-image-block__text-item {
+	min-height: 360px;
+}
+@media screen and (max-width: 1800px) {
+	.wrapper-preimushchestva .b-image-block__text-item {
+		min-height: initial;
+	}
+}
+@media screen and (max-width: 560px) {
+	.wrapper-preimushchestva h2 {
+		font-size: 24pt;
+	}
+}
+.b-cards-slider.no-line {
+	margin-top: 30px;
+	margin-bottom: 65px;
+}
+.b-cards-slider.no-line .b-cards-slider__heading {
+	margin-bottom: 0;
+}
+.b-cards-slider.no-line:after {
+	display: none;
+}
+.wrapper-preimushchestva {
+	margin: 30px 0px 50px;
 }

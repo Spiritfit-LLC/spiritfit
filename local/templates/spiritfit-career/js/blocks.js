@@ -243,7 +243,7 @@ $(function () {
         var $navPlace = $('.b-image-block__slider-nav', $context);
         var $textSlider = $('.b-image-block__text', $context);
         let $sliderFirstImg = elem.querySelector('.b-image-block__slide:first-child img.b-image-block__slide-img');
-        function sliderInit(){
+        function sliderInit() {
             $imgHolder.slick({
                 arrows: false,
                 dots: true,
@@ -273,7 +273,7 @@ $(function () {
                 fade: true,
                 asNavFor: $imgHolder,
                 focusOnSelect: true,
-                adaptiveHeight: true,
+                adaptiveHeight: false,
                 swipeToSlide: true,
                 touchThreshold: 20,
                 infinite: true,

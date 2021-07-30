@@ -4,7 +4,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 $settings = Utils::getInfo();
 ?>
 
-<div class="club__subheading">Оставить заявку</div>
+<div class="club__subheading">Оставьте заявку</div>
 <div class="training__aside">
     <div class="training__aside-stage" data-stage="1">
         <h2 class="training__aside-title">
@@ -49,6 +49,16 @@ $settings = Utils::getInfo();
                     value="<?= $_REQUEST["form_" . $arResult["arAnswers"]["email"]['0']["FIELD_TYPE"] . "_" . $arResult["arAnswers"]["email"]['0']["ID"]] ?>"
                     name="form_<?= $arResult["arAnswers"]["email"]['0']["FIELD_TYPE"]?>_<?= $arResult["arAnswers"]["email"]['0']["ID"] ?>" 
                     <? if ($arResult["arQuestions"]["email"]["REQUIRED"]): ?>required="required"<? endif; ?> 
+                >
+            </div>
+			
+			<div class="subscription__aside-form-row subscription__aside-form-row--club">
+                <input class="input input--light input--long input--club" 
+                    type="text" 
+                    placeholder="<?= $arResult["arQuestions"]["company"]["TITLE"] ?>"
+                    value="<?= $_REQUEST["form_" . $arResult["arAnswers"]["company"]['0']["FIELD_TYPE"] . "_" . $arResult["arAnswers"]["company"]['0']["ID"]] ?>"
+                    name="form_<?= $arResult["arAnswers"]["company"]['0']["FIELD_TYPE"]?>_<?= $arResult["arAnswers"]["company"]['0']["ID"] ?>" 
+                    <? if ($arResult["arQuestions"]["company"]["REQUIRED"]): ?>required="required"<? endif; ?> 
                 >
             </div>
 

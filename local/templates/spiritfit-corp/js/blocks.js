@@ -207,7 +207,7 @@ $(function () {
                 nextArrow: '<div class="b-image-plate-block__arrow b-image-plate-block__arrow--right"></div>',
                 asNavFor: $imgHolder,
                 focusOnSelect: true,
-                adaptiveHeight: true,
+                adaptiveHeight: false,
                 swipeToSlide: true,
                 touchThreshold: 20,
                 infinite: true,

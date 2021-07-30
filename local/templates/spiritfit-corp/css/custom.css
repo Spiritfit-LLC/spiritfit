@@ -450,3 +450,28 @@ main.b-page__main {
 .b-image-plate-block.small-bottom-margin {
 	margin-bottom: 0;
 }
+.club__subheading-centred {
+	padding-left: 150px;
+	text-transform: uppercase;
+}
+.club__subheading {
+	text-transform: uppercase;
+}
+.b-image-plate-block__text-content .slick-track {
+	align-items: start;
+}
+
+@media only screen and (max-width: 1440px) {
+	.club__subheading-centred {
+		padding-left: 50px;
+	}
+}
+@media only screen and (max-width: 1020px) {
+	.b-map_page {
+		padding-top: 50px;
+	}
+	.club__subheading-centred {
+		display: block;
+    	text-align: center;
+	}
+}

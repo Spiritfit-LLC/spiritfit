@@ -270,6 +270,7 @@ class Api
         $name   = !empty($params['name']) ? $params['name'] : false;
         $phone  = !empty($params['phone']) ? $params['phone'] : false;
         $club  = !empty($params['club']) ? $params['club'] : false;
+		$company  = !empty($params['company']) ? $params['company'] : false;
         $client_id   = !empty($params['client_id']) ? $params['client_id'] : false;
         $code   = !empty($params['code']) ? $params['code'] : false;
 
@@ -303,6 +304,10 @@ class Api
 	        	'message' => $_REQUEST[$trafic['cmp']],
 	        	'kword' => $_REQUEST[$trafic['trm']],
 			);
+			
+			if( !empty($company) ) {
+				$arParams['company'] = $company;
+			}
 			
 			$additionFields = $GLOBALS['arAdditionAnswer'][$_REQUEST["WEB_FORM_ID"]];
 			
