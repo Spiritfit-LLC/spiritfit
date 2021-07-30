@@ -293,6 +293,10 @@ class FormRequestComponent extends CBitrixComponent{
                 $arParam["type"] = 10;
             }
 			
+			if( !empty($this->request["form_text_114"]) ) {
+				$arParam["company"] = $this->request["form_text_114"];
+			}
+			
             $api = new Api(array(
                 "action" => "request2",
                 "params" => $arParam
