@@ -454,6 +454,10 @@ main.b-page__main {
 	padding-left: 150px;
 	text-transform: uppercase;
 }
+.club__subheading-clients {
+	padding-left: 120px;
+	text-transform: uppercase;
+}
 .club__subheading {
 	text-transform: uppercase;
 }
@@ -465,12 +469,16 @@ main.b-page__main {
 	.club__subheading-centred {
 		padding-left: 50px;
 	}
+	.club__subheading-clients {
+		padding-left: 0;
+	}
 }
 @media only screen and (max-width: 1020px) {
 	.b-map_page {
 		padding-top: 50px;
 	}
-	.club__subheading-centred {
+	.club__subheading-centred,
+	.club__subheading-clients {
 		display: block;
     	text-align: center;
 	}
