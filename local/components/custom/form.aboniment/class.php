@@ -167,6 +167,10 @@ class FormAbonimentComponent extends CBitrixComponent{
         }
 
         $arFilter = array("IBLOCK_CODE" => "subscription", "CODE" => $code);
+		if( empty($code) ) {
+			unset($arFilter["CODE"]);
+			$arFilter["ACTIVE"] => "Y";
+		}
         $dbElements = CIBlockElement::GetList(array(), $arFilter, false, false, array());
 
         if ($res = $dbElements->GetNextElement()) {
