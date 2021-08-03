@@ -4,7 +4,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 $settings = Utils::getInfo();
 ?>
 
-<div class="club__subheading">Оставьте заявку</div>
+<h2 class="club__subheading">Оставьте заявку</h2>
 <div class="training__aside">
     <div class="training__aside-stage" data-stage="1">
         <h2 class="training__aside-title">

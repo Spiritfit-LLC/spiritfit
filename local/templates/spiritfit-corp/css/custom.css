@@ -451,12 +451,15 @@ main.b-page__main {
 	margin-bottom: 0;
 }
 .club__subheading-centred {
+	margin-top: 30px;
+	margin-bottom: 30px !important;
 	padding-left: 150px;
 	text-transform: uppercase;
 }
 .club__subheading-clients {
 	padding-left: 120px;
 	text-transform: uppercase;
+	margin-bottom: 30px !important;
 }
 .club__subheading {
 	text-transform: uppercase;
