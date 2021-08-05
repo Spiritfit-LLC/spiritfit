@@ -103,7 +103,8 @@
             <div></div>
             <div></div>
         </div>
-        <div class="popup__success">Спасибо! Ваша заявка принята.<br>
-Консультанты клуба свяжутся с Вами в ближайшее время.</div>
+        <div class="popup__success">Спасибо! Ваша заявка принята.<br>Консультанты клуба свяжутся с Вами в ближайшее время.</div>
     </div>
 </div>
+
+<script>dataLayerSend('conversion', 'sendFormTrialWorkout', '');</script>

@@ -84,5 +84,3 @@ setTimeout(function() {
     });
 }, 500);
 </script>
-
-<script>dataLayerSend('conversion', 'sendFormTrialWorkout', '');</script>

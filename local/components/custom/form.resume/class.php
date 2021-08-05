@@ -219,7 +219,11 @@
                 	if (empty($this->arResult["ERROR"])) {
                     	$this->sendSms();
                 	}
-                	$this->includeComponentTemplate('step-2');
+					if( empty($this->arResult["ERROR"]) ) {
+						$this->includeComponentTemplate('step-2');
+					} else {
+						$this->includeComponentTemplate();
+					}
                 	break;
             	case 3:
                 	$this->includeComponentTemplate('step-3');

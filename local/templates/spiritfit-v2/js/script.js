@@ -25,6 +25,9 @@ function getCookie(name) {
 }
 
 function dataLayerSend (eCategory, eAction, eLabel, eNI = false) {
+	console.log("dataLayer");
+	console.log(eCategory);
+	console.log(eAction);
     (dataLayer = window.dataLayer || []).push({
         'eCategory': eCategory,
         'eAction': eAction,

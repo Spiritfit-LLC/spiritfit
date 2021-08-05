@@ -3,13 +3,16 @@ $clubs = Clubs::getList();
 $clubsJson = Clubs::clubsJson($clubs);
 $clubSection = Clubs::getClubSecDesc();
 ?>
+<?$APPLICATION->AddHeadString('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>',true)?>
 <script>window.clubs = <?=$clubsJson?></script>
-<script src="<?=SITE_TEMPLATE_PATH?>/js/map-general.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYnse7iuwKiZ9UTrrviEkyEG7vhBzjWk4&callback=initMap&libraries=&v=weekly"></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+crossorigin=""></script>
+<script src="<?=SITE_TEMPLATE_PATH?>/js/map-leafletjs.js"></script>
 
 <div class="b-map b-map_page">
     <div class="b-map__map-wrap">
-        <div class="b-map__map" id="map"></div>
+        <div class="b-map__map" id="mapid"></div>
         <div class="b-map__content">
             <div class="content-center">
                 <div class="b-map__info-plate">

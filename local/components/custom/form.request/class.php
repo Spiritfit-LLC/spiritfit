@@ -41,7 +41,7 @@ class FormRequestComponent extends CBitrixComponent{
             }
         }
         if ($step == 1 && $this->request->get('ajax_send')) {
-            $this->arResult["ERROR"] = CForm::Check($this->arParams["WEB_FORM_ID"], $_REQUEST, false, "Y", "N");
+			$this->arResult["ERROR"] = CForm::Check($this->arParams["WEB_FORM_ID"], $_REQUEST, false, "Y", "N");
             if (empty($this->arResult["ERROR"])) {
                 return 2;
             } else {
@@ -359,10 +359,12 @@ class FormRequestComponent extends CBitrixComponent{
         
         switch ($this->checkStep()) {
             case 2:
-                // if (empty($this->arResult["ERROR"])) {
-                    $this->sendSms();
-                // }
-                $this->includeComponentTemplate('step-2');
+				$this->sendSms();
+				if( empty($this->arResult["ERROR"]) ) {
+					$this->includeComponentTemplate('step-2');
+				} else {
+					$this->includeComponentTemplate();
+				}
                 break;
             case 3:
                 $this->includeComponentTemplate('step-3');

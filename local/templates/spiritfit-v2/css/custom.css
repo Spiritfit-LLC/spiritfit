@@ -434,5 +434,12 @@ main.b-page__main {
     margin-bottom: 200px;
 }
 
+#map_club .leaflet-layer,
+#mapid .leaflet-layer {
+	filter: contrast(.7) grayscale(1) invert(1) brightness(0.8);
+}
+#mapid {
+	height: 700px;
+}
 
 /* ==================== */
