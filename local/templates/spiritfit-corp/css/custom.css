@@ -467,6 +467,13 @@ main.b-page__main {
 .b-image-plate-block__text-content .slick-track {
 	align-items: start;
 }
+.club__subheading-centred,
+.club__subheading-clients,
+#js-pjax-clubs .club__subheading {
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 40px;
+}
 
 @media only screen and (max-width: 1440px) {
 	.club__subheading-centred {
