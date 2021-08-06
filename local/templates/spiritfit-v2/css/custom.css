@@ -438,8 +438,13 @@ main.b-page__main {
 #mapid .leaflet-layer {
 	filter: contrast(.7) grayscale(1) invert(1) brightness(0.8);
 }
-#mapid {
+#mapid.map-clubs-detail {
 	height: 700px;
+}
+@media screen and (max-width: 1024px) {
+    #mapid.map-clubs-detail {
+        height: calc(100vh - 260px);
+    }
 }
 
 /* ==================== */

@@ -260,11 +260,6 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 				page: "<?=$APPLICATION->GetCurPage();?>",
 			};
 		</script>
-
-		<? if(false) { ?>
-			<script src="<?=SITE_TEMPLATE_PATH?>/js/map-general.js"></script>
-			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYnse7iuwKiZ9UTrrviEkyEG7vhBzjWk4&callback=initMap&libraries=&v=weekly" async></script>
-		<? } ?>
 		
 		<?$APPLICATION->AddHeadString('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>',true)?>
 		<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
@@ -275,7 +270,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 				<h2 class="b-map__title">Контакты</h2>
 			</div>
 			<div class="b-map__map-wrap">
-				<div class="b-map__map" id="mapid"></div>
+				<div class="b-map__map map-clubs-detail" id="mapid"></div>
 				<div class="b-map__content">
 					<div class="content-center">
 						<div class="b-map__info-plate">
