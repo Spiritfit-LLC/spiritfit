@@ -116,6 +116,9 @@ input.small {
 .go-back.last {
 	border: 2px solid transparent;
 }
+.go-back.disabled {
+	opacity: .5;
+}
 
 @media only screen and (max-width: 768px) {
 	.form-standart_tpl-two-col .form-standart__table-list,

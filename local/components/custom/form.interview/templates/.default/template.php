@@ -1,8 +1,10 @@
 <?
 	if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 	
-	$starValues = ["administrator", "trainer", "dressing", "hall", "programs", "ambience", "comfort", "application", "application_isgood", "recommendation", "fullness"];
+	$starValues = ["administrator", "trainer", "dressing", "hall", "programs", "ambience", "comfort", "application_isgood", "fullness"];
 	$nextStep = "fullness";
+	
+	$counter = 1;
 ?>
 <div id="form_interview">
 	<? if(!empty($arResult["ERROR"])) { ?>
@@ -21,6 +23,7 @@
 					if( $arQuestion["VARNAME"] === "agreement" || $arQuestion["VARNAME"] === "personal" || $arQuestion["VARNAME"] === "rules" ) continue;
 					
 					if( $nextStep === $arQuestion["VARNAME"] ) {
+						$counter = 1;
 						?></div><div class="step-2"><div class="primary-form__title">А теперь мы попросим Вас оценить отдельные элементы по 5-балльной шкале, где 1 - очень плохо, хуже некуда и 5 - отлично, мне очень нравится.</div><?
 					}
 					
@@ -35,6 +38,9 @@
 						$fieldType = (!empty($arAnswers[0]["FIELD_TYPE"])) ? $arAnswers[0]["FIELD_TYPE"] : "text";
 						if( in_array($arQuestion["VARNAME"], $starValues) ) {
 							$fieldType = "stars";
+						}
+						if( $arQuestion["VARNAME"] === "recommendation" ) {
+							$fieldType = "integer";
 						}
 						if( isset($arAnswers["BASE"]) ) {
 							?><input id="form_<?=$arQuestion["VARNAME"]?>" type="hidden" name="form_<?=$arAnswers["BASE"]["FIELD_TYPE"]?>_<?=$arAnswers["BASE"]["ID"]?>" value="<?=$arAnswers["BASE"]["VALUE"]?>"><?
@@ -55,11 +61,21 @@
 									<?
 								}
 							break;
+							case "integer":
+								foreach($arAnswers as $answer) {
+									?>
+									<div class="primary-form__row quality__form-row">
+										<span class="primary-form__label "><?=$counter?>. <?=$arQuestion["TITLE"]?><?=($arQuestion["REQUIRED"] === "Y") ? "*" : "" ?></span>
+										<input class="input input--light input--fluid input--text small placeholder-white" type="number" name="form_<?=$answer['FIELD_TYPE']?>_<?=$answer['ID']?>" value="<?=!empty($answer['VALUE']) ? $answer['VALUE'] : "0"?>" min="0" max="10" placeholder="от 0 до 10">
+            						</div>
+									<?
+								}
+							break;
 							case "textarea":
 								foreach($arAnswers as $answer) {
 									?>
 									<div class="primary-form__row quality__form-row">
-										<span class="primary-form__label "><?=$arQuestion["TITLE"]?><?=($arQuestion["REQUIRED"] === "Y") ? "*" : "" ?></span>
+										<span class="primary-form__label "><?=$counter?>. <?=$arQuestion["TITLE"]?><?=($arQuestion["REQUIRED"] === "Y") ? "*" : "" ?></span>
 										<textarea class="input input--light input--fluid input--text small placeholder-white" rows="1" maxlength="500" name="form_<?=$answer['FIELD_TYPE']?>_<?=$answer['ID']?>" <?=($arQuestion["REQUIRED"] === "Y") ? "required" : "" ?>><?=!empty($answer['VALUE']) ? $answer['VALUE'] : ""?></textarea>
             						</div>
 									<?
@@ -68,7 +84,7 @@
 							case "stars":
 								?>
 								<div class="primary-form__row quality__form-row">
-									<span class="primary-form__label"><?=$arQuestion["TITLE"]?><?=($arQuestion["REQUIRED"] === "Y") ? "*" : "" ?></span>
+									<span class="primary-form__label"><?=$counter?>. <?=$arQuestion["TITLE"]?><?=($arQuestion["REQUIRED"] === "Y") ? "*" : "" ?></span>
 									<?
 										foreach($arAnswers as $answer) {
 									?>
@@ -94,7 +110,7 @@
 							case "checkbox":
 								?>
 								<div class="primary-form__row quality__form-row">
-									<span class="primary-form__label"><?=$arQuestion["TITLE"]?><?=($arQuestion["REQUIRED"] === "Y") ? "*" : "" ?></span>
+									<span class="primary-form__label"><?=$counter?>. <?=$arQuestion["TITLE"]?><?=($arQuestion["REQUIRED"] === "Y") ? "*" : "" ?></span>
 									<?
 										foreach($arAnswers as $answer) {
 											if( $answer["FIELD_TYPE"] == "checkbox" ) {
@@ -122,7 +138,7 @@
 							case "radio":
 								?>
 								<div class="primary-form__row quality__form-row <?=$arQuestion['VARNAME']?>">
-									<span class="primary-form__label"><?=$arQuestion["TITLE"]?><?=($arQuestion["REQUIRED"] === "Y") ? "*" : "" ?></span>
+									<span class="primary-form__label"><?=$counter?>. <?=$arQuestion["TITLE"]?><?=($arQuestion["REQUIRED"] === "Y") ? "*" : "" ?></span>
 									<?
 										foreach($arAnswers as $answer) {
 											if( $answer["FIELD_TYPE"] == "radio" ) {
@@ -150,7 +166,7 @@
 							case "select":
 								?>
 									<div class="primary-form__row quality__form-row">
-                						<span class="primary-form__label "><?=$arQuestion["TITLE"]?><?=($arQuestion["REQUIRED"] === "Y") ? "*" : "" ?></span>
+                						<span class="primary-form__label "><?=$counter?>. <?=$arQuestion["TITLE"]?><?=($arQuestion["REQUIRED"] === "Y") ? "*" : "" ?></span>
                 						<select class="input input--light input--fluid input--select" name="<?=$arQuestion["VARNAME"]?>" data-for="#form_<?=$arQuestion["VARNAME"]?>" <?=($arQuestion["REQUIRED"] === "Y") ? "required" : "" ?>>
                     						<option value="">Выберите подходящий вариант</option>
                     						<?
@@ -170,6 +186,8 @@
 							break;
 						}
 					}
+					
+					$counter += 1;
 				?>
 			<? } ?>
 			<div class="form-standart__footer">
@@ -203,7 +221,7 @@
 			</div>
 		</div>
 		<div class="form-standart__buttons">
-			<a class="subscription__total-btn--club subscription__total-btn--reg btn btn--white go-back" href="#back">Далее</a>
+			<a class="subscription__total-btn--club subscription__total-btn--reg btn btn--white go-back disabled" href="#back">Далее</a>
 			<input class="subscription__total-btn--club subscription__total-btn--reg btn btn--white" type="submit" value="<?=$arResult["arForm"]["BUTTON"] ?>">
 		</div>
 	</form>
