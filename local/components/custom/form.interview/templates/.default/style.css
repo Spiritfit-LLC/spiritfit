@@ -1,0 +1,137 @@
+.form-standart_tpl-two-col .form-standart__table-list {
+	display: table;
+	position: relative;
+	width: 100%;
+	table-layout: fixed;
+	padding: 0 56px;
+}
+.form-standart__table-col {
+	display: table-cell;
+	position: relative;
+	width: 50%;
+	vertical-align: top;
+    padding: 24px;
+	box-sizing: border-box;
+}
+.form-standart__table-col.w100 {
+	width: 100%;
+	padding-top: 0;
+}
+.file-selector input[type="file"] {
+    display: none;
+}
+.file-selector > span {
+	display: block;
+	position: relative;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+.file-selector {
+	display: block;
+	position: relative;
+	margin-top: 40px;
+	box-sizing: border-box;
+	padding: 2px 10px;
+	color: #fff;
+	background-color: #000;
+	line-height: 37px;
+	cursor: pointer;
+}
+.form-standart__inputs {
+	display: block;
+	position: relative;
+}
+.form-standart__table-row {
+	display: table-row;
+	position: relative;
+}
+.popup__resume-form textarea {
+	height: 150px;
+}
+.form__error-text {
+	display: block;
+    position: relative;
+    color: #f3f3f3;
+    text-align: left;
+    font-size: 10pt;
+    margin-bottom: 20px;
+}
+#js-pjax-container-vacancies .popup__heading {
+	text-align: center;
+    margin-bottom: 30px;
+}
+#js-pjax-container-vacancies input[name=code] {
+	font-size: 18pt;
+    margin-top: 40px;
+}
+
+textarea.small {
+	height: 120px;
+    background-color: #ff7b25;
+	box-sizing: border-box;
+    padding: 15px;
+}
+textarea.placeholder-white::placeholder,
+input.placeholder-white::placeholder,
+.placeholder-white::placeholder {
+	color: #fff;
+	opacity: .6;
+}
+.primary-form__row-element {
+	margin-bottom: 15px;
+}
+input.small {
+    background-color: #ff7b25;
+    box-sizing: border-box;
+    padding: 15px;
+}
+.primary-form__subtitle {
+	display: block;
+    position: relative;
+    margin-bottom: 5px;
+    margin-top: 15px;
+    opacity: .8;
+}
+.form-interview .quality__form-row {
+	margin-bottom: 35px;
+}
+.form-interview .primary-form__label {
+	font-size: 15pt;
+}
+
+.form-standart__buttons {
+	display: block;
+    position: relative;
+	margin-top: 80px;
+	text-align: center;
+}
+.form-standart__buttons .subscription__total-btn--club {
+	display: inline-block;
+	margin: 0;
+}
+.form-interview .step-2,
+.form-interview input[type=submit] {
+	display: none;
+}
+.go-back.last {
+	border: 2px solid transparent;
+}
+
+@media only screen and (max-width: 768px) {
+	.form-standart_tpl-two-col .form-standart__table-list,
+	.form-standart__table-col,
+	.form-standart__table-row {
+		display: block;
+		width: 100%;
+	}
+	.form-standart__table-col {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+	.form-standart__table-list {
+		padding-bottom: 35px !important;
+	}
+	.form-standart_tpl-two-col .form-standart__table-list {
+		padding: 0;
+	}
+}

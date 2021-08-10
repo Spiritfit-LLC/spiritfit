@@ -43,7 +43,12 @@
 			
         	// Обработка формы без SMS-подтверждения номера
         	if ($this->arParams["SKIP_CHECKS"] == "Y") {
-            	
+			
+				$this->arResult["ERROR"] = CForm::Check($this->arParams["WEB_FORM_ID"], $_REQUEST, false, "Y", "N");
+            	if ( !empty($this->arResult["ERROR"]) ) {
+					return 1;
+				}
+				
 				$arParam = $this->getFormatFields();
             	$arParam['type'] = (int)$type;
             	
@@ -52,8 +57,11 @@
 					"params" => $arParam
             	));
 				
-				if( !empty($_REQUEST["form_file_109"]) ) {
-					$_REQUEST["form_file_109"] = CFile::MakeFileArray(intval($_REQUEST["form_file_109"]));
+				if( !empty($_FILES) ) {
+					foreach($_FILES as $key => $file) {
+						$_REQUEST["form_file_109"] = CFile::MakeFileArray(CFile::SaveFile($file, "emails"));
+						break;
+					}
 				} else {
 					unset($_REQUEST["form_file_109"]);
 				}

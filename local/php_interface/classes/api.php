@@ -106,6 +106,12 @@ class Api
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
+			case 'web_site_inteview':
+                $this->web_site_inteview($post['params']);
+                AddMessage2Log('web_site_inteview');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
         }
     }
 
@@ -185,6 +191,43 @@ class Api
 		$additionFields = $GLOBALS['arAdditionAnswer'][$_REQUEST["WEB_FORM_ID"]];
         
         $this->_send($this->apiUrl."resume", $arParams);
+        
+        if ($this->_data['result']['errorCode'] == 0)
+            $this->_result = true;
+    }
+	
+	/**
+     * does request to website/contact
+     *
+     * @param  array $params
+     */
+    private function web_site_inteview($params) {
+        
+		$name = !empty($params['name']) ? $params['name'] : false;
+		$phone = !empty($params['phone']) ? $params['phone'] : false;
+		$email = !empty($params['email']) ? $params['email'] : false;
+        $client_id = !empty($params['client_id']) ? $params['client_id'] : false;
+        $code = !empty($params['code']) ? $params['code'] : false;
+		
+        if(strpos($client_id, '.')){
+            $client_id = explode('.', $client_id);
+            $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
+        }
+
+        if( empty($phone) ){
+            return false;
+        }
+       
+        $type = $params["type"] ? $params["type"] : 0;
+        
+		$trafic = $GLOBALS['arTraficAnswer'][$_REQUEST["WEB_FORM_ID"]];
+		$arParams = array(
+			"type" => $type
+		);
+		
+		$additionFields = $GLOBALS['arAdditionAnswer'][$_REQUEST["WEB_FORM_ID"]];
+        
+        $this->_send($this->apiUrl."inteview", $arParams);
         
         if ($this->_data['result']['errorCode'] == 0)
             $this->_result = true;
