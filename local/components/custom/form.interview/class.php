@@ -74,27 +74,27 @@
 			
 			$arFormParam = $this->getNamedFields();
 			$arExcelFields = array(
-				"club_768" => "A",
-				"sex_116" => "B",
-				"sex_117" => "B",
-				"age_118" => "C",
-				"age_119" => "C",
-				"age_120" => "C",
-				"age_121" => "C",
-				"age_122" => "C",
-				"knowledge_123" => "D",
-				"knowledge_124" => "D",
-				"knowledge_125" => "D",
-				"knowledge_126" => "D",
-				"visit_127" => "E",
-				"visit_128" => "E",
-				"visit_129" => "E",
-				"goals_130" => "F",
-				"goals_131" => "G",
-				"goals_132" => "H",
-				"goals_133" => "I",
-				"goals_134" => "J",
-				"goals_135" => "K",
+				"club_798" => "B",
+				"sex_116" => "C",
+				"sex_117" => "C",
+				"age_118" => "D",
+				"age_119" => "D",
+				"age_120" => "D",
+				"age_121" => "D",
+				"age_122" => "D",
+				"knowledge_123" => "E",
+				"knowledge_124" => "E",
+				"knowledge_125" => "E",
+				"knowledge_126" => "E",
+				"visit_127" => "F",
+				"visit_128" => "F",
+				"visit_129" => "F",
+				"goals_130" => "G",
+				"goals_131" => "H",
+				"goals_132" => "I",
+				"goals_133" => "J",
+				"goals_134" => "K",
+				"goals_135" => "L",
 				"goals_207" => "L",
 				"payment_136" => "M",
 				"payment_137" => "M",
@@ -167,6 +167,8 @@
 					$value = "";
 					if( $item["FIELD_TYPE"] === "text" || $item["FIELD_TYPE"] === "textarea" ) {
 						$value = $item["VALUE"];
+					} elseif($item["FIELD_TYPE"] === "select") {
+						$value = $item["VALUE"];
 					} else if($item["FIELD_TYPE"] === "radio" && !empty($item["MESSAGE"])) {
 						$value = $item["MESSAGE"];
 					} else {
@@ -182,6 +184,26 @@
 				}
 			}
 			
+			if( empty($arExcelCels["N"]) ) {
+				$arExcelCels["N"] = "0";
+			}
+			
+			if( !empty($arExcelCels["H"]) ) {
+				$arExcelCels["H"] = "Да";
+			}
+			if( !empty($arExcelCels["I"]) ) {
+				$arExcelCels["I"] = "Да";
+			}
+			if( !empty($arExcelCels["J"]) ) {
+				$arExcelCels["J"] = "Да";
+			}
+			if( !empty($arExcelCels["K"]) ) {
+				$arExcelCels["K"] = "Да";
+			}
+			if( !empty($arExcelCels["L"]) ) {
+				$arExcelCels["L"] = "Да";
+			}
+			
 			$sFile = $_SERVER["DOCUMENT_ROOT"] . "/upload/" . $this->arParams["EXCEL_FILE"];
 			if( \Bitrix\Main\Loader::includeModule('phpoffice') && file_exists($sFile) ) {
 				
@@ -192,6 +214,12 @@
 				
 				$rowNum = $oCells->getHighestRow();
 				$rowNum += 1;
+				
+				$currentDate = date("d.m.Y H:i:s");
+				$oSpreadsheet->setActiveSheetIndex(0)->setCellValue("A".$rowNum, $currentDate);
+				$oSpreadsheet->getActiveSheet()->getStyle("A".$rowNum)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER)->SetVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+				$oSpreadsheet->getActiveSheet()->getStyle("A".$rowNum)->getAlignment()->setWrapText(true);
+				$oSpreadsheet->getActiveSheet()->getStyle("A".$rowNum)->getBorders()->getOutline()->setBorderStyle(Border::BORDER_MEDIUM)->setColor(new Color('CECECE'));
 				
 				foreach($arExcelFields as $key) {
 					$num = $key.$rowNum;
@@ -396,7 +424,7 @@
 			
         	$this->getFields();
 			
-        	/*if($this->request->get("mode")){
+        	if($this->request->get("mode")){
             	switch($this->request->get("mode")){
                 	case "try_sms":
                     	if($this->request->get("phone")){
@@ -409,7 +437,7 @@
                     	}
                     	break;
             	}
-        	}*/
+        	}
 			
         	switch ($this->checkStep()) {
             	case 2:

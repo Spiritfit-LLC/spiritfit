@@ -47,6 +47,13 @@ $( document ).ready(function() {
 	}
 	function initFormInterview() {
 		
+		$(".primary-form__row-rating").each(function() {
+			var value = $(this).find("input[type=hidden]").val();
+			if( value !== "" ) {
+				$(".quality__form-star[data-value="+value+"]").addClass("active");
+			}
+		});
+		
 		$("select[data-for]").change(function() {
 			var elem = $( $(this).attr("data-for") ).val($(this).val());
 		});
@@ -158,4 +165,5 @@ $( document ).ready(function() {
 	}
 	
 	initFormInterview();
+	checkStep();
 });
