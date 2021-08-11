@@ -388,7 +388,7 @@ function showLegalInformation_v2(form) {
             block3.attr('disabled', true);
         }
     });
-
+	
     $(window).on('resize', function() {
         scrollbarLegalInformation.update();
     });
@@ -405,12 +405,11 @@ $(document).ready(function(){
     $('.b-info-slider__btn').click(function(){
         var titleSale = $(this).parents('.b-info-slider__item').find('.b-info-slider__title').text();
         dataLayerSend('UX', 'clickOrderLinkSliderPromo', titleSale);
-    })
-
+    });
 
     $('[data-fancybox="feedback-choice"]').click(function(){
         dataLayerSend('UX', 'openFormFeedback', '');
-    })
+    });
 
     $('a').click(function(e){
         var link = $(this).attr('href');
@@ -422,7 +421,7 @@ $(document).ready(function(){
         if(link !== undefined && link.indexOf('tel') != -1){
             dataLayerSend('UX', 'clickCallButton', '');
         }
-    })
+    });
     
     $(document).on("click", ".js-callback-submit_v2", function(e) {
         var buttonCallbackSubmit = $(this);

@@ -24,8 +24,12 @@ function getCookie(name) {
     return(setStr);
 }
 
-function dataLayerSend (eCategory, eAction, eLabel, eNI = false) {
-    (dataLayer = window.dataLayer || []).push({
+function dataLayerSend(eCategory, eAction, eLabel, eNI = false) {
+    return false;
+}
+function dataLayerSendCareer(eCategory, eAction, eLabel, eNI = false) {
+	console.log("ACTION:"+eAction);
+	(dataLayer = window.dataLayer || []).push({
         'eCategory': eCategory,
         'eAction': eAction,
         'eLabel': eLabel,
@@ -94,7 +98,7 @@ $(document).ready(function() {
         var href = $(this).attr('href');
 
         if(href.indexOf('http') !== -1){
-            dataLayerSend('UX', 'clickExternalLink', href);
+			dataLayerSendCareer('UX', 'clickExternalLink', href);
         }
     })
 

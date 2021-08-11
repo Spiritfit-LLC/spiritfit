@@ -402,15 +402,15 @@ function clickBtn(el){
 }
 
 $(document).ready(function(){
-    $('.b-info-slider__btn').click(function(){
+    
+	$('.b-info-slider__btn').click(function(){
         var titleSale = $(this).parents('.b-info-slider__item').find('.b-info-slider__title').text();
         dataLayerSend('UX', 'clickOrderLinkSliderPromo', titleSale);
-    })
-
-
+    });
+	
     $('[data-fancybox="feedback-choice"]').click(function(){
         dataLayerSend('UX', 'openFormFeedback', '');
-    })
+    });
 
     $('a').click(function(e){
         var link = $(this).attr('href');
@@ -422,7 +422,7 @@ $(document).ready(function(){
         if(link !== undefined && link.indexOf('tel') != -1){
             dataLayerSend('UX', 'clickCallButton', '');
         }
-    })
+    });
     
     $(document).on("click", ".js-callback-submit_v2", function(e) {
         var buttonCallbackSubmit = $(this);
@@ -645,6 +645,8 @@ $(document).ready(function(){
 	
 	$('.js-form-vacancy').click(function(e){
         e.preventDefault();
+		
+		dataLayerSendCareer('UX', 'openFormJobRequest', '');
 		
 		formPopup = $( $(this).attr("href") );
         formPopup.show();
@@ -1030,7 +1032,6 @@ $(document).ready(function(){
     }
 	
 	$(document).on('pjax:success', function(data, status, xhr, options) {
-		/*console.log(data);*/
 		initFormSubmit();
 	});
 	function initFormSubmit() {

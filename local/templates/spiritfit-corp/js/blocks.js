@@ -303,6 +303,11 @@ $(function () {
         var $context = $(this);
         var $navPlace = $('.b-info-slider__nav', $context);
         var $slider = $('.b-info-slider__slider', $context);
+		$('.b-info-slider__slider').on('init', function (e, slick) {
+            $(".b-info-slider__btn").click(function() {
+				dataLayerSendCorp('UX', 'clickButtonFindOutCost', '');
+			});
+        });
         $slider.slick({
             dots: true,
             appendDots: $navPlace,
