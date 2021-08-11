@@ -287,7 +287,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 											<div><a class="invisible-link" href="tel:<?=$phone?>"><?=$phone?></a></div>
 										<? } ?>
 										<? if(!empty($email)){ ?>
-											<div><a class="invisible-link" href="mailto:<?=$email?>"></a></div>
+											<div><a class="invisible-link" href="mailto:<?=$email?>"><?=$email?></a></div>
 										<? } ?>
 									</div>
 									<? if(!empty($workHours)){ ?>
