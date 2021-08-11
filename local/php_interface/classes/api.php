@@ -203,11 +203,8 @@ class Api
      */
     private function web_site_inteview($params) {
         
-		$name = !empty($params['name']) ? $params['name'] : false;
 		$phone = !empty($params['phone']) ? $params['phone'] : false;
-		$email = !empty($params['email']) ? $params['email'] : false;
         $client_id = !empty($params['client_id']) ? $params['client_id'] : false;
-        $code = !empty($params['code']) ? $params['code'] : false;
 		
         if(strpos($client_id, '.')){
             $client_id = explode('.', $client_id);
@@ -221,13 +218,21 @@ class Api
         $type = $params["type"] ? $params["type"] : 0;
         
 		$trafic = $GLOBALS['arTraficAnswer'][$_REQUEST["WEB_FORM_ID"]];
-		$arParams = array(
-			"type" => $type
-		);
+		$params["type"] = $type;
+		$params["cid"] = $client_id;
+		$params['type'] = 'inteview';
 		
-		$additionFields = $GLOBALS['arAdditionAnswer'][$_REQUEST["WEB_FORM_ID"]];
+		$trafic = $GLOBALS['arTraficAnswer'][$_REQUEST["WEB_FORM_ID"]];
+		$params['source'] = $_REQUEST[$trafic['src']];
+		$params['channel'] = $_REQUEST[$trafic['mdm']];
+		$params['campania'] = $_REQUEST[$trafic['cnt']];
+		$params['message'] = $_REQUEST[$trafic['cmp']];
+		$params['kword'] = $_REQUEST[$trafic['trm']];
+		if( !empty($_REQUEST[$trafic['ClientId']]) ) {
+			$params['cid'] = $_REQUEST[$trafic['ClientId']];
+		}
         
-        $this->_send($this->apiUrl."inteview", $arParams);
+        $this->_send($this->apiUrl."inteview", $params);
         
         if ($this->_data['result']['errorCode'] == 0)
             $this->_result = true;

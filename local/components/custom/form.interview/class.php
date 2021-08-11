@@ -134,11 +134,11 @@
 				"ambience_180" => "AS",
 				"ambience_181" => "AT",
 				"ambience_ask_182" => "AU",
-				"comfort_183" => "AU",
-				"comfort_184" => "AV",
-				"comfort_185" => "AW",
-				"comfort_186" => "AX",
-				"comfort_ask_187" => "AY",
+				"comfort_183" => "AV",
+				"comfort_184" => "AW",
+				"comfort_185" => "AX",
+				"comfort_186" => "AY",
+				"comfort_ask_187" => "AZ",
 				"application_188" => "BA",
 				"application_189" => "BB",
 				"application_190" => "BC",
@@ -361,18 +361,31 @@
     	}
 		
     	private function getFormatFields() {
-        	$arParam = array();
-        	foreach ($this->arResult["arAnswers"] as $name => $answer) {
-            	$fieldId = $this->request["form_" . $answer['0']["FIELD_TYPE"] . "_" . $answer['0']["ID"]];
-				if ($fieldId) {
-                	if ($name == "phone") {
-                    	$fieldId = preg_replace('![^0-9]+!', '', $fieldId);
-                	}
-                	$arParam[$name] = $fieldId;
-            	}
-        	}
-        	$arParam['client_id'] = $this->request->getCookieRaw('_ga');
-        	return $arParam;
+        	
+			$reqFields = $this->getNamedFields();
+			$arParam = [];
+			foreach( $arFormParam as $code => $value ) {
+				foreach($value["VALUES"] as $item) {
+					$value = "";
+					if( $item["FIELD_TYPE"] === "text" || $item["FIELD_TYPE"] === "textarea" ) {
+						$value = $item["VALUE"];
+					} elseif($item["FIELD_TYPE"] === "select") {
+						$value = $item["VALUE"];
+					} else if($item["FIELD_TYPE"] === "radio" && !empty($item["MESSAGE"])) {
+						$value = $item["MESSAGE"];
+					} else {
+						$value = "Да";
+					}
+					
+					if( empty($arParam[$code]) ) {
+						$arParam[$code] = $value;
+					} else {
+						$arParam[$code] = $arParam[$code] . ", " . $value;
+					}
+				}
+			}
+			
+			return $arParam;
     	}
 		
 		private function getRequestFields() {

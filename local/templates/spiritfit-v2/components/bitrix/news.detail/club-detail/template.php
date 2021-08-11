@@ -335,7 +335,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 			<? } ?>
 			<span itemprop="addressLocality">Москва</span>
 		</div>
-		<span itemprop="telephone">+7(495)266-40-95</span>
+		<span itemprop="telephone">8 (495) 266-40-94</span>
 		<? if( !empty($arResult['PROPERTIES']['EMAIL']['VALUE']) ) { ?>	
 			<span itemprop="email"><?=$arResult['PROPERTIES']['EMAIL']['VALUE']?></span>
 		<? } ?>
