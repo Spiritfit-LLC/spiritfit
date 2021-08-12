@@ -19,7 +19,7 @@ $APPLICATION->SetTitle("Качество обслуживания");
 							"ADD_ELEMENT_CHAIN" => "N",
 							"EXCEL_FILE" => "out_4fdyu693.xlsx",
 							"IBLOCK_CODE" => "clubs",
-							"SKIP_CHECKS" => "Y",
+							"SKIP_CHECKS" => "N",
 							"THANKS" => "Спасибо, Ваше сообщение отправлено.",
 						),
 						false

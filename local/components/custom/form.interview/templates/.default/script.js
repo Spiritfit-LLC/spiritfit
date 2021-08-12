@@ -1,6 +1,7 @@
 $( document ).ready(function() {
 	$(document).on('pjax:success', function(data, status, xhr, options) {
 		initFormInterview();
+		checkStep();
 	});
 	function checkStep1() {
 		if( $("input[name=form_text_115]").val() !== "" && typeof $("input[name=form_radio_sex]:checked").val() !== "undefined"
@@ -50,7 +51,7 @@ $( document ).ready(function() {
 		$(".primary-form__row-rating").each(function() {
 			var value = $(this).find("input[type=hidden]").val();
 			if( value !== "" ) {
-				$(".quality__form-star[data-value="+value+"]").addClass("active");
+				$(this).find(".quality__form-star[data-value="+value+"]").addClass("selected");
 			}
 		});
 		

@@ -66,7 +66,7 @@
 									?>
 									<div class="primary-form__row quality__form-row">
 										<span class="primary-form__label "><?=$counter?>. <?=$arQuestion["TITLE"]?><?=($arQuestion["REQUIRED"] === "Y") ? "*" : "" ?></span>
-										<input class="input input--light input--fluid input--text small placeholder-white" type="number" name="form_<?=$answer['FIELD_TYPE']?>_<?=$answer['ID']?>" value="<?=!empty($answer['VALUE']) ? $answer['VALUE'] : "0"?>" min="0" max="10" placeholder="от 0 до 10">
+										<input class="input input--light input--fluid input--text small placeholder-white" type="number" name="form_<?=$answer['FIELD_TYPE']?>_<?=$answer['ID']?>" value="<?=!empty($answer['VALUE']) ? $answer['VALUE'] : "10"?>" min="0" max="10" placeholder="от 0 до 10">
             						</div>
 									<?
 								}
