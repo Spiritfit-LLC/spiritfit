@@ -120,6 +120,14 @@ input.small {
 	opacity: .5;
 }
 
+@media only screen and (max-width: 1000px) {
+	.form-standart__buttons .subscription__total-btn--club {
+		margin-bottom: 20px;
+	}
+	.form-standart__buttons .subscription__total-btn--club:last-child {
+		margin-bottom: 0;
+	}
+}
 @media only screen and (max-width: 768px) {
 	.form-standart_tpl-two-col .form-standart__table-list,
 	.form-standart__table-col,
