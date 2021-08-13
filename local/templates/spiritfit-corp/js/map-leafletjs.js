@@ -97,8 +97,11 @@ document.addEventListener("DOMContentLoaded", function(){
       refactoredPhone = '+' + refactoredPhone;
     }
     let shedule = '';
-
-    if(marker.options.club_soon_open == 'Y' || marker.options.page === ''){
+	
+	$titlePlace.html("<span>" + marker.options.title + "</span>");
+    $linkButton.addClass('is-hide').attr('href', '#');
+    
+	/*if(marker.options.club_soon_open == 'Y' || marker.options.page === ''){
       $titlePlace.html("<span>" + marker.options.title + "</span>");
       $linkButton.addClass('is-hide').attr('href', '#');
     }else{
@@ -107,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function(){
       shedule = `<div class="b-map__contact-item">
               <a href="${marker.options.page}#timetable">Расписание</a>
           </div>`;
-    }
+    }*/
     
     
     // блок "короткое описание клуба"

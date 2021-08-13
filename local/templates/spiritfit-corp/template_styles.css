@@ -5152,8 +5152,11 @@ button.mfp-arrow::before{
     margin-top: 20px;
 }
 
-
-
+/* стили для карты на странице "клубы" start */
+#mapid .leaflet-layer {filter: contrast(.7) grayscale(1) invert(1) brightness(0.8);}
+.b-map__content {
+	z-index: 999;
+}
 
 @media screen and (max-width: 640px) {
     .slider-progressbar {
