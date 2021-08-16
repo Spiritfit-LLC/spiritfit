@@ -4,7 +4,7 @@ define('HIDE_SLIDER', true);
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Качество обслуживания");
 ?>
-<div class="quality">
+<div class="quality form-interview-wrapper">
     <div class="quality__questionary">
         <?//<h2 class="quality__subheading">Оценка качества обслуживания</h2>?>
         <div class="primary-form quality__form" id="body_quality">

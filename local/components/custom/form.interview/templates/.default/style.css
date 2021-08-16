@@ -12,7 +12,7 @@
 	vertical-align: top;
     padding: 24px;
 	box-sizing: border-box;
-}
+	}
 .form-standart__table-col.w100 {
 	width: 100%;
 	padding-top: 0;
@@ -97,6 +97,7 @@ input.small {
 }
 .form-interview .primary-form__label {
 	font-size: 15pt;
+	text-transform: none;
 }
 
 .form-standart__buttons {
@@ -118,6 +119,17 @@ input.small {
 }
 .go-back.disabled {
 	opacity: .5;
+}
+
+.form-interview .select2-container .select2-selection--single .select2-selection__rendered {
+	font-size: 16px;
+    font-weight: 500;
+    opacity: 0.7;
+}
+.form-interview .input-label__text {
+	font-size: 16px;
+	font-weight: 500;
+	opacity: 0.7;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -144,5 +156,22 @@ input.small {
 	}
 	.form-standart_tpl-two-col .form-standart__table-list {
 		padding: 0;
+	}
+	.form-interview-wrapper,
+	.quality .form-interview-wrapper {
+		margin-left: 0 !important;
+    	padding-top: 0 !important;
+	}
+	.form-interview-wrapper .primary-form {
+		border-radius: 0;
+    	margin: 0;
+	}
+	.form-interview .primary-form__title {
+		font-size: 22px;
+		line-height: 1.2;
+	}
+	.form-interview .input-label__text {
+		padding-top: 0;
+		font-size: 14px;
 	}
 }
