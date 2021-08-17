@@ -117,3 +117,6 @@
 Консультанты клуба свяжутся с Вами в ближайшее время.</div>
     </div>
 </div>
+<? if($arParams["PREV_STEP"] == 2) { ?>
+	<script>dataLayerSend('conversion', 'sendFormTrialWorkout', '');</script>
+<? } ?>

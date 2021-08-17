@@ -38,7 +38,8 @@ class FormAbonimentComponent extends CBitrixComponent{
 
     private function checkStep() {
         $step = $this->request->get('step');
-        
+		$this->arParams["PREV_STEP"] = $step;
+		
         if (empty($step)) {
             return 1;
         }
@@ -142,7 +143,7 @@ class FormAbonimentComponent extends CBitrixComponent{
             $_REQUEST["form_" . $answer['0']["FIELD_TYPE"] . "_" . $answer['0']["ID"]] = "";
         }
     }
-
+	
     private function getFormatFields() {
         $arParam = array();
         foreach ($this->arResult["arAnswers"] as $name => $answer) {

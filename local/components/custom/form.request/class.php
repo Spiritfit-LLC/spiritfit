@@ -27,7 +27,8 @@ class FormRequestComponent extends CBitrixComponent{
 
     private function checkStep() {
         $step = $this->request->get('step');
-        
+        $this->arParams["PREV_STEP"] = $step;
+		
         if (empty($step)) {
             return 1;
         }

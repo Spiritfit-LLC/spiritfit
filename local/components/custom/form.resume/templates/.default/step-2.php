@@ -32,4 +32,3 @@
 	</div>
 	<input class="popup__btn btn" type="submit" value="<?= $arResult["arForm"]["BUTTON"] ?>">
 </form>
-<script>dataLayerSendCareer('conversion', 'sendFormJobRequest', '');</script>

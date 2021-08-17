@@ -140,7 +140,16 @@ $arField = ['name', 'surname', 'email', 'phone'];
                 $strSend = '-/'.$abonementName;
             }
 
-            ?><script>dataLayerSend('UX', 'openMembershipReadyPage', '<?=$strSend?>');</script><?
+            ?>
+			<?
+				if($arParams["PREV_STEP"] == 2 && $abonementName == 'Домашние тренировки') {
+    				?><script>dataLayerSend('UX', 'sendContactFormHomeWorkout', '<?=$strSend?>')</script><?        
+				} else if($arParams["PREV_STEP"] == 2) {
+    				?><script>dataLayerSend('conversion', 'sendContactForm', '<?=$strSend?>')</script><?
+				}
+			?>
+			<script>dataLayerSend('UX', 'openMembershipReadyPage', '<?=$strSend?>');</script>
+			<?
 
             $selectName = "form_".$arResult["arAnswers"]["club"]['0']["FIELD_TYPE"]."_".$arResult["arAnswers"]["club"]['0']["ID"];
             if(!empty($_REQUEST[$selectName])){ ?>

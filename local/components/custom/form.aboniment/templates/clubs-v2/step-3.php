@@ -121,7 +121,7 @@ $arField = ['name', 'email', 'phone'];
         $errorMessage = $settings['PROPERTIES']["ERROR_MESSAGE"][$arResult["RESPONSE"]["data"]["result"]["errorCode"]];
     } else {
         $errorMessage = $arResult["RESPONSE"]["data"]["result"]["userMessage"];
-    }
+		}
     ?>
     <div class="popup popup--call" style="display: block;">
         <div class="popup__bg"></div>
@@ -134,7 +134,7 @@ $arField = ['name', 'email', 'phone'];
         </div>
     </div>
 <? endif; ?>
-
+<script>dataLayerSend('conversion', 'sendFormTrialWorkout', '');</script>
 <script src="<?=SITE_TEMPLATE_PATH?>/js/form-standart.js"></script>
 <script>
 setTimeout(function() {
