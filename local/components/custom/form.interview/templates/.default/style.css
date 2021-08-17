@@ -141,6 +141,10 @@ input.small {
 	position: relative;
 	font-size: 12pt;
 }
+#form_interview .popup__heading {
+	text-align: center;
+    margin-bottom: 13px;
+}
 
 @media only screen and (max-width: 1000px) {
 	.form-standart__buttons .subscription__total-btn--club {

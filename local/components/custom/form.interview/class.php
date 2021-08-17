@@ -452,24 +452,22 @@
             	}
         	}
 			
+			$templateName = '';
         	switch ($this->checkStep()) {
             	case 2:
                 	if (empty($this->arResult["ERROR"])) {
                     	$this->sendSms();
                 	}
-					if( empty($this->arResult["ERROR"]) ) {
-						$this->includeComponentTemplate('step-2');
-					} else {
-						$this->includeComponentTemplate();
+					if( empty($this->arResult["ERROR"]) || intval($this->arResult["ERROR"]) === 1 ) {
+						$templateName = 'step-2';
 					}
                 	break;
             	case 3:
-                	$this->includeComponentTemplate('step-3');
-                	break;
-            	default:
-					$this->includeComponentTemplate();
+					$templateName = 'step-3';
                 	break;
         	}
+			
+			$this->includeComponentTemplate($templateName);
     	}
 	}
 ?>
