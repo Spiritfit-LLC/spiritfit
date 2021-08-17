@@ -2,6 +2,7 @@
 	if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 	
 	$starValues = ["administrator", "trainer", "dressing", "hall", "programs", "ambience", "comfort", "application_isgood", "fullness"];
+	$starValuesQuestions = ["administrator_ask", "trainer_ask", "dressing_ask", "hall_ask", "programs_ask", "ambience_ask", "comfort_ask", "application_isgood_ask", "fullness_ask"];
 	$nextStep = "fullness";
 	
 	$counter = 1;
@@ -51,7 +52,7 @@
 							case "text":
 								foreach($arAnswers as $answer) {
 									?>
-									<div class="primary-form__row quality__form-row">
+									<div class="primary-form__row quality__form-row <? if( in_array($arQuestion["VARNAME"], $starValuesQuestions) ) { echo 'disabled'; } ?>">
 										<? if($arQuestion["VARNAME"] !== "phone") { ?>
 											<textarea class="input input--light input--fluid input--text small placeholder-white" rows="1" maxlength="500" name="form_<?=$answer['FIELD_TYPE']?>_<?=$answer['ID']?>" placeholder="<?=$arQuestion["TITLE"]?>" <?=($arQuestion["REQUIRED"] === "Y") ? "required" : "" ?>><?=!empty($answer['VALUE']) ? $answer['VALUE'] : ""?></textarea>
 										<? } else { ?>
@@ -219,6 +220,9 @@
 					<? } ?>	
 				</div>
 			</div>
+		</div>
+		<div class="form-standart__description">
+			* - поля обязательные для заполнения
 		</div>
 		<div class="form-standart__buttons">
 			<a class="subscription__total-btn--club subscription__total-btn--reg btn btn--white go-back disabled" href="#back">Далее</a>

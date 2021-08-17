@@ -34,13 +34,58 @@ $( document ).ready(function() {
 		}
 		return false;
 	}
+	function checkStars( valuesName, textFieldName ) {
+		
+		if( !Array.isArray(valuesName) )
+			return;
+		
+		var needActivate = false;
+		var wrapper = $("textarea[name="+textFieldName+"]").parents(".primary-form__row").eq(0);
+		
+		for (const name of valuesName) {
+			if( $("input[name="+name+"]").val() !== "" && parseInt($("input[name="+name+"]").val()) <= 4 ) {
+				needActivate = true;
+				break;
+			}
+		}
+		
+		if( needActivate ) {
+			$(wrapper).removeClass("disabled");
+		} else {
+			$("textarea[name="+textFieldName+"]").val("");
+			$(wrapper).addClass("disabled");
+		}
+	}
+	function checkStarsSteps( valuesName ) {
+		if( !Array.isArray(valuesName) )
+			return;
+		
+		for (const name of valuesName) {
+			var wrapper = $("textarea[name="+name+"]").parents(".primary-form__row").eq(0);
+			if( !$(wrapper).hasClass("disabled") && $("textarea[name="+name+"]").val() === "" ) {
+				return false;
+			}
+		}
+		return true;
+	}
 	function checkStep() {
+		
+		checkStars(["form_text_141", "form_text_161", "form_text_162"], "form_text_144");
+		checkStars(["form_text_145", "form_text_163", "form_text_164"], "form_text_148");
+		checkStars(["form_text_149", "form_text_165", "form_text_166"], "form_text_152");
+		checkStars(["form_text_153", "form_text_167", "form_text_168"], "form_text_156");
+		checkStars(["form_text_157", "form_text_169", "form_text_170"], "form_text_160");
+		checkStars(["form_text_171", "form_text_172", "form_text_173", "form_text_174", "form_text_175", "form_text_176"], "form_text_177");
+		checkStars(["form_text_178", "form_text_179", "form_text_180", "form_text_181"], "form_text_181");
+		checkStars(["form_text_183", "form_text_184", "form_text_185", "form_text_186"], "form_text_187");
+		checkStars(["form_text_194", "form_text_195", "form_text_196"], "form_text_197");
+		
 		if( checkStep1() ) {
 			$(".go-back").removeClass("disabled");
 		} else {
 			$(".go-back").addClass("disabled");
 		}
-		if( checkStep2() ) {
+		if( checkStep2() && checkStarsSteps(["form_text_144", "form_text_148", "form_text_152", "form_text_156", "form_text_160", "form_text_177", "form_text_181", "form_text_187", "form_text_197"]) ) {
 			$(".form-interview input[type=submit]").show();
 		} else {
 			$(".form-interview input[type=submit]").hide();
@@ -116,6 +161,9 @@ $( document ).ready(function() {
 			checkStep();
 		});
 		$("input[name=form_text_212]").keyup(function() {
+			checkStep();
+		});
+		$(".form-interview textarea").keyup(function() {
 			checkStep();
 		});
 		

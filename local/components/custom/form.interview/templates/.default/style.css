@@ -51,10 +51,11 @@
 .form__error-text {
 	display: block;
     position: relative;
-    color: #f3f3f3;
+    color: #000000;
     text-align: left;
-    font-size: 10pt;
+    font-size: 14pt;
     margin-bottom: 20px;
+	animation: color-change 1s infinite;
 }
 #js-pjax-container-vacancies .popup__heading {
 	text-align: center;
@@ -132,6 +133,15 @@ input.small {
 	opacity: 0.7;
 }
 
+.form-interview .primary-form__row.disabled {
+	display: none;
+}
+.form-standart__description {
+	display: block;
+	position: relative;
+	font-size: 12pt;
+}
+
 @media only screen and (max-width: 1000px) {
 	.form-standart__buttons .subscription__total-btn--club {
 		margin-bottom: 20px;
@@ -174,4 +184,10 @@ input.small {
 		padding-top: 0;
 		font-size: 14px;
 	}
+}
+
+@keyframes color-change {
+  0% { color: black; }
+  50% { color: red; }
+  100% { color: black; }
 }
