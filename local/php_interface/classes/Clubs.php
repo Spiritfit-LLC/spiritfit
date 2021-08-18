@@ -18,11 +18,11 @@ class Clubs
             $taggedCache->startTagCache($cacheDir);
             $taggedCache->registerTag($cacheKey);		
             
-            $dbElement = CIBlockElement::GetList(['SORT' => 'DESC'], ['IBLOCK_ID' => IBLOCK_CLUBS_ID, 'ACTIVE' => 'Y'], false, false, ['NAME', 'ID', 'PROPERTY_SHORT_PREVIEW_TEXT', 'PROPERTY_ADRESS', 'PROPERTY_PHONE', 'PROPERTY_EMAIL', 'PROPERTY_CORD_YANDEX', 'PROPERTY_WORK', 'PROPERTY_SCHEDULE', 'CODE', 'PROPERTY_NUMBER', 'PROPERTY_NOT_OPEN_YET', 'PROPERTY_SOON', 'PROPERTY_HIDE_LINK']);
+            $dbElement = CIBlockElement::GetList(['SORT' => 'DESC'], ['IBLOCK_ID' => IBLOCK_CLUBS_ID, 'ACTIVE' => 'Y', '!PROPERTY_HIDE_LINK_VALUE' => 'Да'], false, false, ['NAME', 'ID', 'PROPERTY_SHORT_PREVIEW_TEXT', 'PROPERTY_ADRESS', 'PROPERTY_PHONE', 'PROPERTY_EMAIL', 'PROPERTY_CORD_YANDEX', 'PROPERTY_WORK', 'PROPERTY_SCHEDULE', 'CODE', 'PROPERTY_NUMBER', 'PROPERTY_NOT_OPEN_YET', 'PROPERTY_SOON', 'PROPERTY_HIDE_LINK']);
             while ($arElement = $dbElement->Fetch()) {
                 $arResult[] = $arElement;
             }
-
+			
             if (empty($arResult)) {
                 $taggedCache->abortTagCache();
                 $cache->abortDataCache();

@@ -30,7 +30,7 @@ session_start();
 $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 ?>
 <? if($_REQUEST["ajax_send"] != 'Y') { ?>
-	<? if(!empty($arResult['ABONEMENTS']) && $arResult['PROPERTIES']['SOON']['VALUE'] != 'Y'){ ?>
+	<? if(!empty($arResult['ABONEMENTS']) && ($arResult['PROPERTIES']['SOON']['VALUE'] != 'Y' || !empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']))){ ?>
 		<section class="b-cards-slider b-cards-slider--with-prices">
 			<div class="content-center">
 				<div class="b-cards-slider__heading">
@@ -113,38 +113,40 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 	<? } ?>
 <? } ?>
 
-<? if($arResult["PROPERTIES"]["SOON"]["VALUE"] == 'Y') { ?>
-	<div id="js-pjax-clubs">
-		<?
-		$APPLICATION->IncludeComponent(
-			"custom:form.request",
-			"clubs",
-			array(
-				"AJAX_MODE" => "N",
-				"WEB_FORM_ID" => "5",
-				"NUMBER" => $arResult["PROPERTIES"]["NUMBER"]["VALUE"],
-				"TEXT_FORM" => $arResult["PROPERTIES"]["TEXT_FORM"]["~VALUE"],
-			),
-			false
-		);
-		?>
-	</div>
-<? }else{ ?>
-	<div id="js-pjax-clubs">
-		<?
+<? if( empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE'])) { ?>
+	<? if($arResult["PROPERTIES"]["SOON"]["VALUE"] == 'Y') { ?>
+		<div id="js-pjax-clubs">
+			<?
 			$APPLICATION->IncludeComponent(
-				"custom:form.aboniment",
-				"clubs-v2",
+				"custom:form.request",
+				"clubs",
 				array(
 					"AJAX_MODE" => "N",
-					"WEB_FORM_ID" => "3",
+					"WEB_FORM_ID" => "5",
 					"NUMBER" => $arResult["PROPERTIES"]["NUMBER"]["VALUE"],
 					"TEXT_FORM" => $arResult["PROPERTIES"]["TEXT_FORM"]["~VALUE"],
 				),
 				false
 			);
-		?>
-	</div>
+			?>
+		</div>
+	<? } else { ?>
+		<div id="js-pjax-clubs">
+			<?
+				$APPLICATION->IncludeComponent(
+					"custom:form.aboniment",
+					"clubs-v2",
+					array(
+						"AJAX_MODE" => "N",
+						"WEB_FORM_ID" => "3",
+						"NUMBER" => $arResult["PROPERTIES"]["NUMBER"]["VALUE"],
+						"TEXT_FORM" => $arResult["PROPERTIES"]["TEXT_FORM"]["~VALUE"],
+					),
+					false
+				);
+			?>
+		</div>
+	<? } ?>
 <? } ?>
 
 <? if($_REQUEST["ajax_send"] != 'Y') { ?>

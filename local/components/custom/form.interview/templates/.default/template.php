@@ -3,6 +3,7 @@
 	
 	$starValues = ["administrator", "trainer", "dressing", "hall", "programs", "ambience", "comfort", "application_isgood", "fullness"];
 	$starValuesQuestions = ["administrator_ask", "trainer_ask", "dressing_ask", "hall_ask", "programs_ask", "ambience_ask", "comfort_ask", "application_isgood_ask", "fullness_ask"];
+	$skipCounter = ["reccomendation_ask", "fullness_ask", "administrator_ask", "trainer_ask", "dressing_ask", "hall_ask", "programs_ask", "ambience_ask", "comfort_ask", "application_isgood_ask"];
 	$nextStep = "fullness";
 	
 	$counter = 1;
@@ -188,7 +189,11 @@
 						}
 					}
 					
-					$counter += 1;
+					//echo $arQuestion["VARNAME"];
+					if( !in_array($arQuestion["VARNAME"], $skipCounter) ) {
+						$counter += 1;
+					}
+					
 				?>
 			<? } ?>
 			<div class="form-standart__footer">

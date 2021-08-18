@@ -105,14 +105,19 @@ class Utils
 			"ID" => array_values($arClubs),
 			
 		);
-		$dbElements = CIBlockElement::GetList(array("SORT" => "ASC"), $arFilter, false, false, array("ID", "NAME", "PROPERTY_NUMBER"));
-
+		$dbElements = CIBlockElement::GetList(array("SORT" => "ASC"), $arFilter, false, false, array("ID", "NAME", "PROPERTY_NUMBER", "PROPERTY_HIDE_LINK"));
 		while ($res = $dbElements->fetch()) {
+			$clubNumder = $res["PROPERTY_NUMBER_VALUE"];
+			
+			if( !empty($res['PROPERTY_HIDE_LINK_VALUE']) && $clubNumder != $club ) {
+				continue;
+			}
+			
 			$arResult[] = array(
 				"ID" => $res["ID"],
 				"MESSAGE" => $res["NAME"],
-				"SELECTED" => $res["PROPERTY_NUMBER_VALUE"] == $club ? "selected" : "",
-				"NUMBER" => $res["PROPERTY_NUMBER_VALUE"]
+				"SELECTED" => $clubNumder == $club ? "selected" : "",
+				"NUMBER" => $clubNumder
 			);
 		}
 
