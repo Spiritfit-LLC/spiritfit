@@ -422,6 +422,7 @@
 			
         	$arParam = $this->getFormatFields();
         	$arParam["code"] = $this->request->get('code');
+			$arParam["phone"] = $this->request->get('form_text_212');
         	
         	$api = new Api(array(
             	"action" => "check_code",
