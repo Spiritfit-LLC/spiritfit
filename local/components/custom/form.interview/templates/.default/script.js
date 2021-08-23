@@ -197,10 +197,13 @@ $( document ).ready(function() {
 			}
 		});
 		
+		$(".form-interview").unbind();
 		$(".form-interview").submit(function(e) {
 			
 			e.preventDefault();
 			window.oldTitleDocument = document.title;
+
+			$(this).find("input[type=submit]").attr("disabled", "disabled");
 			
 			$.pjax.submit(e, '#form_interview', {
 				push: false,

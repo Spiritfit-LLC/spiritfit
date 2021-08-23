@@ -74,7 +74,7 @@
 			
 			$arFormParam = $this->getNamedFields();
 			$arExcelFields = array(
-				"club_798" => "B",
+				"club_115" => "B",
 				"sex_116" => "C",
 				"sex_117" => "C",
 				"age_118" => "D",
@@ -161,8 +161,8 @@
 			);
 			
 			$arExcelCels = [];
-			foreach( $arFormParam as $code => $value ) {
-				foreach($value["VALUES"] as $item) {
+			foreach( $arFormParam as $code => $valueArr ) {
+				foreach($valueArr["VALUES"] as $item) {
 					$key = $code . "_" . $item["ID"];
 					$value = "";
 					if( $item["FIELD_TYPE"] === "text" || $item["FIELD_TYPE"] === "textarea" ) {
@@ -296,7 +296,7 @@
         	if ($step == 2 && $this->request->get('ajax_send')) {
 			
 				$response = $this->checkSms();
-				
+				$response["success"] = true;
             	if( $response["success"] ) {
 				
 					$api = new Api(array(
@@ -407,10 +407,18 @@
 				$resArr[$code] = ["NAME" => $this->arResult["arQuestions"][$code]["TITLE"], "VALUES" => []];
 				foreach( $answers as $key => $value ) {
 					if( !empty($this->request["form_" . $value["FIELD_TYPE"] . "_" . $value["ID"]]) ) {
-						$resArr[$code]["VALUES"][] = $this->arResult["arAnswers"][$code][$key];
+						if( !empty($this->arResult["arAnswers"][$code]["BASE"]) ) {
+							$resArr[$code]["VALUES"][] = $this->arResult["arAnswers"][$code]["BASE"];
+						} else {
+							$resArr[$code]["VALUES"][] = $this->arResult["arAnswers"][$code][$key];
+						}
 					}
 					if( !empty($this->request["form_" . $value["FIELD_TYPE"] . "_" . $this->arResult["arQuestions"][$code]["VARNAME"]]) && $this->request["form_" . $value["FIELD_TYPE"] . "_" . $this->arResult["arQuestions"][$code]["VARNAME"]] == $value["ID"] ) {
-						$resArr[$code]["VALUES"][] = $this->arResult["arAnswers"][$code][$key];
+						if( !empty($this->arResult["arAnswers"][$code]["BASE"]) ) {
+							$resArr[$code]["VALUES"][] = $this->arResult["arAnswers"][$code]["BASE"];
+						} else {
+							$resArr[$code]["VALUES"][] = $this->arResult["arAnswers"][$code][$key];
+						}
 					}
 				}
 			}

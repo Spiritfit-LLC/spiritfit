@@ -515,7 +515,7 @@ class Api
     {
         $phone  = !empty($params['phone']) ? $params['phone'] : false;
 
-        if(empty($phone)){
+        if(empty($phone)) {
             return false;
         }
 		

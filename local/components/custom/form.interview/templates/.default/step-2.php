@@ -1,5 +1,5 @@
-<?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
-	$APPLICATION->SetTitle($arResult["ELEMENT"]["~NAME"]);
+<?
+    if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 ?>
 <div id="form_interview">
 	<div class="popup__heading"><?= $arResult["arForm"]["NAME"] ?></div>
