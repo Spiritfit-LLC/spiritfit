@@ -420,9 +420,13 @@
     	private function checkSms() {
         	global $APPLICATION;
 			
+            $phoneName = "form_" . $this->arResult["arAnswers"]["phone"]['0']["FIELD_TYPE"] . "_" . $this->arResult["arAnswers"]["phone"]['0']["ID"];
+            $phone = $this->request->get($phoneName);
+        	$phone = preg_replace('![^0-9]+!', '', $phone);
+			
         	$arParam = $this->getFormatFields();
         	$arParam["code"] = $this->request->get('code');
-			$arParam["phone"] = $this->request->get('form_text_212');
+			$arParam["phone"] = $phone;
         	
         	$api = new Api(array(
             	"action" => "check_code",

@@ -7,7 +7,7 @@ $( document ).ready(function() {
 		if( $("input[name=form_text_115]").val() !== "" && typeof $("input[name=form_radio_sex]:checked").val() !== "undefined"
 			&& typeof $("input[name=form_radio_age]:checked").val() !== "undefined" && typeof $("input[name=form_radio_knowledge]:checked").val() !== "undefined"
 			&& typeof $("input[name=form_radio_visit]:checked").val() !== "undefined" && typeof $("input[name=form_radio_goals]:checked").val() !== "undefined"
-			&& typeof $("input[name=form_radio_payment]:checked").val() !== "undefined" ) {
+			&& typeof $("input[name=form_radio_payment]:checked").val() !== "undefined" && $("textarea[name=form_text_140]").val() !== "" ) {
 			return true;
 		}
 		return false;
