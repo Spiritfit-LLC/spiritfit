@@ -284,7 +284,7 @@
         	}
 			/* Обработка формы без SMS-подтверждения номера */
 
-        	if ($step == 1 && $this->request->get('ajax_send')) {
+        	if ($step == 1 && $this->request->get('is_ajax')) {
             	$this->arResult["ERROR"] = CForm::Check($this->arParams["WEB_FORM_ID"], $_REQUEST, false, "Y", "N");
             	if ( empty($this->arResult["ERROR"]) ) {
                 	return 2;
@@ -293,10 +293,10 @@
             	}
         	}
 			
-        	if ($step == 2 && $this->request->get('ajax_send')) {
+        	if ($step == 2 && $this->request->get('is_ajax')) {
 			
 				$response = $this->checkSms();
-				$response["success"] = true;
+				
             	if( $response["success"] ) {
 				
 					$api = new Api(array(
@@ -322,7 +322,7 @@
             	}
         	}
 			
-        	if ($step == 3 && $this->request->get('ajax_send')) {
+        	if ($step == 3 && $this->request->get('is_ajax')) {
             	$this->resetForm();
             	return 1;
         	}

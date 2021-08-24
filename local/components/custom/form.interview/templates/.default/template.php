@@ -16,7 +16,7 @@
 		
 		<input type="hidden" name="WEB_FORM_ID" value="<?=$arParams["WEB_FORM_ID"] ?>">
 		<input type="hidden" name="step" value="1">
-		<input type="hidden" name="ajax_send" value="Y">
+		<input type="hidden" name="is_ajax" value="Y">
 		
 		<div class="step-1">
 			<div class="primary-form__title">Пожалуйста, ответьте на несколько вопросов о себе.</div>

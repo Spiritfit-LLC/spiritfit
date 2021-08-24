@@ -16,7 +16,7 @@
 		<input type="hidden" name="WEB_FORM_ID" value="<?= $arParams["WEB_FORM_ID"] ?>">
 		<input type="hidden" name="step" value="2">
 		<input type="hidden" name="type" value="3">
-		<input type="hidden" name="ajax_send" value="Y">
+		<input type="hidden" name="is_ajax" value="Y">
 		
 		<? foreach ($arResult["HIDDEN_FILEDS"] as $name => $value): ?>
 			<input type="hidden" name="<?= $name ?>" value="<?= $value ?>">
