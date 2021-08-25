@@ -169,3 +169,6 @@ if(!empty($selectClub)){
         </div>
     </div>
 <? endif; ?>
+<script>
+	var getCodeUrl = '<?=$templateFolder?>/sendCode.php';
+</script>

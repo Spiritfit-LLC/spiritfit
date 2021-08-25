@@ -25,7 +25,7 @@ if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 		false
 	);?>
 <? else: ?>
-	<? $GLOBALS['arrFilterAbonement'] = ['PROPERTY_HIDDEN_VALUE' => 'Да'] ?>
+	<? $GLOBALS['arrFilterAbonement'] = ['!PROPERTY_HIDDEN_VALUE' => 'Да'] ?>
 	<?$APPLICATION->IncludeComponent(
 		"bitrix:news.list",
 		"abonements",

@@ -44,11 +44,11 @@ class FormAbonimentComponent extends CBitrixComponent{
             return 1;
         }
 
-        foreach($this->request as $key => $value){
+        foreach($this->request as $key => $value) {
             if(strpos($key, "form_") !== false){
                 $this->arResult["HIDDEN_FILEDS"][$key] = $value;
             }
-            if(strpos($key, "promo") !== false){
+            if(strpos($key, "promo") !== false) {
                 $this->arResult["HIDDEN_FILEDS"][$key] = $value;   
             }
         }
@@ -80,15 +80,17 @@ class FormAbonimentComponent extends CBitrixComponent{
         }
 
         if ($step == 2 && $this->request->get('ajax_send')) {
-            if($this->arResult["RESPONSE"]["data"]["result"]["errorCode"] === 0){
+            if( !empty($this->arResult["RESPONSE"]) && empty($this->arResult["RESPONSE"]["data"]["result"]["errorCode"]) ) {
                 if($RESULT_ID = CFormResult::Add($this->arParams["WEB_FORM_ID"], $_REQUEST, "N")) {
                     CFormResult::SetEvent($RESULT_ID);
                     CFormResult::Mail($RESULT_ID);
                 }
-    
                 return 3;
-            }else{
-                $this->arResult["ERROR"] = "Не правильно введен код";
+            } else if( !empty($this->arResult["RESPONSE"]) && $this->arResult["RESPONSE"]["data"]["result"]["errorCode"] == 6 ) {
+		        $this->arResult["ERROR"] = (!empty($this->arResult["ERROR"])) ? $this->arResult["ERROR"] : "Код введен неверно, повторите через 15 мин.";
+				return 1;
+			} else {
+                $this->arResult["ERROR"] = (!empty($this->arResult["ERROR"])) ? $this->arResult["ERROR"] : "Не правильно введен код";
                 return 2;
             }
         }
@@ -102,12 +104,12 @@ class FormAbonimentComponent extends CBitrixComponent{
     }
 
     private function sendSms($phone = null) {
+
         if($phone == null){
             $phoneName = "form_" . $this->arResult["arAnswers"]["phone"]['0']["FIELD_TYPE"] . "_" . $this->arResult["arAnswers"]["phone"]['0']["ID"];
-            $phone = $this->request->get($phoneName);
+            $phone = (!empty($this->request->get($phoneName))) ? $this->request->get($phoneName) : $this->request->get("phone");
         }
-        
-        $this->arResult["SMS_PHONE"] = $phone;
+		
         $phone = preg_replace('![^0-9]+!', '', $phone);
         $api = new Api(array(
             "action" => "request_sendcode",
@@ -117,6 +119,7 @@ class FormAbonimentComponent extends CBitrixComponent{
         ));
 
         $result = $api->result();
+        
         if(!$result["success"]) {
             $this->arResult["ERROR"] = $result['data']['result']['userMessage'];
         }
@@ -274,8 +277,6 @@ class FormAbonimentComponent extends CBitrixComponent{
             }
         }
 
-        
-
         foreach ($this->arResult["ELEMENT"]["PRICES"] as $key => $arPrice) {
             if ($arPrice["PRICE"] != $this->arResult["ELEMENT"]["BASE_PRICE"]["PRICE"] && $arPrice["NUMBER"] == $this->arResult["ELEMENT"]["BASE_PRICE"]["NUMBER"]) {
 
@@ -323,21 +324,25 @@ class FormAbonimentComponent extends CBitrixComponent{
         global $APPLICATION;
 
         $arParam = $this->getFormatFields();
-        
+
         if ($this->request["num"]) {
             $arParam["code"] = $this->request["num"];
         }
-
-        if($this->arResult["ELEMENT"]["PROPERTIES"]["ADD_TO_1C"]["VALUE"]){
+		
+		$phoneName = "form_" . $this->arResult["arAnswers"]["phone"]['0']["FIELD_TYPE"] . "_" . $this->arResult["arAnswers"]["phone"]['0']["ID"];
+        $phone = $this->request->get($phoneName);
+        $arParam["phone"] = preg_replace('![^0-9]+!', '', $phone);
+		
+		if($arResult["ELEMENT"]["PROPERTIES"]["ADD_TO_1C"]["VALUE"]){
             $arParam["additional"] = $this->arResult["ELEMENT"]["PROPERTIES"]["ADD_TO_1C"]["VALUE"];
         }
         
         if($this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"]){
             $arParam["subscriptionId"] = $this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"];
         }
-        
-        if ($this->request["form_hidden_10"] == 0) {
-        // if ($this->request["form_hidden_10"] == 0 || $this->request["form_hidden_21"] == 0) {
+			
+		// if ($this->request["form_hidden_10"] == 0 || $this->request["form_hidden_21"] == 0) {
+		if ($this->request["form_hidden_10"] == 0) {
             $arParam["type"] = 1;
             if ($this->arResult["ELEMENT"]["CODE"] == "probnaya-trenirovka" || $this->arResult["ELEMENT"]["ID"] == "226") {
                 $arParam["type"] = 3;
@@ -350,24 +355,30 @@ class FormAbonimentComponent extends CBitrixComponent{
         } else {
             $api = new Api(array(
                 "action" => "request",
-                "params" => $arParam
+               	"params" => $arParam
             ));
         }
-        
-        $result = $api->result();
-        
-        
-        $this->arResult["RESPONSE"] = $result;
+		
+		$result = $api->result();
+		$this->arResult["RESPONSE"] = $result;
+		
+		$smsResultArray = $api->result();
+		
+		if( !empty($smsResultArray['data']['result']['errorCode']) ) {
+			$this->arResult["ERROR"] = $smsResultArray['data']['result']['userMessage'];
+			$this->arResult["RESPONSE"] = false;
+		}
     }
 
     function executeComponent(){
+        
         Loader::IncludeModule("form");
         Loader::IncludeModule("iblock");
 
+        $this->arResult["COMPONENT_ID"] = CAjax::GetComponentID($this->GetName(), $this->GetTemplate(), '');
         
         $this->getFields();
         $this->getElement();
-
         
         if($this->arResult["ELEMENT"]["ACTIVE"] == 'N'){
             \Bitrix\Iblock\Component\Tools::process404(
@@ -396,32 +407,43 @@ class FormAbonimentComponent extends CBitrixComponent{
             $this->arResult['SEO']['ELEMENT_META_KEYWORDS'] = $seoValues['ELEMENT_META_KEYWORDS'];
         }
 		
+		$phoneName = "form_" . $this->arResult["arAnswers"]["phone"]['0']["FIELD_TYPE"] . "_" . $this->arResult["arAnswers"]["phone"]['0']["ID"];
+		if( $this->request->get($phoneName) ) {
+			$this->arResult["SMS_PHONE"] = $this->request->get($phoneName);
+		}
+		
         if($this->request->get("mode")){
             switch($this->request->get("mode")){
                 case "try_sms":
-                    if($this->request->get("phone")){
+					if($this->request->get("phone")) {
                         $this->sendSms($this->request->get("phone"));
                     }
                     break;
                 case "coupon":
-                    if($this->request->get("coupon")){
+                    if($this->request->get("coupon")) {
                         $this->checkCoupon($this->request->get("coupon"));
                     }
                     break;
                 case "check_sms":
-                    if ($this->request->get("num")){
+                    if ($this->request->get("num")) {
                         $this->checkSms($this->request->get("num"));
                     }
                     break;
             }
         }
-        
+
+        $prevStep = intval($this->request->get('step'));
+
         switch ($this->checkStep()) {
             case 2:
-                // if (empty($this->arResult["ERROR"])) {
-                    $this->sendSms();
-                // }
-                $this->includeComponentTemplate('step-2');
+                if( $prevStep == 1 ) $this->sendSms();
+                if( empty($this->arResult["ERROR"]) || intval($this->arResult["ERROR"]) === 1 ) {
+                    $this->includeComponentTemplate('step-2');
+                } else if( $prevStep > 1 ) {
+                	$this->includeComponentTemplate('step-2');
+                } else {
+					$this->includeComponentTemplate();
+				}
                 break;
             case 3:
                 $this->includeComponentTemplate('step-3');

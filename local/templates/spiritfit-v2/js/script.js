@@ -1258,17 +1258,30 @@ $(document).ready(function() {
     $(document).on('click', '.subscription__close.js-pjax-link', function() {
         selectChoise = true;
     });
-
+	
+	$(".subscription__code").unbind();
     $(document).on("click", ".subscription__code", function(e) {
         e.preventDefault();
-        $.ajax({
-            url: "",
+        var ajaxUrl = "";
+		if( typeof getCodeUrl !== "undefined" ) {
+			ajaxUrl = getCodeUrl;
+		}
+		$.ajax({
+            url: ajaxUrl,
             method: "POST",
             data: {
                 "phone": $(".subscription__sent-tel").text(),
                 "mode": "try_sms",
             }
-        });
+        }).done(function( data ) {
+			if( ajaxUrl !== "" ) {
+				var obj = jQuery.parseJSON( data );
+				if( obj.SUCCESS === false ) {
+					$(".form-error-modal-sms").remove();
+					$("body").append( '<div class="popup popup--call form-error-modal-sms" style="display: block;"><div class="popup__bg"></div><div class="popup__window"><div class="popup__close"><div></div><div></div></div><div class="popup__success">'+obj.MESSAGE+'</div></div></div>' );
+				}
+			}
+		});
     });
 
     $(document).on("click", ".subscription__promo-btn", function(e, isFormSubmit) {
@@ -1332,8 +1345,8 @@ $(document).ready(function() {
                         $("[name=two_month]").val(twoMonth);
                         $("[data-mouth=1] b").text(twoMonth+' руб.');
                     }
-                    console.log(oldPrice, '111111')
-                    if(newPrice){
+                    
+                    if(newPrice) {
                         $("[name=form_hidden_10]").val(newPrice);
                         $(".subscription__total-value").html("<div class='subscription__total-value-old'>" + oldPrice + "</div>" + newPrice + "&#x20bd;");
                         if(!$('.promocode_info').length){
@@ -1448,9 +1461,9 @@ $(document).ready(function() {
 
     $(document).on("submit", ".subscription__aside-form", function(e) {
         e.preventDefault();
-
+		
         if ($('[name=promo]').val()) {
-            $(".subscription__promo-btn").trigger("click", ["is-form-submit"]);
+            //$(".subscription__promo-btn").trigger("click", ["is-form-submit"]);
         } else {
             showLegalInformation();
         }
@@ -1481,6 +1494,16 @@ $(document).ready(function() {
             "ajax_menu": false
         });
     });
+	
+	$(document).on('pjax:success', function(data, status, xhr, options) {		
+		if( data.target.id == "js-pjax-container" ) {
+			if( $(".subscription__aside-form .form-error-modal").length > 0 ) {
+				$(".popup--legal-information").hide();
+			} else if($('[name=promo]').val()) {
+				$(".subscription__promo-btn").trigger("click", ["is-form-submit"]);
+			}
+		}
+	});
 
     var sendForm = function(ext) {
         var form = $(".subscription__aside-form").serializeArray();

@@ -177,10 +177,19 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                 </div>
 
                 <span onclick="clickBtn(this)" class="subscription__total-btn subscription__total-btn--reg btn btn--white"><?= $arResult["arForm"]["BUTTON"] ?></span>
-
-
-
-
+				
+                <? if (!empty($arResult["ERROR"])): ?>
+                    <div class="popup popup--call form-error-modal" style="display: block;">
+                        <div class="popup__bg"></div>
+                        <div class="popup__window">
+                            <div class="popup__close">
+                                <div></div>
+                                <div></div>
+                            </div>
+                            <div class="popup__success"><?=$arResult["ERROR"]?></div>
+                        </div>
+                    </div>
+                <? endif; ?>
 
                 <div class="popup popup--legal-information">
                     <div class="popup__bg"></div>
@@ -227,6 +236,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
     $(".input--name").on("input", function() {
         this.value = this.value.replace(/[^А-Яа-яA-Za-z]/gi, "");
     });
+	var getCodeUrl = '<?=$templateFolder?>/sendCode.php';
 </script>
 <?
 // send name of club and abonement

@@ -261,9 +261,11 @@ class Api
 			"phone" => substr($phone, 1),
 			"code" => $code,
 		));
-
-		if ($this->_data['result']->result->errorCode == 0) {
-
+		
+		$smsResultArray = $this->result();
+		
+		//if ($this->_data['result']->result->errorCode == 0) {
+		if( empty($smsResultArray['data']['result']['errorCode']) ) {
 			if(empty($name) || empty($surname) || empty($email) || empty($phone)){
 				return false;
 			}
