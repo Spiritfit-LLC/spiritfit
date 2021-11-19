@@ -20,11 +20,24 @@ class ScheduleUpdate {
 
     private static function updateElement($clubs) {
         $props = array();
-
+		
         foreach ($clubs as $id => $club) {
             $arResult = self::send($club);
             // $props["SCHEDULE_JSON"] = json_encode($arResult); old variant
-
+			
+			/*
+			//Смотрим полученные данные
+			if( $id === 224 ) {
+				$max = 0;
+				foreach( $arResult as $r ) {
+					if( $max < $r["beginDate"] ) {
+						$max = $r["beginDate"];
+					}
+				}
+				echo $max;
+				echo '<pre>'; print_r($arResult); echo '</pre>'; exit;
+			}*/
+			
             $arResult = preg_replace_callback('/\\\\u([a-f0-9]{4})/i', create_function('$m', 'return chr(hexdec($m[1])-1072+224);'), json_encode($arResult));
             $props["SCHEDULE_JSON"] = iconv('cp1251', 'utf-8', $arResult);
 

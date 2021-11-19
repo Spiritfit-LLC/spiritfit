@@ -110,9 +110,9 @@ if(!empty($selectClub)){
 }
 ?>
 <script>dataLayerSend('UX', 'openMembershipReadyPage', '<?=$strSend?>');</script>
-
-<script>dataLayerSend('conversion', 'sendFormTrialWorkout', '');</script>
-
+<? /*if($arParams["PREV_STEP"] == 2) { ?>
+	<script>dataLayerSend('conversion', 'sendFormTrialWorkout', '');</script>
+<? }*/ ?>
 
 <!-- Вывод ошибки в popup -->
 <? if ($arResult["RESPONSE"]["data"]["result"]["errorCode"] !== 0 && $arResult["RESPONSE"]["data"]["result"]["userMessage"] != ""): ?>

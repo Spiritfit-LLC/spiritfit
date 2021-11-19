@@ -38,21 +38,11 @@
 
             <div class="subscription__aside-form-row subscription__aside-form-row--club">
                 <input class="input input--light input--long input--text input--club" 
-                    type="text" 
+                    type="email" 
                     placeholder="<?= $arResult["arQuestions"]["email"]["TITLE"] ?>"
                     value="<?= $_REQUEST["form_" . $arResult["arAnswers"]["email"]['0']["FIELD_TYPE"] . "_" . $arResult["arAnswers"]["email"]['0']["ID"]] ?>" 
                     name="form_<?= $arResult["arAnswers"]["email"]['0']["FIELD_TYPE"]?>_<?= $arResult["arAnswers"]["email"]['0']["ID"] ?>" 
                     <? if ($arResult["arQuestions"]["email"]["REQUIRED"]): ?>required="required"<? endif; ?>>
-            </div>
-
-            <div class="subscription__aside-form-row subscription__aside-form-row--club">
-                <input class="input input--light input--long input--tel input--club" 
-                    type="email" 
-                    placeholder="<?= $arResult["arQuestions"]["email"]["TITLE"] ?>"
-                    value="<?= $_REQUEST["form_" . $arResult["arAnswers"]["email"]['0']["FIELD_TYPE"] . "_" . $arResult["arAnswers"]["email"]['0']["ID"]] ?>"
-                    name="form_<?= $arResult["arAnswers"]["email"]['0']["FIELD_TYPE"]?>_<?= $arResult["arAnswers"]["email"]['0']["ID"] ?>" 
-                    <? if ($arResult["arQuestions"]["email"]["REQUIRED"]): ?>required="required"<? endif; ?> 
-                >
             </div>
 
             <div class="subscription__aside-form-row subscription__aside-form-row--club subscription__aside-form-row--margin">
@@ -113,7 +103,8 @@
             <div></div>
             <div></div>
         </div>
-        <div class="popup__success">Спасибо! Ваша заявка принята.<br>
-Консультанты клуба свяжутся с Вами в ближайшее время.</div>
+        <div class="popup__success">Спасибо! Ваша заявка принята.<br>Консультанты клуба свяжутся с Вами в ближайшее время.</div>
     </div>
 </div>
+
+<script>dataLayerSend('conversion', 'sendFormTrialWorkout', '');</script>

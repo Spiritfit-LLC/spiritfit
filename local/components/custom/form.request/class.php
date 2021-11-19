@@ -3,7 +3,7 @@ global $USER;
 
 use \Bitrix\Main\Loader;
 
-class FormAbonimentComponent extends CBitrixComponent{
+class FormRequestComponent extends CBitrixComponent{
 
     function onPrepareComponentParams($arParams){
         if(!$arParams["WEB_FORM_ID"]){
@@ -27,7 +27,8 @@ class FormAbonimentComponent extends CBitrixComponent{
 
     private function checkStep() {
         $step = $this->request->get('step');
-        
+        $this->arParams["PREV_STEP"] = $step;
+		
         if (empty($step)) {
             return 1;
         }
@@ -41,7 +42,7 @@ class FormAbonimentComponent extends CBitrixComponent{
             }
         }
         if ($step == 1 && $this->request->get('ajax_send')) {
-            $this->arResult["ERROR"] = CForm::Check($this->arParams["WEB_FORM_ID"], $_REQUEST, false, "Y", "N");
+			$this->arResult["ERROR"] = CForm::Check($this->arParams["WEB_FORM_ID"], $_REQUEST, false, "Y", "N");
             if (empty($this->arResult["ERROR"])) {
                 return 2;
             } else {
@@ -257,7 +258,7 @@ class FormAbonimentComponent extends CBitrixComponent{
         array_multisort(array_column($this->arResult["ELEMENT"]["PRICES"], "NUMBER"), SORT_ASC, $this->arResult["ELEMENT"]["PRICES"]);
     }
 
-    private function checkSms($num){
+    private function checkSms($num) {
         global $APPLICATION;
 
         $arParam = $this->getFormatFields();
@@ -275,17 +276,34 @@ class FormAbonimentComponent extends CBitrixComponent{
         }
         
         if ($this->request["form_hidden_10"] == 0) {
+			
         // if ($this->request["form_hidden_10"] == 0 || $this->request["form_hidden_21"] == 0) {
             $arParam["type"] = 5;
+			$elementCode = $this->request->getQuery("ELEMENT_CODE");
             if ($this->arResult["ELEMENT"]["CODE"] == "probnaya-trenirovka" || $this->arResult["ELEMENT"]["ID"] == "226") {
                 $arParam["type"] = 3;
             }
+			
+			if ( !empty($elementCode) && $elementCode == "metro-br-rasskazovka" ) {
+                $arParam["type"] = 10;
+            }
+			if ( !empty($elementCode) && $elementCode == "rogozhskiy-br-val" ) {
+                $arParam["type"] = 10;
+            }
+			if ( !empty($elementCode) && $elementCode == "metro-marino" ) {
+                $arParam["type"] = 10;
+            }
+			
+			if( !empty($this->request["form_text_114"]) ) {
+				$arParam["company"] = $this->request["form_text_114"];
+			}
+			
             $api = new Api(array(
                 "action" => "request2",
                 "params" => $arParam
             ));
         } else {
-            $api = new Api(array(
+			$api = new Api(array(
                 "action" => "request",
                 "params" => $arParam
             ));
@@ -299,8 +317,6 @@ class FormAbonimentComponent extends CBitrixComponent{
     function executeComponent(){
         Loader::IncludeModule("form");
         Loader::IncludeModule("iblock");
-
-        
         
         $this->getFields();
         $this->getElement();
@@ -344,10 +360,12 @@ class FormAbonimentComponent extends CBitrixComponent{
         
         switch ($this->checkStep()) {
             case 2:
-                // if (empty($this->arResult["ERROR"])) {
-                    $this->sendSms();
-                // }
-                $this->includeComponentTemplate('step-2');
+				$this->sendSms();
+				if( empty($this->arResult["ERROR"]) ) {
+					$this->includeComponentTemplate('step-2');
+				} else {
+					$this->includeComponentTemplate();
+				}
                 break;
             case 3:
                 $this->includeComponentTemplate('step-3');

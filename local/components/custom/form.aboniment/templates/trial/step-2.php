@@ -120,5 +120,4 @@ if(!empty($selectClub)){
         </div>
     </div>
 <? endif; ?>
-
 <script>dataLayerSend('conversion', 'sendFormTrialWorkout', '');</script>

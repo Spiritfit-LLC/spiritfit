@@ -25,6 +25,48 @@
 	background-color: transparent;
 	overflow: hidden;
 }
+
+/* .checkbox-pre-style .input--checkbox {
+	opacity: 1;
+    position: relative;
+} */
+
+
+/* костыль стилей для чекбокса до подгрузки js стилизации start */
+.checkbox-pre-style input.input--checkbox {
+    position: relative;
+}
+
+.checkbox-pre-style input.input--checkbox::after {
+	content: '';
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 2px solid #fff;
+    position: absolute;
+    box-sizing: border-box;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+}
+
+
+
+.checkbox-pre-style input.input--checkbox:checked::after {
+    background-color: #ff7628;
+}
+
+.checkbox-pre-style .jq-checkbox input.input--checkbox::after {
+    z-index: -2;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    border: 0;
+    position: static;
+}
+
+/* костыль стилей для чекбокса до подгрузки js стилизации end */
+
 .b-page__main .subscription__total-btn{
 	padding: 20px 60px;
     font-size: 13px;
@@ -434,5 +476,62 @@ main.b-page__main {
     margin-bottom: 200px;
 }
 
+.b-map__route img {
+	display: block;
+    position: relative;
+    max-width: 100%;
+    margin-top: 20px;
+}
+.b-video-block {
+	display: block;
+    position: relative;
+	margin: 50px 0px;
+}
+.b-video-block .content-center {
+	text-align: center;
+}
+.b-video-block iframe {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 650px;
+}
+
+#map_club .leaflet-layer,
+#mapid .leaflet-layer {
+	filter: contrast(.7) grayscale(1) invert(1) brightness(0.8);
+}
+#mapid.map-clubs-detail {
+	height: 700px;
+}
+@media screen and (max-width: 1024px) {
+    #mapid.map-clubs-detail {
+        height: calc(100vh - 260px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .quality {
+        margin-left: 0;
+        padding-top: 0;
+    }
+    .quality .primary-form {
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 0;
+        padding: 25px 35px 35px;
+        border-radius: 0;
+    }
+	.b-video-block iframe {
+		height: 450px;
+	}
+}
+@media screen and (max-width: 650px) {
+}
+@media screen and (max-width: 450px) {
+	.b-video-block iframe {
+		height: 300px;
+	}
+}
 
 /* ==================== */

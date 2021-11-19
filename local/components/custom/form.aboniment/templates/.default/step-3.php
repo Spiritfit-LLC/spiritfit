@@ -139,6 +139,13 @@ if(!empty($selectClub)){
     $strSend = '-/'.$abonementName;
 }
 ?>
+<?
+	/*if($arParams["PREV_STEP"] == 2 && $abonementName == 'Домашние тренировки') {
+    	?><script>dataLayerSend('UX', 'sendContactFormHomeWorkout', '<?=$strSend?>')</script><?        
+	} else if($arParams["PREV_STEP"] == 2) {
+    	?><script>dataLayerSend('conversion', 'sendContactForm', '<?=$strSend?>')</script><?
+	}*/
+?>
 <script>dataLayerSend('UX', 'openMembershipReadyPage', '<?=$strSend?>');</script>
 
 <!-- Вывод ошибки в popup -->
@@ -162,3 +169,6 @@ if(!empty($selectClub)){
         </div>
     </div>
 <? endif; ?>
+<script>
+	var getCodeUrl = '<?=$templateFolder?>/sendCode.php';
+</script>

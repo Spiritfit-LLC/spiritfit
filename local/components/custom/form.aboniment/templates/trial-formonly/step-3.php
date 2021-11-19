@@ -15,6 +15,9 @@
             }
         }
         ?>
+		<? /*if(if($arParams["PREV_STEP"] == 2) { ?>
+		<script>dataLayerSend('conversion', 'sendFormTrialWorkout', '');</script>
+		<? }*/ ?>
         <script>
             (dataLayer = window.dataLayer || []).push({
                 'eCategory': 'conversion',

@@ -7,6 +7,7 @@
         "IBLOCK_ID" => "18",
         "ELEMENT_ID" => "",
         "ELEMENT_CODE" => $arParams['ELEMENT_CODE'],
+		"ADDITIONAL_CLASS" => (!empty($arParams['ADDITIONAL_CLASS'])) ? $arParams['ADDITIONAL_CLASS'] : '',
         "CHECK_DATES" => "Y",
         "FIELD_CODE" => array(),
         "PROPERTY_CODE" => array(

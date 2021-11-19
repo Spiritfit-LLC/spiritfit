@@ -1,9 +1,13 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 $APPLICATION->SetTitle($arResult["ELEMENT"]["~NAME"]);
 $arInfoProps = Utils::getInfo()['PROPERTIES'];
-
+foreach( $arResult["arAnswers"]["club"][0]['ITEMS'] as &$item ) {
+    if( $item["NUMBER"] == $arResult["CLUB_ID"] ) {
+        $item["SELECTED"] = "selected";
+    }
+}
+unset($item);
 ?>
-
 <div class="popup popup-path_to js-page-trial-training">
     <div class="popup__bg"></div>
     <div class="popup__window">

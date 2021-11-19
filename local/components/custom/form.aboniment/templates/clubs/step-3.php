@@ -128,7 +128,5 @@ setTimeout(function() {
     $(".input--tel").inputmask("+7 (999) 999-99-99");
     $(document).find('.training__aside-form').trigger('reset');
 }, 500);
-
-
 </script>
 

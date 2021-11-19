@@ -8,12 +8,12 @@ $arField = ['name', 'email', 'phone'];
 <div class="content-center block-margin">
     <div class="form-standart form-standart_tpl-hor form-standart_black-bg">
         <div class="form-standart__plate">
-            <h2 class="form-standart__title">Записаться на пробную тренировку</h2>
+            <h2 class="form-standart__title"><?if($arParams["TEXT_FORM"]){?><?=$arParams["TEXT_FORM"]?><?}else{?>Записаться на пробную тренировку<?}?></h2>
 
             <form class="training__aside-form_v2" name="<?= $arResult["WEB_FORM_NAME"] ?>" action="<?= POST_FORM_ACTION_URI ?>" method="POST" enctype="multipart/form-data">
                 <?= getClientParams($arParams["WEB_FORM_ID"]) ?>
 
-                <input type="hidden" name="WEB_FORM_ID" value="<?= $arParams["WEB_FORM_ID"] ?>">
+                <input type="hidden" name="WEB_FORM_ID" value="<?=$arParams["WEB_FORM_ID"] ?>">
                 <input type="hidden" name="step" value="1">
                 <input type="hidden" name="sub_id" value="<?= $arResult["ELEMENT"]["PROPERTIES"]['CODE_ABONEMENT']['VALUE'] ?>">
                 <input type="hidden" class="club" name="form_<?= $arResult["arAnswers"]["club"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["club"]['0']["ID"] ?>" value="<?= $arParams["NUMBER"] ?>">
@@ -87,8 +87,20 @@ $arField = ['name', 'email', 'phone'];
                     <div class="form-standart__buttons">
                         <input class="form-standart__submit button-outline" type="submit" value="<?= $arResult["arForm"]["BUTTON"] ?>" data-stage="1" name="web_form_submit">
                     </div>
-                </div>                
-
+                </div>
+				
+				<? if (!empty($arResult["ERROR"])): ?>
+                    <div class="popup popup--call form-error-modal" style="display: block;">
+                        <div class="popup__bg"></div>
+                        <div class="popup__window">
+                            <div class="popup__close">
+                                <div></div>
+                                <div></div>
+                            </div>
+                            <div class="popup__success"><?=$arResult["ERROR"]?></div>
+                        </div>
+                    </div>
+                <? endif; ?>
 
                 <div class="popup popup--legal-information" >
                     <div class="popup__bg"></div>

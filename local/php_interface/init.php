@@ -12,6 +12,10 @@ define("ABONEMENTS_GOD_FITNESA_ID", 37);// id абонемента "Год фи�
 define("IBLOCK_COLORS_ID", 14);// ID инфоблока "Цвета"
 define("IBLOCK_CLUBS_ID", 6);// ID инфоблока "Клубы"
 
+define("POST_FORM_CORP_ACTION_URI", "/local/templates/spiritfit-corp/ajax/modal-trial.php");
+define("POST_FORM_CAREER_ACTION_URI", "/local/templates/spiritfit-career/ajax/modal-trial.php");
+define("MAIN_SITE_URL", "https://spiritfit.ru");
+
 if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/Utils.php')) {
     require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/Utils.php');
 }
@@ -40,6 +44,18 @@ if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/Abonem
 AddEventHandler("iblock", "OnIBlockPropertyBuildList", array("CIPropertyPrice", "GetUserTypeDescription"));
 AddEventHandler("iblock", "OnAfterIBlockElementUpdate", Array("ElementUpdate", "OnAfterIBlockElementUpdateHandler"));
 
+/*global $USER;
+if( $USER->IsAuthorized() && $USER->IsAdmin() ) {
+	\Bitrix\Main\Page\Asset::getInstance()->addJs("/js/admin.js");
+}*/
+/*global $APPLICATION;
+$dir = $APPLICATION->GetCurDir();
+echo $dir; exit;*/
+
+$pageUrl = strtok($_SERVER["REQUEST_URI"], '?');
+if( $pageUrl === "/bitrix/admin/form_result_list.php" ) {
+	\Bitrix\Main\Page\Asset::getInstance()->addJs("/js/admin.js");
+}
 
 //массив ответов форм для данных об источнике трафика
 $arTraficAnswer = array(
@@ -134,14 +150,17 @@ function getClientParams($webFormId) {
 	    				$('input[name=<?=$arIdAnswer["trm"]?>]').val(current.trm);
 	    				
 	    				var ClientId = '';
-	    				var ga = getCookie('_ga');
-	    				var i = ga.lastIndexOf('.');
-	    				if(i > 0) {
-	    					i = ga.lastIndexOf('.', i-1);
+	    				if( typeof ga !== 'undefined' ) {
+							var ga = getCookie('_ga');
+	    					var i = ga.lastIndexOf('.');
 	    					if(i > 0) {
-	    						ClientId = ga.substring(i+1);
+	    						i = ga.lastIndexOf('.', i-1);
+	    						if(i > 0) {
+	    							ClientId = ga.substring(i+1);
+	    						}
 	    					}
-	    				}
+						}
+						
 	    				$('input[name=<?=$arIdAnswer["ClientId"]?>]').val(ClientId);
 	                }
 	            }, 1000);

@@ -131,16 +131,13 @@ if(!empty($selectClub)){
 }else{
     $strSend = '-/'.$abonementName;
 }  
-    
 ?><script>dataLayerSend('UX', 'openSmsCodePage', '<?=$strSend?>');</script>
-
-<? if($abonementName == 'Домашние тренировки'){
-    ?><script>dataLayerSend('UX', 'sendContactFormHomeWorkout', '<?=$strSend?>')</script><?        
-}else{
-    ?><script>dataLayerSend('conversion', 'sendContactForm', '<?=$strSend?>')</script><?
+<? if($abonementName == 'Домашние тренировки') {
+   ?><script>dataLayerSend('UX', 'sendContactFormHomeWorkout', '<?=$strSend?>')</script><?        
+} else {
+   ?><script>dataLayerSend('conversion', 'sendContactForm', '<?=$strSend?>')</script><?
 }
 ?>
-
 <!-- Вывод ошибки в popup -->
 <? if ($arResult["RESPONSE"]["data"]["result"]["errorCode"] !== 0 && $arResult["RESPONSE"]["data"]["result"]["userMessage"] != ""): ?>
     <?
@@ -173,3 +170,6 @@ if(!empty($selectClub)){
         </div>
     </div>
 <? endif; ?>
+<script>
+	var getCodeUrl = '<?=$templateFolder?>/sendCode.php';
+</script>

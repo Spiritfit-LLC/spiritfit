@@ -7,6 +7,7 @@ $APPLICATION->SetTitle($arResult["ELEMENT"]["~NAME"]);
 	    	<?=getClientParams($arParams["WEB_FORM_ID"]) ?>
 			<input type="hidden" name="WEB_FORM_ID" value="<?=$arParams['WEB_FORM_ID']?>">
             <input type="hidden" name="step" value="2">
+			<input type="hidden" name="form_default_type" value="<?=(!empty($arParams['DEFAULT_TYPE_ID'])) ? $arParams['DEFAULT_TYPE_ID']  : '' ?>">
             <input type="hidden" name="sub_id" value="<?=$arResult["ELEMENT"]["PROPERTIES"]['CODE_ABONEMENT']['VALUE']?>">
             <? if ($arResult["ELEMENT"]["PROPERTIES"]["ADD_TO_1C"]["VALUE"]): ?>
                 <input type="hidden" name="additional" value="<?= $arResult["ELEMENT"]["PROPERTIES"]["ADD_TO_1C"]["VALUE"] ?>">
@@ -55,6 +56,17 @@ $APPLICATION->SetTitle($arResult["ELEMENT"]["~NAME"]);
             <div class="popup__success"><?= $errorMessage ?></div>
         </div>
     </div>
+<? elseif(!empty($arResult["ERROR"])): ?>
+    <div class="popup popup--call" style="display: block;">
+        <div class="popup__bg"></div>
+        <div class="popup__window">
+            <div class="popup__close">
+                <div></div>
+                <div></div>
+            </div>
+            <div class="popup__success"><?=$arResult["ERROR"]?></div>
+        </div>
+    </div>
 <? endif; ?>
 
 <script>
@@ -72,5 +84,7 @@ setTimeout(function() {
     });
 }, 500);
 </script>
-
 <script>dataLayerSend('conversion', 'sendFormTrialWorkout', '');</script>
+<script>
+	var getCodeUrl = '<?=$templateFolder?>/sendCode.php';
+</script>

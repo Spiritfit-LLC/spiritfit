@@ -63,8 +63,9 @@ if ($arResult["isFormDescription"] == "Y" || $arResult["isFormTitle"] == "Y" || 
             <div class="primary-form__row quality__form-row">
                 <span class="primary-form__label "><?=$arQuestion["CAPTION"]?></span>
                 <select class="input input--light input--fluid input--select" name="form" id="select" required>
-                    <option value="">Выберите подходящий вариант</option>
+                    <option value="">Выберите клуб</option>
                     <?foreach ($arResult["CLUBS"] as $arItem){?>
+                        <? if(strpos($arItem, "Сетевой") !== false) continue; ?>
                         <option value="<?=$arItem?>"><?=$arItem?></option>
                     <?}?>
                 </select>
@@ -80,7 +81,7 @@ if ($arResult["isFormDescription"] == "Y" || $arResult["isFormTitle"] == "Y" || 
         <? }elseif($inputStructure['FIELD_TYPE'] == 'checkbox'){ ?>
             <div class="subscription__aside-form-row">
                 <label class="input-label">
-                    <input class="input input--checkbox" type="checkbox" name="form_checkbox_<?=$FIELD_SID?>" <?=$inputStructure['FIELD_PARAM']?> value="<?=$inputStructure['ID']?>">
+                    <input class="input input--checkbox" type="checkbox" name="form_checkbox_<?=$FIELD_SID?>[]" <?=$inputStructure['FIELD_PARAM']?> value="<?=$inputStructure['ID']?>">
                     <div class="input-label__text"><?=$arQuestion["CAPTION"]?></div>
                 </label>
             </div>

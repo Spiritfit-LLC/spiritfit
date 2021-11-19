@@ -4859,6 +4859,24 @@ button.mfp-arrow::before{
     }
 }
 
+@media (max-width: 1000px) {
+    .b-cards-slider__arrow-wrapper--left {
+        left: 40px;
+    }
+    .b-cards-slider__arrow-wrapper--right {
+        right: 40px;
+    }
+}
+
+@media (max-width: 800px) {
+    .b-cards-slider__arrow-wrapper--left {
+        left: 30px;
+    }
+    .b-cards-slider__arrow-wrapper--right {
+        right: 30px;
+    }
+}
+
 @media screen and (min-width: 1900px) {
     .b-cards-slider__arrow-wrapper--left {
         left: calc((1900px - 100vw)/2);
@@ -4878,9 +4896,15 @@ button.mfp-arrow::before{
         margin-bottom: 0;
     }
 
+    .b-cards-slider__arrow {
+        width: 35px;
+    }
+
+   
+
     .b-cards-slider__arrow-wrapper {
-        height: auto;
-        top: -24px;
+        /* height: auto; */
+        /* top: -24px; */
     }
 
     .b-cards-slider__arrow-wrapper:hover {
@@ -5220,16 +5244,16 @@ button.mfp-arrow::before{
 }
 
 
+/* стили для карты на странице "клубы" start */
+#mapid .leaflet-layer {filter: contrast(.7) grayscale(1) invert(1) brightness(0.8);}
 
-
-
-
-/* .b-map__switch-holder .select2-container  *::-webkit-scrollbar {
-    width: 4px;
+.leaflet-control-attribution.leaflet-control{
+    display: none;
 }
-.b-map__switch-holder .select2-container *::-webkit-scrollbar-thumb {
-    background: #ff7628; 
-} */
 
-
+.invisible-marker-icon {
+    opacity: 0 !important;
+    display: none !important;
+}
+/* стили для карты на странице "клубы" end */
 

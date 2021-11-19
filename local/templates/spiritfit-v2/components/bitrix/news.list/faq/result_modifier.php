@@ -1,7 +1,7 @@
 <?php
 
 $arSecFilter = array("IBLOCK_ID" => $arParams["IBLOCK_ID"],"ACTIVE" => "Y");
-$dbSections = CIBlockSection::GetList(array("SORT"=>"ASC"), $arSecFilter, false, array("ID","NAME","SECTION_PAGE_URL"));
+$dbSections = CIBlockSection::GetList(array("SORT"=>"ASC"), $arSecFilter, false, array("ID","NAME","SECTION_PAGE_URL", "UF_*"));
 while ($res = $dbSections->GetNext()) {
     if($_REQUEST["SECTION_CODE"] && $_REQUEST["SECTION_CODE"] == $res["CODE"]){
         $arResult["ACTIVE_SECTION"] = $res["ID"];

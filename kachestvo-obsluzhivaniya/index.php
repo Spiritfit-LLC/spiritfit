@@ -3,8 +3,14 @@ define('HIDE_BREADCRUMB', true);
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Качество обслуживания");
 ?>
+<style>
+.block__detail-breadcrumb.black .b-breadcrumbs__link.is-current,
+.block__detail-breadcrumb.black .b-breadcrumbs__link {
+	color: black;
+}
+</style>
 <div class="quality">
-    <div class="block__detail-breadcrumb quality__top">
+    <!--<div class="block__detail-breadcrumb quality__top black">
         <? $APPLICATION->IncludeComponent(
             "bitrix:breadcrumb",
             "custom",
@@ -15,9 +21,9 @@ $APPLICATION->SetTitle("Качество обслуживания");
             )
         ); ?>
     </div>
-    <div class="quality__head">
+    <div class="quality__head" style="color: black;">
         <h1 class="quality__heading"><? $APPLICATION->ShowTitle(false) ?></h1>
-    </div>
+    </div>-->
     <div class="quality__questionary">
         <?//<h2 class="quality__subheading">Оценка качества обслуживания</h2>?>
         <div class="primary-form quality__form" id="body_quality">

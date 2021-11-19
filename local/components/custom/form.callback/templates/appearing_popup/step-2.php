@@ -33,7 +33,6 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
         </form>
     </div>
 </div>
-
 <?
 session_start();
 if(empty($_SESSION['FIRST_OPEN'])){ ?>

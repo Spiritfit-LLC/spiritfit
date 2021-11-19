@@ -5,16 +5,16 @@ $settings = Utils::getInfo();
     <footer class="b-footer">
         <div class="content-center">
             <div class="b-footer__content">
-                <div class="b-footer__social"><a class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_INSTAGRAM"]["VALUE"]?>"
+                <div class="b-footer__social"><a rel="nofollow" class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_INSTAGRAM"]["VALUE"]?>"
                         target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img"
                                 src="<?=SITE_TEMPLATE_PATH?>/img/icon-inst.svg" alt="@spiritmoscow" title="" /></span><span
                             class="b-social-link__text">Instagram</span></a>
                 </div>
                 <div class="b-footer__app-buttons">
-                    <div class="b-app-list"><a class="b-app-list__button"
+                    <div class="b-app-list"><a rel="nofollow" class="b-app-list__button"
                             href="<?=$settings["PROPERTIES"]["LINK_APPSTORE"]["VALUE"]?>" target="_blank"><img
                                 class="b-app-list__img" src="<?=SITE_TEMPLATE_PATH?>/img/btn-app-store.svg" alt="Загрузите в App Store"
-                                title="" /></a><a class="b-app-list__button" href="<?=$settings["PROPERTIES"]["LINK_GOOGLEPLAY"]["VALUE"]?>" target="_blank"><img
+                                title="" /></a><a rel="nofollow" class="b-app-list__button" href="<?=$settings["PROPERTIES"]["LINK_GOOGLEPLAY"]["VALUE"]?>" target="_blank"><img
                                 class="b-app-list__img" src="<?=SITE_TEMPLATE_PATH?>/img/btn-google-play.svg" alt="Доступно в Google Play"
                                 title="" /></a>
                     </div>
@@ -32,9 +32,7 @@ $settings = Utils::getInfo();
             </div>
         </div>
     </footer>
-
-
-
+			
     <div id="modalForm" class="popup modalForm" style="display: none;">
         <div class="popup__bg"></div>
         <div class="popup__window popup__window--modal-form">
@@ -60,6 +58,12 @@ $settings = Utils::getInfo();
             </div>
         </div>
     </div>
-
+    <div style="display: none;">+7 (495) 292-67-97</div>
     <script src='/local/templates/spiritfit-v2/js/cookieAllowAccess.js' async></script>
 </body>
+<?
+	$inHead = $APPLICATION->GetViewContent('inhead');
+	if( empty($inHead) ) {
+		$APPLICATION->AddViewContent('inhead', 'https://spiritfit.ru/images/logo_white.svg');
+	}
+?>

@@ -49,7 +49,7 @@ if ($arResult["PROPERTIES"]["LINK_VIDEO"]["VALUE"]) {
     }
 }
 
-
+$itemGetListArray['order'] = ['SORT' => 'ASC', 'NAME' => 'ASC'];
 $itemGetListArray['filter'] = ["IBLOCK_ID" => $arResult["PROPERTIES"]["TEAM"]["LINK_IBLOCK_ID"], "ID" => $arResult["PROPERTIES"]["TEAM"]["VALUE"], "ACTIVE" => "Y"];
 $itemGetListArray['select'] = ["ID", "NAME", "IBLOCK_ID", "PREVIEW_PICTURE", "PREVIEW_TEXT"];
 $itemRes = \Bitrix\Iblock\ElementTable::getList($itemGetListArray);
@@ -125,11 +125,21 @@ while ($res = $dbElements->GetNextElement()) {
     $fields = $res->GetFields();
     $properties = $res->GetProperties();
     $fields['PROPERTIES'] = $properties;
+	
+	/*if( !empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']) && !empty($arResult["PROPERTIES"]["NUMBER"]["VALUE"]) ) {
+		$fields['DETAIL_PAGE_URL'] .= $arResult["PROPERTIES"]["NUMBER"]["VALUE"] . '/';
+	}*/
+	if( !empty($arResult["PROPERTIES"]["NUMBER"]["VALUE"]) ) {
+		$fields['DETAIL_PAGE_URL'] .= $arResult["PROPERTIES"]["NUMBER"]["VALUE"] . '/';
+	}
+	
     $arResult["ABONEMENTS"][] = $fields;
 }
 
 $selectedClub["ID"] = $arResult['ID'];
 
+$arResult["ABONEMENTS_MIN_PRICE"] = 0;
+$arResult["ABONEMENTS_MAX_PRICE"] = 0;
 foreach ($arResult["ABONEMENTS"] as $key => $arItem) {
     $club = false;  
     
@@ -166,6 +176,14 @@ foreach ($arResult["ABONEMENTS"] as $key => $arItem) {
     }
     
     foreach ($arResult["ABONEMENTS"][$key]["PRICES"] as $keyP => $arPrice) {
+	
+		if( $arResult["ABONEMENTS_MIN_PRICE"] == 0 || floatval($arPrice['PRICE']) < $arResult["ABONEMENTS_MIN_PRICE"] ) {
+			$arResult["ABONEMENTS_MIN_PRICE"] = floatval($arPrice['PRICE']);
+		}
+		if( $arResult["ABONEMENTS_MAX_PRICE"] == 0 || floatval($arPrice['PRICE']) > $arResult["ABONEMENTS_MAX_PRICE"] ) {
+			$arResult["ABONEMENTS_MAX_PRICE"] = floatval($arPrice['PRICE']);
+		}
+		
         if ($arPrice["PRICE"] != $arResult["ABONEMENTS"][$key]["BASE_PRICE"]["PRICE"] && $arPrice["NUMBER"] == $arResult["ABONEMENTS"][$key]["BASE_PRICE"]["NUMBER"]) {
             $arResult["ABONEMENTS"][$key]["SALE"] = $arPrice["PRICE"];
 
@@ -188,8 +206,58 @@ foreach ($arResult["ABONEMENTS"] as $key => $arItem) {
     };
 
     array_multisort(array_column($arResult["ABONEMENTS"][$key]["PRICES"], "NUMBER"), SORT_ASC, $arResult["ABONEMENTS"][$key]["PRICES"]);
+	
+	if( $arResult["ABONEMENTS_MIN_PRICE"] == 0 || ($arResult["ABONEMENTS"][$key]['SALE_TWO_MONTH'] != 0 && floatval($arResult["ABONEMENTS"][$key]['SALE_TWO_MONTH']) < $arResult["ABONEMENTS_MIN_PRICE"]) ) {
+		$arResult["ABONEMENTS_MIN_PRICE"] = floatval($arResult["ABONEMENTS"][$key]['SALE_TWO_MONTH']);
+	}
+	if( $arResult["ABONEMENTS_MAX_PRICE"] == 0 || ($arResult["ABONEMENTS"][$key]['SALE_TWO_MONTH'] != 0 && floatval($arResult["ABONEMENTS"][$key]['SALE_TWO_MONTH']) > $arResult["ABONEMENTS_MAX_PRICE"]) ) {
+		$arResult["ABONEMENTS_MAX_PRICE"] = floatval($arResult["ABONEMENTS"][$key]['SALE_TWO_MONTH']);
+	}
+	if( $arResult["ABONEMENTS_MIN_PRICE"] == 0 || ($arResult["ABONEMENTS"][$key]['SALE'] != 0 &&  floatval($arResult["ABONEMENTS"][$key]['SALE']) < $arResult["ABONEMENTS_MIN_PRICE"]) ) {
+		$arResult["ABONEMENTS_MIN_PRICE"] = floatval($arResult["ABONEMENTS"][$key]['SALE']);
+	}
+	if( $arResult["ABONEMENTS_MAX_PRICE"] == 0 || ($arResult["ABONEMENTS"][$key]['SALE'] != 0 &&  floatval($arResult["ABONEMENTS"][$key]['SALE']) > $arResult["ABONEMENTS_MAX_PRICE"]) ) {
+		$arResult["ABONEMENTS_MAX_PRICE"] = floatval($arResult["ABONEMENTS"][$key]['SALE']);
+	}
 
     if (!$club&&!$arResult["PROPERTIES"]["SOON"]["VALUE"]) {
         unset($arResult["ABONEMENTS"][$key]);
     }
+}
+
+$denyInAdddress = ['этаж', 'г.', 'город', 'м.', 'метро', 'эт.', 'ТРЦ', 'трц', 'к.', 'корп', 'корпус', '"'];
+if( !empty($arResult['PROPERTIES']['ADRESS']['VALUE']['TEXT']) ) {
+	$addressArr = explode(',', $arResult['PROPERTIES']['ADRESS']['VALUE']['TEXT']);
+	$clearAddress = [];
+	foreach($addressArr as $aStr) {
+		$needAdd = true;
+		foreach($denyInAdddress as $dStr) {
+			if( strpos($aStr, $dStr) !== false ) {
+				$needAdd = false;
+				break;
+			}
+		}
+		if( $needAdd ) {
+			$clearAddress[] = $aStr;
+		}
+	}
+	$arResult['ADDRESS_SHORT'] = implode(',', $clearAddress);
+}
+
+if( !empty($arResult["PROPERTIES"]["REVIEWS"]["VALUE"]) ) {
+	$res = CIBlockElement::GetList(["SORT" => "ASC"], ["IBLOCK_ID" => $arResult["PROPERTIES"]["REVIEWS"]["LINK_IBLOCK_ID"], "ACTIVE" => "Y", "ID" => $arResult["PROPERTIES"]["REVIEWS"]["VALUE"]], false);
+	$arResult["PROPERTIES"]["REVIEWS"]["VALUE"] = [];
+	while($ob = $res->GetNextElement()) {
+		$arFields = $ob->GetFields();
+		$arFields["PROPERTIES"] = $ob->GetProperties();
+		
+		if( !empty($arFields["PROPERTIES"]["NAME"]["VALUE"]) ) {
+			$arFields["NAME_SHORT"] = mb_substr($arFields["PROPERTIES"]["NAME"]["VALUE"], 0, 1);
+		} else {
+			$arFields["NAME_SHORT"] = "S";
+		}
+		
+		$arFields["RATING"] = intval($arFields["PROPERTIES"]["RATING"]["VALUE"]);
+		$arResult["PROPERTIES"]["REVIEWS"]["VALUE"][] = $arFields;
+	}
 }

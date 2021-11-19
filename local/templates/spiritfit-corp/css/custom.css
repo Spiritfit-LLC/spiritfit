@@ -1,0 +1,495 @@
+.quality__questionary .subscription__aside-form-row {
+    margin-top: 10px;
+}
+.quality__questionary .input--checkbox.checked:before {
+    background-color: #fff;
+}
+.subscription__aside-form .input--checkbox input {
+    height: auto;
+}
+.subscription__title-success {
+    text-align: center;
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+.b-page__heading_absolute {
+    max-width: 1200px;
+}
+.b-info-slider__title {
+    font-size: 40px;
+}
+
+.b-page__main .training__aside {
+	border: 1px solid #fff;
+	background-color: transparent;
+	overflow: hidden;
+}
+.b-page__main .subscription__total-btn{
+	padding: 20px 60px;
+    font-size: 13px;
+    color: currentColor;
+    background-color: transparent;
+    border: 1px solid #ff7628;
+	border-radius: 0;
+}
+.b-page__main .subscription__total-btn:hover {
+	color: #fff;
+    background-color: #f45900;
+    text-decoration: none;
+}
+.b-page__main .subscription__total-btn:after {
+	display: none;
+}
+
+.subscription__code,
+.subscription__code:hover {
+	color: #fff
+}
+.subscription__code:hover {
+	text-decoration: underline;
+}
+
+
+/* v2 */
+.b-image-plate-block__text-content {
+    /* min-height: 600px; */
+}
+#bx-panel {
+    z-index: 1001 !important;
+}
+
+form .input--num {
+    font-size: 30px;
+}
+
+.b-header__mobile-clubs .b-club-search__input {
+    font-size: 13px;
+    padding: 9px 30px 5px 5px;
+}
+
+.training__aside-form_v2 input.form-standart__input:-webkit-autofill,
+.training__aside-form_v2 input.form-standart__input:-webkit-autofill:hover, 
+.training__aside-form_v2 input.form-standart__input:-webkit-autofill:focus {
+    border-bottom: 2px solid;
+    border-color: #fff;
+    -webkit-text-fill-color: #fff;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.popup__window,
+.popup.popup--message .popup__window {
+    width: 1400px;
+    max-width: 100%;
+    color: #000;
+}
+.popup .popup__close {
+    border: 0;
+}
+.popup .popup__close:hover {
+    background-color: transparent;
+}
+
+
+.form-standart_tpl-ver .form-standart__agreements, 
+.form-standart_tpl-two-col .form-standart__agreements {
+    margin-bottom: 10px;
+}
+
+
+.modalForm.popup {
+	color: #000;
+	z-index: 999999;
+}
+.modalForm  .subscription__total-btn,
+.popup__btn[type='submit']  {
+	padding: 20px 60px;
+    font-size: 13px;
+    color: currentColor;
+    background-color: transparent;
+    border: 1px solid #ff7628;
+	display: inline-block;
+    vertical-align: middle;
+    font-family: "Gotham Pro",sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    transition: background-color .15s ease 0s,color .15s ease 0s,border-color .15s ease 0s;
+    cursor: pointer;
+    overflow: hidden;
+	border-radius: 0;
+	display: block;
+}
+
+.modalForm .form-standart {
+    padding-bottom: 20px;
+}
+.modalForm .form-standart__plate,
+.popup__window .form-standart__plate {
+	padding: 0;
+}
+
+.modalForm  .subscription__total-btn:after,
+.modalForm  .subscription__total-btn:hover:after {
+	display: none;
+}
+.modalForm  .subscription__total-btn:hover,
+.modalForm  .subscription__total-btn:focus {
+	color: #fff;
+    background-color: #f45900;
+    text-decoration: none;
+}
+.modalForm .subscription__code_v2, .subscription__code_v2:hover,
+.modalForm .promocode_info,
+.modalForm .input-label__text a,
+.modalForm .subscription__sent {
+	color: #000;
+}
+
+.modalForm .form-standart .popup {
+	width: 100%;
+	height: 100%;
+}
+
+.modalForm .subscription__aside {
+	height: auto;
+	background-color: transparent;
+    margin: -70px auto 0 auto;
+}
+.modalForm .subscription {
+	flex-direction: column;
+	padding: 0;
+    background-color: transparent;
+}
+.modalForm .subscription__info {
+	margin-top: 0;
+	padding-top: 10px;
+}
+.modalForm .popup__window--modal-form {
+    max-width: 800px;
+    /* align-items: center; */
+}
+
+
+.modalForm .popup__window--modal-form.scroll {
+	overflow: auto;
+    max-height: 90%;
+}
+.modalForm .popup__window--modal-form.scroll .popup__wrapper-form {
+    height: 100%;
+}
+
+.modalForm .popup__window--modal-form.scroll.is-info {
+    overflow: initial;
+}
+
+.modalForm .popup__window--modal-form.is-info .popup__wrapper-form{
+    height: 100%;
+    overflow: hidden;
+}
+
+.modalForm .form-standart__agreements,
+.modalForm .subscription__aside,
+.modalForm .subscription__aside-form_v2,
+.modalForm .subscription__aside-form_trial_v2 {
+	margin-bottom: 0;
+}
+
+.modalForm .form-standart_tpl-ver .form-standart__fields-list {
+	margin-bottom: 20px;
+}
+
+.modalForm .subscription__total-value-old span,
+.modalForm .subscription__total-value-old i {
+	opacity: .4;
+}
+.modalForm .subscription__promo-btn_v2 {
+	position: absolute;
+    right: 0;
+    top: 22px;
+    border: none;
+    background-color: transparent;
+    opacity: .7;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+}
+.modalForm .subscription__promo {
+    left: 0;
+}
+
+.modalForm .subscription__code_v2, 
+.modalForm .subscription__code_v2:hover {
+    color: #000;
+}
+
+.modalForm .subscription__code_v2 {
+    display: table;
+    margin: 0 auto 50px;
+    opacity: .7;
+    font-size: 12px;
+    font-weight: 500;
+}
+.modalForm .subscription__ready, 
+.modalForm .subscription__info,
+.modalForm .subscription__main {
+    margin-bottom: 0;
+}
+.modalForm .subscription__main {
+    width: 100%;
+}
+
+
+.subscription__main  {
+    color: #000;
+}
+.subscription .subscription__aside-form input,
+.subscription .subscription__aside-form .select2-selection,
+.subscription .subscription__aside-form select,
+.subscription .subscription__aside-form textarea {
+    border-bottom-color: #ffaf7f;
+    font-family: Gotham, sans-serif;
+    font-size: 18px;
+}
+.subscription .subscription__aside-form .subscription__total-btn {
+    border-color: #fff;
+}
+.subscription .subscription__aside-form input::placeholder,
+.subscription .subscription__aside-form textarea::placeholder,
+.training__aside-form input::placeholder,
+.training__aside-form textarea::placeholder {
+    color: #fff;
+}
+.subscription__aside .subscription__aside-form .input--checkbox.checked:before {
+    background-color: #fff;
+}
+
+.subscription__aside .subscription__total-value-old span {
+    white-space: nowrap;
+}
+
+.subscription__aside .subscription__promo-btn {
+    color: #fff;
+}
+
+.subscription__aside .subscription__promo-btn:hover {
+    color: #ffaf7f;
+}
+.subscription__aside .input-label__text a {
+    text-decoration: underline;
+}
+.subscription__aside .input-label__text a:hover {
+    color: #ffaf7f;
+}
+
+
+.subscription__aside .subscription__total-text {
+    color: #fff;
+}
+.subscription__aside .subscription__total .subscription__total-text {
+    color: #fff;
+}
+
+
+
+.popup.popup--legal-information .input--checkbox.checked:before {
+    background-color: #ff7628;
+}
+
+.popup.popup--legal-information .subscription__total-btn--legal-information {
+    border: 1px solid #ff7628;
+}
+
+.subscription .subscription__aside {
+    height: auto;
+}
+
+
+.abonement-detail .b-screen.b-screen_with-page-heading{
+    margin-bottom: 0;
+}
+.abonement-detail .club__slider-item {
+    height: 650px;
+}
+.abonement-detail .abonement-additional-block {
+    color: #000;
+}
+.abonement-detail .subscription__aside {
+    margin-top: 0;
+}
+@media screen and (max-width: 1260px), screen and (min-aspect-ratio: 76 / 35) and (min-width: 1260px) {
+    .abonement-detail .club__slider-item {
+        height: 400px;
+    }
+}
+
+
+.b-footer__block-title {
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 40px;
+}
+.h2 {
+    margin-bottom: 52px;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 40px;
+}
+.margin-top-20 {
+    margin-top: 20px;
+}
+.b-twoside-card__footnote {
+    height: 23px;
+    overflow: hidden;
+}
+.b-map_page .b-map__map {
+    /* height: 1000px; */
+}
+
+.training__aside .training__aside-title {
+    text-transform: uppercase;
+    font-weight: 900;
+    text-align: center;
+}
+.training__aside-form .input--checkbox-club {
+    min-width: 20px;
+    min-height: 20px;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 0;
+}
+.training__aside-form .input--checkbox-club::before {
+    opacity: 1 !important;
+    width: 16px !important;
+    height: 16px !important;
+    top: 2px !important;
+    left: 2px !important;
+}
+
+/* media */
+@media screen and (max-width: 1024px) {
+    .h2 {
+        margin-bottom: 45px;
+        font-size: 36px;
+    }
+}
+@media(max-width: 799px){
+    .modalForm .popup__window--modal-form {
+        max-width: 100%;
+    }
+    .b-page__title {
+        text-overflow: initial;
+        white-space: initial;
+    }
+
+    .popup__window .form-standart__plate {
+        margin-bottom: 200px;
+    }
+}
+@media screen and (max-width: 400px) {
+    .h2 {
+        font-size: 9vw;
+    }
+    
+}
+
+
+.ui-widget.ui-widget-content {
+    z-index: 1001;
+    border: none;
+}
+
+.ui-widget-content {
+    color: #fff;
+    background: transparent;
+}
+
+.ui-menu .ui-menu-item {
+    margin: 0;
+    cursor: pointer;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    background-color: rgba(0,0,0,0.7);
+    list-style-image: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);
+}
+
+
+main.b-page__main {
+    min-height: calc(100vh - 143px - 133px - 110px);
+}
+
+@media (max-width: 1024px) {
+    main.b-page__main {
+        min-height: calc(100vh - 233px);
+    }
+}
+
+
+.b-top-menu.is-menu-opened a.b-top-menu__btn.button-outline.is-hide-desktop.js-form-abonement {
+    display: block;
+    margin-bottom: 200px;
+}
+
+
+/* ==================== */
+.b-screen.no-bottom-margin {
+	margin-bottom: 0;
+}
+.b-screen.no-bottom-margin::after {
+	display: none;
+}
+
+#js-pjax-clubs {
+	margin-top: 35px;
+}
+
+.b-image-plate-block.small-bottom-margin {
+	margin-bottom: 0;
+}
+.club__subheading-centred {
+	margin-top: 30px;
+	margin-bottom: 30px !important;
+	padding-left: 150px;
+	text-transform: uppercase;
+}
+.club__subheading-clients {
+	padding-left: 120px;
+	text-transform: uppercase;
+	margin-bottom: 30px !important;
+}
+.club__subheading {
+	text-transform: uppercase;
+}
+.b-image-plate-block__text-content .slick-track {
+	align-items: start;
+}
+.club__subheading-centred,
+.club__subheading-clients,
+#js-pjax-clubs .club__subheading {
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 40px;
+}
+
+@media only screen and (max-width: 1440px) {
+	.club__subheading-centred {
+		padding-left: 50px;
+	}
+	.club__subheading-clients {
+		padding-left: 0;
+	}
+}
+@media only screen and (max-width: 1020px) {
+	.b-map_page {
+		padding-top: 50px;
+	}
+	.club__subheading-centred,
+	.club__subheading-clients {
+		display: block;
+    	text-align: center;
+	}
+}

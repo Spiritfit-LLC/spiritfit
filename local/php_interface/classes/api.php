@@ -100,6 +100,18 @@ class Api
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
+			case 'web_site_resume':
+                $this->web_site_resume($post['params']);
+                AddMessage2Log('web_site_resume');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+			case 'web_site_inteview':
+                $this->web_site_inteview($post['params']);
+                AddMessage2Log('web_site_inteview');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
         }
     }
 
@@ -130,12 +142,113 @@ class Api
 			$this->_result = false;
         }
 	}
+	
+	/**
+     * does request to website/contact
+     *
+     * @param  array $params
+     */
+    private function web_site_resume($params) {
+        
+		$name = !empty($params['name']) ? $params['name'] : false;
+		$surname = !empty($params['surname']) ? $params['surname'] : false;
+		$phone = !empty($params['phone']) ? $params['phone'] : false;
+		$email = !empty($params['email']) ? $params['email'] : false;
+		$position = !empty($params['position']) ? $params['position'] : false;
+		$salary = !empty($params['salary']) ? $params['salary'] : false; 
+		$metro= !empty($params['metro']) ? $params['metro'] : false;
+        $client_id   = !empty($params['client_id']) ? $params['client_id'] : false;
+        $code   = !empty($params['code']) ? $params['code'] : false;
+
+        if(strpos($client_id, '.')){
+            $client_id = explode('.', $client_id);
+            $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
+        }
+
+        if(empty($name) || empty($surname) || empty($phone) || empty($email)){
+            return false;
+        }
+       
+        $type = $params["type"] ? $params["type"] : 0;
+        
+		$trafic = $GLOBALS['arTraficAnswer'][$_REQUEST["WEB_FORM_ID"]];
+		$arParams = array(
+			"type" => $type,
+			"name" => $name . " " . $surname,
+            "phone" => substr($phone, 1),
+			"email" => $email,
+			"position" => $position,
+			"salary" => $salary,
+			"metro" => $metro,
+            "cid" => $client_id,
+			'source' => $_REQUEST[$trafic['src']],
+        	'channel' => $_REQUEST[$trafic['mdm']],
+        	'campania' => $_REQUEST[$trafic['cnt']],
+        	'message' => $_REQUEST[$trafic['cmp']],
+        	'kword' => $_REQUEST[$trafic['trm']],
+		);
+		
+		$additionFields = $GLOBALS['arAdditionAnswer'][$_REQUEST["WEB_FORM_ID"]];
+        
+        $this->_send($this->apiUrl."resume", $arParams);
+        
+        if ($this->_data['result']['errorCode'] == 0)
+            $this->_result = true;
+    }
+	
+	/**
+     * does request to website/contact
+     *
+     * @param  array $params
+     */
+    private function web_site_inteview($params) {
+        
+		$phone = !empty($params['phone']) ? $params['phone'] : false;
+        $client_id = !empty($params['client_id']) ? $params['client_id'] : false;
+		
+        if(strpos($client_id, '.')){
+            $client_id = explode('.', $client_id);
+            $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
+        }
+
+        if( empty($phone) ){
+            return false;
+        }
+       
+        $type = $params["type"] ? $params["type"] : 0;
+        
+		$trafic = $GLOBALS['arTraficAnswer'][$_REQUEST["WEB_FORM_ID"]];
+		$params["type"] = $type;
+		$params["cid"] = $client_id;
+		$params['type'] = 'inteview';
+		
+		$trafic = $GLOBALS['arTraficAnswer'][$_REQUEST["WEB_FORM_ID"]];
+		$params['source'] = $_REQUEST[$trafic['src']];
+		$params['channel'] = $_REQUEST[$trafic['mdm']];
+		$params['campania'] = $_REQUEST[$trafic['cnt']];
+		$params['message'] = $_REQUEST[$trafic['cmp']];
+		$params['kword'] = $_REQUEST[$trafic['trm']];
+		if( !empty($_REQUEST[$trafic['ClientId']]) ) {
+			$params['cid'] = $_REQUEST[$trafic['ClientId']];
+		}
+        
+        $this->_send($this->apiUrl."inteview", $params);
+        
+        if ($this->_data['result']['errorCode'] == 0)
+            $this->_result = true;
+    }
 
     /**
      * @param $params
      */
     private function _request($params)
     {
+        /*Костыль для работы клуба с одинаковым ID*/
+        if( !empty($params['club']) && intval($params['club']) == 9999 ) {
+            $params['club'] = "11";
+        }
+        /*Костыль для работы клуба с одинаковым ID*/
+
         $name   = !empty($params['name']) ? $params['name'] : false;
 		$surname   = !empty($params['surname']) ? $params['surname'] : false;
         $email  = !empty($params['email']) ? $params['email'] : false;
@@ -154,9 +267,11 @@ class Api
 			"phone" => substr($phone, 1),
 			"code" => $code,
 		));
-
-		if ($this->_data['result']->result->errorCode == 0) {
-
+		
+		$smsResultArray = $this->result();
+		
+		//if ($this->_data['result']->result->errorCode == 0) {
+		if( empty($smsResultArray['data']['result']['errorCode']) ) {
 			if(empty($name) || empty($surname) || empty($email) || empty($phone)){
 				return false;
 			}
@@ -208,9 +323,16 @@ class Api
      */
     private function _request2($params)
     {
+        /*Костыль для работы клуба с одинаковым ID*/
+        if( !empty($params['club']) && intval($params['club']) == 9999 ) {
+            $params['club'] = "11";
+        }
+        /*Костыль для работы клуба с одинаковым ID*/
+
         $name   = !empty($params['name']) ? $params['name'] : false;
         $phone  = !empty($params['phone']) ? $params['phone'] : false;
         $club  = !empty($params['club']) ? $params['club'] : false;
+		$company  = !empty($params['company']) ? $params['company'] : false;
         $client_id   = !empty($params['client_id']) ? $params['client_id'] : false;
         $code   = !empty($params['code']) ? $params['code'] : false;
 
@@ -233,7 +355,7 @@ class Api
             
 			$trafic = $GLOBALS['arTraficAnswer'][$_REQUEST["WEB_FORM_ID"]];
 			$arParams = array(
-				"type" => $type,
+				"type" => intval($type),
                 "name" => $name,
                 "phone" => substr($phone, 1),
                 "clubid" => sprintf("%02d", $club),
@@ -244,6 +366,10 @@ class Api
 	        	'message' => $_REQUEST[$trafic['cmp']],
 	        	'kword' => $_REQUEST[$trafic['trm']],
 			);
+			
+			if( !empty($company) ) {
+				$arParams['company'] = $company;
+			}
 			
 			$additionFields = $GLOBALS['arAdditionAnswer'][$_REQUEST["WEB_FORM_ID"]];
 			
@@ -403,7 +529,7 @@ class Api
     {
         $phone  = !empty($params['phone']) ? $params['phone'] : false;
 
-        if(empty($phone)){
+        if(empty($phone)) {
             return false;
         }
 		
@@ -436,6 +562,16 @@ class Api
         }
         
         if($webFormId == 1) $arParams['clubid'] = $_REQUEST[$additionFields['subscriptionId']];
+
+        /*Костыль для работы клуба с одинаковым ID*/
+        if( !empty($arParams['clubid']) && intval($arParams['clubid']) == 9999 ) {
+            $arParams['clubid'] = "11";
+        }
+        /*Костыль для работы клуба с одинаковым ID*/
+
+        if( !empty($arParams['subscriptionId']) ) {
+            $arParams['subscriptionId'] = trim($arParams['subscriptionId']);
+        }
         
         //file_put_contents(__DIR__.'/debug_reg.txt', print_r("website\\reg\n", true), FILE_APPEND);
         //file_put_contents(__DIR__.'/debug_reg.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
@@ -443,8 +579,7 @@ class Api
         //file_put_contents(__DIR__.'/debug_reg.txt', print_r($_REQUEST, true), FILE_APPEND);
         //file_put_contents(__DIR__.'/debug_reg.txt', print_r($arParams, true), FILE_APPEND);
         //file_put_contents(__DIR__.'/debug_reg.txt', print_r("\n ================ \n", true), FILE_APPEND);
-
-
+        
 		$this->_send($this->apiUrl."reg", $arParams);
 
 		if ($this->_data['result']['errorCode'] === 0)

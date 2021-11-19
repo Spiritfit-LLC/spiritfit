@@ -15,14 +15,14 @@ $this->setFrameMode(true);
 ?>
 <section class="b-faq">
     <div class="content-center">
-        <div class="b-faq__content">
+        <div id="faq" class="b-faq__content">
             <h2>FAQ</h2>
             <div class="b-faq__tabs js-tabs-parent">
                 <ul class="b-faq__tab-links is-hide-mobile">
                     <?
                     $k = 0;
                     foreach($arResult["SECTIONS"] as $section):?>
-                        <li class="b-faq__tab-link <?=($k == 0 ? 'is-active' : '')?>"><?=$section['NAME']?></li>
+                        <li <?=(!empty($section['UF_ANCHOR'])) ? 'id="'.$section['UF_ANCHOR'].'"' : '' ?> class="b-faq__tab-link <?=($k == 0 ? 'is-active' : '')?>"><?=$section['NAME']?></li>
                         <? $k++; ?>
                     <?endforeach;?>
                 </ul>
