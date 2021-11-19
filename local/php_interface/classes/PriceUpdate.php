@@ -25,8 +25,32 @@ class PriceUpdate {
 
     private static function updateElement($clubs, $abonements) {
         
-      
-        $arResultElements = self::send();     
+        $arResultElements = self::send();
+
+        /* Временно отключаем обноление цен у абонементов с кодами 1С */
+        if( isset($arResultElements["reload"]) ) {
+            unset($arResultElements["reload"]);
+        }
+        if( isset($arResultElements["reload1"]) ) {
+            unset($arResultElements["reload1"]);
+        }
+        if( isset($arResultElements["reload2"]) ) {
+            unset($arResultElements["reload2"]);
+        }
+		
+		if( isset($arResultElements["presalesmonth2"]) ) {
+            unset($arResultElements["presalesmonth2"]);
+        }
+		if( isset($arResultElements["presalesmonth"]) ) {
+            unset($arResultElements["presalesmonth"]);
+        }
+		if( isset($arResultElements["presalesyear"]) ) {
+            unset($arResultElements["presalesyear"]);
+        }
+		if( isset($arResultElements["presalesyear2"]) ) {
+            unset($arResultElements["presalesyear2"]);
+        }
+        /* Временно отключаем обноление цен у абонементов с кодами 1С */
 
         foreach ($arResultElements as $key => $arTypeAbonement) {
             $props = array();

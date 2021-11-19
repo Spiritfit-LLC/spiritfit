@@ -30,6 +30,7 @@ class FormAbonimentComponent extends CBitrixComponent{
                     $club = '08'; // по умолчанию клуб Одинцово
                 }
                 $this->arResult["arAnswers"]["club"][0]['ITEMS'] = Utils::getClubsForm($club);
+                $this->arResult["CLUB_ID"] = $club;
             }
             $this->arResult["WEB_FORM_ID"] = $this->arResult["arForm"]["VARNAME"];
 
@@ -253,7 +254,7 @@ class FormAbonimentComponent extends CBitrixComponent{
         }else{
             $selectedClub = Utils::getClub($club);    
         }
-
+		
         foreach ($this->arResult["ELEMENT"]["PROPERTIES"]["PRICE"]["VALUE"] as $key => $arPrice) {
             if ($arPrice["LIST"] == $selectedClub["ID"]) {
                 $this->arResult["ELEMENT"]["PRICES"][] = $arPrice;
@@ -276,6 +277,10 @@ class FormAbonimentComponent extends CBitrixComponent{
                 $priceSign[] = $arItem;
             }
         }
+		/*echo $selectedClub["ID"];
+		echo '<pre>';
+		print_r($this->arResult["ELEMENT"]["PROPERTIES"]["PRICE_SIGN_DETAIL"]);
+		echo '</pre>';*/
 
         foreach ($this->arResult["ELEMENT"]["PRICES"] as $key => $arPrice) {
             if ($arPrice["PRICE"] != $this->arResult["ELEMENT"]["BASE_PRICE"]["PRICE"] && $arPrice["NUMBER"] == $this->arResult["ELEMENT"]["BASE_PRICE"]["NUMBER"]) {
@@ -320,7 +325,7 @@ class FormAbonimentComponent extends CBitrixComponent{
         array_multisort(array_column($this->arResult["ELEMENT"]["PRICES"], "NUMBER"), SORT_ASC, $this->arResult["ELEMENT"]["PRICES"]);
     }
 
-    private function checkSms($num){
+    private function checkSms($num) {
         global $APPLICATION;
 
         $arParam = $this->getFormatFields();
@@ -343,17 +348,26 @@ class FormAbonimentComponent extends CBitrixComponent{
 			
 		// if ($this->request["form_hidden_10"] == 0 || $this->request["form_hidden_21"] == 0) {
 		if ($this->request["form_hidden_10"] == 0) {
-            $arParam["type"] = 1;
+			
+			$arParam["type"] = 1;
             if ($this->arResult["ELEMENT"]["CODE"] == "probnaya-trenirovka" || $this->arResult["ELEMENT"]["ID"] == "226") {
                 $arParam["type"] = 3;
             }
+			if( !empty($this->request["form_default_type"]) ) {
+				$arParam["type"] = intval($this->request["form_default_type"]);
+			}
             
             $api = new Api(array(
                 "action" => "request2",
                 "params" => $arParam
             ));
         } else {
-            $api = new Api(array(
+            
+			if( !empty($this->request["form_default_type"]) ) {
+				$arParam["type"] = intval($this->request["form_default_type"]);
+			}
+			
+			$api = new Api(array(
                 "action" => "request",
                	"params" => $arParam
             ));

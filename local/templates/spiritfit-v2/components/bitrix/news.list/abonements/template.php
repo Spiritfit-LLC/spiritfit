@@ -56,29 +56,36 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 
                                     <div class="b-twoside-card__prices">
                                         <?if (false && strlen($arItem["BASE_PRICE"]["PRICE"]) > 0){?>
-                                            <? foreach ($arItem["PRICES"] as $key => $price):?>
-                                                <div class="b-twoside-card__prices-item">
-                                                    <div class="b-twoside-card__prices-title"><?= $price["SIGN"] ?></div>
-                                                    <?if ($key == 0 && $arItem["SALE"]) {?>
-                                                        <div class="b-twoside-card__prices-old">
-                                                            <?= $price["PRICE"] ?> <span class="rub">₽</span>
-                                                        </div>
-                                                        <div class="b-twoside-card__prices-current">
-                                                            <?=$arItem["SALE"]?> <span class="rub">₽</span>
-                                                        </div>
-                                                    <?}elseif($key == 1 && $arItem["SALE_TWO_MONTH"]){?>
-                                                        <div class="b-twoside-card__prices-current">
-                                                            <?= $arItem["SALE_TWO_MONTH"] ?> <span class="rub">₽</span>
-                                                        </div>
-                                                    <?}else{?>
-                                                        <? if ($price["PRICE"]  && $price["PRICE"] != " "): ?>
-                                                            <div class="b-twoside-card__prices-current">
-                                                                <?= $price["PRICE"] ?> <span class="rub">₽</span>
-                                                            </div>
-                                                        <? endif; ?>
-                                                    <?}?>
-                                                </div>
-                                            <? endforeach; ?>
+                                            <? if( $arItem['ID'] == 226 ) { ?>
+												<div class="b-twoside-card__prices-item">
+													<div class="b-twoside-card__prices-old">1000 <span class="rub">₽</span></div>
+													<div class="b-twoside-card__prices-current">0 <span class="rub">₽</span></div>
+												</div>
+											<? } else { ?>
+												<? foreach ($arItem["PRICES"] as $key => $price):?>
+                                                	<div class="b-twoside-card__prices-item">
+                                                    	<div class="b-twoside-card__prices-title"><?= $price["SIGN"] ?></div>
+                                                    	<?if ($key == 0 && $arItem["SALE"]) {?>
+                                                        	<div class="b-twoside-card__prices-old">
+                                                            	<?= $price["PRICE"] ?> <span class="rub">₽</span>
+                                                        	</div>
+                                                        	<div class="b-twoside-card__prices-current">
+                                                            	<?=$arItem["SALE"]?> <span class="rub">₽</span>
+                                                        	</div>
+                                                    	<?}elseif($key == 1 && $arItem["SALE_TWO_MONTH"]){?>
+                                                        	<div class="b-twoside-card__prices-current">
+                                                            	<?= $arItem["SALE_TWO_MONTH"] ?> <span class="rub">₽</span>
+                                                        	</div>
+                                                    	<?}else{?>
+                                                        	<? if ($price["PRICE"]  && $price["PRICE"] != " "): ?>
+                                                            	<div class="b-twoside-card__prices-current">
+                                                                	<?= $price["PRICE"] ?> <span class="rub">₽</span>
+                                                            	</div>
+                                                        	<? endif; ?>
+                                                    	<?}?>
+                                                	</div>
+                                            	<? endforeach; ?>
+											<? } ?>
                                             <? 
                                             $showLinkForPopup = false;
                                             if($showLinkForPopup){ ?>
@@ -91,6 +98,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                                     <? if ($arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"]): ?>
                                         <div class="b-twoside-card__footnote"><?= $arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] ?></div>
                                     <? endif; ?>
+                                    
                                 </div>
                             </div>
                         </div>

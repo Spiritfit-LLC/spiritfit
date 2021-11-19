@@ -22,7 +22,7 @@ $this->setFrameMode(true);
                     <?
                     $k = 0;
                     foreach($arResult["SECTIONS"] as $section):?>
-                        <li class="b-faq__tab-link <?=($k == 0 ? 'is-active' : '')?>"><?=$section['NAME']?></li>
+                        <li <?=(!empty($section['UF_ANCHOR'])) ? 'id="'.$section['UF_ANCHOR'].'"' : '' ?> class="b-faq__tab-link <?=($k == 0 ? 'is-active' : '')?>"><?=$section['NAME']?></li>
                         <? $k++; ?>
                     <?endforeach;?>
                 </ul>

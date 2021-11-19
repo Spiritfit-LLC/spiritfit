@@ -8,9 +8,9 @@ $arField = ['name', 'email', 'phone'];
 <div class="content-center block-margin">
 <div class="form-standart form-standart_tpl-hor form-standart_black-bg">
     <div class="form-standart__plate">
-        <h2 class="form-standart__title">Записаться на пробную тренировку</h2>
+        <h2 class="form-standart__title"><?if($arParams["TEXT_FORM"]){?><?=$arParams["TEXT_FORM"]?><?}else{?>Записаться на пробную тренировку<?}?></h2>
 
-        <div class="subscription__title-success">Спасибо, заявка успешно отправлена!</div>
+        <!--<div class="subscription__title-success">Спасибо, ваша заявка принята! После 3-го ноября мы вам позвоним для консультации и оформления двухнедельного тест-драйва и получения скидки.</div>-->
         
         <form class="training__aside-form_v2" name="<?= $arResult["WEB_FORM_NAME"] ?>" action="<?= POST_FORM_ACTION_URI ?>" method="POST" enctype="multipart/form-data">
 	    	<?=getClientParams($arParams["WEB_FORM_ID"]) ?>
@@ -114,7 +114,7 @@ $arField = ['name', 'email', 'phone'];
 </div>
 
 <!-- Вывод ошибки в popup -->
-<? if ($arResult["RESPONSE"]["data"]["result"]["errorCode"] !== 0 && $arResult["RESPONSE"]["data"]["result"]["userMessage"] != ""): ?>
+<? if ($arResult["RESPONSE"]["data"]["result"]["errorCode"] !== 0 && $arResult["RESPONSE"]["data"]["result"]["userMessage"] != "") { ?>
     <?
     $settings = Utils::getInfo(); 
     if ($settings['PROPERTIES']["ERROR_MESSAGE"][$arResult["RESPONSE"]["data"]["result"]["errorCode"]]) {
@@ -133,8 +133,22 @@ $arField = ['name', 'email', 'phone'];
             <div class="popup__success"><?= $errorMessage ?></div>
         </div>
     </div>
-<? endif; ?>
-<script>dataLayerSend('conversion', 'sendFormTrialWorkout', '');</script>
+<?
+	} else {
+		?>
+		<div class="popup popup--call" style="display: block;">
+        	<div class="popup__bg"></div>
+        	<div class="popup__window">
+            	<div class="popup__close">
+                	<div></div>
+                	<div></div>
+            	</div>
+            	<div class="popup__success"><?=(!empty($arParams["CLUB_FORM_SUCCESS"])) ? $arParams["CLUB_FORM_SUCCESS"] : "Спасибо, ваша заявка принята!" ?></div>
+        	</div>
+    	</div>
+		<?
+	}
+?>
 <script src="<?=SITE_TEMPLATE_PATH?>/js/form-standart.js"></script>
 <script>
 setTimeout(function() {

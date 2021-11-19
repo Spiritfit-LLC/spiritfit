@@ -22,6 +22,11 @@ if(!empty($cord)){
 	$cord = explode(',', $cord);
 }
 
+$pathToImageSrc = "";
+if( !empty($arResult['PROPERTIES']['PATH_TO_IMAGE']["VALUE"]) ) {
+	$pathToImageSrc = CFile::ResizeImageGet($arResult['PROPERTIES']['PATH_TO_IMAGE']["VALUE"], array("width" => 800, "height" => 600), BX_RESIZE_IMAGE_PROPORTIONAL)["src"];
+}
+
 $mapName = str_replace("\r\n", '', HTMLToTxt(htmlspecialcharsBack($arResult['NAME'])));
 $mapAdress = str_replace("\r\n", '', HTMLToTxt(htmlspecialcharsBack($address['TEXT'])));
 if(strpos($mapAdress, '"')) $mapAdress = str_replace('"', '\'', $mapAdress);
@@ -31,7 +36,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 ?>
 <? if($_REQUEST["ajax_send"] != 'Y') { ?>
 	<? if(!empty($arResult['ABONEMENTS']) && ($arResult['PROPERTIES']['SOON']['VALUE'] != 'Y' || !empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']))){ ?>
-		<section class="b-cards-slider b-cards-slider--with-prices">
+		<section id="abonements" class="b-cards-slider b-cards-slider--with-prices">
 			<div class="content-center">
 				<div class="b-cards-slider__heading">
 					<div class="b-cards-slider__title">
@@ -70,25 +75,30 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 										<div class="b-twoside-card__hidden-content">
 											<div class="b-twoside-card__text"><?=$abonement['PREVIEW_TEXT']?></div>
 											<div class="b-twoside-card__prices">
-												
-												<? foreach ($abonement["PRICES"] as $key => $price):?>
+												<? if( $abonement['ID'] == 226 ) { ?>
 													<div class="b-twoside-card__prices-item">
-														<div class="b-twoside-card__prices-title"><?= $price["SIGN"] ?></div>
-														<?if ($key == 0 && $abonement["SALE"]) {?>
-															<div class="b-twoside-card__prices-old"><?= $price["PRICE"] ?> <span class="rub">₽</span></div>
-															<div class="b-twoside-card__prices-current"><?=$abonement["SALE"]?> <span class="rub">₽</span></div>
-														<?}elseif($key == 1 && $abonement["SALE_TWO_MONTH"]){?>
-															<div class="b-twoside-card__prices-current"><?=$abonement["SALE_TWO_MONTH"] ?> <span class="rub">₽</span></div>
-														<?}else{?>
-															<? if ($price["PRICE"]  && $price["PRICE"] != " "): ?>
-																<div class="b-twoside-card__prices-current"><?=$price["PRICE"] ?> <span class="rub">₽</span></div>
-															<? endif; ?>
-														<?}?>
+														<div class="b-twoside-card__prices-old">1000 <span class="rub">₽</span></div>
+														<div class="b-twoside-card__prices-current">0 <span class="rub">₽</span></div>
 													</div>
-												<? endforeach; ?>
-
+												<? } else { ?>
+													<? foreach ($abonement["PRICES"] as $key => $price):?>
+														<div class="b-twoside-card__prices-item">
+															<div class="b-twoside-card__prices-title"><?= $price["SIGN"] ?></div>
+															<?if ($key == 0 && $abonement["SALE"]) {?>
+																<div class="b-twoside-card__prices-old"><?= $price["PRICE"] ?> <span class="rub">₽</span></div>
+																<div class="b-twoside-card__prices-current"><?=$abonement["SALE"]?> <span class="rub">₽</span></div>
+															<?}elseif($key == 1 && $abonement["SALE_TWO_MONTH"]){?>
+																<div class="b-twoside-card__prices-current"><?=$abonement["SALE_TWO_MONTH"] ?> <span class="rub">₽</span></div>
+															<?}else{?>
+																<? if ($price["PRICE"]  && $price["PRICE"] != " "): ?>
+																	<div class="b-twoside-card__prices-current"><?=$price["PRICE"] ?> <span class="rub">₽</span></div>
+																<? endif; ?>
+															<?}?>
+														</div>
+													<? endforeach; ?>
+												<? } ?>
+												
 												<a href="<?=$abonement['DETAIL_PAGE_URL']?>" class="b-twoside-card__prices-button button">Выбрать</a>
-
 												<? 
 												$showLinkForPopup = false;
 												if($showLinkForPopup){ ?>
@@ -113,7 +123,8 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 	<? } ?>
 <? } ?>
 
-<? if( empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE'])) { ?>
+<? if( (empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']) && !empty($arResult['PROPERTIES']['SHOW_FORM']['VALUE']))
+	|| (!empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']) && !empty($arResult['PROPERTIES']['HIDE_LINK_FORM']['VALUE'])) ) { ?>
 	<? if($arResult["PROPERTIES"]["SOON"]["VALUE"] == 'Y') { ?>
 		<div id="js-pjax-clubs">
 			<?
@@ -125,6 +136,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 					"WEB_FORM_ID" => "5",
 					"NUMBER" => $arResult["PROPERTIES"]["NUMBER"]["VALUE"],
 					"TEXT_FORM" => $arResult["PROPERTIES"]["TEXT_FORM"]["~VALUE"],
+					"DEFAULT_TYPE_ID" => (!empty($arResult['PROPERTIES']['FORM_TYPE']['VALUE'])) ? $arResult['PROPERTIES']['FORM_TYPE']['VALUE'] : "",
 				),
 				false
 			);
@@ -139,8 +151,10 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 					array(
 						"AJAX_MODE" => "N",
 						"WEB_FORM_ID" => "3",
+						"CLUB_FORM_SUCCESS" => $arParams["CLUB_FORM_SUCCESS"],
 						"NUMBER" => $arResult["PROPERTIES"]["NUMBER"]["VALUE"],
 						"TEXT_FORM" => $arResult["PROPERTIES"]["TEXT_FORM"]["~VALUE"],
+						"DEFAULT_TYPE_ID" => (!empty($arResult['PROPERTIES']['FORM_TYPE']['VALUE'])) ? $arResult['PROPERTIES']['FORM_TYPE']['VALUE'] : "",
 					),
 					false
 				);
@@ -198,7 +212,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 	<? } ?>
 
 	<? if(!empty($arResult["PROPERTIES"]["TEAM"]["ITEMS"])){ ?>
-		<section class="b-cards-slider">
+		<section id="club_command" class="b-cards-slider">
 			<div class="content-center">
 				<div class="b-cards-slider__heading">
 					<div class="b-cards-slider__title">
@@ -233,6 +247,42 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 			</div>
 		</section>
 	<? } ?>
+	
+	<? if(!empty($arResult["PROPERTIES"]["REVIEWS"]["VALUE"])){ ?>
+		<section id="club_reviews" class="b-cards-slider">
+			<div class="content-center">
+				<div class="b-cards-slider__heading">
+					<div class="b-cards-slider__title">
+						<h2>Отзывы</h2>
+					</div>
+				</div>
+			</div>
+			<div class="b-cards-slider__slider-wrap">
+				<div class="content-center">
+					<div class="reviews-slider">
+						<? foreach($arResult["PROPERTIES"]["REVIEWS"]["VALUE"] as $sliderItem) { ?>
+							<div class="reviews-slider-item">
+								<div class="reviews-slider-item__content">
+									<div class="reviews-slider-item__name-top"><?=$sliderItem["NAME_SHORT"]?></div>
+									<div class="reviews-slider-item__name"><?=$sliderItem["PROPERTIES"]["NAME"]["VALUE"]?></div>
+									<div class="reviews-slider-item__rating">
+										<? for($i = 1; $i <= 10; $i += 1) { ?>
+											<span class="rating-star">
+												<svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<path d="M10 0L13.0565 5.79311L19.5106 6.90983L14.9455 11.6069L15.8779 18.0902L10 15.2L4.12215 18.0902L5.05451 11.6069L0.489435 6.90983L6.94352 5.79311L10 0Z" fill="<?=($i <= $sliderItem["RATING"]) ? "#FF7628" : "#D3D3D3" ?>"/>
+												</svg>
+											</span>
+										<? } ?>
+									</div>
+									<div class="reviews-slider-item__description"><?=$sliderItem["PREVIEW_TEXT"]?></div>
+								</div>
+							</div>
+						<? } ?>
+					</div>
+				</div>
+			</div>
+		</section>
+	<? } ?>
 
 	<? if($arResult['PROPERTIES']['SCHEDULE_JSON']['VALUE'] !== 'false' && !empty($arResult['PROPERTIES']['SCHEDULE_JSON']['VALUE'])){ ?>
 		<? $APPLICATION->IncludeComponent(
@@ -245,6 +295,18 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 			),
 			false
 		); ?>
+		<script>
+			jQuery(function($) {
+				$( document ).ready(function() {
+					var hash = window.location.href.split('#').pop();
+					if( typeof hash != "undefined" && hash == "timetableheader" ) {
+						$('html, body').animate({
+        					scrollTop: $("#timetable").offset().top - 120
+    					}, 1);	
+					}
+				});
+			});
+		</script>
 	<? } ?>
 
 	<? if($arResult['PROPERTIES']['MAP_HIDDEN']['VALUE'] != 'Да'){ ?>
@@ -300,17 +362,25 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 								</div>
 							</div>
 							<div class="b-map__buttons">
-								<a class="b-map__button button-outline" href="#js-pjax-clubs">Отправить заявку</a>
+								<?
+									if( (empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']) && !empty($arResult['PROPERTIES']['SHOW_FORM']['VALUE']))
+										|| (!empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']) && !empty($arResult['PROPERTIES']['HIDE_LINK_FORM']['VALUE'])) ) {
+								?>
+									<a class="b-map__button button-outline" href="#js-pjax-clubs">Отправить заявку</a>
+								<? } ?>
 								<? if(!empty($pathTo)){ ?>
 									<a class="b-map__button button-outline custom-button" href="#route-window" data-fancybox="route-window">Как добраться</a>
 								<? } ?>
 							</div>
-							<? if(!empty($pathTo)){ 
+							<? if(!empty($pathTo) || !empty($pathToImageSrc)){ 
 								$pathTo['TEXT'] = htmlspecialcharsBack($pathTo['TEXT']);
 								?>
 								<div class="b-map__route is-hide" id="route-window">
 									<div class="content-area">
 										<?=$pathTo['TEXT']?>
+										<? if(!empty($pathToImageSrc)) { ?>
+											<img src="<?=$pathToImageSrc?>" alt="Как добраться" title="Как добраться">
+										<? } ?>
 									</div>
 								</div>
 							<? } ?>
@@ -325,7 +395,8 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 		<meta itemprop="legalName" content="ООО Рекорд Фитнес">
 		<link itemprop="url" href="https://spiritfit.ru/">
 		<? if( !empty($arResult['PREVIEW_PICTURE']['SRC']) ) { ?>
-			<span itemprop="image"><?=$_SERVER['REQUEST_SCHEME']?>://<?=$_SERVER['SERVER_NAME']?><?=$arResult['PREVIEW_PICTURE']['SRC']?></span>
+			<span itemprop="image">https://<?=$_SERVER['SERVER_NAME']?><?=$arResult['PREVIEW_PICTURE']['SRC']?></span>
+			<? $this->SetViewTarget('inhead'); ?>https://<?=$_SERVER['SERVER_NAME']?><?=$arResult['PREVIEW_PICTURE']['SRC']?><? $this->EndViewTarget(); ?>
 		<? } ?>
 		<span itemprop="priceRange"><?=$arResult['ABONEMENTS_MIN_PRICE']?>-<?=$arResult['ABONEMENTS_MAX_PRICE']?></span>  
 		<img itemprop="logo" src=" http://spiritfit.ru/images/logo.svg ">

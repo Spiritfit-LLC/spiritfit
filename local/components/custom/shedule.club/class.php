@@ -55,6 +55,7 @@ class ScheduleClubomponent extends CBitrixComponent{
         if($this->arParams['CLUB_NUMBER']){
             $this->arResult["CLUB_ACTIVE"] = $this->arParams['CLUB_NUMBER'];
         }
+		
         $club = $this->getClub();
         foreach($club as $key => $value){
             $shedule = $this->prepareShedule($value["PROPERTY_SCHEDULE_JSON_VALUE"]);

@@ -142,11 +142,11 @@ $arField = ['name', 'surname', 'email', 'phone'];
 
             ?>
 			<?
-				if($arParams["PREV_STEP"] == 2 && $abonementName == 'Домашние тренировки') {
+				/*if($arParams["PREV_STEP"] == 2 && $abonementName == 'Домашние тренировки') {
     				?><script>dataLayerSend('UX', 'sendContactFormHomeWorkout', '<?=$strSend?>')</script><?        
 				} else if($arParams["PREV_STEP"] == 2) {
     				?><script>dataLayerSend('conversion', 'sendContactForm', '<?=$strSend?>')</script><?
-				}
+				}*/
 			?>
 			<script>dataLayerSend('UX', 'openMembershipReadyPage', '<?=$strSend?>');</script>
 			<?

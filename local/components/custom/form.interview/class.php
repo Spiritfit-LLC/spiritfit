@@ -449,26 +449,16 @@
     	function executeComponent() {
 			
         	$this->getFields();
-			
-        	if($this->request->get("mode")){
-            	switch($this->request->get("mode")){
-                	case "try_sms":
-                    	if($this->request->get("phone")){
-                        	$this->sendSms($this->request->get("phone"));
-                    	}
-                    	break;
-                	case "check_sms":
-                    	if ($this->request->get("num")){
-                        	$this->checkSms($this->request->get("num"));
-                    	}
-                    	break;
-            	}
-        	}
+
+        	$prevStep = $this->request->get('step');
 			
 			$templateName = '';
         	switch ($this->checkStep()) {
             	case 2:
-                	if (empty($this->arResult["ERROR"])) {
+                	if( !empty($this->arResult["ERROR"]) && $prevStep > 1 ) {
+						$templateName = 'step-2';
+					}
+                	if (empty($this->arResult["ERROR"]) && $prevStep == 1) {
                     	$this->sendSms();
                 	}
 					if( empty($this->arResult["ERROR"]) || intval($this->arResult["ERROR"]) === 1 ) {

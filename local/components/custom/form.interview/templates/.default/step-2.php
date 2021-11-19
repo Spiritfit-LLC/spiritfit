@@ -10,7 +10,7 @@
 	<? if(!empty($arResult["ERROR"])) { ?>
 		<div class="form__error"><?=$arResult["ERROR"]?></div>
 	<? } ?>
-	<form class="popup__form popup__resume-form" name="<?= $arResult["WEB_FORM_NAME"] ?>" action="<?=POST_FORM_ACTION_URI ?>" method="POST" enctype="multipart/form-data">
+	<form class="popup__form form-interview tmpl2" name="<?= $arResult["WEB_FORM_NAME"] ?>" action="<?=POST_FORM_ACTION_URI ?>" method="POST" enctype="multipart/form-data">
     	<?=getClientParams($arParams["WEB_FORM_ID"]) ?>
 		<?=bitrix_sessid_post(); ?>
 		<input type="hidden" name="WEB_FORM_ID" value="<?= $arParams["WEB_FORM_ID"] ?>">

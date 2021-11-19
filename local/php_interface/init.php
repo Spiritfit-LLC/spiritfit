@@ -44,6 +44,18 @@ if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/Abonem
 AddEventHandler("iblock", "OnIBlockPropertyBuildList", array("CIPropertyPrice", "GetUserTypeDescription"));
 AddEventHandler("iblock", "OnAfterIBlockElementUpdate", Array("ElementUpdate", "OnAfterIBlockElementUpdateHandler"));
 
+/*global $USER;
+if( $USER->IsAuthorized() && $USER->IsAdmin() ) {
+	\Bitrix\Main\Page\Asset::getInstance()->addJs("/js/admin.js");
+}*/
+/*global $APPLICATION;
+$dir = $APPLICATION->GetCurDir();
+echo $dir; exit;*/
+
+$pageUrl = strtok($_SERVER["REQUEST_URI"], '?');
+if( $pageUrl === "/bitrix/admin/form_result_list.php" ) {
+	\Bitrix\Main\Page\Asset::getInstance()->addJs("/js/admin.js");
+}
 
 //массив ответов форм для данных об источнике трафика
 $arTraficAnswer = array(

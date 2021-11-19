@@ -13,9 +13,9 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
     </div>
 </div>
 <?
-session_start();
+/*session_start();
 if(empty($_SESSION['FIRST_OPEN'])){ ?>
     <script>dataLayerSend('conversion', 'sendPopupForm', '')</script>
 <? }
-$_SESSION['FIRST_OPEN'] = 'N';
+$_SESSION['FIRST_OPEN'] = 'N';*/
 ?>

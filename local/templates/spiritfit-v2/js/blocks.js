@@ -124,13 +124,13 @@ $(function () {
     });
 });
 $(function () {
+    
     $('.b-faq').each(function () {
         var $context = $(this);
         var $links = $('.b-faq__tab-link', $context);
         var $tabs = $('.b-faq__tab', $context);
         $context.on('click', function (e) {
             var $target = $(e.target);
-
             if ($target.closest('.b-faq__tab-link').length > 0) {
                 var $currentLink = $target.closest('.b-faq__tab-link');
                 $tabs.add($links).removeClass('is-active');
@@ -307,6 +307,9 @@ $(function () {
             dots: true,
             appendDots: $navPlace,
             arrows: true,
+			autoplay: true,
+			pauseOnFocus: false,
+			autoplaySpeed: 5000,
             prevArrow: '<div class="b-info-slider__arrow b-info-slider__arrow--left"></div>',
             nextArrow: '<div class="b-info-slider__arrow b-info-slider__arrow--right"></div>',
             fade: true

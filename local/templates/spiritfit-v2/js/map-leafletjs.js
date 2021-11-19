@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function(){
       $linkButton.removeClass('is-hide').attr('href', marker.options.page);
       shedule = `<div class="b-map__contact-item">
               <a href="${marker.options.page}#timetable">Расписание</a>
-          </div>`;
+	  </div>`;
     }
     
     

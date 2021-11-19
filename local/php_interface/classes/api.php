@@ -243,6 +243,12 @@ class Api
      */
     private function _request($params)
     {
+        /*Костыль для работы клуба с одинаковым ID*/
+        if( !empty($params['club']) && intval($params['club']) == 9999 ) {
+            $params['club'] = "11";
+        }
+        /*Костыль для работы клуба с одинаковым ID*/
+
         $name   = !empty($params['name']) ? $params['name'] : false;
 		$surname   = !empty($params['surname']) ? $params['surname'] : false;
         $email  = !empty($params['email']) ? $params['email'] : false;
@@ -317,6 +323,12 @@ class Api
      */
     private function _request2($params)
     {
+        /*Костыль для работы клуба с одинаковым ID*/
+        if( !empty($params['club']) && intval($params['club']) == 9999 ) {
+            $params['club'] = "11";
+        }
+        /*Костыль для работы клуба с одинаковым ID*/
+
         $name   = !empty($params['name']) ? $params['name'] : false;
         $phone  = !empty($params['phone']) ? $params['phone'] : false;
         $club  = !empty($params['club']) ? $params['club'] : false;
@@ -343,7 +355,7 @@ class Api
             
 			$trafic = $GLOBALS['arTraficAnswer'][$_REQUEST["WEB_FORM_ID"]];
 			$arParams = array(
-				"type" => $type,
+				"type" => intval($type),
                 "name" => $name,
                 "phone" => substr($phone, 1),
                 "clubid" => sprintf("%02d", $club),
@@ -550,6 +562,16 @@ class Api
         }
         
         if($webFormId == 1) $arParams['clubid'] = $_REQUEST[$additionFields['subscriptionId']];
+
+        /*Костыль для работы клуба с одинаковым ID*/
+        if( !empty($arParams['clubid']) && intval($arParams['clubid']) == 9999 ) {
+            $arParams['clubid'] = "11";
+        }
+        /*Костыль для работы клуба с одинаковым ID*/
+
+        if( !empty($arParams['subscriptionId']) ) {
+            $arParams['subscriptionId'] = trim($arParams['subscriptionId']);
+        }
         
         //file_put_contents(__DIR__.'/debug_reg.txt', print_r("website\\reg\n", true), FILE_APPEND);
         //file_put_contents(__DIR__.'/debug_reg.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
@@ -557,8 +579,7 @@ class Api
         //file_put_contents(__DIR__.'/debug_reg.txt', print_r($_REQUEST, true), FILE_APPEND);
         //file_put_contents(__DIR__.'/debug_reg.txt', print_r($arParams, true), FILE_APPEND);
         //file_put_contents(__DIR__.'/debug_reg.txt', print_r("\n ================ \n", true), FILE_APPEND);
-
-
+        
 		$this->_send($this->apiUrl."reg", $arParams);
 
 		if ($this->_data['result']['errorCode'] === 0)

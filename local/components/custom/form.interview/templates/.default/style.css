@@ -111,8 +111,7 @@ input.small {
 	display: inline-block;
 	margin: 0;
 }
-.form-interview .step-2,
-.form-interview input[type=submit] {
+.form-interview .step-2 {
 	display: none;
 }
 .go-back.last {
@@ -144,6 +143,31 @@ input.small {
 #form_interview .popup__heading {
 	text-align: center;
     margin-bottom: 13px;
+}
+
+.form-interview.tmpl2 inpit[type="submit"] {
+    padding: 20px 60px;
+    font-size: 13px;
+    color: currentColor;
+    background-color: transparent;
+    border: 1px solid #ff7628;
+    display: inline-block;
+    vertical-align: middle;
+    font-family: "Gotham Pro",sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    transition: background-color .15s ease 0s,color .15s ease 0s,border-color .15s ease 0s;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 0;
+    display: block;
+}
+.form__error {
+	text-align: center;
 }
 
 @media only screen and (max-width: 1000px) {

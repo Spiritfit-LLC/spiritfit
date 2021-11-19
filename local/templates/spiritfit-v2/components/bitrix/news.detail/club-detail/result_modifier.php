@@ -49,7 +49,7 @@ if ($arResult["PROPERTIES"]["LINK_VIDEO"]["VALUE"]) {
     }
 }
 
-
+$itemGetListArray['order'] = ['SORT' => 'ASC', 'NAME' => 'ASC'];
 $itemGetListArray['filter'] = ["IBLOCK_ID" => $arResult["PROPERTIES"]["TEAM"]["LINK_IBLOCK_ID"], "ID" => $arResult["PROPERTIES"]["TEAM"]["VALUE"], "ACTIVE" => "Y"];
 $itemGetListArray['select'] = ["ID", "NAME", "IBLOCK_ID", "PREVIEW_PICTURE", "PREVIEW_TEXT"];
 $itemRes = \Bitrix\Iblock\ElementTable::getList($itemGetListArray);
@@ -125,6 +125,14 @@ while ($res = $dbElements->GetNextElement()) {
     $fields = $res->GetFields();
     $properties = $res->GetProperties();
     $fields['PROPERTIES'] = $properties;
+	
+	/*if( !empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']) && !empty($arResult["PROPERTIES"]["NUMBER"]["VALUE"]) ) {
+		$fields['DETAIL_PAGE_URL'] .= $arResult["PROPERTIES"]["NUMBER"]["VALUE"] . '/';
+	}*/
+	if( !empty($arResult["PROPERTIES"]["NUMBER"]["VALUE"]) ) {
+		$fields['DETAIL_PAGE_URL'] .= $arResult["PROPERTIES"]["NUMBER"]["VALUE"] . '/';
+	}
+	
     $arResult["ABONEMENTS"][] = $fields;
 }
 
@@ -234,4 +242,22 @@ if( !empty($arResult['PROPERTIES']['ADRESS']['VALUE']['TEXT']) ) {
 		}
 	}
 	$arResult['ADDRESS_SHORT'] = implode(',', $clearAddress);
+}
+
+if( !empty($arResult["PROPERTIES"]["REVIEWS"]["VALUE"]) ) {
+	$res = CIBlockElement::GetList(["SORT" => "ASC"], ["IBLOCK_ID" => $arResult["PROPERTIES"]["REVIEWS"]["LINK_IBLOCK_ID"], "ACTIVE" => "Y", "ID" => $arResult["PROPERTIES"]["REVIEWS"]["VALUE"]], false);
+	$arResult["PROPERTIES"]["REVIEWS"]["VALUE"] = [];
+	while($ob = $res->GetNextElement()) {
+		$arFields = $ob->GetFields();
+		$arFields["PROPERTIES"] = $ob->GetProperties();
+		
+		if( !empty($arFields["PROPERTIES"]["NAME"]["VALUE"]) ) {
+			$arFields["NAME_SHORT"] = mb_substr($arFields["PROPERTIES"]["NAME"]["VALUE"], 0, 1);
+		} else {
+			$arFields["NAME_SHORT"] = "S";
+		}
+		
+		$arFields["RATING"] = intval($arFields["PROPERTIES"]["RATING"]["VALUE"]);
+		$arResult["PROPERTIES"]["REVIEWS"]["VALUE"][] = $arFields;
+	}
 }

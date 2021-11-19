@@ -1,3 +1,121 @@
+.reviews-slider {
+	margin-left: -25px;
+    margin-right: -25px;
+	z-index: 1;
+}
+.reviews-slider-item {
+	position: relative;
+	box-sizing: border-box;
+	padding: 40px 25px 0px;
+}
+.reviews-slider-item:after {
+	content: "";
+    display: block;
+    position: absolute;
+    width: 1px;
+    height: 120px;
+    background-color: #FF7628;
+    right: 0;
+    top: calc(50% - 40px);
+}
+.reviews-slider-item.last-inshow:after {
+	display: none;
+}
+.reviews-slider-item__content {
+	display: block;
+	position: relative;
+	background-color: white;
+	color: black;
+	box-sizing: border-box;
+	padding: 55px;
+}
+.reviews-slider-item__name-top {
+	display: block;
+    position: absolute;
+    top: -40px;
+    left: calc(50% - 40px);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    color: white;
+    background-color: #FF7628;
+    font-size: 36px;
+    line-height: 36px;
+    text-align: center;
+    padding: 22px 0px;
+}
+.reviews-slider-item__name {
+	display: block;
+	position: relative;
+	font-size: 24px;
+	font-weight: bold;
+	line-height: 32px;
+	margin-top: 10px;
+	text-align: center;
+}
+.reviews-slider-item__rating {
+	display: block;
+    position: relative;
+    text-align: center;
+    margin-top: 24px;
+}
+.reviews-slider-item__rating .rating-star {
+	display: inline-block;
+	position: relative;
+	margin-right: 5px;
+}
+.reviews-slider-item__rating .rating-star:last-child {
+	margin-right: 0;
+}
+.reviews-slider-item__description {
+	display: block;
+    position: relative;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 24px;
+}
+.reviews-slider .slick-prev,
+.reviews-slider .slick-next {
+	display: block;
+    position: absolute;
+    border: 0;
+    background-color: transparent;
+    top: 50%;
+	cursor: pointer;
+	z-index: 2;
+}
+.reviews-slider .slick-prev {
+	left: -56px;
+}
+.reviews-slider .slick-next {
+	right: -56px;
+	left: initial;
+}
+
+@media only screen and (max-width: 1560px) {
+	.reviews-slider-item__rating .rating-star {
+		margin-right: 0;
+	}
+}
+@media only screen and (max-width: 1424px) {
+	.reviews-slider-item__content {
+		padding: 25px 30px 50px;
+	}
+	.reviews-slider-item__name {
+		margin-top: 30px;
+	}
+	.reviews-slider .slick-prev {
+		left: 18px;
+	}
+	.reviews-slider .slick-next {
+		right: 18px;
+	}
+	.reviews-slider-item:after {
+		display: none;
+	}
+}
+
 div.news-detail
 {
 	word-wrap: break-word;

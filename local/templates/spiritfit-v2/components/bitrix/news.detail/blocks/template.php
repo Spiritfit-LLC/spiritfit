@@ -137,10 +137,10 @@ switch ($view) {
                     </div>
 					<? if($showApp){ ?>
 						<div class="<?=$class?>__app-list">
-							<div class="b-app-list"><a class="b-app-list__button"
+							<div class="b-app-list"><a rel="nofollow" class="b-app-list__button"
 									href="<?=$settings["PROPERTIES"]["LINK_APPSTORE"]["VALUE"]?>"
 									target="_blank"><img class="b-app-list__img" src="<?=SITE_TEMPLATE_PATH?>/img/btn-app-store-black.svg"
-										alt="Загрузите в App Store" title="" /></a><a class="b-app-list__button"
+										alt="Загрузите в App Store" title="" /></a><a rel="nofollow" class="b-app-list__button"
 									href="<?=$settings["PROPERTIES"]["LINK_GOOGLEPLAY"]["VALUE"]?>" target="_blank"><img class="b-app-list__img"
 										src="<?=SITE_TEMPLATE_PATH?>/img/btn-google-play-black.svg" alt="Доступно в Google Play"
 										title="" /></a>

@@ -306,7 +306,7 @@ function initMap() {
             $linkButton.removeClass('is-hide').attr('href', marker.page);
             shedule = `<div class="b-map__contact-item">
                     <a href="${marker.page}#timetable">Расписание</a>
-                </div>`;
+			</div>`;
         }
         
         

@@ -31,6 +31,15 @@ if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 		false
 	);?>
 <? else: ?>
+	<?
+		CModule::IncludeModule("iblock");
+		$siteProperties = Utils::getInfo();
+		
+		$successText = "";
+		if( !empty($siteProperties["PROPERTIES"]["CLUB_FORM_SUCCESS"]["VALUE"])) {
+			$successText = $siteProperties["PROPERTIES"]["CLUB_FORM_SUCCESS"]["VALUE"];
+		}
+	?>
 	<?$APPLICATION->IncludeComponent(
 		"bitrix:news.detail", 
 		"club-detail", 
@@ -57,7 +66,8 @@ if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 				7 => "WORK",
 				8 => "INDEX",
 				9 => "HIDE_LINK",
-				10 => "",
+				10 => "REVIEWS",
+				11 => "",
 			),
 			"IBLOCK_URL" => "",
 			"DETAIL_URL" => "",
@@ -98,7 +108,8 @@ if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 			"SET_STATUS_404" => "Y",
 			"SHOW_404" => "Y",
 			"MESSAGE_404" => "",
-			"FILE_404" => ""
+			"FILE_404" => "",
+			"CLUB_FORM_SUCCESS" => $successText
 		),
 		false
 	);?>

@@ -95,7 +95,7 @@ function initFormFields($context) {
         }
     }
 
-    $('input[type="tel"]', $form).mask('+7 (999) 999-99-99', {
+    $('input[type="tel"]', $form).mask('+7(999)999-99-99', {
         autoclear: false
     });
     $textInputs.each(function () {
@@ -402,15 +402,44 @@ function clickBtn(el){
 }
 
 $(document).ready(function(){
-    $('.b-info-slider__btn').click(function(){
+    
+	/* Открываем нужную вкладку блока FAQ */
+	var url = window.location.href, idx = url.indexOf("#");
+	var hash = idx != -1 ? url.substring(idx+1) : "";
+	if( hash !== "" ) {
+		var hashes = [];
+		$(".b-faq .b-faq__tab-link").each(function() {
+			hashes.push($(this).attr("id"));
+		});
+		if( hashes.includes(hash) ) {
+			var currentTab = $("#"+hash);
+			var wrapper = $(currentTab).parents(".b-faq__content").eq(0);
+			
+			var contentTabs = $(wrapper).find(".b-faq__tabs-list").eq(0);
+			var tabLinks = $(wrapper).find(".b-faq__tab-links").eq(0);
+			
+			$(tabLinks).find(".b-faq__tab-link").removeClass("is-active");
+			$(contentTabs).find(".b-faq__tab").removeClass("is-active");
+			
+			$(currentTab).addClass("is-active");
+			$(contentTabs).find(".b-faq__tab").eq($(currentTab).index()).addClass('is-active');
+			
+			if ($(window).width() < 1025) {
+                $('html, body').animate({
+                    scrollTop: currentTab.offset().top - 100
+                }, 1000);
+            }
+		}
+	}
+	
+	$('.b-info-slider__btn').click(function(){
         var titleSale = $(this).parents('.b-info-slider__item').find('.b-info-slider__title').text();
         dataLayerSend('UX', 'clickOrderLinkSliderPromo', titleSale);
-    })
-
+    });
 
     $('[data-fancybox="feedback-choice"]').click(function(){
         dataLayerSend('UX', 'openFormFeedback', '');
-    })
+    });
 
     $('a').click(function(e){
         var link = $(this).attr('href');
@@ -616,7 +645,7 @@ $(document).ready(function(){
         $('.form-standart:not(.is-ready)').each(function () {
             initFormFields($(this));
         });
-
+		
         if(window.oldTitleDocument !== undefined){
             document.title = window.oldTitleDocument;
         }
@@ -752,6 +781,10 @@ $(document).ready(function(){
                 if(data.errorCode == "0"){
                     var sub_id = $(form).find('[name=sub_id]').val();
                     var month = '';
+					if( (sub_id in data.result) ) {
+						month = data.result[sub_id];
+					}
+					/*var month = '';
                     switch(sub_id){
                         case "month":
                             month = data.result.month;
@@ -771,7 +804,7 @@ $(document).ready(function(){
                         case "unior":
                             month = data.result.unior;
                             break;
-                    }
+                    }*/
                     var oldPrice = $(form).find('.subscription__total-value-old span').text();
                     var newPrice = '';
                     var twoMonth = '';
@@ -976,14 +1009,51 @@ $(document).ready(function(){
         "Метро Новокосино",
         "Метро Раменки"
     ];
+	if( typeof clubsList !== "undefined" ) {
+		availableClubs = clubsList;
+	}
     let position = window.innerWidth < 1025 ? {my:"left top",at:"left bottom",collision:"none"}:{my:"left bottom",at:"left top",collision:"none"};
     let appendElem = window.innerWidth < 1025 ? ".b-header__mobile-clubs .b-club-search__input-wrap":".b-top-menu__holder .b-club-search__input-wrap";
-    let searchInput = $(".b-club-search__input");
-    searchInput.autocomplete({
-        appendTo: appendElem,
-        source: availableClubs,
-        position: position
-    });
+    
+	let searchInput = false;
+	if( window.innerWidth < 1025 ) {
+		if( $(".b-club-search__input").length > 0 ) {
+			$(".b-top-menu__holder .b-club-search__input").autocomplete({
+        		appendTo: ".b-top-menu__holder .b-club-search__input-wrap",
+        		source: availableClubs,
+        		position: position,
+				select: function( event, ui ) {
+					var clubName = $(ui)[0].item.value;
+					$( event.target ).val(clubName);
+					$( event.target ).parents("form").eq(0).submit();
+				}
+    		});
+			$(".b-header__mobile-clubs .b-club-search__input").autocomplete({
+        		appendTo: ".b-header__mobile-clubs .b-club-search__input-wrap",
+        		source: availableClubs,
+        		position: position,
+				select: function( event, ui ) {
+					var clubName = $(ui)[0].item.value;
+					$( event.target ).val(clubName);
+					$( event.target ).parents("form").eq(0).submit();
+				}
+    		});
+		}
+	} else {
+		let searchInput = $(".b-club-search__input");
+		searchInput.autocomplete({
+        	appendTo: appendElem,
+        	source: availableClubs,
+        	position: position,
+			select: function( event, ui ) {
+				var clubName = $(ui)[0].item.value;
+				$( event.target ).val(clubName);
+				$( event.target ).parents("form").eq(0).submit();
+			}
+    	});
+		
+	}
+    
     // cursorcolor:"#FF7628", 
 
     // кастомный скролл на странице клубов для яблочников

@@ -121,7 +121,6 @@ $settings = Utils::getInfo();
         </div>
     </div>
 <? endif; ?>
-<script>dataLayerSend('conversion', 'sendFormTrialWorkout', '');</script>
 <script>
 setTimeout(function() {
     $(document).trigger('clubFormSuccessOpen');

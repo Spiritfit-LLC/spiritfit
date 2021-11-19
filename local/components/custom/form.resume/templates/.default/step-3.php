@@ -2,4 +2,3 @@
 $APPLICATION->SetTitle($arResult["ELEMENT"]["~NAME"]);
 ?>
 <div class="popup__success"><?=$arParams["THANKS"]?></div>
-<script>dataLayerSendCareer('conversion', 'sendFormJobRequest', '');</script>

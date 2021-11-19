@@ -99,7 +99,6 @@ if(!empty($selectClub)){
 ?>
 
 <script>dataLayerSend('UX', 'openSmsCodePage', '<?=$strSend?>');</script>
-
 <!-- Вывод ошибки в popup -->
 <? if ($arResult["RESPONSE"]["data"]["result"]["errorCode"] !== 0 && $arResult["RESPONSE"]["data"]["result"]["userMessage"] != ""): ?>
     <?
@@ -121,3 +120,4 @@ if(!empty($selectClub)){
         </div>
     </div>
 <? endif; ?>
+<script>dataLayerSend('conversion', 'sendFormTrialWorkout', '');</script>

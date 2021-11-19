@@ -1,6 +1,6 @@
 <?
 $arTemplate = array (
-  'NAME' => 'spiritfit-v2 (corp)',
+  'NAME' => 'spiritfit-v2 (career)',
   'DESCRIPTION' => '',
   'SORT' => '',
   'TYPE' => '',

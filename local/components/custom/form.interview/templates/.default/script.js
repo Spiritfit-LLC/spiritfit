@@ -69,6 +69,10 @@ $( document ).ready(function() {
 		return true;
 	}
 	function checkStep() {
+
+		if( parseInt( $(".form-interview input[name=step]").val() ) !== 1 ) {
+			return;
+		}
 		
 		checkStars(["form_text_141", "form_text_161", "form_text_162"], "form_text_144");
 		checkStars(["form_text_145", "form_text_163", "form_text_164"], "form_text_148");
@@ -201,9 +205,15 @@ $( document ).ready(function() {
 		$(".form-interview").submit(function(e) {
 			
 			e.preventDefault();
+
+			if( $(this).find("input[type=submit]").hasClass("disabled") ) {
+				return false;
+			}
+
 			window.oldTitleDocument = document.title;
 
 			$(this).find("input[type=submit]").attr("disabled", "disabled");
+			$(this).find("input[type=submit]").addClass("disabled");
 			
 			$.pjax.submit(e, '#form_interview', {
 				push: false,

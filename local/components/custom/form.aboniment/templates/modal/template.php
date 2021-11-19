@@ -130,6 +130,19 @@ $arField = ['name', 'surname', 'phone', 'email'];
                         <span onclick="clickBtn(this)" class="form-standart__submit button-outline" data-stage="1"><?= $arResult["arForm"]["BUTTON"] ?></span>
                     </div>
                 </div>
+				
+				<? if (!empty($arResult["ERROR"])): ?>
+                    <div class="popup popup--call form-error-modal" style="display: block;">
+                        <div class="popup__bg"></div>
+                        <div class="popup__window">
+                            <div class="popup__close">
+                                <div></div>
+                                <div></div>
+                            </div>
+                            <div class="popup__success"><?=$arResult["ERROR"]?></div>
+                        </div>
+                    </div>
+                <? endif; ?>
                 
                 <div class="popup popup--legal-information popup-info">
                     <div class="popup__bg"></div>

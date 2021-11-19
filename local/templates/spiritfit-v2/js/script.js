@@ -25,9 +25,7 @@ function getCookie(name) {
 }
 
 function dataLayerSend (eCategory, eAction, eLabel, eNI = false) {
-	console.log("dataLayer");
-	console.log(eCategory);
-	console.log(eAction);
+	/*console.log("dataLayerSend:" + eCategory + "_" + eAction);*/
     (dataLayer = window.dataLayer || []).push({
         'eCategory': eCategory,
         'eAction': eAction,
@@ -699,7 +697,7 @@ $(document).ready(function() {
 
         $.ajax({
             method: "POST",
-            url: "/local/templates/spiritfit/ajax/callback.php",
+            url: "/local/templates/spiritfit-v2/ajax/callback.php",
         }).done(function(data) {
             $('body').append(data);
             $(".popup--choose").fadeIn(300);
@@ -712,7 +710,7 @@ $(document).ready(function() {
 
         $.ajax({
             method: "POST",
-            url: "/local/templates/spiritfit/ajax/call.php",
+            url: "/local/templates/spiritfit-v2/ajax/call.php",
         }).done(function(data) {
             $('body').append(data);
 
@@ -750,7 +748,7 @@ $(document).ready(function() {
 
         $.ajax({
             method: "POST",
-            url: "/local/templates/spiritfit/ajax/call-message.php",
+            url: "/local/templates/spiritfit-v2/ajax/call-message.php",
         }).done(function(data) {
             $('body').append(data);
 
@@ -785,7 +783,7 @@ $(document).ready(function() {
     $(document).on('click','.js-forbidden-video', function() {
         $.ajax({
             method: "POST",
-            url: "/local/templates/spiritfit/ajax/forbidden-video.php",
+            url: "/local/templates/spiritfit-v2/ajax/forbidden-video.php",
         }).done(function(data) {
             $('body').append(data);
 
@@ -798,7 +796,7 @@ $(document).ready(function() {
 
         $.ajax({
             method: "POST",
-            url: "/local/templates/spiritfit/ajax/video-authorization.php",
+            url: "/local/templates/spiritfit-v2/ajax/video-authorization.php",
         }).done(function(data) {
             $('body').append(data);
 
@@ -1301,7 +1299,10 @@ $(document).ready(function() {
                 if(data.errorCode == "0"){
                     var sub_id = $('[name=sub_id]').val();
                     var month = '';
-                    switch(sub_id){
+					if( (sub_id in data.result) ) {
+						month = data.result[sub_id];
+					}
+					/*switch(sub_id){
                         case "month":
                             month = data.result.month;
                             break;
@@ -1320,7 +1321,11 @@ $(document).ready(function() {
                         case "unior":
                             month = data.result.unior;
                             break;
-                    }
+						case "summersale9":
+                            month = data.result.summersale9;
+                            break;
+                    }*/
+					
                     var oldPrice = $(form).find('.subscription__total-value-old span').text();
                     var newPrice = "";
                     if(oldPrice){
@@ -1462,8 +1467,9 @@ $(document).ready(function() {
     $(document).on("submit", ".subscription__aside-form", function(e) {
         e.preventDefault();
 		
-        if ($('[name=promo]').val()) {
+        if ( $('[name=promo]').val() ) {
             //$(".subscription__promo-btn").trigger("click", ["is-form-submit"]);
+			$(".subscription__promo-btn").trigger("click", []);
         } else {
             showLegalInformation();
         }
@@ -1494,15 +1500,33 @@ $(document).ready(function() {
             "ajax_menu": false
         });
     });
+
+    function initNumbersChange(  ) {
+        
+        if( $(".subscription__aside-form-row--code").length > 0 ) {
+            var element = $(".subscription__aside-form-row--code");
+            $(element).find(".input--num").unbind("keyup");
+            $(element).find(".input--num").keyup(function(e) {
+                if( $(this).val() !== "" ) {
+                    $(this).next('.input--num').focus();
+                } else if( e.keyCode == 8 ) {
+                    $(this).prev('.input--num').focus();
+                }
+            });
+        }
+    }
 	
 	$(document).on('pjax:success', function(data, status, xhr, options) {		
 		if( data.target.id == "js-pjax-container" ) {
 			if( $(".subscription__aside-form .form-error-modal").length > 0 ) {
 				$(".popup--legal-information").hide();
+				$(".subscription__promo-btn").trigger("click", []);
 			} else if($('[name=promo]').val()) {
 				$(".subscription__promo-btn").trigger("click", ["is-form-submit"]);
 			}
 		}
+
+        initNumbersChange();
 	});
 
     var sendForm = function(ext) {
@@ -1947,7 +1971,7 @@ $(document).ready(function() {
         $('.popup--sign').fadeOut(300);
         $('.popup--success-sign').fadeIn(600);
 
-        $.post( "/local/templates/spiritfit/ajax/sign.php", $formData)
+        $.post( "/local/templates/spiritfit-v2/ajax/sign.php", $formData)
             .done(function( data ) {
                 console.log( data );
             });
@@ -2013,21 +2037,21 @@ $(document).ready(function() {
         }
         
         console.log();
-        if (!$(request_form).find('input[name="form_checkbox_personal"]').prop('checked')) {
+        if (!$(request_form).find('input[name="form_checkbox_personal[]"]').prop('checked')) {
             request_err9 = 1;
             text76 = '&nbsp;&nbsp;»&nbsp;"Ознакомлен с Политикой, согласен на Обработку персональных данных"<br>';
         } else {
             request_err9 = 0;
         }
 
-        if (!$(request_form).find('input[name="form_checkbox_rules"]').prop('checked')) {
+        if (!$(request_form).find('input[name="form_checkbox_rules[]"]').prop('checked')) {
             request_err10 = 1;
             text77 = '&nbsp;&nbsp;»&nbsp;"Ознакомлен и согласен с Офертой и Правилами клуба"<br>';
         } else {
             request_err10 = 0;
         }
 
-        if (!$(request_form).find('input[name="form_checkbox_privacy"]').prop('checked')) {
+        if (!$(request_form).find('input[name="form_checkbox_privacy[]"]').prop('checked')) {
             request_err11 = 1;
             text78 = '&nbsp;&nbsp;»&nbsp;"Согласен с Политикой конфиденциальности"<br>';
         } else {
@@ -2038,7 +2062,7 @@ $(document).ready(function() {
 
             $.ajax({
             type: 'POST',
-            url: '/local/templates/spiritfit/ajax/quality-send.php',
+            url: '/local/templates/spiritfit-v2/ajax/quality-send.php',
             data: $("#quality_form").serialize(),
             success:function(data){
                $('#body_quality').html(data);
@@ -2118,7 +2142,7 @@ $(document).ready(function() {
         if (request_err1 == 0 && request_err2 == 0 && request_err3 == 0 && request_err4 == 0 && request_err5 == 0) {
             $.ajax({
             type: 'POST',
-            url: '/local/templates/spiritfit/ajax/poll_send.php',
+            url: '/local/templates/spiritfit-v2/ajax/poll_send.php',
             data: $("#poll_form").serialize(),
             success:function(data){
                $('#body_poll').html(data);

@@ -146,7 +146,7 @@ $page = $APPLICATION->GetCurPage();
 							['PROPERTY_BANNER_PAGES' => $page],
 						],
 						[
-							['PROPERTY_SITE' => 42]
+							['PROPERTY_SITE' => 43]
 						]
 					]
 				];

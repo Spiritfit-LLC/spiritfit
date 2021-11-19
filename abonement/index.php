@@ -8,7 +8,7 @@ if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 }
 
 $APPLICATION->SetTitle("Абонементы");
-$APPLICATION->SetPageProperty("description", "Spirit. Fitness предлагает удобную систему абонементов с ежемесячной оплатой услуг. Все абонементы без ограничений по времени посещения и услугам.");
+$APPLICATION->SetPageProperty("description", "Удобная ежемесячная оплата 💥 Полный безлимит по времени и услугам 💯 Специальные условия на покупку в этом месяце. Пробная тренировка бесплатно 💸");
 $APPLICATION->SetPageProperty("title", "Абонементы фитнес-клуба Spirit Fitness");
 ?>
 
@@ -16,7 +16,7 @@ $APPLICATION->SetPageProperty("title", "Абонементы фитнес-клу
 	<? 
 		$component = ($_REQUEST["WEB_FORM_ID"] == "5" ? "custom:form.request" : "custom:form.aboniment");
 		$template = "clubs-v2";
-
+		
 		if($_REQUEST['modal_form']){
 			$template = 'modal';
 		}
@@ -84,9 +84,9 @@ $APPLICATION->SetPageProperty("title", "Абонементы фитнес-клу
 			"SET_LAST_MODIFIED" => "N",
 			"SET_META_DESCRIPTION" => "Y",
 			"SET_META_KEYWORDS" => "Y",
-			"SET_STATUS_404" => "Y",
+			"SET_STATUS_404" => "N",
 			"SET_TITLE" => "Y",
-			"SHOW_404" => "Y",
+			"SHOW_404" => "N",
 			"SORT_BY1" => "ACTIVE_FROM",
 			"SORT_BY2" => "SORT",
 			"SORT_ORDER1" => "ASC",

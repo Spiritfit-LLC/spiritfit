@@ -1,6 +1,23 @@
 <?
 define('BREADCRUMB_H1_ABSOLUTE', true);
 
+$url = strtok($_SERVER['REQUEST_URI'], '?');
+$urlArr = explode('/', $url);
+$clubNumber = false;
+if( !empty($urlArr[3]) ) {
+	
+	$GLOBALS["NO_INDEX"] = true; 
+	
+	$clubNumber = htmlspecialchars($urlArr[3]);
+	$parsedQuery = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+	
+	unset($urlArr[3]);
+	$_SERVER['REQUEST_URI'] = implode("/", $urlArr);
+	if( !empty($parsedQuery) ) {
+		$_SERVER['REQUEST_URI'] .= "?" . $parsedQuery;
+	}
+}
+
 if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
     require_once($_SERVER['DOCUMENT_ROOT'] . "/bitrix/modules/main/include/prolog_before.php");
 } else {
@@ -13,8 +30,10 @@ use Bitrix\Iblock\InheritedProperty;
 
 CModule::IncludeModule("iblock");
 
-$url = strtok($_SERVER['REQUEST_URI'], '?');
-$urlArr = explode('/', $url);
+if( !empty($clubNumber) ) {
+	$_SESSION['CLUB_NUMBER'] = $clubNumber;
+}
+
 $elementCode = !empty($urlArr[2]) ? $urlArr[2] : false;
 $element = [];
 $club = [];
@@ -64,6 +83,28 @@ if( $elementCode ) {
 		}
 		$element['PRICES'][] = [ 'NAME' => (isset($clubs[$arPrice['LIST']])) ? $clubs[$arPrice['LIST']] : '', 'PRICE' => $price, 'CLUB_ID' => $arPrice['LIST'], 'IS_SELECTED' => (!empty($club) && $club['ID'] == $arPrice['LIST']) ? true : false ];
 	}
+	
+	$is404 = false;
+	if( !empty($clubNumber) && empty($club["ID"]) ) {
+		$is404 = true;
+	}
+	if( !$is404 && !empty($clubNumber) ) {
+		$is404 = true;
+		foreach($element["PRICES"] as $price) {
+			if( $price["IS_SELECTED"] ) {
+				$is404 = false;
+				break;
+			}
+		}
+	}
+	if( $is404 ) {
+		global $APPLICATION;
+		$APPLICATION->RestartBuffer();
+		require $_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/header.php';
+		require $_SERVER['DOCUMENT_ROOT'].'/404.php';
+		require $_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/footer.php';
+		exit;
+	}
 }
 if ($_REQUEST["ajax_menu"] == 'true' && isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true'): ?>
 	<? 
@@ -101,6 +142,9 @@ if ($_REQUEST["ajax_menu"] == 'true' && isset($_SERVER['HTTP_X_PJAX']) && $_SERV
 		<link itemprop="url" href="<?=$url?>">
 		<? foreach($element['IMAGES'] as $image) { ?>
 			<img itemprop="image" src="<?=$_SERVER['REQUEST_SCHEME']?>://<?=$_SERVER['SERVER_NAME']?><?=$image?>">
+		<? } ?>
+		<? if(!empty($element['IMAGES'][0])) { ?>
+			<? $this->SetViewTarget('inhead'); ?>https://<?=$_SERVER['SERVER_NAME']?><?=$element['IMAGES'][0]?><? $this->EndViewTarget(); ?>
 		<? } ?>
 		<meta itemprop="brand" content="Spirit.Fitness">
 		<div itemprop="description"><?=$element['META']['ELEMENT_META_DESCRIPTION']?></div>

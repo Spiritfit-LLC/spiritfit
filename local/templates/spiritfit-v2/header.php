@@ -6,6 +6,11 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 global $settings;
 $settings = Utils::getInfo();
 $page = $APPLICATION->GetCurPage();
+$clubs = Clubs::getList();
+$clubsName = [];
+foreach( $clubs as $club ) {
+	$clubsName[] = $club["NAME"];
+}
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +30,12 @@ $page = $APPLICATION->GetCurPage();
     <meta property="og:site_name" content="<?=$arInfoProps['OG_SITE_NAME']['VALUE']?>"/>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <script defer type="text/javascript" src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+	<script type="text/javascript">
+		var clubsList = <?=CUtil::PhpToJSObject($clubsName)?>;
+	</script>
+	<? if( !empty($GLOBALS["NO_INDEX"]) ) { ?>
+		<meta name="robots" content="noindex" />
+	<? } ?>
     <?
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/jquery/jquery.min.js");
 
@@ -146,8 +157,8 @@ $page = $APPLICATION->GetCurPage();
                                 data-webform-fancybox="./form-request.html" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a>
                         </div>
                     </nav>
-                </div><a class="b-header-phone" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a><a
-                    class="b-header__btn button-outline is-hide-mobile js-form-abonement" href="#" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a>
+                </div><a class="b-header-phone" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a>
+                <a class="b-header__btn button-outline is-hide-mobile js-form-abonement" href="#" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a>
             </div>
         </div>
     </header>
@@ -158,7 +169,8 @@ $page = $APPLICATION->GetCurPage();
 					[
 						'LOGIC' => 'AND',
 						['PROPERTY_BANNER_PAGES' => $page],
-						['PROPERTY_SITE' => 41],
+						['PROPERTY_SITE' => 42],
+						['!PROPERTY_BANNER_PAGES_HIDE' => $page]
 					]
 				];
             }else{
@@ -170,70 +182,75 @@ $page = $APPLICATION->GetCurPage();
 							['PROPERTY_BANNER_PAGES' => false],
 							['PROPERTY_BANNER_PAGES' => $page],
 						],
+						['!PROPERTY_BANNER_PAGES_HIDE' => $page],
 						[
-							['PROPERTY_SITE' => 41]
+							['PROPERTY_SITE' => 42]
 						]
 					]
 				];
             }?>
 
-            <?$APPLICATION->IncludeComponent(
-                "bitrix:news.list",
-                "slider",
-                Array(
-                    "ACTIVE_DATE_FORMAT" => "d.m.Y",
-                    "ADD_SECTIONS_CHAIN" => "N",
-                    "AJAX_MODE" => "N",
-                    "AJAX_OPTION_ADDITIONAL" => "",
-                    "AJAX_OPTION_HISTORY" => "N",
-                    "AJAX_OPTION_JUMP" => "N",
-                    "AJAX_OPTION_STYLE" => "Y",
-                    "CACHE_FILTER" => "N",
-                    "CACHE_GROUPS" => "Y",
-                    "CACHE_TIME" => "36000000",
-                    "CACHE_TYPE" => "A",
-                    "CHECK_DATES" => "Y",
-                    "DETAIL_URL" => "",
-                    "DISPLAY_BOTTOM_PAGER" => "N",
-                    "DISPLAY_DATE" => "N",
-                    "DISPLAY_NAME" => "N",
-                    "DISPLAY_PICTURE" => "N",
-                    "DISPLAY_PREVIEW_TEXT" => "N",
-                    "DISPLAY_TOP_PAGER" => "N",
-                    "FIELD_CODE" => array("", ""),
-                    "FILTER_NAME" => "arFilterSlider",
-                    "HIDE_LINK_WHEN_NO_DETAIL" => "N",
-                    "IBLOCK_ID" => "2",
-                    "IBLOCK_TYPE" => "content",
-                    "INCLUDE_IBLOCK_INTO_CHAIN" => "N",
-                    "INCLUDE_SUBSECTIONS" => "Y",
-                    "MESSAGE_404" => "",
-                    "NEWS_COUNT" => "10",
-                    "PAGER_BASE_LINK_ENABLE" => "N",
-                    "PAGER_DESC_NUMBERING" => "N",
-                    "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
-                    "PAGER_SHOW_ALL" => "N",
-                    "PAGER_SHOW_ALWAYS" => "N",
-                    "PAGER_TEMPLATE" => ".default",
-                    "PAGER_TITLE" => "Новости",
-                    "PARENT_SECTION" => "",
-                    "PARENT_SECTION_CODE" => "",
-                    "PREVIEW_TRUNCATE_LEN" => "",
-                    "PROPERTY_CODE" => array("BANNER_BTN_TEXT", "BANNER_BTN_LINK"),
-                    "SET_BROWSER_TITLE" => "N",
-                    "SET_LAST_MODIFIED" => "N",
-                    "SET_META_DESCRIPTION" => "N",
-                    "SET_META_KEYWORDS" => "N",
-                    "SET_STATUS_404" => "N",
-                    "SET_TITLE" => "N",
-                    "SHOW_404" => "N",
-                    "SORT_BY1" => "SORT",
-                    "SORT_BY2" => "ID",
-                    "SORT_ORDER1" => "DESC",
-                    "SORT_ORDER2" => "DESC",
-                    "STRICT_SECTION_CHECK" => "N"
-                )
-            );?>
+            <?
+                if( $page != '/kachestvo-obsluzhivaniya/' && $page != '/spirittv/' ) {
+                    $APPLICATION->IncludeComponent(
+                        "bitrix:news.list",
+                        "slider",
+                        Array(
+                            "ACTIVE_DATE_FORMAT" => "d.m.Y",
+                            "ADD_SECTIONS_CHAIN" => "N",
+                            "AJAX_MODE" => "N",
+                            "AJAX_OPTION_ADDITIONAL" => "",
+                            "AJAX_OPTION_HISTORY" => "N",
+                            "AJAX_OPTION_JUMP" => "N",
+                            "AJAX_OPTION_STYLE" => "Y",
+                            "CACHE_FILTER" => "N",
+                            "CACHE_GROUPS" => "Y",
+                            "CACHE_TIME" => "36000000",
+                            "CACHE_TYPE" => "A",
+                            "CHECK_DATES" => "Y",
+                            "DETAIL_URL" => "",
+                            "DISPLAY_BOTTOM_PAGER" => "N",
+                            "DISPLAY_DATE" => "N",
+                            "DISPLAY_NAME" => "N",
+                            "DISPLAY_PICTURE" => "N",
+                            "DISPLAY_PREVIEW_TEXT" => "N",
+                            "DISPLAY_TOP_PAGER" => "N",
+                            "FIELD_CODE" => array("", ""),
+                            "FILTER_NAME" => "arFilterSlider",
+                            "HIDE_LINK_WHEN_NO_DETAIL" => "N",
+                            "IBLOCK_ID" => "2",
+                            "IBLOCK_TYPE" => "content",
+                            "INCLUDE_IBLOCK_INTO_CHAIN" => "N",
+                            "INCLUDE_SUBSECTIONS" => "Y",
+                            "MESSAGE_404" => "",
+                            "NEWS_COUNT" => "10",
+                            "PAGER_BASE_LINK_ENABLE" => "N",
+                            "PAGER_DESC_NUMBERING" => "N",
+                            "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+                            "PAGER_SHOW_ALL" => "N",
+                            "PAGER_SHOW_ALWAYS" => "N",
+                            "PAGER_TEMPLATE" => ".default",
+                            "PAGER_TITLE" => "Новости",
+                            "PARENT_SECTION" => "",
+                            "PARENT_SECTION_CODE" => "",
+                            "PREVIEW_TRUNCATE_LEN" => "",
+                            "PROPERTY_CODE" => array("BANNER_BTN_TEXT", "BANNER_BTN_LINK"),
+                            "SET_BROWSER_TITLE" => "N",
+                            "SET_LAST_MODIFIED" => "N",
+                            "SET_META_DESCRIPTION" => "N",
+                            "SET_META_KEYWORDS" => "N",
+                            "SET_STATUS_404" => "N",
+                            "SET_TITLE" => "N",
+                            "SHOW_404" => "N",
+                            "SORT_BY1" => "SORT",
+                            "SORT_BY2" => "ID",
+                            "SORT_ORDER1" => "DESC",
+                            "SORT_ORDER2" => "DESC",
+                            "STRICT_SECTION_CHECK" => "N"
+                        )
+                    );
+                }
+            ?>
         <? } ?>
         <? if($page != '/'){ 
         ?>

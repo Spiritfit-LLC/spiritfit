@@ -16,20 +16,20 @@ $arUrlRewrite=array (
     'PATH' => '/catalog/detail.php',
     'SORT' => 100,
   ),
-  2 => 
-  array (
-    'CONDITION' => '#^/stock/([\\.\\-0-9a-zA-Z]+)/.*$#',
-    'RULE' => 'ELEMENT_CODE=$1',
-    'ID' => '',
-    'PATH' => '/stock/detail.php',
-    'SORT' => 100,
-  ),
   3 => 
   array (
     'CONDITION' => '#^/clubs/([\\.\\-_0-9a-zA-Z]+)/.*$#',
     'RULE' => 'ELEMENT_CODE=$1',
     'ID' => '',
     'PATH' => '/clubs/detail.php',
+    'SORT' => 100,
+  ),
+  2 => 
+  array (
+    'CONDITION' => '#^/stock/([\\.\\-0-9a-zA-Z]+)/.*$#',
+    'RULE' => 'ELEMENT_CODE=$1',
+    'ID' => '',
+    'PATH' => '/stock/detail.php',
     'SORT' => 100,
   ),
   5 => 
