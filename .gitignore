@@ -55,3 +55,4 @@ bitbucket-pipelines.yml
 /.stock/
 /.traid-in/
 /.video-on-demand/
+adminer-4.8.0-mysql.php
