@@ -170,13 +170,10 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                             <div class="subscription__total-subtext"><?= $arResult["ELEMENT"]["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] ?></div>
                             <? endif; ?>
                         </div>
-						<?if($arResult["ELEMENT"]['ID'] == 1161 || $arResult["ELEMENT"]['ID'] == 1160):?>
-						<input type="hidden" name="form_<?= $arResult["arAnswers"]["price"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["price"]['0']["ID"] ?>" value="<?=($_REQUEST['WEB_FORM_ID'] || $arParams['WEB_FORM_ID']) ? $arResult["ELEMENT"]["PRICES"][0]["PRICE"] : $arResult["ELEMENT"]["PROPERTIES"]["BASE_PRICE"]["VALUE"][8]["PRICE"] ?>">
-						<?else:?>
-						<input type="hidden" name="form_<?= $arResult["arAnswers"]["price"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["price"]['0']["ID"] ?>" value="<?= $arResult["ELEMENT"]["SALE"] ? $arResult["ELEMENT"]["SALE"] : $arResult["ELEMENT"]["PRICES"][8]["PRICE"] ?>">
+						<?if( false && ($arResult["ELEMENT"]['ID'] == 1161 || $arResult["ELEMENT"]['ID'] == 1160)):?>
+							<input type="hidden" name="form_<?= $arResult["arAnswers"]["price"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["price"]['0']["ID"] ?>" value="<?=($_REQUEST['WEB_FORM_ID'] || $arParams['WEB_FORM_ID']) ? $arResult["ELEMENT"]["PRICES"][0]["PRICE"] : $arResult["ELEMENT"]["PROPERTIES"]["BASE_PRICE"]["VALUE"][8]["PRICE"] ?>">
 						<?endif;?>
-                        
-                    
+                    	<input type="hidden" name="form_<?= $arResult["arAnswers"]["price"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["price"]['0']["ID"] ?>" value="<?= $arResult["ELEMENT"]["SALE"] ? $arResult["ELEMENT"]["SALE"] : $arResult["ELEMENT"]["PRICES"][0]["PRICE"] ?>">
                 </div>
 
                 <div style="display: none;">
