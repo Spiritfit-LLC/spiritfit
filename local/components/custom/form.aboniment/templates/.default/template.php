@@ -91,6 +91,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 						<option value="">-</option>
                         <? foreach ($arResult["arAnswers"]["club"][0]['ITEMS'] as $key => $arItem):
                             if(!isset($clubs_price[$arItem["ID"]])) continue;
+							if($arItem["NUMBER"] == 99) continue;
                         ?>
                         <option value="<?= $arItem["NUMBER"] ?>" <?= $arItem["SELECTED"] ?> <?=($_SESSION['CLUB_NUMBER'] == $arItem["NUMBER"] ? 'selected' : '')?>><?= $arItem["MESSAGE"] ?></option>
                         <? endforeach; ?>
@@ -164,11 +165,17 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                                 <? endif; ?>
                             </div>
                             <input type="hidden" name="old_price" value="<?=($_REQUEST['WEB_FORM_ID'] || $arParams['WEB_FORM_ID']) ? $arResult["ELEMENT"]["PRICES"][0]["PRICE"] : $arResult["ELEMENT"]["PROPERTIES"]["BASE_PRICE"]["VALUE"][8]["PRICE"] ?>">
-                            <? if ($arResult["ELEMENT"]["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] && $arResult["ELEMENT"]["SALE"]): ?>
+							
+							<? if ($arResult["ELEMENT"]["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] && $arResult["ELEMENT"]["SALE"]): ?>
                             <div class="subscription__total-subtext"><?= $arResult["ELEMENT"]["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] ?></div>
                             <? endif; ?>
                         </div>
-                        <input type="hidden" name="form_<?= $arResult["arAnswers"]["price"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["price"]['0']["ID"] ?>" value="<?= $arResult["ELEMENT"]["SALE"] ? $arResult["ELEMENT"]["SALE"] : $arResult["ELEMENT"]["PRICES"][8]["PRICE"] ?>">
+						<?if($arResult["ELEMENT"]['ID'] == 1161 || $arResult["ELEMENT"]['ID'] == 1160):?>
+						<input type="hidden" name="form_<?= $arResult["arAnswers"]["price"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["price"]['0']["ID"] ?>" value="<?=($_REQUEST['WEB_FORM_ID'] || $arParams['WEB_FORM_ID']) ? $arResult["ELEMENT"]["PRICES"][0]["PRICE"] : $arResult["ELEMENT"]["PROPERTIES"]["BASE_PRICE"]["VALUE"][8]["PRICE"] ?>">
+						<?else:?>
+						<input type="hidden" name="form_<?= $arResult["arAnswers"]["price"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["price"]['0']["ID"] ?>" value="<?= $arResult["ELEMENT"]["SALE"] ? $arResult["ELEMENT"]["SALE"] : $arResult["ELEMENT"]["PRICES"][8]["PRICE"] ?>">
+						<?endif;?>
+                        
                     
                 </div>
 
