@@ -91,7 +91,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 						<option value="">-</option>
                         <? foreach ($arResult["arAnswers"]["club"][0]['ITEMS'] as $key => $arItem):
                             if(!isset($clubs_price[$arItem["ID"]])) continue;
-							if($arItem["NUMBER"] == 99) continue;
+							//if($arItem["NUMBER"] == 99) continue;
                         ?>
                         <option value="<?= $arItem["NUMBER"] ?>" <?= $arItem["SELECTED"] ?> <?=($_SESSION['CLUB_NUMBER'] == $arItem["NUMBER"] ? 'selected' : '')?>><?= $arItem["MESSAGE"] ?></option>
                         <? endforeach; ?>

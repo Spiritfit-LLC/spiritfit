@@ -27,7 +27,7 @@ $this->setFrameMode(true);
             <div class="b-cards-slider__slider">
 				<? foreach ($arResult["ITEMS"] as $arItem): ?>
 					<?
-					if($arItem['PROPERTIES']['NUMBER']['VALUE'] > 99 && $arItem['PROPERTIES']['NUMBER']['VALUE'] < 122) continue;
+					//if($arItem['PROPERTIES']['NUMBER']['VALUE'] > 99 && $arItem['PROPERTIES']['NUMBER']['VALUE'] < 122) continue;
 					if( !empty($arItem['PROPERTIES']['HIDE_LINK']['VALUE']) ) continue;
 					
 					// print_r($arItem);
