@@ -20,7 +20,7 @@ crossorigin=""></script>
                         <select class="b-map__switch" data-placeholder="Найти клуб">
                             <option></option>
 							<? foreach ($clubs as $itemClub) { ?>
-							<? //if($itemClub['ID'] > 1162) continue; ?>
+								<? //if($itemClub['ID'] > 1162) continue; ?>
 								<option value="<?=$itemClub['ID']?>"><?=$itemClub['NAME']?></option>
 							<? } ?>
                         </select>
