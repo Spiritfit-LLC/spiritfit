@@ -368,6 +368,93 @@ form .input--num {
     }
 }
 
+/* --- */
+.b-screen.b-screen_short {
+	min-height: 150px;
+}
+.b-page__heading-simple {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: initial;
+    margin: auto;
+    padding: 0;
+}
+.b-page__heading-simple .b-page__heading-inner {
+	padding: 0;
+}
+.main-clubs__title {
+	display: block;
+    position: relative;
+    margin: 0px 0px 20px;
+    box-sizing: border-box;
+    padding-left: 0;
+}
+.main-clubs__title .club__subheading {
+	font-size: 42px;
+}
+.b-map_page.b-map_page-main {
+	margin-bottom: 50px;
+	position: relative;
+}
+.b-map_page.b-map_page-main .b-map__info-plate {
+	padding-top: 40px;
+}
+.b-map_page.b-map_page-main .b-map__map {
+	height: 650px;
+}
+.b-map_page.b-map_page-main .b-map__info-plate:after,
+.b-map_page.b-map_page-main .b-map__switch-holder,
+.b-map__info-plate.hidden {
+	display: none !important;
+}
+.b-map_page.b-map_page-main .b-map__contact-item:last-child {
+	margin-bottom: 0;
+}
+.b-map_page.b-map_page-main .b-map__contacts {
+	margin-bottom: 30px;
+}
+.b-map_page.b-map_page-main .b-map__buttons {
+	padding: 0;
+}
+@media screen and (max-width: 1440px) {
+	.main-clubs__title {
+    	padding-left: 75px;
+	}
+	.main-clubs__title .club__subheading {
+		padding-left: 0;
+	}
+}
+@media screen and (max-width: 1260px) {
+	.main-clubs__title {
+    	padding-left: 0;
+	}
+	.main-clubs__title {
+    	padding-left: 50px;
+	}
+}
+@media screen and (max-width: 1024px) {
+	.b-map_page.b-map_page-main {
+		padding-top: 0;
+	}
+	.b-map_page.b-map_page-main .b-map__map,
+	.b-map_page.b-map_page-main .b-map__info {
+		height: 450px;
+	}
+	.b-map_page.b-map_page-main .b-map__info {
+    	min-height: initial;
+    	padding: 20px 10px 20px 10px;
+	}
+	.b-map_page {
+		padding-top: 50px;
+	}
+	.b-map_page .b-map__map,
+	.b-map__info {
+    	height: calc(100vh - 450px);
+    	min-height: 200px;
+	}
+}
+/* --- */
 
 .b-footer__block-title {
     text-transform: uppercase;

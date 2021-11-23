@@ -191,7 +191,8 @@ foreach( $clubs as $club ) {
             }?>
 
             <?
-                if( $page != '/kachestvo-obsluzhivaniya/' && $page != '/spirittv/' ) {
+                $showSlider = ( defined(HIDE_SLIDER) && HIDE_SLIDER ) ? false : true;
+				if( $page != '/kachestvo-obsluzhivaniya/' && $page != '/spirittv/' && $showSlider ) {
                     $APPLICATION->IncludeComponent(
                         "bitrix:news.list",
                         "slider",
@@ -254,7 +255,12 @@ foreach( $clubs as $club ) {
         <? } ?>
         <? if($page != '/'){ 
         ?>
-            <div class="b-page__heading <?=(defined('BREADCRUMB_H1_ABSOLUTE') ? 'b-page__heading_absolute' : '')?>">
+            <? if(!$showSlider) { ?>
+				<section class="b-screen b-screen_short">
+					<div class="b-screen__bg-holder"></div>
+				</section>
+			<? } ?>
+			<div class="b-page__heading <?=(defined('BREADCRUMB_H1_ABSOLUTE') ? 'b-page__heading_absolute' : '')?>  <?=(!$showSlider) ? "b-page__heading-simple" : "" ?>">
                 <div class="content-center">
                     <div class="b-page__heading-inner">
                         <? $APPLICATION->IncludeComponent(
