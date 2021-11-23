@@ -404,7 +404,7 @@ form .input--num {
 	height: 650px;
 }
 .b-map_page.b-map_page-main .b-map__info-plate:after,
-.b-map_page.b-map_page-main .b-map__switch-holder,
+/*.b-map_page.b-map_page-main .b-map__switch-holder,*/
 .b-map__info-plate.hidden {
 	display: none !important;
 }
@@ -416,6 +416,10 @@ form .input--num {
 }
 .b-map_page.b-map_page-main .b-map__buttons {
 	padding: 0;
+}
+.b-map_page.b-map_page-main .b-map__info-title {
+	font-size: 32px;
+    margin-bottom: 20px;
 }
 @media screen and (max-width: 1440px) {
 	.main-clubs__title {
@@ -434,9 +438,9 @@ form .input--num {
 	}
 }
 @media screen and (max-width: 1024px) {
-	.b-map_page.b-map_page-main {
+	/*.b-map_page.b-map_page-main {
 		padding-top: 0;
-	}
+	}*/
 	.b-map_page.b-map_page-main .b-map__map,
 	.b-map_page.b-map_page-main .b-map__info {
 		height: 450px;
@@ -452,6 +456,10 @@ form .input--num {
 	.b-map__info {
     	height: calc(100vh - 450px);
     	min-height: 200px;
+	}
+	.b-map_page.b-map_page-main .b-map__info-title {
+		font-size: 18px;
+    	margin-bottom: 20px;
 	}
 }
 /* --- */
