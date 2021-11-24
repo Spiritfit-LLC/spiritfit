@@ -424,6 +424,15 @@ form .input--num {
 	font-size: 32px;
     margin-bottom: 20px;
 }
+.content-center.map-title {
+	margin-top: -30px;
+}
+.content-center.map-title .b-cards-slider__title {
+	margin-bottom: 0;
+}
+.b-map_page.margin-top {
+	margin-top: 80px;
+}
 @media screen and (max-width: 1440px) {
 	.main-clubs__title {
     	padding-left: 75px;
@@ -446,7 +455,7 @@ form .input--num {
 	}*/
 	.b-map_page .b-map__map,
 	.b-map_page .b-map__info {
-		height: 320px !important;
+		height: 360px !important;
 	}
 	.b-map_page.b-map_page-main .b-map__map,
 	.b-map_page.b-map_page-main .b-map__info {
@@ -456,8 +465,11 @@ form .input--num {
     	min-height: initial;
     	padding: 20px 10px 20px 10px;
 	}
+	.b-map_page.b-map_page-main {
+		padding-top: 60px;
+	}
 	.b-map_page {
-		padding-top: 50px;
+		padding-top: 80px;
 	}
 	.b-map_page .b-map__map,
 	.b-map__info {
@@ -467,6 +479,15 @@ form .input--num {
 	.b-map_page.b-map_page-main .b-map__info-title {
 		font-size: 18px;
     	margin-bottom: 20px;
+	}
+	.b-map_page .b-map__info-title {
+		margin-bottom: 20px !important;
+	}
+	.content-center.map-title .b-cards-slider__heading {
+		margin-bottom: 10px;
+	}
+	.b-map_page.margin-top {
+		margin-top: 0;
 	}
 }
 /* --- */

@@ -9,8 +9,12 @@ if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 }
 global $settings;
 ?>
-<div class="main-clubs__title">
-	<h2 class="club__subheading club__subheading-centred">Карта клубов</h2>
+<div class="content-center map-title">
+    <div class="b-cards-slider__heading">
+        <div class="b-cards-slider__title">
+            <h2>Карта клубов</h2>
+        </div>
+	</div>
 </div>
 <? $APPLICATION->IncludeFile('/local/include/clubs-main.php'); ?>
 

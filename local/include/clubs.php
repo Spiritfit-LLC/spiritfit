@@ -10,7 +10,7 @@ integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0v
 crossorigin=""></script>
 <script src="<?=SITE_TEMPLATE_PATH?>/js/map-leafletjs.js"></script>
 
-<div class="b-map b-map_page">
+<div class="b-map b-map_page margin-top">
     <div class="b-map__map-wrap">
         <div class="b-map__map" id="mapid"></div>
         <div class="b-map__content">
