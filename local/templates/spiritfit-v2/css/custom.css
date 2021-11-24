@@ -370,7 +370,8 @@ form .input--num {
 
 /* --- */
 .b-screen.b-screen_short {
-	min-height: 150px;
+	min-height: 130px;
+    margin-bottom: 10px;
 }
 .b-page__heading-simple {
     display: block;
@@ -391,7 +392,9 @@ form .input--num {
     padding-left: 0;
 }
 .main-clubs__title .club__subheading {
-	font-size: 42px;
+	text-transform: uppercase;
+    font-weight: 900;
+    font-size: 40px;
 }
 .b-map_page.b-map_page-main {
 	margin-bottom: 50px;
@@ -408,7 +411,7 @@ form .input--num {
 .b-map__info-plate.hidden {
 	display: none !important;
 }
-.b-map_page.b-map_page-main .b-map__contact-item:last-child {
+.b-map_page .b-map__contact-item:last-child {
 	margin-bottom: 0;
 }
 .b-map_page.b-map_page-main .b-map__contacts {
@@ -441,11 +444,15 @@ form .input--num {
 	/*.b-map_page.b-map_page-main {
 		padding-top: 0;
 	}*/
+	.b-map_page .b-map__map,
+	.b-map_page .b-map__info {
+		height: 320px !important;
+	}
 	.b-map_page.b-map_page-main .b-map__map,
 	.b-map_page.b-map_page-main .b-map__info {
 		height: 450px;
 	}
-	.b-map_page.b-map_page-main .b-map__info {
+	.b-map_page .b-map__info {
     	min-height: initial;
     	padding: 20px 10px 20px 10px;
 	}

@@ -1,6 +1,7 @@
 <?
 define('BREADCRUMB_H1_ABSOLUTE', true);
 define('HIDE_SLIDER', true);
+define('H1_HIDE', true);
 
 $url = strtok($_SERVER['REQUEST_URI'], '?');
 $urlArr = explode('/', $url);
