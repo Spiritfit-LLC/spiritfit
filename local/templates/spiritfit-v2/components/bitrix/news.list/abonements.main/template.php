@@ -54,7 +54,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                                     <div class="b-twoside-card__title"><?=$arItem['~NAME']?></div>
                                     <div class="b-twoside-card__text"><?=$arItem["PREVIEW_TEXT"]?></div>
                                     <div class="b-twoside-card__prices">
-										<a href="/clubs/" class="b-twoside-card__prices-button button">Выбрать</a>
+										<a href="<?=$arItem['DETAIL_PAGE_URL']?>" class="b-twoside-card__prices-button button">Выбрать</a>
                                     </div>
                                 </div>
                             </div>
