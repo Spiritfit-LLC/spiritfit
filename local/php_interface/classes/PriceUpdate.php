@@ -92,6 +92,15 @@ class PriceUpdate {
                                     )
                                 );
                             }
+							if ($result['prices1']) {
+                                $props["PRICE"][] = serialize(
+                                    array(
+                                        "NUMBER" => $result['prices1']["month"],
+                                        "PRICE" => $result['prices1']["price"],
+                                        "LIST" => $id
+                                    )
+                                );
+                            }
                         }
                     }
                 }
