@@ -62,10 +62,22 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 													<div class="b-twoside-card__prices-current">0 <span class="rub">₽</span></div>
 												</div>
 											<? } else { ?>
+												<?
+													$discountSecond = [];
+													foreach ($arItem["PRICES"] as $key => $price) {
+														if( intval($price["NUMBER"]) == 99 ) {
+															$discountSecond = $price;
+														}
+													}
+												?>
 												<? foreach ($arItem["PRICES"] as $key => $price):?>
-                                                	<div class="b-twoside-card__prices-item">
+                                                	<? if( intval($price["NUMBER"]) == 99 ) continue; ?>
+													<div class="b-twoside-card__prices-item">
                                                     	<div class="b-twoside-card__prices-title"><?= $price["SIGN"] ?></div>
-                                                    	<?if ($key == 0 && $arItem["SALE"]) {?>
+                                                    	<? if( $key == 1 && !empty($discountSecond) && !empty($discountSecond["PRICE"]) && $discountSecond["PRICE"] != " " ) { ?>
+															<div class="b-twoside-card__prices-old"><?=$discountSecond["PRICE"] ?> <span class="rub">₽</span></div>
+														<? } ?>
+														<?if ($key == 0 && $arItem["SALE"]) {?>
                                                         	<div class="b-twoside-card__prices-old">
                                                             	<?= $price["PRICE"] ?> <span class="rub">₽</span>
                                                         	</div>

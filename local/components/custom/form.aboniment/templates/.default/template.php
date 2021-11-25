@@ -28,6 +28,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
             <? if ($arResult["ELEMENT"]["PRICES"] && (!empty($_REQUEST['club']) || !empty($_SESSION['CLUB_NUMBER']))): ?>
                 <div class="subscription__label">
                     <? foreach ($arResult["ELEMENT"]["PRICES"] as $key => $arPrice): ?>
+						<? if( intval($arPrice["NUMBER"]) == 99 ) continue; ?>
                         <div class="subscription__label-item" data-mouth="<?=$key?>">
                             <?=$arPrice["SIGN"] ?>
                             <?if (strlen($arResult["ELEMENT"]["BASE_PRICE"]["PRICE"]) > 0){?>

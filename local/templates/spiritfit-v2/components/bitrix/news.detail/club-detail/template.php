@@ -81,9 +81,21 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 														<div class="b-twoside-card__prices-current">0 <span class="rub">₽</span></div>
 													</div>
 												<? } else { ?>
+													<?
+														$discountSecond = [];
+														foreach ($abonement["PRICES"] as $key => $price) {
+															if( intval($price["NUMBER"]) == 99 ) {
+																$discountSecond = $price;
+															}
+														}
+													?>
 													<? foreach ($abonement["PRICES"] as $key => $price):?>
+														<? if( intval($price["NUMBER"]) == 99 ) continue; ?>
 														<div class="b-twoside-card__prices-item">
-															<div class="b-twoside-card__prices-title"><?= $price["SIGN"] ?></div>
+															<div class="b-twoside-card__prices-title"><?=$price["SIGN"] ?></div>
+															<? if( $key == 1 && !empty($discountSecond) && !empty($discountSecond["PRICE"]) && $discountSecond["PRICE"] != " " ) { ?>
+																<div class="b-twoside-card__prices-old"><?=$discountSecond["PRICE"] ?> <span class="rub">₽</span></div>
+															<? } ?>
 															<?if ($key == 0 && $abonement["SALE"]) {?>
 																<div class="b-twoside-card__prices-old"><?= $price["PRICE"] ?> <span class="rub">₽</span></div>
 																<div class="b-twoside-card__prices-current"><?=$abonement["SALE"]?> <span class="rub">₽</span></div>
