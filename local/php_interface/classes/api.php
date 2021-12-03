@@ -266,6 +266,7 @@ class Api
 		$this->_send($this->apiUrl."code", array(
 			"phone" => substr($phone, 1),
 			"code" => $code,
+			"type" => $params["type"] ? $params["type"] : 0
 		));
 		
 		$smsResultArray = $this->result();
@@ -344,6 +345,7 @@ class Api
         $this->_send($this->apiUrl."code", array(
 			"phone" => substr($phone, 1),
             "code" => $code,
+			"type" => $params["type"] ? $params["type"] : 0
 		));
 
         if ($this->_data['result']['errorCode'] == 0) {
@@ -547,6 +549,7 @@ class Api
         	'promocode' => $_REQUEST['promo'],
             'clubid' => sprintf("%02d", $_REQUEST['club']),
             'name' => '',
+			'type' => $type
         );
         
 		$additionFields = $GLOBALS['arAdditionAnswer'][$webFormId];
@@ -629,6 +632,12 @@ class Api
 	{
 		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", json_encode($data), FILE_APPEND);
 		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $url, FILE_APPEND);
+		
+		if( !empty($_SERVER["REQUEST_URI"]) && strpos($_SERVER["REQUEST_URI"], '.php') !== false ) {
+			$data["page_url"] = (!empty($_SERVER["HTTP_REFERER"])) ? $_SERVER["HTTP_REFERER"] : "";
+		} else {
+			$data["page_url"] = $_SERVER["REQUEST_URI"];
+		}
         
         if($data){
             $options = array( 
