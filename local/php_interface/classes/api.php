@@ -637,14 +637,20 @@ class Api
 			$data = array();
 		}
 
+		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError2.txt", json_encode($data), FILE_APPEND);
+
 		if( !empty($_SERVER["REQUEST_URI"]) && strpos($_SERVER["REQUEST_URI"], '.php') !== false ) {
 			$data["page_url"] = (!empty($_SERVER["HTTP_REFERER"])) ? $_SERVER["HTTP_REFERER"] : "";
 		} else {
 			$data["page_url"] = $_SERVER["REQUEST_URI"];
 		}
+
+		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError2.txt", json_encode($data), FILE_APPEND);
         
         if($data){
-            $options = array( 
+
+	        file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError2.txt", '1', FILE_APPEND);
+			$options = array(
                 CURLOPT_POST => 1, 
                 CURLOPT_HEADER => 0, 
                 CURLOPT_URL => $url, 
@@ -654,7 +660,9 @@ class Api
                 CURLOPT_POSTFIELDS => json_encode($data)
             ); 
         }else{
-            $options = array( 
+	        file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError2.txt", '2', FILE_APPEND);
+
+			$options = array(
                 CURLOPT_HEADER => 0, 
                 CURLOPT_URL => $url, 
                 CURLOPT_PORT => 443,
