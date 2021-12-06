@@ -634,9 +634,6 @@ class Api
 		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $url, FILE_APPEND);
 
 
-
-		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError2.txt", json_encode($data), FILE_APPEND);
-
 		if($data) {
 			if( !empty($_SERVER["REQUEST_URI"]) && strpos($_SERVER["REQUEST_URI"], '.php') !== false ) {
 				$data["page_url"] = (!empty($_SERVER["HTTP_REFERER"])) ? $_SERVER["HTTP_REFERER"] : "";
@@ -645,13 +642,9 @@ class Api
 			}
 		}
 
-
-		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError2.txt", json_encode($data), FILE_APPEND);
         
         if($data){
-
-	        file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError2.txt", '1', FILE_APPEND);
-			$options = array(
+            $options = array(
                 CURLOPT_POST => 1, 
                 CURLOPT_HEADER => 0, 
                 CURLOPT_URL => $url, 
@@ -661,9 +654,7 @@ class Api
                 CURLOPT_POSTFIELDS => json_encode($data)
             ); 
         }else{
-	        file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError2.txt", '2', FILE_APPEND);
-
-			$options = array(
+            $options = array(
                 CURLOPT_HEADER => 0, 
                 CURLOPT_URL => $url, 
                 CURLOPT_PORT => 443,
@@ -689,7 +680,7 @@ class Api
 				"result" => json_decode($result, true)
 			);
 		}
-		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError2.txt", $result, FILE_APPEND);
+		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $result, FILE_APPEND);
 		
 		curl_close($ch);
 	}
