@@ -633,17 +633,18 @@ class Api
 		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", json_encode($data), FILE_APPEND);
 		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $url, FILE_APPEND);
 
-		if(!is_array($data)) {
-			$data = array();
-		}
+
 
 		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError2.txt", json_encode($data), FILE_APPEND);
 
-		if( !empty($_SERVER["REQUEST_URI"]) && strpos($_SERVER["REQUEST_URI"], '.php') !== false ) {
-			$data["page_url"] = (!empty($_SERVER["HTTP_REFERER"])) ? $_SERVER["HTTP_REFERER"] : "";
-		} else {
-			$data["page_url"] = $_SERVER["REQUEST_URI"];
+		if($data) {
+			if( !empty($_SERVER["REQUEST_URI"]) && strpos($_SERVER["REQUEST_URI"], '.php') !== false ) {
+				$data["page_url"] = (!empty($_SERVER["HTTP_REFERER"])) ? $_SERVER["HTTP_REFERER"] : "";
+			} else {
+				$data["page_url"] = $_SERVER["REQUEST_URI"];
+			}
 		}
+
 
 		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError2.txt", json_encode($data), FILE_APPEND);
         
