@@ -633,18 +633,18 @@ class Api
 		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", json_encode($data), FILE_APPEND);
 		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $url, FILE_APPEND);
 
-		if(!is_array($data)) {
-			$data = [];
+
+		if($data) {
+			if( !empty($_SERVER["REQUEST_URI"]) && strpos($_SERVER["REQUEST_URI"], '.php') !== false ) {
+				$data["page_url"] = (!empty($_SERVER["HTTP_REFERER"])) ? $_SERVER["HTTP_REFERER"] : "";
+			} else {
+				$data["page_url"] = $_SERVER["REQUEST_URI"];
+			}
 		}
 
-		if( !empty($_SERVER["REQUEST_URI"]) && strpos($_SERVER["REQUEST_URI"], '.php') !== false ) {
-			$data["page_url"] = (!empty($_SERVER["HTTP_REFERER"])) ? $_SERVER["HTTP_REFERER"] : "";
-		} else {
-			$data["page_url"] = $_SERVER["REQUEST_URI"];
-		}
         
         if($data){
-            $options = array( 
+            $options = array(
                 CURLOPT_POST => 1, 
                 CURLOPT_HEADER => 0, 
                 CURLOPT_URL => $url, 
@@ -654,7 +654,7 @@ class Api
                 CURLOPT_POSTFIELDS => json_encode($data)
             ); 
         }else{
-            $options = array( 
+            $options = array(
                 CURLOPT_HEADER => 0, 
                 CURLOPT_URL => $url, 
                 CURLOPT_PORT => 443,
