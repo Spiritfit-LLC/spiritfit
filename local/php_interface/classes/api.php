@@ -634,7 +634,7 @@ class Api
 		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $url, FILE_APPEND);
 
 		if(!is_array($data)) {
-			$data = [];
+			$data = array();
 		}
 
 		if( !empty($_SERVER["REQUEST_URI"]) && strpos($_SERVER["REQUEST_URI"], '.php') !== false ) {
