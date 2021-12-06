@@ -688,7 +688,7 @@ class Api
 				"result" => json_decode($result, true)
 			);
 		}
-		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $result, FILE_APPEND);
+		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError2.txt", $result, FILE_APPEND);
 		
 		curl_close($ch);
 	}
