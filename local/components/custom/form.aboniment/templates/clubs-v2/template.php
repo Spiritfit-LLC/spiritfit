@@ -8,7 +8,7 @@ $arField = ['name', 'email', 'phone'];
 <div class="content-center block-margin">
     <div class="form-standart form-standart_tpl-hor form-standart_black-bg">
         <div class="form-standart__plate">
-            <h2 class="form-standart__title"><?if($arParams["TEXT_FORM"]){?><?=$arParams["TEXT_FORM"]?><?}else{?>Записаться на пробную тренировку<?}?></h2>
+            <div class="form-standart__title h2"><?if($arParams["TEXT_FORM"]){?><?=$arParams["TEXT_FORM"]?><?}else{?>Записаться на пробную тренировку<?}?></div>
 
             <form class="training__aside-form_v2" name="<?= $arResult["WEB_FORM_NAME"] ?>" action="<?= POST_FORM_ACTION_URI ?>" method="POST" enctype="multipart/form-data">
                 <?= getClientParams($arParams["WEB_FORM_ID"]) ?>

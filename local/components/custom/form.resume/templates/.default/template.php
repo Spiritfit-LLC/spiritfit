@@ -6,7 +6,7 @@
 ?>
 <div class="form-standart form-standart_tpl-two-col form-standart_white-bg form-standart__popup-message">
 	<div class="form-standart__plate">
-		<h2 class="form-standart__title">Заявка на вакансию</h2>
+		<div class="form-standart__title h2">Заявка на вакансию</div>
 		<? if(!empty($arResult["ERROR"])) { ?>
 			<div class="form__error"><?=$arResult["ERROR"]?></div>
 		<? } ?>
