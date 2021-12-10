@@ -475,6 +475,16 @@ main.b-page__main {
     font-size: 40px;
 }
 
+.b-cards-slider__heading {
+	margin-top: 40px;
+}
+.b-cards-slider {
+	margin-bottom: 0;
+}
+.b-cards-slider:after {
+	display: none;
+}
+
 @media only screen and (max-width: 1440px) {
 	.club__subheading-centred {
 		padding-left: 50px;

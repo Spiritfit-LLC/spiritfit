@@ -406,7 +406,12 @@ $(function () {
         var $context = $(this);
         $context.on('click', function (e) {
             var $card = $(e.target).closest('.b-twoside-card');
-            $card.toggleClass('is-open');
+			console.log($card);
+			if( !$card.hasClass("disabled") ) {
+            	$card.toggleClass('is-open');
+			} else {
+				$card.removeClass('is-open');
+			}
         });
     });
 }); 
