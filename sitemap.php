@@ -14,6 +14,10 @@
 		"/mobilnoe-prilozheniya/",
 		"/mobilnoe-prilozheniya/specproekty/"
 	];
+	$excludeAbonements = [
+		"podarochniy-sertifikat",
+		"ezhemesyachnyy-abonement-po-podpiske"
+	];
 	
 	/*Клубы*/
 	$clubsArr = [];
@@ -36,9 +40,11 @@
 		$lastmod = strtotime($arFields['TIMESTAMP_X']);
 		$sitemapArr[] = [ 'loc' => $arFields["DETAIL_PAGE_URL"], 'lastmod' => date('Y-m-d', $lastmod).'T'.date('H:i:sP', $lastmod)];
 		
-		foreach( $clubsArr as $clubId => $abinementsId ) {
-			if( in_array($arFields["ID"], $abinementsId) ) {
-				$sitemapArr[] = [ 'loc' => $arFields["DETAIL_PAGE_URL"] . $clubId . '/', 'lastmod' => date('Y-m-d', $lastmod).'T'.date('H:i:sP', $lastmod)];
+		if( !in_array( $arFields["CODE"], $excludeAbonements ) ) {
+			foreach( $clubsArr as $clubId => $abinementsId ) {
+				if( in_array($arFields["ID"], $abinementsId) ) {
+					$sitemapArr[] = [ 'loc' => $arFields["DETAIL_PAGE_URL"] . $clubId . '/', 'lastmod' => date('Y-m-d', $lastmod).'T'.date('H:i:sP', $lastmod)];
+				}
 			}
 		}
 	}
