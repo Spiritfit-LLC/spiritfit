@@ -35,6 +35,125 @@ function dataLayerSend (eCategory, eAction, eLabel, eNI = false) {
     });
 }
 
+var reachGo = function(form) {
+    var value = form.find('input[name=form_hidden_10]').val();
+    var club = form.find('input[name=form_text_5]').val();
+    var additional = form.find('input[name=additional]').val();
+    var go = null;
+	
+    if (value == 0) {
+        switch (club) {
+            case "01":
+                go = "callback-uz";
+            break;
+            case "02":
+                go = "callback-kr";
+            break;
+            case "03":
+                go = "callback-ch";
+            break;
+            case "04":
+                go = "callback-mr";
+            break;
+            case "05":
+                go = "callback-be";
+            break;
+            case "06":
+                go = "callback-pd";
+            break;
+            case "07":
+                go = "callback-rp";
+            break;
+            case "08":
+                go = "callback-go";
+            break;
+            case "09":
+                go = "callback-mk";
+            break;
+            case "10":
+                go = "callback-ms";
+            break;
+        }
+    }
+
+    if (value != 0 && additional != undefined) {
+        switch (club) {
+            case "01":
+                go = "god-uz";
+            break;
+            case "02":
+                go = "god-kr";
+            break;
+            case "03":
+                go = "god-ch";
+            break;
+            case "05":
+                go = "god-be";
+            break;
+            case "06":
+                go = "god-pd";
+            break;
+            case "07":
+                go = "god-rp";
+            break;
+            case "08":
+                go = "god-go";
+            break;
+            case "09":
+                go = "god-mk";
+            break;
+            case "10":
+                go = "god-ms";
+            break;
+        }
+    }
+
+    if (value != 0 && additional == undefined) {
+        switch (club) {
+            case "01":
+                go = "mes-uz";
+            break;
+            case "02":
+                go = "mes-kr";
+            break;
+                case "03":
+                    go = "mes-ch";
+                    break;
+                case "04":
+                    go = "mes-mr";
+                    break;
+                case "05":
+                    go = "mes-be";
+                    break;
+                case "06":
+                    go = "mes-pd";
+                    break;
+                case "07":
+                    go = "mes-rp";
+                    break;
+                case "08":
+                    go = "mes-go";
+                    break;
+                case "09":
+                    go = "mes-mk";
+                    break;
+                case "10":
+                    go = "mes-ms";
+                    break;
+        }
+    }
+
+    if (go !== null) {}
+}
+
+function reachGoOnline() {
+   if ($("form.subscription__aside-form").length) {
+        var form = $("form.subscription__aside-form");
+        var subID = form.find("input[name=\"sub_id\"]").val();
+        if (subID == "online") {}
+    }
+}
+
 function getCookies(name) {
     var matches = document.cookie.match(new RegExp(
       "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
@@ -1570,130 +1689,6 @@ $(document).ready(function() {
             dataType: 'html',
             data: data
         });
-    }
-
-    var reachGo = function(form) {
-        var value = form.find('input[name=form_hidden_10]').val();
-        var club = form.find('input[name=form_text_5]').val();
-        var additional = form.find('input[name=additional]').val();
-        var go = null;
-
-        if (value == 0) {
-            switch (club) {
-                case "01":
-                    go = "callback-uz";
-                    break;
-                case "02":
-                    go = "callback-kr";
-                    break;
-                case "03":
-                    go = "callback-ch";
-                    break;
-                case "04":
-                    go = "callback-mr";
-                    break;
-                case "05":
-                    go = "callback-be";
-                    break;
-                case "06":
-                    go = "callback-pd";
-                    break;
-                case "07":
-                    go = "callback-rp";
-                    break;
-                case "08":
-                    go = "callback-go";
-                    break;
-                case "09":
-                    go = "callback-mk";
-                    break;
-                case "10":
-                    go = "callback-ms";
-                    break;
-            }
-        }
-
-        if (value != 0 && additional != undefined) {
-            switch (club) {
-                case "01":
-                    go = "god-uz";
-                    break;
-                case "02":
-                    go = "god-kr";
-                    break;
-                case "03":
-                    go = "god-ch";
-                    break;
-                case "05":
-                    go = "god-be";
-                    break;
-                case "06":
-                    go = "god-pd";
-                    break;
-                case "07":
-                    go = "god-rp";
-                    break;
-                case "08":
-                    go = "god-go";
-                    break;
-                case "09":
-                    go = "god-mk";
-                    break;
-                case "10":
-                    go = "god-ms";
-                    break;
-            }
-        }
-
-        if (value != 0 && additional == undefined) {
-            switch (club) {
-                case "01":
-                    go = "mes-uz";
-                    break;
-                case "02":
-                    go = "mes-kr";
-                    break;
-                case "03":
-                    go = "mes-ch";
-                    break;
-                case "04":
-                    go = "mes-mr";
-                    break;
-                case "05":
-                    go = "mes-be";
-                    break;
-                case "06":
-                    go = "mes-pd";
-                    break;
-                case "07":
-                    go = "mes-rp";
-                    break;
-                case "08":
-                    go = "mes-go";
-                    break;
-                case "09":
-                    go = "mes-mk";
-                    break;
-                case "10":
-                    go = "mes-ms";
-                    break;
-            }
-        }
-
-        if (go !== null) {
-
-        }
-    }
-
-    function reachGoOnline() {
-        if ($("form.subscription__aside-form").length) {
-            var form = $("form.subscription__aside-form");
-            var subID = form.find("input[name=\"sub_id\"]").val();
-
-            if (subID == "online") {
-
-            }
-        }
     }
 
     $(document).on("click", ".js-path-to", function() {
