@@ -136,6 +136,7 @@ if ($_REQUEST["ajax_menu"] == 'true' && isset($_SERVER['HTTP_X_PJAX']) && $_SERV
 						"DEFAULT_CLUB_ID" => 263,
 						"ABONEMENT_IBLOCK_ID" => 9,
 						"CLUBS_IBLOCK_ID" => 6,
+						"FORM_TYPE" => 1,
 						"ELEMENT_CODE" => $elementCode,
 						"FREE_MESSAGE" => "Бесплатный абонемент. Для верификации, мы спишем с карты и вернем 11 рублей. Чтобы убедиться, что Вы человек, а не робот."
 					),

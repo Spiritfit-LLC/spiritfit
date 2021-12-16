@@ -63,6 +63,19 @@
     font-weight: 500;
 }
 
+.get-abonement-resend {
+    display: table;
+    margin: 0 auto 50px;
+    opacity: .7;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+}
+.get-abonement-resend:hover {
+	text-decoration: underline;
+	color: #fff;
+}
+
 @media screen and (max-width: 768px) {
     .get-abonement {
         margin-bottom: 10px

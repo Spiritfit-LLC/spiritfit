@@ -122,7 +122,7 @@
                         <input class="input input--num input--light" type="text" maxlength="1" inputmode="numeric" name="NUM_ARR[<?= $i ?>]" placeholder="0" min="0" max="9" pattern="[0-9]" required="required">
                     <? endfor; ?>
                 </div>
-                <a class="subscription__code get-abonement-resend" href="#resend">Получить код повторно</a>
+                <a class="get-abonement-resend" href="#resend">Получить код повторно</a>
 				<div class="subscription__bottom">
                     <div class="subscription__total">
                         <div class="subscription__total-text">Итого к оплате</div>

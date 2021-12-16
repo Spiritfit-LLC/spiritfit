@@ -62,6 +62,13 @@ $arComponentParameters = array(
 			"TYPE" => "STRING",
 			"MULTIPLE" => "N",
 			"DEFAULT" => "",
+		),
+		"FORM_TYPE" => Array(
+			"PARENT" => "DATA_SOURCE",
+			"NAME" => "Тип события формы в 1С",
+			"TYPE" => "STRING",
+			"MULTIPLE" => "N",
+			"DEFAULT" => "",
 		)
 	),
 );

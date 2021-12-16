@@ -262,7 +262,7 @@ class Api
             $client_id = explode('.', $client_id);
             $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
         }     
-
+		
 		$this->_send($this->apiUrl."code", array(
 			"phone" => substr($phone, 1),
 			"code" => $code,
@@ -341,7 +341,7 @@ class Api
             $client_id = explode('.', $client_id);
             $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
         }
-
+		
         $this->_send($this->apiUrl."code", array(
 			"phone" => substr($phone, 1),
             "code" => $code,

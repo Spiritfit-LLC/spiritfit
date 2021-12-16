@@ -212,14 +212,11 @@ class FormGetAbonimentComponent extends CBitrixComponent{
         return $arParam;
     }
 	
-    private function checkSms($num) {
+    private function checkSms( $num ) {
         global $APPLICATION;
 
         $arParam = $this->getFormatFields();
-
-        if ($this->request["num"]) {
-            $arParam["code"] = $this->request["num"];
-        }
+        $arParam["code"] = $num;
 		
 		$phoneName = "form_" . $this->arResult["arAnswers"]["phone"]['0']["FIELD_TYPE"] . "_" . $this->arResult["arAnswers"]["phone"]['0']["ID"];
         $phone = $this->request->get($phoneName);
@@ -233,32 +230,18 @@ class FormGetAbonimentComponent extends CBitrixComponent{
             $arParam["subscriptionId"] = $this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"];
         }
 		
-		if ($this->request["form_hidden_10"] == 0) {
-			
+		$arParam["type"] = $this->arParams["FORM_TYPE"];
+		if( empty($arParam["type"]) ) {
 			$arParam["type"] = 1;
-            if ($this->arResult["ELEMENT"]["CODE"] == "probnaya-trenirovka" || $this->arResult["ELEMENT"]["ID"] == "226") {
-                $arParam["type"] = 3;
-            }
-			if( !empty($this->request["form_default_type"]) ) {
-				$arParam["type"] = intval($this->request["form_default_type"]);
-			}
-            
-            $api = new Api(array(
-                "action" => "request2",
-                "params" => $arParam
-            ));
-			
-        } else {
-            
-			if( !empty($this->request["form_default_type"]) ) {
-				$arParam["type"] = intval($this->request["form_default_type"]);
-			}
-			
-			$api = new Api(array(
-                "action" => "request",
-               	"params" => $arParam
-            ));
-        }
+		}
+		if( !empty($this->request["form_default_type"]) ) {
+			$arParam["type"] = intval($this->request["form_default_type"]);
+		}
+		
+		$api = new Api(array(
+            "action" => "request",
+            "params" => $arParam
+        ));
 		
 		return $api->result();
     }
@@ -404,6 +387,7 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 						if ( $this->request->get("NUM") ) {
                         	$responseResult["RESPONSE"] = $this->checkSms( $this->request->get("NUM") );
                     	}
+						
 						if( empty($responseResult["RESPONSE"]["success"]) ) {
 							if( !empty($responseResult["RESPONSE"]["data"]["result"]["errorCode"]) && $responseResult["RESPONSE"]["data"]["result"]["errorCode"] == 6 ) {
 								$responseResult["ERROR"] = true;
@@ -561,6 +545,9 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 						$this->arResult["ELEMENT"]["PROPERTIES"]["FOR_PRESENT"]["ITEMS"][] = $service["PRICE"];
 					}
 				}
+				
+				$uniqueId = $this->arResult["COMPONENT_ID"].$this->arResult["CLUB_ID"].$this->arResult["ELEMENT"]["ID"];
+				unset($_SESSION[$uniqueId]);
 				
 				$this->includeComponentTemplate();
 			}
