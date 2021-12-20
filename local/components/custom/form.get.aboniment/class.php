@@ -133,9 +133,9 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 		$dbElements = CIBlockElement::GetList(array("SORT" => "ASC"), $arFilter, false, false, array("ID", "NAME", "PROPERTY_NUMBER", "PROPERTY_HIDE_LINK"));
 		while ($res = $dbElements->fetch()) {
 			if( !empty($res['PROPERTY_HIDE_LINK_VALUE']) && $res["ID"] != $currentClubId ) continue;
-			if (strpos($res["NAME"], 'Сетевой абонемент') !== false) {
+			/*if (strpos($res["NAME"], 'Сетевой абонемент') !== false) {
 				continue;
-			}
+			}*/
 			$inArray = false;
 			foreach( $outArr as $item ) {
 				if( $item["MESSAGE"] === $res["NAME"] ) {
