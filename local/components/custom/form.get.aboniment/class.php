@@ -136,13 +136,22 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 			if (strpos($res["NAME"], 'Сетевой абонемент') !== false) {
 				continue;
 			}
+			$inArray = false;
+			foreach( $outArr as $item ) {
+				if( $item["MESSAGE"] === $res["NAME"] ) {
+					$inArray = true;
+					break;
+				}
+			}
 			
-			$outArr[] = array(
-				"ID" => $res["ID"],
-				"MESSAGE" => $res["NAME"],
-				"SELECTED" => $res["ID"] == $currentClubId ? "selected" : "",
-				"NUMBER" => $res["PROPERTY_NUMBER_VALUE"]
-			);
+			if( !$inArray ) {
+				$outArr[] = array(
+					"ID" => $res["ID"],
+					"MESSAGE" => $res["NAME"],
+					"SELECTED" => $res["ID"] == $currentClubId ? "selected" : "",
+					"NUMBER" => $res["PROPERTY_NUMBER_VALUE"]
+				);
+			}
 		}
 		
 		return $outArr;
