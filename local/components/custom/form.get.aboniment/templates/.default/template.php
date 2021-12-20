@@ -148,7 +148,7 @@
                     <input class="input input--light input--short input--text" type="email" placeholder="<?= $arResult["arQuestions"]["email"]["TITLE"] ?>" value="<?= $_REQUEST["form_" . $arResult["arAnswers"]["email"]['0']["FIELD_TYPE"] . "_" . $arResult["arAnswers"]["email"]['0']["ID"]] ?>" name="form_<?= $arResult["arAnswers"]["email"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["email"]['0']["ID"] ?>" <? if ($arResult["arQuestions"]["email"]["REQUIRED"]) { ?>required="required"<? } ?>>
 				</div>
 				<div class="subscription__promo">
-					<input class="subscription__promo-input input input--light input--short input--text" type="text" placeholder="ПРОМОКОД" name="COUPON" >
+					<input class="subscription__promo-input input input--light input--short input--text" value="<?=(!empty($_POST["COUPON"])) ? $_POST["COUPON"] : "" ?>" type="text" placeholder="ПРОМОКОД" name="COUPON" >
 					<a class="get-abonement-promo" href="#apply">Применить</a>
 				</div>
                 <div class="subscription__aside-form-row">

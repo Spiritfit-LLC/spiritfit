@@ -238,6 +238,14 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 			$arParam["type"] = intval($this->request["form_default_type"]);
 		}
 		
+		if( !empty($this->arResult["CLUB_NUMBER"]) ) {
+			$arParam["club"] = $this->arResult["CLUB_NUMBER"];
+		}
+		$uniqueId = $this->arResult["COMPONENT_ID"].$this->arResult["CLUB_ID"].$this->arResult["ELEMENT"]["ID"];
+		if( !empty( $_SESSION[$uniqueId]["COUPON"] ) ) {
+			$arParam["promo"] = $_SESSION[$uniqueId]["COUPON"];
+		}
+		
 		$api = new Api(array(
             "action" => "request",
             "params" => $arParam
@@ -388,7 +396,7 @@ class FormGetAbonimentComponent extends CBitrixComponent{
                         	$responseResult["RESPONSE"] = $this->checkSms( $this->request->get("NUM") );
                     	}
 						
-						if( empty($responseResult["RESPONSE"]["success"]) ) {
+						if( empty($responseResult["RESPONSE"]["success"]) || !empty($responseResult["RESPONSE"]["data"]["result"]["errorCode"]) ) {
 							if( !empty($responseResult["RESPONSE"]["data"]["result"]["errorCode"]) && $responseResult["RESPONSE"]["data"]["result"]["errorCode"] == 6 ) {
 								$responseResult["ERROR"] = true;
 								$responseResult["MESSAGE"] = (!empty($responseResult["RESPONSE"]["data"]["result"]["userMessage"])) ? $responseResult["RESPONSE"]["data"]["result"]["userMessage"] : "Код введен неверно, повторите через 15 мин.";
