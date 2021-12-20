@@ -130,12 +130,12 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 		);
 		unset($arClubs);
 		
-		$dbElements = CIBlockElement::GetList(array("SORT" => "ASC"), $arFilter, false, false, array("ID", "NAME", "PROPERTY_NUMBER", "PROPERTY_HIDE_LINK"));
+		$dbElements = CIBlockElement::GetList(array("SORT" => "ASC"), $arFilter, false, false, array("ID", "CODE", "NAME", "PROPERTY_NUMBER", "PROPERTY_HIDE_LINK"));
 		while ($res = $dbElements->fetch()) {
 			if( !empty($res['PROPERTY_HIDE_LINK_VALUE']) && $res["ID"] != $currentClubId ) continue;
-			/*if (strpos($res["NAME"], 'Сетевой абонемент') !== false) {
-				continue;
-			}*/
+			if( $res["CODE"] === "fitnes-marafon-br-8-nedel" && $currentClubId === "00" ) continue;
+			if( $res["CODE"] === "fitnes-marafon-br-4-nedeli" && $currentClubId === "00" ) continue;
+			
 			$inArray = false;
 			foreach( $outArr as $item ) {
 				if( $item["MESSAGE"] === $res["NAME"] ) {
@@ -515,6 +515,7 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 			if( !empty($clubId) ) {
 				$this->arResult["CLUB_ID"] = $clubId;
 			}
+
 			if( !empty($this->arResult["CLUB"]["PROPERTIES"]["NUMBER"]["VALUE"]) ) {
 				$this->arResult["CLUB_NUMBER"] = $this->arResult["CLUB"]["PROPERTIES"]["NUMBER"]["VALUE"];
 				$this->arParams["CLUBS_IBLOCK_ID"] = $this->arResult["CLUB"]["IBLOCK_ID"];

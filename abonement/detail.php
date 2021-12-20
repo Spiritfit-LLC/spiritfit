@@ -133,7 +133,7 @@ if ($_REQUEST["ajax_menu"] == 'true' && isset($_SERVER['HTTP_X_PJAX']) && $_SERV
 						"WEB_FORM_ID" => "2",
 						"ADD_ELEMENT_CHAIN" => "N",
 						"CLUB_ID" => $club["ID"],
-						"DEFAULT_CLUB_ID" => 263,
+						"DEFAULT_CLUB_ID" => "",
 						"ABONEMENT_IBLOCK_ID" => 9,
 						"CLUBS_IBLOCK_ID" => 6,
 						"FORM_TYPE" => 1,
