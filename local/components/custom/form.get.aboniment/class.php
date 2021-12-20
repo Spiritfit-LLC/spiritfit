@@ -1,5 +1,5 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
-global $USER;
+	global $USER;
 
 use \Bitrix\Main\Loader;
 
@@ -176,12 +176,26 @@ class FormGetAbonimentComponent extends CBitrixComponent{
             $phone = (!empty($this->request->get($phoneName))) ? $this->request->get($phoneName) : $this->request->get("phone");
         }
 		
-        $phone = preg_replace('![^0-9]+!', '', $phone);
+		$phone = preg_replace('![^0-9]+!', '', $phone);
+		$arParam = ["phone" => $phone];
+		if( !empty($this->arResult["CLUB_NUMBER"]) ) {
+			$arParam["club"] = $this->arResult["CLUB_NUMBER"];
+		}
+		$arParam["type"] = $this->arParams["FORM_TYPE"];
+		if( empty($arParam["type"]) ) {
+			$arParam["type"] = 1;
+		}
+		if( !empty($this->request["form_default_type"]) ) {
+			$arParam["type"] = intval($this->request["form_default_type"]);
+		}
+		$uniqueId = $this->arResult["COMPONENT_ID"].$this->arResult["CLUB_ID"].$this->arResult["ELEMENT"]["ID"];
+		if( !empty( $_SESSION[$uniqueId]["COUPON"] ) ) {
+			$arParam["promo"] = $_SESSION[$uniqueId]["COUPON"];
+		}
+		
         $api = new Api(array(
             "action" => "request_sendcode",
-            "params" => array(
-                "phone" => $phone,
-            )
+            "params" => $arParam
         ));
 
         return $api->result();
@@ -397,12 +411,10 @@ class FormGetAbonimentComponent extends CBitrixComponent{
                     	}
 						
 						if( empty($responseResult["RESPONSE"]["success"]) || !empty($responseResult["RESPONSE"]["data"]["result"]["errorCode"]) ) {
+							
 							if( !empty($responseResult["RESPONSE"]["data"]["result"]["errorCode"]) && $responseResult["RESPONSE"]["data"]["result"]["errorCode"] == 6 ) {
 								$responseResult["ERROR"] = true;
 								$responseResult["MESSAGE"] = (!empty($responseResult["RESPONSE"]["data"]["result"]["userMessage"])) ? $responseResult["RESPONSE"]["data"]["result"]["userMessage"] : "Код введен неверно, повторите через 15 мин.";
-							} else {
-								$responseResult["ERROR"] = true;
-								$responseResult["MESSAGE"] = (!empty($responseResult["RESPONSE"]["data"]["result"]["userMessage"])) ? $responseResult["RESPONSE"]["data"]["result"]["userMessage"] : "Не правильно введен код";
 							}
 							
 							if( !empty($responseResult["RESPONSE"]["data"]["result"]["userMessage"]) ) {
@@ -411,6 +423,7 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 								$responseResult["MESSAGE"] = "Не правильно введен код";
 							}
 							$responseResult["ERROR"] = true;
+							
 						} else {
 							if( !empty( $responseResult["RESPONSE"]["data"]["result"]["result"]["formUrl"] ) ) {
 								$responseResult["PAY_URL"] = $responseResult["RESPONSE"]["data"]["result"]["result"]["formUrl"];
