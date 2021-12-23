@@ -262,7 +262,7 @@ class Api
             $client_id = explode('.', $client_id);
             $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
         }     
-
+		
 		$this->_send($this->apiUrl."code", array(
 			"phone" => substr($phone, 1),
 			"code" => $code,
@@ -341,7 +341,7 @@ class Api
             $client_id = explode('.', $client_id);
             $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
         }
-
+		
         $this->_send($this->apiUrl."code", array(
 			"phone" => substr($phone, 1),
             "code" => $code,
@@ -398,7 +398,7 @@ class Api
                 "promocode" => $params['promo'],
                 "cid" => $client_id         
     		);
-
+			
     		if($params['additional']) {
     			if ($params['additional'] == "1") {
     				$request["additional"] = true;
@@ -551,6 +551,16 @@ class Api
             'name' => '',
 			'type' => $type
         );
+		
+		if( !empty($params["club"]) ) {
+			$arParams["club"] = $params["club"];
+		}
+		if( !empty($params["promo"]) ) {
+			$arParams["promo"] = $params["promo"];
+		}
+		if( !empty($params["type"]) ) {
+			$arParams["type"] = $params["type"];
+		}
         
 		$additionFields = $GLOBALS['arAdditionAnswer'][$webFormId];
 		

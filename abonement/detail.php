@@ -126,26 +126,33 @@ if ($_REQUEST["ajax_menu"] == 'true' && isset($_SERVER['HTTP_X_PJAX']) && $_SERV
 				);
 			}else{
 				$APPLICATION->IncludeComponent(
-					"custom:form.aboniment", 
+					"custom:form.get.aboniment", 
 					"", 
 					array(
 						"AJAX_MODE" => "N",
 						"WEB_FORM_ID" => "2",
 						"ADD_ELEMENT_CHAIN" => "N",
+						"CLUB_ID" => $club["ID"],
+						"DEFAULT_CLUB_ID" => "",
+						"ABONEMENT_IBLOCK_ID" => 9,
+						"CLUBS_IBLOCK_ID" => 6,
+						"FORM_TYPE" => 1,
+						"ELEMENT_CODE" => $elementCode,
+						"FREE_MESSAGE" => "Бесплатный абонемент. Для верификации, мы спишем с карты и вернем 11 рублей. Чтобы убедиться, что Вы человек, а не робот."
 					),
 					false
 				);
 			}?>
 		</div>
 <? endif; ?>
-<? if( !empty($element) ) { ?>
+<? if( !empty($element) && empty($_POST) ) { ?>
 	<div itemscope itemtype="http://schema.org/Product" style="display: none;">
 		<div itemprop="name"><?=strip_tags($element['~NAME'])?></div>
 		<link itemprop="url" href="<?=$url?>">
 		<? foreach($element['IMAGES'] as $image) { ?>
 			<img itemprop="image" src="<?=$_SERVER['REQUEST_SCHEME']?>://<?=$_SERVER['SERVER_NAME']?><?=$image?>">
 		<? } ?>
-		<? if(!empty($element['IMAGES'][0])) { ?>
+		<? if( !empty($element['IMAGES'][0]) ) { ?>
 			<? $this->SetViewTarget('inhead'); ?>https://<?=$_SERVER['SERVER_NAME']?><?=$element['IMAGES'][0]?><? $this->EndViewTarget(); ?>
 		<? } ?>
 		<meta itemprop="brand" content="Spirit.Fitness">

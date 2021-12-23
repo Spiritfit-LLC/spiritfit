@@ -28,7 +28,7 @@ foreach( $clubs as $club ) {
     <meta property="og:image" content="<?=$APPLICATION->ShowViewContent('inhead');?>"/>
     <meta property="og:description" content="<?=$APPLICATION->GetDirProperty("description");?>"/>
     <meta property="og:site_name" content="<?=$arInfoProps['OG_SITE_NAME']['VALUE']?>"/>
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <script defer type="text/javascript" src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
 	<script type="text/javascript">
 		var clubsList = <?=CUtil::PhpToJSObject($clubsName)?>;

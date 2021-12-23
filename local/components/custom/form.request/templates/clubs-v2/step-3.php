@@ -1,12 +1,12 @@
 <div class="club__subheading">Оставить заявку</div>
 <div class="training__aside">
     <div class="training__aside-stage" data-stage="1">
-        <h2 class="training__aside-title">
+        <div class="training__aside-title h2">
             <?if($arParams["TEXT_FORM"]){?><?=$arParams["TEXT_FORM"]?>
             <?}else{?>
                 Испытайте возможности клуба и получите специальные условия на покупку абонемента
             <?}?>
-        </h2>
+        </div>
         <form class="training__aside-form" name="<?= $arResult["WEB_FORM_NAME"] ?>" action="<?= POST_FORM_ACTION_URI ?>" method="POST" enctype="multipart/form-data">
             <?=getClientParams($arParams["WEB_FORM_ID"]) ?>
             <input type="hidden" name="WEB_FORM_ID" value="<?= $arParams["WEB_FORM_ID"] ?>">

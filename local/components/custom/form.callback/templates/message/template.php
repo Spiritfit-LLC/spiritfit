@@ -14,7 +14,7 @@ $arField = ['name', 'email', 'phone'];
         
         <div class="form-standart form-standart_tpl-two-col form-standart_white-bg form-standart__popup-message">
             <div class="form-standart__plate">
-                <h2 class="form-standart__title">Отправить сообщение</h2>
+                <div class="form-standart__title h2">Отправить сообщение</div>
         
                 <form class="popup__form" name="<?= $arResult["WEB_FORM_NAME"] ?>" action="<?= POST_FORM_ACTION_URI ?>" method="POST" enctype="multipart/form-data">
                     <?=getClientParams($arParams["WEB_FORM_ID"]) ?>
