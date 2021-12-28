@@ -27,9 +27,13 @@ $photos = $arResult['PROPERTIES']['BLOCK_PHOTO']['VALUE'];
 				<div class="b-image-block__img-holder b-image-block__img-holder_slider">
 					<?foreach ($photos as $itemPhoto) {
 						$itemPhotoSrc = CFile::getPath($itemPhoto);
+						
+						$imageType1 = CFile::ResizeImageGet($itemPhoto, array('width' => 1280, 'height' => 800), BX_RESIZE_IMAGE_PROPORTIONAL);
+						$imageType2 = CFile::ResizeImageGet($itemPhoto, array('width' => 800, 'height' => 500), BX_RESIZE_IMAGE_PROPORTIONAL);
+						$imageType3 = CFile::ResizeImageGet($itemPhoto, array('width' => 450, 'height' => 281), BX_RESIZE_IMAGE_PROPORTIONAL);
 						?>
 						<div class="b-image-block__slide">
-							<img class="b-image-block__slide-img" src="<?=$itemPhotoSrc?>" alt="" role="presentation" />
+							<img class="b-image-block__slide-img" src="<?=$imageType1["src"]?>" srcset="<?=$imageType3["src"]?> 400w, <?=$imageType2["src"]?> 800w, <?=$imageType1["src"]?> 1280w" alt="" role="presentation" />
 						</div>
 						<?
 					} ?>
@@ -65,12 +69,18 @@ $photos = $arResult['PROPERTIES']['BLOCK_PHOTO']['VALUE'];
 		<div class="content-center">
 			<div class="b-image-plate-block__content">
 				<? 
+				$imageType1 = ""; $imageType2 = ""; $imageType3 = "";
 				if(!empty($videoPreview)){
+					
+					$imageType1 = CFile::ResizeImageGet($videoPreview, array('width' => 1280, 'height' => 800), BX_RESIZE_IMAGE_PROPORTIONAL);
+					$imageType2 = CFile::ResizeImageGet($videoPreview, array('width' => 800, 'height' => 500), BX_RESIZE_IMAGE_PROPORTIONAL);
+					$imageType3 = CFile::ResizeImageGet($videoPreview, array('width' => 450, 'height' => 281), BX_RESIZE_IMAGE_PROPORTIONAL);
+					
 					$videoPreview = CFile::getPath($videoPreview);
 				}?>
 
 				<a class="b-image-block__slide play-btn-overlay" href="<?=$video?>" data-fancybox="">
-					<img class="b-image-block__slide-img" src="<?=$videoPreview?>" alt="" role="presentation" />
+					<img class="b-image-block__slide-img" src="<?=$imageType1["src"]?>" srcset="<?=$imageType3["src"]?> 400w, <?=$imageType2["src"]?> 800w, <?=$imageType1["src"]?> 1280w"  alt="" role="presentation" />
 				</a>
 					
 				<div class="b-image-plate-block__text-content text-center">

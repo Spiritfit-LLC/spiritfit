@@ -49,19 +49,19 @@ foreach( $clubs as $club ) {
     Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . "/css/global.css");
     Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . "/css/custom.css");
     
-    Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/sameheight/jquery.sameheight.js");
-    Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/jquery.maskedinput/jquery.maskedinput.js");
-    Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/select2/select2.js");
-    Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/perfect-scrollbar/perfect-scrollbar.min.js");
+    //Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/sameheight/jquery.sameheight.js");
+    //Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/jquery.maskedinput/jquery.maskedinput.js");
+    //Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/select2/select2.js");
+    //Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/perfect-scrollbar/perfect-scrollbar.min.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/slick/slick.min.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/libs.min.js");
-    Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/jquery.inputmask.min.js");
+    //Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/jquery.inputmask.min.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/common.min.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/jquery.pjax.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/jquery.ui/jquery-ui.min.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/fancybox3/jquery.fancybox.min.js");
-    Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/nicescroll/jquery.nicescroll.js");
+    //Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/nicescroll/jquery.nicescroll.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/bowser.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/script.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/global.js");

@@ -24,7 +24,13 @@ if (empty($id)){
 }
 
 foreach ($arResult["PROPERTIES"]["PHOTO_GALLERY"]["VALUE"] as $photo) {
-    $arResult["PROPERTIES"]["PHOTO_GALLERY"]["ITEMS"][] = CFile::GetPath($photo);
+    /*$arResult["PROPERTIES"]["PHOTO_GALLERY"]["ITEMS"][] = CFile::GetPath($photo);*/
+	$arResult["PROPERTIES"]["PHOTO_GALLERY"]["ITEMS"][] = [
+		"SRC" => CFile::GetPath($photo),
+		"SRC_1280" => CFile::ResizeImageGet($photo, array('width' => 1280, 'height' => 800), BX_RESIZE_IMAGE_PROPORTIONAL)["src"],
+		"SRC_800" => CFile::ResizeImageGet($photo, array('width' => 800, 'height' => 500), BX_RESIZE_IMAGE_PROPORTIONAL)["src"],
+		"SRC_450" => CFile::ResizeImageGet($photo, array('width' => 450, 'height' => 281), BX_RESIZE_IMAGE_PROPORTIONAL)["src"]
+	];
 }
 
 $arResult["PROPERTIES"]["SCHEDULE"]["SRC"] = CFile::GetPath($arResult["PROPERTIES"]["SCHEDULE"]["VALUE"]);
@@ -54,7 +60,7 @@ $itemGetListArray['filter'] = ["IBLOCK_ID" => $arResult["PROPERTIES"]["TEAM"]["L
 $itemGetListArray['select'] = ["ID", "NAME", "IBLOCK_ID", "PREVIEW_PICTURE", "PREVIEW_TEXT"];
 $itemRes = \Bitrix\Iblock\ElementTable::getList($itemGetListArray);
 while ($item = $itemRes->Fetch()) {
-    $item["PICTURE"] = CFile::ResizeImageGet($item["PREVIEW_PICTURE"], array("width" => "500", "height" => "600", BX_RESIZE_IMAGE_PROPORTIONAL));
+    $item["PICTURE"] = CFile::ResizeImageGet($item["PREVIEW_PICTURE"], array("width" => "379", "height" => "580", BX_RESIZE_IMAGE_PROPORTIONAL))["src"];
     $itemPropertyRes = \CIBlockElement::getProperty(
         $item['IBLOCK_ID'],
         $item['ID'],

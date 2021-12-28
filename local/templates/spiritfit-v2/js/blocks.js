@@ -407,5 +407,4 @@ $(function () {
             $card.toggleClass('is-open');
         });
     });
-}); 
-//# sourceMappingURL=../sourcemaps/blocks.js.map
+});
