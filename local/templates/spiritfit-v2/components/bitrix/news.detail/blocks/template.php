@@ -118,22 +118,22 @@ switch ($view) {
 						if($slider){
 							foreach ($photos as $itemPhoto) {
 								$itemPhotoData = CFile::GetFileArray($itemPhoto);
-								$imageType1 = CFile::ResizeImageGet($itemPhoto, array('width' => 1280, 'height' => 800), BX_RESIZE_IMAGE_PROPORTIONAL);
-								$imageType2 = CFile::ResizeImageGet($itemPhoto, array('width' => 800, 'height' => 500), BX_RESIZE_IMAGE_PROPORTIONAL);
-								$imageType3 = CFile::ResizeImageGet($itemPhoto, array('width' => 450, 'height' => 281), BX_RESIZE_IMAGE_PROPORTIONAL);
+								$imageType1 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 1280, 800, true);
+								$imageType2 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 800, 500, true);
+								$imageType3 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 450, 281, true);
 								?>
 								<div class="<?=$class?>__slide">
-									<img class="<?=$class?>__slide-img" src="<?=$imageType1['src']?>" srcset="<?=$imageType3["src"]?> 400w, <?=$imageType2["src"]?> 800w, <?=$imageType1["src"]?> 1280w" alt="<?=$itemPhotoData['DESCRIPTION']?>" role="presentation" />
+									<img class="<?=$class?>__slide-img" src="<?=$imageType1['WEBP_SRC']?>" srcset="<?=$imageType3["WEBP_SRC"]?> 400w, <?=$imageType2["WEBP_SRC"]?> 800w, <?=$imageType1["WEBP_SRC"]?> 1280w" alt="<?=$itemPhotoData['DESCRIPTION']?>" role="presentation" />
 								</div>
 								<?
 							} 
 						}else{ 
 							$itemPhotoData = CFile::GetFileArray($photos[0]);
-							$imageType1 = CFile::ResizeImageGet($photos[0], array('width' => 1280, 'height' => 800), BX_RESIZE_IMAGE_PROPORTIONAL);
-							$imageType2 = CFile::ResizeImageGet($photos[0], array('width' => 800, 'height' => 500), BX_RESIZE_IMAGE_PROPORTIONAL);
-							$imageType3 = CFile::ResizeImageGet($photos[0], array('width' => 450, 'height' => 281), BX_RESIZE_IMAGE_PROPORTIONAL);
+							$imageType1 = \ImageConverter\Picture::getResizeWebp($pitemPhotoData, 1280, 800, true);
+							$imageType2 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 800, 500, true);
+							$imageType3 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 450, 281, true);
 							?>
-							<img class="b-image-block__img" src="<?=$imageType1['src']?>" srcset="<?=$imageType3["src"]?> 400w, <?=$imageType2["src"]?> 800w, <?=$imageType1["src"]?> 1280w" alt="<?=$itemPhotoData['DESCRIPTION']?>"/>
+							<img class="b-image-block__img" src="<?=$imageType1['WEBP_SRC']?>" srcset="<?=$imageType3["WEBP_SRC"]?> 400w, <?=$imageType2["WEBP_SRC"]?> 800w, <?=$imageType1["WEBP_SRC"]?> 1280w" alt="<?=$itemPhotoData['DESCRIPTION']?>"/>
 						<? } ?> 
 					<? } ?>
 				</div>

@@ -36,27 +36,32 @@ if(!empty($files['VALUE'])){
 	$imageType1 = [];
 	$imageType2 = [];
 	$imageType3 = [];
+	$arFile = [];
 	if(!empty($currentFileID)){
 		$dbFile = CFile::GetByID($currentFileID);
+		$arFile = $dbFile->Fetch();
+		
 		$src = CFile::GetPath($currentFileID);
 		
-		if(strpos($arFile['CONTENT_TYPE'], 'image') !== false) {
+		if(!empty($arFile) && strpos($arFile['CONTENT_TYPE'], 'image') !== false) {
 			$imageType1 = CFile::ResizeImageGet($currentFileID, array('width' => 1280, 'height' => 800), BX_RESIZE_IMAGE_PROPORTIONAL);
 			$imageType2 = CFile::ResizeImageGet($currentFileID, array('width' => 800, 'height' => 500), BX_RESIZE_IMAGE_PROPORTIONAL);
 			$imageType3 = CFile::ResizeImageGet($currentFileID, array('width' => 450, 'height' => 281), BX_RESIZE_IMAGE_PROPORTIONAL);
 		}
 	}else{
 		$dbFile = CFile::GetByID($generalFileID);
+		$arFile = $dbFile->Fetch();
+		
 		$src = CFile::GetPath($generalFileID);
 		
-		if(strpos($arFile['CONTENT_TYPE'], 'image') !== false) {
+		if(!empty($arFile) && strpos($arFile['CONTENT_TYPE'], 'image') !== false) {
 			$imageType1 = CFile::ResizeImageGet($generalFileID, array('width' => 1280, 'height' => 800), BX_RESIZE_IMAGE_PROPORTIONAL);
 			$imageType2 = CFile::ResizeImageGet($generalFileID, array('width' => 800, 'height' => 500), BX_RESIZE_IMAGE_PROPORTIONAL);
 			$imageType3 = CFile::ResizeImageGet($generalFileID, array('width' => 450, 'height' => 281), BX_RESIZE_IMAGE_PROPORTIONAL);
 		}
 	}
 
-	if($arFile = $dbFile->Fetch()){
+	if(!empty($arFile)){
 		if(strpos($arFile['CONTENT_TYPE'], 'video') !== false){
 			$video = true;
 		}
@@ -68,7 +73,7 @@ if(!empty($files['VALUE'])){
 
 ?>
 
-<section class="b-screen <?=($page != '/' ? 'b-screen_with-page-heading' : '')?>">
+<section class="b-screen b-screen_with-page-heading <?//=($page != '/' ? 'b-screen_with-page-heading' : '')?>">
 	<div class="b-screen__bg-holder">
 		<? if($video){ ?>
 			<video class="b-screen__bg-video" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline src="<?=$src?>" type="video/mp4">

@@ -9,6 +9,14 @@ if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 }
 global $settings;
 ?>
+<div class="b-page__heading b-page__heading_absolute  ">
+    <div class="content-center">
+		<div class="b-page__heading-inner">
+			<div class="b-breadcrumbs"></div>
+			<h1 class="b-page__title">Сеть фитнес-клубов</h1>
+        </div>
+    </div>
+</div>
 <div class="content-center map-title">
     <div class="b-cards-slider__heading">
         <div class="b-cards-slider__title">

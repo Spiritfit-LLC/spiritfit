@@ -1,4 +1,6 @@
 <?php
+	
+	use \ImageConverter\Picture;
 
 $dbSections = CIBlockSection::GetList(array(), array("IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", "NAME", "DESCRIPTION", "UF_LINK_FAQ"));
 if ($res = $dbSections->GetNext()) {
@@ -144,3 +146,12 @@ if ($seoValues['SECTION_META_DESCRIPTION']) {
 if ($seoValues['SECTION_META_KEYWORDS']) {
     $arResult['SEO']['SECTION_META_KEYWORDS'] = $seoValues['SECTION_META_KEYWORDS'];
 }
+
+/*WebP*/
+foreach( $arResult["ITEMS"] as &$arItem) {
+	$arItem['PREVIEW_PICTURE_WEBP'] = [];
+	if( !empty($arItem['PREVIEW_PICTURE']) ) {
+		$arItem['PREVIEW_PICTURE_WEBP'] = Picture::getResizeWebp($arItem['PREVIEW_PICTURE'], 379, 580, false);
+	}
+}
+unset($arItem);

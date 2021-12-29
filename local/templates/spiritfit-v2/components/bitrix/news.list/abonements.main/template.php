@@ -38,8 +38,10 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 					$arDataAbonement = CUtil::PhpToJSObject($arDataAbonement);
 					$arDataAbonement = str_replace("'", '"', $arDataAbonement);
 					$imageSrc = "";
-					if( !empty($arItem['PREVIEW_PICTURE']) ) {
+					if( !empty($arItem['PREVIEW_PICTURE']) && empty($arItem['PREVIEW_PICTURE_WEBP']['WEBP_SRC']) ) {
 						$imageSrc = CFile::ResizeImageGet($arItem['PREVIEW_PICTURE'], array('width' => 379, 'height' => 580), BX_RESIZE_IMAGE_EXACT)["src"]; 
+					} else {
+						$imageSrc = $arItem['PREVIEW_PICTURE_WEBP']['WEBP_SRC'];
 					}
 					?>
 					<script>
