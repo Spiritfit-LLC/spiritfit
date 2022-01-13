@@ -499,7 +499,7 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 			}
 			
 			/* Если клуб не задан, то выбираем его из цен, по минимальной цене */
-			if( empty($clubId) ) {
+			/*if( empty($clubId) ) {
 				$minPriceKey = -1;
 				foreach( $this->arResult["ELEMENT"]["PROPERTIES"]["PRICE"]["VALUE"] as $key => $value ) {
 					if( $value["NUMBER"] == 2 ) continue;
@@ -511,7 +511,7 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 					$clubId = $this->arResult["ELEMENT"]["PROPERTIES"]["PRICE"]["VALUE"][$minPriceKey]["LIST"];
 					$this->arResult["CLUB"] = $this->getCurrentClub( $clubId );
 				}
-			}
+			}*/
 			if( !empty($clubId) ) {
 				$this->arResult["CLUB_ID"] = $clubId;
 			}
