@@ -53,7 +53,7 @@ if(!empty($files['VALUE'])){
 
 ?>
 
-<section class="b-screen <?=($page != '/' ? 'b-screen_with-page-heading' : '')?>">
+<section class="b-screen b-screen_with-page-heading <?//=($page != '/' ? 'b-screen_with-page-heading' : '')?>">
 	<div class="b-screen__bg-holder">
 		<? if($video){ ?>
 			<video class="b-screen__bg-video" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline src="<?=$src?>" type="video/mp4">
