@@ -68,7 +68,11 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 				}
 
                 $outArrPrice[$key]["PRICE"] = $outArrBasePrice["PRICE"];
-            }
+            } else if( !empty($outArrBasePrice) && !empty($_SESSION[$uniqueId]["DISCOUNTS"]["SALE"]) && $outArrBasePrice["NUMBER"] == 1) {
+				$outSale = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE"];
+			} else if( !empty($outArrBasePrice) && !empty($_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"]) && $outArrBasePrice["NUMBER"] == 2) {
+				$outSaleTwoMonth = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"];
+			}
 			
             if ($priceSign) {
                 $sign = array_search($arPrice["NUMBER"], array_column($priceSign, "NUMBER"));
