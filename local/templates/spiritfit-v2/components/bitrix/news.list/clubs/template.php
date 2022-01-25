@@ -30,21 +30,25 @@ $this->setFrameMode(true);
 					//if($arItem['PROPERTIES']['NUMBER']['VALUE'] > 99 && $arItem['PROPERTIES']['NUMBER']['VALUE'] < 122) continue;
 					if( !empty($arItem['PROPERTIES']['HIDE_LINK']['VALUE']) ) continue;
 					
-					// print_r($arItem);
 					$this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
 					$this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
 
 					$soon = $arItem['PROPERTIES']['NOT_OPEN_YET']['VALUE'];
+					
+					$imageSrc = "";
+					if( !empty($arItem['PREVIEW_PICTURE']) ) {
+						$imageSrc = CFile::ResizeImageGet($arItem['PREVIEW_PICTURE'], array('width' => 379, 'height' => 580), BX_RESIZE_IMAGE_EXACT)["src"]; 
+					}
 					?>
 					
 					<div class="b-cards-slider__item" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
 						<? if($soon == 'Да'){ ?>
-							<span class="b-oneside-card" style="background-image: url('<?= $arItem["PREVIEW_PICTURE"]["SRC"]?>');">
+							<span class="b-oneside-card" style="background-image: url('<?=$imageSrc?>');">
 						<? }else{ ?>
-							<a class="b-oneside-card" href="<?= $arItem["DETAIL_PAGE_URL"] ?>" style="background-image: url('<?= $arItem["PREVIEW_PICTURE"]["SRC"]?>');">
+							<a class="b-oneside-card" href="<?= $arItem["DETAIL_PAGE_URL"] ?>" style="background-image: url('<?=$imageSrc?>');">
 						<? } ?>
 							<span class="b-oneside-card__content">
-								<img style="display: none;" src="<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>" alt="Фитнес-клуб <?=$arItem["~NAME"]?>">
+								<!--<img style="display: none;" src="<?=$imageSrc?>" alt="Фитнес-клуб <?=$arItem["~NAME"]?>">-->
 								<span class="b-oneside-card__label">
 									<span class="b-oneside-card__label-text"><?=$arItem["~NAME"]?></span>
 								</span>

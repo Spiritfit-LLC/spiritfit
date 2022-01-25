@@ -41,6 +41,10 @@ if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/Abonem
     require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/Abonement.php');
 }
 
+CModule::AddAutoloadClasses("", array(
+    '\ImageConverter\Picture' => '/local/php_interface/classes/ImageConverter.php',
+));
+
 AddEventHandler("iblock", "OnIBlockPropertyBuildList", array("CIPropertyPrice", "GetUserTypeDescription"));
 AddEventHandler("iblock", "OnAfterIBlockElementUpdate", Array("ElementUpdate", "OnAfterIBlockElementUpdateHandler"));
 

@@ -71,7 +71,6 @@ switch ($view) {
 		$classBtn = 'button-outline';
 		break;	
 }
-
 ?>
 
 <section class="<?=$class?> <?=($slider ? $class.'_simple-mobile' : '')?>">
@@ -84,26 +83,34 @@ switch ($view) {
 			<? if($hideWrapperImg){ 
 				if(!empty($video)){ 
 					if(!empty($videoPreview)){
+						$imageType1 = CFile::ResizeImageGet($videoPreview, array('width' => 1280, 'height' => 800), BX_RESIZE_IMAGE_PROPORTIONAL);
+						$imageType2 = CFile::ResizeImageGet($videoPreview, array('width' => 800, 'height' => 500), BX_RESIZE_IMAGE_PROPORTIONAL);
+						$imageType3 = CFile::ResizeImageGet($videoPreview, array('width' => 450, 'height' => 281), BX_RESIZE_IMAGE_PROPORTIONAL);
+						
 						$videoPreview = CFile::GetFileArray($videoPreview);
 					} ?>
 					<a class="<?=$class?>__img-holder play-btn-overlay" href="<?=$video?>" data-fancybox="">
-						<img class="<?=$class?>__img" src="<?=$videoPreview['SRC']?>" alt="<?=$videoPreview['DESCRIPTION']?>" />
+						<img class="<?=$class?>__img" src="<?=$imageType1['src']?>" srcset="<?=$imageType3["src"]?> 450w, <?=$imageType2["src"]?> 800w, <?=$imageType1["src"]?> 1280w" alt="<?=$videoPreview['DESCRIPTION']?>" loading="lazy"/>
 					</a>
 				<? } ?>
 			<? }else{ ?>
 				<div class="<?=$class?>__img-holder <?=($slider ? $class.'__img-holder_slider' : '')?>">
 					<? if(!empty($video)){ 
 						if(!empty($videoPreview)){
+							$imageType1 = CFile::ResizeImageGet($videoPreview, array('width' => 1280, 'height' => 800), BX_RESIZE_IMAGE_PROPORTIONAL);
+							$imageType2 = CFile::ResizeImageGet($videoPreview, array('width' => 800, 'height' => 500), BX_RESIZE_IMAGE_PROPORTIONAL);
+							$imageType3 = CFile::ResizeImageGet($videoPreview, array('width' => 450, 'height' => 281), BX_RESIZE_IMAGE_PROPORTIONAL);
+							
 							$videoPreview = CFile::GetFileArray($videoPreview);
 						}
 
 						if($slider){ ?>
 							<a class="<?=$class?>__slide play-btn-overlay" href="<?=$video?>" data-fancybox="">
-								<img class="<?=$class?>__slide-img" src="<?=$videoPreview['SRC']?>" alt="<?=$videoPreview['DESCRIPTION']?>" role="presentation" />
+								<img class="<?=$class?>__slide-img" src="<?=$imageType1['src']?>" srcset="<?=$imageType3["src"]?> 450w, <?=$imageType2["src"]?> 800w, <?=$imageType1["src"]?> 1280w" alt="<?=$videoPreview['DESCRIPTION']?>" role="presentation" loading="lazy" />
 							</a>
 						<? }else{ ?>
 							<a class="<?=$class?>__img-holder play-btn-overlay" href="<?=$video?>" data-fancybox="">
-								<img class="<?=$class?>__img" src="<?=$videoPreview['SRC']?>" alt="<?=$videoPreview['DESCRIPTION']?>" /></a>
+								<img class="<?=$class?>__img" src="<?=$imageType1['src']?>" srcset="<?=$imageType3["src"]?> 450w, <?=$imageType2["src"]?> 800w, <?=$imageType1["src"]?> 1280w" alt="<?=$videoPreview['DESCRIPTION']?>" loading="lazy" /></a>
 						<? } ?>
 					<? } ?>
 
@@ -111,16 +118,22 @@ switch ($view) {
 						if($slider){
 							foreach ($photos as $itemPhoto) {
 								$itemPhotoData = CFile::GetFileArray($itemPhoto);
+								$imageType1 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 1280, 800, true);
+								$imageType2 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 800, 500, true);
+								$imageType3 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 450, 281, true);
 								?>
 								<div class="<?=$class?>__slide">
-									<img class="<?=$class?>__slide-img" src="<?=$itemPhotoData['SRC']?>" alt="<?=$itemPhotoData['DESCRIPTION']?>" role="presentation" />
+									<img class="<?=$class?>__slide-img" src="<?=$imageType1['WEBP_SRC']?>" srcset="<?=$imageType3["WEBP_SRC"]?> 400w, <?=$imageType2["WEBP_SRC"]?> 800w, <?=$imageType1["WEBP_SRC"]?> 1280w" alt="<?=$itemPhotoData['DESCRIPTION']?>" role="presentation" />
 								</div>
 								<?
 							} 
 						}else{ 
 							$itemPhotoData = CFile::GetFileArray($photos[0]);
+							$imageType1 = \ImageConverter\Picture::getResizeWebp($pitemPhotoData, 1280, 800, true);
+							$imageType2 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 800, 500, true);
+							$imageType3 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 450, 281, true);
 							?>
-							<img class="b-image-block__img" src="<?=$itemPhotoData['SRC']?>" alt="<?=$itemPhotoData['DESCRIPTION']?>"/>
+							<img class="b-image-block__img" src="<?=$imageType1['WEBP_SRC']?>" srcset="<?=$imageType3["WEBP_SRC"]?> 400w, <?=$imageType2["WEBP_SRC"]?> 800w, <?=$imageType1["WEBP_SRC"]?> 1280w" alt="<?=$itemPhotoData['DESCRIPTION']?>"/>
 						<? } ?> 
 					<? } ?>
 				</div>

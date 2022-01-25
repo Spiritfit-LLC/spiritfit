@@ -76,7 +76,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 									<? } ?>
 									<? if( !empty($arItem["BUTTON_3_TEXT"]) ) { ?>
 										<div class="corp-abonement__back-button">
-											<a href="<?=$arItem["BUTTON_3_URL"]?>" class="button"><?=$arItem["BUTTON_3_TEXT"]?></a>
+											<a href="<?=(!empty($arItem["BUTTON_3_URL"])) ? $arItem["BUTTON_3_URL"] : "#open_form" ?>" class="button <?=(empty($arItem["BUTTON_3_URL"])) ? "to-contact-form" : "" ?>"><?=$arItem["BUTTON_3_TEXT"]?></a>
 										</div>
 									<? } ?>
                                 </div>

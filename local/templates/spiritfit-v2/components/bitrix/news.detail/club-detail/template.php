@@ -49,8 +49,10 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 				<div class="content-center">
 					<div class="b-cards-slider__slider">
 						<? foreach ($arResult['ABONEMENTS'] as $abonement) {
+							$imageSrc = "";
 							if(!empty($abonement['PREVIEW_PICTURE'])){
 								$img = CFile::getPath($abonement['PREVIEW_PICTURE']);
+								$imageSrc = CFile::ResizeImageGet($abonement['PREVIEW_PICTURE'], array('width' => 379, 'height' => 580), BX_RESIZE_IMAGE_EXACT)["src"]; 
 							}
 							
 							$abonement["PREVIEW_TEXT"] = strip_tags($abonement["PREVIEW_TEXT"]);
@@ -68,8 +70,8 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 								<div class="b-twoside-card">
 									<div class="b-twoside-card__inner">
 										<div class="b-twoside-card__content"
-											style="background-image: url(<?=$img?>);">
-											<img style="display: none;" src="<?=$img?>" alt="<?=$abonement['~NAME']?>">
+											style="background-image: url(<?=$imageSrc?>);">
+											<!--<img style="display: none;" src="<?=$imageSrc?>" alt="<?=$abonement['~NAME']?>">-->
 											<div class="b-twoside-card__label"><?=$abonement['~NAME']?></div>
 										</div>
 										<div class="b-twoside-card__hidden-content">
@@ -188,7 +190,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 					<div class="b-image-plate-block__img-holder b-image-plate-block__img-holder_slider">
 						<? foreach ($arResult["PROPERTIES"]["PHOTO_GALLERY"]["ITEMS"] as $photo): ?>
 							<div class="b-image-plate-block__slide">
-								<img class="b-image-plate-block__slide-img" src="<?=$photo?>" alt="" role="presentation" />
+								<img class="b-image-plate-block__slide-img" src="<?=$photo["SRC_1280"]?>" srcset="<?=$photo["SRC_450"]?> 450w, <?=$photo["SRC_800"]?> 800w, <?=$photo["SRC_1280"]?> 1280w" alt="" role="presentation" />
 							</div>
 						<? endforeach; ?>
 					</div>
@@ -242,8 +244,8 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 								<div class="b-twoside-card">
 									<div class="b-twoside-card__inner">
 										<div class="b-twoside-card__content"
-											style="background-image: url('<?=$trainer['PICTURE']['src']?>');">
-											<img style="display: none;" src="<?=$trainer['PICTURE']['src']?>" alt="<?=$trainer['NAME']?>">
+											style="background-image: url('<?=$trainer['PICTURE']?>');">
+											<!--<img style="display: none;" src="<?=$imageSrc?>" alt="<?=$trainer['NAME']?>">-->
 											<div class="b-twoside-card__label"><?=$trainer['NAME']?></div>
 										</div>
 										<div class="b-twoside-card__hidden-content">
