@@ -55,7 +55,7 @@ foreach( $clubs as $club ) {
     //Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/perfect-scrollbar/perfect-scrollbar.min.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/slick/slick.min.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/libs.min.js");
-    //Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/jquery.inputmask.min.js");
+    Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/jquery.inputmask.min.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/common.min.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/jquery.pjax.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/jquery.ui/jquery-ui.min.js");
