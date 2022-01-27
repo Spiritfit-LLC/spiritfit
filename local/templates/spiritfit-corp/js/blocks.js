@@ -273,7 +273,7 @@ $(function () {
                 fade: true,
                 asNavFor: $imgHolder,
                 focusOnSelect: true,
-                adaptiveHeight: true,
+                adaptiveHeight: false,
                 swipeToSlide: true,
                 touchThreshold: 20,
                 infinite: true,
