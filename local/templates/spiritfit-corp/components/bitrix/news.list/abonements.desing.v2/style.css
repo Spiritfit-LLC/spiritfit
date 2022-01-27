@@ -134,14 +134,14 @@
 }
 .corp-abonement__back-button {
 	position: absolute;
-	width: 100%;
-    margin-top: 30px;
+    width: 100%;
     left: 0;
-    bottom: 55px;
+    bottom: 57px;
     text-align: center;
 }
 .corp-abonement__back-button .button {
 	display: inline-block;
+	min-width: 168px;
 	box-sizing: border-box;
     padding: 14px 10px;
     font-size: 10pt;
