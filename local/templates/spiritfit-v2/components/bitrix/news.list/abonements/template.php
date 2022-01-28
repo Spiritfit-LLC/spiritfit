@@ -58,22 +58,22 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                                     <div class="b-twoside-card__label"><?=$arItem['~NAME']?></div>
                                 </div>
                                 <div class="b-twoside-card__hidden-content">
-                                        <div class="corp-abonement__back-title">
-										    <?=$arItem['~NAME']?>
-									    </div>
-									    <? if( !empty($arItem["PROPERTIES"]["INCLUDE"]["VALUE"]) ) { ?>
-										    <div class="corp-abonement__front-list">
-											    <? foreach($arItem["PROPERTIES"]["INCLUDE"]["VALUE"] as $listItem) { ?>
-												    <div class="corp-abonement__front-list-item"><?=$listItem?></div>
-											    <? } ?>
-										    </div>
-									    <? } ?>
-									    <div class="corp-abonement__back-button">
-										    <a class="button" href="<?=$arItem['DETAIL_PAGE_URL']?>">Выбрать</a>
-									    </div>
-                                        <? if ($arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"]): ?>
-                                            <div class="b-twoside-card__footnote"><?= $arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] ?></div>
-                                        <? endif; ?>
+                                    <div class="corp-abonement__back-title">
+										<?=$arItem['~NAME']?>
+									</div>
+									<? if( !empty($arItem["PROPERTIES"]["INCLUDE"]["VALUE"]) ) { ?>
+										<div class="corp-abonement__front-list">
+											<? foreach($arItem["PROPERTIES"]["INCLUDE"]["VALUE"] as $listItem) { ?>
+												<div class="corp-abonement__front-list-item"><?=$listItem?></div>
+											<? } ?>
+										</div>
+									<? } ?>
+									<div class="corp-abonement__back-button">
+										<a class="button" href="<?=$arItem['DETAIL_PAGE_URL']?>">Выбрать</a>
+									</div>
+                                    <? if ($arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"]): ?>
+                                        <div class="b-twoside-card__footnote"><?= $arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] ?></div>
+                                    <? endif; ?>
                                 </div>
                             </div>
                         </div>

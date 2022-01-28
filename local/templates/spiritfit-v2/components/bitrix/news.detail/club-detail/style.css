@@ -93,6 +93,25 @@
 	left: initial;
 }
 
+.corp-abonement__front-list {
+	width: 100%;
+	font-size: 8pt;
+    line-height: 9pt;
+    text-transform: uppercase;
+}
+.corp-abonement__front-list-item {
+	margin-bottom: 6px;
+	box-sizing: border-box;
+	padding-left: 30px;
+	background-image: url(img/checkbox.svg);
+	background-position: 0px 0px;
+    background-repeat: no-repeat;
+	background-size: 13px 13px;
+}
+.corp-abonement__front-list-item:last-child {
+	margin-bottom: 0;
+}
+
 @media only screen and (max-width: 1560px) {
 	.reviews-slider-item__rating .rating-star {
 		margin-right: 0;
