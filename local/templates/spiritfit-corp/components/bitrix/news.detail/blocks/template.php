@@ -150,7 +150,7 @@ switch ($view) {
 							</div>
 						</div>
 					<? } ?>
-					<? if($btnAvailable){ ?>
+					<? if(false && $btnAvailable){ ?>
 						<a class="<?=$class?>__btn <?=$classBtn?>" href="<?=$link?>"><?=$btnText?></a>
 					<? } ?>
                 </div>
