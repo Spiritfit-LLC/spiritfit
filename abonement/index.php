@@ -94,5 +94,6 @@ $APPLICATION->SetPageProperty("title", "Абонементы фитнес-клу
 			"STRICT_SECTION_CHECK" => "N"
 		)
 	);?>
+	<? $APPLICATION->IncludeFile('/local/include/blocks.php', ['ELEMENT_CODE' => 'trenazhernyy-zal-main'], ['SHOW_BORDER' => false]); ?>
 <? endif; ?>
 <? if (!isset($_SERVER['HTTP_X_PJAX']))  require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
