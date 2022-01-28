@@ -104,7 +104,8 @@
 	table-layout: fixed;
 }
 .corp-abonement__front-buttons .table-cell {
-	width: 50%;
+	width: 100%;
+	text-align: center;
 }
 .corp-abonement__front-buttons .table-cell:first-child {
 	padding-right: 5px;
@@ -113,8 +114,9 @@
 	padding-left: 5px;
 }
 .corp-abonement__front-buttons .button {
-	display: block;
+	display: inline-block;
     position: relative;
+	width: 200px;
     box-sizing: border-box;
     padding: 16px 10px;
     font-size: 10pt;

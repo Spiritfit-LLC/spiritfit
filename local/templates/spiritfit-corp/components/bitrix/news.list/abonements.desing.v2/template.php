@@ -55,9 +55,9 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 										</div>
 									<? } ?>
 									<div class="corp-abonement__front-buttons">
-										<div class="table-cell">
+										<!--<div class="table-cell">
 											<span class="button"><?=(!empty($arItem["BUTTON_1_TEXT"])) ? $arItem["BUTTON_1_TEXT"] : "Подробнее"?></span>
-										</div>
+										</div>-->
 										<div class="table-cell">
 											<a href="#open_form" class="to-contact-form button"><?=(!empty($arItem["BUTTON_2_TEXT"])) ? $arItem["BUTTON_2_TEXT"] : "Оставить заявку"?></a>
 										</div>
