@@ -22,6 +22,8 @@ $link = $arResult['PROPERTIES']['BLOCK_LINK']['VALUE'];
 $linkTitle = $arResult['PROPERTIES']['BLOCK_TITLE_LINK']['VALUE'];
 $view = $arResult['PROPERTIES']['BLOCK_VIEW']['VALUE_XML_ID'];
 
+$arResult['BROWSER'] = getBrowserInformation();
+
 $btnAvailable = ($arResult['PROPERTIES']['BLOCK_BTN_AVAILABLE']['VALUE'] == 'Да' ? true : false);
 if($btnAvailable) $btnText = (!empty($arResult['PROPERTIES']['BLOCK_BTN_TEXT']['VALUE']) ? $arResult['PROPERTIES']['BLOCK_BTN_TEXT']['VALUE'] : 'Подробнее');
 
@@ -72,7 +74,6 @@ switch ($view) {
 		break;	
 }
 ?>
-
 <section class="<?=$class?> <?=($slider ? $class.'_simple-mobile' : '')?>">
     <div class="content-center">
         <div class="<?=$class?>__content <?=($reverse == 'Y' ? $class.'__content_reverse' : '')?>">
@@ -118,20 +119,33 @@ switch ($view) {
 						if($slider){
 							foreach ($photos as $itemPhoto) {
 								$itemPhotoData = CFile::GetFileArray($itemPhoto);
-								$imageType1 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 1280, 800, true);
-								$imageType2 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 800, 500, true);
-								$imageType3 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 450, 281, true);
+								if( (!empty($arResult['BROWSER']['NAME']) && $arResult['BROWSER']['NAME'] !== "Safari") || empty($arResult['BROWSER']['NAME']) ) {
+									$imageType1 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 1280, 800, true);
+									$imageType2 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 800, 500, true);
+									$imageType3 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 450, 281, true);
+								} else {
+									$imageType1['WEBP_SRC'] = CFile::ResizeImageGet($itemPhoto, array('width' => 1280, 'height' => 800), BX_RESIZE_IMAGE_PROPORTIONAL)["src"];
+-									$imageType2['WEBP_SRC'] = CFile::ResizeImageGet($itemPhoto, array('width' => 800, 'height' => 500), BX_RESIZE_IMAGE_PROPORTIONAL)["src"];
+-									$imageType3['WEBP_SRC'] = CFile::ResizeImageGet($itemPhoto, array('width' => 450, 'height' => 281), BX_RESIZE_IMAGE_PROPORTIONAL)["src"];
+								}
 								?>
-								<div class="<?=$class?>__slide">
-									<img class="<?=$class?>__slide-img" src="<?=$imageType1['WEBP_SRC']?>" srcset="<?=$imageType3["WEBP_SRC"]?> 400w, <?=$imageType2["WEBP_SRC"]?> 800w, <?=$imageType1["WEBP_SRC"]?> 1280w" alt="<?=$itemPhotoData['DESCRIPTION']?>" role="presentation" />
-								</div>
+									<div class="<?=$class?>__slide">
+										<img class="<?=$class?>__slide-img" src="<?=$imageType1['WEBP_SRC']?>" srcset="<?=$imageType3["WEBP_SRC"]?> 400w, <?=$imageType2["WEBP_SRC"]?> 800w, <?=$imageType1["WEBP_SRC"]?> 1280w" alt="<?=$itemPhotoData['DESCRIPTION']?>" role="presentation" />
+									</div>
 								<?
 							} 
-						}else{ 
+						} else { 
 							$itemPhotoData = CFile::GetFileArray($photos[0]);
-							$imageType1 = \ImageConverter\Picture::getResizeWebp($pitemPhotoData, 1280, 800, true);
-							$imageType2 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 800, 500, true);
-							$imageType3 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 450, 281, true);
+							if( (!empty($arResult['BROWSER']['NAME']) && $arResult['BROWSER']['NAME'] !== "Safari") || empty($arResult['BROWSER']['NAME']) ) {
+								$imageType1 = \ImageConverter\Picture::getResizeWebp($pitemPhotoData, 1280, 800, true);
+								$imageType2 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 800, 500, true);
+								$imageType3 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 450, 281, true);
+							} else {
+								$imageType1['WEBP_SRC'] = CFile::ResizeImageGet($photos[0], array('width' => 1280, 'height' => 800), BX_RESIZE_IMAGE_PROPORTIONAL)["src"];
+-								$imageType2['WEBP_SRC'] = CFile::ResizeImageGet($photos[0], array('width' => 800, 'height' => 500), BX_RESIZE_IMAGE_PROPORTIONAL)["src"];
+-								$imageType3['WEBP_SRC'] = CFile::ResizeImageGet($photos[0], array('width' => 450, 'height' => 281), BX_RESIZE_IMAGE_PROPORTIONAL)["src"];
+							}
+							
 							?>
 							<img class="b-image-block__img" src="<?=$imageType1['WEBP_SRC']?>" srcset="<?=$imageType3["WEBP_SRC"]?> 400w, <?=$imageType2["WEBP_SRC"]?> 800w, <?=$imageType1["WEBP_SRC"]?> 1280w" alt="<?=$itemPhotoData['DESCRIPTION']?>"/>
 						<? } ?> 

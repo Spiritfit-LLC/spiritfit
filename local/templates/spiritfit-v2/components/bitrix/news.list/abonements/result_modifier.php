@@ -148,10 +148,13 @@ if ($seoValues['SECTION_META_KEYWORDS']) {
 }
 
 /*WebP*/
-foreach( $arResult["ITEMS"] as &$arItem) {
-	$arItem['PREVIEW_PICTURE_WEBP'] = [];
-	if( !empty($arItem['PREVIEW_PICTURE']) ) {
-		$arItem['PREVIEW_PICTURE_WEBP'] = Picture::getResizeWebp($arItem['PREVIEW_PICTURE'], 379, 580, false);
-	}
+$arResult['BROWSER'] = getBrowserInformation();
+if( (!empty($arResult['BROWSER']['NAME']) && $arResult['BROWSER']['NAME'] !== "Safari") || empty($arResult['BROWSER']['NAME']) ) {
+    foreach( $arResult["ITEMS"] as &$arItem) {
+        $arItem['PREVIEW_PICTURE_WEBP'] = [];
+        if( !empty($arItem['PREVIEW_PICTURE']) ) {
+            $arItem['PREVIEW_PICTURE_WEBP'] = Picture::getResizeWebp($arItem['PREVIEW_PICTURE'], 379, 580, false);
+        }
+    }
+    unset($arItem);
 }
-unset($arItem);
