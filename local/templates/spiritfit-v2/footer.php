@@ -61,7 +61,7 @@ $settings = Utils::getInfo();
     <div style="display: none;">+7 (495) 292-67-97</div>
     <script src='/local/templates/spiritfit-v2/js/cookieAllowAccess.js' async></script>
 	<script src="<?=SITE_TEMPLATE_PATH . "/vendor/jquery.maskedinput/jquery.maskedinput.js"?>"></script>
-	<script src="<?=SITE_TEMPLATE_PATH . "/js/jquery.inputmask.min.js"?>"></script>
+	<!--<script src="<?=SITE_TEMPLATE_PATH . "/js/jquery.inputmask.min.js"?>"></script>-->
 	<script src="<?=SITE_TEMPLATE_PATH . "/vendor/perfect-scrollbar/perfect-scrollbar.min.js"?>"></script>
 	<script src="<?=SITE_TEMPLATE_PATH . "/vendor/nicescroll/jquery.nicescroll.js"?>"></script>
 	<script src="<?=SITE_TEMPLATE_PATH . "/vendor/select2/select2.js"?>"></script>

@@ -61,6 +61,40 @@ if( $pageUrl === "/bitrix/admin/form_result_list.php" ) {
 	\Bitrix\Main\Page\Asset::getInstance()->addJs("/js/admin.js");
 }
 
+function getBrowserInformation() : array {
+	$resultArr = ["NAME" => "", "VERSION" => "", "VERSION_PARSED" => []];
+	$arrBrowsers = ["Opera", "Edge", "Chrome", "Safari", "Firefox", "MSIE", "Trident"];
+	$currentUserBrowserName = '';
+	$currentUserBrowserVersion = '';
+	foreach ($arrBrowsers as $browser) {
+    	if (strpos($_SERVER['HTTP_USER_AGENT'], $browser) !== false) {
+        	$currentUserBrowserName = $browser;
+        	break;
+    	}   
+	}
+
+	if( !empty($currentUserBrowserName) ) {
+
+		$known = array('Version', $currentUserBrowserName);
+		$pattern = '#(?<browser>' . join('|', $known) . ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
+
+		preg_match_all($pattern, $_SERVER['HTTP_USER_AGENT'], $matches);
+
+		if( !empty($matches['version'][0]) ) {
+			$currentUserBrowserVersion = $matches['version'][0];
+		} else if( !empty($matches['version']) && !is_array($matches['version']) ) {
+			$currentUserBrowserVersion = $matches['version'];
+		}
+
+		$resultArr["NAME"] = $currentUserBrowserName;
+		if( !empty($currentUserBrowserVersion) ) {
+			$resultArr["VERSION"] = $currentUserBrowserVersion;
+			$resultArr["VERSION_PARSED"] = explode(".", $currentUserBrowserVersion);
+		}
+	}
+	return $resultArr;
+}
+
 //массив ответов форм для данных об источнике трафика
 $arTraficAnswer = array(
 	1 => array(
