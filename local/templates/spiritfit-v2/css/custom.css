@@ -631,6 +631,23 @@ main.b-page__main {
     #mapid.map-clubs-detail {
         height: calc(100vh - 260px);
     }
+	.v2-abonement .b-twoside-card__hidden-content {
+		padding: 35px 5px 0px;
+	}
+	.v2-abonement .corp-abonement__front-list {
+		height: 270px;
+		overflow: auto;
+	}
+	.v2-abonement .corp-abonement__front-list::-webkit-scrollbar {
+		width: 0.5em;
+	}
+	.v2-abonement .corp-abonement__front-list::-webkit-scrollbar-track {
+		background-color: #999;
+	}
+	.v2-abonement .corp-abonement__front-list::-webkit-scrollbar-thumb {
+		background-color: #666;
+		outline: 0;
+	}
 }
 
 @media screen and (max-width: 768px) {
