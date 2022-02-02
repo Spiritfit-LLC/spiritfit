@@ -235,7 +235,7 @@ foreach( $clubs as $club ) {
                             "PARENT_SECTION" => "",
                             "PARENT_SECTION_CODE" => "",
                             "PREVIEW_TRUNCATE_LEN" => "",
-                            "PROPERTY_CODE" => array("BANNER_BTN_TEXT", "BANNER_BTN_LINK"),
+                            "PROPERTY_CODE" => array("BANNER_BTN_TEXT", "BANNER_BTN_LINK", "BANNER_TITLE"),
                             "SET_BROWSER_TITLE" => "N",
                             "SET_LAST_MODIFIED" => "N",
                             "SET_META_DESCRIPTION" => "N",
