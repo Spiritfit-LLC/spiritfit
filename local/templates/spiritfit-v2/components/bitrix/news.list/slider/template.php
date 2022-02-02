@@ -110,7 +110,7 @@ if(!empty($files['VALUE'])){
 								$arItem["PREVIEW_TEXT"] = mb_strimwidth($arItem["PREVIEW_TEXT"], 0, 345, "...");
 								?>
 								<div id="<?=$this->GetEditAreaId($arItem['ID']);?>" class="b-info-slider__item">
-									<div class="b-info-slider__suptitle">Акция</div>
+									<div class="b-info-slider__suptitle"><?=(!empty($arItem['PROPERTIES']['BANNER_TITLE']['VALUE'])) ? $arItem['PROPERTIES']['BANNER_TITLE']['VALUE'] : "Акция"?></div>
 									<div class="b-info-slider__title"><?=$arItem["NAME"]?></div>
 									<div class="b-info-slider__text"><?=$arItem["~PREVIEW_TEXT"]?></div>
 									<a class="b-info-slider__btn button-outline" href="<?=(!empty($btnLink) ? $btnLink : '#')?>"><?=(!empty($btnText) ? $btnText : 'Заказать')?></a>
