@@ -127,7 +127,7 @@ switch ($view) {
 								$imageType3 = (!empty($block["PHOTO"]["450"])) ? $block["PHOTO"]["450"] : "";
 							?>
 							<div class="<?=$class?>__slide">
-								<img class="<?=$class?>__slide-img mobile-src-check" src="<?=$imageType1?>" srcset="<?=$imageType3?> 400w, <?=$imageType2?> 800w, <?=$imageType1?> 1280w" alt="<?=$itemPhotoData['DESCRIPTION']?>" data-src1="<?=$imageType2?>" data-src2="<?=$imageType3?>" role="presentation" />
+								<img class="<?=$class?>__slide-img mobile-src-check" src="<?=$imageType1?>" alt="<?=$itemPhotoData['DESCRIPTION']?>" data-src1="<?=$imageType2?>" data-src2="<?=$imageType3?>" role="presentation" />
 							</div>
 						<? } ?>
 					<? } else if(!empty($arResult["SLIDER_PHOTOS"][0])) { ?>

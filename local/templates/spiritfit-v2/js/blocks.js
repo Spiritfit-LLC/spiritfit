@@ -184,7 +184,6 @@ $(function () {
 		$('.mobile-src-check').each( function () {
 			if( typeof $(this).data(dataName) !== 'undefined' ) {
 				$(this).attr('src', $(this).data(dataName));
-				console.log($(this).data(dataName));
 			}
 		});
 	}
