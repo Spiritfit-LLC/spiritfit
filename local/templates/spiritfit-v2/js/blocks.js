@@ -170,7 +170,26 @@ $(function () {
 });
 
 $(function () {
-    $('.b-image-plate-block').each(function (index , elem) {
+    
+	/*Load mobile images for slider*/
+	var dataName = '';
+	if( $( window ).width() < 801 ) {
+		dataName = 'src1';
+		
+	}
+	if( $( window ).width() < 401 ) {
+		dataName = 'src2';
+	}
+	if( dataName !== '' ) {
+		$('.mobile-src-check').each( function () {
+			if( typeof $(this).data(dataName) !== 'undefined' ) {
+				$(this).attr('src', $(this).data(dataName));
+				console.log($(this).data(dataName));
+			}
+		});
+	}
+	
+	$('.b-image-plate-block').each(function (index , elem) {
         var $context = $(this);
         var $imgHolder = $('.b-image-plate-block__img-holder', $context);
         var $slides = $('.b-image-plate-block__slide', $context);

@@ -32,6 +32,9 @@
 .abonements-block-slider .b-image-plate-block__btn {
 	margin: 0;
 }
+.abonements-block-slider .slick-slide img {
+	max-width: 100%;
+}
 
 @media screen and (max-width: 768px) {
 	.abonements-block-slider .b-image-plate-block__text-content {
@@ -51,5 +54,8 @@
 	}
 	.abonements-block-slider .b-image-plate-block__arrow--left {
 		left: 18px;
+	}
+	.abonements-block-slider .slick-slide img {
+		max-width: initial;
 	}
 }
