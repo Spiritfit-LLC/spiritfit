@@ -1,6 +1,6 @@
 <?$APPLICATION->IncludeComponent(
 	"bitrix:news.detail", 
-	"blocks", 
+	"blocks.abonements", 
 	array(
         "COMPONENT_TEMPLATE" => "",
         "IBLOCK_TYPE" => "service",
