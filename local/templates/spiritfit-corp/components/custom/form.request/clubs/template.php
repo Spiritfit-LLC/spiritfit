@@ -110,7 +110,6 @@ $settings = Utils::getInfo();
         </form>
     </div>              
 </div>
-</div>
 <? if(!empty($arResult["ERROR"])) { ?>
 	<div class="popup popup--call" style="display: block;">
         <div class="popup__bg"></div>
