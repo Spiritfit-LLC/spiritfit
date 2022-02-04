@@ -1518,8 +1518,14 @@ $(document).ready(function() {
             data[i] = ext[i];
         }
 
+        if( data["form_text_30"] === "" ) {
+			data["form_text_30"] = data["club"];
+		}
+		
         $.pjax.reload('#js-pjax-clubs', {
             timeout: false,
+			url: '/',
+            replace: false,
             type: 'POST',
             dataType: 'html',
             data: data,
