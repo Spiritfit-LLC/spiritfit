@@ -3,6 +3,7 @@
 	"blocks.abonements", 
 	array(
         "COMPONENT_TEMPLATE" => "",
+		"BLOCK_ID" => "spiritbox",
         "IBLOCK_TYPE" => "service",
         "IBLOCK_ID" => "18",
         "ELEMENT_ID" => "",

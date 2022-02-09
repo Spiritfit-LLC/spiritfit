@@ -72,14 +72,14 @@ switch ($view) {
 ?>
 <? if( !empty($arResult['TITLE']) ) { ?>
 	<div class="content-center">
-        <div class="b-cards-slider__heading">
+        <div <?=(!empty($arParams["BLOCK_ID"])) ? 'id="'.$arParams["BLOCK_ID"].'"' : '' ?> class="b-cards-slider__heading">
             <div class="b-cards-slider__title">
                 <h2><?=$arResult['TITLE']?></h2>
             </div>
 		</div>
     </div>
 <? } ?>
-<section class="<?=$class?> <?=($slider ? $class.'_simple-mobile' : '')?> abonements-block-slider">
+<section <?=(!empty($arParams["BLOCK_ID"]) && empty($arResult['TITLE'])) ? 'id="'.$arParams["BLOCK_ID"].'"' : '' ?> class="<?=$class?> <?=($slider ? $class.'_simple-mobile' : '')?> abonements-block-slider">
     <div class="content-center">
         <div class="<?=$class?>__content <?=($reverse == 'Y' ? $class.'__content_reverse' : '')?>">
             <? if($slider){ ?>
