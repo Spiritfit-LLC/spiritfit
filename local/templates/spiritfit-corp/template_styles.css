@@ -6,6 +6,10 @@
     font-style: normal;
     font-display: swap;
 }
+.btn--white.disabled {
+	opacity: 0.2;
+	cursor: wait;
+}
 .ps {
     touch-action: auto;
     -ms-touch-action: auto;

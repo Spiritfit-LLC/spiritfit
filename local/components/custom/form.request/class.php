@@ -58,7 +58,8 @@ class FormRequestComponent extends CBitrixComponent{
                 }
     
                 return 3;
-            }else{
+            } else {
+				$this->arResult["STAY_ON_PAGE"] = true;
                 $this->arResult["ERROR"] = "Не правильно введен код";
                 return 2;
             }
@@ -68,7 +69,7 @@ class FormRequestComponent extends CBitrixComponent{
             $this->resetForm();
             return 1;
         }
-
+		
         return 1;
     }
 
@@ -369,7 +370,7 @@ class FormRequestComponent extends CBitrixComponent{
         switch ($this->checkStep()) {
             case 2:
 				$this->sendSms();
-				if( empty($this->arResult["ERROR"]) ) {
+				if( empty($this->arResult["ERROR"]) || !empty($this->arResult["STAY_ON_PAGE"]) ) {
 					$this->includeComponentTemplate('step-2');
 				} else {
 					$this->includeComponentTemplate();
