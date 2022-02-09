@@ -662,8 +662,8 @@ $(document).ready(function(){
         }
 
         $(document).on("click touchend", ".popup__close, .popup__bg", function () {
-            if($(this).parents('.popup__window--modal-form').length > 0){
-                if($(this).parents('.popup-info').length > 0){
+            if($(this).parents('.popup__window--modal-form').length > 0) {
+                if($(this).parents('.popup-info').length > 0 || $(this).parents('.subscription__aside-form-trial_v2').length){
                     $(this).parents('.popup__window--modal-form').removeClass('is-info');
                 }
             }

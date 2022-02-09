@@ -4034,6 +4034,10 @@ button.mfp-arrow::before{
     .header__nav-wrap--link{
         margin-bottom: 0;
     }
+	.b-image-block__text-item h2,
+	.b-image-block__text-item h2 a {
+		32px;
+	}
 }
 
 .subscription__include-wrapper .ps__rail-y{

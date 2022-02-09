@@ -136,11 +136,11 @@
 	color: #ff7628;
     font-size: 14pt;
     font-weight: bold;
-    text-transform: uppercase;
 	margin-bottom: 30px;
-	/*padding-left: 30px;*/
     box-sizing: border-box;
-	/*background-image: url(img/title_arrow.svg);
+	/*padding-left: 30px;
+	text-transform: uppercase;
+	background-image: url(img/title_arrow.svg);
 	background-repeat: no-repeat;
 	background-position: 0px 50%;*/
 }
