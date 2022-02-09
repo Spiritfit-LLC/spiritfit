@@ -349,8 +349,8 @@ class Api
 		));
 
         if ($this->_data['result']['errorCode'] == 0) {
-            if(empty($name) || empty($phone) || empty($club)){
-                return false;
+			if(empty($name) || empty($phone) || empty($club)){
+				return false;
             }
            
             $type = $params["type"] ? $params["type"] : 0;
@@ -377,7 +377,7 @@ class Api
 			
 			if(isset($additionFields['surname'])) $arParams['surname'] = $_REQUEST[$additionFields['surname']];
 			if(isset($additionFields['email'])) $arParams['email'] = $_REQUEST[$additionFields['email']];
-            
+			
             $this->_send($this->apiUrl."contact", $arParams);
             
             if ($this->_data['result']['errorCode'] == 0)
