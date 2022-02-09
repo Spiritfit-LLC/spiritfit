@@ -4036,7 +4036,7 @@ button.mfp-arrow::before{
     }
 	.b-image-block__text-item h2,
 	.b-image-block__text-item h2 a {
-		32px;
+		font-size: 32px;
 	}
 }
 
