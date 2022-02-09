@@ -1388,23 +1388,7 @@ $(document).ready(function() {
 
     $(document).on("click", ".js-check-code-training", function(e) {
         e.preventDefault();
-        var code = "";
-
-        $(this).closest('form').find(".input--num").each(function() {
-            code += $(this).val();
-        });
-
-        if(code != "") {
-            reachGo($(this).closest('form'));
-            sendFormTraining({
-                "ajax_send": "Y",
-                "last_step":"Y",
-                "club": $('[name=form_text_15]').val(),
-                "ajax_menu": false,
-                "num": code,
-                "mode": "check_sms",
-            });
-        }
+		checkCodeTraining( $(this) );
     });
 
     function showLegalInformation() {
@@ -1500,9 +1484,46 @@ $(document).ready(function() {
             data: data
         });
     }
+	
+	var checkCodeTraining = function( obj ) {
+		
+		var code = "";
+        $(obj).closest('form').find(".input--num").each(function() {
+            code += $(this).val();
+        });
+		
+        if( code != "" ) {
+            reachGo( $(obj).closest('form') );
+            sendFormTraining({
+                "ajax_send": "Y",
+                "last_step":"Y",
+                "club": $('[name=form_text_15]').val(),
+                "ajax_menu": false,
+                "num": code,
+                "mode": "check_sms",
+            });
+        }
+	}
+	
+	$(document).on('pjax:complete', function(xhr, status, data, options) {
+		$(".training__aside-form .btn--white").removeClass("disabled");
+		
+		$(".js-check-code-training").unbind();
+		$(".js-check-code-training").click( function(e) {
+        	e.preventDefault();
+			checkCodeTraining( $(this) );
+    	});
+		
+		$('html, body').animate({
+            scrollTop: $("#js-pjax-clubs").offset().top
+        }, 1);
+	});
 
     var sendFormTraining = function(ext) {
         
+		if( $(".training__aside-form .btn--white").hasClass("disabled") ) return;
+		$(".training__aside-form .btn--white").addClass("disabled");
+		
 		$(".training__aside-form input[name=form_text_30]").val( $('#club_id').attr("data-id") );
 		
 		var form = $(".training__aside-form").serializeArray();
