@@ -131,6 +131,8 @@
     line-height: 11pt;
 }
 .corp-abonement__back-title {
+    width: 100%;
+    text-align: left;
 	color: #ff7628;
     font-size: 14pt;
     font-weight: bold;

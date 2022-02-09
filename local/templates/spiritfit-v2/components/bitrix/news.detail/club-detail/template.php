@@ -75,7 +75,14 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 											<div class="b-twoside-card__label"><?=$abonement['~NAME']?></div>
 										</div>
 										<div class="b-twoside-card__hidden-content">
-											<div class="b-twoside-card__text"><?=$abonement['PREVIEW_TEXT']?></div>
+											<!--<div class="b-twoside-card__text"><?//=$abonement['PREVIEW_TEXT']?></div>-->
+											<? if( !empty($abonement["PROPERTIES"]["INCLUDE"]["VALUE"]) ) { ?>
+												<div class="corp-abonement__front-list">
+													<? foreach($abonement["PROPERTIES"]["INCLUDE"]["VALUE"] as $listItem) { ?>
+														<div class="corp-abonement__front-list-item"><?=$listItem?></div>
+													<? } ?>
+												</div>
+											<? } ?>
 											<div class="b-twoside-card__prices">
 												<? if( $abonement['ID'] == 226 ) { ?>
 													<div class="b-twoside-card__prices-item">

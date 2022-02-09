@@ -49,7 +49,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 						window.abonement["<?=$arItem['ID']?>"] = <?=$arDataAbonement?>;
 					</script>
                     
-                    <div class="b-cards-slider__item">
+                    <div class="b-cards-slider__item v2-abonement">
                         <div class="b-twoside-card">
                             <div class="b-twoside-card__inner">
                                 <div class="b-twoside-card__content"
@@ -57,11 +57,22 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                                     <div class="b-twoside-card__label"><?=$arItem['~NAME']?></div>
                                 </div>
                                 <div class="b-twoside-card__hidden-content">
-                                    <div class="b-twoside-card__title"><?=$arItem['~NAME']?></div>
-                                    <div class="b-twoside-card__text"><?=$arItem["PREVIEW_TEXT"]?></div>
-                                    <div class="b-twoside-card__prices">
-										<a href="<?=$arItem['DETAIL_PAGE_URL']?>" class="b-twoside-card__prices-button button">Выбрать</a>
-                                    </div>
+                                    <div class="corp-abonement__back-title">
+										<?=$arItem['~NAME']?>
+									</div>
+									<? if( !empty($arItem["PROPERTIES"]["INCLUDE"]["VALUE"]) ) { ?>
+										<div class="corp-abonement__front-list">
+											<? foreach($arItem["PROPERTIES"]["INCLUDE"]["VALUE"] as $listItem) { ?>
+												<div class="corp-abonement__front-list-item"><?=$listItem?></div>
+											<? } ?>
+										</div>
+									<? } ?>
+									<div class="corp-abonement__back-button">
+										<a class="button" href="<?=$arItem['DETAIL_PAGE_URL']?>">Выбрать</a>
+									</div>
+                                    <? if ($arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"]): ?>
+                                        <div class="b-twoside-card__footnote"><?= $arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] ?></div>
+                                    <? endif; ?>
                                 </div>
                             </div>
                         </div>

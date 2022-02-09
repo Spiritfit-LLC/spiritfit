@@ -50,7 +50,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 						window.abonement["<?=$arItem['ID']?>"] = <?=$arDataAbonement?>;
 					</script>
                     
-                    <div class="b-cards-slider__item">
+                    <div class="b-cards-slider__item v2-abonement">
                         <div class="b-twoside-card">
                             <div class="b-twoside-card__inner">
                                 <div class="b-twoside-card__content"
@@ -58,66 +58,22 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                                     <div class="b-twoside-card__label"><?=$arItem['~NAME']?></div>
                                 </div>
                                 <div class="b-twoside-card__hidden-content">
-                                    <div class="b-twoside-card__title"><?=$arItem['~NAME']?></div>
-                                    <div class="b-twoside-card__text"><?=$arItem["PREVIEW_TEXT"]?></div>
-
-                                    <div class="b-twoside-card__prices">
-                                        <?if (false && strlen($arItem["BASE_PRICE"]["PRICE"]) > 0){?>
-                                            <? if( $arItem['ID'] == 226 ) { ?>
-												<div class="b-twoside-card__prices-item">
-													<div class="b-twoside-card__prices-old">1000 <span class="rub">₽</span></div>
-													<div class="b-twoside-card__prices-current">0 <span class="rub">₽</span></div>
-												</div>
-											<? } else { ?>
-												<?
-													$discountSecond = [];
-													foreach ($arItem["PRICES"] as $key => $price) {
-														if( intval($price["NUMBER"]) == 99 ) {
-															$discountSecond = $price;
-														}
-													}
-												?>
-												<? foreach ($arItem["PRICES"] as $key => $price):?>
-                                                	<? if( intval($price["NUMBER"]) == 99 ) continue; ?>
-													<div class="b-twoside-card__prices-item">
-                                                    	<div class="b-twoside-card__prices-title"><?= $price["SIGN"] ?></div>
-                                                    	<? if( $key == 1 && !empty($discountSecond) && !empty($discountSecond["PRICE"]) && $discountSecond["PRICE"] != " " ) { ?>
-															<div class="b-twoside-card__prices-old"><?=$discountSecond["PRICE"] ?> <span class="rub">₽</span></div>
-														<? } ?>
-														<?if ($key == 0 && $arItem["SALE"]) {?>
-                                                        	<div class="b-twoside-card__prices-old">
-                                                            	<?= $price["PRICE"] ?> <span class="rub">₽</span>
-                                                        	</div>
-                                                        	<div class="b-twoside-card__prices-current">
-                                                            	<?=$arItem["SALE"]?> <span class="rub">₽</span>
-                                                        	</div>
-                                                    	<?}elseif($key == 1 && $arItem["SALE_TWO_MONTH"]){?>
-                                                        	<div class="b-twoside-card__prices-current">
-                                                            	<?= $arItem["SALE_TWO_MONTH"] ?> <span class="rub">₽</span>
-                                                        	</div>
-                                                    	<?}else{?>
-                                                        	<? if ($price["PRICE"]  && $price["PRICE"] != " "): ?>
-                                                            	<div class="b-twoside-card__prices-current">
-                                                                	<?= $price["PRICE"] ?> <span class="rub">₽</span>
-                                                            	</div>
-                                                        	<? endif; ?>
-                                                    	<?}?>
-                                                	</div>
-                                            	<? endforeach; ?>
+                                    <div class="corp-abonement__back-title">
+										<?=$arItem['~NAME']?>
+									</div>
+									<? if( !empty($arItem["PROPERTIES"]["INCLUDE"]["VALUE"]) ) { ?>
+										<div class="corp-abonement__front-list">
+											<? foreach($arItem["PROPERTIES"]["INCLUDE"]["VALUE"] as $listItem) { ?>
+												<div class="corp-abonement__front-list-item"><?=$listItem?></div>
 											<? } ?>
-                                            <? 
-                                            $showLinkForPopup = false;
-                                            if($showLinkForPopup){ ?>
-                                                <a href="#" class="b-twoside-card__prices-button button js-form-abonement" data-code1c="<?=$arItem['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>" data-clubnumber="00" data-abonementid="<?=$arItem['ID']?>" data-abonementcode="<?=$arItem['CODE']?>">Выбрать</a>
-                                            <? } ?>
-                                        <?}?>
-                                            <a href="<?=$arItem['DETAIL_PAGE_URL']?>" class="b-twoside-card__prices-button button">Выбрать</a>
-                                    </div>
-
+										</div>
+									<? } ?>
+									<div class="corp-abonement__back-button">
+										<a class="button" href="<?=$arItem['DETAIL_PAGE_URL']?>">Выбрать</a>
+									</div>
                                     <? if ($arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"]): ?>
                                         <div class="b-twoside-card__footnote"><?= $arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] ?></div>
                                     <? endif; ?>
-                                    
                                 </div>
                             </div>
                         </div>

@@ -21,6 +21,13 @@ $aMenuLinks = Array(
 		Array(), 
 		"" 
 	),
+    Array(
+        "Абонементы",
+        "/abonement/",
+        Array(),
+        Array(),
+        ""
+    ),
 );
 
 CModule::IncludeModule("iblock");
