@@ -1525,7 +1525,7 @@ $(document).ready(function() {
         $.pjax.reload('#js-pjax-clubs', {
             timeout: false,
 			url: '/',
-            replace: false,
+            //replace: false,
             type: 'POST',
             dataType: 'html',
             data: data,
