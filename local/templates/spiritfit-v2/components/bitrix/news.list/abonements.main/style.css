@@ -25,9 +25,9 @@
 	color: #ff7628;
     font-size: 14pt;
     font-weight: bold;
-    text-transform: uppercase;
 	margin-bottom: 30px;
     box-sizing: border-box;
+	/*text-transform: uppercase;*/
 }
 .corp-abonement__back-button {
 	position: absolute;
