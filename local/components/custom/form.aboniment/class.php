@@ -356,6 +356,10 @@ class FormAbonimentComponent extends CBitrixComponent{
 			if( !empty($this->request["form_default_type"]) ) {
 				$arParam["type"] = intval($this->request["form_default_type"]);
 			}
+			
+			if( !empty($this->arParams["DEFAULT_TYPE_ID"]) ) {
+				$arParam["type"] = $this->arParams["DEFAULT_TYPE_ID"];
+			}
             
             $api = new Api(array(
                 "action" => "request2",

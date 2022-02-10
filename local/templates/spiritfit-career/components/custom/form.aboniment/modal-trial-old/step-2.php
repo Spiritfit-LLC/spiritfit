@@ -38,7 +38,7 @@ $APPLICATION->SetTitle($arResult["ELEMENT"]["~NAME"]);
                         <a class="subscription__code_v2" href="#">Получить код повторно</a>
                         
                         <div class="subscription__bottom">
-                            <div class="subscription__total" style="display: none;">
+                            <div class="subscription__total">
                                 <div class="subscription__total-text">Итого к оплате</div>
                                 <div class="subscription__total-value">
                                     <? if ($arResult["ELEMENT"]["SALE"]): ?>
@@ -90,12 +90,15 @@ if(!empty($selectClub)){
 }
 
 ?><script>dataLayerSend('UX', 'openSmsCodePage', '<?=$strSend?>');</script>
-<? if($abonementName == 'Домашние тренировки') {
+    
+<? if($abonementName == 'Домашние тренировки'){
     ?><script>dataLayerSend('UX', 'sendContactFormHomeWorkout', '<?=$strSend?>')</script><?        
-} else {
+}else{
     ?><script>dataLayerSend('conversion', 'sendContactForm', '<?=$strSend?>')</script><?
 }
 ?>
+
+
 <!-- Вывод ошибки в popup -->
 <? if ($arResult["RESPONSE"]["data"]["result"]["errorCode"] !== 0 && $arResult["RESPONSE"]["data"]["result"]["userMessage"] != ""): ?>
     <?

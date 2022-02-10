@@ -7,14 +7,14 @@ $arField = ['name', 'phone', 'email'];
         <div class="form-standart__plate">
             <div class="form-standart__title h2">Отправить заявку</div>
                 
-            <form class="subscription__aside-form-trial_v2" name="<?= $arResult["WEB_FORM_NAME"] ?>" action="<?=POST_FORM_CORP_ACTION_URI?>" method="POST" enctype="multipart/form-data">
+            <form class="subscription__aside-form-trial_v2" name="<?= $arResult["WEB_FORM_NAME"] ?>" action="<?=POST_FORM_CAREER_ACTION_URI?>" method="POST" enctype="multipart/form-data">
                 <?= getClientParams($arParams["WEB_FORM_ID"]) ?>
                 <input type="hidden" name="WEB_FORM_ID" value="<?= $arParams["WEB_FORM_ID"] ?>">
                 <input type="hidden" name="step" value="1">
                 <input type="hidden" name="sub_id" value="<?= $arResult["ELEMENT"]["PROPERTIES"]['CODE_ABONEMENT']['VALUE'] ?>">
                 <input type="hidden" name="two_month" value="0">
                 <input type="hidden" name="old_price" value="">
-                <input class="actual-price" type="hidden" name="form_<?= $arResult["arAnswers"]["price"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["price"]['0']["ID"] ?>" value="1">
+                <input class="actual-price" type="hidden" name="form_<?= $arResult["arAnswers"]["price"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["price"]['0']["ID"] ?>" value="">
                 <input type="hidden" name="abonement_code" value="">
                 <input type="hidden" name="trial" value="Y">
                 
@@ -110,7 +110,7 @@ $arField = ['name', 'phone', 'email'];
 
                     <div class="subscription__bottom">
                     
-                        <div class="subscription__total" style="display: none;">
+                        <div class="subscription__total">
                             <div class="subscription__total-text">ИТОГО К ОПЛАТЕ</div>
                             <div class="subscription__total-value">
                                 <div class="subscription__total-value-old"><span></span></div>
@@ -130,20 +130,6 @@ $arField = ['name', 'phone', 'email'];
                         <span onclick="clickBtn(this)" class="form-standart__submit button-outline" data-stage="1"><?= $arResult["arForm"]["BUTTON"] ?></span>
                     </div>
                 </div>
-				
-				<? if (!empty($arResult["ERROR"])): ?>
-                    <div class="popup popup--call form-error-modal" style="display: block;">
-                        <div class="popup__bg"></div>
-                        <div class="popup__window">
-                            <div class="popup__close">
-                                <div></div>
-                                <div></div>
-                            </div>
-                            <div class="popup__success"><?=$arResult["ERROR"]?></div>
-                        </div>
-                    </div>
-                <? endif; ?>
-				
                 
                 <div class="popup popup--legal-information popup-info">
                     <div class="popup__bg"></div>
