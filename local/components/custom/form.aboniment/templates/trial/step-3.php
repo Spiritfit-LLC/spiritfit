@@ -67,28 +67,27 @@ $APPLICATION->SetTitle($arResult["ELEMENT"]["~NAME"]);
                 </div>
             </form>
             <div class="subscription__bottom">
-            <div class="subscription__total">
-                <div class="subscription__total-text"><?= $arResult["arQuestions"]["price"]["TITLE"] ?></div>
-                <div class="subscription__total-value">
-                    <? if ($arResult["ELEMENT"]["SALE"]): ?>
-                        <div class="subscription__total-value-old">
-                            <span><?= $arResult["ELEMENT"]["PRICES"][0]["PRICE"] ?> &#x20bd;</span>
-                        </div>
-                        <?= $arResult["ELEMENT"]["SALE"] ?> &#x20bd;
-                    <? else: ?>
-                        <?= $arResult["ELEMENT"]["PRICES"][0]["PRICE"] ?> &#x20bd;
+                <div class="subscription__total" style="display: none;">
+                    <div class="subscription__total-text"><?= $arResult["arQuestions"]["price"]["TITLE"] ?></div>
+                    <div class="subscription__total-value">
+                        <? if ($arResult["ELEMENT"]["SALE"]): ?>
+                            <div class="subscription__total-value-old">
+                                <span><?= $arResult["ELEMENT"]["PRICES"][0]["PRICE"] ?> &#x20bd;</span>
+                            </div>
+                            <?= $arResult["ELEMENT"]["SALE"] ?> &#x20bd;
+                        <? else: ?>
+                            <?= $arResult["ELEMENT"]["PRICES"][0]["PRICE"] ?> &#x20bd;
+                        <? endif; ?>
+                    </div>
+                    <? if ($arResult["ELEMENT"]["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] && $arResult["ELEMENT"]["SALE"]): ?>
+                        <div class="subscription__total-subtext"><?= $arResult["ELEMENT"]["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] ?></div>
                     <? endif; ?>
                 </div>
-                <? if ($arResult["ELEMENT"]["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] && $arResult["ELEMENT"]["SALE"]): ?>
-                    <div class="subscription__total-subtext"><?= $arResult["ELEMENT"]["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] ?></div>
+                <? if(false && $arResult["ELEMENT"]["PRICES"][0]["PRICE"]): ?>
+                    <a href="<?= $arResult["RESPONSE"]["data"]["result"]["result"]["formUrl"] ?>" target="_blank" class="subscription__total-btn subscription__total-btn--pay btn btn--white js-btn-pay">
+                        Получить счет
+                    </a>
                 <? endif; ?>
-            </div>
-            <? if ($arResult["ELEMENT"]["PRICES"][0]["PRICE"]): ?>
-                <a href="<?= $arResult["RESPONSE"]["data"]["result"]["result"]["formUrl"] ?>" target="_blank"
-                class="subscription__total-btn subscription__total-btn--pay btn btn--white js-btn-pay">
-                    Получить счет
-                </a>
-            <? endif; ?>
             </div>
         </div>
     </div>
