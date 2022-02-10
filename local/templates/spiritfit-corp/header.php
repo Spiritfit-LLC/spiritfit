@@ -125,13 +125,12 @@ $page = $APPLICATION->GetCurPage();
                                 ),
                                 false
                             );?>
-                            
-                            <a class="b-top-menu__btn button-outline is-hide-desktop js-form-abonement" href="javascript:;"
-                                data-webform-fancybox="./form-request.html" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a>
+							<a class="b-top-menu__btn button-outline is-hide-desktop" href="https://spiritfit.ru/abonement/probnaya-trenirovka-/#js-pjax-container">Пробная тренировка</a>
                         </div>
                     </nav>
-                </div><a class="b-header-phone" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a><a
-                    class="b-header__btn button-outline is-hide-mobile js-form-abonement" href="#" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a>
+                </div>
+				<a class="b-header-phone" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a>
+				<a class="b-header__btn button-outline is-hide-mobile" href="https://spiritfit.ru/abonement/probnaya-trenirovka-/#js-pjax-container">Пробная тренировка</a>
             </div>
         </div>
     </header>

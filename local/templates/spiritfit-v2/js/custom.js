@@ -675,7 +675,9 @@ $(document).ready(function(){
     // popup form
     $('.js-form-abonement').click(function(e){
         e.preventDefault();
-        console.log('jsformabon');
+        
+		//console.log('jsformabon');
+		
         var formPopup = $('#modalForm');
         var link = $(this);
         var type = ''+link.data('type');
@@ -745,6 +747,7 @@ $(document).ready(function(){
             $(formPopup).find('.subscription__promo').show();
         }
         
+		console.log( formPopup );
         formPopup.show();
         formPopup.find('.form-standart').show();
         setScrollFormModal();
