@@ -25,8 +25,8 @@ if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 } else {
     require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 }
+
 global $USER;
-$trial = strpos($APPLICATION->GetCurPage(), "probnaya-trenirovka");
 
 use Bitrix\Iblock\InheritedProperty;
 
@@ -112,18 +112,7 @@ if( $elementCode ) {
 	} else {
 		?>
 		<div id="js-pjax-container">
-			<? if ($trial){
-				$APPLICATION->IncludeComponent(
-					"custom:form.aboniment", 
-					"trial", 
-					array(
-						"AJAX_MODE" => "N",
-						"WEB_FORM_ID" => "3",
-						"ADD_ELEMENT_CHAIN" => "N",
-					),
-					false
-				);
-			}else{
+			<? 
 				$APPLICATION->IncludeComponent(
 					"custom:form.get.aboniment", 
 					"", 
@@ -141,7 +130,7 @@ if( $elementCode ) {
 					),
 					false
 				);
-			}?>
+			?>
 		</div>
 		<? 
 			}
