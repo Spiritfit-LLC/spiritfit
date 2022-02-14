@@ -509,4 +509,7 @@ main.b-page__main {
 		padding-right: 0;
 		font-size: 32px;
 	}
+	#js-pjax-clubs .club__subheading {
+		font-size: 28px;
+	}
 }
