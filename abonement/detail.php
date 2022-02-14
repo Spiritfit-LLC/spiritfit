@@ -113,6 +113,11 @@ if( $elementCode ) {
 		?>
 		<div id="js-pjax-container">
 			<? 
+				$formType = 1;
+				if( strpos($APPLICATION->GetCurPage(false), "probnaya-trenirovka") ) {
+					$formType = 3;
+				}
+				
 				$APPLICATION->IncludeComponent(
 					"custom:form.get.aboniment", 
 					"", 
@@ -124,7 +129,7 @@ if( $elementCode ) {
 						"DEFAULT_CLUB_ID" => "",
 						"ABONEMENT_IBLOCK_ID" => 9,
 						"CLUBS_IBLOCK_ID" => 6,
-						"FORM_TYPE" => 1,
+						"FORM_TYPE" => $formType,
 						"ELEMENT_CODE" => $elementCode,
 						"FREE_MESSAGE" => "Бесплатный абонемент. Для верификации, мы спишем с карты и вернем 11 рублей. Чтобы убедиться, что Вы человек, а не робот."
 					),
