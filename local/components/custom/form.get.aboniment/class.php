@@ -433,7 +433,7 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 							if( !empty($responseResult["RESPONSE"]["data"]["result"]["userMessage"]) ) {
 								$responseResult["MESSAGE"] = $responseResult["RESPONSE"]["data"]["result"]["userMessage"];
 							} else {
-								$responseResult["MESSAGE"] = "Не правильно введен код";
+								$responseResult["MESSAGE"] = "Неправильно введен код";
 							}
 							$responseResult["ERROR"] = true;
 							
