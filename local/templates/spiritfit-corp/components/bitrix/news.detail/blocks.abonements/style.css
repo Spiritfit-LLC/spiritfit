@@ -64,4 +64,7 @@
 	.abonements-block-slider .slick-slide img {
 		max-width: initial;
 	}
+	#spiritbox {
+		margin-top: 30px;
+	}
 }
