@@ -249,13 +249,17 @@ class FormGetAbonimentComponent extends CBitrixComponent{
         $phone = $this->request->get($phoneName);
         $arParam["phone"] = preg_replace('![^0-9]+!', '', $phone);
 		
-		if($arResult["ELEMENT"]["PROPERTIES"]["ADD_TO_1C"]["VALUE"]){
+		if($this->arResult["ELEMENT"]["PROPERTIES"]["ADD_TO_1C"]["VALUE"]){
             $arParam["additional"] = $this->arResult["ELEMENT"]["PROPERTIES"]["ADD_TO_1C"]["VALUE"];
         }
         
         if($this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"]){
             $arParam["subscriptionId"] = $this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"];
         }
+		
+		if( empty($arParam["name"]) && !empty($this->arResult["ELEMENT"]["NAME"]) ) {
+			$arParam["name"] = $this->arResult["ELEMENT"]["NAME"];
+		}
 		
 		$arParam["type"] = $this->arParams["FORM_TYPE"];
 		if( empty($arParam["type"]) ) {
