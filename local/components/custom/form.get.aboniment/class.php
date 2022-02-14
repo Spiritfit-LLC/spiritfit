@@ -257,10 +257,6 @@ class FormGetAbonimentComponent extends CBitrixComponent{
             $arParam["subscriptionId"] = $this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"];
         }
 		
-		if( empty($arParam["name"]) && !empty($this->arResult["ELEMENT"]["NAME"]) ) {
-			$arParam["name"] = $this->arResult["ELEMENT"]["NAME"];
-		}
-		
 		$arParam["type"] = $this->arParams["FORM_TYPE"];
 		if( empty($arParam["type"]) ) {
 			$arParam["type"] = 1;
@@ -293,7 +289,7 @@ class FormGetAbonimentComponent extends CBitrixComponent{
     }
 	
 	private function checkStep( $currentStep, &$responseResult ) {
-		
+	
 		foreach( $this->request as $key => $value ) {
             if(strpos($key, "form_") !== false){
                 $this->arResult["HIDDEN_FILEDS"][$key] = $value;
@@ -422,7 +418,6 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 						return 2;
 					break;
 					case "CHECK_SMS":
-						
 						if ( $this->request->get("NUM") ) {
                         	$responseResult["RESPONSE"] = $this->checkSms( $this->request->get("NUM") );
                     	}
@@ -486,6 +481,7 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 			if( !empty($this->request["STEP"]) ) {
 				$this->arResult["STEP"] = intval($this->request["STEP"]);
 			}
+			$this->arResult["PREV_STEP"] = $this->arResult["STEP"];
 			
 			$clubId = false;
 			if( !empty($this->request["CLUB_ID"]) ) {

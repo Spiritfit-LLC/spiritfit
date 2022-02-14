@@ -114,13 +114,15 @@ if( $elementCode ) {
 		<div id="js-pjax-container">
 			<? 
 				$formType = 1;
+				$formTemplate = "";
 				if( strpos($APPLICATION->GetCurPage(false), "probnaya-trenirovka") ) {
 					$formType = 3;
+					$formTemplate = "trial";
 				}
 				
 				$APPLICATION->IncludeComponent(
 					"custom:form.get.aboniment", 
-					"", 
+					$formTemplate, 
 					array(
 						"AJAX_MODE" => "N",
 						"WEB_FORM_ID" => "2",
