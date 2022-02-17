@@ -190,7 +190,7 @@ class FormGetAbonimentComponent extends CBitrixComponent{
         }
 		
 		$phone = preg_replace('![^0-9]+!', '', $phone);
-		$arParam = ["phone" => $phone];
+		$arParam = ["phone" => $phone, "WEB_FORM_ID" => $this->arParams["WEB_FORM_ID"]];
 		if( !empty($this->arResult["CLUB_NUMBER"]) ) {
 			$arParam["club"] = $this->arResult["CLUB_NUMBER"];
 		}
@@ -244,6 +244,7 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 
         $arParam = $this->getFormatFields();
         $arParam["code"] = $num;
+		$arParam["WEB_FORM_ID"] = $this->arParams["WEB_FORM_ID"];
 		
 		$phoneName = "form_" . $this->arResult["arAnswers"]["phone"]['0']["FIELD_TYPE"] . "_" . $this->arResult["arAnswers"]["phone"]['0']["ID"];
         $phone = $this->request->get($phoneName);
