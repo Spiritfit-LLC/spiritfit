@@ -68,7 +68,6 @@
 .corp-abonement__front-list {
 	font-size: 10pt;
     line-height: 12pt;
-	text-transform: uppercase;
 }
 .corp-abonement__front-list-item {
 	margin-bottom: 10px;
@@ -138,8 +137,8 @@
     font-weight: bold;
 	margin-bottom: 30px;
     box-sizing: border-box;
-	/*padding-left: 30px;
 	text-transform: uppercase;
+	/*padding-left: 30px;
 	background-image: url(img/title_arrow.svg);
 	background-repeat: no-repeat;
 	background-position: 0px 50%;*/
