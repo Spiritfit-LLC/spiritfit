@@ -294,8 +294,9 @@ class Api
 					$request["additional"] = (int)$params['additional'];
 				}
 			}
-
-			$trafic = $GLOBALS['arTraficAnswer'][$_REQUEST["WEB_FORM_ID"]];
+			
+			$webFormId = !empty($params["WEB_FORM_ID"]) ? $params["WEB_FORM_ID"] : $_REQUEST["WEB_FORM_ID"];
+			$trafic = $GLOBALS['arTraficAnswer'][$webFormId];
 			$request['type'] = 'order';
 			$request['source'] = $_REQUEST[$trafic['src']];
 			$request['channel'] = $_REQUEST[$trafic['mdm']];
@@ -355,7 +356,8 @@ class Api
            
             $type = $params["type"] ? $params["type"] : 0;
             
-			$trafic = $GLOBALS['arTraficAnswer'][$_REQUEST["WEB_FORM_ID"]];
+			$webFormId = !empty($params["WEB_FORM_ID"]) ? $params["WEB_FORM_ID"] : $_REQUEST["WEB_FORM_ID"];
+			$trafic = $GLOBALS['arTraficAnswer'][$webFormId];
 			$arParams = array(
 				"type" => intval($type),
                 "name" => $name,
