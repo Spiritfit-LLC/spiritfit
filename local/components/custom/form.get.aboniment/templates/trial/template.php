@@ -138,10 +138,8 @@
 						<? } ?>
                     </select>
                 </div>
-				
 				<div class="subscription__aside-form-row">
-                    <input class="input input--light input--short input--text" type="text" placeholder="<?= $arResult["arQuestions"]["name"]["TITLE"] ?>" value="<?= $_REQUEST["form_" . $arResult["arAnswers"]["name"]['0']["FIELD_TYPE"] . "_" . $arResult["arAnswers"]["name"]['0']["ID"]] ?>" name="form_<?= $arResult["arAnswers"]["name"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["name"]['0']["ID"] ?>" <? if ($arResult["arQuestions"]["name"]["REQUIRED"]) { ?>required="required"<? } ?>>
-					<input class="input input--light input--short input--text" type="text" placeholder="<?= $arResult["arQuestions"]["surname"]["TITLE"] ?>" value="<?= $_REQUEST["form_" . $arResult["arAnswers"]["surname"]['0']["FIELD_TYPE"] . "_" . $arResult["arAnswers"]["surname"]['0']["ID"]] ?>" name="form_<?= $arResult["arAnswers"]["surname"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["surname"]['0']["ID"] ?>" <? if ($arResult["arQuestions"]["surname"]["REQUIRED"]) { ?>required="required"<? } ?>>
+                    <input style="width: 100%;" class="input input--light input--short input--text" type="text" placeholder="<?= $arResult["arQuestions"]["name"]["TITLE"] ?>" value="<?= $_REQUEST["form_" . $arResult["arAnswers"]["name"]['0']["FIELD_TYPE"] . "_" . $arResult["arAnswers"]["name"]['0']["ID"]] ?>" name="form_<?= $arResult["arAnswers"]["name"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["name"]['0']["ID"] ?>" <? if ($arResult["arQuestions"]["name"]["REQUIRED"]) { ?>required="required"<? } ?>>
 				</div>
 				<div class="subscription__aside-form-row">
 					<input class="input input--light input--short input--tel" type="tel" placeholder="<?= $arResult["arQuestions"]["phone"]["TITLE"] ?>" value="<?= $_REQUEST["form_" . $arResult["arAnswers"]["phone"]['0']["FIELD_TYPE"] . "_" . $arResult["arAnswers"]["phone"]['0']["ID"]] ?>" name="form_<?= $arResult["arAnswers"]["phone"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["phone"]['0']["ID"] ?>" <? if ($arResult["arQuestions"]["phone"]["REQUIRED"]) { ?>required="required"<? } ?>>
@@ -170,38 +168,10 @@
                 <? } ?>
 				
 				<? if( isset($arResult["ELEMENT"]["BASE_PRICE"]["PRICE"]) || (!empty($arResult["ELEMENT"]["PRICES"][0]["SIGN"]) && $arResult["ELEMENT"]["PRICES"][0]["SIGN"] == "Бесплатно") ) { ?>
-					
-					<div class="popup popup--legal-information">
-						<div class="popup__bg"></div>
-						<div class="popup__window">
-							<div class="popup__close">
-								<div></div>
-								<div></div>
-							</div>
-							<div class="popup__wrapper">
-								<div class="popup__heading">Юридическая информация</div>
-								<div class="popup__legal-information-wrapper">
-									<div class="popup__legal-information">
-										<?=$arResult["OFERTA_TEXT"]?>
-									</div>
-								</div>
-								<div class="popup__bottom">
-									<div class="popup__privacy-policy">
-										<label class="input-label">
-											<input class="input input--checkbox" type="checkbox" name="form_checkbox_legal-information">
-											<div class="input-label__text">C условиями Оферты ознакомлен</div>
-										</label>
-									</div>
-									<input class="popup__btn btn subscription__total-btn" type="submit" value="Согласен" disabled>
-								</div>
-							</div>
-						</div>
-					</div>
-					
 					<div class="subscription__bottom">
                     	<input type="hidden" name="form_<?=$arResult["arAnswers"]["price"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["price"]['0']["ID"] ?>" value="<?=$arResult["ELEMENT"]["SALE"] ? $arResult["ELEMENT"]["SALE"] : $arResult["ELEMENT"]["PRICES"][0]["PRICE"] ?>">
 					</div>
-					<span class="get-abonement-agree subscription__total-btn subscription__total-btn--reg btn btn--white"><?=$arResult["arForm"]["BUTTON"]?></span>
+					<input class="subscription__total-btn subscription__total-btn--reg btn btn--white" type="submit" value="<?=$arResult["arForm"]["BUTTON"]?>">
 				<? } ?>
 			</form>
 		</div>

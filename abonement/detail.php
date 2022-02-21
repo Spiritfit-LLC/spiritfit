@@ -113,10 +113,12 @@ if( $elementCode ) {
 		?>
 		<div id="js-pjax-container">
 			<? 
+				$formId = 2;
 				$formType = 1;
 				$formTemplate = "";
 				if( strpos($APPLICATION->GetCurPage(false), "probnaya-trenirovka") ) {
 					$formType = 3;
+					$formId = 3;
 					$formTemplate = "trial";
 				}
 				
@@ -125,7 +127,7 @@ if( $elementCode ) {
 					$formTemplate, 
 					array(
 						"AJAX_MODE" => "N",
-						"WEB_FORM_ID" => "2",
+						"WEB_FORM_ID" => $formId,
 						"ADD_ELEMENT_CHAIN" => "N",
 						"CLUB_ID" => $club["ID"],
 						"DEFAULT_CLUB_ID" => "",

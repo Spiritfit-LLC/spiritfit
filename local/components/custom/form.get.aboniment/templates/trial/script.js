@@ -20,8 +20,6 @@ jQuery(function($) {
 			var clubSelector = $(selector).find(".get-abonement-club");
 			var clubInput = $(selector).find("input[name=CLUB_ID]");
 			var actionInput = $(selector).find("input[name=ACTION]");
-			var agreeButton = $(selector).find(".get-abonement-agree");
-			var agreeDialog = $(selector).find(".popup--legal-information");
 			var submitButton = $(selector).find("input[type=submit]");
 			var resendButton = $(selector).find(".get-abonement-resend");
 			var formElement = $(selector);
@@ -34,8 +32,8 @@ jQuery(function($) {
 			});
 			
 			if( step === 1 || step === 3 ) {
-				$( agreeButton ).unbind();
-				$( agreeButton ).click( function(e) {
+				$( submitButton ).unbind();
+				$( submitButton ).click( function(e) {
 					e.preventDefault();
 					
 					var inputs = ["input[type=text]", "input[type=password]", "input[type=hidden]", "input[type=radio]:checked", "input[type=checkbox]:checked", "select", "textarea"];
@@ -60,44 +58,10 @@ jQuery(function($) {
 					
 					$(actionInput).val("SEND_SMS");
 					
-					$(agreeDialog).fadeIn(300);
-					
-					let scrollbarLegalInformation = new PerfectScrollbar(".popup__legal-information", {
-						suppressScrollX: true,
-						minScrollbarLength: 100
-					});
-					
-					if (scrollbarLegalInformation.containerHeight !== scrollbarLegalInformation.contentHeight) {
-						$('body').css('overflow', 'hidden');
-					}
-					
-					$('.popup__close, .popup__bg').unbind();
-					$('.popup__close, .popup__bg').on('click', function() {
-						$('body').css('overflow', '');
-						scrollbarLegalInformation.destroy();
-					});
-					
-					$(submitButton).unbind("click");
-					$(submitButton).click( function() {
-						$(this).attr('disabled', true);
-						$(this).attr("value", "Обработка...");
-						$('body').css('overflow', '');
-						scrollbarLegalInformation.destroy();
-						$(formElement).submit();
-					});
-					
-					$('input[name="form_checkbox_legal-information"]').unbind();
-					$('input[name="form_checkbox_legal-information"]').change(function() {
-						if( $(this).is(':checked') ) {
-							$(submitButton).removeAttr('disabled');
-						} else {
-							$(submitButton).attr('disabled', true);
-						}
-					});
-					
-					$(window).on('resize', function() {
-            			scrollbarLegalInformation.update();
-        			});
+					$(this).attr('disabled', true);
+					$(this).attr("value", "Обработка...");
+					$('body').css('overflow', '');
+					$(formElement).submit();
 				});
 			}
 			if( step === 2 ) {
