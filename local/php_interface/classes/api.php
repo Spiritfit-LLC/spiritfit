@@ -554,8 +554,11 @@ class Api
 			'type' => $type
         );
 		
-		if( !empty($params["club"]) ) {
+		/*if( !empty($params["club"]) ) {
 			$arParams["club"] = $params["club"];
+		}*/
+		if( !empty($params["club"]) ) {
+			$arParams["clubid"] = $params["club"];
 		}
 		if( !empty($params["promo"]) ) {
 			$arParams["promo"] = $params["promo"];
