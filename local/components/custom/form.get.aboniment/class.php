@@ -190,7 +190,10 @@ class FormGetAbonimentComponent extends CBitrixComponent{
         }
 		
 		$phone = preg_replace('![^0-9]+!', '', $phone);
-		$arParam = ["phone" => $phone, "WEB_FORM_ID" => $this->arParams["WEB_FORM_ID"]];
+		
+		$arParam = $this->getFormatFields();
+		$arParam["phone"] = $phone;
+		$arParam["WEB_FORM_ID"] = $this->arParams["WEB_FORM_ID"];
 		if( !empty($this->arResult["CLUB_NUMBER"]) ) {
 			$arParam["club"] = $this->arResult["CLUB_NUMBER"];
 		}
@@ -274,8 +277,9 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 			$arParam["promo"] = $_SESSION[$uniqueId]["COUPON"];
 		}
 		
+		$requestType = (!empty($this->arParams["ACTION_TYPE"])) ? $this->arParams["ACTION_TYPE"] : "request";
 		$api = new Api(array(
-            "action" => "request",
+            "action" => $requestType,
             "params" => $arParam
         ));
 		

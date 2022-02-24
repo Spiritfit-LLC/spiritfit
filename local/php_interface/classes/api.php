@@ -270,10 +270,9 @@ class Api
 		));
 		
 		$smsResultArray = $this->result();
-		
 		//if ($this->_data['result']->result->errorCode == 0) {
 		if( empty($smsResultArray['data']['result']['errorCode']) ) {
-			if(empty($name) || empty($surname) || empty($email) || empty($phone)){
+			if(empty($name) || ( empty($surname) && $params["type"] != 3 ) || empty($email) || empty($phone)){
 				return false;
 			}
 			$request = array(
@@ -550,13 +549,12 @@ class Api
         	'cid' => $_REQUEST[$trafic['ClientId']],
         	'promocode' => $_REQUEST['promo'],
             'clubid' => sprintf("%02d", $_REQUEST['club']),
-            'name' => '',
+            'name' => (!empty($params["name"])) ? $params["name"] : "",
 			'type' => $type
         );
-		
-		/*if( !empty($params["club"]) ) {
-			$arParams["club"] = $params["club"];
-		}*/
+		if( empty($arParams["email"]) && !empty($params["email"]) ) {
+			$arParams["email"] = $params["email"];
+		}
 		if( !empty($params["club"]) ) {
 			$arParams["clubid"] = $params["club"];
 		}
@@ -597,7 +595,7 @@ class Api
         //file_put_contents(__DIR__.'/debug_reg.txt', print_r($_REQUEST, true), FILE_APPEND);
         //file_put_contents(__DIR__.'/debug_reg.txt', print_r($arParams, true), FILE_APPEND);
         //file_put_contents(__DIR__.'/debug_reg.txt', print_r("\n ================ \n", true), FILE_APPEND);
-        
+		
 		$this->_send($this->apiUrl."reg", $arParams);
 
 		if ($this->_data['result']['errorCode'] === 0)

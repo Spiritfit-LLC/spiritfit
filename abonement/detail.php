@@ -116,10 +116,12 @@ if( $elementCode ) {
 				$formId = 2;
 				$formType = 1;
 				$formTemplate = "";
+				$actiontype = "request";
 				if( strpos($APPLICATION->GetCurPage(false), "probnaya-trenirovka") ) {
 					$formType = 3;
 					$formId = 3;
 					$formTemplate = "trial";
+					$actiontype = "request2";
 				}
 				
 				$APPLICATION->IncludeComponent(
@@ -134,6 +136,7 @@ if( $elementCode ) {
 						"ABONEMENT_IBLOCK_ID" => 9,
 						"CLUBS_IBLOCK_ID" => 6,
 						"FORM_TYPE" => $formType,
+						"ACTION_TYPE" => $actiontype,
 						"ELEMENT_CODE" => $elementCode,
 						"FREE_MESSAGE" => "Бесплатный абонемент. Для верификации, мы спишем с карты и вернем 11 рублей. Чтобы убедиться, что Вы человек, а не робот."
 					),
