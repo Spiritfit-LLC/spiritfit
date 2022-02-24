@@ -449,6 +449,10 @@ class FormGetAbonimentComponent extends CBitrixComponent{
                     			CFormResult::SetEvent($RESULT_ID);
                     			CFormResult::Mail($RESULT_ID);
                 			}
+							
+							unset($_SESSION[$uniqueId]);
+							$this->resetForm();
+							
                 			return 3;
 						}
 						

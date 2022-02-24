@@ -50,7 +50,7 @@
 			<form class="get-abonement" action="<?=$APPLICATION->GetCurPage(false)?>" method="POST" enctype="multipart/form-data">
 				<?=getClientParams($arParams["WEB_FORM_ID"]);?>
 				<input type="hidden" name="COMPONENT_ID" value="<?=$arResult["COMPONENT_ID"]?>">
-                <input type="hidden" name="STEP" value="<?=$arResult["STEP"]?>">
+                <input type="hidden" name="STEP" value="1">
 				<input type="hidden" name="CLUB_ID" value="<?=$arResult["CLUB_ID"]?>">
 				<input type="hidden" name="ACTION" value="">
 				<input type="hidden" name="SUB_ID" value="<?=$arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"]?>">

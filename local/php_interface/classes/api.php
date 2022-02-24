@@ -373,6 +373,9 @@ class Api
 			if( !empty($company) ) {
 				$arParams['company'] = $company;
 			}
+			if( !empty($params['email']) ) {
+				$arParams['email'] = $params['email'];
+			}
 			
 			$additionFields = $GLOBALS['arAdditionAnswer'][$_REQUEST["WEB_FORM_ID"]];
 			
@@ -383,51 +386,6 @@ class Api
             
             if ($this->_data['result']['errorCode'] == 0)
                 $this->_result = true;
-            
-            //это Слава добавил website\ordernew , чтобы приходили в 1С заказы абониментов Новокосино, Войковская, Раменки
-    		/*$surname   = !empty($params['surname']) ? $params['surname'] : false;
-            $email  = !empty($params['email']) ? $params['email'] : false;
-    		$subscriptionId   = !empty($params['subscriptionId']) ? $params['subscriptionId'] : false;
-            
-    		$request = array(
-    			"name" => $name,
-    			"surname" => $surname,
-    			"email" => $email,
-    			"phone" => substr($phone, 1),
-                "clubid" => sprintf("%02d", $club),
-                "subscriptionId" => $subscriptionId,
-                "promocode" => $params['promo'],
-                "cid" => $client_id         
-    		);
-			
-    		if($params['additional']) {
-    			if ($params['additional'] == "1") {
-    				$request["additional"] = true;
-    			} else {
-    				$request["additional"] = (int)$params['additional'];
-    			}
-    		}
-
-    		$trafic = $GLOBALS['arTraficAnswer'][$_REQUEST["WEB_FORM_ID"]];
-    		$request['type'] = 'order';
-    		$request['source'] = $_REQUEST[$trafic['src']];
-    		$request['channel'] = $_REQUEST[$trafic['mdm']];
-    		$request['campania'] = $_REQUEST[$trafic['cnt']];
-    		$request['message'] = $_REQUEST[$trafic['cmp']];
-    		$request['kword'] = $_REQUEST[$trafic['trm']];
-    		$request['cid'] = $_REQUEST[$trafic['ClientId']];
-    		
-    		$additionFields = $GLOBALS['arAdditionAnswer'][$_REQUEST["WEB_FORM_ID"]];
-    		
-    		if(isset($additionFields['name'])) $request['name'] = $_REQUEST[$additionFields['name']];
-    		if(isset($additionFields['surname'])) $request['surname'] = $_REQUEST[$additionFields['surname']];
-    		if(isset($additionFields['email'])) $request['email'] = $_REQUEST[$additionFields['email']];
-    		
-    		$this->_send($this->apiUrl."ordernew", $request);
-            
-    		if ($this->_data['result']->errorCode == 0)
-    			$this->_result = true;
-            */
         } else {
             $this->_result = false;
         }
@@ -563,6 +521,9 @@ class Api
 		}
 		if( !empty($params["type"]) ) {
 			$arParams["type"] = $params["type"];
+		}
+		if( !empty($params["client_id"]) && empty($params["cid"]) ) {
+			$arParams["client_id"] = $params["client_id"];
 		}
         
 		$additionFields = $GLOBALS['arAdditionAnswer'][$webFormId];
