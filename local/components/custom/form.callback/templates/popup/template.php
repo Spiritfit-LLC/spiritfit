@@ -23,6 +23,7 @@ $arField = ['name', 'phone', 'email'];
                     <?= bitrix_sessid_post(); ?>
                     <input type="hidden" name="WEB_FORM_ID" value="<?= $arParams["WEB_FORM_ID"] ?>">
                     <input type="hidden" name="step" value="1">
+                    <input type="hidden" name="typeSetClient" value="callback">
 
                     <div class="form-standart__fields-list">
                         <div class="form-standart__field">
@@ -125,3 +126,30 @@ $arField = ['name', 'phone', 'email'];
 
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $('.popup__form .js-callback-submit_v2[type="submit"]').click(function(){
+            var form = $(this).parents('form');
+            var valid = true;
+
+            $(this).parents('form').find('input:required').each(function() {
+                if ($(this).attr('type') == 'checkbox') {
+                    if ($(this).prop('checked') == false) valid = false;
+                } else {
+                    if ($(this).val() == '') valid = false;
+                }
+            });
+
+            if (valid) {
+                var setClientData= {
+                    'phone':$(form).find('[type="tel"]').val(),
+                    'email':$(form).find('[type="email"]').val(),
+                    'setTypeClient':$(form).find('input[name="typeSetClient"]').val()
+                };
+
+                sendToUpMetrika(setClientData);
+            }
+
+        });
+    });
+</script>

@@ -64,6 +64,17 @@ $settings = Utils::getInfo();
 	<script src="<?=SITE_TEMPLATE_PATH . "/vendor/perfect-scrollbar/perfect-scrollbar.min.js"?>"></script>
 	<script src="<?=SITE_TEMPLATE_PATH . "/vendor/nicescroll/jquery.nicescroll.js"?>"></script>
 	<script src="<?=SITE_TEMPLATE_PATH . "/vendor/select2/select2.js"?>"></script>
+    <script>
+        (function (d, o, w, c) {
+        a = d.createElement(o),
+        m = d.getElementsByTagName(o)[0],
+        a.async = 1;
+        a.referrerPolicy = "no-referrer-when-downgrade";
+        a.src = w;
+        a.setAttribute('data-business', 'spiritfit');
+        m.parentNode.insertBefore(a, m);
+        })(document, 'script', '//upmetrics.ru/upmetric.min.js');
+    </script>
 </body>
 <?
 	$inHead = $APPLICATION->GetViewContent('inhead');

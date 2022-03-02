@@ -73,6 +73,8 @@ unset($item);
                 <input type="hidden" name="WEB_FORM_ID" value="<?= $arParams["WEB_FORM_ID"] ?>">
                 <input type="hidden" name="step" value="1">
                 <input type="hidden" name="sub_id" value="<?= $arResult["ELEMENT"]["PROPERTIES"]['CODE_ABONEMENT']['VALUE'] ?>">
+                <input type="hidden" name="typeSetClient" value="trialTraining">
+
                 <div class="subscription__aside-form-row subscription__aside-form-row--title">
 
                 </div>
@@ -297,3 +299,30 @@ if (!$_SERVER['HTTP_X_PJAX']) {
    $APPLICATION->AddViewContent('inhead', $ogImage);
 }
     ?>
+<script>
+    $(document).ready(function(){
+        $('.subscription__aside-form .popup__btn[type="submit"]').click(function(){
+            var form = $(this).parents('form');
+            var valid = true;
+
+            $(this).parents('form').find('input:required').each(function() {
+                if ($(this).attr('type') == 'checkbox') {
+                    if ($(this).prop('checked') == false) valid = false;
+                } else {
+                    if ($(this).val() == '') valid = false;
+                }
+            });
+
+            if (valid) {
+                var setClientData= {
+                    'phone':$(form).find('[type="tel"]').val(),
+                    'email':$(form).find('input[placeholder="<?=$arResult["arQuestions"]["email"]["TITLE"]?>"]').val(),
+                    'setTypeClient':$(form).find('input[name="typeSetClient"]').val()
+                };
+
+                sendToUpMetrika(setClientData);
+            }
+
+        });
+    });
+</script>

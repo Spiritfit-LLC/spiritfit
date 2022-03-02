@@ -1,3 +1,23 @@
+function sendToUpMetrika(sendData){
+    // console.log({
+    //     'phoneMd5': CryptoJS.MD5(sendData['phone']).toString(),
+    //     'emailMd5': CryptoJS.MD5(sendData['email']).toString(),
+    //     'phoneSha256': CryptoJS.SHA256(sendData['phone']).toString(),
+    //     'emailSha256': CryptoJS.SHA256(sendData['email']).toString(),
+    //     'typeSetClient': sendData['setTypeClient']
+    // })
+    sendData['phone']=sendData['phone'].replace(/[^0-9]/g,"");
+
+    acfp.setClient({
+        'phoneMd5': CryptoJS.MD5(sendData['phone']).toString(),
+        'emailMd5': CryptoJS.MD5(sendData['email']).toString(),
+        'phoneSha256': CryptoJS.SHA256(sendData['phone']).toString(),
+        'emailSha256': CryptoJS.SHA256(sendData['email']).toString(),
+        'typeSetClient': sendData['setTypeClient']
+    });
+        
+}
+
 function setScrollFormModal(){
     var block = document.querySelector('.modalForm .popup__window--modal-form');
     var clientH = document.documentElement.clientHeight;
