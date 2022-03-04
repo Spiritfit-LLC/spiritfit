@@ -256,7 +256,7 @@ foreach( $clubs as $club ) {
         <? if($page != '/'){ 
         ?>
             <? if(!$showSlider) { ?>
-				<section class="b-screen b-screen_short">
+				<section class="b-screen b-screen_short <?=(defined('HOLDER_CLASS') ? HOLDER_CLASS : '')?>">
 					<div class="b-screen__bg-holder"></div>
 				</section>
 			<? } ?>

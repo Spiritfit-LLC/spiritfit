@@ -52,7 +52,6 @@
 			$fromFields["client_id"] = $this->request->getCookieRaw("_ga");
 			$fromFields["type"] = $this->arParams["FORM_TYPE"];
 			$fromFields["WEB_FORM_ID"] = $this->arParams["WEB_FORM_ID"];
-			
 			return $fromFields;
 		}
 		
@@ -111,7 +110,6 @@
 				$phoneValue = $this->request->get($phoneName);
 				$this->arResult["SMS_PHONE"] = $phoneValue;
 			}
-			
 			if( $currentStep == 1 ) {
 				switch( $actionName ) {
 					case "REFRESH": //Обновление формы
@@ -127,7 +125,7 @@
 						}
 						return 1;
 					break;
-					case "SEND_SMS": //Отправка СМС и, в случае успеха, переход на следующий шаг
+					case "SEND_SMS":
 						$responseResult["RESPONSE"] = CForm::Check($this->arParams["WEB_FORM_ID"], $_REQUEST, false, "Y", "N");
 						if( empty($responseResult["RESPONSE"]) && !empty($phoneValue) ) {
                         	$responseResult["RESPONSE"] = $this->sendSms($phoneValue);
@@ -207,7 +205,8 @@
 									$this->resetForm();
 									return 3;
                 				} else {
-									$responseResult["MESSAGE"] = "Ошибка создания записи веб-формы";
+									global $strError;
+									$responseResult["MESSAGE"] = $strError;
 									$responseResult["ERROR"] = true;
 								}
 							}
@@ -252,6 +251,7 @@
 					
 					$responseResult = ["ERROR" => false, "MESSAGE" => "", "RESPONSE" => ""];
 					$this->arResult["STEP"] = $this->checkStep($this->arResult["STEP"], $responseResult);
+					$this->arResult["RESPONSE"] = $responseResult;
 					
 					$templateName = ($this->arResult["STEP"] > 1) ? "step-".$this->arResult["STEP"] : "template";
 					

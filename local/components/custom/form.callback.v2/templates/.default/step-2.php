@@ -5,7 +5,7 @@
 	<h2 class="club__subheading"><?=!empty($arParams["BLOCK_TITLE"]) ? $arParams["BLOCK_TITLE"] : "Оставьте заявку" ?></h2>
 	<div class="training__aside">
 		<div class="training__aside-stage">
-			<form class="get-abonement" action="<?=$APPLICATION->GetCurPage(false)?>" method="POST" enctype="multipart/form-data">
+			<form class="get-contact" action="<?=$APPLICATION->GetCurPage(false)?>" method="POST" enctype="multipart/form-data">
 				<?=getClientParams($arParams["WEB_FORM_ID"]);?>
 				<input type="hidden" name="COMPONENT_ID" value="<?=$arResult["COMPONENT_ID"]?>">
                 <input type="hidden" name="STEP" value="<?=$arResult["STEP"]?>">
@@ -47,9 +47,9 @@
                         <input class="input input--num input--light" type="text" maxlength="1" inputmode="numeric" name="NUM_ARR[<?= $i ?>]" placeholder="0" min="0" max="9" pattern="[0-9]" required="required">
                     <? endfor; ?>
                 </div>
-                <a class="get-abonement-resend" href="#resend">Получить код повторно</a>
+                <a class="get-contact-resend" href="#resend">Получить код повторно</a>
 				<div class="subscription__bottom">
-					<input class="subscription__total-btn subscription__total-btn--form btn btn--white" type="submit" value="Купить">
+					<input class="subscription__total-btn subscription__total-btn--form btn btn--white" type="submit" value="Отправить">
                 </div>
 			</form>
 		</div>

@@ -5261,3 +5261,27 @@ button.mfp-arrow::before{
 }
 /* стили для карты на странице "клубы" end */
 
+.company .b-cards-slider__heading {
+    margin-bottom: 20px;
+}
+.company .company-description {
+    display: table;
+    position: relative;
+    table-layout: fixed;
+    width: 100%;
+    margin: 20px 0px 50px;
+}
+.company .table-cell {
+    display: table-cell;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+.company .table-cell:nth-child(1) {
+    padding-right: 20px;
+}
+.company .table-cell:nth-child(2) {
+    padding-left: 20px;
+}
+.company-holder.b-screen:after {
+    display: none;
+}
