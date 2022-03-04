@@ -15,7 +15,7 @@
 		$workoutsFilter = ["ACTIVE" => "Y", "ID" => $settings["PROPERTIES"]["MEMBERS_WORKOUTS"]["VALUE"]];
 	}
 	
-	$APPLICATION->IncludeFile('/local/include/group-workouts.php', ['blockTitle' => $settings["PROPERTIES"]["MEMBERS_TITLE1"]["VALUE"], "filterName" => "workoutsFilter"]);
+	$APPLICATION->IncludeFile('/local/include/group-workouts.php', ['blockTitle' => $settings["PROPERTIES"]["MEMBERS_TITLE1"]["VALUE"], "filterName" => "workoutsFilter", "class" => "workouts"]);
 	
 	$APPLICATION->IncludeFile('/local/include/blocks.abonements.php', ['ELEMENT_CODE' => 'trenazhernyy-zal-main', 'blockTitle' => $settings["PROPERTIES"]["MEMBERS_TITLE2"]["VALUE"]], ['SHOW_BORDER' => false]);
 	

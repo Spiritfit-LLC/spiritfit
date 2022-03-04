@@ -5,11 +5,15 @@ if( !isset($blockTitle) ) {
 if( !isset($filterName) ) {
 	$filterName = "";
 }
+if( !isset($class) ) {
+	$class = "";
+}
 $APPLICATION->IncludeComponent(
 	"bitrix:news.list",
 	"group-workouts",
 	Array(
 		"BLOCK_TITLE" => $blockTitle,
+		"BLOCK_CLASS" => $class,
 		"ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"ADD_SECTIONS_CHAIN" => "N",
 		"AJAX_MODE" => "N",

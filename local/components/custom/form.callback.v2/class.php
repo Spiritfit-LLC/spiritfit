@@ -24,9 +24,14 @@
 		private function getFormFields() {
 			$status = CForm::GetDataByID($this->arParams["WEB_FORM_ID"], $this->arResult["arForm"], $this->arResult["arQuestions"], $this->arResult["arAnswers"], $this->arResult["arDropDown"], $this->arResult["arMultiSelect"]);
 			if( $status && !empty($this->arParams["CLUB_NUMBER"]) ) {
-				if($this->arResult["arAnswers"]["club"]){
+				if($this->arResult["arAnswers"]["club"]) {
 					$this->arResult["arAnswers"]["club"][0]['ITEMS'] = Utils::getClubsForm( $this->arParams["CLUB_NUMBER"] );
 				}
+			}
+			$this->arResult["SELECTED_THEME"] = "";
+			if( $status && !empty($this->arResult["arAnswers"]["theme"]) ) {
+				$fieldId = "form_" . $this->arResult["arAnswers"]["theme"][0]["FIELD_TYPE"] . "_" . $this->arResult["arAnswers"]["theme"][0]["ID"];
+				$this->arResult["SELECTED_THEME"] = (!empty($this->request[$fieldId])) ? $this->request[$fieldId] : "";
 			}
 		}
 		
@@ -196,6 +201,8 @@
 								if( $RESULT_ID = CFormResult::Add($this->arParams["WEB_FORM_ID"], $_REQUEST, "N") ) {
                     				CFormResult::SetEvent($RESULT_ID);
                     				CFormResult::Mail($RESULT_ID);
+									
+									$responseResult["MESSAGE"] = "Сообщение отправлено";
 									
 									$this->resetForm();
 									return 3;

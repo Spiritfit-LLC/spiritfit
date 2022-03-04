@@ -5243,6 +5243,10 @@ button.mfp-arrow::before{
     background: #ff7628; 
 }
 
+.b-cards-slider.workouts {
+	margin-top: 60px;
+}
+
 
 /* стили для карты на странице "клубы" start */
 #mapid .leaflet-layer {filter: contrast(.7) grayscale(1) invert(1) brightness(0.8);}
