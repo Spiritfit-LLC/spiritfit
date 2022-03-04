@@ -33,7 +33,8 @@ class FormAbonimentComponent extends CBitrixComponent{
                 $this->arResult["CLUB_ID"] = $club;
             }
             $this->arResult["WEB_FORM_ID"] = $this->arResult["arForm"]["VARNAME"];
-
+            if ($this->arParams["CLIENT_TYPE"]!=NULL && $this->arParams["CLIENT_TYPE"]!="")
+                $this->arResult["CLIENT_TYPE"] = $this->arParams["CLIENT_TYPE"];
         }
     }
 

@@ -23,7 +23,9 @@ $arField = ['name', 'phone', 'email'];
                     <?= bitrix_sessid_post(); ?>
                     <input type="hidden" name="WEB_FORM_ID" value="<?= $arParams["WEB_FORM_ID"] ?>">
                     <input type="hidden" name="step" value="1">
-                    <input type="hidden" name="typeSetClient" value="callback">
+                    <?if ($arResult["CLIENT_TYPE"]):?>
+                    <input type="hidden" name="typeSetClient" value="<?=$arResult["CLIENT_TYPE"]?>">
+                    <?endif;?>
 
                     <div class="form-standart__fields-list">
                         <div class="form-standart__field">
@@ -141,13 +143,15 @@ $arField = ['name', 'phone', 'email'];
             });
 
             if (valid) {
-                var setClientData= {
-                    'phone':$(form).find('[type="tel"]').val(),
-                    'email':$(form).find('[type="email"]').val(),
-                    'setTypeClient':$(form).find('input[name="typeSetClient"]').val()
-                };
-
-                sendToUpMetrika(setClientData);
+                if ($(form).find('input[name="typeSetClient"]').length > 0){
+                    var setClientData= {
+                        'phone':$(form).find('[type="tel"]').val(),
+                        'email':$(form).find('[type="email"]').val(),
+                        'setTypeClient':$(form).find('input[name="typeSetClient"]').val()
+                    };
+                    sendToUpMetrika(setClientData);
+                    
+                }
             }
 
         });

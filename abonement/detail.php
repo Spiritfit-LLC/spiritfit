@@ -120,6 +120,7 @@ if( $elementCode ) {
 						"AJAX_MODE" => "N",
 						"WEB_FORM_ID" => "3",
 						"ADD_ELEMENT_CHAIN" => "N",
+						"CLIENT_TYPE" => "trialTraining",
 					),
 					false
 				);

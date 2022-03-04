@@ -6,6 +6,7 @@ $APPLICATION->IncludeComponent(
 	array(
 		"AJAX_MODE" => "N",
 		"WEB_FORM_ID" => "4",
+		"CLIENT_TYPE" => "siteFeedback"
 	),
 	false
 );?>

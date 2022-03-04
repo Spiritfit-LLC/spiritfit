@@ -23,6 +23,14 @@ $arComponentParameters = array(
 			"DEFAULT" => "={\$_REQUEST[WEB_FORM_ID]}",
 			"PARENT" => "DATA_SOURCE",
 		),
+		"CLIENT_TYPE"=>array(
+			"NAME"=>"Тип для UPMETRIKA",
+			"DEFAULT" => NULL,
+			"TYPE" => "STRING",
+			"MULTIPLE" => "N",
+			"COLS" => 25,
+			"REFRESH"=> "N",
+		),
 	),
 );
 ?>

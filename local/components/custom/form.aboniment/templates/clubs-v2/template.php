@@ -19,6 +19,9 @@ $arField = ['name', 'email', 'phone'];
                 <input type="hidden" class="club" name="form_<?= $arResult["arAnswers"]["club"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["club"]['0']["ID"] ?>" value="<?= $arParams["NUMBER"] ?>">
                 <input type="hidden" class="text_form" name="text_form" value="<?= $arParams["TEXT_FORM"] ?>">
                 <input type="hidden" name="form_<?= $arResult["arAnswers"]["price"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["price"]['0']["ID"] ?>" value="0">
+                <?if ($arResult["CLIENT_TYPE"]):?>
+                <input type="hidden" name="typeSetClient" value="<?=$arResult["CLIENT_TYPE"]?>">
+                <?endif;?>
 
                 <div class="form-standart__fields-list">
                     <? foreach ($arField as $itemField) { 
@@ -134,4 +137,34 @@ $arField = ['name', 'email', 'phone'];
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $('.training__aside-form_v2 .subscription__total-btn--legal-training_v2[type="submit"]').click(function(){
+            var form = $(this).parents('form');
+            var valid = true;
+
+            $(this).parents('form').find('input:required').each(function() {
+                if ($(this).attr('type') == 'checkbox') {
+                    if ($(this).prop('checked') == false) valid = false;
+                } else {
+                    if ($(this).val() == '') valid = false;
+                }
+            });
+
+            if (valid) {
+                if ($(form).find('input[name="typeSetClient"]').length > 0){
+                    var setClientData= {
+                        'phone':$(form).find('[type="tel"]').val(),
+                        'email':$(form).find('[type="email"]').val(),
+                        'setTypeClient':$(form).find('input[name="typeSetClient"]').val()
+                    };
+                    sendToUpMetrika(setClientData);
+                    
+                }
+            }
+
+        });
+    });
+</script>
 
