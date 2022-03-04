@@ -137,6 +137,14 @@ $arTraficAnswer = array(
 		'trm' => 'form_text_66',
 		'ClientId' => 'form_text_67',
 	),
+	10 => array(
+		'src' => 'form_text_224',
+		'mdm' => 'form_text_225',
+		'cmp' => 'form_text_226',
+		'cnt' => 'form_text_227',
+		'trm' => 'form_text_228',
+		'ClientId' => 'form_text_229',
+	),
 );
 
 $arAdditionAnswer = array(
@@ -165,6 +173,10 @@ $arAdditionAnswer = array(
 		'name' => 'form_text_31',
 		'email' => 'form_text_37',
 		'subscriptionId' => 'form_text_30',
+	),
+	10 => array(
+		'name' => 'form_text_215',
+		'email' => 'form_text_217',
 	),
 );
 

@@ -1,4 +1,8 @@
-<?$APPLICATION->IncludeComponent(
+<?
+if( !isset($blockTitle) ) {
+	$blockTitle = "";
+}
+$APPLICATION->IncludeComponent(
 	"bitrix:news.detail", 
 	"blocks.abonements", 
 	array(
@@ -7,6 +11,7 @@
         "IBLOCK_TYPE" => "service",
         "IBLOCK_ID" => "18",
         "ELEMENT_ID" => "",
+		"BLOCK_TITLE" => $blockTitle,
         "ELEMENT_CODE" => $arParams['ELEMENT_CODE'],
 		"ADDITIONAL_CLASS" => (!empty($arParams['ADDITIONAL_CLASS'])) ? $arParams['ADDITIONAL_CLASS'] : '',
         "CHECK_DATES" => "Y",

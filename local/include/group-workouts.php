@@ -1,7 +1,15 @@
-<?$APPLICATION->IncludeComponent(
+<?
+if( !isset($blockTitle) ) {
+	$blockTitle = "";
+}
+if( !isset($filterName) ) {
+	$filterName = "";
+}
+$APPLICATION->IncludeComponent(
 	"bitrix:news.list",
 	"group-workouts",
 	Array(
+		"BLOCK_TITLE" => $blockTitle,
 		"ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"ADD_SECTIONS_CHAIN" => "N",
 		"AJAX_MODE" => "N",
@@ -22,7 +30,7 @@
 		"DISPLAY_PREVIEW_TEXT" => "N",
 		"DISPLAY_TOP_PAGER" => "N",
 		"FIELD_CODE" => array("", ""),
-		"FILTER_NAME" => "",
+		"FILTER_NAME" => $filterName,
 		"HIDE_LINK_WHEN_NO_DETAIL" => "N",
 		"IBLOCK_ID" => "10",
 		"IBLOCK_TYPE" => "service",

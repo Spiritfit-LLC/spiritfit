@@ -16,7 +16,7 @@ $this->setFrameMode(true);
 <section class="b-faq">
     <div class="content-center">
         <div id="faq" class="b-faq__content">
-            <h2>FAQ</h2>
+            <h2><?=!empty($arParams["BLOCK_TITLE"]) ? $arParams["BLOCK_TITLE"] : "FAQ" ?></h2>
             <div class="b-faq__tabs js-tabs-parent">
                 <ul class="b-faq__tab-links is-hide-mobile">
                     <?
