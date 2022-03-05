@@ -56,7 +56,8 @@ document.addEventListener("DOMContentLoaded", function(){
       className: 'invisible-icon',
       iconSize: [0, 0]
   })
-		
+	
+	let markerId = 0;
     if(marker == networkAbonementID){
       for (var j = 0; j < markers.length; j++) {
         if(markers[j].options.id == networkAbonementID){
@@ -65,7 +66,8 @@ document.addEventListener("DOMContentLoaded", function(){
           markers[j].setIcon(iconActive);
         }
       }
-    }else{
+	  markerId = networkAbonementID;
+    } else {
       for (var j = 0; j < markers.length; j++) {
 				// для "приближения" активного маркера
 				// изменяем его z-index
@@ -81,11 +83,33 @@ document.addEventListener("DOMContentLoaded", function(){
         }
       }
 
-			marker.setZIndexOffset(1000);
-      marker.setIcon(iconActive);
-			marker.options.isActive = true;
-			
-    }
+		marker.setZIndexOffset(1000);
+		marker.setIcon(iconActive);
+		marker.options.isActive = true;
+		
+		markerId = marker.options.id;
+		
+		$('select.b-map__switch').val(marker.options.id);
+		$('select.b-map__switch').trigger('change');
+	}
+	var slickElem = $("#mapslider .map-slider-item__select[data-id="+markerId+"]");
+	if( slickElem.length > 0 ) {
+		$("#mapslider .map-slider-item__select").removeClass("active");
+		$(slickElem).addClass("active");
+		
+		let maxCount = $("#mapslider .map-slider-item").length;
+		let currentNum = parseInt( $(slickElem).data("key") );
+		
+		if( maxCount > 4 ) maxCount -= 4;
+		
+		if( currentNum > maxCount ) {
+			currentNum = maxCount;
+		} else {
+			currentNum -= 1;
+		}
+		
+		$("#mapslider").slick('slickGoTo',  currentNum);
+	}
   }   
 
   // функция обновления контента информации клуба
@@ -108,7 +132,6 @@ document.addEventListener("DOMContentLoaded", function(){
               <a href="${marker.options.page}#timetable">Расписание</a>
 	  </div>`;
     }
-    
     
     // блок "короткое описание клуба"
     let shortDescrBlock = '';
@@ -158,12 +181,12 @@ document.addEventListener("DOMContentLoaded", function(){
 
   // Обработчик выбора клуба в select слева, над инфой клуба
   function clubSelectHandler(){
-    $('.b-map__switch').on("select2:select", function () {
+	$('.b-map__switch').on("select2:select", function () {
       $('.b-map__switch-holder .select2-results__options').getNiceScroll().hide();
       const $selectedOption = $(':selected', $(this));
       const optionValue = $selectedOption.val();
       const activeMarker = markers.find(function (marker) {
-          return marker.options.id === optionValue;
+          return marker.options.id == optionValue;
       });
       if(optionValue == networkAbonementID){
           setActiveIcon(networkAbonementID);
@@ -174,6 +197,62 @@ document.addEventListener("DOMContentLoaded", function(){
 
       setInfoContent(activeMarker);
     });
+  }
+  
+  // Обработчик выбора клуба в слайдере
+  function clubSelectSlider() {
+	$("#mapslider").on('init', function(event, slick) {
+		$("#mapslider .map-slider-item__select").click(function(e) {
+			e.preventDefault();
+			
+			var id = parseInt( $(this).data("id") );
+			
+			$('select.b-map__switch').val(id);
+			$('select.b-map__switch').trigger('change');
+			
+			var activeMarkerDef = markers.find(function (marker) {
+				return marker.options.id == id;
+        	});
+			if( activeMarkerDef !== undefined ) {
+				if( id == networkAbonementID ) {
+					setActiveIcon(networkAbonementID);
+				} else {
+					mapL.panTo(activeMarkerDef.getLatLng());
+					setActiveIcon(activeMarkerDef);
+					setInfoContent(activeMarkerDef);
+				}
+			}
+		});
+	});
+	$("#mapslider").slick({
+		dots: false,
+		infinite: false,
+		speed: 1200,
+		adaptiveHeight: false,
+		draggable: true,
+		centerMode: false,
+		slidesToShow: 4,
+		slidesToScroll: 1,
+		prevArrow: '<button class="slick-prev"><svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7,13L1,7l6-6" stroke="#7F7F7F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>',
+		nextArrow: '<button class="slick-next"><svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L7 7L1 13" stroke="#7F7F7F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>',
+		responsive: [
+		{
+			breakpoint: 1024,
+			settings: {
+				arrows: true,
+				slidesToScroll: 1,
+				slidesToShow: 2
+			}
+		},
+		{
+			breakpoint: 560,
+			settings: {
+				arrows: true,
+				slidesToScroll: 1,
+				slidesToShow: 1
+			}
+		}]
+	});
   }
 
   // функия для блока "поиск клуба" под картой
@@ -217,9 +296,8 @@ document.addEventListener("DOMContentLoaded", function(){
         $('select.b-map__switch').trigger('change');
 
         var activeMarkerDef = markers.find(function (marker) {
-            return marker.options.id === id;
+            return marker.options.id == id;
         });
-
         
         if(activeMarkerDef !== undefined) {
             mapL.panTo(activeMarkerDef.getLatLng());
@@ -229,9 +307,6 @@ document.addEventListener("DOMContentLoaded", function(){
         }
     }
   }
-
-  
-  
 
    // функционал вывода краткого описания для клубов.
     // ниже идет модальное окно для вывода всего поля "краткое описание клуба"
@@ -335,7 +410,6 @@ document.addEventListener("DOMContentLoaded", function(){
 			marker.on('click', function(e){
 				setActiveIcon(e.target);
 				setInfoContent(e.target);
-			
 			});
 
 			marker.addTo(mapL);
@@ -344,10 +418,10 @@ document.addEventListener("DOMContentLoaded", function(){
 	}
 
 	// window.addEventListener('resize',adaptiveMapL);
-
-
-  clubSelectHandler();    
-  clubSearchSelect();
+	
+	clubSelectSlider();
+	clubSelectHandler();  
+	clubSearchSelect();
 	adaptiveMapL();
 });
 // }

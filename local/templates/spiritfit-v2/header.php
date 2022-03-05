@@ -162,7 +162,7 @@ foreach( $clubs as $club ) {
             </div>
         </div>
     </header>
-    <main class="b-page__main" role="main">
+    <main class="b-page__main <?=(defined('HOLDER_CLASS') ? HOLDER_CLASS : '')?>" role="main">
         <?if (!defined('HIDE_SLIDER')){?>
             <? if(strpos($page, '/clubs/') !== false) {
                 $GLOBALS['arFilterSlider'] = [
@@ -256,7 +256,7 @@ foreach( $clubs as $club ) {
         <? if($page != '/'){ 
         ?>
             <? if(!$showSlider) { ?>
-				<section class="b-screen b-screen_short <?=(defined('HOLDER_CLASS') ? HOLDER_CLASS : '')?>">
+				<section class="b-screen b-screen_short">
 					<div class="b-screen__bg-holder"></div>
 				</section>
 			<? } ?>

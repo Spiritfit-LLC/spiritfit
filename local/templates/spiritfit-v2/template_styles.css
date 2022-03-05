@@ -5261,6 +5261,9 @@ button.mfp-arrow::before{
 }
 /* стили для карты на странице "клубы" end */
 
+.content-center.company {
+	margin-top: 60px;
+}
 .company .b-cards-slider__heading {
     margin-bottom: 20px;
 }
@@ -5282,6 +5285,192 @@ button.mfp-arrow::before{
 .company .table-cell:nth-child(2) {
     padding-left: 20px;
 }
-.company-holder.b-screen:after {
+.company-holder .b-screen:after {
     display: none;
+}
+.company-holder h2,
+.company-holder .h2 {
+	font-size: 28pt;
+    font-weight: 500;
+}
+
+.footer-phone {
+	display: flex;
+	position: relative;
+    align-items: center;
+    height: 32px;
+    padding-left: 50px;
+    color: #fff;
+    font-weight: 500;
+    background-image: url(/local/templates/spiritfit-v2/css/../img/icon-phone.svg);
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: contain;
+}
+.footer-phone-wrapper {
+	display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    padding: 20px 25px;
+    background-color: #0f0f0f;
+}
+.footer-menu {
+	display: table;
+	position: relative;
+	width: 100%;
+	table-layout: fixed;
+}
+.footer-menu-title {
+	display: block;
+	position: relative;
+	margin-bottom: 20px;
+	font-size: 14pt;
+	font-weight: bold;
+}
+.footer-menu-title a,
+.footer-menu-cell ul > li > a {
+	color: #fff;
+    text-decoration: none;
+}
+.footer-menu-title a:hover,
+.footer-menu-cell ul > li > a:hover {
+	text-decoration: underline;
+}
+.footer-menu-cell {
+	display: table-cell;
+	position: relative;
+	vertical-align: top;
+	width: 25%;
+	box-sizing: border-box;
+	padding: 40px 25px 0px;
+}
+.footer-menu-cell:first-child {
+	padding-left: 0;
+}
+.footer-menu-cell:last-child {
+	padding-right: 0;
+}
+.footer-menu-cell ul,
+.footer-menu-cell ul > li,
+.footer-menu-cell ul > li > a {
+	display: block;
+	position: relative;
+}
+.footer-menu-cell ul {
+	list-style: none;
+}
+.footer-menu-cell ul > li {
+	margin-bottom: 4px;
+}
+.footer-menu-cell ul > li:last-child {
+	margin-bottom: 0;
+}
+.footer-menu-cell .b-social-link {
+	margin-top: 50px;
+}
+
+.map-slider {
+	display: block;
+    position: relative;
+    width: calc(50% + 90px);
+    left: calc(50% - 90px);
+    bottom: 240px;
+    z-index: 400;
+}
+.map-slider-item {
+	display: block;
+    position: relative;
+    height: 240px;
+    box-sizing: border-box;
+    padding: 5px;
+	font-size: 12pt;
+}
+.map-slider-item__select {
+	display: block;
+    position: relative;
+	height: 230px;
+    border: 1px solid transparent;
+	background-color: rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    padding: 15px 15px 60px 15px;
+	transition: all .3s;
+}
+.map-slider-item__button {
+	display: block;
+    position: absolute;
+    width: calc(100% - 30px);
+    bottom: 20px;
+    left: 15px;
+	text-align: center;
+}
+.map-slider-item__button span {
+	display: inline-block;
+    position: relative;
+    padding: 5px 25px;
+    border: 1px solid #fe6000;
+    color: white;
+    font-size: 12pt;
+    text-transform: uppercase;
+    transition: all .3s;
+}
+.map-slider-item__select:hover,
+.map-slider-item__select.active {
+	border: 1px solid #fe6000;
+	cursor: pointer;
+}
+.map-slider-item__select:hover .map-slider-item__button span,
+.map-slider-item__select.active .map-slider-item__button span {
+	background-color: #fe6000;
+}
+
+.map-slider .slick-arrow {
+	display: block;
+	position: absolute;
+	top: 5px;
+	height: calc(100% - 10px);
+	width: 50px;
+	border: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	transition: all .3s;
+	z-index: 1;
+}
+.map-slider .slick-next {
+	right: 5px;
+}
+.map-slider .slick-prev {
+	left: 5px;
+}
+.map-slider .slick-arrow:hover {
+	background-color: rgba(254, 96, 0, 0.5);
+}
+
+@media screen and (max-width: 1024px) {
+	.footer-menu {
+		display: grid;
+    	position: relative;
+		grid-gap: 25px;
+    	grid-template-columns: 1fr 1fr;
+		padding-top: 50px;
+	}
+	.footer-menu-cell {
+		display: block;
+		width: initial;
+		padding: 0px;
+	}
+}
+@media screen and (max-width: 968px) {
+	.content-center.company {
+		margin-top: 40px;
+	}
+	.footer-menu-cell .b-social-link {
+		margin-top: 20px;
+	}
+	.map-slider {
+		display: none;
+	}
+}
+@media screen and (max-width: 568px) {
+	.footer-menu {
+    	grid-template-columns: 1fr;
+	}
 }

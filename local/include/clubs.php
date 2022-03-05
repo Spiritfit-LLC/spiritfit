@@ -20,7 +20,6 @@ crossorigin=""></script>
                         <select class="b-map__switch" data-placeholder="Найти клуб">
                             <option></option>
 							<? foreach ($clubs as $itemClub) { ?>
-								<? //if($itemClub['ID'] > 1162) continue; ?>
 								<option value="<?=$itemClub['ID']?>"><?=$itemClub['NAME']?></option>
 							<? } ?>
                         </select>
@@ -35,5 +34,19 @@ crossorigin=""></script>
                 </div>
             </div>
         </div>
+		<div id="mapslider" class="map-slider">
+			<? foreach ($clubs as $key => $club) { ?>
+				<div class="map-slider-item">
+					<div class="map-slider-item__select" data-id="<?=$club['ID']?>" data-key="<?=$key?>">
+						<?=!empty($club["PROPERTY_ADRESS_VALUE"]["TEXT"]) ? $club["PROPERTY_ADRESS_VALUE"]["TEXT"] : $club["NAME"]?>
+						<? if( empty($club["PROPERTY_HIDE_LINK_VALUE"]) ) { ?>
+							<a class="map-slider-item__button" href="/clubs/<?=$club["CODE"]?>/"><span>Выбрать</span></a>
+						<? } else { ?>
+							<span class="map-slider-item__button"><span>Выбрать</span></span>
+						<? } ?>
+					</div>
+				</div>
+			<? } ?>
+		</div>
     </div>
 </div>
