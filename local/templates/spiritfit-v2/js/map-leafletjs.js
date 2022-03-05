@@ -231,11 +231,19 @@ document.addEventListener("DOMContentLoaded", function(){
 		adaptiveHeight: false,
 		draggable: true,
 		centerMode: false,
-		slidesToShow: 4,
+		slidesToShow: 6,
 		slidesToScroll: 1,
 		prevArrow: '<button class="slick-prev"><svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7,13L1,7l6-6" stroke="#7F7F7F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>',
 		nextArrow: '<button class="slick-next"><svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L7 7L1 13" stroke="#7F7F7F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>',
 		responsive: [
+		{
+			breakpoint: 1680,
+			settings: {
+				arrows: true,
+				slidesToScroll: 1,
+				slidesToShow: 4
+			}
+		},
 		{
 			breakpoint: 1024,
 			settings: {

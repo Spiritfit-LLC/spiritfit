@@ -5,36 +5,36 @@
 	
 	require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 	
-	$APPLICATION->SetTitle("Тренировки онлайн");
-	$APPLICATION->SetPageProperty("title", "Тренировки онлайн");
+	$APPLICATION->SetTitle("Персональный тренинг");
+	$APPLICATION->SetPageProperty("title", "Персональный тренинг");
 	$APPLICATION->SetPageProperty("description", "");
 	
 	$settings = Utils::getInfo();
 	
 	?>
 	<div class="content-center company">
-        <? if( !empty($settings["PROPERTIES"]["OTRAINING_TITLE1"]["VALUE"]) ) { ?>
+        <? if( !empty($settings["PROPERTIES"]["PTRAINING_TITLE1"]["VALUE"]) ) { ?>
         	<div class="b-cards-slider__heading">
             	<div class="b-cards-slider__title">
-                	<h2><?=$settings["PROPERTIES"]["OTRAINING_TITLE1"]["VALUE"]?></h2>
+                	<h2><?=$settings["PROPERTIES"]["PTRAINING_TITLE1"]["VALUE"]?></h2>
             	</div>
 			</div>
 		<? } ?>
 
 		<div class="company-description">
-			<?=!empty($settings["PROPERTIES"]["OTRAINING_TEXT"]["~VALUE"]["TEXT"]) ? $settings["PROPERTIES"]["OTRAINING_TEXT"]["~VALUE"]["TEXT"] : "" ?>
+			<?=!empty($settings["PROPERTIES"]["PTRAINING_TEXT"]["~VALUE"]["TEXT"]) ? $settings["PROPERTIES"]["PTRAINING_TEXT"]["~VALUE"]["TEXT"] : "" ?>
 		</div>
     </div>
 	<?
 	
-	$APPLICATION->IncludeFile('/local/include/blocks.php', ['ELEMENT_CODE' => 'onlayn-trenirovki', 'blockTitle' => $settings["PROPERTIES"]["OTRAINING_TITLE2"]["VALUE"]], ['SHOW_BORDER' => false]);
+	$APPLICATION->IncludeFile('/local/include/blocks.php', ['ELEMENT_CODE' => 'personalnyy-trening', 'blockTitle' => $settings["PROPERTIES"]["PTRAINING_TITLE2"]["VALUE"]], ['SHOW_BORDER' => false]);
 	
-	if( !empty($settings["PROPERTIES"]["OTRAINING_TITLE3"]["VALUE"]) ) {
+	if( !empty($settings["PROPERTIES"]["PTRAINING_TITLE3"]["VALUE"]) ) {
 		?>
 			<div class="content-center">
         		<div class="b-cards-slider__heading">
             		<div class="b-cards-slider__title">
-                		<h2><?=$settings["PROPERTIES"]["OTRAINING_TITLE3"]["VALUE"]?></h2>
+                		<h2><?=$settings["PROPERTIES"]["PTRAINING_TITLE3"]["VALUE"]?></h2>
             		</div>
 				</div>
 			</div>

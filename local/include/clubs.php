@@ -1,7 +1,15 @@
 <? 
-$clubs = Clubs::getList();
-$clubsJson = Clubs::clubsJson($clubs);
-$clubSection = Clubs::getClubSecDesc();
+	$anchor = "";
+	if( defined('ANCHOR_PERSONAL') ) {
+		$anchor = "#club_command";
+	}
+	if( defined('ANCHOR_TIMETABLE') ) {
+		$anchor = "#timetable";
+	}
+	
+	$clubs = Clubs::getList();
+	$clubsJson = Clubs::clubsJson($clubs, $anchor);
+	$clubSection = Clubs::getClubSecDesc();
 ?>
 <?$APPLICATION->AddHeadString('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>',true)?>
 <script>window.clubs = <?=$clubsJson?></script>
@@ -40,7 +48,7 @@ crossorigin=""></script>
 					<div class="map-slider-item__select" data-id="<?=$club['ID']?>" data-key="<?=$key?>">
 						<?=!empty($club["PROPERTY_ADRESS_VALUE"]["TEXT"]) ? $club["PROPERTY_ADRESS_VALUE"]["TEXT"] : $club["NAME"]?>
 						<? if( empty($club["PROPERTY_HIDE_LINK_VALUE"]) ) { ?>
-							<a class="map-slider-item__button" href="/clubs/<?=$club["CODE"]?>/"><span>Выбрать</span></a>
+							<a class="map-slider-item__button" href="/clubs/<?=$club["CODE"]?>/<?=$anchor?>"><span>Выбрать</span></a>
 						<? } else { ?>
 							<span class="map-slider-item__button"><span>Выбрать</span></span>
 						<? } ?>

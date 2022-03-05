@@ -10,11 +10,11 @@
 	<div class="footer-menu-cell">
 		<div class="footer-menu-title"><a href="/trenirovki/">Тренировки</a></div>
 		<ul>
-			<li><a href="">Тренажерный зал</a></li>
-			<li><a href="">Групповые тренировки</a></li>
-			<li><a href="">Персональный тренинг</a></li>
-			<li><a href="">Тренировки онлайн</a></li>
-			<li><a href="">Фитнес-тестирование</a></li>
+			<li><a href="/trenirovki/trenazhernyy-zal/">Тренажерный зал</a></li>
+			<li><a href="/gruppovye-trenirovki/">Групповые тренировки</a></li>
+			<li><a href="/trenirovki/personal-training/">Персональный тренинг</a></li>
+			<li><a href="/trenirovki/onlayn-trenirovki/">Тренировки онлайн</a></li>
+			<li><a href="/trenirovki/fitnes-testing/">Фитнес-тестирование</a></li>
 		</ul>
 	</div>
 	<div class="footer-menu-cell">

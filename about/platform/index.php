@@ -1,6 +1,5 @@
 <?
 	define('HIDE_SLIDER', true);
-	define('BREADCRUMB_H1_ABSOLUTE', true);
 	define('HOLDER_CLASS', 'company-holder');
 	
 	require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");

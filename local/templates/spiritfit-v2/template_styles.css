@@ -5262,7 +5262,7 @@ button.mfp-arrow::before{
 /* стили для карты на странице "клубы" end */
 
 .content-center.company {
-	margin-top: 60px;
+	margin-top: 20px;
 }
 .company .b-cards-slider__heading {
     margin-bottom: 20px;
@@ -5289,7 +5289,9 @@ button.mfp-arrow::before{
     display: none;
 }
 .company-holder h2,
-.company-holder .h2 {
+.company-holder .h2,
+.trainings h2,
+.trainings .h2 {
 	font-size: 28pt;
     font-weight: 500;
 }
@@ -5444,6 +5446,20 @@ button.mfp-arrow::before{
 	background-color: rgba(254, 96, 0, 0.5);
 }
 
+.trainings .b-map__info-plate:after {
+	display: none;
+}
+.trainings .b-map__map-wrap {
+	height: 1000px;
+}
+
+.trainings .b-image-plate-block {
+	margin-bottom: 45px;
+}
+.trainings .b-map_page.margin-top {
+	margin-top: 45px;
+}
+
 @media screen and (max-width: 1024px) {
 	.footer-menu {
 		display: grid;
@@ -5467,6 +5483,12 @@ button.mfp-arrow::before{
 	}
 	.map-slider {
 		display: none;
+	}
+	.trainings .b-map__map-wrap {
+		height: initial;
+	}
+	.trainings .b-map__buttons {
+		margin-bottom: 0;
 	}
 }
 @media screen and (max-width: 568px) {
