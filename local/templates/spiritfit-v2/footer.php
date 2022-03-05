@@ -5,10 +5,27 @@ $settings = Utils::getInfo();
     <footer class="b-footer">
         <div class="content-center">
             <div class="b-footer__content">
-                <div class="b-footer__social"><a rel="nofollow" class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_INSTAGRAM"]["VALUE"]?>"
+                <div class="b-footer__social">
+                    <div>
+                        <a rel="nofollow" class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_INSTAGRAM"]["VALUE"]?>"
                         target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img"
                                 src="<?=SITE_TEMPLATE_PATH?>/img/icon-inst.svg" alt="@spiritmoscow" title="" /></span><span
                             class="b-social-link__text">Instagram</span></a>
+                        <a rel="nofollow" class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_TELEGRAM"]["VALUE"]?>"
+                        target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img"
+                                src="<?=SITE_TEMPLATE_PATH?>/img/telegram-brands.svg" alt="@spiritmoscow" title="" /></span><span
+                            class="b-social-link__text">Telegram</span></a>
+                    </div>
+                    <div>
+                        <a rel="nofollow" class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_VK"]["VALUE"]?>"
+                        target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img"
+                                src="<?=SITE_TEMPLATE_PATH?>/img/vk-brands.svg" alt="@spiritmoscow" title="" /></span><span
+                            class="b-social-link__text">VK</span></a>
+                        <a rel="nofollow" class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_TIKTOK"]["VALUE"]?>"
+                        target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img"
+                                src="<?=SITE_TEMPLATE_PATH?>/img/tiktok-brands.svg" alt="@spiritmoscow" title="" /></span><span
+                            class="b-social-link__text">Tik-Tok</span></a>
+                    </div>
                 </div>
                 <div class="b-footer__app-buttons">
                     <div class="b-app-list"><a rel="nofollow" class="b-app-list__button"
