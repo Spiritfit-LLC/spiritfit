@@ -5374,9 +5374,9 @@ button.mfp-arrow::before{
 .map-slider {
 	display: block;
     position: relative;
-    width: calc(50% + 90px);
-    left: calc(50% - 90px);
-    bottom: 240px;
+    width: calc(50% + 93px);
+    left: calc(50% - 93px);
+    bottom: 237px;
     z-index: 400;
 }
 .map-slider-item {
@@ -5384,7 +5384,7 @@ button.mfp-arrow::before{
     position: relative;
     height: 240px;
     box-sizing: border-box;
-    padding: 5px;
+    padding: 3px;
 	font-size: 12pt;
 }
 .map-slider-item__select {
