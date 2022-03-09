@@ -5428,7 +5428,7 @@ button.mfp-arrow::before{
 .map-slider .slick-arrow {
 	display: block;
 	position: absolute;
-	top: 5px;
+	top: 3px;
 	height: calc(100% - 10px);
 	width: 50px;
 	border: 0;
@@ -5437,10 +5437,10 @@ button.mfp-arrow::before{
 	z-index: 1;
 }
 .map-slider .slick-next {
-	right: 5px;
+	right: 3px;
 }
 .map-slider .slick-prev {
-	left: 5px;
+	left: 3px;
 }
 .map-slider .slick-arrow:hover {
 	background-color: rgba(254, 96, 0, 0.5);
