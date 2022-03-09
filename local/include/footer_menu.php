@@ -23,7 +23,7 @@
 			<li><a href="/club-members/#abonements">Абонементы</a></li>
 			<li><a href="">Корпоративная программа</a></li>
 			<li><a href="">Программа лояльности</a></li>
-			<li><a href="">Партнёры и привилегии</a></li>
+			<li><a href="/trenirovki/partnery-i-privilegii/">Партнёры и привилегии</a></li>
 			<li><a href="/club-members/#faq">FAQ</a></li>
 		</ul>
 	</div>

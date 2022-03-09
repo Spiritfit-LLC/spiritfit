@@ -11,12 +11,34 @@
 	
 	$settings = Utils::getInfo();
 	
-	if( !empty($settings["PROPERTIES"]["TRAINING_TITLE3"]["VALUE"]) ) {
+	?>
+	<div class="content-center company">
+        <? if( !empty($settings["PROPERTIES"]["GT_TITLE2"]["VALUE"]) ) { ?>
+        	<div class="b-cards-slider__heading">
+            	<div class="b-cards-slider__title">
+                	<h2><?=$settings["PROPERTIES"]["GT_TITLE2"]["VALUE"]?></h2>
+            	</div>
+			</div>
+		<? } ?>
+
+		<div class="company-description">
+			<?=!empty($settings["PROPERTIES"]["GT_TEXT"]["~VALUE"]["TEXT"]) ? $settings["PROPERTIES"]["GT_TEXT"]["~VALUE"]["TEXT"] : "" ?>
+		</div>
+    </div>
+	<?
+	
+	if( !empty($settings["PROPERTIES"]["MEMBERS_WORKOUTS"]["VALUE"]) ) {
+		global $workoutsFilter;
+		$workoutsFilter = ["ACTIVE" => "Y", "ID" => $settings["PROPERTIES"]["MEMBERS_WORKOUTS"]["VALUE"]];
+	}
+	$APPLICATION->IncludeFile('/local/include/group-workouts.php', ['blockTitle' => $settings["PROPERTIES"]["GT_TITLE1"]["VALUE"], "filterName" => "workoutsFilter", "class" => "workouts"]);
+	
+	if( !empty($settings["PROPERTIES"]["GT_TITLE3"]["VALUE"]) ) {
 		?>
 			<div class="content-center">
         		<div class="b-cards-slider__heading">
             		<div class="b-cards-slider__title">
-                		<h2><?=$settings["PROPERTIES"]["TRAINING_TITLE3"]["VALUE"]?></h2>
+                		<h2><?=$settings["PROPERTIES"]["GT_TITLE3"]["VALUE"]?></h2>
             		</div>
 				</div>
 			</div>
