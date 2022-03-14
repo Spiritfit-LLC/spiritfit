@@ -176,6 +176,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 						"NUMBER" => $arResult["PROPERTIES"]["NUMBER"]["VALUE"],
 						"TEXT_FORM" => $arResult["PROPERTIES"]["TEXT_FORM"]["~VALUE"],
 						"DEFAULT_TYPE_ID" => (!empty($arResult['PROPERTIES']['FORM_TYPE']['VALUE'])) ? $arResult['PROPERTIES']['FORM_TYPE']['VALUE'] : "",
+						"CLIENT_TYPE"=>$arResult["PROPERTIES"]["CLIENT_TYPE"]["VALUE"],
 					),
 					false
 				);
