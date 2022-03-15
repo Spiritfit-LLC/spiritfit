@@ -56,24 +56,6 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 		
 		$uniqueId = $this->arResult["COMPONENT_ID"] . $currentClubId . $element["ID"];
 		foreach( $outArrPrice as $key => $arPrice ) {
-            /*if( !empty($outArrBasePrice) && $arPrice["PRICE"] != $outArrBasePrice["PRICE"] && $arPrice["NUMBER"] == $outArrBasePrice["NUMBER"] ) {
-				
-                $outSale = $arPrice["PRICE"];
-                
-				if( isset($_SESSION[$uniqueId]["DISCOUNTS"]["SALE"]) ) {
-					$outSale = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE"];
-				}
-				if( isset($_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"]) ) {
-					$outSaleTwoMonth = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"];
-				}
-
-                $outArrPrice[$key]["PRICE"] = $outArrBasePrice["PRICE"];
-            } else if( !empty($outArrBasePrice) && !empty($_SESSION[$uniqueId]["DISCOUNTS"]["SALE"]) && $outArrBasePrice["NUMBER"] == 1) {
-				$outSale = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE"];
-			} else if( !empty($outArrBasePrice) && !empty($_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"]) && $outArrBasePrice["NUMBER"] == 2) {
-				$outSaleTwoMonth = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"];
-			}*/
-			
 			if( !empty($outArrBasePrice) && $arPrice["PRICE"] != $outArrBasePrice["PRICE"] && $arPrice["NUMBER"] == $outArrBasePrice["NUMBER"] ) {
 				
                 $outSale = $arPrice["PRICE"];
@@ -86,11 +68,14 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 				}
                 $outArrPrice[$key]["PRICE"] = $outArrBasePrice["PRICE"];
 				
-            } else if( !empty($outArrBasePrice) && !empty($_SESSION[$uniqueId]["DISCOUNTS"]["SALE"])) {
-				$outSale = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE"];
-			} else if( !empty($outArrBasePrice) && !empty($_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"])) {
-				$outSaleTwoMonth = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"];
-			}
+            } else {
+            	if( !empty($outArrBasePrice) && !empty($_SESSION[$uniqueId]["DISCOUNTS"]["SALE"])) {
+					$outSale = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE"];
+				}
+				if( !empty($outArrBasePrice) && !empty($_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"])) {
+					$outSaleTwoMonth = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"];
+				}
+            }
 			
             if ($priceSign) {
                 $sign = array_search($arPrice["NUMBER"], array_column($priceSign, "NUMBER"));

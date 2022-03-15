@@ -128,7 +128,7 @@
 					<span class="subscription__total-text">Выберите клуб</span>
 				</div>
 				<div class="subscription__aside-form-row">
-					<select class="input input--light input--long input--select get-abonement-club" name="form_<?= $arResult["arAnswers"]["club"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["club"]['0']["ID"] ?>" required>
+					<select class="input input--light input--long input--select get-abonement-club" name="form_<?= $arResult["arAnswers"]["club"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["club"]['0']["ID"] ?>" autocomplete="off" required>
 						<option value="">-</option>
 						<? foreach ($arResult["arAnswers"]["club"][0]['ITEMS'] as $key => $arItem) {
 							if(!isset($clubs_price[$arItem["ID"]])) continue;

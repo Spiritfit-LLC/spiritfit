@@ -468,6 +468,7 @@ class Api
 		
 		if(isset($additionFields['surname'])) $arParams['surname'] = $_REQUEST[$additionFields['surname']];
 		if(isset($additionFields['email'])) $arParams['email'] = $_REQUEST[$additionFields['email']];
+        if(!empty($params['company'])) $arParams['company'] = $params['company'];
         
 
         //file_put_contents(__DIR__.'/debug_contact.txt', print_r("website\\contact\n", true), FILE_APPEND);
@@ -495,8 +496,21 @@ class Api
         }
 		
 		$webFormId = $_REQUEST["WEB_FORM_ID"];
+        if( empty($webFormId) && !empty($params["WEB_FORM_ID"]) ) {
+            $webFormId = $params["WEB_FORM_ID"];
+        }
 		$type = (($webFormId==1) || ($webFormId==4) || ($webFormId==5) ? 'contact' : 'order');
 		$trafic = $GLOBALS['arTraficAnswer'][$webFormId];
+
+        $client_id = $_REQUEST[$trafic['ClientId']];
+        if( empty($client_id) && !empty($params["client_id"]) ) {
+            $client_id = $params["client_id"];
+        }
+        if(strpos($client_id, '.')) {
+            $client_id = explode('.', $client_id);
+            $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
+        }
+
 		$arParams = array(
 			"phone" => substr($phone, 1),
 			'source' => $_REQUEST[$trafic['src']],
@@ -504,7 +518,7 @@ class Api
         	'campania' => $_REQUEST[$trafic['cnt']],
         	'message' => $_REQUEST[$trafic['cmp']],
         	'kword' => $_REQUEST[$trafic['trm']],
-        	'cid' => $_REQUEST[$trafic['ClientId']],
+        	'cid' => $client_id,
         	'promocode' => $_REQUEST['promo'],
             'clubid' => sprintf("%02d", $_REQUEST['club']),
             'name' => (!empty($params["name"])) ? $params["name"] : "",

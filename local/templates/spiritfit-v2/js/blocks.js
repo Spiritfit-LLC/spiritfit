@@ -321,6 +321,46 @@ $(function () {
         var $context = $(this);
         var $navPlace = $('.b-info-slider__nav', $context);
         var $slider = $('.b-info-slider__slider', $context);
+         $slider.on('init', function(event, slick){
+        	$("a[href='#jspopupcallv2']").click(function(e) {
+        		e.preventDefault();
+
+        		dataLayerSend('UX', 'openFormCallback', '');
+        		
+                $.ajax({
+                    method: "POST",
+                    url: "/local/templates/spiritfit-v2/ajax/call_v2.php",
+                }).done(function(data) {
+                    $.fancybox.close();
+                    
+                    $('body').append(data);
+                    
+                    var isMacLike = navigator.platform.match(/(iPhone|iPod|iPad)/i) ? true : false;
+                    $('select.custom--select').select2({
+                        minimumResultsForSearch: Infinity
+                    });
+                    $(".input--tel").inputmask({
+                        mask: "+7 (999) 999-99-99",
+                        oncomplete: function() {
+                            maskValue = $(this).val().length;
+                        },
+                        onBeforeMask: function (value, opts) {
+                            if (value[0] == '8') {
+                                var processedValue = value.replace('8', "");
+                            }
+                            
+                            return processedValue;
+                        }
+                    });
+                    
+                    initFormFields($('.form-standart.form-standart__popup-call'));
+
+                    $(".popup--call").fadeIn(300);
+                    $('.input--checkbox').styler();
+                    $('.popup--choose').fadeOut();
+                });
+        	});
+        });
         $slider.slick({
             dots: true,
             appendDots: $navPlace,
