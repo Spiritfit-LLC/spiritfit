@@ -124,7 +124,7 @@ if( $elementCode ) {
 					),
 					false
 				);
-			}else{
+			} else {
 				$APPLICATION->IncludeComponent(
 					"custom:form.get.aboniment", 
 					"", 

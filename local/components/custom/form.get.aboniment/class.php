@@ -75,7 +75,6 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 			}*/
 			
 			if( !empty($outArrBasePrice) && $arPrice["PRICE"] != $outArrBasePrice["PRICE"] && $arPrice["NUMBER"] == $outArrBasePrice["NUMBER"] ) {
-				
                 $outSale = $arPrice["PRICE"];
                 
 				if( isset($_SESSION[$uniqueId]["DISCOUNTS"]["SALE"]) ) {
@@ -86,11 +85,14 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 				}
                 $outArrPrice[$key]["PRICE"] = $outArrBasePrice["PRICE"];
 				
-            } else if( !empty($outArrBasePrice) && !empty($_SESSION[$uniqueId]["DISCOUNTS"]["SALE"])) {
-				$outSale = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE"];
-			} else if( !empty($outArrBasePrice) && !empty($_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"])) {
-				$outSaleTwoMonth = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"];
-			}
+            } else {
+            	if( !empty($outArrBasePrice) && !empty($_SESSION[$uniqueId]["DISCOUNTS"]["SALE"])) {
+					$outSale = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE"];
+				}
+				if( !empty($outArrBasePrice) && !empty($_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"])) {
+					$outSaleTwoMonth = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"];
+				}
+            }
 			
             if ($priceSign) {
                 $sign = array_search($arPrice["NUMBER"], array_column($priceSign, "NUMBER"));
@@ -106,9 +108,8 @@ class FormGetAbonimentComponent extends CBitrixComponent{
                 $outArrPrice[$key]["SIGN"] = $props[$arPrice["NUMBER"]];
             }
         }
-		
 		array_multisort(array_column($outArrPrice, "NUMBER"), SORT_ASC, $outArrPrice);
-		
+
 		return ["PRICES" => $outArrPrice, "BASE_PRICE" => $outArrBasePrice, "SALE" => $outSale, "SALE_TWO_MONTH" => $outSaleTwoMonth];
 	}
 	
@@ -208,7 +209,11 @@ class FormGetAbonimentComponent extends CBitrixComponent{
         }
 		
 		$phone = preg_replace('![^0-9]+!', '', $phone);
-		$arParam = ["phone" => $phone, "WEB_FORM_ID" => $this->arParams["WEB_FORM_ID"]];
+		
+		$arParam = $this->getFormatFields();
+		$arParam["phone"] = $phone;
+		$arParam["WEB_FORM_ID"] = $this->arParams["WEB_FORM_ID"];
+
 		if( !empty($this->arResult["CLUB_NUMBER"]) ) {
 			$arParam["club"] = $this->arResult["CLUB_NUMBER"];
 		}
