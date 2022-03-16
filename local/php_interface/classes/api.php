@@ -444,7 +444,7 @@ class Api
             $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
         }
 
-        if(empty($name) || empty($phone) || empty($club)){
+        if(empty($name) || empty($phone)){
             return false;
         }
        
@@ -455,7 +455,7 @@ class Api
 			"type" => $type,
             "name" => $name,
             "phone" => substr($phone, 1),
-            "clubid" => sprintf("%02d", $club),
+            "clubid" => !empty($club) ? sprintf("%02d", $club) : "",
             "cid" => $client_id,
 			'source' => $_REQUEST[$trafic['src']],
         	'channel' => $_REQUEST[$trafic['mdm']],
