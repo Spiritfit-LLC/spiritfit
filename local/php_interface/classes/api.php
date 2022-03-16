@@ -470,7 +470,7 @@ class Api
 		if(isset($additionFields['email'])) $arParams['email'] = $_REQUEST[$additionFields['email']];
         if(!empty($params['company'])) $arParams['company'] = $params['company'];
         	
-		if( empty($arParams["clubid"]) ) unset($arParams["clubid"]);
+		//if( empty($arParams["clubid"]) ) unset($arParams["clubid"]);
 
         //file_put_contents(__DIR__.'/debug_contact.txt', print_r("website\\contact\n", true), FILE_APPEND);
         //file_put_contents(__DIR__.'/debug_contact.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);

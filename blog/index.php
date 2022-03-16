@@ -1,5 +1,6 @@
 <?
 	define('HIDE_SLIDER', true);
+	define('HOLDER_CLASS', 'blog-page');
 	
 	require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 	
@@ -10,9 +11,13 @@
 	$settings = Utils::getInfo();
 	$currUrl = $APPLICATION->GetCurPage(false);
 	
-	$banner = "";
+	$banner = [];
 	if( !empty($settings["PROPERTIES"]["BLOG_BANNERS"]["VALUE"]) ) {
-		foreach( $settings["PROPERTIES"]["BLOG_BANNERS"]["VALUE"] as $key => $value ) {
+		$banner = [
+			"SRC" => CFile::ResizeImageGet($settings["PROPERTIES"]["BLOG_BANNERS"]["VALUE"], ["width" => 395, "height" => 640], BX_RESIZE_IMAGE_EXACT, false)["src"],
+			"LINK" => $settings["PROPERTIES"]["BLOG_BANNERS"]["DESCRIPTION"]
+		];
+		/*foreach( $settings["PROPERTIES"]["BLOG_BANNERS"]["VALUE"] as $key => $value ) {
 			$inPageUrl = (isset($settings["PROPERTIES"]["BLOG_BANNERS"]["DESCRIPTION"][$key])) ? trim($settings["PROPERTIES"]["BLOG_BANNERS"]["DESCRIPTION"][$key]) : "";
 			if(  !empty($inPageUrl) && $inPageUrl == $currUrl ) {
 				$banner = CFile::ResizeImageGet($value, ["width" => 150, "height" => 350], BX_RESIZE_IMAGE_EXACT, false)["src"];
@@ -21,7 +26,7 @@
 				$banner = CFile::ResizeImageGet($value, ["width" => 150, "height" => 350], BX_RESIZE_IMAGE_EXACT, false)["src"];
 				break;
 			}
-		}
+		}*/
 	}
 	
 	$APPLICATION->IncludeComponent("bitrix:news", "blog", 
@@ -34,7 +39,7 @@
 			"IBLOCK_TYPE" => "content",
 			"IBLOCK_ID" => "22",
 			"BANNER" => $banner,
-			"NEWS_COUNT" => "20",
+			"NEWS_COUNT" => "12",
 			"USE_SEARCH" => "N",
 			"USE_RSS" => "N",
 			"USE_RATING" => "N",
@@ -53,7 +58,7 @@
 				1 => "",
 				),
 			"LIST_PROPERTY_CODE" => array(
-				0 => "",
+				0 => "PICT_SECOND",
 				1 => "",
 			),
 			"HIDE_LINK_WHEN_NO_DETAIL" => "N",
@@ -68,7 +73,7 @@
 				1 => "",
 			),
 			"DETAIL_PROPERTY_CODE" => array(
-				0 => "",
+				0 => "PICT_SECOND",
 				1 => "",
 			),
 			"DETAIL_DISPLAY_TOP_PAGER" => "N",
@@ -98,7 +103,7 @@
 			"DISPLAY_BOTTOM_PAGER" => "Y",
 			"PAGER_TITLE" => "Блог",
 			"PAGER_SHOW_ALWAYS" => "Y",
-			"PAGER_TEMPLATE" => "",
+			"PAGER_TEMPLATE" => "spirit",
 			"PAGER_DESC_NUMBERING" => "N",
 			"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
 			"PAGER_SHOW_ALL" => "Y",
