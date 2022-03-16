@@ -5,7 +5,9 @@ $settings = Utils::getInfo();
 	<footer class="b-footer">
 		<div class="content-center">
 			<?
-				$APPLICATION->IncludeFile(SITE_DIR."local/include/footer_menu.php", Array("settings" => $settings), Array("MODE" => "html", "NAME" => "", "TEMPLATE" => ""));
+				if( $APPLICATION->GetCurPage(false) === "/" ) {
+					$APPLICATION->IncludeFile(SITE_DIR."local/include/footer_menu.php", Array("settings" => $settings), Array("MODE" => "html", "NAME" => "", "TEMPLATE" => ""));
+				}
 			?>
             <div class="b-footer__content">
                 <div class="b-footer__social">
