@@ -26,7 +26,11 @@ class FormAbonimentComponent extends CBitrixComponent{
     private function checkStep() {
         
         $step = $this->request->get('step');
-        $type = $this->request->get('type');
+        
+		$type = $this->request->get('type');
+		if( empty($type) && !empty($this->arParams["DEFAULT_TYPE_ID"]) ) {
+			$type = $this->arParams["DEFAULT_TYPE_ID"];
+		}
 
         if (empty($step)) {
             return 1;
@@ -62,7 +66,7 @@ class FormAbonimentComponent extends CBitrixComponent{
                 }
 
                 $arParam = $this->getFormatFields();
-                $arParam["type"] = (int)$type;
+                $arParam["type"] = $type;
 
                 $api = new Api(array(
                     "action" => "web_site_contact",
