@@ -4,7 +4,7 @@
 	use \ImageConverter\Picture;
 	
 	if( !function_exists("getAdditionaBlogItem") ) {
-		function getAdditionaBlogItem( $arItem, $sections ) {
+		function getAdditionaBlogItem( $arItem, $sections, $isSafari ) {
 			$item = ["ID" => $arItem["ID"], "NAME" => !empty($arItem["PROPERTIES"]["TITLE"]["~VALUE"]) ? $arItem["PROPERTIES"]["TITLE"]["~VALUE"] : $arItem["NAME"], "LINK" => $arItem["DETAIL_PAGE_URL"]];
 			
 			if( !empty($arItem["PREVIEW_PICTURE"]) && $isSafari ) {
@@ -37,6 +37,9 @@
 	$isSafari = true;
 	if( (!empty($arResult['BROWSER']['NAME']) && $arResult['BROWSER']['NAME'] !== "Safari") || empty($arResult['BROWSER']['NAME']) ) {
 		$isSafari = false;
+	}
+	if( empty($arParams["CACHE_TYPE"]) || $arParams["CACHE_TYPE"] !== "N" ) {
+		$isSafari = true;
 	}
 	
 	$arResult["SECTIONS"] = [];
@@ -90,7 +93,7 @@
 			
 			if( $arItem["ID"] === $arResult["ID"] ) continue;
 			
-    		$arResult["ADDITIONAL_ITEMS"][] = getAdditionaBlogItem($arItem, $arResult["SECTIONS"]);
+    		$arResult["ADDITIONAL_ITEMS"][] = getAdditionaBlogItem($arItem, $arResult["SECTIONS"], $isSafari);
 		}
 	}
 	
@@ -99,5 +102,5 @@
 	while( $obItem = $res->GetNextElement() ) {
 		$arItem = $obItem->GetFields();
 		$arItem["PROPERTIES"] = $obItem->GetProperties();
-		$arResult["LEFT_ITEMS"][] = getAdditionaBlogItem($arItem, $arResult["SECTIONS"]);
+		$arResult["LEFT_ITEMS"][] = getAdditionaBlogItem($arItem, $arResult["SECTIONS"], $isSafari);
 	}

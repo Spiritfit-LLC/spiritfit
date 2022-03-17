@@ -479,3 +479,9 @@ body.white .blog-additional .blog-item-name {
 		margin-top: 5px;
 	}
 }
+
+@media not all and (min-resolution:.001dpcm) { @media {
+	.blog-item.blog-left .cell:nth-child(2) {
+		width: 80%;
+	}
+}}

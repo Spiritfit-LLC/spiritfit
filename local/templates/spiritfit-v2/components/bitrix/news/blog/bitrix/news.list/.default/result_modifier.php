@@ -4,7 +4,7 @@
 	use \ImageConverter\Picture;
 	
 	if( !function_exists("getAdditionaBlogItem") ) {
-		function getAdditionaBlogItem( $arItem, $sections ) {
+		function getAdditionaBlogItem( $arItem, $sections, $isSafari ) {
 			$item = ["ID" => $arItem["ID"], "NAME" => !empty($arItem["PROPERTIES"]["TITLE"]["~VALUE"]) ? $arItem["PROPERTIES"]["TITLE"]["~VALUE"] : $arItem["NAME"], "LINK" => $arItem["DETAIL_PAGE_URL"]];
     		
 			if( !empty($arItem["PREVIEW_PICTURE"]) && !is_array($arItem["PREVIEW_PICTURE"]) ) {
@@ -13,9 +13,9 @@
 			
 			if( !empty($arItem["PREVIEW_PICTURE"]) && $isSafari ) {
 				$item["PICTURE"] = [
-    				"SMALL" => !empty($arItem["PROPERTIES"]["PICT_SECOND"]["VALUE"]) ? CFile::ResizeImageGet($arItem["PROPERTIES"]["PICT_SECOND"]["VALUE"], ["width" => 130, "height" => 130], BX_RESIZE_IMAGE_EXACT)["src"] : CFile::ResizeImageGet($arItem["PREVIEW_PICTURE"], ["width" => 130, "height" => 130], BX_RESIZE_IMAGE_EXACT)["src"],
-    				"MEDIUM" => CFile::ResizeImageGet($arItem["PREVIEW_PICTURE"], ["width" => 573, "height" => 311], BX_RESIZE_IMAGE_EXACT)["src"],
-    				"BIG" => CFile::ResizeImageGet($arItem["PREVIEW_PICTURE"], ["width" => 1180, "height" => 640], BX_RESIZE_IMAGE_EXACT)["src"]
+    				"SMALL" => !empty($arItem["PROPERTIES"]["PICT_SECOND"]["VALUE"]) ? CFile::ResizeImageGet($arItem["PROPERTIES"]["PICT_SECOND"]["VALUE"], ["width" => 130, "height" => 130], BX_RESIZE_IMAGE_EXACT)["src"] : CFile::ResizeImageGet($arItem["PREVIEW_PICTURE"]["ID"], ["width" => 130, "height" => 130], BX_RESIZE_IMAGE_EXACT)["src"],
+    				"MEDIUM" => CFile::ResizeImageGet($arItem["PREVIEW_PICTURE"]["ID"], ["width" => 573, "height" => 311], BX_RESIZE_IMAGE_EXACT)["src"],
+    				"BIG" => CFile::ResizeImageGet($arItem["PREVIEW_PICTURE"]["ID"], ["width" => 1180, "height" => 640], BX_RESIZE_IMAGE_EXACT)["src"]
     			];
     		} else if( !empty($arItem["PREVIEW_PICTURE"]) ) {
 				$item["PICTURE"] = [
@@ -41,6 +41,9 @@
 	if( (!empty($arResult['BROWSER']['NAME']) && $arResult['BROWSER']['NAME'] !== "Safari") || empty($arResult['BROWSER']['NAME']) ) {
 		$isSafari = false;
 	}
+	if( empty($arParams["CACHE_TYPE"]) || $arParams["CACHE_TYPE"] !== "N" ) {
+		$isSafari = true;
+	}
 
     $arResult["SECTIONS"] = [];
     $dbList = CIBlockSection::GetList([], ["IBLOCK_ID" => $arParams["IBLOCK_ID"], "DEPTH_LEVEL" => 1], false);
@@ -50,7 +53,7 @@
 
     $itemsArr = [];
     foreach( $arResult["ITEMS"] as $arItem ) {
-    	$itemsArr[] = getAdditionaBlogItem($arItem, $arResult["SECTIONS"]);
+    	$itemsArr[] = getAdditionaBlogItem($arItem, $arResult["SECTIONS"], $isSafari);
     }
     unset($arResult["ITEMS"]);
 
@@ -61,5 +64,5 @@
 	while( $obItem = $res->GetNextElement() ) {
 		$arItem = $obItem->GetFields();
 		$arItem["PROPERTIES"] = $obItem->GetProperties();
-		$arResult["LEFT_ITEMS"][] = getAdditionaBlogItem($arItem, $arResult["SECTIONS"]);
+		$arResult["LEFT_ITEMS"][] = getAdditionaBlogItem($arItem, $arResult["SECTIONS"], $isSafari);
 	}
