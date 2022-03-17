@@ -249,6 +249,9 @@
 .blog-banner__mobile .blog-banner {
 	margin-bottom: 50px;
 }
+.blog-banner__mobile img {
+	width: initial;
+}
 
 .blog-item-banner:after {
 	content: "";
@@ -381,7 +384,9 @@ body.white .blog-additional .blog-item-name {
 		padding: 0;
 	}
 	.blog-items.two .blog-items-col:nth-child(2) {
-		margin-top: 24px;
+		margin-top: 48px;
+		padding-top: 48px;
+		border-top: 1px solid #fc6120;
 	}
 	.blog-items-col .blog-banner,
 	.blog-items.two .blog-items-col:nth-child(1):after {
