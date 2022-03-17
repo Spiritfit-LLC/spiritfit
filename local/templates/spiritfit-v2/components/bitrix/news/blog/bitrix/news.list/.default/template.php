@@ -29,7 +29,12 @@
 						<div class="blog-item-banner">
 							<img src="<?=$arResult["ITEMS"][0]["PICTURE"]["BIG"]?>" alt="<?=strip_tags($arResult["ITEMS"][0]["NAME"])?>" title="<?=strip_tags($arResult["ITEMS"][0]["NAME"])?>">
 							<? if(!empty($arResult["ITEMS"][0]["SECTION"])) {
-								?><div class="blog-item-section"><?=$arResult["ITEMS"][0]["SECTION"]["NAME"]?></div><?
+								?>
+								<div class="blog-item-section items">
+									<? foreach($arResult["ITEMS"][0]["SECTION"] as $name) {
+										?><div class="item"><?=$name?></div><?
+									} ?>
+								</div><?
 							} ?>
 							<div class="blog-item-date">
 								<?=$arResult["ITEMS"][0]["DATE"]?>
@@ -48,7 +53,13 @@
 						<div class="blog-item-banner">
 							<img src="<?=$arItem["PICTURE"]["MEDIUM"]?>" alt="<?=strip_tags($arItem["NAME"])?>" title="<?=strip_tags($arItem["NAME"])?>">
 							<? if(!empty($arItem["SECTION"])) {
-								?><div class="blog-item-section"><?=$arItem["SECTION"]["NAME"]?></div><?
+								?><div class="blog-item-section items">
+									<? foreach($arItem["SECTION"] as $name) {
+										?><div class="item"><?=$name?></div><?
+									} ?>
+									<?=$arItem["SECTION"]["NAME"]?>
+										
+								</div><?
 							} ?>
 							<div class="blog-item-date">
 								<?=$arItem["DATE"]?>
@@ -80,7 +91,11 @@
 							</div>
 							<div class="cell">
 								<? if(!empty($arItem["SECTION"])) {
-									?><div class="blog-item-section"><?=$arItem["SECTION"]["NAME"]?></div><?
+									?><div class="blog-item-section items">
+										<? foreach($arItem["SECTION"] as $name) {
+											?><div class="item"><?=$name?></div><?
+										} ?>
+									</div><?
 								} ?>
 								<div class="blog-item-name"><?=$arItem["NAME"]?></div>
 							</div>

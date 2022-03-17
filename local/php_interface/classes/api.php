@@ -35,6 +35,12 @@ class Api
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
+            case 'subscribe':
+                $this->subscribe($post['params']);
+                AddMessage2Log('request');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
             case 'request2':
                 $this->_request2($post['params']);
                 AddMessage2Log('request2');
@@ -236,6 +242,39 @@ class Api
         
         if ($this->_data['result']['errorCode'] == 0)
             $this->_result = true;
+    }
+
+    /**
+     * @param $params
+     */
+    private function subscribe( $params )
+    {
+        $email  = !empty($params['email']) ? $params['email'] : false;
+        $type = !empty($params['type']) ? $params['type'] : false;
+        if( empty($email) || empty($type) ) return false;
+
+        $client_id = !empty($params['client_id']) ? $params['client_id'] : false;
+        if(strpos($client_id, '.')){
+            $client_id = explode('.', $client_id);
+            $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
+        }
+
+        $requestArr = array(
+            "email" => $email,
+            "type" => $type,
+            "source" => !empty($params['src']) ? $params['src'] : false,
+            "channel" => !empty($params['mdm']) ? $params['mdm'] : false,
+            "campania" => !empty($params['cmp']) ? $params['cmp'] : false,
+            "message" => !empty($params['cnt']) ? $params['cnt'] : false,
+            "kword" => !empty($params['trm']) ? $params['trm'] : false,
+            "cid" => $client_id         
+        );
+
+        $this->_send($this->apiUrl."subscribe", $requestArr);
+
+        if ($this->_data['result']->errorCode == 0) {
+            $this->_result = true;
+        }
     }
 
     /**

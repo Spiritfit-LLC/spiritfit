@@ -4,7 +4,7 @@
 	use \ImageConverter\Picture;
 	
 	if( !function_exists("getAdditionaBlogItem") ) {
-		function getAdditionaBlogItem( $arItem, $sections, $isSafari ) {
+		function getAdditionaBlogItem( $arItem, $isSafari ) {
 			$item = ["ID" => $arItem["ID"], "NAME" => !empty($arItem["PROPERTIES"]["TITLE"]["~VALUE"]) ? $arItem["PROPERTIES"]["TITLE"]["~VALUE"] : $arItem["NAME"], "LINK" => $arItem["DETAIL_PAGE_URL"]];
     		
 			if( !empty($arItem["PREVIEW_PICTURE"]) && !is_array($arItem["PREVIEW_PICTURE"]) ) {
@@ -28,8 +28,11 @@
     		$item["DATE"] = !empty($arItem["ACTIVE_FROM"]) ? explode(" ", $arItem["ACTIVE_FROM"])[0] : explode(" ", $arItem["TIMESTAMP_X"])[0];
     		$item["SECTION"] = [];
 			
-    		if( !empty($arItem["IBLOCK_SECTION_ID"]) && isset($sections[$arItem["IBLOCK_SECTION_ID"]]) ) {
-    			$item["SECTION"] = ["NAME" => $sections[$arItem["IBLOCK_SECTION_ID"]], "ID" => $arItem["IBLOCK_SECTION_ID"]];
+    		if( !empty($arItem["IBLOCK_SECTION_ID"]) ) {
+    			$dbGroups = CIBlockElement::GetElementGroups($arItem["ID"], true, ["ID", "NAME"]);
+    			while( $arGroup = $dbGroups->Fetch() ) {
+    				$item["SECTION"][] = $arGroup["NAME"];
+    			}
     		}
 			
 			return $item;
@@ -45,15 +48,9 @@
 		$isSafari = true;
 	}
 
-    $arResult["SECTIONS"] = [];
-    $dbList = CIBlockSection::GetList([], ["IBLOCK_ID" => $arParams["IBLOCK_ID"], "DEPTH_LEVEL" => 1], false);
-    while( $arRes = $dbList->GetNext() ) {
-    	$arResult["SECTIONS"][$arRes["ID"]] = $arRes["NAME"];
-    }
-
     $itemsArr = [];
     foreach( $arResult["ITEMS"] as $arItem ) {
-    	$itemsArr[] = getAdditionaBlogItem($arItem, $arResult["SECTIONS"], $isSafari);
+    	$itemsArr[] = getAdditionaBlogItem($arItem, $isSafari);
     }
     unset($arResult["ITEMS"]);
 
@@ -64,5 +61,5 @@
 	while( $obItem = $res->GetNextElement() ) {
 		$arItem = $obItem->GetFields();
 		$arItem["PROPERTIES"] = $obItem->GetProperties();
-		$arResult["LEFT_ITEMS"][] = getAdditionaBlogItem($arItem, $arResult["SECTIONS"], $isSafari);
+		$arResult["LEFT_ITEMS"][] = getAdditionaBlogItem($arItem, $isSafari);
 	}

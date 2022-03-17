@@ -1,0 +1,149 @@
+.subscribe-form-table {
+	display: flex;
+    position: relative;
+    flex-direction: row;
+    gap: 35px;
+    margin: 100px 0px 60px;
+}
+.subscribe-form-table__cell {
+	position: relative;
+}
+.subscribe-form-table__cell:nth-child(1) {
+	width: 45%;
+}
+.subscribe-form-table__cell:nth-child(2) {
+    width: 55%;
+    box-sizing: border-box;
+    padding-left: 50px;
+}
+.subscribe-form-table img {
+	width: 100%;
+}
+.subscribe-form-title {
+	display: block;
+    position: relative;
+    top: -8px;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 64px;
+    margin-bottom: 16px;
+}
+.subscribe-form-title > span {
+	color: #FC6120;
+}
+.subscribe-form,
+.subscribe-form-footer {
+	display: block;
+    position: relative;
+}
+.subscribe-form .fields {
+	display: flex;
+    position: relative;
+    flex-direction: row;
+    gap: 16px;
+    margin-bottom: 36px;
+}
+.subscribe-form input[type=text]::placeholder {
+	color: #484848;
+	font-size: 18px;
+    line-height: 18px;
+}
+.subscribe-form input[type=text] {
+	position: relative;
+	width: 70%;
+	font-size: 18px;
+    line-height: 18px;
+    border: 1px solid #484848;
+    padding: 10px 15px;
+    color: #fff;
+}
+.subscribe-form input[type=text]:active,
+.subscribe-form input[type=text]:focus {
+	border: 1px solid #FC6120;
+}
+.subscribe-form input[type=submit] {
+	position: relative;
+	box-sizing: border-box;
+	width: 30%;
+	color: #fff;
+	font-size: 18px;
+	font-weight: normal;
+    line-height: 18px;
+    border: 1px solid #FC6120;
+    padding: 10px 15px;
+    background-color: transparent;
+    text-transform: none;
+    transition: all .3s;
+}
+.subscribe-form input[type=submit]:hover {
+	color: #fff;
+	background-color: #FC6120;
+}
+.subscribe-form .input-label a {
+	color: #FC6120;;
+}
+.subscribe-form .input--checkbox {
+	border: 1px solid #484848;
+}
+.subscribe-form .input-label__text {
+	color: #5e5e5e;
+}
+
+body.white .subscribe-form input[type=submit],
+body.white .subscribe-form input[type=text] {
+	color: #000;
+}
+body.white .subscribe-form input[type=submit]:hover {
+	color: #fff;
+	background-color: #FC6120;
+}
+
+@media screen and (max-width: 1200px) {
+	.subscribe-form-table__cell:nth-child(1) {
+		width: 35%;
+	}
+	.subscribe-form-table__cell:nth-child(2) {
+    	width: 55%;
+    	padding-left: 0;
+	}
+	.subscribe-form-title {
+		top: -8px;
+		font-size: 46px;
+		line-height: 54px;
+	}
+}
+@media screen and (max-width: 968px) {
+	.subscribe-form-table__cell:nth-child(1) {
+		display: none;
+	}
+	.subscribe-form-table__cell:nth-child(2) {
+    	width: 100%;
+	}
+	.subscribe-form-title {
+		top: initial;
+	}
+}
+@media screen and (max-width: 768px) {
+	.subscribe-form-title {
+		font-size: 36px;
+		line-height: 44px;
+	}
+}
+@media screen and (max-width: 568px) {
+	.subscribe-form .fields {
+		flex-direction: column;
+		align-items: end;
+		justify-content: end;
+	}
+	.subscribe-form input[type=text] {
+		width: 100%;
+	}
+	.subscribe-form input[type=submit] {
+		width: 50%;
+	}
+}
+@media screen and (max-width: 368px) {
+	.subscribe-form input[type=submit] {
+		width: 80%;
+	}
+}

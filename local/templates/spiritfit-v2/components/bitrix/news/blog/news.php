@@ -96,5 +96,17 @@
 				$component
 			);
 		?>
+		<?
+			$APPLICATION->IncludeComponent(
+				"custom:form.subscribe", 
+				"", 
+				array(
+					"AJAX_MODE" => "N",
+					"FORM_TYPE" => "subscribe",
+					"ACTION_TYPE" => "subscribe"
+				),
+				false
+			);
+		?>
 	</div>
 </div>

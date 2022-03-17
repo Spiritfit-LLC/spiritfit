@@ -9,7 +9,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
             <div></div>
             <div></div>
         </div>
-        <div class="popup__heading"><?= $arResult["INFO"]["PROPERTIES"]["NAME_CALLBACK"]["VALUE"] ?></div>
+        <div class="popup__heading">Оставить заявку на посещение</div>
         <form class="popup__form" name="<?= $arResult["WEB_FORM_NAME"] ?>" action="<?= POST_FORM_ACTION_URI ?>" method="POST" enctype="multipart/form-data">
         <?=getClientParams($arParams["WEB_FORM_ID"]) ?>
         <?= bitrix_sessid_post(); ?>
