@@ -236,6 +236,9 @@
 .blog-banner {
 	margin-bottom: 87px;
 }
+.blog-banner img {
+	width: 100%;
+}
 .blog-banner__mobile {
 	display: none;
     position: relative;
@@ -381,7 +384,6 @@ body.white .blog-additional .blog-item-name {
 		margin-top: 24px;
 	}
 	.blog-items-col .blog-banner,
-	.blog-items.two .blog-items-col:nth-child(2),
 	.blog-items.two .blog-items-col:nth-child(1):after {
 		display: none;
 	}

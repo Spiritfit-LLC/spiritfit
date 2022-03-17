@@ -39,7 +39,7 @@
 			"IBLOCK_TYPE" => "content",
 			"IBLOCK_ID" => "22",
 			"BANNER" => $banner,
-			"NEWS_COUNT" => "12",
+			"NEWS_COUNT" => "7",
 			"USE_SEARCH" => "N",
 			"USE_RSS" => "N",
 			"USE_RATING" => "N",

@@ -18,7 +18,7 @@
 <div class="content-center">
 	<div class="blog">
 		<div class="blog-wrapper detail">
-			<div class="blog-items <?=(count($arResult["ADDITIONAL_ITEMS"]) > 2 || !empty($arParams["BANNER"])) ? "two" : "one" ?>">
+			<div class="blog-items <?=(count($arResult["LEFT_ITEMS"]) > 0 || !empty($arParams["BANNER"])) ? "two" : "one" ?>">
 				<div class="blog-items-col">
 					<div class="blog-detail-date"><?=$arResult["DATE"]?></div>
 					<? if( !empty($arResult["PICTURE_SRC"]) ) { ?>
@@ -37,7 +37,7 @@
 								<?
 									foreach($arResult["ADDITIONAL_ITEMS"] as $key => $arItem) {
 										?>
-										<a class="blog-item <?=( $key > 1 ) ? "mobile" : "" ?>" href="<?=$arItem["LINK"]?>">
+										<a class="blog-item" href="<?=$arItem["LINK"]?>">
 											<div class="blog-item-banner">
 												<img src="<?=$arItem["PICTURE"]["MEDIUM"]?>" alt="<?=strip_tags($arItem["NAME"])?>" title="<?=strip_tags($arItem["NAME"])?>">
 												<? if(!empty($arItem["SECTION"])) {
@@ -53,12 +53,11 @@
 						</div>
 					<? } ?>
 				</div>
-				<? if(count($arResult["ADDITIONAL_ITEMS"]) > 2 || !empty($arParams["BANNER"])) {
+				<? if(count($arResult["LEFT_ITEMS"]) > 0 || !empty($arParams["BANNER"])) {
 					?>
 					<div class="blog-items-col">
 						<? if(!empty($arParams["BANNER"])) { ?><a class="blog-banner" href="<?=$arParams["BANNER"]["LINK"]?>"><img src="<?=$arParams["BANNER"]["SRC"]?>" alt="<?=$arResult["NAME"]?>" title="<?=$arResult["NAME"]?>"></a><? } ?>
-						<? foreach($arResult["ADDITIONAL_ITEMS"] as $key => $arItem) {
-							if( $key <= 1 ) continue;
+						<? foreach($arResult["LEFT_ITEMS"] as $key => $arItem) {
 							?>
 								<a class="blog-item blog-left" href="<?=$arItem["LINK"]?>">
 									<div class="cell">

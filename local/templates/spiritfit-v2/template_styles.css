@@ -5541,6 +5541,7 @@ button.mfp-arrow::before{
 		position: relative;
 		right: initial;
 		top: initial;
+		margin: 15px 0px;
 	}
 	.blog-page .b-page__title.has-selector {
 		padding-right: 0;
