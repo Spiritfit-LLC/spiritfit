@@ -5460,6 +5460,66 @@ button.mfp-arrow::before{
 	margin-top: 45px;
 }
 
+.theme-selector-wrapper {
+	display: block;
+    position: absolute;
+    font-size: 9pt;
+    line-height: 9px;
+    top: calc(50% - 8px);
+    right: 0px;
+    text-transform: none;
+}
+.theme-selector {
+	display: inline-block;
+	position: relative;
+}
+.theme-selector input {
+	margin: 0px;
+    margin-top: 1px;
+    cursor: pointer;
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 20px;
+}
+.theme-selector label {
+	display: block;
+    position: relative;
+    box-sizing: border-box;
+    height: 20px;
+    padding: 3px 10px 3px 25px;
+    background-color: #666;
+    font-size: 9pt;
+    line-height: 10pt;
+	border-radius: 10px;
+	cursor: pointer;
+}
+.theme-selector label:before {
+	content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    top: 2px;
+    border-radius: 10px;
+    background: #FC6120;
+    transition: background-color 0.3s, left 0.3s;
+}
+.theme-selector input:checked + label {
+	padding: 3px 25px 3px 10px;
+}
+.theme-selector input:checked + label:before {
+	left: calc(100% - 18px);
+}
+
 @media screen and (max-width: 1024px) {
 	.footer-menu {
 		display: grid;
@@ -5472,6 +5532,11 @@ button.mfp-arrow::before{
 		display: block;
 		width: initial;
 		padding: 0px;
+	}
+	.theme-selector-wrapper {
+		position: relative;
+		right: initial;
+		top: initial;
 	}
 }
 @media screen and (max-width: 968px) {

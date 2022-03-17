@@ -118,4 +118,13 @@ class Picture {
 
 		return $file['WEBP_SRC'];
 	}
+	
+	public static function getResizeWebpFileId($fileId, $width, $height, $isProportional = true, $intQuality = 70)
+	{
+		$file = \CFile::GetFileArray($fileId);
+		$file['SRC'] = self::resizePict($file, $width, $height, $isProportional, $intQuality);
+		$file = self::getWebp($file, $intQuality);
+
+		return $file;
+	}
 }

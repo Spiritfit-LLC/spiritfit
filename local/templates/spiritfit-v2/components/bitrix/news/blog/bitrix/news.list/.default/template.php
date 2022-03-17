@@ -41,7 +41,7 @@
 			<? if( count($arResult["ITEMS"]) > 1 ) {
 				?><div class="blog-second"><?
 				foreach($arResult["ITEMS"] as $key => $arItem) {
-					if( $key >= 7 ) continue;
+					if( $key >= 7 || $key == 0 ) continue;
 					?>
 					<a class="blog-item" href="<?=$arItem["LINK"]?>">
 						<div class="blog-item-banner">
@@ -66,7 +66,7 @@
 		<? if(count($arResult["ITEMS"]) > 7 || !empty($arParams["BANNER"])) {
 			?>
 			<div class="blog-items-col">
-				<? if(!empty($arParams["BANNER"])) { ?><a class="banner" href="<?=$arParams["BANNER"]["LINK"]?>"><img src="<?=$arParams["BANNER"]["SRC"]?>" alt="<?=$arResult["NAME"]?>" title="<?=$arResult["NAME"]?>"></a><? } ?>
+				<? if(!empty($arParams["BANNER"])) { ?><a class="blog-banner" href="<?=$arParams["BANNER"]["LINK"]?>"><img src="<?=$arParams["BANNER"]["SRC"]?>" alt="<?=$arResult["NAME"]?>" title="<?=$arResult["NAME"]?>"></a><? } ?>
 				<? foreach($arResult["ITEMS"] as $key => $arItem) {
 					if( $key < 7 ) continue;
 					?>
@@ -89,5 +89,12 @@
 	</div>
 	<? if($arParams["DISPLAY_BOTTOM_PAGER"]) { ?>
 		<?=$arResult["NAV_STRING"]?>
+	<? } ?>
+	<? if(!empty($arParams["BANNER"])) { ?>
+		<div class="blog-banner__mobile">
+			<a class="blog-banner" href="<?=$arParams["BANNER"]["LINK"]?>">
+				<img src="<?=$arParams["BANNER"]["SRC"]?>" alt="<?=$arResult["NAME"]?>" title="<?=$arResult["NAME"]?>">
+			</a>
+		</div>
 	<? } ?>
 </div>

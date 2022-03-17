@@ -96,4 +96,10 @@ if (0 < $arResult['SECTIONS_COUNT'])
 		}
 	}
 }
-?>
+
+$curPageUrl = $APPLICATION->GetCurPage(false);
+foreach ($arResult['SECTIONS'] as &$arSection) {
+	$arSection["IS_CURRENT"] = false;
+	if( $arSection["SECTION_PAGE_URL"] === $curPageUrl ) $arSection["IS_CURRENT"] = true;
+}
+unset($arSection);

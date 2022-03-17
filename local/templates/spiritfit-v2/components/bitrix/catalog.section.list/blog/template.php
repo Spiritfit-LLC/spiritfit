@@ -19,6 +19,6 @@
     <div class="blog-section-list">
     <?
         foreach ($arResult['SECTIONS'] as $arSection) {
-    	    ?><div class="blog-section"><a href="<?=$arSection["SECTION_PAGE_URL"]?>"><?=$arSection["NAME"]?></a></div><?
+    	    ?><a class="blog-section <?=$arSection["IS_CURRENT"] ? "current" : "" ?>" href="<?=$arSection["SECTION_PAGE_URL"]?>"><?=$arSection["NAME"]?></a><?
         }
     ?></div><?

@@ -229,3 +229,14 @@ function my_onBeforeResultAdd($WEB_FORM_ID, &$arFields, &$arrVALUES) {
     }
 }
 
+function getThemeSelector() {
+	$isChecked = '';
+	$name = 'темная';
+	if( isset($_COOKIE["theme_type"]) && intval($_COOKIE["theme_type"]) === 2 ) {
+		$isChecked = 'checked';
+		$name = 'светлая';
+	}
+	$resultString = '<div class="theme-selector-wrapper">Тема оформления: <div class="theme-selector"><input id="theme_type" type="checkbox" name="theme_type" value="2" ' . $isChecked . '><label for="theme_type">' . $name . '</label></div></div>';
+	return $resultString;
+}
+

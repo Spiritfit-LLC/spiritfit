@@ -1,95 +1,80 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
-/** @var array $arParams */
-/** @var array $arResult */
-/** @global CMain $APPLICATION */
-/** @global CUser $USER */
-/** @global CDatabase $DB */
-/** @var CBitrixComponentTemplate $this */
-/** @var string $templateName */
-/** @var string $templateFile */
-/** @var string $templateFolder */
-/** @var string $componentPath */
-/** @var CBitrixComponent $component */
-$this->setFrameMode(true);
+<?
+	if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+	
+	/** @var array $arParams */
+	/** @var array $arResult */
+	/** @global CMain $APPLICATION */
+	/** @global CUser $USER */
+	/** @global CDatabase $DB */
+	/** @var CBitrixComponentTemplate $this */
+	/** @var string $templateName */
+	/** @var string $templateFile */
+	/** @var string $templateFolder */
+	/** @var string $componentPath */
+	/** @var CBitrixComponent $component */
+	
+	$this->setFrameMode(true);
 ?>
-<div class="news-detail">
-	<?if($arParams["DISPLAY_PICTURE"]!="N" && is_array($arResult["DETAIL_PICTURE"])):?>
-		<img
-			class="detail_picture"
-			border="0"
-			src="<?=$arResult["DETAIL_PICTURE"]["SRC"]?>"
-			width="<?=$arResult["DETAIL_PICTURE"]["WIDTH"]?>"
-			height="<?=$arResult["DETAIL_PICTURE"]["HEIGHT"]?>"
-			alt="<?=$arResult["DETAIL_PICTURE"]["ALT"]?>"
-			title="<?=$arResult["DETAIL_PICTURE"]["TITLE"]?>"
-			/>
-	<?endif?>
-	<?if($arParams["DISPLAY_DATE"]!="N" && $arResult["DISPLAY_ACTIVE_FROM"]):?>
-		<span class="news-date-time"><?=$arResult["DISPLAY_ACTIVE_FROM"]?></span>
-	<?endif;?>
-	<?if($arParams["DISPLAY_NAME"]!="N" && $arResult["NAME"]):?>
-		<h3><?=$arResult["NAME"]?></h3>
-	<?endif;?>
-	<?if($arParams["DISPLAY_PREVIEW_TEXT"]!="N" && $arResult["FIELDS"]["PREVIEW_TEXT"]):?>
-		<p><?=$arResult["FIELDS"]["PREVIEW_TEXT"];unset($arResult["FIELDS"]["PREVIEW_TEXT"]);?></p>
-	<?endif;?>
-	<?if($arResult["NAV_RESULT"]):?>
-		<?if($arParams["DISPLAY_TOP_PAGER"]):?><?=$arResult["NAV_STRING"]?><br /><?endif;?>
-		<?echo $arResult["NAV_TEXT"];?>
-		<?if($arParams["DISPLAY_BOTTOM_PAGER"]):?><br /><?=$arResult["NAV_STRING"]?><?endif;?>
-	<?elseif(strlen($arResult["DETAIL_TEXT"])>0):?>
-		<?echo $arResult["DETAIL_TEXT"];?>
-	<?else:?>
-		<?echo $arResult["PREVIEW_TEXT"];?>
-	<?endif?>
-	<div style="clear:both"></div>
-	<br />
-	<?foreach($arResult["FIELDS"] as $code=>$value):
-		if ('PREVIEW_PICTURE' == $code || 'DETAIL_PICTURE' == $code)
-		{
-			?><?=GetMessage("IBLOCK_FIELD_".$code)?>:&nbsp;<?
-			if (!empty($value) && is_array($value))
-			{
-				?><img border="0" src="<?=$value["SRC"]?>" width="<?=$value["WIDTH"]?>" height="<?=$value["HEIGHT"]?>"><?
-			}
-		}
-		else
-		{
-			?><?=GetMessage("IBLOCK_FIELD_".$code)?>:&nbsp;<?=$value;?><?
-		}
-		?><br />
-	<?endforeach;
-	foreach($arResult["DISPLAY_PROPERTIES"] as $pid=>$arProperty):?>
-
-		<?=$arProperty["NAME"]?>:&nbsp;
-		<?if(is_array($arProperty["DISPLAY_VALUE"])):?>
-			<?=implode("&nbsp;/&nbsp;", $arProperty["DISPLAY_VALUE"]);?>
-		<?else:?>
-			<?=$arProperty["DISPLAY_VALUE"];?>
-		<?endif?>
-		<br />
-	<?endforeach;
-	if(array_key_exists("USE_SHARE", $arParams) && $arParams["USE_SHARE"] == "Y")
-	{
-		?>
-		<div class="news-detail-share">
-			<noindex>
-			<?
-			$APPLICATION->IncludeComponent("bitrix:main.share", "", array(
-					"HANDLERS" => $arParams["SHARE_HANDLERS"],
-					"PAGE_URL" => $arResult["~DETAIL_PAGE_URL"],
-					"PAGE_TITLE" => $arResult["~NAME"],
-					"SHORTEN_URL_LOGIN" => $arParams["SHARE_SHORTEN_URL_LOGIN"],
-					"SHORTEN_URL_KEY" => $arParams["SHARE_SHORTEN_URL_KEY"],
-					"HIDE" => $arParams["SHARE_HIDE"],
-				),
-				$component,
-				array("HIDE_ICONS" => "Y")
-			);
-			?>
-			</noindex>
+<div class="content-center">
+	<div class="blog">
+		<div class="blog-wrapper detail">
+			<div class="blog-items <?=(count($arResult["ADDITIONAL_ITEMS"]) > 2 || !empty($arParams["BANNER"])) ? "two" : "one" ?>">
+				<div class="blog-items-col">
+					<div class="blog-detail-date"><?=$arResult["DATE"]?></div>
+					<? if( !empty($arResult["PICTURE_SRC"]) ) { ?>
+						<div class="blog-detail-picture">
+							<img src="<?=$arResult["PICTURE_SRC"]?>" alt="<?=strip_tags($arResult["NAME"])?>" title="<?=strip_tags($arResult["NAME"])?>">
+							<? if(!empty($arResult["SECTION_NAME"])) {
+								?><div class="blog-detail-section"><?=$arResult["SECTION_NAME"]?></div><?
+							} ?>
+						</div>
+					<? } ?>
+					<div class="blog-detail-text"><?=$arResult["~DETAIL_TEXT"]?></div>
+					<? if( !empty($arResult["ADDITIONAL_ITEMS"]) ) { ?>
+						<div class="blog-additional">
+							<?
+								foreach($arResult["ADDITIONAL_ITEMS"] as $key => $arItem) {
+									if( $key > 1 ) continue;
+									?>
+									<a class="blog-item" href="<?=$arItem["LINK"]?>">
+										<div class="blog-item-banner">
+											<img src="<?=$arItem["PICTURE"]["MEDIUM"]?>" alt="<?=strip_tags($arItem["NAME"])?>" title="<?=strip_tags($arItem["NAME"])?>">
+											<? if(!empty($arItem["SECTION"])) {
+												?><div class="blog-item-section"><?=$arItem["SECTION"]["NAME"]?></div><?
+											} ?>
+											<div class="blog-item-name"><?=$arItem["NAME"]?></div>
+										</div>
+									</a>
+									<?
+								}
+							?>
+						</div>
+					<? } ?>
+				</div>
+				<? if(count($arResult["ADDITIONAL_ITEMS"]) > 2 || !empty($arParams["BANNER"])) {
+					?>
+					<div class="blog-items-col">
+						<? if(!empty($arParams["BANNER"])) { ?><a class="blog-banner" href="<?=$arParams["BANNER"]["LINK"]?>"><img src="<?=$arParams["BANNER"]["SRC"]?>" alt="<?=$arResult["NAME"]?>" title="<?=$arResult["NAME"]?>"></a><? } ?>
+						<? foreach($arResult["ADDITIONAL_ITEMS"] as $key => $arItem) {
+							if( $key < 1 ) continue;
+							?>
+								<a class="blog-item blog-left" href="<?=$arItem["LINK"]?>">
+									<div class="cell">
+										<img src="<?=$arItem["PICTURE"]["SMALL"]?>" alt="<?=strip_tags($arItem["NAME"])?>" title="<?=strip_tags($arItem["NAME"])?>">
+									</div>
+									<div class="cell">
+										<? if(!empty($arItem["SECTION"])) {
+											?><div class="blog-item-section"><?=$arItem["SECTION"]["NAME"]?></div><?
+										} ?>
+										<div class="blog-item-name"><?=$arItem["NAME"]?></div>
+									</div>
+								</a>
+							<?
+						} ?>
+					</div>
+					<?
+				} ?>
+			</div>
 		</div>
-		<?
-	}
-	?>
+	</div>
 </div>

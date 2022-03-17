@@ -48,6 +48,7 @@ foreach( $clubs as $club ) {
     Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . "/vendor/fancybox3/jquery.fancybox.min.css");
     Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . "/css/global.css");
     Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . "/css/custom.css");
+	Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . "/css/white.css");
     
     //Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/sameheight/jquery.sameheight.js");
     //Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/jquery.maskedinput/jquery.maskedinput.js");
@@ -98,9 +99,14 @@ foreach( $clubs as $club ) {
     <link rel="canonical" href="<?= 'https://' . $_SERVER['HTTP_HOST'] . $page; ?>"/>
 </head>
 <? $APPLICATION->ShowPanel(); ?>
-<? if(strpos($page, '/abonement/') !== false && $page != '/abonement/'){
-    $classPage = 'abonement-detail';
-} ?>
+<?
+	if(strpos($page, '/abonement/') !== false && $page != '/abonement/'){
+        $classPage = 'abonement-detail';
+    }
+    if( isset($_COOKIE["theme_type"]) && intval($_COOKIE["theme_type"]) === 2 && strpos($page, "/blog/") !== false ) {
+	    if( isset($classPage) ) $classPage += " white"; else $classPage = "white";
+    }
+?>
 <body class="b-page <?=$classPage?>">
     <!-- VK counter -->
     <script defer type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?160",t.onload=function(){VK.Retargeting.Init("VK-RTRG-333642-hybZ4"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-333642-hybZ4" style="position:fixed; left:-999px;" alt=""/></noscript>    
@@ -273,7 +279,7 @@ foreach( $clubs as $club ) {
                             )
                         ); ?>
                         <? if(!defined('H1_HIDE')){ ?>
-                            <h1 class="b-page__title"><?=$APPLICATION->ShowTitle(false)?></h1>
+                            <h1 class="b-page__title"><?=$APPLICATION->ShowTitle(false)?><?=(strpos($page, "/blog/") !== false) ? getThemeSelector() : ""?></h1>
                         <? } ?>
                     </div>
                 </div>
