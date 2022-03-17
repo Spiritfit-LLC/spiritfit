@@ -21,6 +21,7 @@
 	<? } ?>
 	<div class="blog-items <?=(count($arResult["LEFT_ITEMS"]) > 0 || !empty($arParams["BANNER"])) ? "two" : "one" ?>">
 		<div class="blog-items-col">
+			<?=empty($arResult["ITEMS"]) ? GetMessage("BLOG_EMPTY") : "" ?>
 			<? if(!empty($arResult["ITEMS"][0])) {
 				?>
 				<div class="blog-top blog-item">

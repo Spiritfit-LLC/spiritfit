@@ -186,9 +186,10 @@
 	top: 24px;
 	left: 24px;
 }
-.blog-second img {
+.blog-second img,
+.blog-top img {
 	width: 100%;
-	height: 224px;
+	/*height: 224px;*/
 }
 
 .blog-item-description {
