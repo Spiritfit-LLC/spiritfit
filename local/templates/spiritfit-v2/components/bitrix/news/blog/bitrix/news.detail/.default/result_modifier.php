@@ -60,7 +60,7 @@
 			
 			if( $arItem["ID"] === $arResult["ID"] ) continue;
 			
-			$item = ["ID" => $arItem["ID"], "NAME" => $arItem["~NAME"], "LINK" => $arItem["DETAIL_PAGE_URL"]];
+			$item = ["ID" => $arItem["ID"], "NAME" => !empty($arItem["PROPERTIES"]["TITLE"]["~VALUE"]) ? $arItem["PROPERTIES"]["TITLE"]["~VALUE"] : $arItem["NAME"], "LINK" => $arItem["DETAIL_PAGE_URL"]];
 			
 			if( !empty($arItem["PREVIEW_PICTURE"]) && $isSafari ) {
 				$item["PICTURE"] = [

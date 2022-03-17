@@ -405,6 +405,7 @@ $(document).ready(function() {
 	
 	/* Изменение темы сайта */
 	if( $(".theme-selector").length > 0 ) {
+		$(".theme-selector-wrapper").show();
 		$(".theme-selector input[type=checkbox]").change(function() {
 			
 			var cookieValue = 1;

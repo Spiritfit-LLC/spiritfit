@@ -41,9 +41,9 @@
 			<? if( count($arResult["ITEMS"]) > 1 ) {
 				?><div class="blog-second"><?
 				foreach($arResult["ITEMS"] as $key => $arItem) {
-					if( $key >= 7 || $key == 0 ) continue;
+					if( $key == 0 ) continue;
 					?>
-					<a class="blog-item" href="<?=$arItem["LINK"]?>">
+					<a class="blog-item <?=($key >= 7) ? "mobile" : "" ?>" href="<?=$arItem["LINK"]?>">
 						<div class="blog-item-banner">
 							<img src="<?=$arItem["PICTURE"]["MEDIUM"]?>" alt="<?=strip_tags($arItem["NAME"])?>" title="<?=strip_tags($arItem["NAME"])?>">
 							<? if(!empty($arItem["SECTION"])) {
@@ -51,6 +51,7 @@
 							} ?>
 							<div class="blog-item-date">
 								<?=$arItem["DATE"]?>
+								<div class="blog-item-name mobile"><?=$arItem["NAME"]?></div>
 							</div>
 						</div>
 						<div class="blog-item-name"><?=$arItem["NAME"]?></div>

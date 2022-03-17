@@ -31,23 +31,25 @@
 					<? } ?>
 					<div class="blog-detail-text"><?=$arResult["~DETAIL_TEXT"]?></div>
 					<? if( !empty($arResult["ADDITIONAL_ITEMS"]) ) { ?>
-						<div class="blog-additional">
-							<?
-								foreach($arResult["ADDITIONAL_ITEMS"] as $key => $arItem) {
-									if( $key > 1 ) continue;
-									?>
-									<a class="blog-item" href="<?=$arItem["LINK"]?>">
-										<div class="blog-item-banner">
-											<img src="<?=$arItem["PICTURE"]["MEDIUM"]?>" alt="<?=strip_tags($arItem["NAME"])?>" title="<?=strip_tags($arItem["NAME"])?>">
-											<? if(!empty($arItem["SECTION"])) {
-												?><div class="blog-item-section"><?=$arItem["SECTION"]["NAME"]?></div><?
-											} ?>
-											<div class="blog-item-name"><?=$arItem["NAME"]?></div>
-										</div>
-									</a>
-									<?
-								}
-							?>
+						<div class="blog-additional-wrapper">
+							<div class="blog-additional-title"><?=GetMessage("BLOG_ADDITIONAL_TITLE")?></div>
+							<div class="blog-additional">
+								<?
+									foreach($arResult["ADDITIONAL_ITEMS"] as $key => $arItem) {
+										?>
+										<a class="blog-item <?=( $key > 1 ) ? "mobile" : "" ?>" href="<?=$arItem["LINK"]?>">
+											<div class="blog-item-banner">
+												<img src="<?=$arItem["PICTURE"]["MEDIUM"]?>" alt="<?=strip_tags($arItem["NAME"])?>" title="<?=strip_tags($arItem["NAME"])?>">
+												<? if(!empty($arItem["SECTION"])) {
+													?><div class="blog-item-section"><?=$arItem["SECTION"]["NAME"]?></div><?
+												} ?>
+												<div class="blog-item-name"><?=$arItem["NAME"]?></div>
+											</div>
+										</a>
+										<?
+									}
+								?>
+							</div>
 						</div>
 					<? } ?>
 				</div>
@@ -56,7 +58,7 @@
 					<div class="blog-items-col">
 						<? if(!empty($arParams["BANNER"])) { ?><a class="blog-banner" href="<?=$arParams["BANNER"]["LINK"]?>"><img src="<?=$arParams["BANNER"]["SRC"]?>" alt="<?=$arResult["NAME"]?>" title="<?=$arResult["NAME"]?>"></a><? } ?>
 						<? foreach($arResult["ADDITIONAL_ITEMS"] as $key => $arItem) {
-							if( $key < 1 ) continue;
+							if( $key <= 1 ) continue;
 							?>
 								<a class="blog-item blog-left" href="<?=$arItem["LINK"]?>">
 									<div class="cell">
@@ -75,6 +77,13 @@
 					<?
 				} ?>
 			</div>
+			<? if(!empty($arParams["BANNER"])) { ?>
+				<div class="blog-banner__mobile">
+					<a class="blog-banner" href="<?=$arParams["BANNER"]["LINK"]?>">
+						<img src="<?=$arParams["BANNER"]["SRC"]?>" alt="<?=$arResult["NAME"]?>" title="<?=$arResult["NAME"]?>">
+					</a>
+				</div>
+			<? } ?>
 		</div>
 	</div>
 </div>

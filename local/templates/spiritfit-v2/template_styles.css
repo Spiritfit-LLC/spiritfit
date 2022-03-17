@@ -5461,7 +5461,7 @@ button.mfp-arrow::before{
 }
 
 .theme-selector-wrapper {
-	display: block;
+	display: none;
     position: absolute;
     font-size: 9pt;
     line-height: 9px;
@@ -5520,6 +5520,10 @@ button.mfp-arrow::before{
 	left: calc(100% - 18px);
 }
 
+.blog-page .b-page__title.has-selector {
+	padding-right: 250px;
+}
+
 @media screen and (max-width: 1024px) {
 	.footer-menu {
 		display: grid;
@@ -5537,6 +5541,9 @@ button.mfp-arrow::before{
 		position: relative;
 		right: initial;
 		top: initial;
+	}
+	.blog-page .b-page__title.has-selector {
+		padding-right: 0;
 	}
 }
 @media screen and (max-width: 968px) {

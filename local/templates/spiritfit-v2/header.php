@@ -279,7 +279,7 @@ foreach( $clubs as $club ) {
                             )
                         ); ?>
                         <? if(!defined('H1_HIDE')){ ?>
-                            <h1 class="b-page__title"><?=$APPLICATION->ShowTitle(false)?><?=(strpos($page, "/blog/") !== false) ? getThemeSelector() : ""?></h1>
+                            <h1 class="b-page__title <?=(strpos($page, "/blog/") !== false) ? "has-selector" : ""?>"><?=$APPLICATION->ShowTitle(false)?><?=(strpos($page, "/blog/") !== false) ? getThemeSelector() : ""?></h1>
                         <? } ?>
                     </div>
                 </div>

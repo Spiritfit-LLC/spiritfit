@@ -59,7 +59,8 @@
 				),
 			"LIST_PROPERTY_CODE" => array(
 				0 => "PICT_SECOND",
-				1 => "",
+				1 => "TITLE",
+				2 => ""
 			),
 			"HIDE_LINK_WHEN_NO_DETAIL" => "N",
 			"DISPLAY_NAME" => "Y",
@@ -75,6 +76,8 @@
 			"DETAIL_PROPERTY_CODE" => array(
 				0 => "PICT_SECOND",
 				1 => "ADDITIONAL",
+				2 => "TITLE",
+				3 => ""
 			),
 			"DETAIL_DISPLAY_TOP_PAGER" => "N",
 			"DETAIL_DISPLAY_BOTTOM_PAGER" => "Y",

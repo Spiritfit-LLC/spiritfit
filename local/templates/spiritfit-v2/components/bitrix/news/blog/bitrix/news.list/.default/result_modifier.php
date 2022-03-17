@@ -17,7 +17,7 @@
 
     $itemsArr = [];
     foreach( $arResult["ITEMS"] as $arItem ) {
-    	$item = ["ID" => $arItem["ID"], "NAME" => $arItem["~NAME"], "LINK" => $arItem["DETAIL_PAGE_URL"]];
+    	$item = ["ID" => $arItem["ID"], "NAME" => !empty($arItem["PROPERTIES"]["TITLE"]["~VALUE"]) ? $arItem["PROPERTIES"]["TITLE"]["~VALUE"] : $arItem["NAME"], "LINK" => $arItem["DETAIL_PAGE_URL"]];
     	if( !empty($arItem["PREVIEW_PICTURE"]) && $isSafari ) {
 			$item["PICTURE"] = [
     			"SMALL" => !empty($arItem["PROPERTIES"]["PICT_SECOND"]["VALUE"]) ? CFile::ResizeImageGet($arItem["PROPERTIES"]["PICT_SECOND"]["VALUE"], ["width" => 130, "height" => 130], BX_RESIZE_IMAGE_EXACT)["src"] : CFile::ResizeImageGet($arItem["PREVIEW_PICTURE"], ["width" => 130, "height" => 130], BX_RESIZE_IMAGE_EXACT)["src"],
