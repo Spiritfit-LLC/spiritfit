@@ -56,6 +56,15 @@
 
     $arResult["ITEMS"] = $itemsArr;
 	
+	$sortArr = [];
+	if( !empty($arParams["SORT_BY1"]) && !empty($arParams["SORT_ORDER1"]) ) {
+		$sortArr[$arParams["SORT_BY1"]] = $arParams["SORT_ORDER1"];
+	}
+	if( !empty($arParams["SORT_BY2"]) && !empty($arParams["SORT_ORDER2"]) ) {
+		$sortArr[$arParams["SORT_BY2"]] = $arParams["SORT_ORDER2"];
+	}
+	if( empty($sortArr) ) $sortArr["ID"] = "ASC";
+	
 	$arResult["LEFT_ITEMS"] = [];
 	$res = CIBlockElement::GetList( $sortArr, ["IBLOCK_ID" => $arParams["IBLOCK_ID"], "ACTIVE" => "Y", "PROPERTY_IN_LEFT_VALUE" => "Да"], false );
 	while( $obItem = $res->GetNextElement() ) {

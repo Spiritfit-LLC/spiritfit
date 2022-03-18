@@ -34,7 +34,7 @@
 		array(
 			"AJAX_MODE" => "N",
 			"WEB_FORM_ID" => "10",
-			"FORM_TYPE" => "1",
+			"FORM_TYPE" => "14",
 			"ACTION_TYPE" => "web_site_contact",
 			"BLOCK_TITLE" => $settings["PROPERTIES"]["PLATFORM_TITLE3"]["VALUE"]
 		),

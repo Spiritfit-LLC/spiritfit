@@ -507,7 +507,10 @@ class Api
 		
 		if(isset($additionFields['surname'])) $arParams['surname'] = $_REQUEST[$additionFields['surname']];
 		if(isset($additionFields['email'])) $arParams['email'] = $_REQUEST[$additionFields['email']];
-        if(!empty($params['company'])) $arParams['company'] = $params['company'];
+        
+		if(!empty($params['company'])) $arParams['company'] = $params['company'];
+		if(!empty($params['theme'])) $arParams['theme'] = $params['theme'];
+		if(!empty($params['email'])) $arParams['email'] = $params['email'];
         	
 		//if( empty($arParams["clubid"]) ) unset($arParams["clubid"]);
 

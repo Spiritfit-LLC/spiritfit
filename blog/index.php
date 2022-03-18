@@ -105,7 +105,7 @@
 			"DISPLAY_TOP_PAGER" => "N",
 			"DISPLAY_BOTTOM_PAGER" => "Y",
 			"PAGER_TITLE" => "Блог",
-			"PAGER_SHOW_ALWAYS" => "Y",
+			"PAGER_SHOW_ALWAYS" => "N",
 			"PAGER_TEMPLATE" => "spirit",
 			"PAGER_DESC_NUMBERING" => "N",
 			"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
