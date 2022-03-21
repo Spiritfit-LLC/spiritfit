@@ -21,8 +21,8 @@
 		<div class="footer-menu-title"><a href="/club-members/">Членам клуба</a></div>
 		<ul>
 			<li><a href="/club-members/#abonements">Абонементы</a></li>
-			<li><a href="">Корпоративная программа</a></li>
-			<li><a href="">Программа лояльности</a></li>
+			<li><a href="https://corp.spiritfit.ru/">Корпоративная программа</a></li>
+			<li><a href="/club-members/#spiritbox">Программа лояльности</a></li>
 			<li><a href="/trenirovki/partnery-i-privilegii/">Партнёры и привилегии</a></li>
 			<li><a href="/club-members/#faq">FAQ</a></li>
 		</ul>
