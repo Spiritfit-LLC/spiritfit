@@ -93,11 +93,17 @@
 	left: initial;
 }
 
-.corp-abonement__front-list {
+/* .corp-abonement__front-list {
 	width: 100%;
 	font-size: 8pt;
     line-height: 9pt;
     text-transform: uppercase;
+} */
+.corp-abonement__front-list {
+	width: 100%;
+	font-size: 9.5pt;
+    line-height: 11.1pt;
+    /*text-transform: uppercase;*/
 }
 .corp-abonement__front-list-item {
 	margin-bottom: 6px;

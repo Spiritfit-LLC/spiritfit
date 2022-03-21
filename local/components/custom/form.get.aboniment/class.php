@@ -108,7 +108,7 @@ class FormGetAbonimentComponent extends CBitrixComponent{
                 $outArrPrice[$key]["SIGN"] = $props[$arPrice["NUMBER"]];
             }
         }
-		array_multisort(array_column($outArrPrice, "NUMBER"), SORT_ASC, $outArrPrice);
+		// array_multisort(array_column($outArrPrice, "NUMBER"), SORT_ASC, $outArrPrice);
 
 		return ["PRICES" => $outArrPrice, "BASE_PRICE" => $outArrBasePrice, "SALE" => $outSale, "SALE_TWO_MONTH" => $outSaleTwoMonth];
 	}

@@ -24,7 +24,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
         <div class="subscription__common">
             <h1 class="subscription__title"><?= $arResult["ELEMENT"]["~NAME"] ?></h1>
             <div class="subscription__desc"><?= $arResult["ELEMENT"]["~PREVIEW_TEXT"] ?></div>
-
+            
             <? if ($arResult["ELEMENT"]["PRICES"] && (!empty($_REQUEST['club']) || !empty($_SESSION['CLUB_NUMBER']))): ?>
                 <div class="subscription__label">
                     <? foreach ($arResult["ELEMENT"]["PRICES"] as $key => $arPrice): ?>

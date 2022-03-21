@@ -188,16 +188,18 @@ function getClientParams($webFormId) {
 	    				$('input[name=<?=$arIdAnswer["trm"]?>]').val(current.trm);
 	    				
 	    				var ClientId = '';
-	    				if( typeof ga !== 'undefined' ) {
+	    				//if( typeof ga !== 'undefined' ) {
 							var ga = getCookie('_ga');
-	    					var i = ga.lastIndexOf('.');
-	    					if(i > 0) {
-	    						i = ga.lastIndexOf('.', i-1);
+							if( ga !== null ) {
+								var i = ga.lastIndexOf('.');
 	    						if(i > 0) {
-	    							ClientId = ga.substring(i+1);
+	    							i = ga.lastIndexOf('.', i-1);
+	    							if(i > 0) {
+	    								ClientId = ga.substring(i+1);
+	    							}
 	    						}
-	    					}
-						}
+							}
+						//}
 						
 	    				$('input[name=<?=$arIdAnswer["ClientId"]?>]').val(ClientId);
 	                }

@@ -303,7 +303,7 @@ class Api
 			$request['campania'] = $_REQUEST[$trafic['cnt']];
 			$request['message'] = $_REQUEST[$trafic['cmp']];
 			$request['kword'] = $_REQUEST[$trafic['trm']];
-			$request['cid'] = empty($request['cid']) ? $_REQUEST[$trafic['ClientId']] : $client_id;
+			$request['cid'] = empty($_REQUEST[$trafic['ClientId']]) ? $_REQUEST[$trafic['ClientId']] : $client_id;
 			
 			$additionFields = $GLOBALS['arAdditionAnswer'][$_REQUEST["WEB_FORM_ID"]];
 			
