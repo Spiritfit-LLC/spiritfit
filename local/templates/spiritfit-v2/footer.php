@@ -6,17 +6,23 @@ $settings = Utils::getInfo();
         <div class="content-center">
             <div class="b-footer__content">
                 <div class="b-footer__social">
+                    <!--
+                    22.03 блокировка инст    
                     <div>
-                        <a rel="nofollow" class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_INSTAGRAM"]["VALUE"]?>"
+                        <a rel="nofollow" class="b-social-link" href="<?//=$settings["PROPERTIES"]["LINK_INSTAGRAM"]["VALUE"]?>"
                         target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img"
-                                src="<?=SITE_TEMPLATE_PATH?>/img/icon-inst.svg" alt="@spiritmoscow" title="" /></span><span
+                                src="<?//=SITE_TEMPLATE_PATH?>/img/icon-inst.svg" alt="@spiritmoscow" title="" /></span><span
                             class="b-social-link__text">Instagram</span></a>
+                        <a rel="nofollow" class="b-social-link" href="<?//=$settings["PROPERTIES"]["LINK_TELEGRAM"]["VALUE"]?>"
+                        target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img"
+                                src="<?//=SITE_TEMPLATE_PATH?>/img/telegram-brands.svg" alt="@spiritmoscow" title="" /></span><span
+                            class="b-social-link__text">Telegram</span></a>
+                    </div> -->
+                    <div>
                         <a rel="nofollow" class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_TELEGRAM"]["VALUE"]?>"
                         target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img"
                                 src="<?=SITE_TEMPLATE_PATH?>/img/telegram-brands.svg" alt="@spiritmoscow" title="" /></span><span
                             class="b-social-link__text">Telegram</span></a>
-                    </div>
-                    <div>
                         <a rel="nofollow" class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_VK"]["VALUE"]?>"
                         target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img"
                                 src="<?=SITE_TEMPLATE_PATH?>/img/vk-brands.svg" alt="@spiritmoscow" title="" /></span><span

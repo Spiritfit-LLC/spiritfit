@@ -104,6 +104,7 @@ $arTraficAnswer = array(
 		'cnt' => 'form_text_41',
 		'trm' => 'form_text_42',
 		'ClientId' => 'form_text_43',
+		'yaClientID'=>'form_yaClientID1',
 	),
 	2 => array(
 		'src' => 'form_text_44',
@@ -112,6 +113,7 @@ $arTraficAnswer = array(
 		'cnt' => 'form_text_47',
 		'trm' => 'form_text_48',
 		'ClientId' => 'form_text_49',
+		'yaClientID'=>'form_yaClientID2',
 	),
 	3 => array(
 		'src' => 'form_text_50',
@@ -120,6 +122,7 @@ $arTraficAnswer = array(
 		'cnt' => 'form_text_53',
 		'trm' => 'form_text_54',
 		'ClientId' => 'form_text_55',
+		'yaClientID'=>'form_yaClientID3',
 	),
 	4 => array(
 		'src' => 'form_text_56',
@@ -128,6 +131,7 @@ $arTraficAnswer = array(
 		'cnt' => 'form_text_59',
 		'trm' => 'form_text_60',
 		'ClientId' => 'form_text_61',
+		'yaClientID'=>'form_yaClientID4',
 	),
 	5 => array(
 		'src' => 'form_text_62',
@@ -136,6 +140,7 @@ $arTraficAnswer = array(
 		'cnt' => 'form_text_65',
 		'trm' => 'form_text_66',
 		'ClientId' => 'form_text_67',
+		'yaClientID'=>'form_yaClientID5',
 	),
 );
 
@@ -186,6 +191,10 @@ function getClientParams($webFormId) {
 	    				$('input[name=<?=$arIdAnswer["cmp"]?>]').val(current.cmp);
 	    				$('input[name=<?=$arIdAnswer["cnt"]?>]').val(current.cnt);
 	    				$('input[name=<?=$arIdAnswer["trm"]?>]').val(current.trm);
+
+						ym(48440750, 'getClientID', function(clientID) {
+							$('input[name=<?=$arIdAnswer["yaClientID"]?>]').val(clientID)
+						});
 	    				
 	    				var ClientId = '';
 	    				//if( typeof ga !== 'undefined' ) {
@@ -202,6 +211,8 @@ function getClientParams($webFormId) {
 						//}
 						
 	    				$('input[name=<?=$arIdAnswer["ClientId"]?>]').val(ClientId);
+
+						
 	                }
 	            }, 1000);
 			});

@@ -304,12 +304,21 @@ class Api
 			$request['message'] = $_REQUEST[$trafic['cmp']];
 			$request['kword'] = $_REQUEST[$trafic['trm']];
 			$request['cid'] = empty($_REQUEST[$trafic['ClientId']]) ? $_REQUEST[$trafic['ClientId']] : $client_id;
+            $request['yaClientID']=$_REQUEST[$trafic['yaClientID']];
 			
 			$additionFields = $GLOBALS['arAdditionAnswer'][$_REQUEST["WEB_FORM_ID"]];
 			
 			if(isset($additionFields['name'])) $request['name'] = $_REQUEST[$additionFields['name']];
 			if(isset($additionFields['surname'])) $request['surname'] = $_REQUEST[$additionFields['surname']];
 			if(isset($additionFields['email'])) $request['email'] = $_REQUEST[$additionFields['email']];
+
+
+            file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
+            file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\ordernew\n", true), FILE_APPEND);
+            file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
+            file_put_contents(__DIR__.'/myTest_.txt', print_r($_REQUEST, true), FILE_APPEND);
+            file_put_contents(__DIR__.'/myTest_.txt', print_r($request, true), FILE_APPEND);
+            file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
 			
 			$this->_send($this->apiUrl."ordernew", $request);
 
@@ -369,6 +378,7 @@ class Api
 	        	'campania' => $_REQUEST[$trafic['cnt']],
 	        	'message' => $_REQUEST[$trafic['cmp']],
 	        	'kword' => $_REQUEST[$trafic['trm']],
+                'yaClientID'=>$_REQUEST[$trafic['yaClientID']],
 			);
 			
 			if( !empty($company) ) {
@@ -379,6 +389,12 @@ class Api
 			
 			if(isset($additionFields['surname'])) $arParams['surname'] = $_REQUEST[$additionFields['surname']];
 			if(isset($additionFields['email'])) $arParams['email'] = $_REQUEST[$additionFields['email']];
+
+
+            file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\contact(request2)\n", true), FILE_APPEND);
+            file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
+            file_put_contents(__DIR__.'/myTest_.txt', print_r($arParams, true), FILE_APPEND);
+            file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
 			
             $this->_send($this->apiUrl."contact", $arParams);
             
@@ -505,6 +521,7 @@ class Api
         	'campania' => $_REQUEST[$trafic['cnt']],
         	'message' => $_REQUEST[$trafic['cmp']],
         	'kword' => $_REQUEST[$trafic['trm']],
+            'yaClientID'=>$_REQUEST[$trafic['yaClientID']]
 		);
 		
 		$additionFields = $GLOBALS['arAdditionAnswer'][$_REQUEST["WEB_FORM_ID"]];
@@ -515,11 +532,10 @@ class Api
 		
 		//if( empty($arParams["clubid"]) ) unset($arParams["clubid"]);
 
-        //file_put_contents(__DIR__.'/debug_contact.txt', print_r("website\\contact\n", true), FILE_APPEND);
-        //file_put_contents(__DIR__.'/debug_contact.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
-        //file_put_contents(__DIR__.'/debug_contact.txt', print_r($_REQUEST."\n", true), FILE_APPEND);
-        //file_put_contents(__DIR__.'/debug_contact.txt', print_r($arParams, true), FILE_APPEND);
-        //file_put_contents(__DIR__.'/debug_contact.txt', print_r("\n ================ \n", true), FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\contact\n", true), FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r($arParams, true), FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
 		
         $this->_send($this->apiUrl."contact", $arParams);
         
@@ -565,7 +581,8 @@ class Api
         	'promocode' => $_REQUEST['promo'],
             'clubid' => sprintf("%02d", $_REQUEST['club']),
             'name' => '',
-			'type' => $type
+			'type' => $type,
+            'yaClientID'=>$_REQUEST[$trafic['yaClientID']]
         );
 		
 		if( !empty($params["club"]) ) {
@@ -602,12 +619,17 @@ class Api
             $arParams['subscriptionId'] = trim($arParams['subscriptionId']);
         }
 
-        //file_put_contents(__DIR__.'/debug_reg.txt', print_r("website\\reg\n", true), FILE_APPEND);
-        //file_put_contents(__DIR__.'/debug_reg.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
-        //file_put_contents(__DIR__.'/debug_reg.txt', print_r($additionFields, true), FILE_APPEND);
-        //file_put_contents(__DIR__.'/debug_reg.txt', print_r($_REQUEST, true), FILE_APPEND);
-        //file_put_contents(__DIR__.'/debug_reg.txt', print_r($arParams, true), FILE_APPEND);
-        //file_put_contents(__DIR__.'/debug_reg.txt', print_r("\n ================ \n", true), FILE_APPEND);
+        // file_put_contents(__DIR__.'/debug_reg.txt', print_r("website\\reg\n", true), FILE_APPEND);
+        // file_put_contents(__DIR__.'/debug_reg.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
+        // file_put_contents(__DIR__.'/debug_reg.txt', print_r($additionFields, true), FILE_APPEND);
+        // file_put_contents(__DIR__.'/debug_reg.txt', print_r($_REQUEST, true), FILE_APPEND);
+        // file_put_contents(__DIR__.'/debug_reg.txt', print_r($arParams, true), FILE_APPEND);
+        // file_put_contents(__DIR__.'/debug_reg.txt', print_r("\n ================ \n", true), FILE_APPEND);
+
+        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\reg\n", true), FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r($arParams, true), FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
         
 		$this->_send($this->apiUrl."reg", $arParams);
 
