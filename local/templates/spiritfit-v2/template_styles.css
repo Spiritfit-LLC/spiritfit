@@ -5374,8 +5374,8 @@ button.mfp-arrow::before{
 .map-slider {
 	display: block;
     position: relative;
-    width: calc(50% + 93px);
-    left: calc(50% - 93px);
+    width: calc((100% - ((((100% - 24px*12)/12)*5) + (24px*(5 - 1)) + (24px/2)*3)) - 23px);
+    left: calc(((((100% - 24px*12)/12)*5) + (24px*(5 - 1)) + (24px/2)*3) + 23px);
     bottom: 237px;
     z-index: 400;
 }
@@ -5524,6 +5524,20 @@ button.mfp-arrow::before{
 	padding-right: 250px;
 }
 
+.company-holder .b-screen.b-screen_short {
+    min-height: 50px;
+    margin-bottom: 10px;
+}
+.company-holder .b-screen {
+    padding-bottom: 0px;
+    padding-top: 50px;
+}
+@media screen and (max-width: 1440px) {
+    .map-slider {
+        width: calc((100% - ((((100% - 24px*12)/12)*5) + (24px*(5 - 1)) + (24px/2)*3)) - 6px);
+        left: calc(((((100% - 24px*12)/12)*5) + (24px*(5 - 1)) + (24px/2)*3) + 6px);
+    }
+}
 @media screen and (max-width: 1024px) {
 	.footer-menu {
 		display: grid;
@@ -5563,6 +5577,19 @@ button.mfp-arrow::before{
 	.trainings .b-map__buttons {
 		margin-bottom: 0;
 	}
+    .company-description,
+    .company-description .table-cell,
+    .company-description .table-cell:nth-child(2),
+    .company-description .table-cell:nth-child(1)  {
+        display: block;
+        position: relative;
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .company-description .table-cell:first-child {
+        margin-bottom: 30px;
+    }
 }
 @media screen and (max-width: 568px) {
 	.footer-menu {

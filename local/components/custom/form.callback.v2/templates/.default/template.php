@@ -51,25 +51,25 @@
 				<? } ?>
 				<? if($arResult["arQuestions"]["privacy"]['ACTIVE'] == "Y") { ?>
 					<div class="subscription__aside-form-row">
-						<label class="input-label">
-                        	<input class="input input--checkbox" type="checkbox" required="required" name="form_<?= $arResult["arAnswers"]["privacy"]['0']["FIELD_TYPE"] ?>_privacy[]" <?=$arResult["arAnswers"]["privacy"]['0']["FIELD_PARAM"] ?> value="<?=$arResult["arAnswers"]["privacy"]['0']["ID"] ?>">
-                        	<div class="input-label__text"><?=$arResult["arQuestions"]["privacy"]["TITLE"] ?></div>
+						<label class="b-checkbox">
+                        	<input class="b-checkbox__input" type="checkbox" required="required" name="form_<?= $arResult["arAnswers"]["privacy"]['0']["FIELD_TYPE"] ?>_privacy[]" <?=$arResult["arAnswers"]["privacy"]['0']["FIELD_PARAM"] ?> value="<?=$arResult["arAnswers"]["privacy"]['0']["ID"] ?>">
+                        	<span class="b-checkbox__text"><?=$arResult["arQuestions"]["privacy"]["TITLE"] ?></span>
                     	</label>
                 	</div>
 				<? } ?>
 				<? if($arResult["arQuestions"]["personal"]['ACTIVE'] == "Y") { ?>
 					<div class="subscription__aside-form-row">
-						<label class="input-label">
-                        	<input class="input input--checkbox" type="checkbox" required="required" name="form_<?= $arResult["arAnswers"]["personal"]['0']["FIELD_TYPE"] ?>_personal[]" <?=$arResult["arAnswers"]["personal"]['0']["FIELD_PARAM"] ?> value="<?=$arResult["arAnswers"]["personal"]['0']["ID"] ?>">
-                        	<div class="input-label__text"><?=$arResult["arQuestions"]["personal"]["TITLE"] ?></div>
+						<label class="b-checkbox">
+                        	<input class="b-checkbox__input" type="checkbox" required="required" name="form_<?= $arResult["arAnswers"]["personal"]['0']["FIELD_TYPE"] ?>_personal[]" <?=$arResult["arAnswers"]["personal"]['0']["FIELD_PARAM"] ?> value="<?=$arResult["arAnswers"]["personal"]['0']["ID"] ?>">
+                        	<div class="b-checkbox__text"><?=$arResult["arQuestions"]["personal"]["TITLE"] ?></div>
                     	</label>
                 	</div>
 				<? } ?>
 				<? if($arResult["arQuestions"]["rules"]['ACTIVE'] == "Y") { ?>
 					<div class="subscription__aside-form-row">
-						<label class="input-label">
-                        	<input class="input input--checkbox" type="checkbox" required="required" name="form_<?= $arResult["arAnswers"]["rules"]['0']["FIELD_TYPE"] ?>_rules[]" <?=$arResult["arAnswers"]["rules"]['0']["FIELD_PARAM"] ?> value="<?=$arResult["arAnswers"]["rules"]['0']["ID"] ?>">
-                        	<div class="input-label__text"><?=$arResult["arQuestions"]["rules"]["TITLE"] ?></div>
+						<label class="b-checkbox">
+                        	<input class="b-checkbox__input" type="checkbox" required="required" name="form_<?= $arResult["arAnswers"]["rules"]['0']["FIELD_TYPE"] ?>_rules[]" <?=$arResult["arAnswers"]["rules"]['0']["FIELD_PARAM"] ?> value="<?=$arResult["arAnswers"]["rules"]['0']["ID"] ?>">
+                        	<div class="b-checkbox__text"><?=$arResult["arQuestions"]["rules"]["TITLE"] ?></div>
                     	</label>
                 	</div>
 				<? } ?>

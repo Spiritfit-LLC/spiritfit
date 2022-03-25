@@ -245,6 +245,14 @@ document.addEventListener("DOMContentLoaded", function(){
 			}
 		},
 		{
+			breakpoint: 1300,
+			settings: {
+				arrows: true,
+				slidesToScroll: 1,
+				slidesToShow: 3
+			}
+		},
+		{
 			breakpoint: 1024,
 			settings: {
 				arrows: true,

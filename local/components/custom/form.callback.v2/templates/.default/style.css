@@ -19,7 +19,7 @@
 	font-size:  14pt;
 }
 .get-contact .input--checkbox {
-	border:  1px solid white;
+	/*border:  1px solid white;*/
 }
 .get-contact .input-label__text {
 	font-size:  12pt;
@@ -48,4 +48,15 @@
     position: relative;
     margin: 0 auto;
     text-align: center;
+}
+
+.get-contact input::placeholder {
+    color: #fff;
+    opacity: 1;
+    font-size: 12pt;
+    transition: all .3s;
+}
+.get-contact input:active::placeholder,
+.get-contact input:focus::placeholder {
+    color: rgba(255, 255, 255, .2);
 }
