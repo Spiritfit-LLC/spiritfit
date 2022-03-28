@@ -49,14 +49,3 @@
     margin: 0 auto;
     text-align: center;
 }
-
-.get-contact input::placeholder {
-    color: #fff;
-    opacity: 1;
-    font-size: 12pt;
-    transition: all .3s;
-}
-.get-contact input:active::placeholder,
-.get-contact input:focus::placeholder {
-    color: rgba(255, 255, 255, .2);
-}
