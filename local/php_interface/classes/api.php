@@ -313,12 +313,12 @@ class Api
 			if(isset($additionFields['email'])) $request['email'] = $_REQUEST[$additionFields['email']];
 
 
-            file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
-            file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\ordernew\n", true), FILE_APPEND);
-            file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
-            file_put_contents(__DIR__.'/myTest_.txt', print_r($_REQUEST, true), FILE_APPEND);
-            file_put_contents(__DIR__.'/myTest_.txt', print_r($request, true), FILE_APPEND);
-            file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+            // file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
+            // file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\ordernew\n", true), FILE_APPEND);
+            // file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
+            // file_put_contents(__DIR__.'/myTest_.txt', print_r($_REQUEST, true), FILE_APPEND);
+            // file_put_contents(__DIR__.'/myTest_.txt', print_r($request, true), FILE_APPEND);
+            // file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
 			
 			$this->_send($this->apiUrl."ordernew", $request);
 
@@ -391,10 +391,10 @@ class Api
 			if(isset($additionFields['email'])) $arParams['email'] = $_REQUEST[$additionFields['email']];
 
 
-            file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\contact(request2)\n", true), FILE_APPEND);
-            file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
-            file_put_contents(__DIR__.'/myTest_.txt', print_r($arParams, true), FILE_APPEND);
-            file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+            // file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\contact(request2)\n", true), FILE_APPEND);
+            // file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
+            // file_put_contents(__DIR__.'/myTest_.txt', print_r($arParams, true), FILE_APPEND);
+            // file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
 			
             $this->_send($this->apiUrl."contact", $arParams);
             
@@ -532,10 +532,10 @@ class Api
 		
 		//if( empty($arParams["clubid"]) ) unset($arParams["clubid"]);
 
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\contact\n", true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($arParams, true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+        // file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\contact\n", true), FILE_APPEND);
+        // file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
+        // file_put_contents(__DIR__.'/myTest_.txt', print_r($arParams, true), FILE_APPEND);
+        // file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
 		
         $this->_send($this->apiUrl."contact", $arParams);
         
@@ -626,10 +626,10 @@ class Api
         // file_put_contents(__DIR__.'/debug_reg.txt', print_r($arParams, true), FILE_APPEND);
         // file_put_contents(__DIR__.'/debug_reg.txt', print_r("\n ================ \n", true), FILE_APPEND);
 
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\reg\n", true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($arParams, true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+        // file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\reg\n", true), FILE_APPEND);
+        // file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
+        // file_put_contents(__DIR__.'/myTest_.txt', print_r($arParams, true), FILE_APPEND);
+        // file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
         
 		$this->_send($this->apiUrl."reg", $arParams);
 
