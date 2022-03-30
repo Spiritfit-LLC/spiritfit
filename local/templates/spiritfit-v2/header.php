@@ -96,6 +96,12 @@ foreach( $clubs as $club ) {
 	<script>
 		sbjs.init();
 	</script>
+	<script>
+        mindbox = window.mindbox || function() { mindbox.queue.push(arguments); };
+        mindbox.queue = mindbox.queue || [];
+        mindbox('create');
+    </script>
+    <script src="https://api.mindbox.ru/scripts/v1/tracker.js" async></script>
     <link rel="canonical" href="<?= 'https://' . $_SERVER['HTTP_HOST'] . $page; ?>"/>
 </head>
 <? $APPLICATION->ShowPanel(); ?>
