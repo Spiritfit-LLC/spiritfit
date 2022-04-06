@@ -33,7 +33,10 @@
 			<li><a href="/spirittv/">Spirit. TV</a></li>
 			<li><a href="/blog/">Блог</a></li>
 		</ul>
-		<a rel="nofollow" class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_INSTAGRAM"]["VALUE"]?>" target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img" src="<?=SITE_TEMPLATE_PATH?>/img/icon-inst.svg" alt="@spiritmoscow" title="" /></span><span class="b-social-link__text"></span></a>
+		<a rel="nofollow" class="b-social-link" href="https://t.me/spiritfitness_official" target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img" src="<?=SITE_TEMPLATE_PATH?>/img/telegram-brands.svg" alt="@spiritmoscow" title=""></span><span class="b-social-link__text"></span></a>
+        <a rel="nofollow" class="b-social-link" href="https://vk.com/spiritmoscow" target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img" src="<?=SITE_TEMPLATE_PATH?>/img/vk-brands.svg" alt="@spiritmoscow" title=""></span><span class="b-social-link__text"></span></a>
+        <a rel="nofollow" class="b-social-link" href="http://www.tiktok.com/@spiritfitness" target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img" src="<?=SITE_TEMPLATE_PATH?>/img/tiktok-brands.svg" alt="@spiritmoscow" title=""></span><span class="b-social-link__text"></span></a>
+		<!--<a rel="nofollow" class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_INSTAGRAM"]["VALUE"]?>" target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img" src="<?=SITE_TEMPLATE_PATH?>/img/icon-inst.svg" alt="@spiritmoscow" title="" /></span><span class="b-social-link__text"></span></a>-->
 	</div>
 	
 </div>

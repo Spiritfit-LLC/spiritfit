@@ -47,8 +47,4 @@
 	
 	$APPLICATION->IncludeFile("/local/include/clubs.php");
 ?>
-
-<? $APPLICATION->IncludeFile('/local/include/blocks-detail.php', ['ELEMENT_CODE' => 'gruppovye-trenirovki'], ['SHOW_BORDER' => false]); ?>
-<? $APPLICATION->IncludeFile('/local/include/group-workouts.php') ?>
-
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
