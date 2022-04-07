@@ -47,7 +47,7 @@
 			$clubSelection = [];
 			$clubSelection["BASE"] = $answers["club"][0];
 			
-			$res = CIBlockElement::GetList(array("SORT" => "ASC", "NAME" => "ASC"), array("IBLOCK_CODE" => $this->arParams["IBLOCK_CODE"], "ACTIVE" => "Y"), false);
+			$res = CIBlockElement::GetList(array("SORT" => "ASC", "NAME" => "ASC"), array("IBLOCK_CODE" => $this->arParams["IBLOCK_CODE"], "ACTIVE" => "Y", "!PROPERTY_HIDE_LINK_VALUE" => "Да", "!PROPERTY_NOT_OPEN_YET_VALUE" => "Да", "!PROPERTY_SOON_VALUE" => "Y"), false);
 			$cSort = 100;
 			while($arRes = $res->GetNext()) {
 				$clubSelection[] = array(
