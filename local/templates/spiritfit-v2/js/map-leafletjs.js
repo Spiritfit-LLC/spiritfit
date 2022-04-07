@@ -108,7 +108,10 @@ document.addEventListener("DOMContentLoaded", function(){
 			currentNum -= 1;
 		}
 		
-		$("#mapslider").slick('slickGoTo',  currentNum);
+		/* --------------------- Отключено --------------------- */
+		/*
+			$("#mapslider").slick('slickGoTo',  currentNum);
+		*/
 	}
   }   
 
@@ -202,7 +205,9 @@ document.addEventListener("DOMContentLoaded", function(){
   // Обработчик выбора клуба в слайдере
   function clubSelectSlider() {
 	$("#mapslider").on('init', function(event, slick) {
-		$("#mapslider .map-slider-item__select").click(function(e) {
+		/* --------------------- Отключено --------------------- */
+		//$("#mapslider .map-slider-item__select").click(function(e) {
+		$("#mapslider .map-slider-item__select").mouseenter(function(e) {
 			e.preventDefault();
 			
 			var id = parseInt( $(this).data("id") );

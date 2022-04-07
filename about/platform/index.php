@@ -4,15 +4,14 @@
 	
 	require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 	
-	$APPLICATION->SetTitle("Площадки");
 	$APPLICATION->SetPageProperty("description", "");
 	$APPLICATION->SetPageProperty("title", "");
 	
 	$settings = Utils::getInfo();
-
+	$APPLICATION->SetTitle($settings["PROPERTIES"]["PLATFORM_TITLE1"]["VALUE"]);
 	?>
 	<div class="content-center company">
-        <? if( !empty($settings["PROPERTIES"]["PLATFORM_TITLE1"]["VALUE"]) ) { ?>
+        <? if( false && !empty($settings["PROPERTIES"]["PLATFORM_TITLE1"]["VALUE"]) ) { ?>
         	<div class="b-cards-slider__heading">
             	<div class="b-cards-slider__title">
                 	<h2><?=$settings["PROPERTIES"]["PLATFORM_TITLE1"]["VALUE"]?></h2>

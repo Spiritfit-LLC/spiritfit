@@ -4,22 +4,21 @@
 	
 	require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 	
-	$APPLICATION->SetTitle("О компании");
 	$APPLICATION->SetPageProperty("description", "");
 	$APPLICATION->SetPageProperty("title", "");
 	
 	$settings = Utils::getInfo();
-
+	
+	$APPLICATION->SetTitle($settings["PROPERTIES"]["ABOUT_TITLE1"]["VALUE"]);
 	?>
 	<div class="content-center company">
-        <? if( !empty($settings["PROPERTIES"]["ABOUT_TITLE1"]["VALUE"]) ) { ?>
+        <? if( false && !empty($settings["PROPERTIES"]["ABOUT_TITLE1"]["VALUE"]) ) { ?>
         	<div class="b-cards-slider__heading">
             	<div class="b-cards-slider__title">
                 	<h2><?=$settings["PROPERTIES"]["ABOUT_TITLE1"]["VALUE"]?></h2>
             	</div>
 			</div>
 		<? } ?>
-
 		<div class="company-description">
 			<?=!empty($settings["PROPERTIES"]["ABOUT_TEXT"]["~VALUE"]["TEXT"]) ? $settings["PROPERTIES"]["ABOUT_TEXT"]["~VALUE"]["TEXT"] : "" ?>
 		</div>

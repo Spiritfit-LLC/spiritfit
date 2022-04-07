@@ -5,22 +5,20 @@
 	
 	require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 	
-	$APPLICATION->SetTitle("Персональный тренинг");
 	$APPLICATION->SetPageProperty("title", "Персональный тренинг");
 	$APPLICATION->SetPageProperty("description", "");
 	
 	$settings = Utils::getInfo();
-	
+	$APPLICATION->SetTitle($settings["PROPERTIES"]["PTRAINING_TITLE1"]["VALUE"]);
 	?>
 	<div class="content-center company">
-        <? if( !empty($settings["PROPERTIES"]["PTRAINING_TITLE1"]["VALUE"]) ) { ?>
+        <? if( false && !empty($settings["PROPERTIES"]["PTRAINING_TITLE1"]["VALUE"]) ) { ?>
         	<div class="b-cards-slider__heading">
             	<div class="b-cards-slider__title">
                 	<h2><?=$settings["PROPERTIES"]["PTRAINING_TITLE1"]["VALUE"]?></h2>
             	</div>
 			</div>
 		<? } ?>
-
 		<div class="company-description">
 			<?=!empty($settings["PROPERTIES"]["PTRAINING_TEXT"]["~VALUE"]["TEXT"]) ? $settings["PROPERTIES"]["PTRAINING_TEXT"]["~VALUE"]["TEXT"] : "" ?>
 		</div>

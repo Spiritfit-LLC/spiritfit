@@ -1,13 +1,15 @@
 <?
 	define('HIDE_SLIDER', true);
+	define('HOLDER_CLASS', 'members');
 	
 	require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 	
-	$APPLICATION->SetTitle("Членам клуба");
 	$APPLICATION->SetPageProperty("description", "");
 	$APPLICATION->SetPageProperty("title", "");
 	
 	$settings = Utils::getInfo();
+	
+	$APPLICATION->SetTitle($settings["PROPERTIES"]["MEMBERS_TITLE1"]["VALUE"]);
 	
 	?><div id="abonements"></div><?
 		if( !empty($settings["PROPERTIES"]["MEMBERS_ABONEMENTS"]["VALUE"]) ) {
@@ -16,7 +18,7 @@
 				"bitrix:news.list",
 				"abonements",
 				Array(
-					"TITLE_BLOCK" => $settings["PROPERTIES"]["MEMBERS_TITLE1"]["VALUE"],
+					"TITLE_BLOCK" => "N",
 					"ACTIVE_DATE_FORMAT" => "d.m.Y",
 					"ADD_SECTIONS_CHAIN" => "Y",
 					"AJAX_MODE" => "N",
