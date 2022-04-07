@@ -620,6 +620,11 @@ main.b-page__main {
 	height: 650px;
 }
 
+.opros .b-page__title,
+.b-page__heading-simple .b-page__title {
+	margin-bottom: 30px;
+}
+
 #map_club .leaflet-layer,
 #mapid .leaflet-layer {
 	filter: contrast(.7) grayscale(1) invert(1) brightness(0.8);
