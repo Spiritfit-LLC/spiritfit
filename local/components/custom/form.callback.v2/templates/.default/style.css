@@ -1,0 +1,51 @@
+.get-contact .subscription__aside-form-row {
+	display: block;
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+    margin: 0px auto 20px;
+}
+.get-contact .subscription__aside-form-row input.input {
+	display: block;
+    position: relative;
+    width: 100%;
+}
+.get-contact .subscription__aside-form-row input.input--num {
+	display: inline-block;
+    position: relative;
+}
+.get-contact ::placeholder,
+.get-contact .subscription__aside-form-row input.input {
+	font-size:  14pt;
+}
+.get-contact .input--checkbox {
+	/*border:  1px solid white;*/
+}
+.get-contact .input-label__text {
+	font-size:  12pt;
+}
+.get-contact input[type=submit] {
+	display: inline-block;
+    position: relative;
+    font-size: 12pt;
+    padding: 20px 60px;
+    border: 1px solid #ff7628;
+    border-radius: 0;
+}
+.get-contact .subscription__aside-form-row.submit {
+	margin-top: 50px;
+	text-align: center;
+}
+.get-contact .select2-container {
+	width: 100% !important;
+}
+.get-contact .subscription__aside-form-row--code,
+.get-contact .subscription__bottom {
+	text-align: center;
+}
+.get-contact-resend {
+	display: block;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+}

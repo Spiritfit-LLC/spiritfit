@@ -14,15 +14,16 @@ $this->setFrameMode(true);
 $arInfoProps = Utils::getInfo()['PROPERTIES'];
 ?>
 <section class="b-cards-slider">
-    <div class="content-center">
-        <div class="b-cards-slider__heading">
-            <div class="b-cards-slider__title">
-                <h2><?=($arParams['TITLE_BLOCK'] ? $arParams['TITLE_BLOCK'] : 'Абонементы')?></h2>
-            </div>
-            <div class="b-cards-slider__slider-nav">
-            </div>
-        </div>
-    </div>
+    <? if( isset($arParams['TITLE_BLOCK']) && $arParams['TITLE_BLOCK'] !== "N" ) { ?>
+		<div class="content-center">
+        	<div class="b-cards-slider__heading">
+            	<div class="b-cards-slider__title">
+                	<h2><?=($arParams['TITLE_BLOCK'] ? $arParams['TITLE_BLOCK'] : 'Абонементы')?></h2>
+            	</div>
+            	<div class="b-cards-slider__slider-nav"></div>
+        	</div>
+    	</div>
+	<? } ?>
     <div class="b-cards-slider__slider-wrap">
         <div class="content-center">
             <div class="b-cards-slider__slider">

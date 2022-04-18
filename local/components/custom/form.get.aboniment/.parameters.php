@@ -69,6 +69,13 @@ $arComponentParameters = array(
 			"TYPE" => "STRING",
 			"MULTIPLE" => "N",
 			"DEFAULT" => "",
+		),
+		"ACTION_TYPE" => Array(
+			"PARENT" => "DATA_SOURCE",
+			"NAME" => "Тип события отправки в 1С",
+			"TYPE" => "STRING",
+			"MULTIPLE" => "N",
+			"DEFAULT" => "",
 		)
 	),
 );

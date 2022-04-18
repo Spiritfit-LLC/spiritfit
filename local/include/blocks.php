@@ -1,10 +1,15 @@
-<?$APPLICATION->IncludeComponent(
+<?
+if( !isset($blockTitle) ) {
+    $blockTitle = "";
+}
+$APPLICATION->IncludeComponent(
 	"bitrix:news.detail", 
 	"blocks", 
 	array(
         "COMPONENT_TEMPLATE" => "",
         "IBLOCK_TYPE" => "service",
         "IBLOCK_ID" => "18",
+        "BLOCK_TITLE" => $blockTitle,
         "ELEMENT_ID" => "",
         "ELEMENT_CODE" => $arParams['ELEMENT_CODE'],
 		"ADDITIONAL_CLASS" => (!empty($arParams['ADDITIONAL_CLASS'])) ? $arParams['ADDITIONAL_CLASS'] : '',

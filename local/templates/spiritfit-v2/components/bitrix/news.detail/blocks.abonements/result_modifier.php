@@ -2,7 +2,11 @@
 	if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 	
 	$settings = Utils::getInfo();
-	$arResult['TITLE'] = (!empty($settings['PROPERTIES']['ABONEMENTS_SLIDER_TITLE']['VALUE'])) ? $settings['PROPERTIES']['ABONEMENTS_SLIDER_TITLE']['VALUE'] : "";
+	if( !empty($arParams["BLOCK_TITLE"]) ) {
+		$arResult['TITLE'] = $arParams["BLOCK_TITLE"];
+	} else {
+		$arResult['TITLE'] = (!empty($settings['PROPERTIES']['ABONEMENTS_SLIDER_TITLE']['VALUE'])) ? $settings['PROPERTIES']['ABONEMENTS_SLIDER_TITLE']['VALUE'] : "";
+	}
 	
 	$arResult['BROWSER'] = getBrowserInformation();
 	$arResult["SLIDER_PHOTOS"] = [];

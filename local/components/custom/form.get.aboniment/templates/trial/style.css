@@ -1,0 +1,83 @@
+.get-abonement {
+    margin-bottom: 35px;
+    color: #fff;
+}
+
+.get-abonement .input--checkbox input {
+    height: auto;
+}
+
+.subscription .get-abonement input,
+.subscription .get-abonement .select2-selection,
+.subscription .get-abonement select,
+.subscription .get-abonement textarea {
+    border-bottom-color: #ffaf7f;
+    font-family: Gotham, sans-serif;
+    font-size: 18px;
+}
+
+.subscription .get-abonement input[type=submit] {
+    border: 1px solid #ff7628;
+}
+
+.subscription .get-abonement .subscription__total-btn {
+    border-color: #fff;
+}
+
+.subscription .get-abonement input::placeholder,
+.subscription .get-abonement textarea::placeholder {
+    color: #fff;
+}
+
+.subscription__aside .get-abonement .input--checkbox.checked:before {
+    background-color: #fff;
+}
+
+.get-abonement .select2-results__options{
+    background-color:#fff;
+}
+
+.get-abonement .select2-results__option{
+    color: #000;
+}
+
+.get-abonement .select2-container--default .select2-results__option--highlighted[aria-selected]{
+    color: #000;
+    background-color:#fff;
+}
+
+.get-abonement .select2-container--default .select2-results__option[aria-selected=true] {
+    background-color:#ff7628;
+}
+
+.get-abonement-promo {
+    position: absolute;
+    right: 0;
+    top: 22px;
+    border: none;
+    background-color: transparent;
+    opacity: .7;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.get-abonement-resend {
+    display: table;
+    margin: 0 auto 50px;
+    opacity: .7;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+}
+.get-abonement-resend:hover {
+	text-decoration: underline;
+	color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+    .get-abonement {
+        margin-bottom: 10px
+    }
+}

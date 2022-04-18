@@ -35,6 +35,12 @@ class Api
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
+            case 'subscribe':
+                $this->subscribe($post['params']);
+                AddMessage2Log('request');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
             case 'request2':
                 $this->_request2($post['params']);
                 AddMessage2Log('request2');
@@ -241,6 +247,39 @@ class Api
     /**
      * @param $params
      */
+    private function subscribe( $params )
+    {
+        $email  = !empty($params['email']) ? $params['email'] : false;
+        $type = !empty($params['type']) ? $params['type'] : false;
+        if( empty($email) || empty($type) ) return false;
+
+        $client_id = !empty($params['client_id']) ? $params['client_id'] : false;
+        if(strpos($client_id, '.')){
+            $client_id = explode('.', $client_id);
+            $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
+        }
+
+        $requestArr = array(
+            "email" => $email,
+            "type" => $type,
+            "source" => !empty($params['src']) ? $params['src'] : false,
+            "channel" => !empty($params['mdm']) ? $params['mdm'] : false,
+            "campania" => !empty($params['cmp']) ? $params['cmp'] : false,
+            "message" => !empty($params['cnt']) ? $params['cnt'] : false,
+            "kword" => !empty($params['trm']) ? $params['trm'] : false,
+            "cid" => $client_id
+        );
+
+        $this->_send($this->apiUrl."subscribe", $requestArr);
+
+        if ($this->_data['result']->errorCode == 0) {
+            $this->_result = true;
+        }
+    }
+
+    /**
+     * @param $params
+     */
     private function _request($params)
     {
         /*Костыль для работы клуба с одинаковым ID*/
@@ -270,10 +309,9 @@ class Api
 		));
 		
 		$smsResultArray = $this->result();
-		
 		//if ($this->_data['result']->result->errorCode == 0) {
 		if( empty($smsResultArray['data']['result']['errorCode']) ) {
-			if(empty($name) || empty($surname) || empty($email) || empty($phone)){
+			if(empty($name) || ( empty($surname) && $params["type"] != 3 ) || empty($email) || empty($phone)){
 				return false;
 			}
 			$request = array(
@@ -383,6 +421,9 @@ class Api
 			
 			if( !empty($company) ) {
 				$arParams['company'] = $company;
+			}
+			if( !empty($params['email']) ) {
+				$arParams['email'] = $params['email'];
 			}
 			
 			$additionFields = $GLOBALS['arAdditionAnswer'][$_REQUEST["WEB_FORM_ID"]];
@@ -503,7 +544,7 @@ class Api
             $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
         }
 
-        if(empty($name) || empty($phone)) {
+        if(empty($name) || empty($phone)){
             return false;
         }
        
@@ -528,8 +569,11 @@ class Api
 		
 		if(isset($additionFields['surname'])) $arParams['surname'] = $_REQUEST[$additionFields['surname']];
 		if(isset($additionFields['email'])) $arParams['email'] = $_REQUEST[$additionFields['email']];
-        if(!empty($params['company'])) $arParams['company'] = $params['company'];
-		
+  
+		if(!empty($params['company'])) $arParams['company'] = $params['company'];
+		if(!empty($params['theme'])) $arParams['theme'] = $params['theme'];
+		if(!empty($params['email'])) $arParams['email'] = $params['email'];
+  
 		//if( empty($arParams["clubid"]) ) unset($arParams["clubid"]);
 
         // file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\contact\n", true), FILE_APPEND);
@@ -580,13 +624,15 @@ class Api
         	'cid' => $client_id,
         	'promocode' => $_REQUEST['promo'],
             'clubid' => sprintf("%02d", $_REQUEST['club']),
-            'name' => '',
+            'name' => (!empty($params["name"])) ? $params["name"] : "",
 			'type' => $type,
-            'yaClientID'=>$_REQUEST[$trafic['yaClientID']]
+            'yaClientID' => $_REQUEST[$trafic['yaClientID']]
         );
-		
+		if( empty($arParams["email"]) && !empty($params["email"]) ) {
+			$arParams["email"] = $params["email"];
+		}
 		if( !empty($params["club"]) ) {
-			$arParams["club"] = $params["club"];
+			$arParams["clubid"] = $params["club"];
 		}
 		if( !empty($params["promo"]) ) {
 			$arParams["promo"] = $params["promo"];
@@ -594,7 +640,10 @@ class Api
 		if( !empty($params["type"]) ) {
 			$arParams["type"] = $params["type"];
 		}
-        
+		if( !empty($params["client_id"]) && empty($params["cid"]) ) {
+			$arParams["client_id"] = $params["client_id"];
+		}
+  
 		$additionFields = $GLOBALS['arAdditionAnswer'][$webFormId];
 		
 		if(isset($additionFields['name'])) $arParams['name'] = $_REQUEST[$additionFields['name']];

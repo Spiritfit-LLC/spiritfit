@@ -142,6 +142,14 @@ $arTraficAnswer = array(
 		'ClientId' => 'form_text_67',
 		'yaClientID'=>'form_yaClientID5',
 	),
+	10 => array(
+		'src' => 'form_text_224',
+		'mdm' => 'form_text_225',
+		'cmp' => 'form_text_226',
+		'cnt' => 'form_text_227',
+		'trm' => 'form_text_228',
+		'ClientId' => 'form_text_229',
+	),
 );
 
 $arAdditionAnswer = array(
@@ -170,6 +178,10 @@ $arAdditionAnswer = array(
 		'name' => 'form_text_31',
 		'email' => 'form_text_37',
 		'subscriptionId' => 'form_text_30',
+	),
+	10 => array(
+		'name' => 'form_text_215',
+		'email' => 'form_text_217',
 	),
 );
 
@@ -228,5 +240,16 @@ function my_onBeforeResultAdd($WEB_FORM_ID, &$arFields, &$arrVALUES) {
         $APPLICATION->throwException("result_not_add"); 
         return false;
     }
+}
+
+function getThemeSelector() {
+	$isChecked = '';
+	$name = 'темная';
+	if( isset($_COOKIE["theme_type"]) && intval($_COOKIE["theme_type"]) === 2 ) {
+		$isChecked = 'checked';
+		$name = 'светлая';
+	}
+	$resultString = '<div class="theme-selector-wrapper">Тема оформления: <div class="theme-selector"><input id="theme_type" type="checkbox" name="theme_type" value="2" ' . $isChecked . '><label for="theme_type">' . $name . '</label></div></div>';
+	return $resultString;
 }
 

@@ -12,11 +12,11 @@
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 ?>
-<section class="b-cards-slider">
+<section class="b-cards-slider <?=!empty($arParams["BLOCK_CLASS"]) ? $arParams["BLOCK_CLASS"] : "" ?>">
     <div class="content-center">
         <div class="b-cards-slider__heading">
             <div class="b-cards-slider__title">
-                <h2>Групповые тренировки</h2>
+                <h2><?=!empty($arParams["BLOCK_TITLE"]) ? $arParams["BLOCK_TITLE"] : "Групповые тренировки" ?></h2>
             </div>
             <div class="b-cards-slider__slider-nav">
             </div>

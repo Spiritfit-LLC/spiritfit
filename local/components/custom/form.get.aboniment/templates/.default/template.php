@@ -59,7 +59,6 @@
                     <? foreach ($arResult["ELEMENT"]["PRICES"] as $key => $arPrice) { ?>
 						<? if( intval($arPrice["NUMBER"]) == 99 ) continue; ?>
                         <div class="subscription__label-item" data-mouth="<?=$key?>">
-						
                             <?=$arPrice["SIGN"] ?>
                             <?if (strlen($arResult["ELEMENT"]["BASE_PRICE"]["PRICE"]) > 0){?>
                                 <?if ($key == 0 && $arResult["ELEMENT"]["SALE"]) {?>

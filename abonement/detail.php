@@ -25,8 +25,8 @@ if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 } else {
     require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 }
+
 global $USER;
-$trial = strpos($APPLICATION->GetCurPage(), "probnaya-trenirovka");
 
 use Bitrix\Iblock\InheritedProperty;
 
@@ -112,37 +112,37 @@ if( $elementCode ) {
 	} else {
 		?>
 		<div id="js-pjax-container">
-			<? if ($trial){
-				$APPLICATION->IncludeComponent(
-					"custom:form.aboniment", 
-					"trial", 
-					array(
-						"AJAX_MODE" => "N",
-						"WEB_FORM_ID" => "3",
-						"ADD_ELEMENT_CHAIN" => "N",
-						"CLIENT_TYPE" => "trialTraining",
-					),
-					false
-				);
-			} else {
+			<?
+				$formId = 2;
+				$formType = 1;
+				$formTemplate = "";
+				$actiontype = "request";
+				if( strpos($APPLICATION->GetCurPage(false), "probnaya-trenirovka") ) {
+					$formType = 3;
+					$formId = 3;
+					$formTemplate = "trial";
+					$actiontype = "request2";
+				}
+				
 				$APPLICATION->IncludeComponent(
 					"custom:form.get.aboniment", 
-					"", 
+					$formTemplate,
 					array(
 						"AJAX_MODE" => "N",
-						"WEB_FORM_ID" => "2",
+						"WEB_FORM_ID" => $formId,
 						"ADD_ELEMENT_CHAIN" => "N",
 						"CLUB_ID" => $club["ID"],
 						"DEFAULT_CLUB_ID" => "",
 						"ABONEMENT_IBLOCK_ID" => 9,
 						"CLUBS_IBLOCK_ID" => 6,
-						"FORM_TYPE" => 1,
+						"FORM_TYPE" => $formType,
+						"ACTION_TYPE" => $actiontype,
 						"ELEMENT_CODE" => $elementCode,
 						"FREE_MESSAGE" => "Бесплатный абонемент. Для верификации, мы спишем с карты и вернем 11 рублей. Чтобы убедиться, что Вы человек, а не робот."
 					),
 					false
 				);
-			}?>
+			?>
 		</div>
 		<? 
 			}

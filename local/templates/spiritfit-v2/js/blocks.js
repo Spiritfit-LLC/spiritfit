@@ -321,7 +321,7 @@ $(function () {
         var $context = $(this);
         var $navPlace = $('.b-info-slider__nav', $context);
         var $slider = $('.b-info-slider__slider', $context);
-        $slider.on('init', function(event, slick){
+         $slider.on('init', function(event, slick){
         	$("a[href='#jspopupcallv2']").click(function(e) {
         		e.preventDefault();
 

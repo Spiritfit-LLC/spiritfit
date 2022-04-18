@@ -74,6 +74,15 @@ switch ($view) {
 		break;	
 }
 ?>
+<? if( !empty($arParams['BLOCK_TITLE']) ) { ?>
+	<div class="content-center">
+        <div <?=(!empty($arParams["BLOCK_ID"])) ? 'id="'.$arParams["BLOCK_ID"].'"' : '' ?> class="b-cards-slider__heading">
+            <div class="b-cards-slider__title">
+                <h2><?=$arParams['BLOCK_TITLE']?></h2>
+            </div>
+		</div>
+    </div>
+<? } ?>
 <section class="<?=$class?> <?=($slider ? $class.'_simple-mobile' : '')?>">
     <div class="content-center">
         <div class="<?=$class?>__content <?=($reverse == 'Y' ? $class.'__content_reverse' : '')?>">

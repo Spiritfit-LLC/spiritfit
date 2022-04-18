@@ -2,24 +2,14 @@
 $settings = Utils::getInfo();
 ?>
 	</main>
-    <footer class="b-footer">
-        <div class="content-center">
+	<footer class="b-footer">
+		<div class="content-center">
+			<?
+				$APPLICATION->IncludeFile(SITE_DIR."local/include/footer_menu.php", Array("settings" => $settings), Array("MODE" => "html", "NAME" => "", "TEMPLATE" => ""));
+			?>
             <div class="b-footer__content">
                 <div class="b-footer__social">
-                    <div>
-                        <a rel="nofollow" class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_TELEGRAM"]["VALUE"]?>"
-                        target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img"
-                                src="<?=SITE_TEMPLATE_PATH?>/img/telegram-brands.svg" alt="@spiritmoscow" title="" /></span><span
-                            class="b-social-link__text">Telegram</span></a>
-                        <a rel="nofollow" class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_VK"]["VALUE"]?>"
-                        target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img"
-                                src="<?=SITE_TEMPLATE_PATH?>/img/vk-brands.svg" alt="@spiritmoscow" title="" /></span><span
-                            class="b-social-link__text">VK</span></a>
-                        <a rel="nofollow" class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_TIKTOK"]["VALUE"]?>"
-                        target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img"
-                                src="<?=SITE_TEMPLATE_PATH?>/img/tiktok-brands.svg" alt="@spiritmoscow" title="" /></span><span
-                            class="b-social-link__text">Tik-Tok</span></a>
-                    </div>
+					<div class="footer-phone-wrapper"><a class="footer-phone" href="tel:84951059797">8 495 105 97 97</a></div>
                 </div>
                 <div class="b-footer__app-buttons">
                     <div class="b-app-list"><a rel="nofollow" class="b-app-list__button"
@@ -33,8 +23,8 @@ $settings = Utils::getInfo();
                     data-fancybox="feedback-choice"
                     data-options="{'autoFocus' : false, 'backFocus': false}">Обратная связь</a>
             </div>
-        </div>
-        <div class="b-footer__feedback-choice text-center is-hide" id="feedback-choice">
+		</div>
+		<div class="b-footer__feedback-choice text-center is-hide" id="feedback-choice">
             <div class="block-margin h2">Выберите действие</div>
             <div class="b-footer__buttons-wrapper">
                 <div class="button-outline b-footer__button button-margin js-popup-call_v2">Заявка на звонок</div>
@@ -42,8 +32,7 @@ $settings = Utils::getInfo();
 
             </div>
         </div>
-    </footer>
-			
+	</footer>
     <div id="modalForm" class="popup modalForm" style="display: none;">
         <div class="popup__bg"></div>
         <div class="popup__window popup__window--modal-form">

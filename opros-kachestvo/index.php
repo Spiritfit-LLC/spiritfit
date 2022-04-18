@@ -1,6 +1,8 @@
 <?
 define('HIDE_BREADCRUMB', true);
 define('HIDE_SLIDER', true);
+define('HOLDER_CLASS', 'opros');
+
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Качество обслуживания");
 ?>

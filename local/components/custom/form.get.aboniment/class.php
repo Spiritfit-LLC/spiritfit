@@ -56,25 +56,8 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 		
 		$uniqueId = $this->arResult["COMPONENT_ID"] . $currentClubId . $element["ID"];
 		foreach( $outArrPrice as $key => $arPrice ) {
-            /*if( !empty($outArrBasePrice) && $arPrice["PRICE"] != $outArrBasePrice["PRICE"] && $arPrice["NUMBER"] == $outArrBasePrice["NUMBER"] ) {
-				
-                $outSale = $arPrice["PRICE"];
-                
-				if( isset($_SESSION[$uniqueId]["DISCOUNTS"]["SALE"]) ) {
-					$outSale = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE"];
-				}
-				if( isset($_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"]) ) {
-					$outSaleTwoMonth = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"];
-				}
-
-                $outArrPrice[$key]["PRICE"] = $outArrBasePrice["PRICE"];
-            } else if( !empty($outArrBasePrice) && !empty($_SESSION[$uniqueId]["DISCOUNTS"]["SALE"]) && $outArrBasePrice["NUMBER"] == 1) {
-				$outSale = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE"];
-			} else if( !empty($outArrBasePrice) && !empty($_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"]) && $outArrBasePrice["NUMBER"] == 2) {
-				$outSaleTwoMonth = $_SESSION[$uniqueId]["DISCOUNTS"]["SALE_TWO_MONTH"];
-			}*/
-			
 			if( !empty($outArrBasePrice) && $arPrice["PRICE"] != $outArrBasePrice["PRICE"] && $arPrice["NUMBER"] == $outArrBasePrice["NUMBER"] ) {
+				
                 $outSale = $arPrice["PRICE"];
                 
 				if( isset($_SESSION[$uniqueId]["DISCOUNTS"]["SALE"]) ) {
@@ -108,8 +91,9 @@ class FormGetAbonimentComponent extends CBitrixComponent{
                 $outArrPrice[$key]["SIGN"] = $props[$arPrice["NUMBER"]];
             }
         }
-		// array_multisort(array_column($outArrPrice, "NUMBER"), SORT_ASC, $outArrPrice);
-
+		
+		array_multisort(array_column($outArrPrice, "NUMBER"), SORT_ASC, $outArrPrice);
+		
 		return ["PRICES" => $outArrPrice, "BASE_PRICE" => $outArrBasePrice, "SALE" => $outSale, "SALE_TWO_MONTH" => $outSaleTwoMonth];
 	}
 	
@@ -213,7 +197,6 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 		$arParam = $this->getFormatFields();
 		$arParam["phone"] = $phone;
 		$arParam["WEB_FORM_ID"] = $this->arParams["WEB_FORM_ID"];
-
 		if( !empty($this->arResult["CLUB_NUMBER"]) ) {
 			$arParam["club"] = $this->arResult["CLUB_NUMBER"];
 		}
@@ -281,10 +264,6 @@ class FormGetAbonimentComponent extends CBitrixComponent{
             $arParam["subscriptionId"] = $this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"];
         }
 		
-		if( empty($arParam["name"]) && !empty($this->arResult["ELEMENT"]["NAME"]) ) {
-			$arParam["name"] = $this->arResult["ELEMENT"]["NAME"];
-		}
-		
 		$arParam["type"] = $this->arParams["FORM_TYPE"];
 		if( empty($arParam["type"]) ) {
 			$arParam["type"] = 1;
@@ -301,8 +280,9 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 			$arParam["promo"] = $_SESSION[$uniqueId]["COUPON"];
 		}
 		
+		$requestType = (!empty($this->arParams["ACTION_TYPE"])) ? $this->arParams["ACTION_TYPE"] : "request";
 		$api = new Api(array(
-            "action" => "request",
+            "action" => $requestType,
             "params" => $arParam
         ));
 		
@@ -317,7 +297,7 @@ class FormGetAbonimentComponent extends CBitrixComponent{
     }
 	
 	private function checkStep( $currentStep, &$responseResult ) {
-		
+	
 		foreach( $this->request as $key => $value ) {
             if(strpos($key, "form_") !== false){
                 $this->arResult["HIDDEN_FILEDS"][$key] = $value;
@@ -446,7 +426,6 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 						return 2;
 					break;
 					case "CHECK_SMS":
-						
 						if ( $this->request->get("NUM") ) {
                         	$responseResult["RESPONSE"] = $this->checkSms( $this->request->get("NUM") );
                     	}
@@ -473,6 +452,10 @@ class FormGetAbonimentComponent extends CBitrixComponent{
                     			CFormResult::SetEvent($RESULT_ID);
                     			CFormResult::Mail($RESULT_ID);
                 			}
+							
+							unset($_SESSION[$uniqueId]);
+							$this->resetForm();
+							
                 			return 3;
 						}
 						
@@ -510,6 +493,7 @@ class FormGetAbonimentComponent extends CBitrixComponent{
 			if( !empty($this->request["STEP"]) ) {
 				$this->arResult["STEP"] = intval($this->request["STEP"]);
 			}
+			$this->arResult["PREV_STEP"] = $this->arResult["STEP"];
 			
 			$clubId = false;
 			if( !empty($this->request["CLUB_ID"]) ) {

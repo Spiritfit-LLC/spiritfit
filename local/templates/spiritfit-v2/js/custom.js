@@ -425,7 +425,34 @@ function clickBtn(el){
     $('.subscription__promo-btn_v2').trigger('click', ["is-form-submit"]);
 }
 
-$(document).ready(function(){
+$(document).ready(function() {
+
+	/* Изменение темы сайта */
+	if( $(".theme-selector").length > 0 ) {
+		$(".theme-selector-wrapper").show();
+		$(".theme-selector input[type=checkbox]").change(function() {
+			
+			var cookieValue = 1;
+			var expires = "";
+			var date = new Date();
+			
+			if( $(this).is(":checked") ) {
+				$(this).parent().addClass("checked");
+				$(this).parent().find("label").text("светлая");
+				$("body").addClass("white");
+				cookieValue = 2;
+			} else {
+				$(this).parent().removeClass("checked");
+				$(this).parent().find("label").text("темная");
+				$("body").removeClass("white");
+			}
+			
+			date.setTime(date.getTime() + 43200);
+			expires = "; expires=" + date.toUTCString();
+			
+			document.cookie = "theme_type=" + cookieValue + expires + "; path=/";
+		});
+	}
     
 	/* Открываем нужную вкладку блока FAQ */
 	var url = window.location.href, idx = url.indexOf("#");
