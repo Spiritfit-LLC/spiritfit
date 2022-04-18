@@ -5596,3 +5596,16 @@ button.mfp-arrow::before{
     	grid-template-columns: 1fr;
 	}
 }
+
+/* Скрываем меню в подвале */
+.footer-menu-cell:nth-child(1),
+.footer-menu-cell:nth-child(2),
+.footer-menu-cell:nth-child(3),
+.footer-menu-cell:nth-child(4) .footer-menu-title,
+.footer-menu-cell:nth-child(4) > ul {
+    display: none;
+}
+.footer-menu-cell:last-child {
+    padding-left: 0;
+    padding-top: 0;
+}

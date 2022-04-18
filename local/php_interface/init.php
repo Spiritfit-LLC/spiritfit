@@ -16,6 +16,16 @@ define("POST_FORM_CORP_ACTION_URI", "/local/templates/spiritfit-corp/ajax/modal-
 define("POST_FORM_CAREER_ACTION_URI", "/local/templates/spiritfit-career/ajax/modal-trial.php");
 define("MAIN_SITE_URL", "https://spiritfit.ru");
 
+$currentUrl = strtok($_SERVER["REQUEST_URI"], "?");
+$enableNoIndexPages = [
+	"/trenirovki/", "/blog/", "/gruppovye-trenirovki/",
+	"/trenirovki/personal-training/", "/trenirovki/onlayn-trenirovki/", "/club-members/", "/trenirovki/partnery-i-privilegii/",
+	"/about/", "/about/adv/", "/about/platform/"
+];
+if( in_array($currentUrl, $enableNoIndexPages) ) {
+	$GLOBALS["NO_INDEX"] = true;
+}
+
 if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/Utils.php')) {
     require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/Utils.php');
 }
