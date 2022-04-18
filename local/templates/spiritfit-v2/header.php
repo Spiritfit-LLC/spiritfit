@@ -38,6 +38,10 @@ foreach( $clubs as $club ) {
 	<? } ?>
     <?
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/jquery/jquery.min.js");
+    
+    Asset::getInstance()->addJS(SITE_TEMPLATE_PATH.'/js/cryptojs/crypto-js.min.js');
+    Asset::getInstance()->addJS(SITE_TEMPLATE_PATH.'/js/cryptojs/sha256.min.js');
+    Asset::getInstance()->addJS(SITE_TEMPLATE_PATH.'/js/cryptojs/md5.min.js');
 
     // old
     Asset::getInstance()->addCSS(SITE_TEMPLATE_PATH . "/css/style.min.css");
@@ -68,6 +72,7 @@ foreach( $clubs as $club ) {
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/blocks.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/form-standart.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/custom.js");
+
 
     ?>
     

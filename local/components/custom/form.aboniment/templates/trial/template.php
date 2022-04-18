@@ -303,7 +303,7 @@ if (!$_SERVER['HTTP_X_PJAX']) {
     ?>
 <script>
     $(document).ready(function(){
-        $('.subscription__aside-form .popup__btn[type="submit"]').click(function(){
+        $('.subscription__aside-form .subscription__total-btn[type="submit"]').click(function(){
             var form = $(this).parents('form');
             var valid = true;
 
@@ -321,12 +321,9 @@ if (!$_SERVER['HTTP_X_PJAX']) {
                         'email':$(form).find('input[placeholder="<?=$arResult["arQuestions"]["email"]["TITLE"]?>"]').val(),
                         'setTypeClient':$(form).find('input[name="typeSetClient"]').val()
                     };
-
                     sendToUpMetrika(setClientData);
-                    
                 }
             }
-
         });
     });
 </script>

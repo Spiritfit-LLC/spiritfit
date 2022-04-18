@@ -1,4 +1,9 @@
 function sendToUpMetrika(sendData){
+    // console.log(sendData)
+
+
+    sendData['phone']=sendData['phone'].replace(/[^0-9]/g,"");
+
     // console.log({
     //     'phoneMd5': CryptoJS.MD5(sendData['phone']).toString(),
     //     'emailMd5': CryptoJS.MD5(sendData['email']).toString(),
@@ -6,7 +11,6 @@ function sendToUpMetrika(sendData){
     //     'emailSha256': CryptoJS.SHA256(sendData['email']).toString(),
     //     'typeSetClient': sendData['setTypeClient']
     // })
-    sendData['phone']=sendData['phone'].replace(/[^0-9]/g,"");
 
     acfp.setClient({
         'phoneMd5': CryptoJS.MD5(sendData['phone']).toString(),
