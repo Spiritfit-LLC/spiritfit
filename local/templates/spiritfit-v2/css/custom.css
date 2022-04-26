@@ -625,6 +625,322 @@ main.b-page__main {
 	margin-bottom: 30px;
 }
 
+/* Программа лояльности */
+.b-page__main.loyality {
+	background-color: #121212;
+	background-image: url(/images/loyality/background.jpg);
+	background-position: right 107px;
+    background-repeat: no-repeat;
+    background-size: contain;
+	position: relative;
+}
+.b-page__main.loyality:before {
+	content: "";
+	display: block;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	background-image: url(/images/loyality/bottom.jpg);
+	background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right top;
+    width: 100%;
+    height: 450px;
+	z-index: 1;
+}
+.b-page__main.loyality .content-center {
+	z-index: 2;
+}
+.b-page__main.loyality .b-screen_short {
+	min-height: 50px;
+	padding-top: 50px;
+}
+.b-page__main.loyality  .b-screen:after {
+	display: none;
+}
+.loyality-top,
+.loyality-top h1,
+.loyality-top-levels__description,
+.loyality-top-description,
+.loyality-top-levels,
+.loyality-levels,
+.loyality-levels-item,
+.loyality-levels-item__title,
+.loyality-levels-item__image,
+.loyality-levels-item__description,
+.loyality-levels-item__button ,
+.loyality-levels-item__button .description,
+.loyality-levels-item__button .button-wrapper,
+.loyality-levels-item__content,
+.loyality-steps-item,
+.loyality-steps-item__title,
+.loyality-steps-item__description,
+.loyality-steps-item__description ul,
+.loyality-steps-item__description ul > li,
+.loyality-steps-item__warning,
+.loyality-warning {
+	display: block;
+    position: relative;
+}
+.loyality-top {
+    margin: 45px 0px 100px;
+    width: 65%;
+    box-sizing: border-box;
+    padding-right: 70px;
+}
+.loyality-top h1 {
+    font-weight: 550;
+    font-size: 54pt;
+    line-height: 58pt;
+    letter-spacing: 0.05em;
+    margin-bottom: 52px;
+    text-transform: uppercase;
+}
+.loyality-top h1 > span,
+.loyality-top-levels__title > span,
+.loyality-levels-item__title > span {
+	color: #fc6120;
+}
+.loyality-top-levels__description,
+.loyality-top-description {
+	font-size: 20px;
+	line-height: 28px;
+}
+.loyality-top-levels {
+	margin-top: 100px;
+}
+.loyality-top-levels__title {
+	font-size: 32pt;
+	font-weight: 550;
+    line-height: 32pt;
+}
+.loyality-top-levels__description {
+	margin-top: 40px;
+}
+.loyality-top:before,
+.loyality-top:after {
+	content: "";
+	display: block;
+    position: absolute;
+    background-color: #f45e20;
+}
+.loyality-top:before {
+	width: 430px;
+    height: 1px;
+    bottom: -10px;
+    right: -215px;
+}
+.loyality-top:after {
+	width: 1px;
+    height: 430px;
+    bottom: -70px;
+    right: 0;
+}
+.loyality .b-breadcrumbs__link.is-current,
+.loyality .b-breadcrumbs__link.is-current:hover {
+	color: #FC6120;
+}
+.loyality-levels {
+	display: grid;
+    grid-gap: 32px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-top: 100px;
+    margin-bottom: 95px;
+}
+.loyality-levels-item img {
+	display: block;
+	position: relative;
+	max-width: 100%;
+}
+.loyality-levels-item__title {
+	font-size: 21pt;
+    font-weight: 550;
+    line-height: 23pt;
+    text-align: center;
+	margin-bottom: 32px;
+}
+.loyality-levels-item__content {
+	margin-top: 27px;
+	padding-bottom: 16px;
+}
+.loyality-levels-item__content:before {
+	content: "";
+	display: block;
+    position: absolute;
+	width: 1px;
+	height: 100%;
+	top: 0px;
+	right: -16px;
+	background: #FC6120;
+}
+.loyality-levels-item:last-child .loyality-levels-item__content:before {
+	display: none;
+}
+.loyality-levels-item__description,
+.loyality-levels-item__description a {
+	font-size: 14pt;
+    line-height: 20pt;
+    text-align: center;
+    margin-bottom: 12px;
+	color: #FFF;
+}
+.loyality-levels-item__bonus {
+	display: table;
+    position: relative;
+    width: 100%;
+    table-layout: fixed;
+    color: #FC6120;
+	margin-top: 20px;
+}
+.loyality-levels-item__bonus > span {
+	display: table-cell;
+	position: relative;
+	vertical-align: bottom;
+	box-sizing: border-box;
+}
+.loyality-levels-item__bonus > span:nth-child(1) {
+	font-size: 38pt;
+    font-weight: 550;
+    line-height: 32pt;
+    text-align: right;
+    padding-right: 10px;
+}
+.loyality-levels-item__bonus > span:nth-child(2) {
+	font-size: 10pt;
+    line-height: 12pt;
+}
+.loyality-levels-item__button .description {
+	margin: 16px 0px 20px;
+	text-align: center;
+}
+.loyality-levels-item__button .description,
+.loyality-levels-item__button .description a {
+	font-size: 11pt;
+    line-height: 11pt;
+	color: #FFF;
+}
+.loyality-levels-item__button .description a:hover,
+.loyality-levels-item__description a:hover {
+	text-decoration: underline;
+}
+.loyality-levels-item__button .button-wrapper {
+	text-align: center;
+}
+.loyality-levels-item__button .btn {
+	border-radius: 0;
+    color: #FFF;
+    padding: 12px 60px;
+    font-size: 13px;
+}
+.loyality-steps {
+	display: grid;
+    grid-gap: 36px;
+    grid-template-columns: 1fr 1fr 1fr;
+	margin: 126px 0px 96px;
+}
+.loyality-steps-item {
+	display: flex;
+    position: relative;
+    flex-direction: column;
+    border: 1px solid #FC6120;
+	background-color: #000;
+    box-sizing: border-box;
+    padding: 100px 32px 46px;
+}
+.loyality-steps-item__icon {
+	display: flex;
+    position: absolute;
+    width: 120px;
+    height: 120px;
+	align-items: center;
+	justify-content: center;
+    top: -60px;
+    left: calc(50% - 60px);
+    background-color: #FC6120;
+}
+.loyality-steps-item__title {
+	font-size: 16pt;
+    font-weight: bold;
+    line-height: 18pt;
+    text-align: center;
+    margin-bottom: 45px;
+}
+.loyality-steps-item__description {
+	font-size: 12pt;
+    line-height: 16pt;
+}
+.loyality-steps-item__description ul {
+	list-style: none;
+}
+.loyality-steps-item__description ul > li {
+	box-sizing: border-box;
+	padding-left: 14px;
+	margin-bottom: 24px;
+}
+.loyality-steps-item__description ul > li:before {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 6px;
+	height: 6px;
+	background-color: #FC6120;
+	border-radius: 50%;
+	top: 8px;
+	left: 0px;
+}
+.loyality-steps-item__description ul > li:last-child {
+	margin-bottom: 0;
+}
+.loyality-steps-item__warning {
+	color: #FC6120;
+	margin-top: 30px;
+	text-align: center;
+	font-size: 21pt;
+    font-weight: 550;
+    line-height: 23pt;
+}
+.loyality-steps-item__button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+.loyality-steps-item__button .btn {
+	border-radius: 0;
+    color: #FFF;
+    padding: 12px 40px;
+    font-size: 13px;
+    background-color: #FC6120;
+}
+.loyality-warning {
+	border-top: 1px solid #FC6120;
+	border-bottom: 1px solid #FC6120;
+	margin: 96px 0px 64px;
+	padding: 24px 0px;
+}
+.loyality-warning-title,
+.loyality-warning-description {
+	display: inline-block;
+	position: relative;
+	margin-right: 46px;
+}
+.loyality-warning-description:last-child {
+	margin-right: 0;
+}
+.loyality-warning-title {
+	font-size: 16pt;
+	font-weight: bold;
+    line-height: 18pt;
+}
+.loyality-warning-description {
+    font-size: 12pt;
+    line-height: 16pt;
+}
+.loyality-warning-description > a {
+	text-decoration: underline;
+}
+/* Программа лояльности */
+
 #map_club .leaflet-layer,
 #mapid .leaflet-layer {
 	filter: contrast(.7) grayscale(1) invert(1) brightness(0.8);
