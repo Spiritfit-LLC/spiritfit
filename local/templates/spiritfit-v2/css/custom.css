@@ -629,7 +629,7 @@ main.b-page__main {
 .b-page__main.loyality {
 	background-color: #121212;
 	background-image: url(/images/loyality/background.jpg);
-	background-position: right 107px;
+	background-position: right top;
     background-repeat: no-repeat;
     background-size: contain;
 	position: relative;
@@ -645,7 +645,7 @@ main.b-page__main {
     background-size: contain;
     background-position: right top;
     width: 100%;
-    height: 450px;
+    height: 850px;
 	z-index: 1;
 }
 .b-page__main.loyality .content-center {
@@ -1220,7 +1220,8 @@ main.b-page__main {
 		background-color: rgb(19 19 19 / 50%);
 	}
 	.b-page__main.loyality:before {
-		background-position: right bottom;
+		background-position: center;
+		background-size: cover;
 	}
 }
 @media screen and (max-width: 468px) {
