@@ -235,6 +235,9 @@
 						</div>
 					</li>
 				</ul>
+				<div class="loyality-bonus-button">
+					<a class="btn" href="<?=$settings["PROPERTIES"]["LOYALITY_CHECK"]["VALUE"]?>">Проверить баланс</a>
+				</div>
 			</div>
 		</div>
 	</div>

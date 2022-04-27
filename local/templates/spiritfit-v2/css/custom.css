@@ -688,7 +688,8 @@ main.b-page__main {
 .loyality-bonus-table__title,
 .loyality-bonus-table__blocks,
 .loyality-bonus-table__blocks-item,
-.loyality-steps-item__wrapper {
+.loyality-steps-item__wrapper,
+.loyality-bonus-button {
 	display: block;
     position: relative;
 }
@@ -852,7 +853,8 @@ main.b-page__main {
 .loyality-levels-item__button .button-wrapper {
 	text-align: center;
 }
-.loyality-levels-item__button .btn {
+.loyality-levels-item__button .btn,
+.loyality-bonus-button .btn {
 	border-radius: 0;
     color: #FFF;
     padding: 12px 60px;
@@ -901,10 +903,13 @@ main.b-page__main {
 .loyality-steps-item__description ul > li,
 .loyality-bonus-table ul > li {
 	box-sizing: border-box;
-	padding-left: 14px;
+	padding-left: 24px;
 	margin-bottom: 24px;
+    background-image: url(/local/templates/spiritfit-v2/components/bitrix/news.list/abonements.main/img/checkbox.svg);
+    background-position: 0px 2px;
+    background-repeat: no-repeat;
 }
-.loyality-steps-item__description ul > li:before,
+/*.loyality-steps-item__description ul > li:before,
 .loyality-bonus-table ul > li:before {
 	content: "";
 	display: block;
@@ -915,7 +920,7 @@ main.b-page__main {
 	border-radius: 50%;
 	top: 8px;
 	left: 0px;
-}
+}*/
 .loyality-steps-item__description ul > li:last-child,
 .loyality-bonus-table ul > li:last-child {
 	margin-bottom: 0;
@@ -1056,6 +1061,10 @@ main.b-page__main {
 .loyality-bonus-table__blocks-item > div:nth-child(2) > span {
 	font-size: 26pt;
 	line-height: 26pt;
+}
+.loyality-bonus-button {
+    text-align: center;
+    margin-top: 150px;
 }
 @media screen and (max-width: 1200px) {
 	.loyality-top {
