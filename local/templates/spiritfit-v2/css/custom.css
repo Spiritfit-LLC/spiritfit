@@ -649,6 +649,7 @@ main.b-page__main {
 	z-index: 1;
 }
 .b-page__main.loyality .content-center {
+	position: relative;
 	z-index: 2;
 }
 .b-page__main.loyality .b-screen_short {
@@ -678,9 +679,38 @@ main.b-page__main {
 .loyality-steps-item__description ul,
 .loyality-steps-item__description ul > li,
 .loyality-steps-item__warning,
-.loyality-warning {
+.loyality-warning,
+.loyality-bonus,
+.loyality-bonus-title,
+.loyality-bonus-description,
+.loyality-bonus-table ul > li,
+.loyality-bonus-table ul,
+.loyality-bonus-table__title,
+.loyality-bonus-table__blocks,
+.loyality-bonus-table__blocks-item,
+.loyality-steps-item__wrapper {
 	display: block;
     position: relative;
+}
+.loyality-top-levels__title,
+.loyality-bonus-title {
+	font-size: 32pt;
+}
+.loyality-warning-title,
+.loyality-steps-item__title,
+.loyality-bonus-description,
+.loyality-bonus-table__title {
+	font-size: 16pt;
+}
+.loyality-warning-description,
+.loyality-steps-item__description,
+.loyality-bonus-table {
+	font-size: 12pt;
+}
+.loyality-bonus-table .table > span .title,
+.loyality-levels-item__bonus > span:nth-child(2) {
+	font-size: 10pt;
+	line-height: 12pt;
 }
 .loyality-top {
     margin: 45px 0px 100px;
@@ -698,7 +728,8 @@ main.b-page__main {
 }
 .loyality-top h1 > span,
 .loyality-top-levels__title > span,
-.loyality-levels-item__title > span {
+.loyality-levels-item__title > span,
+.loyality-bonus-table .title > span {
 	color: #fc6120;
 }
 .loyality-top-levels__description,
@@ -710,7 +741,6 @@ main.b-page__main {
 	margin-top: 100px;
 }
 .loyality-top-levels__title {
-	font-size: 32pt;
 	font-weight: 550;
     line-height: 32pt;
 }
@@ -805,10 +835,6 @@ main.b-page__main {
     text-align: right;
     padding-right: 10px;
 }
-.loyality-levels-item__bonus > span:nth-child(2) {
-	font-size: 10pt;
-    line-height: 12pt;
-}
 .loyality-levels-item__button .description {
 	margin: 16px 0px 20px;
 	text-align: center;
@@ -841,6 +867,7 @@ main.b-page__main {
 .loyality-steps-item {
 	display: flex;
     position: relative;
+	height: 100%;
     flex-direction: column;
     border: 1px solid #FC6120;
 	background-color: #000;
@@ -859,25 +886,26 @@ main.b-page__main {
     background-color: #FC6120;
 }
 .loyality-steps-item__title {
-	font-size: 16pt;
     font-weight: bold;
     line-height: 18pt;
     text-align: center;
     margin-bottom: 45px;
 }
 .loyality-steps-item__description {
-	font-size: 12pt;
     line-height: 16pt;
 }
-.loyality-steps-item__description ul {
+.loyality-steps-item__description ul,
+.loyality-bonus-table ul {
 	list-style: none;
 }
-.loyality-steps-item__description ul > li {
+.loyality-steps-item__description ul > li,
+.loyality-bonus-table ul > li {
 	box-sizing: border-box;
 	padding-left: 14px;
 	margin-bottom: 24px;
 }
-.loyality-steps-item__description ul > li:before {
+.loyality-steps-item__description ul > li:before,
+.loyality-bonus-table ul > li:before {
 	content: "";
 	display: block;
 	position: absolute;
@@ -888,7 +916,8 @@ main.b-page__main {
 	top: 8px;
 	left: 0px;
 }
-.loyality-steps-item__description ul > li:last-child {
+.loyality-steps-item__description ul > li:last-child,
+.loyality-bonus-table ul > li:last-child {
 	margin-bottom: 0;
 }
 .loyality-steps-item__warning {
@@ -928,16 +957,277 @@ main.b-page__main {
 	margin-right: 0;
 }
 .loyality-warning-title {
-	font-size: 16pt;
 	font-weight: bold;
     line-height: 18pt;
 }
 .loyality-warning-description {
-    font-size: 12pt;
     line-height: 16pt;
 }
 .loyality-warning-description > a {
 	text-decoration: underline;
+}
+.loyality-bonus {
+	margin: 65px 0px 0px;
+	padding-bottom: 150px;
+}
+.loyality-bonus-title {
+	line-height: 32pt;
+	margin-bottom: 40px;
+}
+.loyality-bonus-description {
+	line-height: 16pt;
+	margin: 40px 0px 40px;
+	max-width: 610px;
+}
+.loyality-bonus-table {
+	display: flex;
+    position: relative;
+    flex-direction: row;
+    gap: 80px;
+    line-height: 16pt;
+}
+.loyality-bonus-table .table-cell {
+	position: relative;
+    width: 33%;
+	padding: 30px 0px 20px;
+}
+.loyality-bonus-table .table-cell:after {
+	content: "";
+	display: block;
+	position: absolute;
+	height: 100%;
+	width: 1px;
+	background-color: #FC6120;
+	right: -40px;
+	top: 0px;
+}
+.loyality-bonus-table .table-cell:last-child:after {
+	display: none;
+}
+.loyality-bonus-table__title {
+	font-weight: bold;
+	line-height: 18pt;
+	margin-bottom: 45px;
+}
+.loyality-bonus-table .title {
+	display: block;
+	position: relative;
+	font-weight: bold;
+}
+.loyality-bonus-table .table {
+	display: flex;
+    position: relative;
+    flex-direction: row;
+	gap: 20px;
+	margin-top: 16px;
+}
+.loyality-bonus-table .table > span {
+	position: relative;
+	font-weight: bold;
+	color: #FC6120;
+	width: 33%;
+}
+.loyality-bonus-table .table > span .title {
+	color: #FFF;
+}
+.loyality-bonus-table__blocks {
+	margin-top: 25px;
+}
+.loyality-bonus-table__blocks-item {
+	font-weight: bold;
+	margin-bottom: 25px;
+}
+.loyality-bonus-table__blocks-item:last-child {
+	margin-bottom: 0;
+}
+.loyality-bonus-table__blocks-item > div {
+	position: relative;
+}
+.loyality-bonus-table__blocks-item > div:nth-child(1) {
+	margin-bottom: 4px;
+}
+.loyality-bonus-table__blocks-item > div:nth-child(2) {
+	position: relative;
+	color: #FC6120;
+	font-size: 38pt;
+	font-weight: 550;
+	line-height: 32pt;
+}
+.loyality-bonus-table__blocks-item > div:nth-child(2) > span {
+	font-size: 26pt;
+	line-height: 26pt;
+}
+@media screen and (max-width: 1200px) {
+	.loyality-top {
+		width: 100%;
+	}
+	.loyality-top h1 {
+		font-size: 38pt;
+		line-height: 38pt;
+	}
+	.loyality-warning-title,
+	.loyality-steps-item__title,
+	.loyality-bonus-description,
+	.loyality-bonus-table__title {
+		font-size: 14pt;
+		line-height: 16pt;
+	}
+	.loyality-top-levels__description,
+	.loyality-top-description {
+		font-size: 14pt;
+		line-height: 18pt;
+	}
+	.loyality-top-levels__title,
+	.loyality-bonus-title {
+		font-size: 26pt;
+		line-height: 26pt;
+	}
+	.loyality-levels-item__description,
+	.loyality-levels-item__description a {
+		font-size: 13pt;
+		line-height: 18pt;
+	}
+	.loyality-levels-item__bonus > span:nth-child(1),
+	.loyality-bonus-table__blocks-item > div:nth-child(2) {
+		font-size: 30pt;
+    	font-weight: 550;
+    	line-height: 25pt;
+	}
+	.loyality-bonus-table__blocks-item > div:nth-child(2) > span {
+		font-size: 20pt;
+        line-height: 20pt;
+	}
+	.loyality-levels {
+		grid-template-columns: 1fr 1fr;
+	}
+	.loyality-levels-item:nth-child(2) .loyality-levels-item__content:before {
+		display: none;
+	}
+	.loyality-top:before {
+		right: -15px;
+	}
+	.loyality-warning-title,
+	.loyality-warning-description {
+		display: block;
+		margin-right: 0px;
+		margin-bottom: 10px;
+	}
+	.loyality-warning-description:last-child {
+		margin-bottom: 0;
+	}
+}
+@media screen and (max-width: 1140px) {
+	.loyality-bonus-table,
+	.loyality-steps {
+		display: block;
+	}
+	.loyality-levels {
+		margin-bottom: 100px;
+	}
+	.loyality-steps {
+		margin-top: 100px;
+	}
+	.loyality-bonus-table .table-cell {
+		padding: 0;
+		width: 100%;
+		margin-right: 2px;
+		margin-left: 2px;
+	}
+	.loyality-bonus-table .table-cell:after {
+		display: none;
+	}
+	.loyality-steps-item {
+		margin-right: 2px;
+		margin-left: 2px;
+		padding: 100px 50px 80px;
+	}
+	.loyality-steps .b-image-plate-block__arrow--right,
+	.loyality-steps .b-image-plate-block__arrow--left,
+	.loyality-bonus-table .b-image-plate-block__arrow--right,
+	.loyality-bonus-table .b-image-plate-block__arrow--left {
+		top: 50%;
+		width: 45px;
+		border: 1px solid rgba(0, 0, 0, 0);
+		border-radius: 0;
+	}
+	.loyality-steps .b-image-plate-block__arrow--right,
+	.loyality-bonus-table .b-image-plate-block__arrow--right {
+		right: 0px;
+	}
+	.loyality-steps .b-image-plate-block__arrow--left,
+	.loyality-bonus-table .b-image-plate-block__arrow--left {
+		left: 0px;
+	}  
+	.loyality-steps-item__wrapper {
+		padding-top: 50px;
+	}
+	.loyality-bonus-table__title {
+		text-align: center;
+		font-size: 18pt;
+    	line-height: 20pt;
+		margin-bottom: 80px;
+	}
+	.loyality-bonus-table__title:after {
+		content: "";
+		display: block;
+		position: absolute;
+		width: 50%;
+		height: 1px;
+		background: #FC6120;
+		bottom: -25px;
+		left: 25%;
+	}
+}
+@media screen and (max-width: 768px) {
+	.loyality-levels {
+		grid-template-columns: 1fr;
+		grid-gap: 50px;
+	}
+	.loyality-levels-item:after {
+		content: "";
+		display: block;
+		position: absolute;
+		width: 50%;
+		height: 1px;
+		background: #FC6120;
+		bottom: -25px;
+		left: 25%;
+	}
+	.loyality-levels-item:last-child:after {
+		display: none;
+	}
+	.loyality-levels-item__content {
+		padding-bottom: 0px;
+	}
+	.loyality-levels-item__content:before {
+		display: none;
+	}
+	.loyality-bonus {
+		padding-bottom: 50px;
+	}
+	.loyality-steps .b-image-plate-block__arrow--right {
+		right: 0px;
+	}
+	.loyality-steps .b-image-plate-block__arrow--left {
+		left: 0px;
+	}
+	.loyality-bonus-table .b-image-plate-block__arrow--right {
+		right: -20px;
+		background-color: rgb(19 19 19 / 50%);
+	}
+	.loyality-bonus-table .b-image-plate-block__arrow--left {
+		left: -20px;
+		background-color: rgb(19 19 19 / 50%);
+	}
+	.b-page__main.loyality:before {
+		background-position: right bottom;
+	}
+}
+@media screen and (max-width: 468px) {
+	.loyality-top h1 {
+   		font-size: 28pt;
+    	line-height: 34pt;
+	}
 }
 /* Программа лояльности */
 
