@@ -426,7 +426,38 @@ function clickBtn(el){
 }
 
 $(document).ready(function() {
-
+	
+	/* Slick init on loyalty */
+	if( $(window).width() < 1140 ) {
+		$(".loyality-steps").slick({
+			dots: false,
+			infinite: true,
+			speed: 1200,
+			adaptiveHeight: true,
+			draggable: true,
+			centerMode: false,
+			fade: false,
+			slidesToShow: 1,
+			slidesToScroll: 1,
+			prevArrow: '<button class="b-image-plate-block__arrow b-image-plate-block__arrow--left slick-arrow"></button>',
+			nextArrow: '<button class="b-image-plate-block__arrow b-image-plate-block__arrow--right slick-arrow"></button>'
+		});
+		$(".loyality-bonus-table").slick({
+			dots: false,
+			infinite: true,
+			speed: 1200,
+			adaptiveHeight: true,
+			draggable: true,
+			centerMode: false,
+			fade: false,
+			slidesToShow: 1,
+			slidesToScroll: 1,
+			prevArrow: '<button class="b-image-plate-block__arrow b-image-plate-block__arrow--left slick-arrow"></button>',
+			nextArrow: '<button class="b-image-plate-block__arrow b-image-plate-block__arrow--right slick-arrow"></button>'
+		});
+	}
+	/* Slick init on loyalty */
+	
 	/* Изменение темы сайта */
 	if( $(".theme-selector").length > 0 ) {
 		$(".theme-selector-wrapper").show();

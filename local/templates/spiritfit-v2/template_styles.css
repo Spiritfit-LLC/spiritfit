@@ -5313,8 +5313,7 @@ button.mfp-arrow::before{
 	display: inline-block;
     position: relative;
     box-sizing: border-box;
-    padding: 20px 25px;
-    background-color: #0f0f0f;
+    padding: 20px 25px 20px 0px;
 }
 .footer-menu {
 	display: table;
