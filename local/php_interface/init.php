@@ -50,6 +50,9 @@ if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/Clubs.
 if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/Abonement.php')) {
     require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/Abonement.php');
 }
+if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/EventHandlersClass.php')) {
+    require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/EventHandlersClass.php');
+}
 
 CModule::AddAutoloadClasses("", array(
     '\ImageConverter\Picture' => '/local/php_interface/classes/ImageConverter.php',

@@ -118,6 +118,26 @@ class Api
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
+            
+            //МЕТОДЫ ДЛЯ ЛК
+            case 'lkreg':
+                $this->lkreg($post['params']);
+                AddMessage2Log('lkreg');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case 'lkcode':
+                $this->lkcode($post['params']);
+                AddMessage2Log('lkreg');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case 'lkinfo':
+                $this->lkinfo($post['params']);
+                AddMessage2Log('lkreg');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
         }
     }
 
@@ -912,6 +932,42 @@ class Api
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $calltouch = curl_exec ($ch);
             curl_close ($ch);
+        }
+    }
+
+
+    //МЕТОДЫ ДЛЯ ЛК
+    private function lkreg($params){
+        //$this->_send($this->apiUrl."lkregistration", $params);
+        $this->_send("https://app.spiritfit.ru/fitness-test1/hs/website/lkregistration", $params);
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
+    }
+
+    private function lkcode($params){
+        //$this->_send($this->apiUrl."lkcode", $params);
+        $this->_send("https://app.spiritfit.ru/fitness-test1/hs/website/lkcode", $params);
+        if (empty($this->_data['result'])){
+
+            $this->_result=false;
+        }
+        else{
+            $this->_result = $this->_data['result']['result'];
+        }
+    }
+
+    private function lkinfo($params){
+        //$this->_send($this->apiUrl."lkinfo", $params);
+        $this->_send("https://app.spiritfit.ru/fitness-test1/hs/website/lkinfo", $params);
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
         }
     }
 }
