@@ -1,0 +1,677 @@
+/*AUTOCOMPLETE*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+    -webkit-transition-delay: 9999s;
+}
+/*AUTOCOMPLETE*/
+
+/*КНОПКА ВЫЗОВА ФОРМ*/
+.personal-onpage{
+    transform: rotate(90deg);
+    width: 300px;
+    position: fixed;
+    top: calc(50% - 32.5px);
+    left: -120px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000000e6;
+    z-index: 1000;
+}
+span.onpage-btn{
+    color: #ff7628;
+    text-decoration: none;
+    transition: color .2s ease 0s;
+    cursor: pointer;
+}
+/*КНОПКА ВЫЗОВА ФОРМ*/
+
+/*ДЕФОЛТНЫЕ СТИЛИ ДЛЯ МОДАЛЬНЫХ ОКОН*/
+.-modal{
+    position: fixed;
+    left: 10px;
+    width: 520px;
+    background: #000000;
+    transform: translateX(-550px);
+    transition: transform 0.5s;
+    z-index: 1000;
+}
+@media screen and (max-width: 970px){
+    .-modal{
+        display: none;
+    }
+}
+.-modal.active{
+    transform: translateX(0px);
+}
+.-modal-header{
+    display: flex;
+    position: relative;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    margin: 20px 10px;
+    height: 25px;
+}
+.-modal-closer{
+    position: absolute;
+    top: 0;
+    right: 20px;
+    height: 25px;
+    width: 25px;
+}
+.-modal-closer svg{
+    fill:white;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+.-modal-closer svg:hover{
+    transform: rotate(180deg);
+}
+.-modal-body{
+    width: 100%;
+    padding: 0 50px;
+    margin: 20px 0;
+}
+.modal-overlay{
+    z-index: -1;
+    opacity: 0;
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background: #0000008c;
+    transition: opacity 0.3s;
+}
+.modal-overlay.active{
+    z-index:1000;
+    opacity:1;
+}
+/*ДЕФОЛТНЫЕ СТИЛИ ДЛЯ МОДАЛЬНЫХ ОКОН*/
+
+
+/*Дефолтные стили для страницы personal*/
+.-personal{
+    width: 30%;
+    margin: auto;
+    min-width: 400px;
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+@media screen and (max-width: 970px){
+    .-personal{
+        margin-top: 50px;
+        width: 100%;
+        min-width: 100%;
+        padding: 30px;
+    }
+}
+/*Дефолтные стили для страницы personal*/
+
+
+/*ДЕФОЛНЫЕ СТИЛИ ФОРМ*/
+form label{
+    width: calc(40% - 10px);
+    float: left;
+    padding: 28px 0 0;
+    font-size: 16px;
+}
+/*ДЕФОЛНЫЕ СТИЛИ ФОРМ*/
+
+
+/*ФОРМА АВТОРИЗАЦИИ*/
+.personal-auth.-modal{
+    top: calc(50% - 150px);
+    height: 300px;
+}
+form.personal-auth-form {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+@media screen and (max-width: 970px){
+    form.personal-auth-form{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .personal-auth-form-data {
+        width: 100% !important;
+    }
+    .personal-auth-form-auth-links {
+        width: 100%!important;
+        margin-top: 20px;
+    }
+}
+.auth-link{
+    /* margin: 10px 0; */
+    padding: 10px 0px 0px;
+    position: static;
+    display: block;
+    text-transform: uppercase;
+    font-size: 14px;
+    cursor: pointer;
+    color: #ff7628;
+}
+/*ФОРМА АВТОРИЗАЦИИ*/
+
+/*ФОРМА РЕГИСТРАЦИИ*/
+.personal-reg.-modal {
+    top: calc(50% - 300px);
+    height: 600px;
+}
+.personal-reg .select2-selection__rendered{
+    font-size: 16px!important;
+}
+.personal-reg.-personal .input{
+    width: calc(60% + 10px)!important;
+}
+/*ФОРМА РЕГИСТРАЦИИ*/
+
+/*ФОРМА ВОССТАНОВЛЕНИЯ ПАРОЛЯ*/
+.personal-getpass.-modal{
+    top: calc(50% - 140px);
+    height: 280px;
+}
+/*ФОРМА ВОССТАНОВЛЕНИЯ ПАРОЛЯ*/
+
+/*ПЕРСОНАЛЬНАЯ СТРАНИЦА*/
+.personal-profile.-modal{
+    top: calc(50% - 265px);
+    height: 530px;
+    width: 750px;
+    transform: translateX(-760px);
+    margin: 0;
+}
+.personal-profile.-modal.active{
+    transform: translateX(0px);
+}
+.personal-profile-body{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.personal-profile-photo{
+    width: 200px;
+    height: 200px;
+    position:relative;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.personal-profile-info {
+    width: calc(100% - 250px);
+    display: flex;
+    flex-direction: column;
+}
+.personal-profile-btns {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+.personal-profile-form-btn {
+    padding: 20px;
+    width: calc(50% - 20px);
+}
+/*ПЕРСОНАЛЬНАЯ СТРАНИЦА*/
+
+/*ИЗМЕНИТЬ ФОТОГРАФИЮ*/
+.change-profile-photo-btn{
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #4e4e4e73;
+    border-radius: 50%;
+    transform: translateY(200px) scale(0.1);
+    /* transform: translateY(110px); */
+    z-index: 1;
+    transition: transform 0.5s;
+    font-size: 10px;
+    /* display: flex; */
+    padding-top: 30px;
+    text-align: center;
+}
+img.profile-personal-photo:hover + .change-profile-photo-btn,
+.change-profile-photo-btn:hover{
+    transform: translateY(110px) scale(1.0);
+}
+.change-profile-photo-btn span{
+    cursor: pointer;
+}
+.personal-change-profile-photo {
+    z-index: -1;
+    opacity:0;
+    width: 600px;
+    height: 640px;
+    position: fixed;
+    top: calc(50% - 300px);
+    left: calc(50% - 300px);
+    background: black;
+    transition:opacity 0.3s;
+}
+.personal-change-profile-photo.active {
+    z-index: 1001;
+    opacity:1;
+}
+.personal-change-profile-photo-closer{
+    position: absolute;
+    top: 0;
+    right: 20px;
+    height: 25px;
+    width: 25px;
+}
+.personal-change-profile-photo-closer svg{
+    fill:white;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+.personal-change-profile-photo-closer svg:hover{
+    transform: rotate(180deg);
+}
+.personal-change-profile-photo-photo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.personal-change-profile-photo-photo .personal-profile-photo{
+    width:400px;
+    height: 400px;
+}
+@media screen and (max-width: 970px){
+    .personal-change-profile-photo {
+        width: 100%;
+        top: 0;
+        left: 0;
+        height: 100%;
+    }
+    .personal-change-profile-photo-body {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .personal-change-profile-photo-form {
+        margin: 30px;
+        padding: 0;
+        width: 100%;
+    }
+    .personal-change-profile-photo-body img.profile-personal-photo {
+        width: 100%;
+        height: 100%;
+        padding: 30px;
+    }
+    .personal-change-profile-photo-body .personal-change-profile-photo-form {
+        margin: 0;
+    }
+    .personal-change-profile-photo-form .-modal-btn {
+        width: 100%!important;
+    }
+    .personal-profile.-onpersonal .personal-profile-photo{
+        margin-bottom: 30px;
+    }
+}
+@media screen and (max-width: 680px){
+    .personal-profile-photo{
+        width: 250px;
+        height: 250px;
+    }
+    .personal-profile.-onpersonal .change-profile-photo-btn{
+        width: 250px;
+        height: 250px;
+    }
+    img.profile-personal-photo:hover + .change-profile-photo-btn, .change-profile-photo-btn:hover {
+        transform: translateY(180px) scale(1.0);
+    }
+}
+/*ИЗМЕНИТЬ ФОТОГРАФИЮ*/
+
+
+/*КОД СМС*/
+.code-block{
+    display: inline-flex;
+    flex-direction: row;
+    align-items: flex-end;
+    width: 100%;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 1s;
+}
+.code-block.active,
+.code-block.active{
+    visibility: visible;
+    opacity: 1;
+}
+a.refreshcode {
+    margin-left: 10px;
+    cursor: pointer;
+}
+svg#Capa_1 {
+    width: 20px;
+    height: 20px;
+    fill: white;
+    margin-left: 10px;
+}
+input.reg_code{
+    width: calc(60% - 45px);
+}
+/*КОД СМС*/
+
+
+
+
+/*ВСЕ ЧТО НИЖЕ НУЖНО ПРИВЕСТИ В ПОРЯДОК*/
+
+
+.update-head-items{
+    float: right;
+    font-size: 12px;
+    color: #ff762885;
+}
+.update-head-items:hover{
+    color: #ff7628;
+}
+
+
+
+.-width-60{
+    width: calc(60% - 10px);
+}
+.-width-40{
+    width: calc(40% - 10px);
+}
+.-width-30{
+    width: calc(30% - 10px);
+}
+
+
+
+.-modal-btn{
+    width: 100%;
+    margin: 30px 0;
+}
+
+input.-modal-btn{
+    margin-bottom: 10px;
+}
+span.error-message-text {
+    color: darkred;
+    font-size: 14px;
+}
+span.error-message-text.success{
+    color: green;
+}
+span.input-comment {
+    font-size: 14px;
+    font-weight: 300;
+    color: #ff7628;
+}
+
+form input{
+    display:inline-block !important;
+}
+
+img.profile-personal-photo {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.personal-info-item{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 12px 0;
+}
+.personal-info-item .info-item-placeholder {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #ffffff54;
+}
+.personal-info-item .info-item-value {
+    margin-top: 3px;
+}
+
+.personal-info-item.-important {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.personal-info-item.-important .info-item-placeholder{
+    font-size: 16px;
+    color:white;
+    max-width: 70%;
+}
+.personal-info-item.-important .info-item-value{
+    color: #ff7628;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+
+/*USER BLOCK*/
+.user-field-group{
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0;
+}
+.user-field-item {
+    margin-right: 6px;
+    /* color: #ff7628; */
+}
+.user-field-value{
+    color: #ff7628;
+}
+.user-field-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+span.user-field-placeholder {
+    font-size: 14px;
+    color: #ffffff52;
+}
+.-whitetext{
+    color: white;
+}
+/*USER BLOCK*/
+
+/*PERSONAL USER block*/
+.personal-profile.-onpersonal {
+    display: inline-block;
+    width: calc(50% - 20px);
+}
+.personal-page {
+    margin: 80px 0;
+    padding: 0 120px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+/*PERSONAL USER BLOCK*/
+
+/*CHANGE PHOTO FORM*/
+.personal-change-profile-photo-file-input{
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+}
+.personal-change-profile-photo-form{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 30px;
+    margin: 50px 0;
+}
+.personal-change-profile-photo-form input.input{
+    width: calc(100% - 240px);
+    border-bottom: 1px solid white;
+    padding: 16px 0 0 0;
+    font-size: 18px;
+}
+.personal-change-profile-photo-form span.input {
+    padding: 15px;
+    width: 200px;
+    margin: 0 20px;
+    font-size: 14px;
+}
+/*CHANGE PHOTO FORM*/
+
+
+/*ЕСЛИ СТРАНИЦА PROFILE*/
+.personal-profile.-onpage {
+     /*margin: 80px 120px;*/
+     /*max-width: 900px;*/
+    margin: 80px 0;
+    width: 100%;
+    padding: 0 120px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.personal-profile.-onpage .personal-profile-body{
+    width: 50%;
+    max-width: 900px;
+}
+.personal-info-item.-onpage.-important{
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+input.change-profile-input{
+    padding: 0 0 3px
+}
+.change-personal-profile .personal-info-item.-onpage{
+    margin-top: 20px;
+}
+.change-personal-profile input.-modal-btn {
+    margin-bottom: 30px;
+}
+.change-personal-profile input.-modal-btn[disabled],
+.change-personal-profile input.-modal-btn[disabled]:hover{
+    color: #ffffff63;
+    background-color: black;
+}
+
+.other-users-block {
+    width: 50%;
+    max-width: 800px;
+    /* height: 100%; */
+    max-height: 600px;
+    padding: 0 50px;
+    z-index: 1;
+}
+
+.other-users-header {
+    background: #ff7628;
+    height: 50px;
+    display: flex;
+    /* vertical-align: middle; */
+    align-items: center;
+    padding: 20px;
+}
+.other-users-body {
+    height: calc(100% - 50px);
+    /*border: 1px solid #ff7628;*/
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.user-block {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid #ff7628;
+}
+.user-profile-photo {
+    width: 80px;
+    height: 80px;
+}
+.user-profile-photo img{
+    width: 100%;
+    height:100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.user-field.-important {
+    color: #ff7628;
+    font-size: 20px;
+}
+.user-field {
+    /* display: flex; */
+    /* flex-direction: row; */
+    font-size: 14px;
+}
+.user-profile-info {
+    margin-left: 20px;
+}
+.-important span.user-field-value{
+    text-decoration: none;
+}
+
+@media screen and (max-width:680px){
+    .personal-profile.-onpage {
+        padding: 0;
+        margin-bottom: 20px;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 30px;
+    }
+    .personal-profile-body {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex-direction: column;
+        align-items: center;
+    }
+    .personal-profile-info {
+        width: 100%;
+    }
+    .personal-profile-btns {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .personal-profile-form-btn {
+        width: 100%;
+        margin: 10px;
+    }
+    .other-users-block{
+        display: none;
+    }
+    .-onpage .personal-profile-photo {
+        margin-bottom: 20px;
+    }
+}
+
+@media screen and (max-width:1440px) {
+    .personal-page {
+        padding: 0 24px;
+    }
+}
+@media screen and (max-width: 970px) {
+    .other-users-block{
+        display: none;
+    }
+    .personal-profile-body {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    .personal-profile.-onpersonal{
+        width: 100%;
+    }
+
+}
