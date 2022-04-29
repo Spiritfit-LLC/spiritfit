@@ -11,11 +11,11 @@
 	
 	$settings = Utils::getInfo();
 	
-	$APPLICATION->SetTitle($settings["PROPERTIES"]["LOYALITY_TITLE"]["VALUE"]);
+	$APPLICATION->SetTitle(strip_tags($settings["PROPERTIES"]["LOYALITY_TITLE"]["~VALUE"]));
 ?>
 <div class="content-center">
 	<div class="loyality-top">
-		<h1>Программа <span>лояльности</span></h1>
+		<h1><?=$settings["PROPERTIES"]["LOYALITY_TITLE"]["~VALUE"]?></span></h1>
 		<div class="loyality-top-description">
 			Бонусная программа для членов клуба Spirit.Fitness.<br/>
 			Для участия в программе необходимо оплатить любой вид контракта, регистрация в программе лояльности происходит автоматически.
