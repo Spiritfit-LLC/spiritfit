@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", function(){
   let mapOptions = {
       center: [cord1, cord2],
       zoom: mapZoom,
-      zoomControl: false
+      zoomControl: false,
+      gestureHandling: true,
   }
 
   // инициализация карты
@@ -30,11 +31,13 @@ document.addEventListener("DOMContentLoaded", function(){
   const iconPath = "/local/templates/spiritfit-v2/img/";
   let spiritFitnessIcon = iconPath + "map-pin-small2.png";
   let spiritFitnessIconActive = iconPath + "map-pin-small2-active.png";
+  let IconAnchor=[20, 47];
   // const spiritFitnessIconNetwork = iconPath + "transparent.png";
 
   if(window.innerWidth < 800){
     spiritFitnessIcon = iconPath + "map-pin-small_25.png";
     spiritFitnessIconActive = iconPath + "map-pin-small_25-active.png";
+    IconAnchor=[12.5, 29];
   }
 
   // получаем массив с данными клубов
@@ -49,8 +52,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
   // функция для установки активного маркера
   function setActiveIcon(marker) {
-    let iconActive = L.icon({iconUrl: spiritFitnessIconActive});
-    let iconNotActive = L.icon({iconUrl: spiritFitnessIcon});
+    let iconActive = L.icon({iconUrl: spiritFitnessIconActive, iconAnchor:   IconAnchor});
+    let iconNotActive = L.icon({iconUrl: spiritFitnessIcon, iconAnchor:   IconAnchor});
     let iconNetwork =  L.divIcon({
       html: '',
       className: 'invisible-icon',
@@ -267,7 +270,7 @@ document.addEventListener("DOMContentLoaded", function(){
 			// для страниц клубов (где 1 метка)
 
 			let markerIcon = L.icon({
-				iconUrl: spiritFitnessIconActive
+				iconUrl: spiritFitnessIconActive, iconAnchor:   IconAnchor
 		});
 
 			const marker = L.marker([+cord1, +cord2],{
@@ -303,7 +306,7 @@ document.addEventListener("DOMContentLoaded", function(){
 			var iconPathToMap = locations.length > 1 ? spiritFitnessIcon : spiritFitnessIconActive;
 
       let markerIcon = L.icon({
-				iconUrl: iconPathToMap
+				iconUrl: iconPathToMap, iconAnchor:   IconAnchor
 			});
 			
 			if(locations[i].id == networkAbonementID){

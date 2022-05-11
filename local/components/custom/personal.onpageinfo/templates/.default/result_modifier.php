@@ -5,3 +5,10 @@
 /** @global \CUser $USER */
 /** @global \CDatabase $DB */
 /** @var CBitrixComponentTemplate $this */
+
+?>
+
+<script>
+    var personal_page_url=<?=CUtil::PhpToJSObject($arParams['PROFILE_URL'])?>;
+    var ajax=<?=CUtil::PhpToJSObject($arResult['ajax'])?>;
+</script>

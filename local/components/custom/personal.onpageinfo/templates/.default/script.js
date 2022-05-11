@@ -1,4 +1,34 @@
 $(document).ready(function(){
+//    AUTOSCROLL
+    $('html, body').animate({scrollTop: 0},500);
+
+
+//    НАСТРЙОКИ ДЛЯ ДАТЫ
+    $('[data-toggle="datepicker"]').each(function(){
+        $(this).inputmask({
+            'mask': '99.99.9999',
+        });
+
+        var minDate=$(this).data('min');
+        var maxDate=$(this).data('max');
+
+        var minAge=$(this).data('minage');
+        var maxAge=$(this).data('maxage');
+
+        if (typeof minAge !== typeof undefined && maxAge !== false) {
+            var today = new Date();
+            maxDate = today.setFullYear(today.getFullYear()-minAge);
+            minDate=today.setFullYear(today.getFullYear()-maxAge);
+        }
+
+        $(this).datepicker({
+            language:'ru-RU',
+            format: 'dd.mm.yyyy',
+            autoHide:true,
+            startDate: minDate,
+            endDate: maxDate,
+        })
+    });
 
     //МАСКА ДЛЯ ТЕЛЕФОНА
     [].forEach.call( document.querySelectorAll('[type="tel"]'), function(input) {
@@ -7,413 +37,225 @@ $(document).ready(function(){
         });
     });
 
-    //МАСКА ДЛЯ КОДА
-    $('input.reg_code').inputmask(
-        {
-            'mask': '9 9 9 9 9',
+
+
+
+
+    //ПОКАЗ РАЗДЕЛОВ
+    $('.personal-section').hide(300).removeClass('active');
+    $(`.personal-section[data-id="${$('.personal-profile__tab-item.active').data('id')}"`).show(300).addClass('active');
+    function showSection(){
+        var data_id=$(this).data('id');
+        if (data_id===$('.personal-section.active').data('id')){
+            return;
         }
-    );
-    // var codeInput=$('.personal-reg-form-code-block').find('input[name="reg_code"]');
-    // $(codeInput).inputmask({
-    //     'mask': '9 9 9 9 9',
-    // });
+        $('.personal-profile__tab-item').removeClass('active');
+        $(this).addClass('active');
 
+        $('.personal-section').hide(300).removeClass('active');
+        $(`.personal-section[data-id="${data_id}"`).show(300).addClass('active');
 
-    $('.go-auth').click(function(){
-        var parent=$(this).parent()
-        var X_COORD=parent.height();
-        parent.animate({
-            'left':`-=${X_COORD}px`
-        }, 300, function(){
-            $('.personal-auth.-modal').addClass('active')
-        })
-    });
-
-    $('.show-profile').click(function(){
-        var parent=$(this).parent()
-        var X_COORD=parent.height();
-        parent.animate({
-            'left':`-=${X_COORD}px`
-        }, 300, function(){
-            $('.personal-profile.-modal').addClass('active')
-        })
-    })
-
-
-    //ЧИТАЕМ ПАРАМЕТРЫ ЗАПРОСА
-    var params = window
-        .location
-        .search
-        .replace('?','')
-        .split('&')
-        .reduce(
-            function(p,e){
-                var a = e.split('=');
-                p[ decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
-                return p;
-            },
-            {}
-        );
-
-    if (Object.keys(params).includes('profile')){
-        //console.log(params['profile'], params['profile']==='Y')
-        if (params['profile']==='Y'){
-            $('.show-profile').trigger('click');
+        if (window.outerWidth<=768){
+            $('.show-all-section-icon').removeClass('active');
+            $('.personal-profile__tab-item:not(.active)').hide(300);
         }
     }
 
-    $('.-modal-closer').click(function(){
-        $('.-modal').removeClass('active');
-        $('.error-message-text').html('');
-
-        var X_COORD=$('.personal-onpage').height();
-        $('.personal-onpage').animate({
-            'left':`+=${X_COORD}px`
-        })
-    });
-
-    $('span.auth-link').click(function(){
-        $('.-modal').removeClass('active');
-
-        $(`.${$(this).data('action')}`).addClass('active');
-    })
-
-    function setError(form, errorText){
-        $(form).find('.error-message-text').html(errorText);
-        $(form).find('.error-message-text').closest('.-modal').css({
-            'height':`+=${$(form).find('.error-message-text').height()}`
-        })
-    }
-
-    function clearError(form){
-        $(form).find('.error-message-text').html('');
-        $(form).find('.error-message-text').closest('.-modal').removeAttr('style');
-    }
-
-    //Запрос СМС
-    function sendSMS(form){
-        var url=$(form).attr('action');
-        var postData=$(form).serializeArray();
-
-        clearError(form);
-
-        $(form).find('input').prop( "readonly", true );
-        $(form).find('option').prop( "readonly", true );
-
-        //console.log(postData);
-        $.ajax({
-            url:url,
-            method:'POST',
-            data:postData,
-            success:function(res){
-                //console.log(res)
-                var success=res['result'];
-                var message=res['message'];
-                var errorCode=res['errorCode'];
-                if (success){
-                    $(form).find('input[name="STEP"]').val(2);
-                    $(form).find('input').prop( "readonly", true );
-                    $(form).find('option').prop( "readonly", true );
-
-                    $(form).find('.code-block').find('input').prop("readonly", false);
-                    $(form).find('input[type="submit"]').prop("readonly", false).val("Подтвердить");
-
-                    $(form).find('.code-block').addClass('active');
-                    $(form).find('.reg_code').prop('readonly', false);
-                    $(form).find('.reg_code').val('')
-                }
-                else{
-                    $(form).find('input[name="STEP"]').val(1);
-
-                    setError(form,message);
-
-                    $(form).find('input').prop( "readonly", false );
-                    $(form).find('option').prop( "readonly", false );
-                }
-            },
-            error:function(){
-                setError(form, 'Не удалось связаться с сервером.');
-
-                $(form).find('input').prop( "readonly", false );
-                $(form).find('option').prop( "readonly", false );
-            }
-        })
-    }
-    //Проверка СМС
-    function checkSMS(form){
-        var url=$(form).attr('action');
-        var postData=$(form).serializeArray();
-
-        clearError(form);
-
-        $(form).find('input').prop( "readonly", true );
-        $(form).find('option').prop( "readonly", true );
-
-        $.ajax({
-            url:url,
-            method:'POST',
-            data:postData,
-            success:function(res){
-                //console.log(res);
-
-                var success=res['result'];
-                var message=res['message'];
-                var errorCode=res['errorCode'];
-
-                if (success){
-                    window.location.href='/personal/';
-                }
-                else{
-                    setError(form, message);
-
-                    $(form).find('.reg_code').val('')
-                    if (errorCode===7){
-                        $(form).find('input[name="STEP"]').val(1);
-                        $(form).find('input').prop( "readonly", false );
-                        $(form).find('option').prop( "readonly", false );
-                        $(form).find('input[type="submit"]').prop("readonly", false).val("отправить");
-                        $(form).find('.code-block').removeClass('active');
-                    }
-                    else{
-                        $(form).find('.reg_code').prop('readonly', false);
-                        $(form).find('input[type="submit"]').prop("readonly", false);
-                    }
-                }
-            },
-            error:function(){
-                setError(form, 'Не удалось связаться с сервером.');
-
-                $(form).find('input').prop( "readonly", false );
-                $(form).find('option').prop( "readonly", false );
-            }
-        })
-    }
+    $('.personal-profile__tab-item').click(showSection);
 
 
-    //АВТОРИЗАЦИЯ
-    $('form.personal-auth-form').on('submit', function (e){
-        e.preventDefault();
-        clearError(this);
-
-        var url=$(this).attr('action');
-        var postData=$(this).serializeArray();
-        // //console.log(postData);
-
-        $.ajax({
-            url:url,
-            method:'POST',
-            data:postData,
-            success: function(res){
-                if (res['result']!==true){
-                    setError($('.personal-auth-form'), res['message']);
-                }
-                else{
-                    window.location.reload()
-                }
-            },
-            error:function(){
-                setError($('.personal-auth-form'), 'Не удалось связаться с сервером.');
-            }
-        })
-
-        return false;
-    });
-
-    //РЕГИСТРАЦИЯ
-    $('form.personal-reg-form').on('submit', function(e){
-        e.preventDefault();
-
-        $(this).find('input').prop( "readonly", false );
-        $(this).find('option').prop( "readonly", false );
-
-        if (parseInt($(this).find('input[name="STEP"]').val())===1){
-            sendSMS(this);
-
-            $(this).find('a.refreshcode').unbind();
-            $(this).find('a.refreshcode').click(function(){
-                $($('form.personal-reg-form')).find('input[name="STEP"]').val(1);
-                sendSMS($('form.personal-reg-form'));
-            });
+    //ПОКАЗАТЬ/СКРЫТЬ ПАРОЛЬ
+    $('.show-password-icon').click(function (){
+        if ($(this).find('div.active').hasClass('pass-view')){
+            $(this).parent().find('input[type="password"]').attr('type', 'text');
+            $(this).find('div.pass-view').removeClass('active');
+            $(this).find('div.pass-hide').addClass('active');
         }
         else{
-            checkSMS(this);
+            $(this).parent().find('input[type="text"]').attr('type', 'password');
+            $(this).find('div.pass-hide').removeClass('active');
+            $(this).find('div.pass-view').addClass('active');
         }
-        return false;
     });
 
-    //Восстановление пароля
-    $('form.personal-getpass-form').on('submit', function(e){
-        e.preventDefault();
+    //ВЫХОД
+    $('.profile-exit-btn').unbind();
+    $('.profile-exit-btn').click(function(){
+        var url=ajax;
+        $.ajax({
+            url:url,
+            method:'POST',
+            data: {
+                'ACTION': 'EXIT'
+            },
+            cache: false,
+            success:function(res){
+                if (res['result']===true){
+                    window.location.reload();
+                }
+            }
+        })
+    });
 
-        $(this).find('input').prop( "readonly", false );
-        $(this).find('option').prop( "readonly", false );
-
-        if (parseInt($(this).find('input[name="STEP"]').val())===1){
-            sendSMS(this);
-
-            $(this).find('a.refreshcode').unbind();
-            $(this).find('a.refreshcode').click(function(){
-                $($('form.personal-getpass-form')).find('input[name="STEP"]').val(1);
-                sendSMS($('form.personal-getpass-form'));
-            });
+    //CHECKBOX
+    $('.checkbox-input').unbind();
+    $('.checkbox-input').click(function(){
+        if($(this).is(':checked')){
+            $(this).val(1);
         }
         else{
-            checkSMS(this);
+            $(this).val(0);
         }
-        return false;
     })
 
-    //ВЫХОД из профиля или обновление профиля
-    $('form.personal-profile-form').on('submit', function(e){
+    //Послать форму стандартная
+    $('.personal-section-form').unbind();
+    $('.personal-section-form').on('submit', function (e){
         e.preventDefault();
 
         var url=$(this).attr('action');
+
+        var disabled = $(this).find(':input:disabled').removeAttr('disabled');
         var postData=$(this).serializeArray();
+        disabled.attr('disabled','disabled');
+
+        var form=$(this);
+        form.find('.form-submit-result-text').html('').removeClass('active');
+
+        form.find('input[type="submit"]').attr('disabled','disabled');
+
+        function createCodeEl(form, action){
+            if ($(form).find('.reg_code').length<=0){
+                var elStr='<div style="display: none; margin-top: 20px;" class="reg_code-block">' +
+                    '<span class="personal-section-form__item-placeholder">Подтверждение</span>' +
+                    '<input class="personal-section-form__item-value reg_code" name="reg_code" required style="border-bottom: 1px solid #fc612042; background: transparent ">' +
+                    '<div class="resend-icon">' +
+                    '<svg fill="#000000" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 30 30" width="60px" height="60px"><path d="M 15 3 C 12.031398 3 9.3028202 4.0834384 7.2070312 5.875 A 1.0001 1.0001 0 1 0 8.5058594 7.3945312 C 10.25407 5.9000929 12.516602 5 15 5 C 20.19656 5 24.450989 8.9379267 24.951172 14 L 22 14 L 26 20 L 30 14 L 26.949219 14 C 26.437925 7.8516588 21.277839 3 15 3 z M 4 10 L 0 16 L 3.0507812 16 C 3.562075 22.148341 8.7221607 27 15 27 C 17.968602 27 20.69718 25.916562 22.792969 24.125 A 1.0001 1.0001 0 1 0 21.494141 22.605469 C 19.74593 24.099907 17.483398 25 15 25 C 9.80344 25 5.5490109 21.062074 5.0488281 16 L 8 16 L 4 10 z"/></svg>' +
+                    '</div>' +
+                    '</div>';
+                $(form).find('input[type="tel"]').after(elStr);
+                $(form).find('input[type="tel"]').next().show(300);
+
+                //МАСКА ДЛЯ КОДА
+                $('input.reg_code').inputmask(
+                    {
+                        'mask': '9 9 9 9 9',
+                    }
+                );
+
+                $('.resend-icon').unbind()
+                $('.resend-icon').click(function(){
+                    $(form).find('input[name="ACTION"]').val(action);
+                    $(form).submit();
+                })
+            }
+
+        }
+
         $.ajax({
             url:url,
             method:'POST',
             data:postData,
-            success:function(res){
-                var success=res['result'];
-                var message=res['message'];
-                if (success){
-                    const url = new URL(document.location);
-                    const searchParams = url.searchParams;
-                    searchParams.delete("change"); // удалить параметр
-                    window.history.pushState({}, '', url.toString());
-                    window.location.reload()
+            cache:false,
+            success:function (res){
+                console.log(res);
+                form.find('input[type="submit"]').removeAttr('disabled');
+                var ACTION=form.find('input[name="ACTION"]').val();
+                if (res['result']===true){
+                    if (ACTION==='UPDATE_USER'){
+                        form.find('.form-submit-result-text').html('Ваши данные обновлены').addClass('active');
+
+                        form.find('input[data-code]').each(function(){
+                            $('.personal-profile__user-head-items').find(`[data-code="${$(this).data('code')}"]`).text($(this).val());
+                        })
+                    }
+                    else if(ACTION==='UPDATE_1C'){
+                        var data=res['data'];
+                        for (const [key, value] of Object.entries(data)) {
+                            form.find(`input[data-code=${key}]`).val(value);
+                        }
+                        form.find('.form-submit-result-text').html('Ваши данные обновлены').addClass('active');
+                    }
+                    else if(ACTION==='LOGIN'){
+                        window.location.reload();
+                    }
+                    else if (ACTION==='REG_1' || ACTION==='FORGOT_1'){
+                        form.find('input[name="ACTION"]').val(ACTION.replace('1', '2'));
+                        form.find('input:not([type="submit"]):not(.reg_code)').prop( "disabled", true );
+                        form.find('input[type="submit"]').val('подтвердить');
+
+                        createCodeEl(form, ACTION);
+                    }
+                    else if (ACTION==='REG_2' || ACTION==='FORGOT_2'){
+                        window.location.href=personal_page_url;
+                    }
                 }
                 else{
-                    setError($('.personal-profile-form'), message);
+                    form.find('.form-submit-result-text').html(res['message']).addClass('active');
+                    if (res['errorCode']===7){
+                        form.find('input[name="ACTION"]').val(ACTION.replace('2', '1'));
+                        form.find('input[type="submit"]').val('отправить');
+                        form.find('.reg_code-block').hide(300);
+                        form.find('.reg_code-block').remove();
+                        disabled.removeAttr('disabled');
+                    }
                 }
-            },
-            error:function(){
-                setError($('.personal-profile-form'), 'Не удалось связаться с сервером');
             }
-        });
-        return false;
-    });
+        })
+    })
 
-    //Зависимость заполнения поля
-    function requiredforminput(e){
-        var input=$(e.target);
-        var fromInput=$(`input[data-required_from="${input.data('required_id')}"]`);
-
-        if (input.data('required_from') !==undefined){
-            if (input.val().length===0 && fromInput.val().length===0){
-                input.closest('form').find('input[type="submit"]').prop('disabled', false);
-            }
-            else if (input.val().length>0 && fromInput.val().length>0){
-                input.closest('form').find('input[type="submit"]').prop('disabled', false);
-            }
-            else{
-                input.closest('form').find('input[type="submit"]').prop('disabled', true);
-            }
+    //Моб Версия. Показать все разделы
+    $('.show-all-section-icon').unbind()
+    $('.show-all-section-icon').click(function(){
+        if ($(this).hasClass('active')){
+            $(this).removeClass('active');
+            $('.personal-profile__tab-item:not(.active)').hide(300);
         }
-    }
-    $('input[data-required_from]').on('input', requiredforminput);
-    $('input[data-required_from]').on("focus", requiredforminput);
-    $('input[data-required_from]').on("blur", requiredforminput);
-    $('input[data-required_from]').on("keydown", requiredforminput)
+        else{
+            $(this).addClass('active');
+            $('.personal-profile__tab-item').show(300);
+        }
+    })
 
 
+    //Изменить фото
+    $('.personal-profile__user-refresh-photo svg').click(function(){
+        function changeProfilePhoto(e){
+            var target=e.target;
+            var url=$(target.form).attr('action');
+            var postData=$(target.form).serializeArray();
 
-    //Обновление инфы из 1С
-    $('.update-head-items').click(function(e){
-        e.preventDefault();
-
-        if ($(this).attr('disabled')!=="disabled"){
-            $(this).text('Обработка...');
-            $(this).attr('disabled', "disabled");
-
-            var postData= {
-                'ACTION': 'UPDATE_1C',
-            };
-            var url=$(this).closest('form').attr('action');
-
+            var form_data = new FormData();
+            var file = target.files[0];
+            form_data.append('new-photo-file', file);
+            for(var i=0; i<postData.length; i++){
+                form_data.append(postData[i].name, postData[i].value);
+            }
+            $('.personal-profile__user-result').html('обработка...')
             $.ajax({
                 url:url,
-                data:postData,
                 method:'POST',
+                data:form_data,
+                processData: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
                 success:function(res){
-                    for (const [key, value] of Object.entries(res['data'])) {
-                        $(`[data-code=${key}]`).text(value);
+                    console.log(res);
+                    var success=res['result'];
+                    var message=res['message'];
+                    if (success){
+                        window.location.reload();
                     }
-                    $('.update-head-items').text('Обновить')
+                    else{
+                        $('.personal-profile__user-result').html(message)
+                    }
                 }
-            })
+            });
+
         }
-    });
+        $('.personal-profile__user-refresh-photo-file-input').on('change', changeProfilePhoto);
+        $('.personal-profile__user-refresh-photo-file-input').trigger('click');
 
+    })
 
-    //
-    //
-    // function closeChangePhotoModal(){
-    //     $('.modal-overlay').removeClass('active');
-    //     $('.personal-change-profile-photo').removeClass('active');
-    // }
-    // $('.personal-change-profile-photo-closer').click(closeChangePhotoModal);
-    // $('.modal-overlay').click(closeChangePhotoModal);
-    //
-    //
-    // $('#choose-new-profile-photo').click(function(){
-    //     $('.personal-change-profile-photo-file-input').trigger('click');
-    // })
-    // $('#new-profile-photo-filename').click(function(){
-    //     $('.personal-change-profile-photo-file-input').trigger('click');
-    // })
-
-    // $('.personal-change-profile-photo-choose').on('submit', function(){
-    //     e.preventDefault();
-    //
-    //     $(this).find('input').prop( "readonly", false );
-    //     $(this).find('option').prop( "readonly", false );
-    //
-    //     var url=$(this).attr('action');
-    //     var postData=$(this).serializeArray();
-    // });
-    //
-    // $('.personal-change-profile-photo-file-input').change(function(e){
-    //     var file = e.target.files[0];
-    //     $('#new-profile-photo-filename').val(file.name);
-    //
-    //     $('.personal-change-profile-photo-preloader').addClass('active');
-    //
-    //     var form_data = new FormData();
-    //     form_data.append('personal-photo', file);
-    //     form_data.append('action', 'new_profile_photo');
-    //     form_data.append('old-photo-id', $('input[name="old-photo-id"]').val());
-    //     form_data.append('user-id', $('input[name="user-id"]').val());
-    //
-    //     var url=$(this).data('action');
-    //     //console.log(url);
-    //     $.ajax({
-    //         'url':url,
-    //         'data':form_data,
-    //         'processData': false,
-    //         'contentType': false,
-    //         'enctype': 'multipart/form-data',
-    //         'method':'POST',
-    //         'type':'POST',
-    //         success:function(responce){
-    //             var res=JSON.parse(responce)
-    //             if (res['result']!==true){
-    //                 // //console.log(res);
-    //                 $('.personal-change-profile-photo .error-message-text').html(res['message']);
-    //                 $('.personal-change-profile-photo-preloader').removeClass('active');
-    //             }
-    //             else{
-    //                 if (!Object.keys(params).includes('profile') && !Object.keys(params).includes('change')) {
-    //                     var url = new URL(window.location.href);
-    //                     url.searchParams.append('profile', 'Y');
-    //                     window.location.href=url.href;
-    //                 }
-    //                 else{
-    //                     window.location.reload();
-    //                 }
-    //             }
-    //         }
-    //     });
-    // });
-
-})
+});

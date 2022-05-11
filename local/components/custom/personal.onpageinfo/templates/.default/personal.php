@@ -1,215 +1,148 @@
 <?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 ?>
 
-<script type="application/javascript">
-    var personal_page_link=<?=$arResult["PROFILE_URL"]?>;
-</script>
-<div class="personal-page">
-    <div class="personal-profile -onpersonal">
-        <form class="personal-profile-form -onpersonal" action="<?=$arResult['ajax']?>" method="post" enctype="multipart/form-data">
-            <div class="personal-profile-body">
-                <div class="personal-profile-photo">
-                    <img src="<?=$arResult['LK_FIELDS']['PERSONAL_PHOTO']?>" height="100%" width="100%" class="profile-personal-photo">
-                    <div class="change-profile-photo-btn">
-                        <span>ПОМЕНЯТЬ ФОТО</span>
-                    </div>
-                </div>
-                <?foreach($arResult['LK_FIELDS']['HIDDEN'] as $FIELD):?>
-                    <input
-                            name="<?=$FIELD['NAME']?>"
-                            type="<?=$FIELD['TYPE']?>"
-                            value="<?=$FIELD['VALUE']?>"
-                            autocomplete="off"
-                            <? if ($FIELD["REQUIRED"]) { ?>required="required"<? } ?>>
-                <?endforeach;?>
-                <div class="personal-profile-info">
-                    <div class="personal-info-head-items">
-                        <?foreach ($arResult['LK_FIELDS']['VISIBLE']['HEAD'] as $FIELD):?>
-                            <div class="personal-info-item -important">
-                                <span class="info-item-placeholder"><?=$FIELD['PLACEHOLDER']?></span>
-                                <?if (!$arResult['CHANGE'] || !$FIELD['CHANGEBLE']):?>
-                                    <span class="info-item-value" data-code="<?=$FIELD['USER_FIELD_CODE']?>"><?=$FIELD['VALUE']?></span>
-                                <?else:?>
-                                    <input class="info-item-value change-profile-input" value="<?=$FIELD['VALUE']?>" name="<?=$FIELD['NAME']?>" placeholder="<?=$FIELD['PLACEHOLDER']?>" type="<?=$FIELD['TYPE']?>">
-                                <?endif;?>
-                            </div>
-                        <?endforeach;?>
-                        <a href="#update-head-items" class="update-head-items">Обновить</a>
-                    </div>
-                    <div class="personal-info-nothead-items">
-                        <?foreach ($arResult['LK_FIELDS']['VISIBLE']['NOTHEAD'] as $FIELD):?>
-                            <div class="personal-info-item">
-                                <span class="info-item-placeholder"><?=$FIELD['PLACEHOLDER']?></span>
-                                <?if (!$arResult['CHANGE'] || !$FIELD['CHANGEBLE']):?>
-                                    <span class="info-item-value" data-code="<?=$FIELD['USER_FIELD_CODE']?>"><?=$FIELD['VALUE']?></span>
-                                <?else:?>
-                                    <input
-                                            class="info-item-value change-profile-input personal-form-input"
-                                            value="<?=$FIELD['VALUE']?>"
-                                            name="<?=$FIELD['NAME']?>"
-                                            placeholder="<?=$FIELD['PLACEHOLDER']?>"
-                                            type="<?=$FIELD['TYPE']?>"
-                                            data-required_id="<?=$FIELD['REQUIRED_ID']?>"
-                                            <? if ($FIELD['REQUIRED_FROM']){?> data-required_from="<?=$FIELD['REQUIRED_FROM']?>"<?}?>
-                                            <? if ($FIELD['MIN_LENGTH']):?> minlength="<?=$FIELD['MIN_LENGTH']?>" <?endif;?>
-                                            <? if ($FIELD['MAX_LENGTH']):?> maxlength="<?=$FIELD['MAX_LENGTH']?>" <?endif;?>
-                                            <? if ($FIELD["REQUIRED"]) { ?>required="required"<? } ?>
-                                    >
-                                <?endif;?>
-                            </div>
-                        <?endforeach;?>
-                    </div>
-                </div>
-                <div class="personal-profile-btns">
-                    <?if (!$arResult['CHANGE']):?>
-                        <a class="personal-profile-form-btn button-outline modal-button" href="?change=Y">Редактировать</a>
-                        <input class="personal-profile-form-btn button-outline modal-button" type="submit" value="Выйти">
-                    <?else:?>
-                        <a class="personal-profile-form-btn button-outline modal-button" href="<?=$arResult["PROFILE_URL"]?>">Назад</a>
-                        <input class="personal-profile-form-btn button-outline modal-button" type="submit" value="сохранить">
-                    <?endif;?>
-                </div>
-                <span class="error-message-text"></span>
-            </div>
-        </form>
-    </div>
-    <?if (!$arResult['CHANGE'] && !empty($arResult['ACTIVE_USERS_LIST'])):?>
-        <div class="other-users-block">
-            <div class="other-users-header">
-                ПОЛЬЗОВАТЕЛИ САЙТА СЕГОДНЯ
-            </div>
-            <div class="other-users-body">
-                <div class="search-block">
 
+<div class="personal-profile-block">
+    <div class="personal-profile__left-block">
+        <div class="personal-profile__user">
+            <div>
+                <div class="personal-profile__user-photo">
+                    <img src="<?=$arResult['LK_FIELDS']['HEAD']['PERSONAL_PHOTO']?>" height="100%" width="100%">
+                    <form class="personal-profile__user-refresh-photo" action="<?=$arResult['ajax']?>" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="ACTION" value="UPDATE_PERSONAL_PHOTO">
+                        <input type="hidden" name="old-photo-id" value="<?=$arResult['LK_FIELDS']['OLD_PHOTO_ID']?>">
+                        <input class="personal-profile__user-refresh-photo-file-input" type="file" name="new-photo-file" accept="image/*">
+                        <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/refresh.svg');?>
+                    </form>
                 </div>
-                <div class="users-list-block">
-                    <?foreach($arResult['ACTIVE_USERS_LIST'] as $arUser):?>
-                        <div class="user-block">
-                            <div class="user-profile-photo">
-                                <img src="<?=$arUser['PERSONAL_PHOTO']?>" loading="lazy">
-                            </div>
-                            <div class="user-profile-info">
-                                <?foreach ($arUser['VISIBLE'] as $GROUP):?>
-                                    <div class="user-field-group">
-                                        <?foreach ($GROUP as $FIELD):?>
-                                            <div class="user-field-item">
-                                                <?if(strlen($FIELD['PLACEHOLDER'])>0):?>
-                                                    <span class="user-field-placeholder"><?=$FIELD['PLACEHOLDER']?></span>
-                                                <?endif;?>
-                                                <span class="user-field-value <?=$FIELD['ADDITIONAL_CLASSNAME']?>"><?=$FIELD['VALUE']?></span>
-                                            </div>
-                                        <?endforeach;?>
-                                    </div>
-                                <?endforeach;?>
-                            </div>
-                        </div>
-                    <?endforeach;?>
-                </div>
+                <div class="personal-profile__user-result"></div>
+            </div>
+            <div class="personal-profile__user-head-items">
+                <?foreach ($arResult['LK_FIELDS']['HEAD']['FIELDS'] as $FIELD):?>
+                    <div class="personal-profile__user-head-item">
+                        <?if (!empty($FIELD['SHOW_PLACEHOLDER'])):?>
+                        <span class="user-head-item-placeholder"><?=$FIELD['PLACEHOLDER']?></span>
+                        <?endif;?>
+                        <span class="user-head-item-value" data-code="<?=$FIELD['USER_FIELD_CODE']?>"><?=$FIELD['VALUE']?></span>
+                    </div>
+                <?endforeach;?>
             </div>
         </div>
-    <?endif;?>
+        <div style="position:relative;margin-top: 50px;">
+            <div class="personal-profile__tabs">
+
+                <?
+                $i=0;
+                foreach ($arResult['LK_FIELDS']['SECTIONS'] as $ID=>$SECTION):?>
+                    <div class="personal-profile__tab-item <?if ($i==0) echo 'active';?>" data-id="<?=$ID?>">
+                        <div class="tab-item__icon">
+                            <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].$SECTION['ICON']);?>
+                        </div>
+                        <div class="tab-item__name">
+                            <?=$SECTION['NAME']?>
+                        </div>
+                    </div>
+                <?
+                $i++;
+                endforeach;
+                ?>
+                <div class="personal-profile__tab-item profile-exit-btn">
+                    <div class="tab-item__icon">
+                        <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/exit-btn.svg');?>
+                    </div>
+                    <div class="tab-item__name">
+                        Выйти
+                    </div>
+                </div>
+            </div>
+            <div class="show-all-section-icon is-hide-desktop">
+                <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/arrow-down.svg');?>
+            </div>
+        </div>
+        <div class="left-block-border -right"></div>
+
+    </div>
+    <div class="personal-profile__center-block">
+        <?
+        $i=0;
+        foreach ($arResult['LK_FIELDS']['SECTIONS'] as $ID=>$SECTION):?>
+            <div class="personal-section" style="display: none" data-id="<?=$ID?>">
+                <div class="personal-section__title"><?=$SECTION['NAME']?></div>
+                <form class="personal-section-form" autocomplete="off" action="<?=$arResult['ajax']?>" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="SECTION_ID" value="<?=$ID?>">
+                    <?if (!empty($SECTION['ACTION'])):?>
+                    <input type="hidden" name="ACTION" value="<?=$SECTION['ACTION']?>">
+                    <?endif;?>
+                    <?foreach ($SECTION['FIELDS'] as $FIELD):?>
+                    <div class="personal-section-form__item <?if($FIELD['TYPE']=='radio') echo 'radio-item';?>
+                                                           <?if($FIELD['TYPE']=='table') echo 'table-item';?>
+                                                           <?if($FIELD['TYPE']=='checkbox') echo 'checkbox-item';?>
+                                                           <?if (!$FIELD['CHANGEBLE']) echo 'readonly-item';?>">
+                        <?if ($FIELD['TYPE']!='checkbox'):?>
+                        <span class="personal-section-form__item-placeholder"><?=$FIELD['PLACEHOLDER']?></span>
+                        <?endif;?>
+                        <?if ($FIELD['TYPE']=='radio'):?>
+                            <div style="margin-top: 5px;">
+                            <?for ($i=0; $i<count($FIELD['VALUE']); $i++):?>
+                            <div class="input-radio-item-block">
+                                <input
+                                        class="personal-section-form__item-value input-radio-btn"
+                                        type="<?=$FIELD['TYPE']?>"
+                                        name="<?=$FIELD['NAME']?>"
+                                        value="<?=$FIELD['VALUE'][$i]['RADIO_VAL']?>"
+                                        id="<?=$FIELD['NAME'].'_'.$i?>"
+                                    <?if ($FIELD['REQUIRED']) echo 'required';?>
+                                    <?if (!$FIELD['CHANGEBLE']){?> disabled="disabled" <?}?>
+                                    <?if ($FIELD['VALUE'][$i]['CHECKED']) echo 'checked';?>
+                                        data-code="<?=$FIELD['USER_FIELD_CODE']?>"
+                                        >
+                                <label for="<?=$FIELD['NAME'].'_'.$i?>"><?=$FIELD['VALUE_DESC'][$i]?></label>
+                            </div>
+                            <?endfor;?>
+                            </div>
+                        <?else:?>
+                        <input
+                                class="personal-section-form__item-value <?if ($FIELD['TYPE']=='checkbox') echo 'checkbox-input';?>
+                                                                        <?if ($FIELD['TYPE']=='password') echo 'passwd-input'?>"
+                                type="<?if ($FIELD['TYPE']=='date' || $FIELD['TYPE']=='table') echo 'text'; else echo $FIELD['TYPE'];?>"
+                                name="<?=$FIELD['NAME']?>"
+                                value="<?=$FIELD['VALUE']?>"
+                                id="<?=$FIELD['NAME']?>"
+                                data-required_id="<?=$FIELD['REQUIRED_ID']?>"
+                            <?if ($FIELD['REQUIRED']) echo 'required';?>
+                            <?if ($FIELD['REQUIRED_FROM']){?> data-required_from="<?=$FIELD['REQUIRED_FROM']?>"<?}?>
+                            <?if (!$FIELD['CHANGEBLE']){?> disabled="disabled" <?}?>
+                            <?if ($FIELD['TYPE']=='date'):?> data-toggle="datepicker" <?endif;?>
+                                <?if ($FIELD['TYPE']=='checkbox' && (int)$FIELD['VALUE']==1) echo 'checked'?>
+                                data-code="<?=$FIELD['USER_FIELD_CODE']?>"
+                                <?if (!empty($FIELD['VALIDATOR'])) echo $FIELD['VALIDATOR']?>
+                        >
+                            <?if ($FIELD['TYPE']=='password'):?>
+                                <div class="show-password-icon">
+                                    <div class="pass-view active">
+                                        <?=file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/pass-view.svg');?>
+                                    </div>
+                                    <div class="pass-hide">
+                                        <?=file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/pass-hide.svg');?>
+                                    </div>
+                                </div>
+                            <?endif;?>
+                            <?if ($FIELD['TYPE']=='checkbox'):?>
+                                <label for="<?=$FIELD['NAME']?>"><?=$FIELD['PLACEHOLDER']?></label>
+                            <?endif;?>
+                        <?endif;?>
+                    </div>
+                    <?endforeach;?>
+                    <?if (!empty($SECTION['BTN_TEXT'])):?>
+                        <input type="submit" class="personal-section-form__submit button-outline" value="<?=$SECTION['BTN_TEXT']?>">
+                    <?endif;?>
+
+                    <div class="form-submit-result-text"></div>
+                </form>
+            </div>
+        <?
+        $i++;
+        endforeach;
+        ?>
+    </div>
 </div>
-
-<!--<div class="personal-profile -onpage">-->
-<!--    --><?//if (isset($_GET['change'])):?>
-<!--    <form class="change-personal-profile personal-profile-body" action="--><?//=$arResult['LOGIN_URL']?><!--">-->
-<!--        <input type="hidden" name="action" value="change_profile">-->
-<!--        --><?//else:?>
-<!--        <div class="personal-profile-body">-->
-<!--            --><?//endif;?>
-<!--            <div class="personal-profile-photo">-->
-<!--                <img src="--><?//=$arResult['USER']['PERSONAL_PHOTO']?><!--" height="200" width="200" class="profile-personal-photo">-->
-<!--                <div class="change-profile-photo-btn">-->
-<!--                    <span>ПОМЕНЯТЬ ФОТО</span>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="personal-profile-info">-->
-<!--                --><?//if (!isset($_GET['change'])):?>
-<!--                    --><?//foreach ($arResult['USER_SHOWING_INFO'] as $INFO):?>
-<!--                        <div class="personal-info-item -onpage --><?//if ($INFO['TYPE']=='IMPORTANT') echo '-important'?><!--">-->
-<!--                            <span class="info-item-placeholder">--><?//=$INFO['HUMANIZED']?><!--</span>-->
-<!--                            <span class="info-item-value">--><?//=$INFO['VALUE']?><!--</span>-->
-<!--                        </div>-->
-<!--                    --><?//endforeach;?>
-<!--                --><?//else:?>
-<!--                    --><?//foreach ($arResult['USER_SHOWING_INFO'] as $INFO):?>
-<!--                        <div class="personal-info-item -onpage --><?//if ($INFO['TYPE']=='IMPORTANT') echo '-important';?><!--">-->
-<!--                            --><?//if ($INFO['CHANGEBLE']):?>
-<!--                                <span class="info-item-placeholder">--><?//=$INFO['HUMANIZED']?><!--</span>-->
-<!--                                <input class="info-item-value change-profile-input" value="--><?//=$INFO['VALUE']?><!--" type="--><?//=$INFO['INPUT_TYPE']?><!--" name="--><?//=$INFO['INPUT_NAME']?><!--" required>-->
-<!--                            --><?//else:?>
-<!--                                <span class="info-item-placeholder">--><?//=$INFO['HUMANIZED']?><!--</span>-->
-<!--                                <span class="info-item-value">--><?//=$INFO['VALUE']?><!--</span>-->
-<!--                            --><?//endif;?>
-<!--                        </div>-->
-<!--                    --><?//endforeach;?>
-<!---->
-<!--                    <div class="personal-info-item -onpage">-->
-<!--                        <span class="info-item-placeholder">Новый пароль</span>-->
-<!--                        <input class="info-item-value  change-profile-input" type="password" name="new-passwd">-->
-<!--                    </div>-->
-<!--                    <div class="personal-info-item -onpage">-->
-<!--                        <span class="info-item-placeholder">Подтверждение</span>-->
-<!--                        <input class="info-item-value  change-profile-input" type="password" name="new-passwd-confirm">-->
-<!--                    </div>-->
-<!--                    <span class="error-message-text"></span>-->
-<!--                --><?//endif;?>
-<!--            </div>-->
-<!--            <div class="personal-profile-btns">-->
-<!--                --><?//if (!isset($_GET['change'])):?>
-<!--                    <span class="personal-profile-form-btn button-outline -modal-btn -logout" data-action="--><?//=$arResult['LOGIN_URL']?><!--">выйти</span>-->
-<!--                    <span class="personal-profile-form-btn button-outline -modal-btn personal-change-btn">Редактировать</span>-->
-<!--                --><?//else:?>
-<!--                    <a class="personal-profile-form-btn button-outline -modal-btn -logout" href="--><?//=$arResult["PROFILE_URL"]?><!--">назад</a>-->
-<!--                    <input class="personal-profile-form-btn button-outline -modal-btn personal-save-btn" type="submit" value="сохранить">-->
-<!--                --><?//endif;?>
-<!--            </div>-->
-<!---->
-<!--            --><?//if (isset($_GET['change'])):?>
-<!--    </form>-->
-<!--    --><?//else:?>
-<!--</div>-->
-<?//if (isset($arResult['OTHER_USERS_LIST'])):?>
-<!--    <div class="other-users-block">-->
-<!--        <div class="other-users-header">-->
-<!--            ПОЛЬЗОВАТЕЛИ САЙТА СЕГОДНЯ-->
-<!--        </div>-->
-<!--        <div class="other-users-body">-->
-<!--            <div class="search-block">-->
-<!---->
-<!--            </div>-->
-<!--            <div class="users-list-block">-->
-<!--                --><?//foreach($arResult['OTHER_USERS_LIST'] as $arUser):?>
-<!--                    <div class="user-block">-->
-<!--                        <div class="user-profile-photo">-->
-<!--                            <img src="--><?//=$arUser['PERSONAL_PHOTO']?><!--" loading="lazy">-->
-<!--                        </div>-->
-<!--                        <div class="user-profile-info">-->
-<!--                            --><?//foreach ($arUser['FIELDS'] as $FIELD):?>
-<!--                                <div class="user-field --><?//if ($FIELD['TYPE']=='IMPORTANT') echo '-important';?><!--">-->
-<!--                                    --><?//if (isset($FIELD['HUMANIZED'])):?>
-<!--                                        <span class="user-field-placeholder">--><?//=$FIELD['HUMANIZED']?><!--</span>:-->
-<!--                                    --><?//endif;?>
-<!--                                    <span class="user-field-value">--><?//=$FIELD['VALUE']?><!--</span>-->
-<!--                                </div>-->
-<!--                            --><?//endforeach;?>
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                --><?//endforeach;?>
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<?//endif;?>
-<?//endif;?>
-<!--</div>-->
-
-<?php
-//global $APPLICATION;
-//$APPLICATION->IncludeFile(str_replace($_SERVER['DOCUMENT_ROOT'], '', __DIR__).'/includes/change-photo.php',
-//    [
-//        'USER_OLD_PHOTO_ID'=>$arResult['LK_FIELDS']['OLD_PHOTO_ID'],
-//        'AJAX_LINK'=>$arResult['ajax'],
-//        'USER_PERSONAL_PHOTO'=>$arResult['LK_FIELDS']['PERSONAL_PHOTO'],
-//    ],
-//    ['SHOW_BORDER' => false]);
-//?>

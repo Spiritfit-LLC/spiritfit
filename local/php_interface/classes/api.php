@@ -938,19 +938,24 @@ class Api
 
     //МЕТОДЫ ДЛЯ ЛК
     private function lkreg($params){
-        //$this->_send($this->apiUrl."lkregistration", $params);
-        $this->_send("https://app.spiritfit.ru/fitness-test1/hs/website/lkregistration", $params);
+        $this->_send($this->apiUrl."lkregistration", $params);
+        // $this->_send("https://app.spiritfit.ru/fitness-test1/hs/website/lkregistration", $params);
         if ($this->_data['result']['errorCode'] == 0){
             $this->_result = true;
         }
         else{
             $this->_result=false;
         }
+        file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\lkregistration\n", true), FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r($params, true)."\n", FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r($this->_data, true)."\n", FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
     }
 
     private function lkcode($params){
-        //$this->_send($this->apiUrl."lkcode", $params);
-        $this->_send("https://app.spiritfit.ru/fitness-test1/hs/website/lkcode", $params);
+        $this->_send($this->apiUrl."lkcode", $params);
+        // $this->_send("https://app.spiritfit.ru/fitness-test1/hs/website/lkcode", $params);
         if (empty($this->_data['result'])){
 
             $this->_result=false;
@@ -958,16 +963,27 @@ class Api
         else{
             $this->_result = $this->_data['result']['result'];
         }
+        file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\lkcode\n", true), FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r($params, true)."\n", FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r($this->_data, true)."\n", FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
     }
 
     private function lkinfo($params){
-        //$this->_send($this->apiUrl."lkinfo", $params);
-        $this->_send("https://app.spiritfit.ru/fitness-test1/hs/website/lkinfo", $params);
+        $this->_send($this->apiUrl."lkinfo", $params);
+        // $this->_send("https://app.spiritfit.ru/fitness-test1/hs/website/lkinfo", $params);
         if ($this->_data['result']['errorCode'] == 0){
             $this->_result = true;
         }
         else{
             $this->_result=false;
         }
+
+        file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\lkinfo\n", true), FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r($params, true)."\n", FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r($this->_data, true)."\n", FILE_APPEND);
+        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
     }
 }

@@ -303,4 +303,21 @@ class Utils
         return ($phone) ? trim(preg_replace($pattern, $format, $phone, 1)) : false;
     }
 
+    public static function GetIBlockIDBySID($SID){
+        $DBRes=CIBlock::GetList(Array("SORT"=>"ASC"), Array("CODE"=>$SID));
+        return $DBRes->Fetch()['ID'];
+    }
+
+	//IMG RESIZE
+	public static function resize_image($file, $percent) {
+		list($width, $height) = getimagesize($file);
+		$newheight=$height*$percent;
+		$newwidth=$width*$percent;
+		$src = imagecreatefromjpeg($file);
+		$dst = imagecreatetruecolor($newwidth, $newheight);
+		imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+		return $dst;
+	}
+
 }?>

@@ -13,7 +13,7 @@ class PriceUpdate {
             return false;
         }
 
-        file_put_contents($_SERVER["DOCUMENT_ROOT"] . self::$logFile, "Начало обновления цен " . date('d.m.Y H:i:s'), FILE_APPEND);
+        file_put_contents($_SERVER["DOCUMENT_ROOT"] . self::$logFile, "Начало обновления цен " . date('d.m.Y H:i:s')."\n", FILE_APPEND);
         
         $clubs = self::getClubs();
         $abonements = self::getAbonements();
@@ -115,13 +115,13 @@ class PriceUpdate {
             }
         }
 		
-        file_put_contents($_SERVER["DOCUMENT_ROOT"] . self::$logFile, "Элемент: " . $id, FILE_APPEND);
-        file_put_contents($_SERVER["DOCUMENT_ROOT"] . self::$logFile, "Цены: " . json_encode($props), FILE_APPEND);
+        file_put_contents($_SERVER["DOCUMENT_ROOT"] . self::$logFile, "Элемент: " . $id."\n", FILE_APPEND);
+        file_put_contents($_SERVER["DOCUMENT_ROOT"] . self::$logFile, "Цены: " . json_encode($props)."\n", FILE_APPEND);
     }
 
     private static function getClubs() {
         $arResult = array();
-        $arFilter = array("IBLOCK_CODE" => "clubs");
+        $arFilter = array("IBLOCK_CODE" => "clubs", "ACTIVE"=>'Y');
         $dbElements = CIBlockElement::GetList(array(), $arFilter, false, false, array("ID", "PROPERTY_NUMBER"));
 
         while ($res = $dbElements->fetch()) {
@@ -133,7 +133,7 @@ class PriceUpdate {
 
     private static function getAbonements() {
         $arResult = array();
-        $arFilter = array("IBLOCK_CODE" => "subscription");
+        $arFilter = array("IBLOCK_CODE" => "subscription", "ACTIVE"=>'Y');
         $dbElements = CIBlockElement::GetList(array(), $arFilter, false, false, array("ID", "PROPERTY_CODE_ABONEMENT"));
 
         while ($res = $dbElements->fetch()) {

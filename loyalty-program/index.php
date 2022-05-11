@@ -133,7 +133,7 @@
 					</ul>
 				</div>
 				<div class="loyality-steps-item__button">
-					<a class="btn" href="<?=$settings["PROPERTIES"]["LOYALITY_PARTICIPATE"]["VALUE"]?>">Учавствовать</a>
+					<a class="btn" href="<?=$settings["PROPERTIES"]["LOYALITY_PARTICIPATE"]["VALUE"]?>">Участвовать</a>
 				</div>
 			</div>
 		</div>

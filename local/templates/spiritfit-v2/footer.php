@@ -1,20 +1,22 @@
 <? if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die(); 
 $settings = Utils::getInfo();
 ?>
+<?php //if (!defined('PERSONAL_PAGE')):?>
 <?php
-$APPLICATION->IncludeComponent(
-    "custom:personal.onpageinfo",
-    "",
-    Array(
-        "PROFILE_URL" => "/personal/",
-        "AUTH_FORM_CODE" => "AUTH",
-        "REGISTER_FORM_CODE" => "REGISTRATION",
-        "PASSFORGOT_FORM_CODE"=>'PASSFORGOT',
-        "SHOW_ERRORS" => "Y"
-    ),
-    false
-);
-?>
+//$APPLICATION->IncludeComponent(
+//    "custom:personal.onpageinfo",
+//    "",
+//    Array(
+//        "PROFILE_URL" => "/personal/",
+//        "AUTH_FORM_CODE" => "AUTH",
+//        "REGISTER_FORM_CODE" => "REGISTRATION",
+//        "PASSFORGOT_FORM_CODE"=>'PASSFORGOT',
+//        "SHOW_ERRORS" => "Y"
+//    ),
+//    false
+//);
+//?>
+<?php //endif;?>
 	</main>
 	<footer class="b-footer">
 		<div class="content-center">

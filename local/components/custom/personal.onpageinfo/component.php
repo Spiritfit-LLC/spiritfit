@@ -21,11 +21,7 @@ if (empty($auth_form_id) ||
 {
     return;
 }
-$arResult['FORM_FIELDS']=[
-    $arParams['AUTH_FORM_CODE']=>PersonalUtils::GetFormFileds($auth_form_id, "LOGIN"),
-    $arParams['REGISTER_FORM_CODE']=>PersonalUtils::GetFormFileds($reg_form_id, "REG", 'registration'),
-    $arParams['PASSFORGOT_FORM_CODE']=>PersonalUtils::GetFormFileds($passforgot_form_id, "FORGOT", 'recovery'),
-];
+
 
 
 global $USER;
@@ -36,115 +32,48 @@ $url =$_SERVER['REQUEST_URI'];
 $parts = parse_url($url);
 $currentUrl = $parts['path'];
 
+parse_str($parts['query'], $query);
+if (isset($query['reg'])){
+    $active='reg';
+}
+elseif (isset($query['forgot'])){
+    $active='forgot';
+}
+else{
+    $active='auth';
+}
+
 $arResult["AUTH"]=$USER->IsAuthorized();
 $arResult["PROFILE_URL"] = $arParams["PROFILE_URL"];
 $arResult['ajax']=str_replace($_SERVER['DOCUMENT_ROOT'], '', __DIR__).'/ajax.php';
 
+$arResult['PROFILE_PAGE']=defined('PERSONAL_PAGE');
 
-if ($currentUrl==$arParams['PROFILE_URL']){
-    $arResult['PROFILE_PAGE']=true;
-}
-else{
-    $arResult['PROFILE_PAGE']=false;
-}
 
 
 //НА ВРЕМЯ ТЕСТА ПОКАЗЫВАЕМ ТОЛЬКО НА СТРАНИЦЕ PERSONAL
 if ($arResult['PROFILE_PAGE']){
     if (!$USER->IsAuthorized()){
-        if ($_GET['reg']=='Y'){
-            $this->IncludeComponentTemplate('registration');
-        }
-        elseif ($_GET['getpass']=='Y'){
-            $this->IncludeComponentTemplate('passforgot');
-        }
-        else{
-            $this->IncludeComponentTemplate('authorization');
-        }
+        $arResult['FORM_FIELDS']=[
+            $arParams['AUTH_FORM_CODE']=>PersonalUtils::GetFormFileds($auth_form_id, "LOGIN", false, "ВОЙТИ", $active=='auth'?true:false),
+            $arParams['REGISTER_FORM_CODE']=>PersonalUtils::GetFormFileds($reg_form_id, "REG_1", false, "ОТПРАВИТЬ", $active=='reg'?true:false),
+            $arParams['PASSFORGOT_FORM_CODE']=>PersonalUtils::GetFormFileds($passforgot_form_id, "FORGOT_1", false, "ОТПРАВИТЬ", $active=='forgot'?true:false),
+        ];
+
+        $this->IncludeComponentTemplate('auth-page');
+
     }
     else{
         $arResult['CHANGE']=$_GET['change']=='Y'? true:false;
         $ACTION=$_GET['change']=='Y'? "UPDATE_USER":"EXIT";
-        $arResult['LK_FIELDS']=PersonalUtils::GetPersonalPageFormFields($USER->GetID(), $arResult['CHANGE'], false, $ACTION);
+        $arResult['LK_FIELDS']=PersonalUtils::GetPersonalPageFormFields($USER->GetID());
 
-        $filter = Array
-        (
-            "LAST_LOGIN_1"        => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
-            "ACTIVE"              => "Y",
-            "GROUPS_ID"           => Array(7),
-            'ID'=>'~'.$USER->GetID()
-        );
-        $rsUsers = CUser::GetList(($by="last_login"), ($order="desc"), $filter, $arParams); // выбираем пользователей
-
-        $count=0;
-        while($arUser = $rsUsers->Fetch()){
-            $USER_FIELDS=PersonalUtils::GetPersonalPageFormFields($arUser['ID'], false, false, "", true);
-            $arResult['ACTIVE_USERS_LIST'][]=$USER_FIELDS;
-            $count++;
-            if ($count>50){
-                break;
-            }
-        }
         $this->IncludeComponentTemplate('personal');
-        $this->IncludeComponentTemplate('change-photo');
     }
     $template = & $this->GetTemplate();
     $template->addExternalJs(SITE_TEMPLATE_PATH . '/js/jquery.inputmask.min.js');
-}
 
-//РАСКОМЕНТИТЬ ПОСЛЕ ТЕСТОВ
-//if(!$USER->IsAuthorized()){
-//    if (!$arResult['PROFILE_PAGE']){
-//        $this->IncludeComponentTemplate('registration');
-//        $this->IncludeComponentTemplate('passforgot');
-//        $this->IncludeComponentTemplate('authorization');
-//    }
-//    else{
-//        if ($_GET['reg']=='Y'){
-//            $this->IncludeComponentTemplate('registration');
-//        }
-//        elseif ($_GET['getpass']=='Y'){
-//            $this->IncludeComponentTemplate('passforgot');
-//        }
-//        else{
-//            $this->IncludeComponentTemplate('authorization');
-//        }
-//    }
-//}
-//else {
-//    if (!$arResult['PROFILE_PAGE']){
-//        $arResult['LK_FIELDS']=PersonalUtils::GetPersonalPageFormFields($USER->GetID(), $arResult['CHANGE'], false, "EXIT");
-//        $this->IncludeComponentTemplate('auth');
-//    }
-//    else{
-//        $arResult['CHANGE']=$_GET['change']=='Y'? true:false;
-//        $ACTION=$_GET['change']=='Y'? "UPDATE_USER":"EXIT";
-//        $arResult['LK_FIELDS']=PersonalUtils::GetPersonalPageFormFields($USER->GetID(), $arResult['CHANGE'], false, $ACTION);
-//
-//        $filter = Array
-//        (
-//            "LAST_LOGIN_1"        => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
-//            "ACTIVE"              => "Y",
-//            "GROUPS_ID"           => Array(7),
-//            'ID'=>'~'.$USER->GetID()
-//        );
-//        $rsUsers = CUser::GetList(($by="last_login"), ($order="desc"), $filter, $arParams); // выбираем пользователей
-//
-//        $count=0;
-//        while($arUser = $rsUsers->Fetch()){
-//            $USER_FIELDS=PersonalUtils::GetPersonalPageFormFields($arUser['ID'], false, false, "", true);
-//            $arResult['ACTIVE_USERS_LIST'][]=$USER_FIELDS;
-//            $count++;
-//            if ($count>50){
-//                break;
-//            }
-//        }
-//        $this->IncludeComponentTemplate('personal');
-//    }
-//    $this->IncludeComponentTemplate('change-photo');
-//}
-//if (!$arResult['PROFILE_PAGE']){
-//    $this->IncludeComponentTemplate('onsomepage_btn');
-//}
-//$template = & $this->GetTemplate();
-//$template->addExternalJs(SITE_TEMPLATE_PATH . '/js/jquery.inputmask.min.js');
+    $template->addExternalJs(SITE_TEMPLATE_PATH . '/js/datepicker.min.js');
+    $template->addExternalJs(SITE_TEMPLATE_PATH . '/js/datepicker.ru-RU.js');
+    $template->addExternalCss(SITE_TEMPLATE_PATH . '/css/datepicker.min.css');
+}
