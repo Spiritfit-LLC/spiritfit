@@ -56,7 +56,6 @@ bitbucket-pipelines.yml
 /.traid-in/
 /.video-on-demand/
 /.git_old/
-=======
 /bitrix
 /upload
 *DS_Store

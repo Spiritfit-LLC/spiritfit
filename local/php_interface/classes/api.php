@@ -8,11 +8,14 @@ class Api
 	/*
 	* API url
 	*/
-    private $apiUrl		= "https://app.spiritfit.ru/Fitness/hs/website/";
-    private $apiUrlTest = "https://app.spiritfit.ru/testv11/hs/website/";
+    // private $apiUrl		= "https://app.spiritfit.ru/Fitness/hs/website/";
+    // private $apiUrlTest = "https://app.spiritfit.ru/testv11/hs/website/";
+    private $apiUrl;
 
     public function __construct($post)
     {
+        $this->apiUrl= Utils::getApiURL();//Берем из настроек сайта, для теста и для прода разные api
+        
         if(empty($post['action'])){
             return;
         }
