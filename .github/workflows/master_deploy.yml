@@ -22,4 +22,4 @@ jobs:
       - run: mkdir "$HOME/.ssh"
       - run: echo "${{ secrets.DEPLOY_SSH_KEY }}" > "$HOME/.ssh/key"
       - run: chmod 600 "$HOME/.ssh/key"
-      - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" -zhra --include='**.gitignore' --filter=':- .gitignore' --delete-after . root@188.225.47.165:/var/www/www-root/data/www/backup
+      - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" -zhra --include='**.gitignore' --filter=':- .gitignore' --delete-after . root@188.225.47.165:/var/www/www-root/data/www/73964.tw1.ru
