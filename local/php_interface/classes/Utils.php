@@ -303,10 +303,24 @@ class Utils
         return ($phone) ? trim(preg_replace($pattern, $format, $phone, 1)) : false;
     }
 
-	// МЕТОДЫ ДЛЯ ИЗВЛЕЧЕНИЯ СИМВОЛЬНОЙ ССЫЛКИ
+	// МЕТОДЫ ДЛЯ ИЗВЛЕЧЕНИЯ ID о символному коду
     public static function GetIBlockIDBySID($SID){
         $DBRes=CIBlock::GetList(Array("SORT"=>"ASC"), Array("CODE"=>$SID));
         return $DBRes->Fetch()['ID'];
+    }
+    public static function GetIBlockSectionIDBySID($SID){
+        $DBRes=CIBlockSection::GetList(Array("SORT"=>"ASC"), Array("CODE"=>$SID));
+        return $DBRes->Fetch()['ID'];
+    }
+    public static function GetIBlockElementIDBySID($SID){
+        $DBRes=CIBlockElement::GetList(Array("SORT"=>"ASC"), Array("CODE"=>$SID));
+        return $DBRes->Fetch()['ID'];
+    }
+    public static function GetFormIDBySID($SID){
+        Loader::IncludeModule("form");
+        $rsForm = CForm::GetBySID($SID);
+        $arForm = $rsForm->Fetch();
+        return $arForm['ID'];
     }
 
 	// ИЗВЛЕЧЕНИЕ API URL
