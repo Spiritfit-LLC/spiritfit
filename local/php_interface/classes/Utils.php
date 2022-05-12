@@ -303,9 +303,22 @@ class Utils
         return ($phone) ? trim(preg_replace($pattern, $format, $phone, 1)) : false;
     }
 
+	// МЕТОДЫ ДЛЯ ИЗВЛЕЧЕНИЯ СИМВОЛЬНОЙ ССЫЛКИ
     public static function GetIBlockIDBySID($SID){
         $DBRes=CIBlock::GetList(Array("SORT"=>"ASC"), Array("CODE"=>$SID));
         return $DBRes->Fetch()['ID'];
+    }
+
+	// ИЗВЛЕЧЕНИЕ API URL
+	public static function getApiURL(){
+        Loader::includeModule('iblock');
+        $db_props = CIBlockElement::GetProperty(SETTINGS_IBLOCK_ID, SETTINGS_ELEMENT_ID, array("sort" => "asc"), Array("CODE"=>"API_URL"));
+        if($ar_props = $db_props->Fetch())
+            $API_URL = $ar_props["VALUE"];
+        else
+            $API_URL = false;
+
+        return $API_URL;
     }
 
 	//IMG RESIZE
