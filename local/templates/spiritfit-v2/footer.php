@@ -8,15 +8,12 @@ $settings = Utils::getInfo();
 //    "",
 //    Array(
 //        "PROFILE_URL" => "/personal/",
-//        "AUTH_FORM_CODE" => "AUTH",
-//        "REGISTER_FORM_CODE" => "REGISTRATION",
-//        "PASSFORGOT_FORM_CODE"=>'PASSFORGOT',
-//        "SHOW_ERRORS" => "Y"
+//        "PERSONAL_PAGE"=>"N"
 //    ),
 //    false
 //);
 //?>
-<?php //endif;?>
+<?//endif;?>
 	</main>
 	<footer class="b-footer">
 		<div class="content-center">

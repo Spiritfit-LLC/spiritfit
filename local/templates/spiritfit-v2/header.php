@@ -169,11 +169,28 @@ foreach( $clubs as $club ) {
                                 false
                             );?>
                             <? if(false) { ?><a class="b-top-menu__btn button-outline is-hide-desktop js-form-abonement" href="javascript:;" data-webform-fancybox="./form-request.html" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a><? } ?>
+							<a class="b-top-menu__btn button-outline is-hide-desktop" style="margin-bottom: 20px;" href="/personal/">Личный кабинет</a>
 							<a class="b-top-menu__btn button-outline is-hide-desktop" href="/abonement/probnaya-trenirovka-/#js-pjax-container">Пробная тренировка</a>
                         </div>
                     </nav>
                 </div>
 				<a class="b-header-phone" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a>
+                <a href="/personal/" class="personal-btn is-hide-mobile">
+                    <?
+                    global $USER;
+                    if ($USER->IsAuthorized()):?>
+                        Личный кабинет
+                        <div class="personal-btn__icon">
+                            <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/profile_icon.svg');?>
+                        </div>
+                    <?else:?>
+                        Личный кабинет
+                        <div class="personal-btn__icon">
+                            <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/exit-btn.svg');?>
+                        </div>
+                    <?endif;?>
+                </a>
+
                 <? if(false) { ?><a class="b-header__btn button-outline is-hide-mobile js-form-abonement" href="#" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a><? } ?>
 				<a class="b-header__btn button-outline is-hide-mobile" href="/abonement/probnaya-trenirovka-/#js-pjax-container">Пробная тренировка</a>
             </div>

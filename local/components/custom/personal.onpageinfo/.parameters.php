@@ -31,6 +31,16 @@ $arComponentParameters = array(
             "TYPE" => "LIST",
             "VALUES" => $arrForms,
         ),
+        "ACTIVE_FORM"=>array(
+            'NAME'=>"Активная форма после авторизации",
+            "TYPE"=>"STRING",
+            "DEFAULT"=>""
+        ),
+        "PERSONAL_PAGE"=>array(
+            "NAME"=>"Страница ЛК",
+            "TYPE"=>"CHECKBOX",
+            "DEFAULT"=>"N"
+        ),
 		"SHOW_ERRORS" => array(
 			"NAME" => GetMessage("COMP_AUTH_FORM_SHOW_ERRORS"), 
 			"TYPE" => "CHECKBOX",

@@ -138,15 +138,36 @@ class PersonalUtils{
         }
     }
 
-    public static function GetPersonalPageFormFields($user_id, $request_info=false, $code=[], $section_id=false){
-
+    public static function GetPersonalPageFormFields($user_id, $request_info=false, $code=[], $section_id=false, $active_form=false){
         $rsUser = CUser::GetByID($user_id);
         $arUser = $rsUser->Fetch();
-
         $IBLOCK_ID=Utils::GetIBlockIDBySID('LK_FIELDS');
 
+        $LK_FIELDS['IS_CORRECT']=boolval($arUser['UF_IS_CORRECT']);
+        $LK_FIELDS['USER_1CID']=$arUser['UF_1CID'];
+        $LK_FIELDS['USER_LOGIN']=$arUser['LOGIN'];
+
         if (empty($section_id)){
-            $dbRes=CIBlockSection::GetList(Array("SORT"=>"ASC"), array('ACTIVE'=>'Y','IBLOCK_ID'=>$IBLOCK_ID), false, array('UF_LK_SECTION_ICON', 'UF_ACTION', 'UF_BTN_TEXT'));
+            $arGroups = CUser::GetUserGroup($arUser['ID']);
+
+            $arFilter=[
+                'ACTIVE'=>'Y',
+                'IBLOCK_ID'=>$IBLOCK_ID,
+                'UF_GROUP'=>$arGroups,
+            ];
+
+            if (!$LK_FIELDS['IS_CORRECT']){
+                $arFilter['CODE']='lk_profile';
+            }
+
+
+            $dbRes=CIBlockSection::GetList(
+                Array("SORT"=>"ASC"),
+                $arFilter,
+                false,
+                array('UF_LK_SECTION_ICON', 'UF_ACTION', 'UF_BTN_TEXT', 'UF_GROUP'));
+
+            $active_flag=false;
             while($ar_result = $dbRes->GetNext())
             {
                 $LK_FIELDS['SECTIONS'][$ar_result['ID']]=[
@@ -155,6 +176,20 @@ class PersonalUtils{
                     'ACTION'=>!empty($ar_result['UF_ACTION'])?$ar_result['UF_ACTION']:false,
                     'BTN_TEXT'=>!empty($ar_result['UF_BTN_TEXT'])?$ar_result['UF_BTN_TEXT']:false,
                 ];
+                if (!empty($active_form) && $ar_result['CODE']==$active_form){
+                    $LK_FIELDS['SECTIONS'][$ar_result['ID']]['ACTIVE']=true;
+                    $active_flag=true;
+                }
+                else{
+                    $LK_FIELDS['SECTIONS'][$ar_result['ID']]['ACTIVE']=false;
+                }
+            }
+
+            if (!$active_flag){
+                foreach ($LK_FIELDS['SECTIONS'] as $ID=>&$SECTION){
+                    $SECTION['ACTIVE']=true;
+                    break;
+                }
             }
         }
         else{
@@ -184,7 +219,6 @@ class PersonalUtils{
             $FIELD=[
                 'NAME'=>"form_" . $element['CODE'] . "_" . $id,
                 'TYPE'=>$element['PROPERTIES']['FIELD_TYPE']['VALUE_XML_ID'],
-                'REQUIRED'=>$element['PROPERTIES']['REQUIRED']['VALUE']=='Y'?true:false,
                 'CHANGEBLE'=>$element['PROPERTIES']['CHANGEBLE']['VALUE']=='Y'?true:false,
                 'IN_HEAD'=>$element['PROPERTIES']['IN_HEAD']['VALUE']=='Y'?true:false,
                 'USER_FIELD_CODE'=>$element['PROPERTIES']['USER_FIELD_CODE']['VALUE'],
@@ -193,7 +227,15 @@ class PersonalUtils{
                 'PLACEHOLDER'=>$element['PROPERTIES']['FIELD_TITLE']['VALUE'],
                 'SHOW_PLACEHOLDER'=>$element['PROPERTIES']['SHOW_TITLE_IN_HEAD']['VALUE']=='Y',
                 'VALIDATOR'=>$element['PROPERTIES']['VALIDATOR']['VALUE'],
+                'CLUE'=>!empty($element['PROPERTIES']['CLUE']['VALUE'])?$element['PROPERTIES']['CLUE']['VALUE']:false
             ];
+
+            if ($FIELD['TYPE']=='password' && !$LK_FIELDS['IS_CORRECT']){
+                $FIELD["REQUIRED"]=true;
+            }
+            else{
+                $FIELD["REQUIRED"]=$element['PROPERTIES']['REQUIRED']['VALUE']=='Y'?true:false;
+            }
 
             if ($request_info){
                 if (!$FIELD['CHANGEBLE']){
@@ -205,10 +247,16 @@ class PersonalUtils{
                 }
             }
             else{
-                if($element['CODE']=='client-phone'){
+                if($FIELD['TYPE']=='nonclick-phone' || $FIELD['TYPE']=='click-phone'){
                     $FIELD['VALUE']=Utils::phone_format($arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']]);
+                    if ($FIELD['CHANGEBLE']){
+                        $FIELD['TYPE']='tel';
+                    }
+                    else{
+                        $FIELD['TYPE']='text';
+                    }
                 }
-                elseif($element['CODE']=='client-password' || $element['CODE']=='client-password-confirm'){
+                elseif($FIELD['TYPE']=='password'){
                     $FIELD['VALUE']=null;
                 }
                 else{
@@ -238,26 +286,36 @@ class PersonalUtils{
         $LK_FIELDS['ISSET']=$issetFLAG;
 
 
-        if (!$request_info) {
-            global $settings;
-            $image=CFile::GetPath(!empty($arUser['PERSONAL_PHOTO']) ? $arUser['PERSONAL_PHOTO'] : $settings["PROPERTIES"]['PROFILE_DEFAULT_PHOTO']['VALUE']);
-            list($width, $height) = getimagesize($_SERVER['DOCUMENT_ROOT'] . $image);
-            if ($height > 300 || $width>300) {
-                $ratio = $height < $width?300 / $height:300/$width;
-                if (!file_exists($_SERVER['DOCUMENT_ROOT'] . '/upload/user_avatars/' . basename($image))) {
-                    $img = Utils::resize_image($_SERVER['DOCUMENT_ROOT'] . $image, $ratio);
-                    if (!file_exists($_SERVER['DOCUMENT_ROOT'] . '/upload/user_avatars/')) {
-                        mkdir($_SERVER['DOCUMENT_ROOT'] . '/upload/user_avatars/', 0777, true);
-                    }
-                    imagejpeg($img, $_SERVER['DOCUMENT_ROOT'] . '/upload/user_avatars/' . basename($image));
+
+        global $settings;
+        $image=CFile::GetPath(!empty($arUser['PERSONAL_PHOTO']) ? $arUser['PERSONAL_PHOTO'] : $settings["PROPERTIES"]['PROFILE_DEFAULT_PHOTO']['VALUE']);
+        list($width, $height) = getimagesize($_SERVER['DOCUMENT_ROOT'] . $image);
+        if ($height > 300 || $width>300) {
+            $ratio = $height < $width?300 / $height:300/$width;
+            if (!file_exists($_SERVER['DOCUMENT_ROOT'] . '/upload/user_avatars/' . basename($image))) {
+                $img = Utils::resize_image($_SERVER['DOCUMENT_ROOT'] . $image, $ratio);
+                if (!file_exists($_SERVER['DOCUMENT_ROOT'] . '/upload/user_avatars/')) {
+                    mkdir($_SERVER['DOCUMENT_ROOT'] . '/upload/user_avatars/', 0777, true);
                 }
-                $img_src = '/upload/user_avatars/' . basename($image);
-            } else {
-                $img_src = $image;
+                imagejpeg($img, $_SERVER['DOCUMENT_ROOT'] . '/upload/user_avatars/' . basename($image));
             }
+            $img_src = '/upload/user_avatars/' . basename($image);
+        } else {
+            $img_src = $image;
+        }
+        if (!$request_info){
             $LK_FIELDS['HEAD']['PERSONAL_PHOTO'] = $img_src;
             $LK_FIELDS['OLD_PHOTO_ID']=$arUser['PERSONAL_PHOTO'];
         }
+        else{
+            $LK_FIELDS['PERSONAL_PHOTO'] = sprintf(
+                "%s://%s",
+                isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
+                $_SERVER['SERVER_NAME'])
+                .$img_src;
+        }
+
+
 
         return $LK_FIELDS;
     }

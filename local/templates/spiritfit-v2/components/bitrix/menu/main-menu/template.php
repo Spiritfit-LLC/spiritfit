@@ -2,6 +2,9 @@
 ?>
 <?if (!empty($arResult)):?>
 	<ul class="b-top-menu__menu">
+<!--        <li class="b-top-menu__item">-->
+<!--            <a href="/personal/" class="b-top-menu__link is-hide-desktop">профиль</a>-->
+<!--        </li>-->
 		<? foreach($arResult as $arItem):
 			if($arParams["MAX_LEVEL"] == 1 && $arItem["DEPTH_LEVEL"] > 1) 
 				continue; ?>

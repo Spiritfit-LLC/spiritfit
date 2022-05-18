@@ -131,13 +131,25 @@ class Api
                 break;
             case 'lkcode':
                 $this->lkcode($post['params']);
-                AddMessage2Log('lkreg');
+                AddMessage2Log('lkcode');
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
             case 'lkinfo':
                 $this->lkinfo($post['params']);
-                AddMessage2Log('lkreg');
+                AddMessage2Log('lkinfo');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "lkcheck":
+                $this->lkcheck($post['params']);
+                AddMessage2Log('lkcheck');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "lkedit":
+                $this->lkedit($post['params']);
+                AddMessage2Log('lkedit');
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
@@ -949,28 +961,27 @@ class Api
         else{
             $this->_result=false;
         }
-        file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\lkregistration\n", true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($params, true)."\n", FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($this->_data, true)."\n", FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\lkregistration\n", true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r($params, true)."\n", FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r($this->_data, true)."\n", FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
     }
 
     private function lkcode($params){
         $this->_send($this->apiUrl."lkcode", $params);
         // $this->_send("https://app.spiritfit.ru/fitness-test1/hs/website/lkcode", $params);
         if (empty($this->_data['result'])){
-
             $this->_result=false;
         }
         else{
             $this->_result = $this->_data['result']['result'];
         }
-        file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\lkcode\n", true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($params, true)."\n", FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($this->_data, true)."\n", FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\lkcode\n", true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r($params, true)."\n", FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r($this->_data, true)."\n", FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
     }
 
     private function lkinfo($params){
@@ -983,10 +994,24 @@ class Api
             $this->_result=false;
         }
 
-        file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\lkinfo\n", true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($params, true)."\n", FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($this->_data, true)."\n", FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\lkinfo\n", true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r($params, true)."\n", FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r($this->_data, true)."\n", FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+    }
+
+    private function lkcheck($params){
+        $this->_send($this->apiUrl."lkcheck", $params);
+        if ($this->_data['result']['result'] === true){
+            $this->_result = true;
+        }
+        else{
+            $this->_result = false;
+        }
+    }
+
+    private function lkedit($params){
+        $this->_send($this->apiUrl."lkedit", $params);
     }
 }
