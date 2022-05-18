@@ -1,5 +1,5 @@
 <div class="personal-section" style="display: none" data-id="<?=$arParams['SECTION_ID']?>">
-    <div class="personal-section__title"><?=$arParams['SECTION']['NAME']?></div>
+    <div class="personal-section__title is-hide-mobile"><?=$arParams['SECTION']['NAME']?></div>
     <?if (!$arParams['IS_CORRECT']):?>
         <div class="profile-warnig-message">Пожалуйста, заполните все поля, чтобы активировать ваш профиль</div>
     <?endif;?>
