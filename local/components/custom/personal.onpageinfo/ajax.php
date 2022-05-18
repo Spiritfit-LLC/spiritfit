@@ -56,8 +56,20 @@ $errorMessages=[
     16=>'Пользователь не авторизован',
     19=>'Не удалось загрузить файл',
     20=>'Ошибка обновления данных',
+    21=>'Пользователь не существует',
     100=>'Непредвиденная ошибка'
 ];
+
+function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
 //echo json_encode($_REQUEST);
 //return;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -81,12 +93,242 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return;
         }
 
-        //Авторизация
-        if ($FORM_FIELDS['ACTION']=="LOGIN"){
+        //Авторизация OLD
+//        if ($FORM_FIELDS['ACTION']=="LOGIN"){
+//            global $USER;
+//            if (!is_object($USER)) $USER = new CUser;
+//            $user=CUser::GetByLogin($FORM_FIELDS['FIELDS']['phone']['VALUE'])->Fetch();
+//            if (empty($user)){
+//                echo json_encode([
+//                    'result'=>false,
+//                    'message'=>$errorMessages[21],
+//                    'errorCode'=>21,
+//                ], JSON_UNESCAPED_UNICODE);
+//                return;
+//            }
+//
+//            $arAuthResult = $USER->Login($FORM_FIELDS['FIELDS']['phone']['VALUE'], $FORM_FIELDS['FIELDS']['passwd']['VALUE'],"Y","Y");
+//            if ($arAuthResult===true){
+//                echo json_encode(['result'=>true]);
+//            }
+//            else{
+//                echo json_encode([
+//                    'result'=>false,
+//                    'message'=>$errorMessages[8],
+//                    'errorCode'=>8,
+//                ], JSON_UNESCAPED_UNICODE);
+//            }
+//            return;
+//        }
+
+        //АВТОРИЗАЦИЯ NEW шаг 1 проверка юзера
+        elseif ($FORM_FIELDS['ACTION']=="LOGIN_1"){
             global $USER;
             if (!is_object($USER)) $USER = new CUser;
+            $user=CUser::GetByLogin($FORM_FIELDS['FIELDS']['phone']['VALUE'])->Fetch();
+            if (empty($user)){
+                $arParams=['login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE']];
+                $api=new Api(array(
+                    'action'=>'lkcheck',
+                    'params'=>$arParams
+                ));
+                $result=$api->result();
+
+                //Пользователь не найден, переход на регистрацию
+                if ($result['success']==false){
+                    echo json_encode([
+                        'result'=>false,
+                        'message'=>$errorMessages[21],
+                        'errorCode'=>21
+                    ], JSON_UNESCAPED_UNICODE);
+                    return;
+                }
+
+                //Пользователь найден в 1с, завершаем регистрацию
+                //Возвращаем на фронт инфу
+                echo json_encode(['result'=>true, 'type'=>'1c']);
+                return;
+            }
+            else{
+                if (boolval($user['UF_IS_CORRECT'])){
+                    echo json_encode(['result'=>true, 'type'=>'site']);
+                    return;
+                }
+                else{
+                    //Отправялем СМС для "забыл пароль"
+                    $arParams=[
+                        'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                        'event'=>$FORM_FIELDS['FIELDS']['EVENT_1C']['VALUE'],
+                        'id1c'=>$user['UF_1CID']
+                    ];
+                    $api=new Api(array(
+                        'action'=>'lkreg',
+                        'params'=>$arParams
+                    ));
+                    $result=$api->result();
+                    if ($result['error']==true){
+                        echo json_encode([
+                            'result'=>false,
+                            'message'=>$errorMessages[4],
+                            'errorCode'=>4
+                        ], JSON_UNESCAPED_UNICODE);
+                        return;
+                    }
+                    if ($result['success']==true){
+                        //Возвращаем на фронт инфу
+                        echo json_encode(['result'=>true, 'type'=>'site2']);
+                        return;
+                    }
+                    else{
+                        switch ($result['data']['result']['errorCode']){
+                            case 3:
+                                echo json_encode([
+                                    'result'=>false,
+                                    'message'=> $errorMessages[11],
+                                    'errorCode'=>11,
+                                    'data'=>$result
+                                ], JSON_UNESCAPED_UNICODE);
+                                return;
+                            default:
+                                echo json_encode([
+                                    'result'=>false,
+                                    'message'=> $errorMessages[100],
+                                    'errorCode'=>100,
+                                    'data'=>$result
+                                ], JSON_UNESCAPED_UNICODE);
+                                return;
+                        }
+                    }
+                }
+            }
+        }
+        //Пользователь найден в 1с, нужно пройти регистрацию на сайте
+        elseif($FORM_FIELDS['ACTION']=='LOGIN_2'){
+            if (empty($_POST['reg_code'])){
+                echo json_encode([
+                    'result'=>false,
+                    'message'=> $errorMessages[14],
+                    'errorCode'=>14,
+                ], JSON_UNESCAPED_UNICODE);
+                return;
+            }
+
+            //Подтверждаем СМС Код
+            $code=preg_replace('![^0-9]+!', '', $_POST['reg_code']);
+            if (strlen($code)!=5){
+                echo json_encode([
+                    'result'=>false,
+                    'message'=> $errorMessages[15],
+                    'errorCode'=>15,
+                ], JSON_UNESCAPED_UNICODE);
+                return;
+            }
+            $arParams=[
+                'code'=>$code,
+                'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                'event'=>"auth",
+            ];
+
+            $api=new Api(array(
+                'action'=>'lkcode',
+                'params'=>$arParams
+            ));
+            $result=$api->result();
+            if ($result['success']==false){
+                switch ($result['data']['result']['errorCode']){
+                    case 0:
+                        echo json_encode([
+                            'result'=>false,
+                            'message'=>$errorMessages[6],
+                            'errorCode'=>6,
+                        ], JSON_UNESCAPED_UNICODE);
+                        return;
+                    case 3:
+                        echo json_encode([
+                            'result'=>false,
+                            'message'=>$errorMessages[7],
+                            'errorCode'=>7,
+                        ], JSON_UNESCAPED_UNICODE);
+                        return;
+                    default:
+                        echo json_encode([
+                            'result'=>false,
+                            'message'=> $errorMessages[100],
+                            'errorCode'=>100,
+                            'data'=>$result
+                        ], JSON_UNESCAPED_UNICODE);
+                        return;
+                }
+            }
+            else{
+                //Заранее добавялем пользователя с имеющимися полями и авторизовываем его
+                $user=new CUser;
+                $user1Carr=$result['data']['result']['result'];
+
+                $passwd=generateRandomString();
+                $arFields=array(
+                    'UF_IS_CORRECT'=>false,
+                    'NAME'=>$user1Carr['name'],
+                    'LAST_NAME'=>$user1Carr['surname'],
+                    'EMAIL'=>$user1Carr['email'],
+                    'LOGIN'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                    'ACTIVE'=>'Y',
+                    "GROUP_ID"=>array(7),
+                    'UF_1CID'=>$user1Carr['id1c'],
+                    'PERSONAL_BIRTHDAY'=>$user1Carr['birthday'],
+                    'PERSONAL_PHONE'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                    'PERSONAL_GENDER'=>$user1Carr['gender'],
+                    "PASSWORD"=>$passwd,
+                    "CONFIRM_PASSWORD"=>$passwd,
+                );
+                if (empty($user1Carr['imageurl'])) {
+                    $settings = Utils::getInfo();
+                    $imgPath = $settings["PROPERTIES"]['PROFILE_DEFAULT_PHOTO']['VALUE'];
+                }
+                else{
+                    $imgPath = $user1Carr['imageurl'];
+                }
+                $arImage=CFile::MakeFileArray($imgPath);
+                $arImage["MODULE_ID"] = "main";
+                $arFields['PERSONAL_PHOTO']=$arImage;
+                $ID = $user->Add($arFields);
+                if (intval($ID) > 0){
+                    $user->Authorize($ID);
+                    $api=new Api(array(
+                        'action'=>'lkedit',
+                        'params'=>[
+                            'id1c'=>$user1Carr['id1c'],
+                            'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE']
+                        ],
+                    ));
+                    echo json_encode(['result'=>true], JSON_UNESCAPED_UNICODE);
+                }
+                else{
+                    echo json_encode([
+                        'result'=>false,
+                        'message'=>$user->LAST_ERROR,
+                        'errorCode'=>17,
+                    ], JSON_UNESCAPED_UNICODE);
+                }
+                return;
+            }
+
+
+        }
+        //Пользован определен в битрикс, авторизация по паролю
+        elseif ($FORM_FIELDS['ACTION']=="LOGIN_3"){
+            global $USER;
             $arAuthResult = $USER->Login($FORM_FIELDS['FIELDS']['phone']['VALUE'], $FORM_FIELDS['FIELDS']['passwd']['VALUE'],"Y","Y");
             if ($arAuthResult===true){
+                $rsUser = CUser::GetByLogin($FORM_FIELDS['FIELDS']['phone']['VALUE']);
+                $arUser = $rsUser->Fetch();
+                $api=new Api(array(
+                    'action'=>'lkedit',
+                    'params'=>[
+                        'id1c'=>$arUser['UF_1CID'],
+                        'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE']
+                    ],
+                ));
                 echo json_encode(['result'=>true]);
             }
             else{
@@ -121,7 +363,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $arParams=[
                 'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
-                'name'=>$FORM_FIELDS['VISIBFIELDSLE']['name']['VALUE'].' '.$FORM_FIELDS['FIELDS']['surname']['VALUE'],
+                'name'=>$FORM_FIELDS['FIELDS']['name']['VALUE'],
+                "surname"=>$FORM_FIELDS['FIELDS']['surname']['VALUE'],
+                "gender"=>$FORM_FIELDS['FIELDS']['gender']['VALUE'],
+                "birthday"=>$FORM_FIELDS['FIELDS']['birthday']['VALUE'],
+                "email"=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
                 'clubid'=>(string)$FORM_FIELDS['FIELDS']['club']['VALUE'],
                 'event'=>$FORM_FIELDS['FIELDS']['EVENT_1C']['VALUE'],
             ];
@@ -153,6 +399,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             'message'=> $errorMessages[11],
                             'errorCode'=>11,
                             'data'=>$result
+                        ], JSON_UNESCAPED_UNICODE);
+                        return;
+                    case 2:
+                        echo json_encode([
+                            'result'=>false,
+                            'message'=>$errorMessages[5],
+                            'errorCode'=>5
                         ], JSON_UNESCAPED_UNICODE);
                         return;
                     default:
@@ -208,9 +461,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'id1c'=>$_SESSION['ID_1C'],
                     'code'=>$code,
                     'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
-                    'name'=>$FORM_FIELDS['FIELDS']['name']['VALUE'].' '.$FORM_FIELDS['FIELDS']['surname']['VALUE'],
                     'clubid'=>$FORM_FIELDS['FIELDS']['club']['VALUE'],
                     'event'=>$FORM_FIELDS['FIELDS']['EVENT_1C']['VALUE'],
+                    'name'=>$FORM_FIELDS['FIELDS']['name']['VALUE'],
+                    "surname"=>$FORM_FIELDS['FIELDS']['surname']['VALUE'],
+                    "gender"=>$FORM_FIELDS['FIELDS']['gender']['VALUE'],
+                    "birthday"=>$FORM_FIELDS['FIELDS']['birthday']['VALUE'],
+                    "email"=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
                 ];
 
                 $api=new Api(array(
@@ -218,7 +475,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'params'=>$arParams
                 ));
                 $result=$api->result();
-//                $result=['success'=>true, 'error'=>false];
+
                 if ($result['error']==true){
                     echo json_encode([
                         'result'=>false,
@@ -235,6 +492,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     $user = new CUser;
                     $arFields=array(
+                        'UF_IS_CORRECT'=>true,
                         'NAME'=>$FORM_FIELDS['FIELDS']['name']['VALUE'],
                         'LAST_NAME'=>$FORM_FIELDS['FIELDS']['surname']['VALUE'],
                         'EMAIL'=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
@@ -254,6 +512,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $ID = $user->Add($arFields);
                     if (intval($ID) > 0){
                         $user->Login($FORM_FIELDS['FIELDS']['phone']['VALUE'], $FORM_FIELDS['FIELDS']['passwd']['VALUE'],"Y","Y");
+                        $api=new Api(array(
+                            'action'=>'lkedit',
+                            'params'=>[
+                                'id1c'=>$arFields['UF_1CID'],
+                                'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE']
+                            ],
+                        ));
                         echo json_encode(['result'=>true], JSON_UNESCAPED_UNICODE);
                     }
                     else{
@@ -295,12 +560,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         //Восстановление пароля шаг 1
         elseif ($FORM_FIELDS['ACTION']=='FORGOT_1'){
-            $rsUser=CUser::GetByLogin($FORM_FIELDS['FIELDS']['phone']['VALUE']);
-            if ($arUser=$rsUser->Fetch()){
+            global $USER;
+            if (!is_object($USER)) $USER = new CUser;
+            $user=CUser::GetByLogin($FORM_FIELDS['FIELDS']['phone']['VALUE'])->Fetch();
+            if (empty($user)){
+                $arParams=['login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE']];
+                $api=new Api(array(
+                    'action'=>'lkcheck',
+                    'params'=>$arParams
+                ));
+                $result=$api->result();
+
+                if ($result['success']==false){
+                    if ($result['data']['result']['errorCode']==0){
+                        echo json_encode([
+                            'result'=>false,
+                            'message'=>$errorMessages[21],
+                            'errorCode'=>21
+                        ], JSON_UNESCAPED_UNICODE);
+                        return;
+                    }
+                }
+                else{
+                    //Пользователь найден в 1с, завершаем регистрацию
+                    //Возвращаем на фронт инфу
+                    echo json_encode(['result'=>true, 'type'=>'1c', 'data'=>$result]);
+                    return;
+                }
+            }
+            else{
+                //Отправялем СМС для "забыл пароль"
                 $arParams=[
                     'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
                     'event'=>$FORM_FIELDS['FIELDS']['EVENT_1C']['VALUE'],
-                    'id1c'=>$arUser['UF_1CID']
+                    'id1c'=>$user['UF_1CID']
                 ];
                 $api=new Api(array(
                     'action'=>'lkreg',
@@ -316,7 +609,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     return;
                 }
                 if ($result['success']==true){
-                    echo json_encode(['result'=>true]);
+                    //Возвращаем на фронт инфу
+                    echo json_encode(['result'=>true, 'type'=>'site']);
                     return;
                 }
                 else{
@@ -329,6 +623,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 'data'=>$result
                             ], JSON_UNESCAPED_UNICODE);
                             return;
+                        case 2:
+                            echo json_encode([
+                                'result'=>false,
+                                'message'=> $errorMessages[21],
+                                'errorCode'=>21,
+                                'data'=>$result
+                            ], JSON_UNESCAPED_UNICODE);
+                            return;
                         default:
                             echo json_encode([
                                 'result'=>false,
@@ -338,17 +640,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             ], JSON_UNESCAPED_UNICODE);
                             return;
                     }
-
                 }
             }
-            else{
-                echo json_encode([
-                    'result'=>false,
-                    'message'=>$errorMessages[3],
-                    'errorCode'=>3,
-                ], JSON_UNESCAPED_UNICODE);
-                return;
-            }
+
+
+
+//            $rsUser=CUser::GetByLogin($FORM_FIELDS['FIELDS']['phone']['VALUE']);
+//            if ($arUser=$rsUser->Fetch()){
+//                $arParams=[
+//                    'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+//                    'event'=>$FORM_FIELDS['FIELDS']['EVENT_1C']['VALUE'],
+//                    'id1c'=>$arUser['UF_1CID']
+//                ];
+//                $api=new Api(array(
+//                    'action'=>'lkreg',
+//                    'params'=>$arParams
+//                ));
+//                $result=$api->result();
+//                if ($result['error']==true){
+//                    echo json_encode([
+//                        'result'=>false,
+//                        'message'=>$errorMessages[4],
+//                        'errorCode'=>4
+//                    ], JSON_UNESCAPED_UNICODE);
+//                    return;
+//                }
+//                if ($result['success']==true){
+//                    echo json_encode(['result'=>true]);
+//                    return;
+//                }
+//                else{
+//                    switch ($result['data']['result']['errorCode']){
+//                        case 3:
+//                            echo json_encode([
+//                                'result'=>false,
+//                                'message'=> $errorMessages[11],
+//                                'errorCode'=>11,
+//                                'data'=>$result
+//                            ], JSON_UNESCAPED_UNICODE);
+//                            return;
+//                        default:
+//                            echo json_encode([
+//                                'result'=>false,
+//                                'message'=> $errorMessages[100],
+//                                'errorCode'=>100,
+//                                'data'=>$result
+//                            ], JSON_UNESCAPED_UNICODE);
+//                            return;
+//                    }
+//                }
+//            }
+//            else{
+//                echo json_encode([
+//                    'result'=>false,
+//                    'message'=>$errorMessages[3],
+//                    'errorCode'=>3,
+//                ], JSON_UNESCAPED_UNICODE);
+//                return;
+//            }
         }
         //Восстановление пароля шаг 2
         elseif($FORM_FIELDS['ACTION']=='FORGOT_2') {
@@ -371,7 +720,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'id1c' => $arUser['UF_1CID'],
                     'code' => $code,
                 ];
-
                 $api = new Api(array(
                     'action' => 'lkcode',
                     'params' => $arParams
@@ -389,6 +737,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($result['success'] == true) {
                     global $USER;
                     if ($USER->Authorize($arUser['ID'])) {
+                        $api=new Api(array(
+                            'action'=>'lkedit',
+                            'params'=>[
+                                'id1c'=>$arUser['UF_1CID'],
+                                'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE']
+                            ],
+                        ));
                         echo json_encode(['result' => true]);
                         return;
                     } else {
@@ -459,6 +814,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($USER->IsAuthorized()){
             $FORM_FIELDS=PersonalUtils::GetPersonalPageFormFields($USER->GetID(), true, [], $_POST['SECTION_ID']);
+
             if (!$FORM_FIELDS['ISSET']){
                 echo json_encode([
                     'result'=>false,
@@ -475,11 +831,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
+            if (!$FORM_FIELDS['IS_CORRECT']){
+                $CHANGEARR['UF_IS_CORRECT']=true;
+                $type='is_correct';
+            }
+            else{
+                $type='is_update';
+            }
+
 
             global $USER;
             $result = $USER->Update($USER->GetID(), $CHANGEARR, false);
             if($result==true){
-                $result=['result'=>true];
+
+                $arParams=array(
+                    'name'=>$CHANGEARR['NAME'],
+                    'surname'=>$CHANGEARR['LAST_NAME'],
+                    'email'=>$CHANGEARR['EMAIL'],
+                    'birthday'=>$CHANGEARR['PERSONAL_BIRTHDAY'],
+                    'gender'=>$CHANGEARR['PERSONAL_GENDER'],
+                    'id1c'=>$FORM_FIELDS['USER_1CID'],
+                    'login'=>$FORM_FIELDS['USER_LOGIN'],
+                    'imageurl'=>$FORM_FIELDS['PERSONAL_PHOTO']
+                );
+
+                $result=['result'=>true, 'type'=>$type, 'data'=>$arParams];
             }
             else{
                 $result=[

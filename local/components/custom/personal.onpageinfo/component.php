@@ -6,6 +6,14 @@ require_once 'PersonalUtils.php';
 use PersonalUtils;
 use \Bitrix\Main\Loader;
 
+
+//if ($arParams['PERSONAL_PAGE']=="N"){
+//    $arResult['PROFILE_URL']=$arParams['PROFILE_URL'];
+//    $arResult['AUTH']=$USER->IsAuthorized();
+//    $this->IncludeComponentTemplate('onsomepage');
+//    return;
+//}
+
 Loader::IncludeModule("form");
 Loader::IncludeModule("iblock");
 
@@ -55,10 +63,11 @@ $arResult['PROFILE_PAGE']=defined('PERSONAL_PAGE');
 if ($arResult['PROFILE_PAGE']){
     if (!$USER->IsAuthorized()){
         $arResult['FORM_FIELDS']=[
-            $arParams['AUTH_FORM_CODE']=>PersonalUtils::GetFormFileds($auth_form_id, "LOGIN", false, "ВОЙТИ", $active=='auth'?true:false),
+            $arParams['AUTH_FORM_CODE']=>PersonalUtils::GetFormFileds($auth_form_id, "LOGIN_1", false, "ВОЙТИ", $active=='auth'?true:false),
             $arParams['REGISTER_FORM_CODE']=>PersonalUtils::GetFormFileds($reg_form_id, "REG_1", false, "ОТПРАВИТЬ", $active=='reg'?true:false),
             $arParams['PASSFORGOT_FORM_CODE']=>PersonalUtils::GetFormFileds($passforgot_form_id, "FORGOT_1", false, "ОТПРАВИТЬ", $active=='forgot'?true:false),
         ];
+        $arResult['AUTH_FORM_CODE']=$arParams['AUTH_FORM_CODE'];
 
         $this->IncludeComponentTemplate('auth-page');
 
@@ -66,7 +75,20 @@ if ($arResult['PROFILE_PAGE']){
     else{
         $arResult['CHANGE']=$_GET['change']=='Y'? true:false;
         $ACTION=$_GET['change']=='Y'? "UPDATE_USER":"EXIT";
-        $arResult['LK_FIELDS']=PersonalUtils::GetPersonalPageFormFields($USER->GetID());
+
+        $user_id=$USER->GetID();
+
+        $arResult['LK_FIELDS']=PersonalUtils::GetPersonalPageFormFields($user_id, false, [], false, $arParams['ACTIVE_FORM']);
+
+        $arGroups = CUser::GetUserGroup($user_id);
+
+        $arResult['IS_EMPLOYE']=false;
+        foreach ($arGroups as $group){
+            if ($group==9){
+                $arResult['IS_EMPLOYE']=true;
+                break;
+            }
+        }
 
         $this->IncludeComponentTemplate('personal');
     }
@@ -76,4 +98,6 @@ if ($arResult['PROFILE_PAGE']){
     $template->addExternalJs(SITE_TEMPLATE_PATH . '/js/datepicker.min.js');
     $template->addExternalJs(SITE_TEMPLATE_PATH . '/js/datepicker.ru-RU.js');
     $template->addExternalCss(SITE_TEMPLATE_PATH . '/css/datepicker.min.css');
+    $template->addExternalJs(SITE_TEMPLATE_PATH . '/js/tippy/popper.min.js');
+    $template->addExternalJs(SITE_TEMPLATE_PATH . '/js/tippy/tippy-bundle.umd.min.js');
 }

@@ -33,6 +33,8 @@ Asset::getInstance()->addString('<meta name="robots" content="noindex, follow" /
             "AUTH_FORM_CODE" => "AUTH",
             "REGISTER_FORM_CODE" => "REGISTRATION",
             "PASSFORGOT_FORM_CODE"=>'PASSFORGOT',
+            "ACTIVE_FORM"=>"lk_loyalty_program",
+            "PERSONAL_PAGE"=>"Y",
             "SHOW_ERRORS" => "Y"
         ),
         false

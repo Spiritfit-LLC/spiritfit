@@ -41,7 +41,9 @@
                         ?>
                         <div class="personal-section-form__item <?if($FIELD['TYPE']=='radio') echo 'radio-item';?>
                                                            <?if($FIELD['TYPE']=='checkbox') echo 'checkbox-item';?>
-                                                           <?if($FIELD['TYPE']=='SELECT') echo 'select-item';?>">
+                                                           <?if($FIELD['TYPE']=='SELECT') echo 'select-item';?>
+                                                        <?if ($FIELD['TYPE']=='password') echo 'auth-password';?>"
+                            <?if ($FIELD['TYPE']=='password'&&$arResult['AUTH_FORM_CODE']==$ID):?> style="display: none"<?endif;?>>
                             <?if ($FIELD['TYPE']!='checkbox'):?>
                                 <span class="personal-section-form__item-placeholder"><?=$FIELD['PLACEHOLDER']?></span>
                             <?endif;?>
