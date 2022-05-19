@@ -163,7 +163,7 @@ $(document).ready(function(){
             data:postData,
             cache:false,
             success:function (res){
-                console.log(res);
+                // console.log(res);
                 form.find('input[type="submit"]').removeAttr('disabled');
                 var ACTION=form.find('input[name="ACTION"]').val();
                 if (res['result']===true){
@@ -248,9 +248,9 @@ $(document).ready(function(){
                     }
                 }
             },
-            error:function(err){
-                console.log(err);
-            }
+            // error:function(err){
+            //     console.log(err);
+            // }
         })
     })
 
@@ -290,7 +290,7 @@ $(document).ready(function(){
                 contentType: false,
                 enctype: 'multipart/form-data',
                 success:function(res){
-                    console.log(res);
+                    // console.log(res);
                     var success=res['result'];
                     var message=res['message'];
                     if (success){

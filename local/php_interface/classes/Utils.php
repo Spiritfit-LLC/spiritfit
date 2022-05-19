@@ -322,6 +322,10 @@ class Utils
         $arForm = $rsForm->Fetch();
         return $arForm['ID'];
     }
+    public static function GetUGroupIDBySID($SID){
+        $DBRes=CGroup::GetList(($by="c_sort"), ($order="desc"), Array("STRING_ID"=>$SID));
+        return $DBRes->Fetch()['ID'];
+    }
 
 	// ИЗВЛЕЧЕНИЕ API URL
 	public static function getApiURL(){

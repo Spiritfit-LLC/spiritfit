@@ -377,6 +377,14 @@ class PersonalUtils{
         $result=$api->result();
 
         if ($result['success']){
+            $arGroups = CUser::GetUserGroup($USER_ID);
+            $potential_id=Utils::GetUGroupIDBySID('POTENTIAL_CLIENTS');
+            if (in_array($potential_id, $arGroups)){
+                $resArr = array_diff($arGroups, [$potential_id]);
+                $resArr[]=Utils::GetUGroupIDBySID('CLIENTS');
+                CUser::SetUserGroup($USER_ID, $resArr);
+            }
+
             $fields=$result['data']['result']['result'];
             foreach ($fields as $key=>$value){
                 if (key_exists($key, $UPDATEBLE_FIELDS)){
@@ -393,6 +401,7 @@ class PersonalUtils{
             }
         }
         else{
+            CUser::SetUserGroup($USER_ID, [Utils::GetUGroupIDBySID('POTENTIAL_CLIENTS')]);
             return false;
         }
     }
@@ -406,7 +415,7 @@ class PersonalUtils{
                 $now=new DateTime();
                 $interval=$update_time->diff($now);
                 $minutes = ($interval->days * 24 * 60) + ($interval->h * 60) + $interval->i;
-                if ($minutes>180){
+                if ($minutes>30){
                     self::UpdatePersonalInfoFrom1C(false, $arUser2);
                 }
             }
