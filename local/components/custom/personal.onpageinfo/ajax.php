@@ -273,7 +273,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'EMAIL'=>$user1Carr['email'],
                     'LOGIN'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
                     'ACTIVE'=>'Y',
-                    "GROUP_ID"=>array(7),
+                    "GROUP_ID"=>array(Utils::GetUGroupIDBySID('CLIENTS')),
                     'UF_1CID'=>$user1Carr['id1c'],
                     'PERSONAL_BIRTHDAY'=>$user1Carr['birthday'],
                     'PERSONAL_PHONE'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
@@ -498,7 +498,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'EMAIL'=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
                         'LOGIN'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
                         "ACTIVE"=>"Y",
-                        "GROUP_ID"=>array(7),
+                        "GROUP_ID"=>array(Utils::GetUGroupIDBySID('POTENTIAL_CLIENTS')),
                         "PASSWORD"=>$FORM_FIELDS['FIELDS']['passwd']['VALUE'],
                         "CONFIRM_PASSWORD"=>$FORM_FIELDS['FIELDS']['passwd']['VALUE'],
                         "PERSONAL_PHOTO"=> $arImage,
@@ -854,7 +854,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'login'=>$FORM_FIELDS['USER_LOGIN'],
                     'imageurl'=>$FORM_FIELDS['PERSONAL_PHOTO']
                 );
-
+                $api=new Api(array(
+                    'action'=>'lkedit',
+                    'params'=>$arParams,
+                ));
                 $result=['result'=>true, 'type'=>$type, 'data'=>$arParams];
             }
             else{
