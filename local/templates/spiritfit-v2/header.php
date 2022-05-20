@@ -148,6 +148,8 @@ foreach( $clubs as $club ) {
                                         <button class="b-club-search__submit" type="submit">Найти</button>
                                     </div>
                                 </form>
+                                <? if(false) { ?><a class="b-header__btn button-outline is-hide-mobile js-form-abonement" href="#" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a><? } ?>
+				                <a class="b-header__btn button-outline is-hide-mobile" href="/abonement/probnaya-trenirovka-/#js-pjax-container">Пробная тренировка</a>
                             </div>
                             <?$APPLICATION->IncludeComponent(
                                 "bitrix:menu", 
@@ -191,8 +193,7 @@ foreach( $clubs as $club ) {
                     <?endif;?>
                 </a>
 
-                <? if(false) { ?><a class="b-header__btn button-outline is-hide-mobile js-form-abonement" href="#" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a><? } ?>
-				<a class="b-header__btn button-outline is-hide-mobile" href="/abonement/probnaya-trenirovka-/#js-pjax-container">Пробная тренировка</a>
+
             </div>
         </div>
     </header>
