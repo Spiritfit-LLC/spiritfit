@@ -8,7 +8,7 @@
 		</ul>
 	</div>
 	<div class="footer-menu-cell">
-		<div class="footer-menu-title"><a href="/trenirovki/">Тренировки</a></div>
+		<div class="footer-menu-title"><a href="/trenirovki/trenirovki.php">Тренировки</a></div>
 		<ul>
 			<li><a href="/trenirovki/trenazhernyy-zal/">Тренажерный зал</a></li>
 			<li><a href="/gruppovye-trenirovki/">Групповые тренировки</a></li>
