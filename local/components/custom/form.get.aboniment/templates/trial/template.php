@@ -102,6 +102,7 @@
 				<input type="hidden" name="CLUB_ID" value="<?=$arResult["CLUB_ID"]?>">
 				<input type="hidden" name="ACTION" value="">
 				<input type="hidden" name="SUB_ID" value="<?=$arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"]?>">
+                <input type="hidden" name="typeSetClient" value="trialTraining">
 				
 				<? if( !empty($arResult["RESPONSE"]["ERROR"]) ) { ?>
                     <div class="popup popup--call form-error-modal" style="display: block;">
