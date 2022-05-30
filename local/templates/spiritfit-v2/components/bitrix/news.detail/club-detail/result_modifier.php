@@ -6,6 +6,15 @@
 $page_element=$APPLICATION->GetCurPage();
 
 $url_parts = explode("/", $page_element);
+if (count($url_parts)>4){
+    Bitrix\Iblock\Component\Tools::process404(
+        trim($arParams["MESSAGE_404"]) ?: GetMessage("CATALOG_SECTION_NOT_FOUND")
+        ,true
+        ,$arParams["SET_STATUS_404"] === "Y"
+        ,$arParams["SHOW_404"] === "Y"
+        ,$arParams["FILE_404"]
+    );
+}
 $last = count($url_parts)-1;
 if ($url_parts[$last]=="") $last--;
 $code = $url_parts[$last];
@@ -124,8 +133,13 @@ if ($seoValues['ELEMENT_META_KEYWORDS']) {
  */
 
 
-$arFilter = array("IBLOCK_CODE" => "subscription", "ACTIVE" => "Y", "ID" => $arResult['PROPERTIES']['ABONEMENTS']['VALUE']);
-$dbElements = CIBlockElement::GetList(array("SORT" => "ASC"), $arFilter, false, false);
+$abonements=array(
+    'LOGIC' => 'OR',
+    array('ID' => $arResult['PROPERTIES']['ABONEMENTS']['VALUE']),
+    array('!PROPERTY_HIDDEN' => 40),
+);
+$arFilter = array("IBLOCK_CODE" => "subscription", "ACTIVE" => "Y", $abonements);
+$dbElements = CIBlockElement::GetList(array("property_HIDDEN" => "DESC", ["SORT"=>"ASC"]), $arFilter, false, false);
 
 while ($res = $dbElements->GetNextElement()) {
     $fields = $res->GetFields();
@@ -135,12 +149,13 @@ while ($res = $dbElements->GetNextElement()) {
 	/*if( !empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']) && !empty($arResult["PROPERTIES"]["NUMBER"]["VALUE"]) ) {
 		$fields['DETAIL_PAGE_URL'] .= $arResult["PROPERTIES"]["NUMBER"]["VALUE"] . '/';
 	}*/
-	if( !empty($arResult["PROPERTIES"]["NUMBER"]["VALUE"]) ) {
-		$fields['DETAIL_PAGE_URL'] .= $arResult["PROPERTIES"]["NUMBER"]["VALUE"] . '/';
-	}
+//	if( !empty($arResult["PROPERTIES"]["NUMBER"]["VALUE"]) ) {
+//		$fields['DETAIL_PAGE_URL'] .= $arResult["PROPERTIES"]["NUMBER"]["VALUE"] . '/';
+//	}
 	
     $arResult["ABONEMENTS"][] = $fields;
 }
+
 
 $selectedClub["ID"] = $arResult['ID'];
 
@@ -226,9 +241,15 @@ foreach ($arResult["ABONEMENTS"] as $key => $arItem) {
 		$arResult["ABONEMENTS_MAX_PRICE"] = floatval($arResult["ABONEMENTS"][$key]['SALE']);
 	}
 
-    if (!$club&&!$arResult["PROPERTIES"]["SOON"]["VALUE"]) {
-        unset($arResult["ABONEMENTS"][$key]);
+    if ($club || $arResult["PROPERTIES"]["SOON"]["VALUE"]){
+        $arResult["ABONEMENTS"][$key]['DETAIL_PAGE_URL'] .= $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
     }
+//    if (!$club&&!$arResult["PROPERTIES"]["SOON"]["VALUE"]) {
+////        unset($arResult["ABONEMENTS"][$key]);
+//    }
+//    else{
+//        $arResult["ABONEMENTS"][$key]['DETAIL_PAGE_URL'] .= $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
+//    }
 }
 
 $denyInAdddress = ['этаж', 'г.', 'город', 'м.', 'метро', 'эт.', 'ТРЦ', 'трц', 'к.', 'корп', 'корпус', '"'];
