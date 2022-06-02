@@ -1,0 +1,23 @@
+.reports-client__block {
+    padding: 15px 0;
+}
+.report_item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 10px 0;
+}
+.report-title {
+    margin-right: 10px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.report-value {
+    font-size: 20px;
+    font-weight: 100;
+}
+.report-block__title {
+    font-size: 28px;
+    font-weight: 900;
+}
