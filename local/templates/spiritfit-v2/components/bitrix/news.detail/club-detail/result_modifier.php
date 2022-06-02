@@ -15,6 +15,8 @@ if (count($url_parts)>4){
         ,$arParams["FILE_404"]
     );
 }
+
+
 $last = count($url_parts)-1;
 if ($url_parts[$last]=="") $last--;
 $code = $url_parts[$last];
@@ -139,7 +141,7 @@ $abonements=array(
     array('!PROPERTY_HIDDEN' => 40),
 );
 $arFilter = array("IBLOCK_CODE" => "subscription", "ACTIVE" => "Y", $abonements);
-$dbElements = CIBlockElement::GetList(array("property_HIDDEN" => "DESC", ["SORT"=>"ASC"]), $arFilter, false, false);
+$dbElements = CIBlockElement::GetList(array("SORT"=>"ASC"), $arFilter, false, false);
 
 while ($res = $dbElements->GetNextElement()) {
     $fields = $res->GetFields();
