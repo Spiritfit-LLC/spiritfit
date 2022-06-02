@@ -6,7 +6,6 @@ define('H1_HIDE', true);
 $url = strtok($_SERVER['REQUEST_URI'], '?');
 $urlArr = explode('/', $url);
 
-
 foreach($urlArr as $k => $val) {
     if($k > 0 && empty($val)) {
         unset($urlArr[$k]);
@@ -23,8 +22,6 @@ if (count($urlArr)>4){
     exit;
 
 }
-
-
 
 $clubNumber = false;
 if( !empty($urlArr[3]) ) {
