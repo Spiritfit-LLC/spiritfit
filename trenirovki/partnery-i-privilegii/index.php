@@ -4,10 +4,10 @@
 	define('HOLDER_CLASS', 'trainings');
 	
 	require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+$APPLICATION->SetTitle("Партнеры");
 	
 	$APPLICATION->SetPageProperty("title", "Партнеры и привилегии");
-	$APPLICATION->SetPageProperty("description", "");
-	
+		
 	$settings = Utils::getInfo();
 	$APPLICATION->SetTitle($settings["PROPERTIES"]["PARTNERS_TITLE1"]["VALUE"]);
 	

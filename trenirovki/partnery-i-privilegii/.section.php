@@ -1,6 +1,6 @@
 <?
-$sSectionName = "Партнеры и привилегии";
+$sSectionName = "Партнеры";
 $arDirProperties = Array(
-   "description" => ""
+   "description" => "Партнеры компании | SpiritFit.ru"
 );
 ?>
