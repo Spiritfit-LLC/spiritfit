@@ -33,8 +33,10 @@ if(strpos($mapAdress, '"')) $mapAdress = str_replace('"', '\'', $mapAdress);
 
 session_start();
 $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
+
 ?>
 <? if($_REQUEST["ajax_send"] != 'Y') { ?>
+
 	<? if(!empty($arResult['ABONEMENTS']) && ($arResult['PROPERTIES']['SOON']['VALUE'] != 'Y' || !empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']))){ ?>
 		<section id="abonements" class="b-cards-slider b-cards-slider--with-prices">
 			<div class="content-center">
@@ -156,8 +158,8 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 					"AJAX_MODE" => "N",
 					"WEB_FORM_ID" => "5",
 					"NUMBER" => $arResult["PROPERTIES"]["NUMBER"]["VALUE"],
-					"TEXT_FORM" => $arResult["PROPERTIES"]["TEXT_FORM"]["~VALUE"],
-					"DEFAULT_TYPE_ID" => (!empty($arResult['PROPERTIES']['FORM_TYPE']['VALUE'])) ? $arResult['PROPERTIES']['FORM_TYPE']['VALUE'] : "",
+					"TEXT_FORM" => $arResult["FORM_TITLE"],
+					"DEFAULT_TYPE_ID" => $arResult["FORM_TYPE"],
 				),
 				false
 			);
@@ -174,8 +176,8 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 						"WEB_FORM_ID" => "3",
 						"CLUB_FORM_SUCCESS" => $arParams["CLUB_FORM_SUCCESS"],
 						"NUMBER" => $arResult["PROPERTIES"]["NUMBER"]["VALUE"],
-						"TEXT_FORM" => $arResult["PROPERTIES"]["TEXT_FORM"]["~VALUE"],
-						"DEFAULT_TYPE_ID" => (!empty($arResult['PROPERTIES']['FORM_TYPE']['VALUE'])) ? $arResult['PROPERTIES']['FORM_TYPE']['VALUE'] : "",
+                        "TEXT_FORM" => $arResult["FORM_TITLE"],
+                        "DEFAULT_TYPE_ID" => $arResult["FORM_TYPE"],
 						"CLIENT_TYPE"=>$arResult["PROPERTIES"]["CLIENT_TYPE"]["VALUE"],
 					),
 					false

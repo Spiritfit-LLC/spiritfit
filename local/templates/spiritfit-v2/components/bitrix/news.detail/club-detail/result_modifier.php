@@ -290,3 +290,23 @@ if( !empty($arResult["PROPERTIES"]["REVIEWS"]["VALUE"]) ) {
 		$arResult["PROPERTIES"]["REVIEWS"]["VALUE"][] = $arFields;
 	}
 }
+
+
+if (!empty($_REQUEST['form'])){
+    $res = CIBlockElement::GetByID(Utils::GetIBlockElementIDBySID($_REQUEST['form']));
+    if($ar_res = $res->GetNextElement()){
+        $props=$ar_res->GetProperties();
+        $FORM_TYPE=$props['FORM_TYPE']['VALUE'];
+        $FORM_TITLE=$props['FORM_TITLE']['VALUE'];
+    }
+    else{
+        $FORM_TYPE=(!empty($arResult['PROPERTIES']['FORM_TYPE']['VALUE'])) ? $arResult['PROPERTIES']['FORM_TYPE']['VALUE'] : "";
+        $FORM_TITLE=$arResult["PROPERTIES"]["TEXT_FORM"]["~VALUE"];
+    }
+
+} else {
+    $FORM_TYPE=(!empty($arResult['PROPERTIES']['FORM_TYPE']['VALUE'])) ? $arResult['PROPERTIES']['FORM_TYPE']['VALUE'] : "";
+    $FORM_TITLE=$arResult["PROPERTIES"]["TEXT_FORM"]["~VALUE"];
+}
+$arResult['FORM_TYPE']=$FORM_TYPE;
+$arResult['FORM_TITLE']=$FORM_TITLE;
