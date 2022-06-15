@@ -127,13 +127,18 @@ if(!empty($files['VALUE'])){
 <script>
     $(document).ready(function(){
         function resizeSliderTitle(){
-            var current_width=document.querySelector('.b-info-slider__title').scrollWidth;
-            var real_width=document.querySelector('.b-info-slider__title').clientWidth;
+            try {
+                var current_width = document.querySelector('.b-info-slider__title').scrollWidth;
+                var real_width = document.querySelector('.b-info-slider__title').clientWidth;
 
-            if (current_width>real_width){
-                var curr_text=$('.b-info-slider__title').text().toLowerCase();
-                var new_text=curr_text.split('spirit.')[0]+'spirit. '+curr_text.split('spirit.')[1]
-                $('.b-info-slider__title').text(new_text)
+                if (current_width > real_width) {
+                    var curr_text = $('.b-info-slider__title').text().toLowerCase();
+                    var new_text = curr_text.split('spirit.')[0] + 'spirit. ' + curr_text.split('spirit.')[1]
+                    $('.b-info-slider__title').text(new_text)
+                }
+            }
+            catch (e) {
+                console.log(e)
             }
         }
         resizeSliderTitle();

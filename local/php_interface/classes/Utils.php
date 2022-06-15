@@ -304,28 +304,29 @@ class Utils
     }
 
 	// МЕТОДЫ ДЛЯ ИЗВЛЕЧЕНИЯ ID о символному коду
-    public static function GetIBlockIDBySID($SID){
+    public static function GetIBlockIDBySID($SID, $type="ID"){
         $DBRes=CIBlock::GetList(Array("SORT"=>"ASC"), Array("CODE"=>$SID));
-        return $DBRes->Fetch()['ID'];
+        return $DBRes->Fetch()[$type];
     }
-    public static function GetIBlockSectionIDBySID($SID){
+    public static function GetIBlockSectionIDBySID($SID, $type="ID"){
         $DBRes=CIBlockSection::GetList(Array("SORT"=>"ASC"), Array("CODE"=>$SID));
-        return $DBRes->Fetch()['ID'];
+        return $DBRes->Fetch()[$type];
     }
-    public static function GetIBlockElementIDBySID($SID){
+    public static function GetIBlockElementIDBySID($SID, $type="ID"){
         $DBRes=CIBlockElement::GetList(Array("SORT"=>"ASC"), Array("CODE"=>$SID));
-        return $DBRes->Fetch()['ID'];
+        return $DBRes->Fetch()[$type];
     }
-    public static function GetFormIDBySID($SID){
+    public static function GetFormIDBySID($SID, $type="ID"){
         Loader::IncludeModule("form");
         $rsForm = CForm::GetBySID($SID);
         $arForm = $rsForm->Fetch();
-        return $arForm['ID'];
+        return $arForm[$type];
     }
     public static function GetUGroupIDBySID($SID){
         $DBRes=CGroup::GetList(($by="c_sort"), ($order="desc"), Array("STRING_ID"=>$SID));
         return $DBRes->Fetch()['ID'];
     }
+
 
 	// ИЗВЛЕЧЕНИЕ API URL
 	public static function getApiURL(){

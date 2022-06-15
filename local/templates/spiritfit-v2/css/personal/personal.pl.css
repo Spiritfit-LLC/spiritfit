@@ -1,0 +1,64 @@
+.tooltip-form{
+    width: 350px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: default;
+}
+
+.tooltip-form-title {
+    font-size: 20px;
+    color: #ff7628;
+    font-weight: 500;
+}
+
+input.tooltip-form-input {
+    margin: 20px 0 0 0;
+    border-bottom: 1px solid #fc6120;
+    box-sizing: border-box;
+    padding: 5px 10px;
+}
+
+input.tooltip-form-submit {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    background: none;
+    color: white;
+    border: 1px solid #ff7628;
+    transition: 0.5s;
+    text-transform: lowercase;
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: 18px;
+}
+
+input.tooltip-form-submit:hover{
+    background: #ff7628;
+}
+.tippy-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0000008a;
+    z-index: 0;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.tippy-background.active {
+    z-index: 100;
+    opacity: 1;
+}
+
+[data-code="UF_ACTIVE_PROMOCODE"]{
+    color:#ff7628!important;
+    font-weight: 800 !important;
+}
+
+.tooltip-form .form-submit-result-text{
+    width: 100%;
+}

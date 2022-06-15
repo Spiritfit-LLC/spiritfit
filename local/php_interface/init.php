@@ -54,6 +54,10 @@ if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/EventH
     require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/EventHandlersClass.php');
 }
 
+if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/PersonalUtils.php')) {
+    require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/PersonalUtils.php');
+}
+
 CModule::AddAutoloadClasses("", array(
     '\ImageConverter\Picture' => '/local/php_interface/classes/ImageConverter.php',
 ));
@@ -163,6 +167,13 @@ $arTraficAnswer = array(
 		'trm' => 'form_text_228',
 		'ClientId' => 'form_text_229',
 	),
+    Utils::GetFormIDBySID('PAYMENT_NEW')=>array(
+        'src' => 'form_text_230',
+        'mdm' => 'form_text_231',
+        'cmp' => 'form_text_232',
+        'cnt' => 'form_text_233',
+        'trm' => 'form_text_234',
+    ),
 );
 
 $arAdditionAnswer = array(
@@ -217,25 +228,25 @@ function getClientParams($webFormId) {
 	    				$('input[name=<?=$arIdAnswer["cnt"]?>]').val(current.cnt);
 	    				$('input[name=<?=$arIdAnswer["trm"]?>]').val(current.trm);
 
-						ym(48440750, 'getClientID', function(clientID) {
-							$('input[name=<?=$arIdAnswer["yaClientID"]?>]').val(clientID)
-						});
-	    				
-	    				var ClientId = '';
-	    				//if( typeof ga !== 'undefined' ) {
-							var ga = getCookie('_ga');
-							if( ga !== null ) {
-								var i = ga.lastIndexOf('.');
-	    						if(i > 0) {
-	    							i = ga.lastIndexOf('.', i-1);
-	    							if(i > 0) {
-	    								ClientId = ga.substring(i+1);
-	    							}
-	    						}
-							}
-						//}
-						
-	    				$('input[name=<?=$arIdAnswer["ClientId"]?>]').val(ClientId);
+						//ym(48440750, 'getClientID', function(clientID) {
+						//	$('input[name=<?//=$arIdAnswer["yaClientID"]?>//]').val(clientID)
+						//});
+	    				//
+	    				//var ClientId = '';
+	    				////if( typeof ga !== 'undefined' ) {
+						//	var ga = getCookie('_ga');
+						//	if( ga !== null ) {
+						//		var i = ga.lastIndexOf('.');
+	    				//		if(i > 0) {
+	    				//			i = ga.lastIndexOf('.', i-1);
+	    				//			if(i > 0) {
+	    				//				ClientId = ga.substring(i+1);
+	    				//			}
+	    				//		}
+						//	}
+						////}
+						//
+	    				//$('input[name=<?//=$arIdAnswer["ClientId"]?>//]').val(ClientId);
 
 						
 	                }
