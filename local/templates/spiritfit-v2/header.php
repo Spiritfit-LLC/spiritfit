@@ -74,7 +74,7 @@ foreach( $clubs as $club ) {
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/form-standart.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/custom.js");
 
-
+    CJSCore::Init();
     ?>
     
     <? $APPLICATION->ShowHead(); ?>
