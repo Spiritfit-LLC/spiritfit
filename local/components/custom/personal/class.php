@@ -893,7 +893,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         $rsUser = CUser::GetByID($USER->GetID());
         $arUser = $rsUser->Fetch();
 
-        if ((int)$_POST['sum']>(int)$arUser['UF_PAYMENT_LIMIT']){
+        if (!empty($arUser['UF_PAYMENT_LIMIT']) && ((int)$_POST['sum']>(int)$arUser['UF_PAYMENT_LIMIT'])){
             throw new Exception($this->errorMessages[24], 24);
         }
 

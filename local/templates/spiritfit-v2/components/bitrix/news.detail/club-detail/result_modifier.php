@@ -17,10 +17,21 @@ if (count($url_parts)>4){
 }
 
 
+
+
 $last = count($url_parts)-1;
 if ($url_parts[$last]=="") $last--;
 $code = $url_parts[$last];
 $code = preg_replace('/(.*).(php|html|htm)/', '$1', $code);
+
+//////////////////////////////////////////////////////////////////////////
+//Временное решение, пока не отошли от дублей. НЕ ЗАБУДЬ УДАЛИТЬ ЭТО ПОТОМ
+if ($code=="gorod-odintsovo"){
+    $url_parts[$last]="odintsovo";
+    $REDIRECT_URL=implode('/', $url_parts);
+    LocalRedirect($REDIRECT_URL.'?form=t-drive', false, 301);
+}
+//////////////////////////////////////////////////////////////////////////
 
 $id = CIBlockFindTools::GetElementID(false, $code, false, false, array());
 

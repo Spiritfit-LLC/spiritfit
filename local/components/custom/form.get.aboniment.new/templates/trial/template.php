@@ -105,6 +105,8 @@ $ELEMENT=$arResult["ELEMENT"];
                 <input type="hidden" name="ACTION" value="<?=$arResult['ACTION']?>">
                 <input type="hidden" name="FORM_TYPE" value="<?=$arResult['FORM_TYPE']?>">
 
+                <input type="hidden" value="trialTraining" data-upmetric="setTypeClient">
+
 
                 <?foreach ($FORM_FIELDS as $key=>$FIELD):?>
                     <?if ($FIELD['TYPE']=='hidden'):?>
@@ -148,6 +150,7 @@ $ELEMENT=$arResult["ELEMENT"];
                                placeholder="<?=$FORM_FIELDS['phone']['PLACEHOLDER']?>"
                                value="<?=$FORM_FIELDS['phone']['VALUE']?>"
                                name="<?=$FORM_FIELDS['phone']['NAME']?>"
+                               data-upmetric="phone"
                             <?if ($FORM_FIELDS['phone']['REQUIRED']) echo 'required';?>
                             <?if (!empty($FORM_FIELDS['phone']['VALIDATOR'])) echo $FORM_FIELDS['phone']['VALIDATOR'];?>>
                         <input class="input input--light input--short input--text"
@@ -155,6 +158,7 @@ $ELEMENT=$arResult["ELEMENT"];
                                placeholder="<?=$FORM_FIELDS['email']['PLACEHOLDER']?>"
                                value="<?=$FORM_FIELDS['email']['VALUE']?>"
                                name="<?=$FORM_FIELDS['email']['NAME']?>"
+                               data-upmetric="email"
                             <?if ($FORM_FIELDS['email']['REQUIRED']) echo 'required';?>
                             <?if (!empty($FORM_FIELDS['email']['VALIDATOR'])) echo $FORM_FIELDS['email']['VALIDATOR'];?>>
                     </div>

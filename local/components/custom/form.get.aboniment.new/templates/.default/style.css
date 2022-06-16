@@ -79,6 +79,12 @@ a.get-abonement-code:hover{
     padding: 20px;
     font-variant-caps: all-small-caps;
 }
+@media screen and (max-width: 768px){
+    .message-modal__content {
+        padding: 0;
+        font-size: 20px;
+    }
+}
 .dlg-header{
     display: none!important;
 }
@@ -123,6 +129,7 @@ input#bonuses-input {
     flex-direction: column;
     align-items: center;
     max-width: 600px;
+    margin:auto;
 }
 .auth-request-form__text {
     text-align: center;
@@ -141,6 +148,12 @@ a.auth-request-form__button {
     display: inline-block;
     text-align: center;
     transition: 0.3s;
+}
+
+@media screen and (max-width: 390px) {
+    a.auth-request-form__button {
+        width: 100px;
+    }
 }
 
 a.auth-request-form__button:hover {

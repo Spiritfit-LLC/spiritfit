@@ -130,10 +130,12 @@ $(document).ready(function(){
         tippy('a[href="#spend"]', {
             content: (reference) =>
             {
+                var paymentlimit=$('input#paymentlimit').val()
                 var string='<form class="spend-form tooltip-form">' +
                     '<div class="tooltip-form-title">Списать бонусы</div>' +
                     '<input type="hidden" name="ACTION" value="SPEND">' +
                     '<input type="text" class="tooltip-form-input number" name="sum" placeholder="Количество баллов" required>' +
+                    '<div class="tooltip-form-body-text">Доступный лимит бонусов в счет следующего списания: <span class="bold">'+paymentlimit+'</span></div>' +
                     '<input type="submit" class="tooltip-form-submit" value="Списать">' +
                     '<div class="escapingBallG-animation tippy-form">' +
                     '<div id="escapingBall_1" class="escapingBallG"></div>' +

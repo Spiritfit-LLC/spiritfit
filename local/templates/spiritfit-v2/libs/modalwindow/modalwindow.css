@@ -27,6 +27,11 @@
     -ms-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
 }
+@media screen and (max-width: 768px){
+    .dlg-modal{
+        min-width: 100%;
+    }
+}
 #dlg_modal{
     position: fixed;
     top: 50%;
