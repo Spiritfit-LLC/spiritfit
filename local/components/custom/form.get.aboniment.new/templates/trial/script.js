@@ -1,10 +1,17 @@
 $(document).ready(function(){
+    function o(){
+        $(window).innerWidth() < 1260 ? $(".subscription__aside").next().is($(".services-block")) || ($(".subscription__aside").insertAfter(".subscription__label-prices-block"), $(".subscription__ready").insertAfter(".subscription__title:eq(0)")) : $(".subscription__aside").next().is($(".services-block")) && ($(".subscription__aside").insertAfter(".subscription__main"), $(".subscription__ready").insertAfter(".subscription__common"))
+    }
+
+
     $(".input--checkbox").styler();
     [].forEach.call( document.querySelectorAll('[type="tel"]'), function(input) {
         $(input).inputmask({
             'mask': '+7 (999) 999-99-99',
         });
     });
+
+    dataLayerSend('UX', 'openMembershipRegPage', strSend);
 
     //МОДАЛЬНЫЕ ОКНА
     var message_modal_content=$('#message-modal').get(0);
@@ -60,6 +67,7 @@ $(document).ready(function(){
             data: postData,
             method:'POST'
         }).then(function (response) {
+            o();
             // console.log(response)
             var result_data=response['data'];
 
@@ -115,8 +123,20 @@ $(document).ready(function(){
     function SubmitForm(e){
         e.preventDefault();
 
+
+
         var form=$(this);
         var action=form.find('input[name="ACTION"]').val();
+
+        if ($(form).find('[data-upmetric="setTypeClient"]').length > 0){
+            var setClientData= {
+                'phone':$(form).find('[data-upmetric="phone"]').val(),
+                'email':$(form).find('[data-upmetric="email"]').val(),
+                'setTypeClient':$(form).find('[data-upmetric="setTypeClient"]').val()
+            };
+            $(form).find('[data-upmetric="setTypeClient"]').remove();
+            sendToUpMetrika(setClientData);
+        }
 
         if (!CheckFormBeforeSubmit()){
             ShowMessage('Заполните обязательные поля');
@@ -146,6 +166,7 @@ $(document).ready(function(){
             method:'POST'
         }).then(function(responce){
             // console.log(responce)
+            o();
 
             //Разблокируем кнопку
             form.find('input[type="submit"]').removeAttr('disabled')
@@ -195,6 +216,13 @@ $(document).ready(function(){
 
 
             if (action==='getTrial'){
+                dataLayerSend('UX', 'openSmsCodePage', strSend);
+                if( strAbonement == "Домашние тренировки" ) {
+                    dataLayerSend('UX', 'sendContactFormHomeWorkout', strSend);
+                } else {
+                    dataLayerSend('conversion', 'sendContactForm', strSend);
+                }
+
                 form.find('.form-checkboxes').hide(300);
 
                 form.find('input#smscode-input').prop('required', 'required').removeAttr('disabled');
@@ -217,9 +245,7 @@ $(document).ready(function(){
 
                 $('input.get-abonement-agree').val('Подтвердить')
             }
-            else if(action==='getOrder' || action==='checkCode'){
-                form.find('.subscription__code-new').hide(300);
-                form.find('input#smscode-input').removeAttr('required').val('');
+            else if(action==='checkCodeTrial'){
                 dataLayerSend('UX', 'openMembershipReadyPage', strSend);
             }
 

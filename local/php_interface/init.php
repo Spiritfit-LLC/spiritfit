@@ -58,6 +58,9 @@ if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/Person
     require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/PersonalUtils.php');
 }
 
+AddEventHandler("main", "OnAfterUserAuthorize", Array("PersonalUtils", "UpdateFieldsAfterLogin"));
+
+
 CModule::AddAutoloadClasses("", array(
     '\ImageConverter\Picture' => '/local/php_interface/classes/ImageConverter.php',
 ));

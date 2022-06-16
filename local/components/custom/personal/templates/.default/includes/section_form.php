@@ -1,6 +1,10 @@
 <?php
 if(!function_exists('GetPersonalSection')) {
     function GetPersonalSection($FIELD){?>
+            <?if ($FIELD['TYPE']=='hidden'):?>
+                <input type="hidden" name="<?=$FIELD['NAME']?>" value="<?=$FIELD['VALUE']?>" id="<?=$FIELD['HTML_ID']?>">
+            <?return?>
+            <?endif;?>
         <div class="personal-section-form__item <?if($FIELD['TYPE']=='radio') echo 'radio-item';?>
                                                                <?if($FIELD['TYPE']=='table') echo 'table-item';?>
                                                                <?if($FIELD['TYPE']=='checkbox') echo 'checkbox-item';?>
@@ -26,13 +30,13 @@ if(!function_exists('GetPersonalSection')) {
                                 type="<?=$FIELD['TYPE']?>"
                                 name="<?=$FIELD['NAME']?>"
                                 value="<?=$FIELD['VALUE'][$i]['RADIO_VAL']?>"
-                                id="<?=$FIELD['NAME'].'_'.$i?>"
+                                id="<?=$FIELD['HTML_ID']?>"
                                 <?if ($FIELD['REQUIRED']) echo 'required';?>
                                 <?if (!$FIELD['CHANGEBLE']){?> disabled="disabled" <?}?>
                                 <?if ($FIELD['VALUE'][$i]['CHECKED']) echo 'checked';?>
                                 data-code="<?=$FIELD['USER_FIELD_CODE']?>"
                             >
-                            <label for="<?=$FIELD['NAME'].'_'.$i?>"><?=$FIELD['VALUE_DESC'][$i]?></label>
+                            <label for="<?=$FIELD['HTML_ID']?>"><?=$FIELD['VALUE_DESC'][$i]?></label>
                         </div>
                     <?endfor;?>
                 </div>
@@ -47,7 +51,7 @@ if(!function_exists('GetPersonalSection')) {
                     <?if ($FIELD['REQUIRED']) echo 'required';?>
                     <?if (!empty($FIELD['VALIDATOR'])) echo $FIELD['VALIDATOR']?>
                         name="<?=$FIELD['NAME']?>"
-                          id="<?=$FIELD['NAME']?>"><?=$FIELD['VALUE']?></textarea>
+                          id="<?=$FIELD['HTML_ID']?>"><?=$FIELD['VALUE']?></textarea>
             <?else:?>
                 <?if (!empty($FIELD['OLD_SUM'])):?>
                     <div class="old-sum"><s><?=$FIELD['OLD_SUM']?></s>
@@ -58,7 +62,7 @@ if(!function_exists('GetPersonalSection')) {
                     type="<?if ($FIELD['TYPE']=='date' || $FIELD['TYPE']=='table') echo 'text'; else echo $FIELD['TYPE'];?>"
                     name="<?=$FIELD['NAME']?>"
                     value="<?=$FIELD['VALUE']?>"
-                    id="<?=$FIELD['NAME']?>"
+                    id="<?=$FIELD['HTML_ID']?>"
                     data-required_id="<?=$FIELD['REQUIRED_ID']?>"
                     <?if ($FIELD['REQUIRED']) echo 'required';?>
                     <?if ($FIELD['REQUIRED_FROM']){?> data-required_from="<?=$FIELD['REQUIRED_FROM']?>"<?}?>

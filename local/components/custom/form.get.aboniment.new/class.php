@@ -419,7 +419,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
 
     private function GetSeo(){
         /* Получаем значения SEO */
-        $ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues($this->arParams["ABONEMENT_IBLOCK_ID"], $this->arResult["ELEMENT"]["ID"]);
+        $ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues($this->arResult['ABONEMENT_IBLOCK_ID'], $this->arResult["ELEMENT"]["ID"]);
         $seoValues = $ipropValues->getValues();
         if ($seoValues['ELEMENT_META_TITLE']) {
             $this->arResult['SEO']['ELEMENT_META_TITLE'] = $seoValues['ELEMENT_META_TITLE'];
@@ -886,6 +886,17 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         if (!empty($bonuses)){
             $CURRENT_PRICE-=$bonuses;
         }
+
+        global $USER;
+        if ($USER->IsAuthorized()){
+            try{
+                PersonalUtils::UpdatePersonalInfoFrom1C($USER->GetID());
+            }
+            catch (Exception $err){
+
+            }
+        }
+
         return [
             'elements'=>[
                 '.subscription__main'=>$content,

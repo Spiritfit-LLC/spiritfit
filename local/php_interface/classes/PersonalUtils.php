@@ -1,6 +1,5 @@
 <?php
 
-AddEventHandler("main", "OnAfterUserAuthorize", Array("PersonalUtils", "UpdateFieldsAfterLogin"));
 
 class PersonalUtils{
     public static function GetIDBySID($FORM_SID){
@@ -180,6 +179,7 @@ class PersonalUtils{
                     'SHOW_PLACEHOLDER'=>$element['PROPERTIES']['SHOW_TITLE_IN_HEAD']['VALUE_XML_ID']=='Y',
                     'VALIDATOR'=>$element['PROPERTIES']['VALIDATOR']['VALUE'],
                     'CLUE'=>!empty($element['PROPERTIES']['CLUE']['VALUE'])?$element['PROPERTIES']['CLUE']['VALUE']:false,
+                    'HTML_ID'=>!empty($element['PROPERTIES']['HTML_ID']['VALUE'])?$element['PROPERTIES']['HTML_ID']['VALUE']:"form_" . $element['CODE'] . "_" . $id,
                 ];
 
                 if ($FIELD['TYPE']=='password' && !$is_correct){
@@ -571,19 +571,23 @@ class PersonalUtils{
 
     public function UpdateFieldsAfterLogin($arUser){
         $rsUser = CUser::GetByID($arUser['user_fields']['ID']);
+        $arGroups = CUser::GetUserGroup($arUser['user_fields']['ID']);
+
         if ($arUser2 = $rsUser->Fetch())
         {
-            if (!empty($arUser2['UF_LAST_UPDATE_TIME'])){
-                $update_time = new DateTime($arUser2['UF_LAST_UPDATE_TIME']);
-                $now=new DateTime();
-                $interval=$update_time->diff($now);
-                $minutes = ($interval->days * 24 * 60) + ($interval->h * 60) + $interval->i;
-                if ($minutes>30){
+            if (in_array(Utils::GetUGroupIDBySID('POTENTIAL_CLIENTS'), $arGroups) || in_array(Utils::GetUGroupIDBySID('CLIENTS'), $arGroups)){
+                if (!empty($arUser2['UF_LAST_UPDATE_TIME'])){
+                    $update_time = new DateTime($arUser2['UF_LAST_UPDATE_TIME']);
+                    $now=new DateTime();
+                    $interval=$update_time->diff($now);
+                    $minutes = ($interval->days * 24 * 60) + ($interval->h * 60) + $interval->i;
+                    if ($minutes>30){
+                        self::UpdatePersonalInfoFrom1C(false, $arUser2);
+                    }
+                }
+                else{
                     self::UpdatePersonalInfoFrom1C(false, $arUser2);
                 }
-            }
-            else{
-                self::UpdatePersonalInfoFrom1C(false, $arUser2);
             }
         }
     }

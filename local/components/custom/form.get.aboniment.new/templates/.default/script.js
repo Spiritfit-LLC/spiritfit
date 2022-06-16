@@ -1,4 +1,8 @@
 $(document).ready(function(){
+    function o(){
+        $(window).innerWidth() < 1260 ? $(".subscription__aside").next().is($(".services-block")) || ($(".subscription__aside").insertAfter(".subscription__label-prices-block"), $(".subscription__ready").insertAfter(".subscription__title:eq(0)")) : $(".subscription__aside").next().is($(".services-block")) && ($(".subscription__aside").insertAfter(".subscription__main"), $(".subscription__ready").insertAfter(".subscription__common"))
+    }
+
     $(".input--checkbox").styler();
     [].forEach.call( document.querySelectorAll('[type="tel"]'), function(input) {
         $(input).inputmask({
@@ -119,6 +123,7 @@ $(document).ready(function(){
             data: postData,
             method:'POST'
         }).then(function (response) {
+            o();
             // console.log(response)
             var result_data=response['data'];
 
@@ -218,6 +223,7 @@ $(document).ready(function(){
                 method:'POST'
             }).then(function(responce){
                 // console.log(responce)
+                o();
 
                 //Разблокируем кнопку
                 form.find('input[type="submit"]').removeAttr('disabled')
