@@ -5,7 +5,7 @@ $arUrlRewrite=array (
     'CONDITION' => '#^/abonement/([\\.\\-0-9a-zA-Z]+)/.*$#',
     'RULE' => 'ELEMENT_CODE=$1',
     'ID' => '',
-    'PATH' => '/abonement/detail.php',
+    'PATH' => '/abonement/detail.new.php',
     'SORT' => 100,
   ),
   1 => 

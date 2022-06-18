@@ -107,3 +107,17 @@
 		$arItem["PROPERTIES"] = $obItem->GetProperties();
 		$arResult["LEFT_ITEMS"][] = getAdditionaBlogItem($arItem, $isSafari);
 	}
+
+    function remove_empty_html_tags($html)
+    {
+        return preg_replace("/\xEF\xBB\xBF/", "", $html);
+    }
+
+    for ($i=0; $i<count($arResult['PROPERTIES']['BLOG_TEXT']['VALUE']); $i++){
+        $arResult['TXT'][]=[
+            'TEXT'=>remove_empty_html_tags(htmlspecialchars_decode($arResult['PROPERTIES']['BLOG_TEXT']['VALUE'][$i]['TEXT'])),
+            'TITLE'=>$arResult['PROPERTIES']['BLOG_TEXT']['DESCRIPTION'][$i],
+            'ID'=>'section_'.$i,
+        ];
+
+    }

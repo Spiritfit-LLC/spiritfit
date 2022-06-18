@@ -1,30 +1,30 @@
 <div class="footer-menu">
 	<div class="footer-menu-cell">
-		<div class="footer-menu-title"><a href="/about/">О компании</a></div>
+		<div class="footer-menu-title"><a href="/about/" class="dont-touch">О компании</a></div>
 		<ul>
-			<li><a href="https://career.spiritfit.ru/">Карьера</a></li>
-			<li><a href="/about/adv/">Рекламные возможности</a></li>
-			<li><a href="/about/platform/">Площадки под новые клубы</a></li>
+			<li><a href="https://career.spiritfit.ru/" class="dont-touch">Карьера</a></li>
+			<li><a href="/about/adv/" class="dont-touch">Рекламные возможности</a></li>
+			<li><a href="/about/platform/" class="dont-touch">Площадки под новые клубы</a></li>
 		</ul>
 	</div>
 	<div class="footer-menu-cell">
-		<div class="footer-menu-title"><a href="/trenirovki/trenirovki.php">Тренировки</a></div>
+		<div class="footer-menu-title"><a href="/trenirovki/trenirovki.php" class="dont-touch">Тренировки</a></div>
 		<ul>
-			<li><a href="/trenirovki/trenazhernyy-zal/">Тренажерный зал</a></li>
-			<li><a href="/gruppovye-trenirovki/">Групповые тренировки</a></li>
-			<li><a href="/trenirovki/personal-training/">Персональный тренинг</a></li>
-			<li><a href="/trenirovki/onlayn-trenirovki/">Тренировки онлайн</a></li>
-			<li><a href="/trenirovki/fitnes-testing/">Фитнес-тестирование</a></li>
+			<li><a href="/trenirovki/trenazhernyy-zal/" class="dont-touch">Тренажерный зал</a></li>
+			<li><a href="/gruppovye-trenirovki/" class="dont-touch">Групповые тренировки</a></li>
+			<li><a href="/trenirovki/personal-training/" class="dont-touch">Персональный тренинг</a></li>
+			<li><a href="/trenirovki/onlayn-trenirovki/" class="dont-touch">Тренировки онлайн</a></li>
+			<li><a href="/trenirovki/fitnes-testing/" class="dont-touch">Фитнес-тестирование</a></li>
 		</ul>
 	</div>
 	<div class="footer-menu-cell">
-		<div class="footer-menu-title"><a href="/club-members/">Членам клуба</a></div>
+		<div class="footer-menu-title"><a href="/club-members/" class="dont-touch">Членам клуба</a></div>
 		<ul>
-			<li><a href="/club-members/#abonements">Абонементы</a></li>
-			<li><a href="https://corp.spiritfit.ru/">Корпоративная программа</a></li>
+			<li><a href="/club-members/#abonements" class="dont-touch">Абонементы</a></li>
+			<li><a href="https://corp.spiritfit.ru/" class="dont-touch">Корпоративная программа</a></li>
 			<li><a href="/loyalty-program/">Программа лояльности</a></li>
-			<li><a href="/trenirovki/partnery-i-privilegii/">Партнёры и привилегии</a></li>
-			<li><a href="/club-members/#faq">FAQ</a></li>
+			<li><a href="/trenirovki/partnery-i-privilegii/" class="dont-touch">Партнёры и привилегии</a></li>
+			<li><a href="/#faq">FAQ</a></li>
 		</ul>
 	</div>
 	<div class="footer-menu-cell">
@@ -40,3 +40,11 @@
 	</div>
 	
 </div>
+<script>
+    $(document).ready(function(){
+        $('.dont-touch').click(function(e){
+            e.preventDefault();
+            return false;
+        })
+    })
+</script>
