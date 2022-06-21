@@ -839,6 +839,39 @@ ul li p {
 	box-sizing: border-box;
 }
 
+
+.blog-detail-text .space-beetwen{
+	display: flex;
+	flex-direction: row;
+}
+.space-beetwen div {
+	width: 50%;
+	margin: 0 25px;
+}
+.space-beetwen div:first-child {
+	margin-left: 0;
+}
+.space-beetwen div:last-child {
+	text-align: end;
+	margin-right: 0;
+}
+
+.space-beetwen img{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+@media screen and (max-width: 768px){
+	.blog-detail-text .space-beetwen {
+		display: flex;
+		flex-direction: column;
+	}
+	.space-beetwen div {
+		width: 100%;
+		margin:0;
+	}
+}
+
 @media not all and (min-resolution:.001dpcm) { @media {
 	.blog-item.blog-left .cell:nth-child(2) {
 		width: initial;

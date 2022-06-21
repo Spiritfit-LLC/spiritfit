@@ -1,4 +1,9 @@
 <?
+
+//ÐÅÄÈÐÅÊÒ ÍÀ ÁÎÒÀ
+header('Location: https://t.me/SpiritFitBot');
+exit;
+
 define('HIDE_BREADCRUMB', true);
 define('HIDE_SLIDER', true);
 define('HOLDER_CLASS', 'opros');
