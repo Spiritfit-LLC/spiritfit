@@ -8,4 +8,5 @@ $APPLICATION->SetPageProperty("description", "Спецпроекты Spirit. Fit
 
 <? $APPLICATION->IncludeFile('/local/include/blocks-detail.php', ['ELEMENT_CODE' => 'specproekty'], ['SHOW_BORDER' => false]); ?>
 
+
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
