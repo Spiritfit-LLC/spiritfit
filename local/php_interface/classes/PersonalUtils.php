@@ -167,6 +167,25 @@ class PersonalUtils{
                     continue;
                 }
 
+                if (!empty($element['PROPERTIES']['USER_FIELD_DEPENDENT']['VALUE'])){
+                    $cont_flag=false;
+                    foreach ($element['PROPERTIES']['USER_FIELD_DEPENDENT']['VALUE'] as $DEPENDENT){
+                        if ($DEPENDENT[0]=='='){
+                            if (empty($arUser[mb_substr($DEPENDENT, 1)])){
+                                $cont_flag=true;
+                            }
+                        }
+                        elseif ($DEPENDENT[0]=='!'){
+                            if (!empty($arUser[mb_substr($DEPENDENT, 1)])){
+                                $cont_flag=true;
+                            }
+                        }
+                    }
+                    if ($cont_flag){
+                        continue;
+                    }
+                }
+
                 $FIELD=[
                     'NAME'=>"form_" . $element['CODE'] . "_" . $id,
                     'TYPE'=>$element['PROPERTIES']['FIELD_TYPE']['VALUE_XML_ID'],
@@ -187,6 +206,10 @@ class PersonalUtils{
                 }
                 else{
                     $FIELD["REQUIRED"]=$element['PROPERTIES']['REQUIRED']['VALUE']=='Y'?true:false;
+                }
+
+                if ($FIELD['HTML_ID']=='client-email'){
+                    $FIELD['CONFIRM']=boolval($arUser['UF_EMAIL_IS_CONFIRM']);
                 }
 
                 if ($request_info){
@@ -255,6 +278,13 @@ class PersonalUtils{
                     if ($FIELD['USER_FIELD_CODE']=='UF_PAYMENT_SUM' && !empty($arUser['UF_PAYMENT_BONUSES'])){
                         $old_sum=(int)$arUser['UF_PAYMENT_SUM']+(int)$arUser['UF_PAYMENT_BONUSES'];
                         $FIELD['OLD_SUM']=$old_sum;
+                    }
+
+                    if ($element['PROPERTIES']['ADD_VALUE_TO_DATA']['VALUE_XML_ID']=='Y'){
+                        $FIELD['DATA_VALUE']=$arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']];
+                    }
+                    else{
+                        $FIELD['DATA_VALUE']=null;
                     }
                 }
 
@@ -358,16 +388,16 @@ class PersonalUtils{
                 }
 
                 foreach ($ar_Section['UF_JS_FILE'] as $js){
-                    $ar_SectionList[$ar_Section['ID']]['JS'][]=CFile::GetPath($js);
+                    $LK_FIELDS['JS'][]=CFile::GetPath($js);
                 }
                 foreach ($ar_Section['UF_JS_FILE_LINK'] as $js){
-                    $ar_SectionList[$ar_Section['ID']]['JS'][]=$js;
+                    $LK_FIELDS['JS'][]=$js;
                 }
                 foreach ($ar_Section['UF_CSS_FILE'] as $css){
-                    $ar_SectionList[$ar_Section['ID']]['CSS'][]=CFile::GetPath($css);
+                    $LK_FIELDS['CSS'][]=CFile::GetPath($css);
                 }
                 foreach ($ar_Section['UF_CSS_FILE_LINK'] as $css){
-                    $ar_SectionList[$ar_Section['ID']]['CSS'][]=$css;
+                    $LK_FIELDS['CSS'][]=$css;
                 }
                 $ar_DepthLavel[] = $ar_Section['DEPTH_LEVEL'];
             }

@@ -211,6 +211,7 @@ input.personal-profile__user-refresh-photo-file-input {
     box-sizing: border-box;
     padding: 5px 20px;
     margin: 20px 0;
+    position:relative;
 }
 .personal-section-form__item-placeholder {
     font-family: 'Gotham Pro';
@@ -287,6 +288,12 @@ input.personal-section-form__item-value.half-width{
     margin-bottom: 0;
     /*border-bottom: 1px solid #ff76285e;*/
     padding-bottom: 5px;
+}
+a.confirm-email-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    font-weight: 600;
 }
 /*SECTION BLOCK*/
 

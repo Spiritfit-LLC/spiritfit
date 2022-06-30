@@ -121,7 +121,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 													<? endforeach; ?>
 												<? } ?>
 												
-												<a href="<?=$abonement['DETAIL_PAGE_URL']?>" class="b-twoside-card__prices-button button">Выбрать</a>
+												<a href="<?=$abonement['DETAIL_PAGE_URL']?>" class="b-twoside-card__prices-button button <?=$abonement['PROPERTIES']['ADDITIONAL_CLASS']['VALUE']?>"  data-sub_id="<?=$abonement['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>">Выбрать</a>
 												<? 
 												$showLinkForPopup = false;
 												if($showLinkForPopup){ ?>
@@ -214,6 +214,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 										$photoText = $arResult["PROPERTIES"]['PHOTO_DESC']['~VALUE'][$i];
 										if(!empty($photoText['TEXT'])){ ?>
 											<div class="b-image-plate-block__text-item">
+                                                <h2 class="slide-text-title"><?=$arResult["PROPERTIES"]['PHOTO_DESC']['~DESCRIPTION'][$i]?></h2>
 												<div class="b-image-plate-block__text-item-wrap">
 												<?=$photoText['TEXT']?>
 												</div>

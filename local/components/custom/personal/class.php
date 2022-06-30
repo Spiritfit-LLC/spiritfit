@@ -110,6 +110,46 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                 ],
                 'postfilters' => []
             ],
+            'emailConfirm'=>[
+                'prefilters' => [
+                    new ActionFilter\Authentication,
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
+            ],
+            'emailCodeConfirm'=>[
+                'prefilters' => [
+                    new ActionFilter\Authentication,
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
+            ],
+            'getfreezing'=>[
+                'prefilters' => [
+                    new ActionFilter\Authentication,
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
+            ],
+            'postfreezing'=>[
+                'prefilters' => [
+                    new ActionFilter\Authentication,
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
+            ]
         ];
     }
 
@@ -235,6 +275,10 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         22=>'Вы не можете отправить подарок самому себе',
         23=>'Неверный формат номера',
         24=>'Превышен лимит списания.',
+        25=>'Проверочный код не верный',
+        26=>'Не удалось подтвердить Email. Обновите страницу и попробуйте еще раз',
+        27=>'Время подтверждения Email истекло. Попробуйте еще раз',
+        28=>'Некорректный E-mail адрес',
         100=>'Непредвиденная ошибка'
     ];
 
@@ -395,7 +439,8 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                                 'action'=>'lkedit',
                                 'params'=>[
                                     'id1c'=>$user1Carr['id1c'],
-                                    'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE']
+                                    'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                                    'action'=>'update'
                                 ],
                             ));
                             return ['result'=>true, 'reload'=>true];
@@ -414,7 +459,8 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                             'action'=>'lkedit',
                             'params'=>[
                                 'id1c'=>$arUser['UF_1CID'],
-                                'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE']
+                                'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                                'action'=>'update'
                             ],
                         ));
                         return ['result'=>true, 'reload'=>true];
@@ -559,10 +605,11 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                                     'action'=>'lkedit',
                                     'params'=>[
                                         'id1c'=>$arFields['UF_1CID'],
-                                        'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE']
+                                        'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                                        'action'=>'update'
                                     ],
                                 ));
-                                return ['result'=>true, 'reload'=>true];
+                                return ['result'=>true, 'reload'=>true, 'dataLayer'=>['eLabel'=>'', 'eAction'=>'sendRegistrationForm']];
                             }
                             else{
                                 throw new Exception($user->LAST_ERROR, 17);
@@ -683,7 +730,8 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                                     'action'=>'lkedit',
                                     'params'=>[
                                         'id1c'=>$arUser['UF_1CID'],
-                                        'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE']
+                                        'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                                        'action'=>'update'
                                     ],
                                 ));
                                 return ['result'=>true, 'reload'=>true];
@@ -769,7 +817,8 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                 'gender'=>$CHANGEARR['PERSONAL_GENDER'],
                 'id1c'=>$FORM_FIELDS['USER_1CID'],
                 'login'=>$FORM_FIELDS['USER_LOGIN'],
-                'imageurl'=>$FORM_FIELDS['PERSONAL_PHOTO']
+                'imageurl'=>$FORM_FIELDS['PERSONAL_PHOTO'],
+                'action'=>'edit'
             );
             $api=new Api(array(
                 'action'=>'lkedit',
@@ -823,7 +872,8 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                     'gender'=>$arUser['PERSONAL_GENDER'],
                     'id1c'=>$arUser['UF_1CID'],
                     'login'=>$arUser['LOGIN'],
-                    'imageurl'=>CFile::GetPath($arUser['PERSONAL_PHOTO'])
+                    'imageurl'=>CFile::GetPath($arUser['PERSONAL_PHOTO']),
+                    'action'=>'edit'
                 );
                 $api=new Api(array(
                     'action'=>'lkedit',
@@ -968,5 +1018,235 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         else{
             throw new Exception($USER->LAST_ERROR, 18);
         }
+    }
+    //Подтверждение email
+    public function emailConfirmAction(){
+        unset($_SESSION['CORRECT_EMAIL']);
+        unset($_SESSION['EMAIL_CODE']);
+        unset($_SESSION['EMAIL_CODE_COUNT']);
+        unset($_SESSION['EMAIL_CODE_TIME']);
+        $email=Context::getCurrent()->getRequest()->getPost('email');
+        if (empty($email)){
+            throw new Exception($this->errorMessages[2], 2);
+        }
+
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new Exception($this->errorMessages[28], 28);
+        }
+
+        $api=new Api([
+            'action'=>'lkemailconfirm',
+            'params'=>[
+                'email'=>$email
+            ]
+        ]);
+
+        $response=$api->result();
+
+        if (!$response['success']){
+            throw new Exception($response['data']['result']['message'], 100);
+        }
+        else{
+            $_SESSION['EMAIL_CODE']=$response['data']['result']['result']['code'];
+            $_SESSION['EMAIL_CODE_COUNT']=0;
+            $_SESSION['EMAIL_CODE_TIME']=time();
+            $_SESSION['CORRECT_EMAIL']=$email;
+
+            if (!empty($_SESSION['EMAIL_CODE'])){
+                return array('result'=>true);
+            }
+            else{
+                throw new Exception($this->errorMessages[100], 100);
+            }
+        }
+
+    }
+    //Подтверждение кода из email
+    public function emailCodeConfirmAction(){
+//        return [$_SESSION['EMAIL_CODE'], $_SESSION['EMAIL_CODE_COUNT'], $_SESSION['EMAIL_CODE_TIME']];
+        if (!isset($_SESSION['EMAIL_CODE']) || !isset($_SESSION['EMAIL_CODE_COUNT']) || !isset($_SESSION['EMAIL_CODE_TIME'])){
+            throw new Exception($this->errorMessages[26], 26);
+        }
+
+        if ($_SESSION['EMAIL_CODE_COUNT']>3){
+            unset($_SESSION['EMAIL_CODE']);
+            unset($_SESSION['EMAIL_CODE_COUNT']);
+            unset($_SESSION['EMAIL_CODE_TIME']);
+            unset($_SESSION['CORRECT_EMAIL']);
+            throw new Exception($this->errorMessages[26], 26);
+        }
+
+        if (time()-$_SESSION['EMAIL_CODE_TIME']>180){
+            unset($_SESSION['EMAIL_CODE']);
+            unset($_SESSION['EMAIL_CODE_COUNT']);
+            unset($_SESSION['EMAIL_CODE_TIME']);
+            unset($_SESSION['CORRECT_EMAIL']);
+            throw new Exception($this->errorMessages[27], 27);
+        }
+
+        $code=Context::getCurrent()->getRequest()->getPost('code');
+        if (empty($code)){
+            throw new Exception($this->errorMessages[2], 2);
+        }
+        $code = preg_replace('![^0-9]+!', '', $code);
+        if (strlen($code) != 5) {
+            throw new Exception($this->errorMessages[15], 15);
+        }
+
+        if ($_SESSION['EMAIL_CODE']==$code){
+            global $USER;
+            $result=$USER->Update($USER->GetID(), array('UF_EMAIL_IS_CONFIRM'=>true, 'EMAIL'=>$_SESSION['CORRECT_EMAIL']), false);
+            if($result==true){
+                $arParams=array(
+                    'email'=>$_SESSION['CORRECT_EMAIL'],
+                    'authorizationemail'=>'edit'
+                );
+                $api=new Api(array(
+                    'action'=>'lkedit',
+                    'params'=>$arParams,
+                ));
+
+                unset($_SESSION['EMAIL_CODE']);
+                unset($_SESSION['EMAIL_CODE_COUNT']);
+                unset($_SESSION['EMAIL_CODE_TIME']);
+                unset($_SESSION['CORRECT_EMAIL']);
+
+                return ['result'=>true, 'reload'=>true, 'message'=>'Ваши данные обновлены'];
+            }
+            else{
+                throw new Exception($USER->LAST_ERROR, 18);
+            }
+            return array('result'=>true, 'reload'=>true, 'section'=>Context::getCurrent()->getRequest()->getPost('SECTION_ID')[0]);
+        }
+        else{
+            $_SESSION['EMAIL_CODE_COUNT'].=1;
+            if ($_SESSION['EMAIL_CODE_COUNT']>3){
+                unset($_SESSION['EMAIL_CODE']);
+                unset($_SESSION['EMAIL_CODE_COUNT']);
+                unset($_SESSION['EMAIL_CODE_TIME']);
+                unset($_SESSION['CORRECT_EMAIL']);
+                throw new Exception($this->errorMessages[26], 26);
+            }
+            throw new Exception($this->errorMessages[25], 25);
+        }
+    }
+
+    //Запрос заморозки
+    public function getfreezingAction(){
+        global $USER;
+        $rsUser = CUser::GetByID($USER->GetID());
+        $arUser = $rsUser->Fetch();
+
+        $rsUser = CUser::GetByID($USER->GetID());
+        $arUser = $rsUser->Fetch();
+        $arParams=[
+            'id1c'=>$arUser['UF_1CID'],
+            'login'=>$arUser['LOGIN']
+        ];
+        $action='lkfreezingget';
+
+        $api=new Api([
+            'action'=>$action,
+            'params'=> $arParams
+        ]);
+
+        $result=$api->result();
+        if (!$result['success']){
+            throw new Exception($result['data']['result']['userMessage'],100);
+        }
+
+        return ['result'=>true,'freezings'=>$result['data']['result']['result'], 'next_action'=>'postfreezing'];
+    }
+    //Отправка заморозки
+    public function postfreezingAction(){
+        $freezing_id=Context::getCurrent()->getRequest()->getPost('freezing');
+        if(empty($freezing_id)){
+            throw new Exception($this->errorMessages[2], 2);
+        }
+
+        global $USER;
+        $rsUser = CUser::GetByID($USER->GetID());
+        $arUser = $rsUser->Fetch();
+
+        $rsUser = CUser::GetByID($USER->GetID());
+        $arUser = $rsUser->Fetch();
+        $arParams=[
+            'id1c'=>$arUser['UF_1CID'],
+            'login'=>$arUser['LOGIN'],
+            'id'=>$freezing_id
+        ];
+        $action='lkfreezingpost';
+
+        $api=new Api([
+            'action'=>$action,
+            'params'=> $arParams
+        ]);
+
+        $result=$api->result();
+        if (!$result['success']){
+            throw new Exception($result['data']['result']['userMessage'], 100);
+        }
+        PersonalUtils::UpdatePersonalInfoFrom1C($USER->GetID());
+        return ['result'=>true,'invoice'=>$result['data']['result']['result']];
+    }
+
+    //Запрос бесплатной заморозки
+    public function getfreefreezingAction(){
+        global $USER;
+        $rsUser = CUser::GetByID($USER->GetID());
+        $arUser = $rsUser->Fetch();
+
+        $rsUser = CUser::GetByID($USER->GetID());
+        $arUser = $rsUser->Fetch();
+        $arParams=[
+            'id1c'=>$arUser['UF_1CID'],
+            'login'=>$arUser['LOGIN']
+        ];
+        $action='lkfreefreezingget';
+
+        $api=new Api([
+            'action'=>$action,
+            'params'=> $arParams
+        ]);
+
+        $result=$api->result();
+        if (!$result['success']){
+            throw new Exception($result['data']['result']['userMessage'],100);
+        }
+
+        sort($result['data']['result']['result']);
+
+        return ['result'=>true,'freezings'=>$result['data']['result']['result'], 'next_action'=>'postfreezing'];
+    }
+    //Отправка бесплатной заморозки
+    public function freefreezingpostAction(){
+        $freezing=Context::getCurrent()->getRequest()->getPost('freezing');
+        if(empty($freezing)){
+            throw new Exception($this->errorMessages[2], 2);
+        }
+        global $USER;
+        $rsUser = CUser::GetByID($USER->GetID());
+        $arUser = $rsUser->Fetch();
+
+        $rsUser = CUser::GetByID($USER->GetID());
+        $arUser = $rsUser->Fetch();
+        $arParams=[
+            'id1c'=>$arUser['UF_1CID'],
+            'login'=>$arUser['LOGIN'],
+            'value'=>(int)$freezing
+        ];
+        $action='lkfreefreezingpost';
+
+        $api=new Api([
+            'action'=>$action,
+            'params'=> $arParams
+        ]);
+
+        $result=$api->result();
+        if (!$result['success']){
+            throw new Exception($result['data']['result']['userMessage'], 100);
+        }
+        PersonalUtils::UpdatePersonalInfoFrom1C($USER->GetID());
+        return ['reload'=>true];
     }
 }
