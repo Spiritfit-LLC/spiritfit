@@ -4,7 +4,6 @@
 $arField = ['name', 'email', 'phone'];
 ?>
 
-
 <div class="content-center block-margin">
     <div class="form-standart form-standart_tpl-hor form-standart_black-bg">
         <div class="form-standart__plate">

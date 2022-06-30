@@ -21,25 +21,12 @@ if( !isset($arResult["ELEMENT"]["PRICES"][0]["PRICE"]) ) {
 }
 
 //send name of club and abonement
-$selectClub = '';
-$selectClubSession = '';
-foreach ($arResult["arAnswers"]["club"][0]['ITEMS'] as $itemClub) {
-    if($itemClub['ID'] == $arResult["CLUB_ID"]) {
-        $selectClubSession = $itemClub['MESSAGE'];
-    }
-    if(!empty($itemClub['SELECTED'])){
-        $selectClub = $itemClub['MESSAGE'];
-    }
-}
-if( empty($selectClub) ) {
-    $selectClub = $selectClubSession;
-}
+$abonementName=$arResult['ELEMENT']['PROPERTIES']['CODE_ABONEMENT']['VALUE'];
 
-$abonementName = str_replace('<br>', ' ', $arResult['ELEMENT']['~NAME']);
-if( !empty($selectClub) ) {
-    $strSend = strip_tags($selectClub).'/'.$abonementName;
+if(!empty($arResult['SELECTED_CLUB'])) {
+    $clubName = strip_tags($arResult['SELECTED_CLUB']);
 } else {
-    $strSend = '-/'.$abonementName;
+    $clubName = '-';
 }
 
 $CLUB=$arResult['CLUB'];
@@ -48,7 +35,7 @@ $ELEMENT=$arResult["ELEMENT"];
 ?>
 
 
-<div class="subscription fixed" data-strsend="<?=$strSend?>" data-abonementname="<?=strip_tags($abonementName)?>">
+<div class="subscription fixed" data-abonementname="<?=strip_tags($abonementName)?>">
     <div class="subscription__main">
         <div class="subscription__stage">
             <div class="subscription__stage-item subscription__stage-item--done" data-step="1">1. Регистрация</div>
@@ -308,6 +295,6 @@ $ELEMENT=$arResult["ELEMENT"];
 
 <script>
     var componentName = <?=CUtil::PhpToJSObject($arResult['COMPONENT_NAME'])?>;
-    var strSend = '<?=$strSend?>';
+    var clubName = '<?=$clubName?>';
     var strAbonement = '<?=$abonementName?>';
 </script>

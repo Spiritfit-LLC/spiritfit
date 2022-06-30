@@ -136,6 +136,143 @@ $(document).ready(function(){
         interactive: true,
     });
 
+    //Подтверждение email
+    function EmailConfirmTippy(){
+        tippy('a[href="#email-confirm"]', {
+            content: (reference) =>
+            {
+                var string='<form class="email-confirm-form tooltip-form">' +
+                    '<div class="tooltip-form-title">Подстверждение почты</div>' +
+                    '<div class="tooltip-form-body-text">Проверьте вашу почту</div>' +
+                    '<input type="hidden" name="ACTION" value="emailCodeConfirm">' +
+                    '<input type="text" class="tooltip-form-input number" name="code" placeholder="Код из письма" required>' +
+                    '<input type="submit" class="tooltip-form-submit" value="Подтвердить">' +
+                    '<div class="escapingBallG-animation tippy-form">' +
+                    '<div id="escapingBall_1" class="escapingBallG"></div>' +
+                    '</div>' +
+                    '<span class="form-submit-result-text"></span>' +
+                    '</form>';
+                return string;
+            },
+            interactive: true,
+            trigger: 'click',
+            allowHTML: true,
+            maxWidth:400,
+            onMount: ()=>{
+                $("input.number").on('input', function(e){
+                    this.value = this.value.replace(/[^0-9\.]/g, '');
+                });
+
+                $('.tooltip-form-input.tel').inputmask({
+                    mask: '9 9 9 9 9',
+                    placeholder: "*",
+                });
+                $('.tippy-background').addClass('active');
+            },
+            onShown:(instance)=>{
+                var email=$('input#client-email').val()
+                BX.ajax.runComponentAction(componentName, 'emailConfirm', {
+                    mode: 'class',
+                    data: {
+                        'email':email
+                    },
+                    method:'POST'
+                }).then(function(response){
+                }, function(response){
+                    var error_id=0;
+                    response.errors.forEach(function(err, index){
+                        if (err.code!==0){
+                            error_id=index
+                            return false;
+                        }
+                    });
+                    var message=response.errors[error_id].message;
+                    var code=response.errors[error_id].code;
+
+                    $('.email-confirm-form').find('.form-submit-result-text').html(message).addClass('active');
+                })
+
+
+                $('.email-confirm-form').unbind();
+                $('.email-confirm-form').submit(function(e){
+                    e.preventDefault();
+
+                    var disabled = $(this).find(':input:disabled').removeAttr('disabled');
+                    var postData=new FormData(this);
+                    disabled.attr('disabled','disabled');
+
+                    var form=$(this);
+                    form.find('.form-submit-result-text').html('').removeClass('active');
+
+                    form.find('input[type="submit"]').attr('disabled','disabled');
+
+                    form.find('.escapingBallG-animation').addClass('active');
+                    form.find('input[type="submit"]').css({
+                        'opacity':0,
+                        'z-index':1
+                    });
+
+
+                    BX.ajax.runComponentAction(componentName, postData.get('ACTION'), {
+                        mode: 'class',
+                        data: postData,
+                        method:'POST'
+                    }).then(function(responce){
+
+                        form.find('.escapingBallG-animation').removeClass('active');
+                        form.find('input[type="submit"]').css({
+                            'opacity':1,
+                        });
+
+                        form.find('input[type="submit"]').removeAttr('disabled');
+                        var res_data=responce['data'];
+                        if (res_data['reload']===true){
+                            window.location.reload();
+                            return;
+                        }
+                    }, function (responce){
+                        form.find('.escapingBallG-animation').removeClass('active');
+                        form.find('input[type="submit"]').css({
+                            'opacity':1,
+                        });
+
+                        form.find('input[type="submit"]').removeAttr('disabled');
+                        var message=responce.errors[0].message;
+                        form.find('.form-submit-result-text').html(message).addClass('active');
+                    })
+
+                    return false;
+                });
+            },
+            appendTo: () => document.querySelector('body'),
+            onHide:()=>{
+                $('.tippy-background').removeClass('active');
+                $('.spend-form').unbind();
+                $('.email-confirm-form').find('.form-submit-result-text').html('').removeClass('active');
+            }
+        });
+    }
+    EmailConfirmTippy();
+
+    //Изменение EMAIL
+    $('a[href="#email-change"]').click(function(e){
+        e.preventDefault();
+
+        var correct_email=$('input#correct-email').val();
+
+        if ($('.new-email').length===0){
+            $('<div class="personal-section-form__item new-email" style="display:none">' +
+                '<span class="personal-section-form__item-placeholder">Новый E-mail</span>' +
+                `<input class="personal-section-form__item-value" type="email" value="${correct_email}" name="email" required id="client-email">` +
+                '<a class="confirm-email-btn" href="#email-confirm">Подтвердить</a>'+
+                '</div>').insertAfter($('input#correct-email').closest('div'));
+            EmailConfirmTippy();
+        }
+
+        $('.new-email').prev().hide(300);
+        $('.new-email').show(300);
+    })
+
 
     //Послать форму стандартная
     $('.personal-section-form input[type="submit"]').click(function(e){
@@ -201,7 +338,6 @@ $(document).ready(function(){
             data: postData,
             method:'POST'
         }).then(function(responce){
-            console.log(responce)
             form.find('.escapingBallG-animation').removeClass('active');
             form.find('input[type="submit"]').css({
                 'opacity':1,
@@ -209,6 +345,15 @@ $(document).ready(function(){
 
             form.find('input[type="submit"]').removeAttr('disabled');
             var res_data=responce['data'];
+
+            if (res_data['dataLayer']!==undefined){
+                try{
+                    dataLayerSend('UX', res_data['dataLayer'].eAction, res_data['dataLayer'].eLabel)
+                }
+                catch (e) {
+                    console.log(e);
+                }
+            }
 
             if (res_data['reload']===true){
                 window.location.reload();
@@ -240,7 +385,6 @@ $(document).ready(function(){
             }
 
         }, function(responce){
-            console.log(responce)
 
             form.find('.escapingBallG-animation').removeClass('active');
             form.find('input[type="submit"]').css({

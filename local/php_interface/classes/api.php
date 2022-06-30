@@ -165,6 +165,36 @@ class Api
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
+            case 'lkemailconfirm':
+                $this->lkemailconfirm($post['params']);
+                AddMessage2Log('lkemailconfirm');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "lkfreezingget":
+                $this->lkfreezingget($post['params']);
+                AddMessage2Log('lkfreezingget');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "lkfreezingpost":
+                $this->lkfreezingpost($post['params']);
+                AddMessage2Log('lkfreezingpost');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "lkfreefreezingget":
+                $this->lkfreefreezingget($post['params']);
+                AddMessage2Log('lkfreefreezingget');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "lkfreefreezingpost":
+                $this->lkfreefreezingpost($post['params']);
+                AddMessage2Log('lkfreefreezingpost');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
 
             //НОВАЯ ОПЛАТА
             case "orderreg":
@@ -449,12 +479,12 @@ class Api
 			if(isset($additionFields['email'])) $request['email'] = $_REQUEST[$additionFields['email']];
 
 
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\ordernew\n", true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r($_REQUEST, true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r($request, true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+//             file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
+//             file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\ordernew\n", true), FILE_APPEND);
+//             file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
+//             file_put_contents(__DIR__.'/myTest_.txt', print_r($_REQUEST, true), FILE_APPEND);
+//             file_put_contents(__DIR__.'/myTest_.txt', print_r($request, true), FILE_APPEND);
+//             file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
 			
 			$this->_send($this->apiUrl."ordernew", $request);
 
@@ -487,7 +517,7 @@ class Api
             $client_id = explode('.', $client_id);
             $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
         }
-		
+        file_put_contents(__DIR__.'/myTest_.txt', print_r($params["type"]."\n", true), FILE_APPEND);
         $this->_send($this->apiUrl."code", array(
 			"phone" => substr($phone, 1),
             "code" => $code,
@@ -530,10 +560,7 @@ class Api
 			if(isset($additionFields['email'])) $arParams['email'] = $_REQUEST[$additionFields['email']];
 
 
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\contact(request2)\n", true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r($arParams, true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+
 			
             $this->_send($this->apiUrl."contact", $arParams);
             
@@ -822,7 +849,7 @@ class Api
 			$this->_result = true;			
     }
 	
-	private function _send($url, $data) 
+	private function _send($url, $data, $header=null)
 	{
 		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", json_encode($data), FILE_APPEND);
 		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $url, FILE_APPEND);
@@ -855,11 +882,18 @@ class Api
                 CURLOPT_RETURNTRANSFER => 1, 
                 CURLOPT_TIMEOUT => 20,
             ); 
-        }       
+        }
+
+        if (!empty($header)){
+            $options[CURLOPT_HTTPHEADER]=array(
+                    $header,
+            );
+        }
         
 		$ch = curl_init();
 		
 		curl_setopt_array($ch, $options);
+
 
 		if( ! $result = curl_exec($ch)) {
 			$this->_data = array(
@@ -1091,6 +1125,64 @@ class Api
 
     private function lkpayments($params){
         $this->_send($this->apiUrl."lkpayments", $params);
+
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
+    }
+
+    private function lkemailconfirm($params){
+        $token=Utils::getApiSpiritfitToken();
+        $arParams['token']=$token;
+        $arParams['email']=$params['email'];
+        $this->_send("https://api.spiritfit.ru/email-sendcode", $arParams, 'Content-Type: application/json');
+
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
+    }
+
+    private function lkfreezingget($params){
+        $this->_send($this->apiUrl."lkfreezingget", $params);
+
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
+    }
+
+    private function lkfreezingpost($params){
+        $this->_send($this->apiUrl."lkfreezingpost", $params);
+
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
+    }
+
+    private function lkfreefreezingget($params){
+        $this->_send($this->apiUrl."lkfreefreezingget", $params);
+
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
+    }
+
+    private function lkfreefreezingpost($params){
+        $this->_send($this->apiUrl."lkfreefreezingpost", $params);
 
         if ($this->_data['result']['errorCode'] == 0){
             $this->_result = true;

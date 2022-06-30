@@ -100,6 +100,17 @@ if (0 < $arResult['SECTIONS_COUNT'])
 $curPageUrl = $APPLICATION->GetCurPage(false);
 foreach ($arResult['SECTIONS'] as &$arSection) {
 	$arSection["IS_CURRENT"] = false;
-	if( $arSection["SECTION_PAGE_URL"] === $curPageUrl ) $arSection["IS_CURRENT"] = true;
+	if( $arSection["SECTION_PAGE_URL"] === $curPageUrl ){
+        $arSection["IS_CURRENT"] = true;
+        $ipropValues = new \Bitrix\Iblock\InheritedProperty\SectionValues(Utils::GetIBlockIDBySID('blog'),$arSection['ID']);
+        $seoValues  = $ipropValues->getValues();
+        if ($seoValues['SECTION_META_TITLE']) {
+            $APPLICATION->SetPageProperty('title', $seoValues['SECTION_META_TITLE']);
+        }
+        if ($seoValues['SECTION_META_DESCRIPTION']) {
+            $APPLICATION->SetPageProperty('description',$$seoValues['SECTION_META_DESCRIPTION']);
+        }
+    }
+
 }
 unset($arSection);

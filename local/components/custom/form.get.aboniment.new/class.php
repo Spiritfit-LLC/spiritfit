@@ -148,7 +148,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
 
         $this->IncludeComponentTemplate();
 
-        $template = & $this->GetTemplate();
+        $template = &$this->GetTemplate();
         $template->addExternalJs(SITE_TEMPLATE_PATH . '/libs/modalwindow/modalwindow.js');
         $template->addExternalCss(SITE_TEMPLATE_PATH . '/libs/modalwindow/modalwindow.css');
     }
@@ -256,6 +256,11 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         $result['SERVICES']=$SERVICES;
 
         $_SESSION['CURRENT_PRICE']=$result['CURRENT_PRICE'];
+        $res = CIBlockElement::GetByID($this->arParams['CLUB_ID']);
+        if( $ob = $res->GetNextElement() ) {
+            $currentClub = $ob->GetFields();
+            $result['CLUB_NAME']=$currentClub['NAME'];
+        }
 
         $this->arResult['CLUB']=$result;
     }
@@ -266,6 +271,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             $currentClub = $ob->GetFields();
             $currentClub["PROPERTIES"] = $ob->GetProperties();
             $this->arResult['CLUB_NUMBER']=$currentClub["PROPERTIES"]["NUMBER"]["VALUE"];
+            $this->arResult['CLUB_NAME']=$currentClub['NAME'];
             return true;
         }
         else{
@@ -330,6 +336,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                         );
                         if ($this->arResult['CLUB_ID']==$res['ID']){
                             $club['SELECTED']=true;
+                            $this->arResult['SELECTED_CLUB']=$res['NAME'];
                         }
                         $CLUBS[]=$club;
                     }
@@ -725,7 +732,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                         'user-action'=>'code',
                         'next-action'=>'checkCode',
                         'promocode'=>!empty($promocode),
-//                        'code'=>$_SESSION['code'],
+                        'code'=>$_SESSION['code'],
                         'btn'=>'Подтвердить',
                         'step'=>2
                     ];
@@ -917,7 +924,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                 'user-action'=>'code',
                 'next-action'=>'checkCode',
                 'promocode'=>!empty($promocode),
-//                'code'=>$_SESSION['code'],
+                'code'=>$_SESSION['code'],
                 'btn'=>'Подтвердить'
             ];
         }

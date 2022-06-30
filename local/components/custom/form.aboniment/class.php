@@ -33,7 +33,7 @@ class FormAbonimentComponent extends CBitrixComponent{
                 $this->arResult["CLUB_ID"] = $club;
             }
             $this->arResult["WEB_FORM_ID"] = $this->arResult["arForm"]["VARNAME"];
-            if ($this->arParams["CLIENT_TYPE"]!=NULL && $this->arParams["CLIENT_TYPE"]!="")
+            if (!empty($this->arParams["CLIENT_TYPE"]))
                 $this->arResult["CLIENT_TYPE"] = $this->arParams["CLIENT_TYPE"];
         }
     }
@@ -349,7 +349,7 @@ class FormAbonimentComponent extends CBitrixComponent{
 			
 		// if ($this->request["form_hidden_10"] == 0 || $this->request["form_hidden_21"] == 0) {
 		if ($this->request["form_hidden_10"] == 0) {
-			
+            file_put_contents(__DIR__.'/myTest_.txt', print_r($this->request."\n", true), FILE_APPEND);
 			$arParam["type"] = 1;
             if ($this->arResult["ELEMENT"]["CODE"] == "probnaya-trenirovka" || $this->arResult["ELEMENT"]["ID"] == "226") {
                 $arParam["type"] = 3;
@@ -359,9 +359,9 @@ class FormAbonimentComponent extends CBitrixComponent{
 			}
 			
 			if( !empty($this->arParams["DEFAULT_TYPE_ID"]) ) {
-				$arParam["type"] = $this->arParams["DEFAULT_TYPE_ID"];
+				$arParam["type"] = intval($this->arParams["DEFAULT_TYPE_ID"]);
 			}
-            
+
             $api = new Api(array(
                 "action" => "request2",
                 "params" => $arParam
@@ -371,7 +371,10 @@ class FormAbonimentComponent extends CBitrixComponent{
 			if( !empty($this->request["form_default_type"]) ) {
 				$arParam["type"] = intval($this->request["form_default_type"]);
 			}
-			
+            if( !empty($this->arParams["DEFAULT_TYPE_ID"]) ) {
+                $arParam["type"] = intval($this->arParams["DEFAULT_TYPE_ID"]);
+            }
+
 			$api = new Api(array(
                 "action" => "request",
                	"params" => $arParam
@@ -390,7 +393,6 @@ class FormAbonimentComponent extends CBitrixComponent{
     }
 
     function executeComponent(){
-        
         Loader::IncludeModule("form");
         Loader::IncludeModule("iblock");
 
@@ -453,6 +455,9 @@ class FormAbonimentComponent extends CBitrixComponent{
 
         $prevStep = intval($this->request->get('step'));
 
+
+
+
         switch ($this->checkStep()) {
             case 2:
                 if( $prevStep == 1 ) $this->sendSms();
@@ -465,6 +470,24 @@ class FormAbonimentComponent extends CBitrixComponent{
 				}
                 break;
             case 3:
+                $type=!empty($this->arParams['DEFAULT_TYPE_ID']) ? $this->arParams['DEFAULT_TYPE_ID'] : 1;
+                $res = CIBlockElement::GetList(
+                    Array("SORT"=>"ASC"),
+                    Array('IBLOCK_ID'=>Utils::GetIBlockIDBySID('FORM_TYPES'), 'PROPERTY_FORM_TYPE'=>$type),
+                    false,
+                    false,
+                    Array()
+                );
+                if ($ar_res=$res->Fetch()){
+                    $FORM_TYPE=$ar_res['NAME'];
+                }
+                else{
+                    $FORM_TYPE='-';
+                }
+
+                $selectedClub = Utils::getClub($this->arParams["NUMBER"]);
+
+                $this->arResult['GA_LABEL']=str_replace('<br>', ' ', $selectedClub['NAME']).'/'.$FORM_TYPE;
                 $this->includeComponentTemplate('step-3');
                 break;
             default:

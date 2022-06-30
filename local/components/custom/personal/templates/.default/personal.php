@@ -1,15 +1,11 @@
 <?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 ?>
 
-<?foreach ($arResult['LK_FIELDS']['SECTIONS'] as $SECTION):?>
-    <?foreach($SECTION['JS'] as $js):?>
-        <script src="<?=$js?>?version=<?=uniqid()?>"></script>
-    <?endforeach;?>
+<?foreach ($arResult['LK_FIELDS']['JS'] as $js):?>
+    <script src="<?=$js?>?version=<?=uniqid()?>"></script>
 <?endforeach;?>
-<?foreach ($arResult['LK_FIELDS']['SECTIONS'] as $SECTION):?>
-    <?foreach($SECTION['CSS'] as $css):?>
-        <link href="<?=$css?>?version=<?=uniqid()?>" type="text/css" rel="stylesheet">
-    <?endforeach;?>
+<?foreach ($arResult['LK_FIELDS']['CSS'] as $css):?>
+    <link href="<?=$css?>?version=<?=uniqid()?>" type="text/css" rel="stylesheet">
 <?endforeach;?>
 
 <div class="personal-profile-block">

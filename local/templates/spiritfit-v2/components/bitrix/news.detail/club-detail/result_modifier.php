@@ -311,12 +311,12 @@ if (!empty($_REQUEST['form'])){
         $FORM_TITLE=$props['FORM_TITLE']['VALUE'];
     }
     else{
-        $FORM_TYPE=(!empty($arResult['PROPERTIES']['FORM_TYPE']['VALUE'])) ? $arResult['PROPERTIES']['FORM_TYPE']['VALUE'] : "";
+        $FORM_TYPE=(!empty($arResult['PROPERTIES']['FORM_TYPE']['VALUE'])) ? $arResult['PROPERTIES']['FORM_TYPE']['VALUE'] : "3";
         $FORM_TITLE=$arResult["PROPERTIES"]["TEXT_FORM"]["~VALUE"];
     }
 
 } else {
-    $FORM_TYPE=(!empty($arResult['PROPERTIES']['FORM_TYPE']['VALUE'])) ? $arResult['PROPERTIES']['FORM_TYPE']['VALUE'] : "";
+    $FORM_TYPE=(!empty($arResult['PROPERTIES']['FORM_TYPE']['VALUE'])) ? $arResult['PROPERTIES']['FORM_TYPE']['VALUE'] : "3";
     $FORM_TITLE=$arResult["PROPERTIES"]["TEXT_FORM"]["~VALUE"];
 }
 $arResult['FORM_TYPE']=$FORM_TYPE;

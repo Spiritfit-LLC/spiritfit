@@ -30,23 +30,26 @@ if(!function_exists('GetPersonalSection')) {
                                 type="<?=$FIELD['TYPE']?>"
                                 name="<?=$FIELD['NAME']?>"
                                 value="<?=$FIELD['VALUE'][$i]['RADIO_VAL']?>"
-                                id="<?=$FIELD['HTML_ID']?>"
+                                id="<?=$FIELD['NAME'].'_'.$i?>"
                                 <?if ($FIELD['REQUIRED']) echo 'required';?>
                                 <?if (!$FIELD['CHANGEBLE']){?> disabled="disabled" <?}?>
                                 <?if ($FIELD['VALUE'][$i]['CHECKED']) echo 'checked';?>
                                 data-code="<?=$FIELD['USER_FIELD_CODE']?>"
+                                data-value="<?=$FIELD['DATA_VALUE']?>"
                             >
-                            <label for="<?=$FIELD['HTML_ID']?>"><?=$FIELD['VALUE_DESC'][$i]?></label>
+                            <label for="<?=$FIELD['NAME'].'_'.$i?>"><?=$FIELD['VALUE_DESC'][$i]?></label>
                         </div>
                     <?endfor;?>
                 </div>
             <?elseif($FIELD['TYPE']=='link'):?>
                 <a href="<?=$FIELD['VALUE']?>"
                     <?if (!empty($FIELD['CLICKABBLE'])) echo 'data-clickable="true"';?>
-                   data-clue="<?=$FIELD['CLUE']['TEXT']?>"><?=$FIELD['PLACEHOLDER']?></a>
+                   data-clue="<?=$FIELD['CLUE']['TEXT']?>"
+                   data-value="<?=$FIELD['DATA_VALUE']?>"><?=$FIELD['PLACEHOLDER']?></a>
             <?elseif($FIELD['TYPE']=='textarea'):?>
                 <textarea class="personal-section-form__item-value textarea"
                           data-code="<?=$FIELD['USER_FIELD_CODE']?>"
+                          data-value="<?=$FIELD['DATA_VALUE']?>"
                         <?if (!$FIELD['CHANGEBLE']){?> disabled="disabled" <?}?>
                     <?if ($FIELD['REQUIRED']) echo 'required';?>
                     <?if (!empty($FIELD['VALIDATOR'])) echo $FIELD['VALIDATOR']?>
@@ -70,6 +73,7 @@ if(!function_exists('GetPersonalSection')) {
                     <?if ($FIELD['TYPE']=='date'):?> data-toggle="datepicker" <?endif;?>
                     <?if ($FIELD['TYPE']=='checkbox' && (int)$FIELD['VALUE']==1) echo 'checked'?>
                     data-code="<?=$FIELD['USER_FIELD_CODE']?>"
+                    data-value="<?=$FIELD['DATA_VALUE']?>"
                     <?if (!empty($FIELD['VALIDATOR'])) echo $FIELD['VALIDATOR']?>
                 >
                 <?if ($FIELD['TYPE']=='password'):?>
@@ -81,6 +85,11 @@ if(!function_exists('GetPersonalSection')) {
                             <?=file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/pass-hide.svg');?>
                         </div>
                     </div>
+                <?endif;?>
+                <?if ($FIELD['HTML_ID']=='client-email' && !$FIELD['CONFIRM']):?>
+                    <a class="confirm-email-btn" href="#email-confirm">Подтвердить</a>
+                <?elseif ($FIELD['HTML_ID']=='correct-email'):?>
+                    <a class="confirm-email-btn" href="#email-change">Изменить</a>
                 <?endif;?>
                 <?if ($FIELD['TYPE']=='checkbox'):?>
                     <label for="<?=$FIELD['NAME']?>"><?=$FIELD['PLACEHOLDER']?></label>

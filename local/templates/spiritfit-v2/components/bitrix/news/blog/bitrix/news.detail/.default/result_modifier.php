@@ -119,5 +119,15 @@
             'TITLE'=>$arResult['PROPERTIES']['BLOG_TEXT']['DESCRIPTION'][$i],
             'ID'=>'section_'.$i,
         ];
-
     }
+
+/* Получаем значения SEO */
+$ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues(Utils::GetIBlockIDBySID('blog'), $arResult["ID"]);
+$seoValues = $ipropValues->getValues();
+
+if (empty($seoValues['ELEMENT_META_TITLE'])){
+    $APPLICATION->SetPageProperty('title',$arResult["NAME"].' - Блог фитнес-клуба Spirit Fitness');
+}
+if (empty($seoValues['ELEMENT_META_DESCRIPTION'])){
+    $APPLICATION->SetPageProperty('description',$arResult["NAME"].'. В разделе «Блог» вы можете узнать много полезной информации о тренировках. Блог фитнес-клуба Spirit Fitness.');
+}

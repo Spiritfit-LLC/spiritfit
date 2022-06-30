@@ -30,7 +30,7 @@
 							<? if(!empty($arResult["SECTION_NAMES"])) {
 								?><div class="blog-detail-section items">
 									<? foreach($arResult["SECTION_NAMES"] as $name) {
-										?><div class="item"><?=$name?></div><?
+										?><a class="item" href="<?=$arResult['SECTION']['PATH'][0]['SECTION_PAGE_URL']?>"><?=$name?></a><?
 									} ?>
 								</div><?
 							} ?>

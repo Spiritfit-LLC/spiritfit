@@ -2,7 +2,6 @@
 define('BREADCRUMB_H1_ABSOLUTE', true);
 define('HIDE_SLIDER', true);
 define('H1_HIDE', true);
-define('PERSONAL_PAGE', true);
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 

@@ -1,5 +1,6 @@
 <?
 define('BREADCRUMB_H1_ABSOLUTE', true);
+define('HIDE_SLIDER', true);
 
 if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
     require_once($_SERVER['DOCUMENT_ROOT'] . "/bitrix/modules/main/include/prolog_before.php");

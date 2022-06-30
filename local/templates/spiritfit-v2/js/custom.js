@@ -1,16 +1,5 @@
 function sendToUpMetrika(sendData){
-    // console.log(sendData)
-
-
     sendData['phone']=sendData['phone'].replace(/[^0-9]/g,"");
-
-    // console.log({
-    //     'phoneMd5': CryptoJS.MD5(sendData['phone']).toString(),
-    //     'emailMd5': CryptoJS.MD5(sendData['email']).toString(),
-    //     'phoneSha256': CryptoJS.SHA256(sendData['phone']).toString(),
-    //     'emailSha256': CryptoJS.SHA256(sendData['email']).toString(),
-    //     'typeSetClient': sendData['setTypeClient']
-    // })
 
     acfp.setClient({
         'phoneMd5': CryptoJS.MD5(sendData['phone']).toString(),
@@ -1178,4 +1167,40 @@ $(document).ready(function() {
     // $('.subscription__aside-form:not(.is-ready)').each(function () {
     //     initFormFields($(this));
     // });
+
+
+    //Отправка в GA по клику на ПРОБНУЮ ТРЕНИРОВКУ
+    $('.trial-training-btn').click(function(){
+        if ($(this).data('position')){
+            var eLabel=$(this).data('position')
+        }
+        else{
+            eLabel=window.location.href;
+        }
+        var eAction='clickTrialWorkoutButton';
+        dataLayerSend('UX', eAction, eLabel);
+    });
+
+    $('.header-personal-btn').click(function(){
+        dataLayerSend('UX', 'clickLKbutton', '');
+    });
+
+    $('.b-map__switch').on("select2:open", function(){
+       dataLayerSend('UX','useClubSearchForm', 'clubsPage');
+    });
+
+    $('.b-club-search__input').click(function(){
+        dataLayerSend('UX','useClubSearchForm', 'bottomFixedBar');
+    });
+
+    $('a[data-sub_id]').click(function(){
+        dataLayerSend('UX','clickFitnessSubscriptionBlock', $(this).data('sub_id'));
+    });
+
+    $('a.b-info-slider__btn').click(function(e){
+        dataLayerSend('UX','clickLinkSliderPromo', $(this).siblings('.b-info-slider__title').text());
+    })
 })
+
+
+

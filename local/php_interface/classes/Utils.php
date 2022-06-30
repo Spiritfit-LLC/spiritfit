@@ -340,6 +340,18 @@ class Utils
         return $API_URL;
     }
 
+    // ИЗВЛЕЧЕНИЕ API TOKEN
+    public static function getApiSpiritfitToken(){
+        Loader::includeModule('iblock');
+        $db_props = CIBlockElement::GetProperty(SETTINGS_IBLOCK_ID, SETTINGS_ELEMENT_ID, array("sort" => "asc"), Array("CODE"=>"API_SPIRITFIT_TOKEN"));
+        if($ar_props = $db_props->Fetch())
+            $TOKEN = $ar_props["VALUE"];
+        else
+            $TOKEN = false;
+
+        return $TOKEN;
+    }
+
 	//IMG RESIZE
 	public static function resize_image($file, $percent) {
 		list($width, $height) = getimagesize($file);

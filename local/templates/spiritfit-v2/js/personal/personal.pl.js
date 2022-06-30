@@ -79,7 +79,6 @@ $(document).ready(function(){
                         data: postData,
                         method:'POST'
                     }).then(function(responce){
-                        console.log(responce);
 
                         form.find('.escapingBallG-animation').removeClass('active');
                         form.find('input[type="submit"]').css({
@@ -98,7 +97,15 @@ $(document).ready(function(){
                             'opacity':1,
                         });
                         form.find('input[type="submit"]').removeAttr('disabled');
-                        var message=responce.errors[0].message;
+                        var error_id=0;
+                        responce.errors.forEach(function(err, index){
+                            if (err.code!==0){
+                                error_id=index
+                                return false;
+                            }
+                        });
+                        var message=responce.errors[error_id].message;
+                        var code=responce.errors[error_id].code;
                         form.find('.form-submit-result-text').html(message).addClass('active');
                     })
 
@@ -181,7 +188,6 @@ $(document).ready(function(){
                         data: postData,
                         method:'POST'
                     }).then(function(responce){
-                        console.log(responce);
 
                         form.find('.escapingBallG-animation').removeClass('active');
                         form.find('input[type="submit"]').css({
@@ -201,7 +207,15 @@ $(document).ready(function(){
                         });
 
                         form.find('input[type="submit"]').removeAttr('disabled');
-                        var message=responce.errors[0].message;
+                        var error_id=0;
+                        responce.errors.forEach(function(err, index){
+                            if (err.code!==0){
+                                error_id=index
+                                return false;
+                            }
+                        });
+                        var message=responce.errors[error_id].message;
+                        var code=responce.errors[error_id].code;
                         form.find('.form-submit-result-text').html(message).addClass('active');
                     })
 

@@ -1,4 +1,7 @@
 $(document).ready(function(){
+
+    var strSend=clubName+"/"+strAbonement;
+
     function o(){
         $(window).innerWidth() < 1260 ? $(".subscription__aside").next().is($(".services-block")) || ($(".subscription__aside").insertAfter(".subscription__label-prices-block"), $(".subscription__ready").insertAfter(".subscription__title:eq(0)")) : $(".subscription__aside").next().is($(".services-block")) && ($(".subscription__aside").insertAfter(".subscription__main"), $(".subscription__ready").insertAfter(".subscription__common"))
     }
@@ -10,6 +13,7 @@ $(document).ready(function(){
             'mask': '+7 (999) 999-99-99',
         });
     });
+
 
     dataLayerSend('UX', 'openMembershipRegPage', strSend);
 
@@ -68,8 +72,11 @@ $(document).ready(function(){
             method:'POST'
         }).then(function (response) {
             o();
-            // console.log(response)
             var result_data=response['data'];
+
+            if (result_data['CLUB_NAME']!==undefined){
+                strSend=result_data['CLUB_NAME']+"/"+strAbonement;
+            }
 
             if (result_data['result']===false){
                 return;
@@ -111,7 +118,6 @@ $(document).ready(function(){
 
         }, function (response) {
             //Сообщение об ошибке
-            // console.log(response);
             var message=response.errors[0].message;
             ShowMessage(message);
         });
@@ -165,7 +171,6 @@ $(document).ready(function(){
             data: postData,
             method:'POST'
         }).then(function(responce){
-            // console.log(responce)
             o();
 
             //Разблокируем кнопку
@@ -251,7 +256,6 @@ $(document).ready(function(){
 
 
         }, function(response){
-            // console.log(response)
 
             form.find('input[type="submit"]').removeAttr('disabled');
             form.find('.escapingBallG-animation').removeClass('active');

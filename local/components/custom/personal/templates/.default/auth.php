@@ -7,9 +7,7 @@
                 <?
                 foreach ($arResult['FORM_FIELDS'] as $ID=>$FORM):?>
                     <div class="personal-profile__tab-item <?if ($FORM['ACTIVE']==true) echo 'active'?>" data-id="<?=$ID?>">
-                        <div class="tab-item__name">
-                            <?=$FORM['NAME']?>
-                        </div>
+                        <div class="tab-item__name"><?=$FORM['NAME']?></div>
                     </div>
                 <?
                 endforeach;
@@ -113,3 +111,12 @@
         ?>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $('.personal-profile__tab-item:not(.child)').click(function(){
+            var btn_value=$(this).find('.tab-item__name').text();
+            dataLayerSend('UX', 'clickAccountButtons', btn_value)
+        })
+    });
+</script>

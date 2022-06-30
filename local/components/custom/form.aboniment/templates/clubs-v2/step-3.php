@@ -146,6 +146,7 @@ $arField = ['name', 'email', 'phone'];
             	<div class="popup__success"><?=(!empty($arParams["CLUB_FORM_SUCCESS"])) ? $arParams["CLUB_FORM_SUCCESS"] : "Спасибо, ваша заявка принята!" ?></div>
         	</div>
     	</div>
+        <script>dataLayerSend('conversion', 'sendFormTrialWorkout', '<?=$arResult['GA_LABEL']?>');</script>
 		<?
 	}
 ?>
@@ -162,6 +163,7 @@ $(document).ready(function(){
     $('.form-standart:not(.is-ready)').each(function() {
         initFormFields($(this));
     });
+
 })
 </script>
 

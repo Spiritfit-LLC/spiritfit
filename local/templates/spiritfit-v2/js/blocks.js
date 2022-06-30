@@ -442,6 +442,7 @@ $(function () {
             $context.toggleClass('is-menu-opened');
 
             if ($context.is('.is-menu-opened')) {
+                dataLayerSend('UX', 'clickHamburgerButton','')
                 scrollTopOnClick = window.pageYOffset || document.documentElement.scrollTop;
                 $page.css({
                     "top": -1 * scrollTopOnClick

@@ -103,6 +103,4 @@ if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 	<? $APPLICATION->IncludeFile('/local/include/blocks.php', ['ELEMENT_CODE' => 'specproekty'], ['SHOW_BORDER' => false]); ?>
 
 <? endif; ?>
-
-
 <? if (!isset($_SERVER['HTTP_X_PJAX']))  require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

@@ -7,4 +7,5 @@ $APPLICATION->SetPageProperty("description", "Окунитесь в уникал
 ?>
 <? $APPLICATION->IncludeFile('/local/include/blocks-detail.php', ['ELEMENT_CODE' => 'atmosfera']); ?>
 
+
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
