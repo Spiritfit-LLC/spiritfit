@@ -171,7 +171,7 @@ $ELEMENT=$arResult["ELEMENT"];
                                    name="<?=$FORM_FIELDS['personaldata']['NAME']?>[]"
                                    value="<?=$FORM_FIELDS['personaldata']['VALUE']?>"
                                 <?if ($FORM_FIELDS['personaldata']['REQUIRED']) echo 'required';?>
-                                   checked>
+                                >
                             <div class="input-label__text"><?=$FORM_FIELDS['personaldata']['PLACEHOLDER']?></div>
                         </label>
                     </div>
@@ -183,7 +183,7 @@ $ELEMENT=$arResult["ELEMENT"];
                                    name="<?=$FORM_FIELDS['rules']['NAME']?>[]"
                                    value="<?=$FORM_FIELDS['rules']['VALUE']?>"
                                 <?if ($FORM_FIELDS['rules']['REQUIRED']) echo 'required';?>
-                                   checked>
+                                   >
                             <div class="input-label__text"><?=$FORM_FIELDS['rules']['PLACEHOLDER']?></div>
                         </label>
                     </div>
@@ -195,7 +195,7 @@ $ELEMENT=$arResult["ELEMENT"];
                                    name="<?=$FORM_FIELDS['privacy']['NAME']?>[]"
                                    value="<?=$FORM_FIELDS['privacy']['VALUE']?>"
                                 <?if ($FORM_FIELDS['privacy']['REQUIRED']) echo 'required';?>
-                                   checked>
+                                   >
                             <div class="input-label__text"><?=$FORM_FIELDS['privacy']['PLACEHOLDER']?></div>
                         </label>
                     </div>

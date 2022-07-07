@@ -128,14 +128,16 @@ $ELEMENT=$arResult["ELEMENT"];
                                value="<?=$FORM_FIELDS['name']['VALUE']?>"
                                name="<?=$FORM_FIELDS['name']['NAME']?>"
                             <?if ($FORM_FIELDS['name']['REQUIRED']) echo 'required';?>
-                            <?if (!empty($FORM_FIELDS['name']['VALIDATOR'])) echo $FORM_FIELDS['name']['VALIDATOR'];?>>
+                            <?if (!empty($FORM_FIELDS['name']['VALIDATOR'])) echo $FORM_FIELDS['name']['VALIDATOR'];?>
+                            <?=$FORM_FIELDS['FIELDS'][$key]['PARAMS']?>>
                         <input class="input input--light input--short input--text"
                                type="<?=$FORM_FIELDS['surname']['TYPE']?>"
                                placeholder="<?=$FORM_FIELDS['surname']['PLACEHOLDER']?>"
                                value="<?=$FORM_FIELDS['surname']['VALUE']?>"
                                name="<?=$FORM_FIELDS['surname']['NAME']?>"
                             <?if ($FORM_FIELDS['surname']['REQUIRED']) echo 'required';?>
-                            <?if (!empty($FORM_FIELDS['surname']['VALIDATOR'])) echo $FORM_FIELDS['surname']['VALIDATOR'];?>>
+                            <?if (!empty($FORM_FIELDS['surname']['VALIDATOR'])) echo $FORM_FIELDS['surname']['VALIDATOR'];?>
+                            <?=$FORM_FIELDS['FIELDS'][$key]['PARAMS']?>>
                     </div>
                     <div class="subscription__aside-form-row">
                         <input class="input input--light input--short input--text"
@@ -144,14 +146,16 @@ $ELEMENT=$arResult["ELEMENT"];
                                value="<?=$FORM_FIELDS['phone']['VALUE']?>"
                                name="<?=$FORM_FIELDS['phone']['NAME']?>"
                             <?if ($FORM_FIELDS['phone']['REQUIRED']) echo 'required';?>
-                            <?if (!empty($FORM_FIELDS['phone']['VALIDATOR'])) echo $FORM_FIELDS['phone']['VALIDATOR'];?>>
+                            <?if (!empty($FORM_FIELDS['phone']['VALIDATOR'])) echo $FORM_FIELDS['phone']['VALIDATOR'];?>
+                            <?=$FORM_FIELDS['FIELDS'][$key]['PARAMS']?>>
                         <input class="input input--light input--short input--text"
                                type="<?=$FORM_FIELDS['email']['TYPE']?>"
                                placeholder="<?=$FORM_FIELDS['email']['PLACEHOLDER']?>"
                                value="<?=$FORM_FIELDS['email']['VALUE']?>"
                                name="<?=$FORM_FIELDS['email']['NAME']?>"
                             <?if ($FORM_FIELDS['email']['REQUIRED']) echo 'required';?>
-                            <?if (!empty($FORM_FIELDS['email']['VALIDATOR'])) echo $FORM_FIELDS['email']['VALIDATOR'];?>>
+                            <?if (!empty($FORM_FIELDS['email']['VALIDATOR'])) echo $FORM_FIELDS['email']['VALIDATOR'];?>
+                            <?=$FORM_FIELDS['FIELDS'][$key]['PARAMS']?>>
                     </div>
                     <div class="subscription__promo subscription__aside-form-row">
                         <input class="input input--light input--short input--text"
@@ -161,7 +165,8 @@ $ELEMENT=$arResult["ELEMENT"];
                                value="<?=$FORM_FIELDS['promocode']['VALUE']?>"
                                name="<?=$FORM_FIELDS['promocode']['NAME']?>"
                             <?if ($FORM_FIELDS['promocode']['REQUIRED']) echo 'required';?>
-                            <?if (!empty($FORM_FIELDS['promocode']['VALIDATOR'])) echo $FORM_FIELDS['promocode']['VALIDATOR'];?>>
+                            <?if (!empty($FORM_FIELDS['promocode']['VALIDATOR'])) echo $FORM_FIELDS['promocode']['VALIDATOR'];?>
+                            <?=$FORM_FIELDS['FIELDS'][$key]['PARAMS']?>>
                         <a class="get-abonement-promo" href="#apply">Применить</a>
                     </div>
                     <div class="subscription__code-new subscription__aside-form-row" style="display: none">
@@ -196,7 +201,7 @@ $ELEMENT=$arResult["ELEMENT"];
                                    name="<?=$FORM_FIELDS['personaldata']['NAME']?>[]"
                                    value="<?=$FORM_FIELDS['personaldata']['VALUE']?>"
                                 <?if ($FORM_FIELDS['personaldata']['REQUIRED']) echo 'required';?>
-                                checked>
+                                <?=$FORM_FIELDS['FIELDS'][$key]['PARAMS']?>>
                             <div class="input-label__text"><?=$FORM_FIELDS['personaldata']['PLACEHOLDER']?></div>
                         </label>
                     </div>
@@ -208,7 +213,7 @@ $ELEMENT=$arResult["ELEMENT"];
                                    name="<?=$FORM_FIELDS['rules']['NAME']?>[]"
                                    value="<?=$FORM_FIELDS['rules']['VALUE']?>"
                                 <?if ($FORM_FIELDS['rules']['REQUIRED']) echo 'required';?>
-                                   checked>
+                                <?=$FORM_FIELDS['FIELDS'][$key]['PARAMS']?>>
                             <div class="input-label__text"><?=$FORM_FIELDS['rules']['PLACEHOLDER']?></div>
                         </label>
                     </div>
@@ -220,7 +225,7 @@ $ELEMENT=$arResult["ELEMENT"];
                                    name="<?=$FORM_FIELDS['privacy']['NAME']?>[]"
                                    value="<?=$FORM_FIELDS['privacy']['VALUE']?>"
                                 <?if ($FORM_FIELDS['privacy']['REQUIRED']) echo 'required';?>
-                                   checked>
+                                <?=$FORM_FIELDS['FIELDS'][$key]['PARAMS']?>>
                             <div class="input-label__text"><?=$FORM_FIELDS['privacy']['PLACEHOLDER']?></div>
                         </label>
                     </div>
@@ -269,8 +274,7 @@ $ELEMENT=$arResult["ELEMENT"];
                                                type="<?=$FORM_FIELDS['legalinfo']['TYPE']?>"
                                                name="<?=$FORM_FIELDS['legalinfo']['NAME']?>[]"
                                                value="<?=$FORM_FIELDS['legalinfo']['VALUE']?>"
-                                            <?if ($FORM_FIELDS['legalinfo']['REQUIRED']) echo 'required';?>
-                                               checked>
+                                            <?=$FORM_FIELDS['FIELDS'][$key]['PARAMS']?>>
                                         <div class="input-label__text"><?=$FORM_FIELDS['legalinfo']['PLACEHOLDER']?></div>
                                     </label>
                                 </div>

@@ -104,11 +104,17 @@ foreach ($arResult['SECTIONS'] as &$arSection) {
         $arSection["IS_CURRENT"] = true;
         $ipropValues = new \Bitrix\Iblock\InheritedProperty\SectionValues(Utils::GetIBlockIDBySID('blog'),$arSection['ID']);
         $seoValues  = $ipropValues->getValues();
-        if ($seoValues['SECTION_META_TITLE']) {
+        if (!empty($seoValues['SECTION_META_TITLE'])) {
             $APPLICATION->SetPageProperty('title', $seoValues['SECTION_META_TITLE']);
         }
-        if ($seoValues['SECTION_META_DESCRIPTION']) {
-            $APPLICATION->SetPageProperty('description',$$seoValues['SECTION_META_DESCRIPTION']);
+        else{
+            $APPLICATION->SetPageProperty('title',$arSection["NAME"].' - Рубрика в блоге фитнес-клуба Spirit Fitness');
+        }
+        if (!empty($seoValues['SECTION_META_DESCRIPTION'])) {
+            $APPLICATION->SetPageProperty('description', $seoValues['SECTION_META_DESCRIPTION']);
+        }
+        else{
+            $APPLICATION->SetPageProperty('description',$arSection["NAME"].'. В разделе «Блог» вы можете узнать много полезной информации о тренировках. Блог фитнес-клуба Spirit Fitness.');
         }
     }
 

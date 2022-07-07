@@ -45,32 +45,72 @@ $(document).ready(function(){
         instance.show();
 
 
+        BX.ajax.runComponentAction(componentName, 'getCardQr', {
+            mode:'class',
+            method:'GET',
+        }).then(function(response){
+            console.log(response)
 
-        var user_id=$(this).data('value');
-        var page_url=window.location.protocol+'//'+window.location.hostname
 
-        $.ajax({
-            url:'/local/ajax/get-qr.php',
-            data:{
-                data:page_url+'/personalcard/?ID='+user_id,
-                logo:true
-            },
-            method:'POST',
-            success:function(response){
+            var html_content='<form class="card-qr-code-form tooltip-form">' +
+                '<div class="tooltip-form-title">Используйте данный QR-Code в качестве вашей визитки</div>' +
+                '<div class="tooltip-form-body-text">' +
+                `<img class="qr-code-img" src="${response['data']['src']}">` +
+                '</div>' +
+                '<input type="submit" class="tooltip-form-submit" value="скачать">' +
+                '<span class="form-submit-result-text"></span>' +
+                '</form>';
 
-                var html_content='<form class="card-qr-code-form tooltip-form">' +
-                    '<div class="tooltip-form-title">Используйте данный QR-Code в качестве вашей визитки</div>' +
-                    '<div class="tooltip-form-body-text">' +
-                    `<img class="qr-code-img" src="${response['url']}">` +
-                    '</div>' +
-                    '<input type="submit" class="tooltip-form-submit" value="скачать">' +
-                    '<span class="form-submit-result-text"></span>' +
-                    '</form>';
+            instance.hide()
+            instance.setContent(html_content);
+            instance.show();
+        }, function(response){
+            console.log(response)
 
-                instance.hide()
-                instance.setContent(html_content);
-                instance.show();
-            }
-        })
+            var error_id=0;
+            response.errors.forEach(function(err, index){
+                if (err.code!==0){
+                    error_id=index
+                    return false;
+                }
+            });
+
+            var html_content='<form class="card-qr-code-form tooltip-form">' +
+                '<div class="tooltip-form-title">Ошибка</div>' +
+                `<span class="form-submit-result-text active">${response.errors[error_id].message}</span>` +
+                '</form>';
+
+            instance.hide()
+            instance.setContent(html_content);
+            instance.show();
+        });
+
+
+        // var user_id=$(this).data('value');
+        // var page_url=window.location.protocol+'//'+window.location.hostname
+
+        // $.ajax({
+        //     url:'/local/ajax/get-qr.php',
+        //     data:{
+        //         data:page_url+'/personalcard/?ID='+user_id,
+        //         logo:true
+        //     },
+        //     method:'POST',
+        //     success:function(response){
+        //
+        //         var html_content='<form class="card-qr-code-form tooltip-form">' +
+        //             '<div class="tooltip-form-title">Используйте данный QR-Code в качестве вашей визитки</div>' +
+        //             '<div class="tooltip-form-body-text">' +
+        //             `<img class="qr-code-img" src="${response['url']}">` +
+        //             '</div>' +
+        //             '<input type="submit" class="tooltip-form-submit" value="скачать">' +
+        //             '<span class="form-submit-result-text"></span>' +
+        //             '</form>';
+        //
+        //         instance.hide()
+        //         instance.setContent(html_content);
+        //         instance.show();
+        //     }
+        // })
     });
 });

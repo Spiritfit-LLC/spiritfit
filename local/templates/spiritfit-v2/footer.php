@@ -22,7 +22,7 @@ $settings = Utils::getInfo();
 			?>
             <div class="b-footer__content">
                 <div class="b-footer__social">
-					<div class="footer-phone-wrapper"><a class="footer-phone" href="tel:84951059797">8 495 105 97 97</a></div>
+					<div class="footer-phone-wrapper"><a class="footer-phone phone-btn" data-position="footer" href="tel:84951059797">8 495 105 97 97</a></div>
                 </div>
                 <div class="b-footer__app-buttons">
                     <div class="b-app-list"><a rel="nofollow" class="b-app-list__button"
@@ -88,6 +88,21 @@ $settings = Utils::getInfo();
         m.parentNode.insertBefore(a, m);
         })(document, 'script', '//upmetrics.ru/upmetric.min.js');
     </script>
+<!--    <script>-->
+<!--        (function(w,d,u){-->
+<!--            var s=d.createElement('script');s.async=true;s.src=u+'?'+(Date.now()/60000|0);-->
+<!--            var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);-->
+<!--        })(window,document,'https://portal.spiritfit.ru/upload/crm/site_button/loader_1_v48yzw.js');-->
+<!--    </script>-->
+    <?
+//    $APPLICATION->IncludeComponent("bitrix:b24connector.openline.info","", Array(
+//            "COMPOSITE_FRAME_MODE" => "A",
+//            "COMPOSITE_FRAME_TYPE" => "AUTO",
+//            "DATA" => "",
+//            "GA_MARK" => ""
+//        )
+//    );
+    ?>
 </body>
 <?
 	$inHead = $APPLICATION->GetViewContent('inhead');

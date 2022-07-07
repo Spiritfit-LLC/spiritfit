@@ -131,3 +131,10 @@ if (empty($seoValues['ELEMENT_META_TITLE'])){
 if (empty($seoValues['ELEMENT_META_DESCRIPTION'])){
     $APPLICATION->SetPageProperty('description',$arResult["NAME"].'. В разделе «Блог» вы можете узнать много полезной информации о тренировках. Блог фитнес-клуба Spirit Fitness.');
 }
+
+CIBlockElement::SetPropertyValues($arResult['ID'], $arResult['IBLOCK_ID'], (int)$arResult['PROPERTIES']['SHOWING_COUNT']['VALUE']+1, "SHOWING_COUNT");
+
+if(empty($arResult['PROPERTIES']['RATING']['VALUE'])){
+    $arResult['PROPERTIES']['RATING']['VALUE']=0;
+}
+$arResult['PROPERTIES']['RATING_PROCENT']=$arResult['PROPERTIES']['RATING']['VALUE']/5*100;

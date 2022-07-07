@@ -52,6 +52,9 @@
 }
 .abonement-min-price__face {
 	width: 100%;
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
 }
 .b-twoside-card__prices-face {
 	float: left;
@@ -59,4 +62,12 @@
 	font-size: 14px;
 	text-transform: lowercase;
 	color: #ff7628;
+}
+
+.abonement-min-price .b-twoside-card__prices-title{
+	display:inline-block;
+}
+.abonement-min-price .b-twoside-card__prices-current{
+	display:inline-block;
+	font-size: 16px;
 }

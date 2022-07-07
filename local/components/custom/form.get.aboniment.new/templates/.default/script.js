@@ -87,6 +87,7 @@ $(document).ready(function(){
             data: postData,
             method:'POST'
         }).then(function (response) {
+            // console.log(response)
             var res_data=response['data'];
 
             res_data['DISCOUNTS'].forEach(function(el){
@@ -100,6 +101,7 @@ $(document).ready(function(){
             $('a[href="#apply"]').remove();
 
         }, function (response) {
+            // console.log(response)
             //Сообщение об ошибке
             var message=response.errors[0].message;
             ShowMessage(message);
@@ -123,6 +125,7 @@ $(document).ready(function(){
             data: postData,
             method:'POST'
         }).then(function (response) {
+            // console.log(response)
             o();
             var result_data=response['data'];
             if (result_data['CLUB_NAME']!==undefined){
@@ -168,6 +171,7 @@ $(document).ready(function(){
 
 
         }, function (response) {
+            // console.log(response)
             //Сообщение об ошибке
             var message=response.errors[0].message;
             ShowMessage(message);
@@ -192,7 +196,7 @@ $(document).ready(function(){
         var action=form.find('input[name="ACTION"]').val();
 
         if (form.find('input[name="STEP"]').val()==='LEGALINFO'){
-            form.find('.popup.popup--legal-information').fadeIn(300)
+            form.find('.popup.popup--legal-information').fadeIn(300);
         }
         else if(form.find('input[name="STEP"]').val()==='SUBMIT'){
 
@@ -223,6 +227,7 @@ $(document).ready(function(){
                 data: postData,
                 method:'POST'
             }).then(function(responce){
+                // console.log(responce)
                 o();
 
                 //Разблокируем кнопку
@@ -276,6 +281,8 @@ $(document).ready(function(){
 
                 if (action==='getAbonement'){
                     form.find('.popup.popup--legal-information').fadeOut(300);
+
+
                     form.find('.form-checkboxes').hide(300);
 
                     if (res_data['user-action']==='code'){
@@ -354,6 +361,7 @@ $(document).ready(function(){
                     dataLayerSend('UX', 'openMembershipReadyPage', strSend);
                 }
             }, function(response){
+                // console.log(response)
 
                 form.find('input[type="submit"]').removeAttr('disabled');
                 form.find('.escapingBallG-animation').removeClass('active');
@@ -383,7 +391,6 @@ $(document).ready(function(){
                     var popup_legal=form.find('.popup.popup--legal-information');
                     popup_legal.fadeOut(300);
                     form.find('input[name="STEP"]').val('LEGALINFO');
-                    popup_legal.find('.input--checkbox').trigger('click');
                 }
                 if (action==='checkCode'){
                     if (code===7){

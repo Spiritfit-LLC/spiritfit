@@ -139,7 +139,7 @@ foreach( $clubs as $club ) {
                     <nav class="b-top-menu">
                         <button class="b-top-menu__toggle is-hide-desktop">Меню</button>
                         <div class="b-top-menu__holder">
-                            <div class="b-club-search">
+                            <div class="b-club-search active">
                                 <form action="/clubs/" method="get"> 
                                     <label class="b-club-search__label" for="#club-search">Найти клуб
                                     </label>
@@ -150,7 +150,19 @@ foreach( $clubs as $club ) {
                                 </form>
                                 <? if(false) { ?><a class="b-header__btn button-outline is-hide-mobile js-form-abonement" href="#" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a><? } ?>
 				                <a class="b-header__btn button-outline is-hide-mobile trial-training-btn" href="/abonement/probnaya-trenirovka-/#js-pjax-container" data-position="bottomFixedBar">Пробная тренировка</a>
+<!--INDEV-->
+<!--                                <button class="b-club-search__hide-btn b-club-search-btn">-->
+<!--                                --><?php //echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/cross_footer_icon.svg');?>
+<!--                                </button>-->
+<!--INDEV-->
+
                             </div>
+<!--INDEV-->
+<!--                            <button class="b-club-search__show-btn b-club-search-btn">-->
+<!--                            --><?php //echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/arrow_up_footer_icon.svg');?>
+<!--                            </button>-->
+<!--INDEV-->
+
                             <?$APPLICATION->IncludeComponent(
                                 "bitrix:menu", 
                                 "main-menu", 
@@ -170,13 +182,22 @@ foreach( $clubs as $club ) {
                                 ),
                                 false
                             );?>
-                            <? if(false) { ?><a class="b-top-menu__btn button-outline is-hide-desktop js-form-abonement" href="javascript:;" data-webform-fancybox="./form-request.html" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a><? } ?>
-							<a class="b-top-menu__btn button-outline is-hide-desktop header-personal-btn" style="margin-bottom: 20px;" href="/personal/">Личный кабинет</a>
-							<a class="b-top-menu__btn button-outline is-hide-desktop trial-training-btn" href="/abonement/probnaya-trenirovka-/#js-pjax-container" data-position="burgerMenu">Пробная тренировка</a>
+<!--                            --><?// if(false) { ?><!--<a class="b-top-menu__btn button-outline is-hide-desktop js-form-abonement" href="javascript:;" data-webform-fancybox="./form-request.html" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a>--><?// } ?>
+<!--							--><?// if(false) { ?><!--<a class="b-top-menu__btn button-outline is-hide-desktop header-personal-btn" style="margin-bottom: 20px;" href="/personal/">Личный кабинет</a>--><?// } ?>
+<!---->
+<!--							--><?//if (!PersonalUtils::IsClient()):?>
+<!--								<a class="b-top-menu__btn button-outline is-hide-desktop" href="/abonement/" style="margin-bottom: 20px;">Купить абонемент</a>-->
+<!--								<a class="b-top-menu__btn button-outline is-hide-desktop trial-training-btn" href="/abonement/probnaya-trenirovka-/#js-pjax-container" data-position="burgerMenu">Пробная тренировка</a>-->
+<!--							--><?//endif;?>
+                            <!--INDEV-->
+                            <a class="b-top-menu__btn button-outline is-hide-desktop header-personal-btn" style="margin-bottom: 20px;" href="/personal/">Личный кабинет</a>
+                            <a class="b-top-menu__btn button-outline is-hide-desktop trial-training-btn" href="/abonement/probnaya-trenirovka-/#js-pjax-container" data-position="burgerMenu">Пробная тренировка</a>
+                            <!--INDEV-->
+
                         </div>
                     </nav>
                 </div>
-				<a class="b-header-phone" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a>
+				<a class="b-header-phone phone-btn main-phone-btn" data-position="header" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a>
                 <a href="/personal/" class="personal-btn is-hide-mobile header-personal-btn">
                     <?
                     global $USER;

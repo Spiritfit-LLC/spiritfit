@@ -8,7 +8,7 @@ $clubSection = Clubs::getClubSecDesc();
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
 integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
 crossorigin=""></script>
-<script src="<?=SITE_TEMPLATE_PATH?>/js/map-leafletjs.js?version=3"></script>
+<script src="<?=SITE_TEMPLATE_PATH?>/js/map-leafletjs.js?version=<?=uniqid()?>"></script>
 <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" type="text/css">
 <script src="//unpkg.com/leaflet-gesture-handling"></script>
 

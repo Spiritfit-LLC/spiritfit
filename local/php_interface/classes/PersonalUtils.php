@@ -622,4 +622,24 @@ class PersonalUtils{
         }
     }
 
+
+    public static function IsClient(){
+        global $USER;
+
+        if ($USER->IsAuthorized()){
+            $arGroups = CUser::GetUserGroup($USER->GetID());
+            if (in_array(Utils::GetUGroupIDBySID('CLIENTS'), $arGroups)){
+                $CLIENT=true;
+            }
+            else{
+                $CLIENT=false;
+            }
+        }
+        else{
+            $CLIENT=false;
+        }
+
+        return $CLIENT;
+    }
+
 }

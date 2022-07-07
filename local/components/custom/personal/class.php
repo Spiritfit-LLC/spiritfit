@@ -149,6 +149,16 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                     new ActionFilter\Csrf(),
                 ],
                 'postfilters' => []
+            ],
+            'getCardQr'=>[
+                'prefilters' => [
+                    new ActionFilter\Authentication,
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_GET)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
             ]
         ];
     }
@@ -1248,5 +1258,50 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         }
         PersonalUtils::UpdatePersonalInfoFrom1C($USER->GetID());
         return ['reload'=>true];
+    }
+
+
+    //Запрос QR кода сотрудника
+    public function getCardQrAction(){
+        global $USER;
+        $user_id=$USER->GetID();
+        $rsUser=CUser::GetByID($user_id);
+
+        if ($arUser = $rsUser->Fetch()){
+            if (!empty($arUser['UF_CARD_QRCODE'])){
+                return ['result'=>true, 'src'=>$arUser['UF_CARD_QRCODE']];
+            }
+            else{
+                $arParams=[
+                    'data'=>MAIN_SITE_URL.'/personalcard/?ID='.$user_id,
+                    'logo'=>true,
+                    'background'=>'white'
+                ];
+
+                $api=new Api([
+                    'action'=>'getqrcode',
+                    'params'=>$arParams,
+                ]);
+
+                $response=$api->result();
+                if (!$response['success']){
+                    if (empty($response['data']['result']['message'])){
+                        throw new Exception($this->errorMessages[100], 100);
+                    }
+                    else{
+                        throw new Exception($response['data']['result']['message'], 100);
+                    }
+                }
+                else{
+                    $USER->Update($user_id, [
+                        'UF_CARD_QRCODE'=>$response['data']['result']['result']['code_src']
+                    ], false);
+                    return ['result'=>true, 'src'=>$response['data']['result']['result']['code_src']];
+                }
+            }
+        }
+        else{
+            throw new Exception($this->errorMessages[100], 100);
+        }
     }
 }

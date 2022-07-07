@@ -308,7 +308,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                 'PLACEHOLDER'=>$FORM["arQuestions"][$key]["TITLE"],
                 'TYPE'=>$key=="phone" ? "tel" : $value['0']["FIELD_TYPE"],
                 'REQUIRED'=>$FORM["arQuestions"][$key]["REQUIRED"]=="Y" ? true:false,
-                "COMMENT"=>$FORM["arQuestions"][$key]["COMMENTS"],
+                "COMMENT"=>$FORM["arQuestions"][$key]["COMMENTS"]
             ];
             if ($value['0']["FIELD_TYPE"]=='radio' || $value['0']["FIELD_TYPE"]=='checkbox'){
                 $FORM_FIELDS['FIELDS'][$key]['NAME']="form_".$value['0']["FIELD_TYPE"]."_".$FORM['arQuestions'][$key]['SID'];
@@ -342,6 +342,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                     }
                     $FORM_FIELDS['FIELDS'][$key]['TYPE']='SELECT';
                     $FORM_FIELDS['FIELDS'][$key]['ITEMS']=$CLUBS;
+                    $FORM_FIELDS['FIELDS'][$key]['PARAMS']=$value['0']["FIELD_PARAM"];
                 }
                 elseif ($FORM_FIELDS['FIELDS'][$key]['TYPE']=='checkbox'){
                     $FORM_FIELDS['FIELDS'][$key]['VALUE']=$value['0']["ID"];
@@ -666,6 +667,9 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         if (empty($FORM_FIELDS)){
             throw new Exception('Незаполнены обязательные поля', 7);
         }
+        if (empty($FORM_FIELDS['FIELDS']['legalinfo']['VALUE'])){
+            throw new Exception('Необходимо ознакомиться с условиями Оферты', 7);
+        }
         if (!$FORM_FIELDS['ISSET']){
             throw new Exception('Незаполнены обязательные поля', 7);
         }
@@ -732,7 +736,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                         'user-action'=>'code',
                         'next-action'=>'checkCode',
                         'promocode'=>!empty($promocode),
-                        'code'=>$_SESSION['code'],
+//                        'code'=>$_SESSION['code'],
                         'btn'=>'Подтвердить',
                         'step'=>2
                     ];
@@ -924,7 +928,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                 'user-action'=>'code',
                 'next-action'=>'checkCode',
                 'promocode'=>!empty($promocode),
-                'code'=>$_SESSION['code'],
+//                'code'=>$_SESSION['code'],
                 'btn'=>'Подтвердить'
             ];
         }
@@ -991,7 +995,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
 
         return [
             'next-action'=>'checkCodeTrial',
-            'code'=>$responce["data"]["result"]["userMessage"],
+//            'code'=>$responce["data"]["result"]["userMessage"],
             'btn'=>'Подтвердить',
             'step'=>2
         ];
