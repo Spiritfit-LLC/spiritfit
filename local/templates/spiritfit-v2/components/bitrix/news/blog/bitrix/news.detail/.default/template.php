@@ -22,7 +22,32 @@
 		<div class="blog-wrapper detail">
 			<div class="blog-items <?=(count($arResult["LEFT_ITEMS"]) > 0 || !empty($arParams["BANNER"])) ? "two" : "one" ?>">
 				<div class="blog-items-col">
-					<div class="blog-detail-date"><?=$arResult["DATE"]?></div>
+                    <div class="blog-detail-seo-info">
+                        <div class="blog-detail-date">Дата: <?=$arResult["DATE"]?></div>
+                        <div class="blog-detail-showing-count">Просмотры: <?=$arResult['PROPERTIES']['SHOWING_COUNT']["VALUE"]?></div>
+                        <div class="blog-detail-rating">Рейтинг:
+                            <svg width="70" height="14" viewBox="0 0 160 32" style="margin: 0 5px;">
+                                <defs>
+                                    <mask id="perc">
+                                        <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                                        <rect x="<?=$arResult['PROPERTIES']['RATING_PROCENT']?>%" y="0" width="100%" height="100%" fill="grey" />
+                                    </mask>
+
+                                    <symbol viewBox="0 0 32 32" id="star">
+                                        <path d="M31.547 12a.848.848 0 00-.677-.577l-9.427-1.376-4.224-8.532a.847.847 0 00-1.516 0l-4.218 8.534-9.427 1.355a.847.847 0 00-.467 1.467l6.823 6.664-1.612 9.375a.847.847 0 001.23.893l8.428-4.434 8.432 4.432a.847.847 0 001.229-.894l-1.615-9.373 6.822-6.665a.845.845 0 00.214-.869z" />
+                                    </symbol>
+                                    <symbol viewBox="0 0 160 32" id="stars">
+                                        <use xlink:href="#star" x="-64" y="0"></use>
+                                        <use xlink:href="#star" x="-32" y="0"></use>
+                                        <use xlink:href="#star" x="0" y="0"></use>
+                                        <use xlink:href="#star" x="32" y="0"></use>
+                                        <use xlink:href="#star" x="64" y="0"></use>
+                                    </symbol>
+                                </defs>
+
+                                <use xlink:href="#stars" fill="#ff7628" mask="url(#perc)"></use>
+                            </svg><?=round($arResult['PROPERTIES']['RATING']['VALUE'],2)?></div>
+                    </div>
                     <div class="blog-head-items">
 					<? if( !empty($arResult["PICTURE_SRC"]) ) { ?>
 						<div class="blog-detail-picture">
@@ -48,6 +73,33 @@
                             </div>
                         <?endforeach;?>
                     </div>
+                    <?if (empty($_SESSION['USER_VOTES'][$arResult['ID']])):?>
+                    <form class="blog-detail-rating-vote">
+                        <input type="hidden" name="blog-id" value="<?=$arResult["ID"]?>">
+                        <div class="rating-area">
+                            <input type="radio" id="star-5" name="rating" value="5">
+                            <label for="star-5" title="Оценка «5»"></label>
+                            <input type="radio" id="star-4" name="rating" value="4">
+                            <label for="star-4" title="Оценка «4»"></label>
+                            <input type="radio" id="star-3" name="rating" value="3">
+                            <label for="star-3" title="Оценка «3»"></label>
+                            <input type="radio" id="star-2" name="rating" value="2">
+                            <label for="star-2" title="Оценка «2»"></label>
+                            <input type="radio" id="star-1" name="rating" value="1" required>
+                            <label for="star-1" title="Оценка «1»"></label>
+                        </div>
+                        <input type="submit" value="Оценить работу автора">
+                        <div class="thnks-message">Спасибо, будем писать еще!</div>
+                    </form>
+                    <?else:?>
+                        <div class="rating-area">
+                            <?for ($i=5; $i>=1; $i--):?>
+                                <input type="radio" id="star-<?=$i?>>" name="rating" value="<?=$i?>" disabled <?if ($i==$_SESSION['USER_VOTES'][$arResult['ID']]) echo "checked";?>>
+                                <label for="star-<?=$i?>" title="Оценка «<?=$i?>»"></label>
+                            <?endfor;?>
+                            <div class="thnks-message active">Спасибо, будем писать еще!</div>
+                        </div>
+                    <?endif;?>
 				</div>
                 <div class="blog-items-col is-hide-mobile">
                     <ul class="text-section-titles">

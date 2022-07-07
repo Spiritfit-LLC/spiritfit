@@ -56,7 +56,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                                     style="background-image: url(<?=$imageSrc?>);">
                                     <div class="b-twoside-card__label"><?=$arItem['~NAME']?>
                                         <div class="abonement-min-price__face">
-                                            <div class="b-twoside-card__prices-face">От <?=$arItem["MIN_PRICE2"]?> <span class="rub">₽</span></div>
+                                            <div class="b-twoside-card__prices-face">от <?=$arItem["MIN_PRICE2"]?> <span class="rub">₽</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 									<? } ?>
                                     <div class="abonement-min-price">
                                         <div class="b-twoside-card__prices-item">
-                                            <div class="b-twoside-card__prices-title">Цена от</div>
+                                            <div class="b-twoside-card__prices-title">от </div>
                                             <div class="b-twoside-card__prices-current"><?=$arItem["MIN_PRICE2"]?> <span class="rub">₽</span></div>
                                         </div>
                                     </div>

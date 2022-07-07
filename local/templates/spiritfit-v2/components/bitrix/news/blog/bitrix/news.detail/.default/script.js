@@ -94,4 +94,22 @@ $(document).ready(function(){
         //     }
         // })
     }
+
+    $('form.blog-detail-rating-vote').unbind();
+    $('form.blog-detail-rating-vote').submit(function(e){
+        e.preventDefault();
+
+        var postData=$(this).serializeArray();
+
+        $.ajax({
+            url:'/local/ajax/blog.vote.php',
+            data:postData,
+            method: "POST",
+            success: function(response){
+                $('form.blog-detail-rating-vote').find('input').prop('disabled', true);
+                $('form.blog-detail-rating-vote').find('input[type="submit"]').hide(300);
+                $('form.blog-detail-rating-vote').find('.thnks-message').show(300);
+            }
+        })
+    });
 });

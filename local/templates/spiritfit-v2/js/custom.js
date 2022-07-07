@@ -414,6 +414,16 @@ function clickBtn(el){
     $('.subscription__promo-btn_v2').trigger('click', ["is-form-submit"]);
 }
 
+//Кнопка звонка
+function phone_btn_position(){
+    if (window.innerWidth<=1024){
+        $('.main-phone-btn').data('position', 'mobileRoundButton');
+    }
+    else{
+        $('.main-phone-btn').data('position', 'header');
+    }
+}
+
 $(document).ready(function() {
 	
 	/* Slick init on loyalty */
@@ -517,10 +527,6 @@ $(document).ready(function() {
         if(link !== undefined && link.indexOf('http') != -1){
             e.preventDefault();
             window.open(link, '_blank');
-        }
-
-        if(link !== undefined && link.indexOf('tel') != -1){
-            dataLayerSend('UX', 'clickCallButton', '');
         }
     })
     
@@ -1199,7 +1205,46 @@ $(document).ready(function() {
 
     $('a.b-info-slider__btn').click(function(e){
         dataLayerSend('UX','clickLinkSliderPromo', $(this).siblings('.b-info-slider__title').text());
-    })
+    });
+
+    phone_btn_position();
+    $(window).resize(phone_btn_position);
+
+
+    $('.phone-btn').click(function(){
+        if ($(this).data('position')==='page'){
+            position=document.location.protocol+'//'+document.location.host+document.location.pathname
+        }
+        else{
+            position=$(this).data('position');
+        }
+        dataLayerSend('UX','clickCallButton', position);
+    });
+
+
+
+    //Футер всплывашка
+    // if (localStorage.getItem('footer-hide')==="1"){
+    //     $('.b-club-search').removeClass('active');
+    //     $('.b-club-search__show-btn').addClass('active');
+    // }
+    // else{
+    //     $('.b-club-search').addClass('active');
+    //     $('.b-club-search__show-btn').removeClass('active');
+    // }
+    //
+    // $('.b-club-search__hide-btn').click(function(){
+    //     $('.b-club-search').removeClass('active');
+    //     $('.b-club-search__show-btn').addClass('active');
+    //     localStorage.setItem('footer-hide', "1");
+    // });
+    //
+    // $('.b-club-search__show-btn').click(function(){
+    //     $('.b-club-search').addClass('active');
+    //     $('.b-club-search__show-btn').removeClass('active');
+    //     localStorage.setItem('footer-hide', "0");
+    // });
+
 })
 
 

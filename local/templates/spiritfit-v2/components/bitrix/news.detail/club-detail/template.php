@@ -33,6 +33,8 @@ if(strpos($mapAdress, '"')) $mapAdress = str_replace('"', '\'', $mapAdress);
 
 session_start();
 $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
+$this->addExternalJs(SITE_TEMPLATE_PATH.'/libs/modalwindow/modalwindow.js');
+$this->addExternalCss(SITE_TEMPLATE_PATH .'/libs/modalwindow/modalwindow.css');
 
 ?>
 <? if($_REQUEST["ajax_send"] != 'Y') { ?>
@@ -226,8 +228,19 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 									} ?>
 								</div>
 								<? if ($arResult["PROPERTIES"]["VIRTUAL_TOUR"]["VALUE"]){ ?>
-									<a class="b-image-plate-block__btn button" href="<?= $arResult["PROPERTIES"]["VIRTUAL_TOUR"]["VALUE"] ?>">Открыть 3D тур</a>
+									<a class="b-image-plate-block__btn button is-hide-mobile" href="<?= $arResult["PROPERTIES"]["VIRTUAL_TOUR"]["VALUE"] ?>">Открыть 3D тур</a>
 								<? } ?>
+                                <?if ($arResult['PROPERTIES']['AJAX_MOBILE_VIDEO']['VALUE']):?>
+                                    <a class="b-image-plate-block__btn button is-hide-desktop"
+                                       href="#show-club-btn"
+                                       data-src="<?=CFile::GetPath($arResult['PROPERTIES']['AJAX_MOBILE_VIDEO']['VALUE'])?>"
+                                       data-title="<?=$arResult['PROPERTIES']['AJAX_MOBILE_VIDEO_TITLE']['VALUE']?>"
+                                       data-poster="<?=CFile::GetPath($arResult['PROPERTIES']['AJAX_MOBILE_VIDEO_POSTER']['VALUE'])?>">посмотреть клуб</a>
+                                    <div class="escapingBallG-animation">
+                                        <div id="escapingBall_1" class="escapingBallG"></div>
+                                    </div>
+                                    <div class="club-video-container is-hide-desktop"></div>
+                                <?endif;?>
 							</div>
 						</div>
 					
@@ -352,7 +365,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 		
 		<?$APPLICATION->AddHeadString('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>',true)?>
 		<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-		<script src="<?=SITE_TEMPLATE_PATH?>/js/map-leafletjs.js?version=3"></script>
+		<script src="<?=SITE_TEMPLATE_PATH?>/js/map-leafletjs.js?version=<?=uniqid()?>"></script>
 		<link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" type="text/css">
 		<script src="//unpkg.com/leaflet-gesture-handling"></script>
 		
@@ -375,7 +388,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 									<? } ?>
 									<div class="b-map__contact-item">
 										<? if(!empty($phone)){ ?>
-											<div><a class="invisible-link" href="tel:<?=$phone?>"><?=$phone?></a></div>
+											<div><a class="invisible-link phone-btn" href="tel:<?=$phone?>" data-position="page"><?=$phone?></a></div>
 										<? } ?>
 										<? if(!empty($email)){ ?>
 											<div><a class="invisible-link" href="mailto:<?=$email?>"><?=$email?></a></div>

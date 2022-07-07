@@ -72,7 +72,8 @@ class ModalWindow{
             }
             else{
                 this.modal.className=this.className+' '+this.animation_type+'In';
-                this.modal.style.top='calc(50% - '+ this.modal.offsetHeight/2+'px)'
+                // this.modal.style.top='calc(50% - '+ this.modal.offsetHeight/2+'px)'
+                this.modal.style.top='50%';
             }
             this.status=true;
         }
