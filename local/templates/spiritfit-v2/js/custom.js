@@ -1,3 +1,6 @@
+var clickHandler = ("ontouchstart" in window ? "touchend" : "click");
+
+
 function sendToUpMetrika(sendData){
     sendData['phone']=sendData['phone'].replace(/[^0-9]/g,"");
 
@@ -163,7 +166,7 @@ function initFormFields($context) {
             var placeholder = $select.attr('data-placeholder');
             $select.select2({
                 width: '100%',
-                minimumResultsForSearch: 100,
+                // minimumResultsForSearch: 100,
                 placeholder: placeholder,
                 dropdownParent: $select.parent(),
                 "language": {
@@ -608,7 +611,7 @@ $(document).ready(function() {
 
             var isMacLike = navigator.platform.match(/(iPhone|iPod|iPad)/i) ? true : false;
             $('select.custom--select').select2({
-                minimumResultsForSearch: Infinity
+                // minimumResultsForSearch: Infinity
             });
             if (!isMacLike) {
                 // $('select.input--select').styler({
@@ -651,7 +654,7 @@ $(document).ready(function() {
 
             var isMacLike = navigator.platform.match(/(iPhone|iPod|iPad)/i) ? true : false;
             $('select.custom--select').select2({
-                minimumResultsForSearch: Infinity
+                // minimumResultsForSearch: Infinity
             });
             if (!isMacLike) {
                 // $('select.input--select.js-msg-select').styler({
@@ -1199,9 +1202,9 @@ $(document).ready(function() {
         dataLayerSend('UX','useClubSearchForm', 'bottomFixedBar');
     });
 
-    $('a[data-sub_id]').click(function(){
-        dataLayerSend('UX','clickFitnessSubscriptionBlock', $(this).data('sub_id'));
-    });
+    // $('a[data-sub_id]').click(function(){
+    //     dataLayerSend('UX','clickFitnessSubscriptionBlock', $(this).data('sub_id'));
+    // });
 
     $('a.b-info-slider__btn').click(function(e){
         dataLayerSend('UX','clickLinkSliderPromo', $(this).siblings('.b-info-slider__title').text());
@@ -1209,6 +1212,27 @@ $(document).ready(function() {
 
     phone_btn_position();
     $(window).resize(phone_btn_position);
+
+    //Общая функция отправки в ГА
+    $('[data-layer="true"]').unbind(clickHandler).on(clickHandler, function(){
+        if ($(this).data("layercategory")!==undefined){
+            var ecategory=$(this).data("layercategory");
+        }
+        else{
+            ecategory="UX";
+        }
+
+        if ($(this).data("layerlabel")!==undefined){
+            var elabel=$(this).data("layerlabel");
+        }
+        else{
+            elabel="";
+        }
+
+        var eaction=$(this).data("layeraction");
+
+        dataLayerSend(ecategory, eaction, elabel);
+    });
 
 
     $('.phone-btn').click(function(){
@@ -1224,26 +1248,26 @@ $(document).ready(function() {
 
 
     //Футер всплывашка
-    // if (localStorage.getItem('footer-hide')==="1"){
-    //     $('.b-club-search').removeClass('active');
-    //     $('.b-club-search__show-btn').addClass('active');
-    // }
-    // else{
-    //     $('.b-club-search').addClass('active');
-    //     $('.b-club-search__show-btn').removeClass('active');
-    // }
-    //
-    // $('.b-club-search__hide-btn').click(function(){
-    //     $('.b-club-search').removeClass('active');
-    //     $('.b-club-search__show-btn').addClass('active');
-    //     localStorage.setItem('footer-hide', "1");
-    // });
-    //
-    // $('.b-club-search__show-btn').click(function(){
-    //     $('.b-club-search').addClass('active');
-    //     $('.b-club-search__show-btn').removeClass('active');
-    //     localStorage.setItem('footer-hide', "0");
-    // });
+    if (localStorage.getItem('footer-hide')==="1"){
+        $('.b-club-search').removeClass('active');
+        $('.b-club-search__show-btn').addClass('active');
+    }
+    else{
+        $('.b-club-search').addClass('active');
+        $('.b-club-search__show-btn').removeClass('active');
+    }
+
+    $('.b-club-search__hide-btn').click(function(){
+        $('.b-club-search').removeClass('active');
+        $('.b-club-search__show-btn').addClass('active');
+        localStorage.setItem('footer-hide', "1");
+    });
+
+    $('.b-club-search__show-btn').click(function(){
+        $('.b-club-search').addClass('active');
+        $('.b-club-search__show-btn').removeClass('active');
+        localStorage.setItem('footer-hide', "0");
+    });
 
 })
 

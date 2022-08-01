@@ -14,6 +14,7 @@ class ModalWindow{
         this.closer=null;
         this.view=null;
         this.onClose=null;
+        this.id=Date.now().toString(36) + Math.random().toString(36).substr(2);
 
 
         this.className='dlg-modal'
@@ -100,6 +101,7 @@ class ModalWindow{
         }
         else{
             this.modal.className=this.className+' '+this.animation_type+'Out';
+            this.modal.id=this.id;
         }
 
 
@@ -163,6 +165,14 @@ class ModalWindow{
         this.onClose=func;
     }
 
+    destroy(){
+        if (this.modal!==undefined){
+            this.modal.remove();
+        }
+        if (this.overlay!==undefined){
+            this.overlay.remove();
+        }
+    }
     // set_overlay_clickable(clickable=true){
     //     var clonedElement = this.overlay.cloneNode(true);
     //     this.overlay.replaceWith(clonedElement);

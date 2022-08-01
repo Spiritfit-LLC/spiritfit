@@ -52,15 +52,11 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 					</script>
                     
                     <div class="b-cards-slider__item v2-abonement">
-                        <div class="b-twoside-card">
+                        <div class="b-twoside-card"  data-sub_id="<?=$arItem['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>">
                             <div class="b-twoside-card__inner">
                                 <div class="b-twoside-card__content"
                                     style="background-image: url(<?=$imageSrc?>);">
-                                    <div class="b-twoside-card__label"><?=$arItem['~NAME']?>
-                                        <div class="abonement-min-price__face">
-                                            <div class="b-twoside-card__prices-face">от <?=$arItem["MIN_PRICE2"]?> <span class="rub">₽</span></div>
-                                        </div>
-                                    </div>
+                                    <div class="b-twoside-card__label"><?=$arItem['~NAME']?></div>
                                 </div>
                                 <div class="b-twoside-card__hidden-content">
                                     <div class="corp-abonement__back-title">
@@ -73,19 +69,17 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 											<? } ?>
 										</div>
 									<? } ?>
-                                    <div class="abonement-min-price">
-                                        <div class="b-twoside-card__prices-item">
-                                            <div class="b-twoside-card__prices-title">от </div>
-                                            <div class="b-twoside-card__prices-current"><?=$arItem["MIN_PRICE2"]?> <span class="rub">₽</span></div>
-                                        </div>
-                                    </div>
-									<div class="corp-abonement__back-button">
-										<a class="button <?=$arItem['PROPERTIES']['ADDITIONAL_CLASS']['VALUE']?>" href="<?=$arItem['DETAIL_PAGE_URL']?>"  data-sub_id="<?=$arItem['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>">Выбрать</a>
-									</div>
                                     <? if ($arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"]): ?>
                                         <div class="b-twoside-card__footnote"><?= $arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] ?></div>
                                     <? endif; ?>
                                 </div>
+                            </div>
+                            <div class="b-twoside-card__footer">
+                                <div class="abonement-min-price__face">
+                                    <div class="b-twoside-card__prices-face">от <?=$arItem["MIN_PRICE2"]?> <span class="rub">₽</span></div>
+                                </div>
+                                <a class="button-outline b-twoside-card-detail-btn">Подробнее</a>
+                                <a class="button <?=$arItem['PROPERTIES']['ADDITIONAL_CLASS']['VALUE']?> choose-abonement-btn" href="<?=$arItem['DETAIL_PAGE_URL']?>" data-sub_id="<?=$arItem['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>" style="display: none;">Выбрать</a>
                             </div>
                         </div>
                     </div>

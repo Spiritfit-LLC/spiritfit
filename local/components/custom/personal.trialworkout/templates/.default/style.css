@@ -1,0 +1,93 @@
+form.tw_form{
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+form.tw_form span.select2-selection.select2-selection--single{
+    padding-left: 0!important;
+}
+.tw_select_input {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+.tw_row{
+    width: 100%;
+    margin: 10px 0;
+    border: 1px solid #fc612042;
+    box-sizing: border-box;
+    padding: 5px 20px;
+}
+span.tw_select_placeholder {
+    font-family: 'Gotham Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #FC6120;
+}
+form.tw_form .select2-selection__arrow:before{
+    top: 5px!important;
+}
+.tw_form_submit{
+    width: 100%;
+    margin: 10px 0;
+}
+
+.timepicker-ui-clock-face{
+    background-color: #FC6120!important;
+}
+.timepicker-ui-wrapper,.timepicker-ui-wrapper.mobile{
+    background-color:#171717fc!important;
+}
+.timepicker-ui-select-time, .timepicker-ui-select-time.mobile{
+    width: 100%;
+    text-align: center;
+    left:0px!important;
+    font-size: 14px;
+}
+
+.timepicker-ui-hour:hover, .timepicker-ui-hour.active, .timepicker-ui-minutes:hover, .timepicker-ui-minutes.active, .timepicker-ui-hour.mobile:hover, .timepicker-ui-hour.mobile.active, .timepicker-ui-minutes.mobile:hover, .timepicker-ui-minutes.mobile.active {
+    color: #ff5722!important;
+    background-color: #303030!important;
+}
+.timepicker-ui-hour:focus-visible, .timepicker-ui-minutes:focus-visible, .timepicker-ui-hour.mobile:focus-visible, .timepicker-ui-minutes.mobile:focus-visible {
+     outline: none!important;
+}
+.timepicker-ui-hour, .timepicker-ui-minutes, .timepicker-ui-hour.mobile, .timepicker-ui-minutes.mobile{
+    background-color: #000000!important;
+    color: #8f8f8f;
+}
+.timepicker-ui-dot, .timepicker-ui-circle-hand, .timepicker-ui-clock-hand{
+    background-color: black!important;
+}
+.timepicker-ui-wrapper-btn, .timepicker-ui-wrapper-btn.mobile{
+    width: 100%;
+}
+.timepicker-ui-cancel-btn, .timepicker-ui-ok-btn{
+    width: 90px!important;
+    color:#ff5722!important;
+    font-weight: 500!important;
+}
+.timepicker-ui-cancel-btn:hover, .timepicker-ui-ok-btn:hover, .timepicker-ui-cancel-btn.mobile:hover, .timepicker-ui-ok.btn-mobile:hover{
+    background-color: transparent!important;
+}
+.timepicker-ui-wrapper.crane-straight, .timepicker-ui-wrapper.mobile.crane-straight{
+    color:black!important;
+}
+.timepicker-ui-value-tips.crane-straight{
+    color:unset!important;
+}
+.timepicker-ui-value-tips.active, .timepicker-ui-value-tips-24h.active{
+    color:white!important;;
+}
+.timepicker-ui-modal{
+    background-color: rgb(0 0 0 / 64%)!important;
+}
+
+@media screen and (max-width: 768px){
+    a[href="#choose_my_time"]{
+        font-size:14px!important;
+    }
+}

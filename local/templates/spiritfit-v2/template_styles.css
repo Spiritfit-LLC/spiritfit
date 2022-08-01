@@ -1810,6 +1810,7 @@ input::-moz-focus-inner{
     .popup--legal-information .popup__heading {
         max-width: 100%;
         margin-bottom: 40px;
+        padding-right: 50px;
     }
     .popup--legal-information .popup__btn {
         position: relative;

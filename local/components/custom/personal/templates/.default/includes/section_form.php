@@ -9,7 +9,9 @@ if(!function_exists('GetPersonalSection')) {
                                                                <?if($FIELD['TYPE']=='table') echo 'table-item';?>
                                                                <?if($FIELD['TYPE']=='checkbox') echo 'checkbox-item';?>
                                                                <?if (!$FIELD['CHANGEBLE']) echo 'readonly-item';?>
-                                                               <?if ($FIELD['TYPE']=='link') echo 'link-item';?>">
+                                                               <?if ($FIELD['TYPE']=='link') echo 'link-item';?>
+                                                               <?if ($FIELD['TYPE']=='list') echo 'list-item';?>
+                                                               <?if($FIELD['TYPE']=='SELECT') echo 'select-item';?>">
 
             <?if ($FIELD['TYPE']!='checkbox' && $FIELD['TYPE']!='link'):?>
                 <span class="personal-section-form__item-placeholder"><?=$FIELD['PLACEHOLDER']?>
@@ -55,6 +57,33 @@ if(!function_exists('GetPersonalSection')) {
                     <?if (!empty($FIELD['VALIDATOR'])) echo $FIELD['VALIDATOR']?>
                         name="<?=$FIELD['NAME']?>"
                           id="<?=$FIELD['HTML_ID']?>"><?=$FIELD['VALUE']?></textarea>
+            <?elseif($FIELD['TYPE']=='list'):?>
+                <div class="list-item__body">
+                <?foreach ($FIELD['VALUE'] as $V):?>
+                    <input
+                        class="personal-section-form__item-value list-item"
+                        type="text"
+                        name="<?=$FIELD['NAME']?>"
+                        value="<?=$V?>"
+                        id="<?=$FIELD['HTML_ID']?>"
+                        data-required_id="<?=$FIELD['REQUIRED_ID']?>"
+                    <?if ($FIELD['REQUIRED']) echo 'required';?>
+                    <?if ($FIELD['REQUIRED_FROM']){?> data-required_from="<?=$FIELD['REQUIRED_FROM']?>"<?}?>
+                    <?if (!$FIELD['CHANGEBLE']){?> disabled="disabled" <?}?>
+                        data-code="<?=$FIELD['USER_FIELD_CODE']?>"
+                        data-value="<?=$FIELD['DATA_VALUE']?>"
+                    <?if (!empty($FIELD['VALIDATOR'])) echo $FIELD['VALIDATOR']?>
+                >
+                <?endforeach;?>
+                </div>
+            <?elseif ($FIELD['TYPE']=='SELECT'):?>
+                <select class="input input--light input--select" name="<?=$FIELD['NAME']?>" autocomplete="off" <? if ($FIELD["REQUIRED"]) { ?>required="required"<? } ?> >
+                    <? foreach ($FIELD['ITEMS'] as $CLUB):?>
+                        <option value="<?=$CLUB["VALUE"]?>"><?=$CLUB["STRING"]?></option>
+                    <? endforeach; ?>
+                </select>
+            <?elseif ($FIELD['TYPE']=='info'):?>
+                <span class="personal-section-form__item-value"><?=$FIELD['VALUE']?></span>
             <?else:?>
                 <?if (!empty($FIELD['OLD_SUM'])):?>
                     <div class="old-sum"><s><?=$FIELD['OLD_SUM']?></s>
@@ -126,7 +155,7 @@ if(!function_exists('GetPersonalSection')) {
     </div>
 <?endif?>
 
-<div class="personal-section <?if (!empty($arParams['PARENT'])) echo 'child'?>" style="display: none" data-id="<?=$arParams['SECTION_ID']?>">
+<div class="personal-section <?if (!empty($arParams['PARENT'])) echo 'child'?>" style="display: none" data-id="<?=$arParams['SECTION_ID']?>" data-code="<?=$arParams['SECTION_CODE']?>">
     <?if (empty($arParams['PARENT'])):?>
         <div class="personal-section__title is-hide-mobile"><?=$arParams['SECTION']['NAME']?></div>
     <?endif?>
@@ -135,7 +164,7 @@ if(!function_exists('GetPersonalSection')) {
         <div class="profile-warnig-message">Пожалуйста, заполните все поля, чтобы активировать ваш профиль</div>
     <?endif;?>
     <?if (empty($arParams['PARENT']) || (!empty($arParams['PARENT']) && $arParams['SECTION']['FORM_TYPE']=='independent')):?>
-    <form class="personal-section-form" autocomplete="off" method="post" enctype="multipart/form-data">
+    <form class="personal-section-form" autocomplete="off" method="post" enctype="multipart/form-data" data-componentName="<?=$arParams['COMPONENT_NAME']?>">
         <?if (!empty($arParams['SECTION']['ACTION'])):?>
             <input type="hidden" name="ACTION" value="<?=$arParams['SECTION']['ACTION']?>">
         <?endif;?>
@@ -163,9 +192,11 @@ if(!function_exists('GetPersonalSection')) {
                     str_replace($_SERVER['DOCUMENT_ROOT'], '', __DIR__) . '/section_form.php',
                     array(
                         'SECTION_ID' => $SECTION['ID'],
+                        'SECTION_CODE'=>$SECTION['CODE'],
                         'SECTION' => $SECTION,
                         'IS_CORRECT' => $arParams['IS_CORRECT'],
                         'PARENT'=>$arParams['SECTION_ID'],
+                        'COMPONENT_NAME'=>$arParams['COMPONENT_NAME'],
                     ),
                     array(
                         'SHOW_BORDER' => true
@@ -191,9 +222,11 @@ if(!function_exists('GetPersonalSection')) {
                 str_replace($_SERVER['DOCUMENT_ROOT'], '', __DIR__) . '/section_form.php',
                 array(
                     'SECTION_ID' => $SECTION['ID'],
+                    'SECTION_CODE'=>$SECTION['CODE'],
                     'SECTION' => $SECTION,
                     'IS_CORRECT' => $arParams['IS_CORRECT'],
                     'PARENT'=>$arParams['SECTION_ID'],
+                    'COMPONENT_NAME'=>$arParams['COMPONENT_NAME'],
                 ),
                 array(
                     'SHOW_BORDER' => true

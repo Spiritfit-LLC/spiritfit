@@ -24,7 +24,7 @@
         foreach ($arResult['FORM_FIELDS'] as $ID=>$SECTION):?>
             <div class="personal-section" style="display: none" data-id="<?=$ID?>">
                 <div class="personal-section__title"><?=$SECTION['NAME']?></div>
-                <form class="personal-section-form" autocomplete="off" method="post" enctype="multipart/form-data">
+                <form class="personal-section-form" autocomplete="off" method="post" enctype="multipart/form-data" data-componentName="<?=$arResult['COMPONENT_NAME']?>">
                     <input type="hidden" name="WEB_FORM_ID" value="<?=$SECTION['WEB_FORM_ID']?>">
                     <input type="hidden" name="FORM_STEP" value="1">
                     <?if (!empty($SECTION['ACTION'])):?>

@@ -147,10 +147,6 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
 
 
         $this->IncludeComponentTemplate();
-
-        $template = &$this->GetTemplate();
-        $template->addExternalJs(SITE_TEMPLATE_PATH . '/libs/modalwindow/modalwindow.js');
-        $template->addExternalCss(SITE_TEMPLATE_PATH . '/libs/modalwindow/modalwindow.css');
     }
 
 
@@ -320,29 +316,35 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             if (!$request){
                 $validator=CFormValidator::GetList($FORM["arQuestions"][$key]['ID'], array(), $by,$order)->Fetch();
                 if ($key=="club"){
-                    $arFilter = array(
-                        "IBLOCK_ID" => Utils::GetIBlockIDBySID('clubs'),
-                        "PROPERTY_SOON" => false,
-                        "ACTIVE" => "Y",
-                        "PROPERTY_HIDE_LINK_VALUE"=>false,
-                        'ID'=>$this->GetClubsArr()
-                    );
-                    $dbElements = CIBlockElement::GetList(array("SORT" => "ASC"), $arFilter, false, false, array("ID", "CODE", "NAME", "PROPERTY_NUMBER"));
-                    while ($res = $dbElements->fetch()) {
-                        $club=array(
-                            'NUMBER'=>$res["PROPERTY_NUMBER_VALUE"],
-                            'STRING'=>$res["NAME"],
-                            'VALUE'=>$res['ID'],
-                        );
-                        if ($this->arResult['CLUB_ID']==$res['ID']){
-                            $club['SELECTED']=true;
-                            $this->arResult['SELECTED_CLUB']=$res['NAME'];
-                        }
-                        $CLUBS[]=$club;
+                    if (boolval($this->arResult["ELEMENT"]["PROPERTIES"]["ONLINE"]["VALUE"])){
+                        $FORM_FIELDS['FIELDS'][$key]["TYPE"]="hidden";
+                        $FORM_FIELDS['FIELDS'][$key]["VALUE"]=Utils::GetIBlockElementIDBySID("setevoy-abonement-");
                     }
-                    $FORM_FIELDS['FIELDS'][$key]['TYPE']='SELECT';
-                    $FORM_FIELDS['FIELDS'][$key]['ITEMS']=$CLUBS;
-                    $FORM_FIELDS['FIELDS'][$key]['PARAMS']=$value['0']["FIELD_PARAM"];
+                    else{
+                        $arFilter = array(
+                            "IBLOCK_ID" => Utils::GetIBlockIDBySID('clubs'),
+                            "PROPERTY_SOON" => false,
+                            "ACTIVE" => "Y",
+                            "PROPERTY_HIDE_LINK_VALUE"=>false,
+                            'ID'=>$this->GetClubsArr()
+                        );
+                        $dbElements = CIBlockElement::GetList(array("SORT" => "ASC"), $arFilter, false, false, array("ID", "CODE", "NAME", "PROPERTY_NUMBER"));
+                        while ($res = $dbElements->fetch()) {
+                            $club=array(
+                                'NUMBER'=>$res["PROPERTY_NUMBER_VALUE"],
+                                'STRING'=>$res["NAME"],
+                                'VALUE'=>$res['ID'],
+                            );
+                            if ($this->arResult['CLUB_ID']==$res['ID']){
+                                $club['SELECTED']=true;
+                                $this->arResult['SELECTED_CLUB']=$res['NAME'];
+                            }
+                            $CLUBS[]=$club;
+                        }
+                        $FORM_FIELDS['FIELDS'][$key]['TYPE']='SELECT';
+                        $FORM_FIELDS['FIELDS'][$key]['ITEMS']=$CLUBS;
+                        $FORM_FIELDS['FIELDS'][$key]['PARAMS']=$value['0']["FIELD_PARAM"];
+                    }
                 }
                 elseif ($FORM_FIELDS['FIELDS'][$key]['TYPE']=='checkbox'){
                     $FORM_FIELDS['FIELDS'][$key]['VALUE']=$value['0']["ID"];
@@ -656,6 +658,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
     }
 
     public function getAbonementAction(){
+//        return Context::getCurrent()->getRequest()->toArray();
         $this->componentParams();
         $this->GetClient();
 
@@ -704,6 +707,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
 
             'subscriptionId'=>$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"]
         ];
+//        return $arParams;
 
         $api=new Api([
             'action'=>'orderreg',
@@ -711,6 +715,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         ]);
 
         $responce=$api->result();
+//        file_put_contents($_SERVER["DOCUMENT_ROOT"].'/logs/test.txt', print_r($responce, true), FILE_APPEND);
 
         if(empty($responce["success"]) ) {
             if(!empty($responce["data"]["result"]["userMessage"]) ) {
@@ -736,7 +741,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                         'user-action'=>'code',
                         'next-action'=>'checkCode',
                         'promocode'=>!empty($promocode),
-//                        'code'=>$_SESSION['code'],
+                        'code'=>$_SESSION['code'],
                         'btn'=>'Подтвердить',
                         'step'=>2
                     ];
@@ -928,7 +933,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                 'user-action'=>'code',
                 'next-action'=>'checkCode',
                 'promocode'=>!empty($promocode),
-//                'code'=>$_SESSION['code'],
+                'code'=>$_SESSION['code'],
                 'btn'=>'Подтвердить'
             ];
         }
@@ -995,7 +1000,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
 
         return [
             'next-action'=>'checkCodeTrial',
-//            'code'=>$responce["data"]["result"]["userMessage"],
+            'code'=>$responce["data"]["result"]["userMessage"],
             'btn'=>'Подтвердить',
             'step'=>2
         ];

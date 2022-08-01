@@ -339,7 +339,7 @@ class FormAbonimentComponent extends CBitrixComponent{
         $phone = $this->request->get($phoneName);
         $arParam["phone"] = preg_replace('![^0-9]+!', '', $phone);
 		
-		if($arResult["ELEMENT"]["PROPERTIES"]["ADD_TO_1C"]["VALUE"]){
+		if($this->arResult["ELEMENT"]["PROPERTIES"]["ADD_TO_1C"]["VALUE"]){
             $arParam["additional"] = $this->arResult["ELEMENT"]["PROPERTIES"]["ADD_TO_1C"]["VALUE"];
         }
         
@@ -349,7 +349,6 @@ class FormAbonimentComponent extends CBitrixComponent{
 			
 		// if ($this->request["form_hidden_10"] == 0 || $this->request["form_hidden_21"] == 0) {
 		if ($this->request["form_hidden_10"] == 0) {
-            file_put_contents(__DIR__.'/myTest_.txt', print_r($this->request."\n", true), FILE_APPEND);
 			$arParam["type"] = 1;
             if ($this->arResult["ELEMENT"]["CODE"] == "probnaya-trenirovka" || $this->arResult["ELEMENT"]["ID"] == "226") {
                 $arParam["type"] = 3;
@@ -476,18 +475,20 @@ class FormAbonimentComponent extends CBitrixComponent{
                     Array('IBLOCK_ID'=>Utils::GetIBlockIDBySID('FORM_TYPES'), 'PROPERTY_FORM_TYPE'=>$type),
                     false,
                     false,
-                    Array()
+                    Array("PROPERTY_GA_EACTION", "PROPERTY_GA_ELLABEL", "PROPERTY_GA_ECATEGORY",)
                 );
                 if ($ar_res=$res->Fetch()){
-                    $FORM_TYPE=$ar_res['NAME'];
+                    $selectedClub = Utils::getClub($this->arParams["NUMBER"]);
+                    $this->arResult["GA_SETTINGS"]=[
+                        "eAction"=>$ar_res['PROPERTY_GA_EACTION_VALUE'],
+                        "eCategory"=>$ar_res["PROPERTY_GA_ECATEGORY_VALUE"],
+                        "elLabel"=>str_replace('<br>', ' ', $selectedClub['NAME']).'/'.$ar_res["PROPERTY_GA_ELLABEL_VALUE"]
+                    ];
                 }
                 else{
-                    $FORM_TYPE='-';
+                    $this->arResult["GA_SETTINGS"]=false;
                 }
 
-                $selectedClub = Utils::getClub($this->arParams["NUMBER"]);
-
-                $this->arResult['GA_LABEL']=str_replace('<br>', ' ', $selectedClub['NAME']).'/'.$FORM_TYPE;
                 $this->includeComponentTemplate('step-3');
                 break;
             default:

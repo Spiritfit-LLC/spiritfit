@@ -538,9 +538,10 @@ a.confirm-email-btn {
     padding-left: 0!important;
 }
 .personal-section-form__item.select-item {
-    border: none;
+    /*border: none;*/
     padding: 0;
-    border-bottom: 1px solid #fc612042;
+    border: 1px solid #fc612042;
+    padding-top: 5px;
 }
 span.select2-selection.select2-selection--single {
     padding-left: 20px;
@@ -604,6 +605,31 @@ input.reg_code{
     box-shadow: inset 0 0 6px #FC6120;
     cursor: default;
 }
+
+span.field-error {
+    font-size: 12px;
+    color: #fc6120;
+}
+.list-item__body {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.list-item__body::-webkit-scrollbar {
+    width: 5px;
+    cursor: default;
+}
+.list-item__body::-webkit-scrollbar-track {
+    background-color: rgba(0,0,0,0);
+    cursor: default;
+}
+.list-item__body::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px #FC6120;
+    cursor: default;
+}
+.list-item__body input{
+    font-size:18px!important;
+}
 /*INPUTS*/
 
 /*FORM RESULT*/
@@ -615,6 +641,13 @@ input.reg_code{
 }
 .form-submit-result-text.active{
     opacity: 1;
+}
+.form-submit-result-text a{
+    font-size: 18px;
+    text-decoration: underline;
+}
+span.field-message {
+    font-size: 12px;
 }
 /*FORM RESULT*/
 

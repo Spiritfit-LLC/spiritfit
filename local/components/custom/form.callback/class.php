@@ -136,6 +136,7 @@ class FormAbonimentComponent extends CBitrixComponent{
                 if ($name == "phone") {
                     $fieldId = preg_replace('![^0-9]+!', '', $fieldId);
                 }
+
                 $arParam[$name] = $fieldId;
             }
         }
@@ -148,6 +149,7 @@ class FormAbonimentComponent extends CBitrixComponent{
         global $APPLICATION;
 
         $arParam = $this->getFormatFields();
+
         $arParam["code"] = $this->request->get('code');
         
         $api = new Api(array(
@@ -172,6 +174,23 @@ class FormAbonimentComponent extends CBitrixComponent{
             case 2:
                 if (empty($this->arResult["ERROR"])) {
                     $this->sendSms();
+                }
+
+                $clubName = "form_" . $this->arResult["arAnswers"]["club"]['0']["FIELD_TYPE"] . "_" . $this->arResult["arAnswers"]["club"]['0']["ID"];
+                $clubNumber = $this->request->get($clubName);
+                $arFilter = array(
+                    "IBLOCK_CODE" => "clubs",
+                    "PROPERTY_SOON" => false,
+                    "ACTIVE" => "Y",
+                );
+                $dbElements = CIBlockElement::GetList(array("SORT" => "ASC"), $arFilter, false, false, array("ID", "NAME", "PROPERTY_NUMBER", "PROPERTY_HIDE_LINK"));
+                while ($res = $dbElements->fetch()) {
+                    $clubNumder = $res["PROPERTY_NUMBER_VALUE"];
+
+                    if(empty($res['PROPERTY_HIDE_LINK_VALUE']) && $clubNumder == $clubNumber ) {
+                        $this->arResult["CLUB_NAME"]=$res["NAME"];
+                        break;
+                    }
                 }
                 $this->includeComponentTemplate('step-2');
                 break;

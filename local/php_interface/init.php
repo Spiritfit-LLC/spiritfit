@@ -58,6 +58,9 @@ if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/EventH
 if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/PersonalUtils.php')) {
     require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/PersonalUtils.php');
 }
+if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/FeedCreator.php')) {
+    require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/FeedCreator.php');
+}
 
 AddEventHandler("main", "OnAfterUserAuthorize", Array("PersonalUtils", "UpdateFieldsAfterLogin"));
 

@@ -40,5 +40,33 @@ ul.left-menu li a.selected:hover
 	color:#FC8D3D;
 }
 
+a.b-top-menu__abonement-btn {
+	color: black;
+	font-size: 13px;
+	font-weight: 700;
+	/* padding: 0; */
+	padding: 10px 20px;
+	background-color: #ff7628;
+	border-radius: 5px;
+	display: block;
+	text-transform: uppercase;
+	/* margin-left: 50px; */
+}
+.b-top-menu__link{
+	display:block;
+	padding:15px;
+	color:#fff;
+	font-size:13px;
+	font-weight:700;
+	text-transform:uppercase;
+	text-decoration:none
+}
+@media screen and (max-width:1024px){
+	.b-top-menu__link{
+		padding:15px 0;
+		font-size:24px;
+		font-weight:500
+	}
+}
 
 

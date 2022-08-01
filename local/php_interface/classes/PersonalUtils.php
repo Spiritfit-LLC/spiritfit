@@ -123,6 +123,10 @@ class PersonalUtils{
 
                 if ($FORM_FIELDS['FIELDS'][$key]["REQUIRED"] && empty($FORM_FIELDS['FIELDS'][$key]['VALUE'])){
                     $FORM_FIELDS['ISSET']=false;
+                    $FORM_FIELDS['ERRORS'][]=[
+                        'form_name'=>$FORM_FIELDS['FIELDS'][$key]['NAME'],
+                        'message'=>'Проверьте корректность заполнения поля'
+                    ];
                 }
             }
             $FORM_FIELDS["WEB_FORM_ID"]=$WEB_FORM_ID;
@@ -139,8 +143,13 @@ class PersonalUtils{
 
     public static function GetPersonalPageFormFields($user_id, $request_info=false, $code=[], $section_id=false, $active_form=false, $photo_size=300){
         function GetSectionFields(&$ar_SectionList, $request_info, $code, $is_correct, $arUser, &$HEAD){
+            foreach ($ar_SectionList as $key=>$section){
+                $SECTION_ID[]=$section['ID'];
+            }
+
+
             $objects=[];
-            $filter = ['SECTION_ID' => array_keys($ar_SectionList), 'ACTIVE'=>'Y', 'CODE'=>$code, '!PROPERTY_HIDE_ON_FORM_VALUE'=>'Да'];
+            $filter = ['SECTION_ID' => array_unique($SECTION_ID), 'ACTIVE'=>'Y', 'CODE'=>$code, '!PROPERTY_HIDE_ON_FORM_VALUE'=>'Да'];
             $order = ['SORT' => 'ASC'];
 
             $rows = CIBlockElement::GetList($order, $filter);
@@ -151,16 +160,15 @@ class PersonalUtils{
                 unset($row);
             }
 
+
             CIBlockElement::GetPropertyValuesArray($objects, $filter['IBLOCK_ID'], $filter);
             unset($rows, $filter, $order);
-
 
             $issetFLAG=true;
             $GROUPS=[];
 
             $i=0;
             foreach ($objects as $id=>$element){
-//                var_dump(array($element['PROPERTIES']['USER_FIELD_CODE']['VALUE'],$arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']]));
                 if ($element['PROPERTIES']['HIDE_IF_EMPTY']['VALUE_XML_ID']=='Y'
                     && (!empty($element['PROPERTIES']['USER_FIELD_CODE']['VALUE']) &&
                         empty($arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']]))){
@@ -180,14 +188,40 @@ class PersonalUtils{
                                 $cont_flag=true;
                             }
                         }
+                        elseif ($DEPENDENT[0]==';'){
+                            $operator=explode(";", $DEPENDENT)[1];
+                            $parameter=explode("#", $DEPENDENT)[1];
+                            $usField=explode("#", $DEPENDENT)[2];
+
+                            switch($operator){
+                                case 0:
+                                    if ($arUser[$usField]<$parameter){
+                                        $cont_flag=true;
+                                    }
+                                    break;
+                                case 1:
+                                    if ($arUser[$usField]>$parameter){
+                                        $cont_flag=true;
+                                    }
+                                    break;
+                                case 2:
+                                    if ($arUser[$usField]!=$parameter){
+                                        $cont_flag=true;
+                                    }
+                                    break;
+                            }
+                        }
                     }
                     if ($cont_flag){
                         continue;
                     }
                 }
-
+                $field_name="form_" . $element['CODE'] . "_" . $id;
+                if (!empty($element["PROPERTIES"]["STATIC_VALUE_NAME"]["VALUE"])){
+                    $field_name=$element["PROPERTIES"]["STATIC_VALUE_NAME"]["VALUE"];
+                }
                 $FIELD=[
-                    'NAME'=>"form_" . $element['CODE'] . "_" . $id,
+                    'NAME'=>$field_name,
                     'TYPE'=>$element['PROPERTIES']['FIELD_TYPE']['VALUE_XML_ID'],
                     'CHANGEBLE'=>$element['PROPERTIES']['CHANGEBLE']['VALUE_XML_ID']=='Y'?true:false,
                     'IN_HEAD'=>$element['PROPERTIES']['IN_HEAD']['VALUE_XML_ID']=='Y'?true:false,
@@ -216,11 +250,14 @@ class PersonalUtils{
                     if (!$FIELD['CHANGEBLE']){
                         continue;
                     }
-
+                    if ($FIELD["TYPE"]=="info"){
+                        continue;
+                    }
                     $FIELD['VALUE']=empty($_REQUEST["form_".$element['CODE']."_".$id]) || strlen($_REQUEST["form_".$element['CODE']."_".$id])==0?false:$_REQUEST["form_".$element['CODE']."_".$id];
                     if ($FIELD["REQUIRED"] && empty($FIELD['VALUE'])){
                         $issetFLAG=false;
                     }
+                    $FIELD['CODE']=$element['CODE'];
                     switch ($FIELD['TYPE']){
                         case 'checkbox':
                             $FIELD['VALUE']=boolval($FIELD['VALUE']);
@@ -270,9 +307,37 @@ class PersonalUtils{
                                 }
                             }
                             break;
+                        case 'list':
+                            $FIELD['VALUE']=[];
+                            foreach ($arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']] as $F){
+                                $FIELD['VALUE'][]=$F;
+                            }
+                            break;
+                        case 'clublist':
+                            $arFilter = array(
+                                "IBLOCK_CODE" => 'clubs',
+                                "PROPERTY_SOON" => false,
+                                "ACTIVE" => "Y",
+                                "PROPERTY_HIDE_LINK_VALUE"=>false
+                            );
+
+                            $dbElements = CIBlockElement::GetList(array("SORT" => "ASC"), $arFilter, false, false, array("ID", "CODE", "NAME", "PROPERTY_NUMBER"));
+                            while ($res = $dbElements->fetch()) {
+                                $CLUBS[]=array(
+                                    'VALUE'=>$res["PROPERTY_NUMBER_VALUE"],
+                                    'STRING'=>$res["NAME"]
+                                );
+                            }
+                            $FIELD['TYPE']='SELECT';
+                            $FIELD['ITEMS']=$CLUBS;
+                            break;
                         default:
                             $FIELD['VALUE']=$arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']];
                             break;
+                    }
+
+                    if (!empty($element["PROPERTIES"]["STATIC_VALUE"]["VALUE"])){
+                        $FIELD['VALUE']=$element["PROPERTIES"]["STATIC_VALUE"]["VALUE"];
                     }
 
                     if ($FIELD['USER_FIELD_CODE']=='UF_PAYMENT_SUM' && !empty($arUser['UF_PAYMENT_BONUSES'])){
@@ -286,31 +351,94 @@ class PersonalUtils{
                     else{
                         $FIELD['DATA_VALUE']=null;
                     }
+
+                    if ($element['PROPERTIES']['SERIALIZE']['VALUE_XML_ID']=='Y'){
+                        if ($FIELD['TYPE']=='list'){
+                            $FIELD['VALUE']=[];
+                            foreach ($arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']] as $F){
+                                $FIELD['VALUE'][]=unserialize($F)[$element['PROPERTIES']['SERIALIZED_VALUE']['VALUE']];
+                            }
+                        }
+                        else{
+                            if ($ar_SectionList[$element['IBLOCK_SECTION_ID']]['LIST']==true){
+                                $FIELD['VALUE']=unserialize($arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']]);
+                            }
+                            else{
+                                $FIELD['VALUE']=unserialize($arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']])[$element['PROPERTIES']['SERIALIZED_VALUE']['VALUE']];
+                            }
+                            if ($element['PROPERTIES']['HIDE_IF_EMPTY']['VALUE_XML_ID']=='Y'
+                                && (!empty($element['PROPERTIES']['USER_FIELD_CODE']['VALUE']) &&
+                                    empty($FIELD['VALUE']))){
+                                continue;
+                            }
+                        }
+                    }
                 }
 
                 if ($FIELD['IN_HEAD'] && !$request_info){
                     $HEAD['FIELDS'][]=$FIELD;
                 }
                 if ($element['PROPERTIES']['GROUP']['VALUE']!==""){
-                    if (empty($GROUPS[$element['PROPERTIES']['GROUP']['VALUE']])){
-                        $GROUPS[$element['PROPERTIES']['GROUP']['VALUE']]['POSITION']=count($ar_SectionList[$element['IBLOCK_SECTION_ID']]['FIELDS']);
-                        $GROUPS[$element['PROPERTIES']['GROUP']['VALUE']]['SECTION_ID']=$element['IBLOCK_SECTION_ID'];
-                        $ar_SectionList[$element['IBLOCK_SECTION_ID']]['FIELDS'][]=$i;
-                    }
-                    $GROUPS[$element['PROPERTIES']['GROUP']['VALUE']]['FIELDS'][]=$FIELD;
+                    if ($ar_SectionList[$element['IBLOCK_SECTION_ID']]['LIST']==true){
+                        for($j=0; $j<count($FIELD['VALUE']); $j++){
+                            if (empty($GROUPS[$element['PROPERTIES']['GROUP']['VALUE'].'_'.$j])){
+                                $GROUPS[$element['PROPERTIES']['GROUP']['VALUE'].'_'.$j]['POSITION']=count($ar_SectionList[$element['IBLOCK_SECTION_ID']*10+$j]['FIELDS']);
+                                $GROUPS[$element['PROPERTIES']['GROUP']['VALUE'].'_'.$j]['SECTION_ID']=$element['IBLOCK_SECTION_ID']*10+$j;
+                                $ar_SectionList[$element['IBLOCK_SECTION_ID']*10+$j]['FIELDS'][]=$i;
+                            }
 
+
+                            $curr_field=$FIELD;
+                            $curr_field['VALUE']=$FIELD['VALUE'][$j][$element['PROPERTIES']['SERIALIZED_VALUE']['VALUE']];
+                            $GROUPS[$element['PROPERTIES']['GROUP']['VALUE'].'_'.$j]['SECTION_ID']=$element['IBLOCK_SECTION_ID']*10+$j;
+                            $ar_SectionList[$element['IBLOCK_SECTION_ID']*10+$j]['ID']=$element['IBLOCK_SECTION_ID']*10+$j;
+                            if ($element['PROPERTIES']['HIDE_IF_EMPTY']['VALUE_XML_ID']=='Y'
+                                && (!empty($element['PROPERTIES']['USER_FIELD_CODE']['VALUE']) &&
+                                    empty($curr_field['VALUE']))){
+                                continue;
+                            }
+                            $GROUPS[$element['PROPERTIES']['GROUP']['VALUE'].'_'.$j]['FIELDS'][]=$curr_field;
+                        }
+                        $UNSET_ELEMENTS[]=$element['IBLOCK_SECTION_ID'];
+                    }
+                    else{
+                        if (empty($GROUPS[$element['PROPERTIES']['GROUP']['VALUE']])){
+                            $GROUPS[$element['PROPERTIES']['GROUP']['VALUE']]['POSITION']=count($ar_SectionList[$element['IBLOCK_SECTION_ID']]['FIELDS']);
+                            $GROUPS[$element['PROPERTIES']['GROUP']['VALUE']]['SECTION_ID']=$element['IBLOCK_SECTION_ID'];
+                            $ar_SectionList[$element['IBLOCK_SECTION_ID']]['FIELDS'][]=$i;
+                        }
+                        $GROUPS[$element['PROPERTIES']['GROUP']['VALUE']]['FIELDS'][]=$FIELD;
+                    }
                 }
                 else{
-                    $ar_SectionList[$element['IBLOCK_SECTION_ID']]['FIELDS'][]=$FIELD;
+                    if ($ar_SectionList[$element['IBLOCK_SECTION_ID']]['LIST']==true){
+                        for($j=0; $j<count($FIELD['VALUE']); $j++){
+                            $curr_field=$FIELD;
+                            $curr_field['VALUE']=$FIELD['VALUE'][$j][$element['PROPERTIES']['SERIALIZED_VALUE']['VALUE']];
+                            if ($element['PROPERTIES']['HIDE_IF_EMPTY']['VALUE_XML_ID']=='Y'
+                                && (!empty($element['PROPERTIES']['USER_FIELD_CODE']['VALUE']) &&
+                                    empty($curr_field['VALUE']))){
+                                continue;
+                            }
+                            $ar_SectionList[$element['IBLOCK_SECTION_ID']*10+$j]['FIELDS'][]=$curr_field;
+                            $ar_SectionList[$element['IBLOCK_SECTION_ID']*10+$j]['ID']=$element['IBLOCK_SECTION_ID']*10+$j;
+                        }
+                        $UNSET_ELEMENTS[]=$element['IBLOCK_SECTION_ID'];
+                    }
+                    else{
+                        $ar_SectionList[$element['IBLOCK_SECTION_ID']]['FIELDS'][]=$FIELD;
+                    }
                 }
                 $i++;
             }
+            if (is_array($UNSET_ELEMENTS)){
+                foreach (array_unique($UNSET_ELEMENTS) as $ID){
+                    unset($ar_SectionList[$ID]);
+                }
+            }
             foreach($GROUPS as $key=>$GROUP){
-//            $arr=array(['GROUP'=>$GROUP['FIELDS']]);
-//            array_splice( $ar_SectionList[$GROUP['SECTION_ID']]['FIELDS'], $GROUP['POSITION'], 0, $arr);
                 $ar_SectionList[$GROUP['SECTION_ID']]['FIELDS'][$GROUP['POSITION']]=['GROUP'=>$GROUP['FIELDS']];
             }
-
             return $issetFLAG;
         }
 
@@ -347,16 +475,62 @@ class PersonalUtils{
             $active_flag=false;
             while($ar_Section = $rs_Section->GetNext(true, false))
             {
-                $cont_flag=false;
-                foreach ($ar_Section['UF_USER_FIELD_'] as $USER_FIELD){
-                    if (empty($arUser[$USER_FIELD])){
-                        $cont_flag=true;
+                if (!empty($ar_Section['UF_USER_FIELD_'])){
+                    $cont_flag=false;
+                    foreach ($ar_Section['UF_USER_FIELD_'] as $DEPENDENT){
+                        switch ($DEPENDENT[0]){
+                            case "=":
+                                if (empty($arUser[mb_substr($DEPENDENT, 1)])){
+                                    $cont_flag=true;
+                                }
+                                break;
+                            case "!":
+                                if (!empty($arUser[mb_substr($DEPENDENT, 1)])){
+                                    $cont_flag=true;
+                                }
+                                break;
+                            case ";":
+                                $operator=explode(";", $DEPENDENT)[1];
+                                $parameter=explode("#", $DEPENDENT)[1];
+                                $usField=explode("#", $DEPENDENT)[2];
+
+                                switch($operator){
+                                    case 0:
+                                        if ($arUser[$usField]<$parameter){
+                                            $cont_flag=true;
+                                        }
+                                        break;
+                                    case 1:
+                                        if ($arUser[$usField]>$parameter){
+                                            $cont_flag=true;
+                                        }
+                                        break;
+                                    case 2:
+                                        if ($arUser[$usField]!=$parameter){
+                                            $cont_flag=true;
+                                        }
+                                        break;
+                                }
+                                break;
+                            default:
+                                if (empty($arUser[$DEPENDENT])){
+                                    $cont_flag=true;
+                                }
+                        }
+                    }
+                    if ($cont_flag){
+                        continue;
                     }
                 }
-                if ($cont_flag){
-                    continue;
-                }
-
+//                $cont_flag=false;
+//                foreach ($ar_Section['UF_USER_FIELD_'] as $USER_FIELD){
+//                    if (empty($arUser[$USER_FIELD])){
+//                        $cont_flag=true;
+//                    }
+//                }
+//                if ($cont_flag){
+//                    continue;
+//                }
                 $ar_SectionList[$ar_Section['ID']] = [
                     'NAME'=>$ar_Section['NAME'],
                     "ICON"=>CFile::GetPath($ar_Section['UF_LK_SECTION_ICON']),
@@ -379,7 +553,7 @@ class PersonalUtils{
                         $ar_SectionList[$ar_Section['ID']]['FORM_TYPE']='in_parent';
                         break;
                 }
-                if (!empty($active_form) && $ar_Section['CODE']==$active_form){
+                if (!empty($active_form) && ($ar_Section['CODE']==$active_form || $ar_Section['ID']==$active_form)){
                     $ar_SectionList[$ar_Section['ID']]['ACTIVE']=true;
                     $active_flag=true;
                 }
@@ -400,9 +574,18 @@ class PersonalUtils{
                     $LK_FIELDS['CSS'][]=$css;
                 }
                 $ar_DepthLavel[] = $ar_Section['DEPTH_LEVEL'];
+
+                if (!empty($ar_Section['UF_USER_FIELD_LIST'])){
+                    $unserialize=unserialize($arUser[$ar_Section['UF_USER_FIELD_LIST']]);
+                    for ($i=0; $i<count($unserialize);$i++){
+                        $ar_SectionList[$ar_Section['ID']*10+$i]=$ar_SectionList[$ar_Section['ID']];
+                        if (!empty($ar_Section['UF_USER_FIELD_LIST_NAME_FUNC'])){
+                            $ar_SectionList[$ar_Section['ID']*10+$i]['NAME']=eval(str_replace('#VALUE#', '$unserialize["$i"]', $ar_Section['UF_USER_FIELD_LIST_NAME_FUNC']));
+                        }
+                    }
+                    $ar_SectionList[$ar_Section['ID']]['LIST']=true;
+                }
             }
-
-
 
             $LK_FIELDS['ISSET']=GetSectionFields($ar_SectionList, $request_info, $code, $LK_FIELDS['IS_CORRECT'], $arUser, $LK_FIELDS['HEAD']);
 
@@ -424,9 +607,6 @@ class PersonalUtils{
                     }
                 }
             }
-
-
-
         }
         elseif (is_numeric($section_id)){
             $ar_SectionList[$section_id]=[];
@@ -497,10 +677,12 @@ class PersonalUtils{
                 .$img_src;
         }
 
+//        var_dump(json_encode($LK_FIELDS, JSON_UNESCAPED_UNICODE));
+
         return $LK_FIELDS;
     }
 
-    private static function GetUpdatebleFrom1CPersonalInfo(){
+    public static function GetUpdatebleFrom1CPersonalInfo(){
         $objects=[];
         $filter = [
             'IBLOCK_CODE' => 'LK_FIELDS',
@@ -515,15 +697,21 @@ class PersonalUtils{
             $filter['IBLOCK_ID']=$row['IBLOCK_ID'];
             unset($row);
         }
-        CIBlockElement::GetPropertyValuesArray($objects, $filter['IBLOCK_ID'], $filter, ['CODE'=>['CODE_1C', 'USER_FIELD_CODE']]);
-        foreach ($objects as $id=>$element){
-            $RESULT[$element['PROPERTIES']['CODE_1C']['VALUE']]=$element['PROPERTIES']['USER_FIELD_CODE']['VALUE'];
+        CIBlockElement::GetPropertyValuesArray($objects, $filter['IBLOCK_ID'], $filter, ['CODE'=>['CODE_1C', 'USER_FIELD_CODE', 'SERIALIZE', 'FIELD_TYPE', 'VALUE_HANDLER', 'ONLY_1C_CHANGE']]);
+        foreach ($objects as $id=>$element){$RESULT[$element['PROPERTIES']['CODE_1C']['VALUE']][]=[
+                'VALUE'=>$element['PROPERTIES']['USER_FIELD_CODE']['VALUE'],
+                'SERIALIZE'=>$element['PROPERTIES']['SERIALIZE']['VALUE_XML_ID']=='Y' ? true:false,
+                'TYPE'=>$element['PROPERTIES']['FIELD_TYPE']['VALUE_XML_ID'],
+                'VALUE_HANDLER'=>$element['PROPERTIES']['VALUE_HANDLER']['VALUE'],
+                'ONLY_CHANGE'=>$element['PROPERTIES']['ONLY_1C_CHANGE']['VALUE_XML_ID']=='Y'?true:false,
+            ];
         }
         return $RESULT;
     }
 
     public static function UpdatePersonalInfoFrom1C($user_id, $user=false){
         $UPDATEBLE_FIELDS=self::GetUpdatebleFrom1CPersonalInfo();
+//        return $UPDATEBLE_FIELDS;
 
 
         if (!empty($user) && !empty($user['LOGIN']) && !empty($user['UF_1CID'])){
@@ -567,23 +755,56 @@ class PersonalUtils{
 
             $fields=$result['data']['result']['result'];
 
-            foreach($UPDATEBLE_FIELDS as $key=>$value){
-                if (key_exists($key, $fields)){
-                    if ($key=='bankcard' && !empty($fields[$key])){
-                        $fields[$key]=substr_replace($fields[$key],'******',0, 6);
+            foreach($UPDATEBLE_FIELDS as $key=>$val){
+                foreach ($val as $value){
+                    if ($value["ONLY_CHANGE"]){
+                        continue;
                     }
-                    $usUpdateArr[$UPDATEBLE_FIELDS[$key]]=$fields[$key];
-                }
-                else{
-                    $usUpdateArr[$UPDATEBLE_FIELDS[$key]]=null;
+                    if (key_exists($key, $fields)){
+                        if ($value['TYPE']=='list'){
+                            $CURRENT_VAL=[];
+                            foreach($fields[$key] as $field){
+                                if (!empty($value['VALUE_HANDLER'])){
+                                    $value['VALUE_HANDLER']=str_replace('#VALUE#', '$field', $value['VALUE_HANDLER']);
+                                    $field=eval($value['VALUE_HANDLER']);
+                                    if ($field===null){
+                                        continue;
+                                    }
+                                }
+
+                                if (boolval($value['SERIALIZE'])){
+                                    $CURRENT_VAL[]=serialize($field);
+                                }
+                                else{
+                                    $CURRENT_VAL[]=$field;
+                                }
+                            }
+                            $usUpdateArr[$value['VALUE']]=$CURRENT_VAL;
+                            file_put_contents($_SERVER['DOCUMENT_ROOT'].'/logs/test.txt', print_r($CURRENT_VAL, true)."\n", FILE_APPEND);
+                            continue;
+                        }
+
+                        $CURRENT_VAL=$fields[$key];
+                        if ($key=='bankcard' && !empty($CURRENT_VAL)){
+                            $CURRENT_VAL=substr_replace($CURRENT_VAL,'******',0, 6);
+                        }
+
+                        if (!empty($value['VALUE_HANDLER'])){
+                            $value['VALUE_HANDLER']=str_replace('#VALUE#', '$CURRENT_VAL', $value['VALUE_HANDLER']);
+                            $CURRENT_VAL=eval($value['VALUE_HANDLER']);
+                        }
+
+                        if (boolval($value['SERIALIZE'])){
+                            $CURRENT_VAL=serialize($CURRENT_VAL);
+                        }
+                    }
+                    else{
+                        $CURRENT_VAL=null;
+                    }
+
+                    $usUpdateArr[$value['VALUE']]=$CURRENT_VAL;
                 }
             }
-
-//            foreach ($fields as $key=>$value){
-//                if (key_exists($key, $UPDATEBLE_FIELDS)){
-//                    $usUpdateArr[$UPDATEBLE_FIELDS[$key]]=$value;
-//                }
-//            }
             global $USER;
             $usUpdateArr['UF_LAST_UPDATE_TIME']=date('d.m.Y H:i:s');
             if ($USER->Update($USER_ID, $usUpdateArr, false)){
@@ -641,5 +862,4 @@ class PersonalUtils{
 
         return $CLIENT;
     }
-
 }

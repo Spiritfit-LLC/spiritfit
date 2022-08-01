@@ -115,10 +115,6 @@ class PersonalCardComponent extends CBitrixComponent implements Controllerable{
         $this->arResult['COMPONENT_NAME']=$this->GetName();
 
         $this->IncludeComponentTemplate();
-
-        $template = &$this->GetTemplate();
-        $template->addExternalJs(SITE_TEMPLATE_PATH . '/libs/modalwindow/modalwindow.js');
-        $template->addExternalCss(SITE_TEMPLATE_PATH . '/libs/modalwindow/modalwindow.css');
     }
 
     function getVCardAction(){
