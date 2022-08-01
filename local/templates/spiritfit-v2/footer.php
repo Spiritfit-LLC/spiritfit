@@ -1,19 +1,6 @@
 <? if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die(); 
 $settings = Utils::getInfo();
 ?>
-<?php //if (!defined('PERSONAL_PAGE')):?>
-<?php
-//$APPLICATION->IncludeComponent(
-//    "custom:personal.onpageinfo",
-//    "",
-//    Array(
-//        "PROFILE_URL" => "/personal/",
-//        "PERSONAL_PAGE"=>"N"
-//    ),
-//    false
-//);
-//?>
-<?//endif;?>
 	</main>
 	<footer class="b-footer">
 		<div class="content-center">
@@ -88,21 +75,58 @@ $settings = Utils::getInfo();
         m.parentNode.insertBefore(a, m);
         })(document, 'script', '//upmetrics.ru/upmetric.min.js');
     </script>
-<!--    <script>-->
-<!--        (function(w,d,u){-->
-<!--            var s=d.createElement('script');s.async=true;s.src=u+'?'+(Date.now()/60000|0);-->
-<!--            var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);-->
-<!--        })(window,document,'https://portal.spiritfit.ru/upload/crm/site_button/loader_1_v48yzw.js');-->
-<!--    </script>-->
+    <script>
+        (function(w,d,u){
+            var s=d.createElement('script');s.async=true;s.src=u+'?'+(Date.now()/60000|0);
+            var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);
+        })(window,document,'https://portal.spiritfit.ru/upload/crm/site_button/loader_1_v48yzw.js');
+    </script>
     <?
-//    $APPLICATION->IncludeComponent("bitrix:b24connector.openline.info","", Array(
-//            "COMPOSITE_FRAME_MODE" => "A",
-//            "COMPOSITE_FRAME_TYPE" => "AUTO",
-//            "DATA" => "",
-//            "GA_MARK" => ""
-//        )
-//    );
+    $APPLICATION->IncludeComponent("bitrix:b24connector.openline.info","", Array(
+            "COMPOSITE_FRAME_MODE" => "A",
+            "COMPOSITE_FRAME_TYPE" => "AUTO",
+            "DATA" => "",
+            "GA_MARK" => ""
+        )
+    );
     ?>
+    <style>
+        .bx-livechat-body{
+            background-image: url("<?=SITE_TEMPLATE_PATH.'/img/open-lines-background.png'?>");
+            /*background-color: black;*/
+        }
+        .bx-livechat-head{
+            background-image: linear-gradient(90deg, #7f4790, #ff4f38);
+        }
+        .bx-livechat-bright-header .bx-livechat-title {
+            color: white!important;
+            font-weight: 700;
+            font-size: 18px;
+            font-family: 'Gotham Pro';
+        }
+        .bx-livechat-textarea-resize-handle{
+            background-image: linear-gradient(90deg, #7f4790, #ff4f38);
+        }
+        .bx-im-textarea{
+            padding:20px 0 0 0;
+        }
+        .b24-widget-button-inner-item{
+            background-image: linear-gradient(90deg, #7f4790, #ff4f38);
+            background-color: transparent;
+        }
+        .b24-widget-button-position-bottom-right{
+            bottom:37px!important;
+        }
+        .b24-widget-button-pulse{
+            border-color: #7f4790!important;
+        }
+        .b24-widget-button-inner-mask{
+            background: #7f4790!important;
+        }
+        button.b24-form-btn{
+            background-image: linear-gradient(90deg, #7f4790, #ff4f38);
+        }
+    </style>
 </body>
 <?
 	$inHead = $APPLICATION->GetViewContent('inhead');

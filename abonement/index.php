@@ -97,4 +97,15 @@ $APPLICATION->SetPageProperty("title", "Абонементы фитнес-клу
 	);?>
 	<? $APPLICATION->IncludeFile('/local/include/blocks.abonements.php', ['ELEMENT_CODE' => 'trenazhernyy-zal-main'], ['SHOW_BORDER' => false]); ?>
 <? endif; ?>
+<?
+//$APPLICATION->IncludeComponent(
+//    "custom:promocode.banner",
+//    "purple",
+//    Array(
+//        "BANNER_DISCOUNT" => "1000 &#x20bd;",
+//        "BANNER_TIME" => 3000,
+//        "PROMOCODE" => "FITSUMMER"
+//    )
+//);
+?>
 <? if (!isset($_SERVER['HTTP_X_PJAX']))  require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

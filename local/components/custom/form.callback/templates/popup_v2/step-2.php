@@ -32,4 +32,4 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
         </form>
     </div>
 </div>
-<script>dataLayerSend('UX', 'sendFormCallback', '');</script>
+<script>dataLayerSend('conversion', 'sendFormCallback', '<?=$arResult["CLUB_NAME"]?>');</script>

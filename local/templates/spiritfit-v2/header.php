@@ -73,8 +73,12 @@ foreach( $clubs as $club ) {
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/blocks.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/form-standart.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/custom.js");
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . '/libs/modalwindow/modalwindow.js');
+    Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . '/libs/modalwindow/modalwindow.css');
 
     CJSCore::Init();
+
+
     ?>
     
     <? $APPLICATION->ShowHead(); ?>
@@ -124,17 +128,14 @@ foreach( $clubs as $club ) {
 
     <header class="b-header">
         <div class="content-center">
-            <div class="b-header__content"><a class="b-header__logo-holder" href="/"><img class="b-header__logo-img"
+            <div class="b-header__content">
+                <a class="b-header__logo-holder is-hide-mobile" href="/"><img class="b-header__logo-img"
                         src="<?= $settings["PROPERTIES"]["SVG_WHITE"]["src"] ?>" alt="Spirit Fitness" title="" /></a>
-
-                <div class="b-header__mobile-clubs is-hide-desktop">
-                    <form action="/clubs/" method="get"> 
-                        <div class="b-club-search__input-wrap">
-                            <input class="b-club-search__input" type="text" id="club-search" name="club" placeholder="Название клуба" />
-                            <button class="b-club-search__submit" type="submit">Найти</button>
-                        </div>
-                    </form>
-                </div>
+<!--            INDEV-->
+                <a class="b-header__logo-holder is-hide-desktop" href="/"><img class="b-header__logo-img"
+                        src="<?= CFile::GetPath($settings["PROPERTIES"]["SVG_WHITE_MINI"]['VALUE'] );?>" alt="Spirit Fitness" title="" /></a>
+                <a class="phone-btn is-hide-desktop" data-position="mobile-header" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a>
+                <!--INDEV-->
                 <div class="b-header__nav">
                     <nav class="b-top-menu">
                         <button class="b-top-menu__toggle is-hide-desktop">Меню</button>
@@ -151,16 +152,20 @@ foreach( $clubs as $club ) {
                                 <? if(false) { ?><a class="b-header__btn button-outline is-hide-mobile js-form-abonement" href="#" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a><? } ?>
 				                <a class="b-header__btn button-outline is-hide-mobile trial-training-btn" href="/abonement/probnaya-trenirovka-/#js-pjax-container" data-position="bottomFixedBar">Пробная тренировка</a>
 <!--INDEV-->
-<!--                                <button class="b-club-search__hide-btn b-club-search-btn">-->
-<!--                                --><?php //echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/cross_footer_icon.svg');?>
-<!--                                </button>-->
+                                <button class="b-club-search__hide-btn b-club-search-btn"
+                                data-layer="true"
+                                data-layercategory="BottomFixedBar"
+                                data-layeraction="clickBottomFixedBarCloseButton">
+                                <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/cross_footer_icon.svg');?>
+                                </button>
 <!--INDEV-->
 
                             </div>
 <!--INDEV-->
-<!--                            <button class="b-club-search__show-btn b-club-search-btn">-->
-<!--                            --><?php //echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/arrow_up_footer_icon.svg');?>
-<!--                            </button>-->
+                            <button class="b-club-search__show-btn b-club-search-btn"
+                            data-layer="true"
+                            data-layercategory="BottomFixedBar"
+                            data-layeraction="clickBottomFixedBarShowButton" style="background-image: url('<?=SITE_TEMPLATE_PATH.'/img/icons/arrow_up_footer_gantel.png'?>')"></button>
 <!--INDEV-->
 
                             <?$APPLICATION->IncludeComponent(
@@ -182,25 +187,48 @@ foreach( $clubs as $club ) {
                                 ),
                                 false
                             );?>
-<!--                            --><?// if(false) { ?><!--<a class="b-top-menu__btn button-outline is-hide-desktop js-form-abonement" href="javascript:;" data-webform-fancybox="./form-request.html" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a>--><?// } ?>
-<!--							--><?// if(false) { ?><!--<a class="b-top-menu__btn button-outline is-hide-desktop header-personal-btn" style="margin-bottom: 20px;" href="/personal/">Личный кабинет</a>--><?// } ?>
-<!---->
-<!--							--><?//if (!PersonalUtils::IsClient()):?>
-<!--								<a class="b-top-menu__btn button-outline is-hide-desktop" href="/abonement/" style="margin-bottom: 20px;">Купить абонемент</a>-->
-<!--								<a class="b-top-menu__btn button-outline is-hide-desktop trial-training-btn" href="/abonement/probnaya-trenirovka-/#js-pjax-container" data-position="burgerMenu">Пробная тренировка</a>-->
-<!--							--><?//endif;?>
+                            <? if(false) { ?><a class="b-top-menu__btn button-outline is-hide-desktop js-form-abonement" href="javascript:;" data-webform-fancybox="./form-request.html" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a><? } ?>
+							<? if(false) { ?><a class="b-top-menu__btn button-outline is-hide-desktop header-personal-btn" style="margin-bottom: 20px;" href="/personal/"
+							    data-layer="true"
+                                data-layercategory="UX"
+                                data-layeraction="clickLKbutton">Личный кабинет</a><? } ?>
+
+							<?if (!PersonalUtils::IsClient()):?>
+                                <a class="b-top-menu__btn button-outline is-hide-desktop trial-training-btn" href="/abonement/probnaya-trenirovka-/#js-pjax-container" data-position="burgerMenu" style="margin-bottom: 20px;">Пробная тренировка</a>
+								<a class="b-top-menu__btn button is-hide-desktop" href="/abonement/"
+								    data-layer="true"
+                                    data-layercategory="UX"
+                                    data-layeraction="clickBuyAbonementButton"
+                                    data-layerlabel="burgerMenu">Купить абонемент</a>
+							<?endif;?>
+
+							<a href="/personal/" class="b-top-menu__link is-hide-desktop auth-btn"
+							data-layer="true"
+                            data-layercategory="UX"
+                            data-layeraction="clickLKbutton">
+                            <?
+                            global $USER;
+                            if (!$USER->IsAuthorized()):?>
+                                <div class="personal-btn__icon">
+                                    <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/exit-btn.svg');?>
+                                </div>
+                                Личный кабинет
+                            <?endif;?>
+                            </a>
                             <!--INDEV-->
-                            <a class="b-top-menu__btn button-outline is-hide-desktop header-personal-btn" style="margin-bottom: 20px;" href="/personal/">Личный кабинет</a>
-                            <a class="b-top-menu__btn button-outline is-hide-desktop trial-training-btn" href="/abonement/probnaya-trenirovka-/#js-pjax-container" data-position="burgerMenu">Пробная тренировка</a>
+<!--                            <a class="b-top-menu__btn button-outline is-hide-desktop header-personal-btn" style="margin-bottom: 20px;" href="/personal/">Личный кабинет</a>-->
+<!--                            <a class="b-top-menu__btn button-outline is-hide-desktop trial-training-btn" href="/abonement/probnaya-trenirovka-/#js-pjax-container" data-position="burgerMenu">Пробная тренировка</a>-->
                             <!--INDEV-->
 
                         </div>
                     </nav>
                 </div>
-				<a class="b-header-phone phone-btn main-phone-btn" data-position="header" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a>
-                <a href="/personal/" class="personal-btn is-hide-mobile header-personal-btn">
+				<a class="b-header-phone phone-btn main-phone-btn is-hide-mobile" data-position="header" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a>
+                <a href="/personal/" class="personal-btn is-hide-mobile header-personal-btn"
+                data-layer="true"
+                data-layercategory="UX"
+                data-layeraction="clickLKbutton">
                     <?
-                    global $USER;
                     if ($USER->IsAuthorized()):?>
                         Личный кабинет
                         <div class="personal-btn__icon">

@@ -77,18 +77,18 @@ if ($arResult["PROPERTIES"]["LINK_VIDEO"]["VALUE"]) {
     }
 }
 
-$itemGetListArray['order'] = ['SORT' => 'ASC', 'NAME' => 'ASC'];
-$itemGetListArray['filter'] = ["IBLOCK_ID" => $arResult["PROPERTIES"]["TEAM"]["LINK_IBLOCK_ID"], "ID" => $arResult["PROPERTIES"]["TEAM"]["VALUE"], "ACTIVE" => "Y"];
-$itemGetListArray['select'] = ["ID", "NAME", "IBLOCK_ID", "PREVIEW_PICTURE", "PREVIEW_TEXT"];
-$itemRes = \Bitrix\Iblock\ElementTable::getList($itemGetListArray);
-while ($item = $itemRes->Fetch()) {
+$order=array('SORT' => 'ASC', 'NAME' => 'ASC');
+$filter=array("IBLOCK_ID" => $arResult["PROPERTIES"]["TEAM"]["LINK_IBLOCK_ID"], "ID" => $arResult["PROPERTIES"]["TEAM"]["VALUE"], "ACTIVE" => "Y");
+$select=array("ID", "NAME", "IBLOCK_ID", "PREVIEW_PICTURE", "PREVIEW_TEXT");
+$itemRes=CIBlockElement::GetList($order, $filter, false, false, $select);
+while($item=$itemRes->Fetch()){
     $item["PICTURE"] = CFile::ResizeImageGet($item["PREVIEW_PICTURE"], array("width" => "379", "height" => "580", BX_RESIZE_IMAGE_PROPORTIONAL))["src"];
-    $itemPropertyRes = \CIBlockElement::getProperty(
+    $itemPropertyRes = CIBlockElement::GetProperty(
         $item['IBLOCK_ID'],
         $item['ID'],
-        [],
-        ["CODE" => ["BACK_IMAGE", "BACK_TEXT", "BACK_TEXT_COLOR", "POSITION"]]
+        array("sort" => "asc")
     );
+    $arResult["TEST"]=$itemPropertyRes->Fetch();
     while ($itemProperty = $itemPropertyRes->Fetch()) {
         $item['PROPERTIES'][$itemProperty['CODE']] = $itemProperty;
     }
@@ -108,6 +108,40 @@ while ($item = $itemRes->Fetch()) {
     }
     $arResult["PROPERTIES"]["TEAM"]["ITEMS"][] = $item;
 }
+
+
+
+//$itemGetListArray['order'] = ['SORT' => 'ASC', 'NAME' => 'ASC'];
+//$itemGetListArray['filter'] = ["IBLOCK_ID" => $arResult["PROPERTIES"]["TEAM"]["LINK_IBLOCK_ID"], "ID" => $arResult["PROPERTIES"]["TEAM"]["VALUE"], "ACTIVE" => "Y"];
+//$itemGetListArray['select'] = ["ID", "NAME", "IBLOCK_ID", "PREVIEW_PICTURE", "PREVIEW_TEXT"];
+//$itemRes = \Bitrix\Iblock\ElementTable::getList($itemGetListArray);
+//while ($item = $itemRes->Fetch()) {
+//    $item["PICTURE"] = CFile::ResizeImageGet($item["PREVIEW_PICTURE"], array("width" => "379", "height" => "580", BX_RESIZE_IMAGE_PROPORTIONAL))["src"];
+//    $itemPropertyRes = \CIBlockElement::getProperty(
+//        $item['IBLOCK_ID'],
+//        $item['ID'],
+//        [],
+//        ["CODE" => ["BACK_IMAGE", "BACK_TEXT", "BACK_TEXT_COLOR", "POSITION"]]
+//    );
+//    while ($itemProperty = $itemPropertyRes->Fetch()) {
+//        $item['PROPERTIES'][$itemProperty['CODE']] = $itemProperty;
+//    }
+//    if ($item['PROPERTIES']['BACK_IMAGE']['VALUE']) {
+//        $item['BACK']['IMAGE'] = CFile::ResizeImageGet($item['PROPERTIES']['BACK_IMAGE']['VALUE'], array("width" => "500", "height" => "600", BX_RESIZE_IMAGE_PROPORTIONAL))['src'];
+//    }
+//    if ($item['PROPERTIES']['BACK_TEXT']['VALUE']) {
+//        $item['BACK']['TEXT'] = $item['PROPERTIES']['BACK_TEXT']['VALUE']['TEXT'];
+//    }
+//    if ($item['PROPERTIES']['BACK_TEXT_COLOR']['VALUE']) {
+//        $colorGetListArray['filter'] = ["=ID" => $item['PROPERTIES']['BACK_TEXT_COLOR']['VALUE'], "IBLOCK_ID" => IBLOCK_COLORS_ID];
+//        $colorGetListArray['select'] = ["CODE"];
+//        $colorRes = \Bitrix\Iblock\ElementTable::getList($colorGetListArray);
+//        if ($color = $colorRes->Fetch()) {
+//            $item['BACK']['COLOR'] = $color['CODE'];
+//        }
+//    }
+//    $arResult["PROPERTIES"]["TEAM"]["ITEMS"][] = $item;
+//}
 
 $arResult["URL_ABONEMENT"] = Utils::getUrlAbonement() . "?club=" . $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 

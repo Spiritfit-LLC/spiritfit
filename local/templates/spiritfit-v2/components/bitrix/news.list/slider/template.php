@@ -75,6 +75,7 @@ if(!empty($files['VALUE'])){
 
 <section class="b-screen b-screen_with-page-heading <?//=($page != '/' ? 'b-screen_with-page-heading' : '')?>">
 	<div class="b-screen__bg-holder">
+<!--        <button class="b-screen__sound-btn"></button>-->
 		<? if($video){ ?>
 			<video class="b-screen__bg-video" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline src="<?=$src?>" type="video/mp4">
 			</video>
@@ -84,11 +85,11 @@ if(!empty($files['VALUE'])){
 			<video class="b-screen__bg-video" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline src="<?=SITE_TEMPLATE_PATH?>/video/spirit-screen.mp4" type="video/mp4">
 			</video>
 		<? } ?>
+
 	</div>
 	<? if(!empty($arResult["ITEMS"])){  ?>
 		<div class="content-center">
 			<div class="b-screen__content">
-				<button class="b-screen__sound-btn"></button>
 				<div class="b-screen__slider">
 					<div class="b-info-slider">
 						<div class="b-info-slider__nav"></div>
@@ -119,6 +120,7 @@ if(!empty($files['VALUE'])){
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
 	<? } ?>

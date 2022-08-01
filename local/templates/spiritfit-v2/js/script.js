@@ -544,7 +544,7 @@ $(document).ready(function() {
             let parent = $('select.js-pjax-select').parent();
             $('select.js-pjax-select').select2({
                 width: '100%',
-                minimumResultsForSearch: 100,
+                // minimumResultsForSearch: 100,
                 dropdownParent: parent,
             });
         }

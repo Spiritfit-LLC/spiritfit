@@ -146,8 +146,10 @@ $arField = ['name', 'email', 'phone'];
             	<div class="popup__success"><?=(!empty($arParams["CLUB_FORM_SUCCESS"])) ? $arParams["CLUB_FORM_SUCCESS"] : "Спасибо, ваша заявка принята!" ?></div>
         	</div>
     	</div>
-        <script>dataLayerSend('conversion', 'sendFormTrialWorkout', '<?=$arResult['GA_LABEL']?>');</script>
-		<?
+        <?if (!empty($arResult['GA_SETTINGS'])):?>
+        <script>dataLayerSend('<?=$arResult['GA_SETTINGS']["eCategory"]?>', '<?=$arResult['GA_SETTINGS']["eAction"]?>', '<?=$arResult['GA_SETTINGS']["elLabel"]?>');</script>
+	    <?endif;?>
+    <?
 	}
 ?>
 <script src="<?=SITE_TEMPLATE_PATH?>/js/form-standart.js"></script>

@@ -16,16 +16,17 @@ $phone = $arResult['PROPERTIES']['PHONE']['VALUE'];
 $email = $arResult['PROPERTIES']['EMAIL']['VALUE'];
 $address = $arResult['PROPERTIES']['ADRESS']['VALUE'];
 $workHours = $arResult['PROPERTIES']['WORK']['VALUE'];
-$pathTo = $arResult['PROPERTIES']['PATH_TO']['VALUE'];
+//$pathToMASSTRANSIT = $arResult['PROPERTIES']['PATH_TO']['VALUE'];
+//$pathToAUTO = $arResult['PROPERTIES']['PATH_TO_AUTO']['VALUE'];
 $cord = $arResult['PROPERTIES']['CORD_YANDEX']['VALUE'];
 if(!empty($cord)){
 	$cord = explode(',', $cord);
 }
 
-$pathToImageSrc = "";
-if( !empty($arResult['PROPERTIES']['PATH_TO_IMAGE']["VALUE"]) ) {
-	$pathToImageSrc = CFile::ResizeImageGet($arResult['PROPERTIES']['PATH_TO_IMAGE']["VALUE"], array("width" => 800, "height" => 600), BX_RESIZE_IMAGE_PROPORTIONAL)["src"];
-}
+//$pathToImageSrc = "";
+//if( !empty($arResult['PROPERTIES']['PATH_TO_IMAGE']["VALUE"]) ) {
+//	$pathToImageSrc = CFile::ResizeImageGet($arResult['PROPERTIES']['PATH_TO_IMAGE']["VALUE"], array("width" => 800, "height" => 600), BX_RESIZE_IMAGE_PROPORTIONAL)["src"];
+//}
 
 $mapName = str_replace("\r\n", '', HTMLToTxt(htmlspecialcharsBack($arResult['NAME'])));
 $mapAdress = str_replace("\r\n", '', HTMLToTxt(htmlspecialcharsBack($address['TEXT'])));
@@ -33,13 +34,31 @@ if(strpos($mapAdress, '"')) $mapAdress = str_replace('"', '\'', $mapAdress);
 
 session_start();
 $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
-$this->addExternalJs(SITE_TEMPLATE_PATH.'/libs/modalwindow/modalwindow.js');
-$this->addExternalCss(SITE_TEMPLATE_PATH .'/libs/modalwindow/modalwindow.css');
+
 
 ?>
 <? if($_REQUEST["ajax_send"] != 'Y') { ?>
-
-	<? if(!empty($arResult['ABONEMENTS']) && ($arResult['PROPERTIES']['SOON']['VALUE'] != 'Y' || !empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']))){ ?>
+    <?if (!empty($arResult['PROPERTIES']['UTP']['VALUE'])):?>
+    <div class="club-utp">
+        <?for ($i=0; $i<count($arResult['PROPERTIES']['UTP']['VALUE']); $i++):?>
+            <div class="club-utp__item">
+                <div class="club-utp__item-icon" style='background-image: url("<?=CFile::GetPath($arResult['PROPERTIES']['UTP']['VALUE'][$i])?>")'></div>
+                <div class="club-utp__item-title">
+                    <span><?=htmlspecialcharsBack($arResult['PROPERTIES']['UTP']['DESCRIPTION'][$i])?></span>
+                </div>
+                <?if (!empty($arResult['PROPERTIES']['UTP_DESC']['VALUE'][$i]["TEXT"])):?>
+                    <div class="club-utp__desc">
+                        <?=htmlspecialcharsBack($arResult['PROPERTIES']['UTP_DESC']['VALUE'][$i]['TEXT'])?>
+                    </div>
+                <?endif;?>
+            </div>
+        <?endfor;?>
+        <?if (!empty($arResult['PROPERTIES']['UTP_LINK']['VALUE'])):?>
+            <a href="<?=$arResult['PROPERTIES']['UTP_LINK']['VALUE']?>" class="button club-utp__btn" style="margin-top: 30px; margin-bottom: 50px"><?=$arResult['PROPERTIES']['UTP_LINK']['DESCRIPTION']?></a>
+        <?endif;?>
+    </div>
+    <?endif;?>
+	<? if((!empty($arResult['ABONEMENTS']) && ($arResult['PROPERTIES']['SOON']['VALUE'] != 'Y' || !empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']))) && !$arResult["PROPERTIES"]["HIDE_ABONEMENT"]["VALUE_XML_ID"]=='Y'){ ?>
 		<section id="abonements" class="b-cards-slider b-cards-slider--with-prices">
 			<div class="content-center">
 				<div class="b-cards-slider__heading">
@@ -71,7 +90,7 @@ $this->addExternalCss(SITE_TEMPLATE_PATH .'/libs/modalwindow/modalwindow.css');
 								window.abonement["<?=$abonement['ID']?>"] = <?=$arDataAbonement?>;
 							</script>
 							<div class="b-cards-slider__item">
-								<div class="b-twoside-card">
+								<div class="b-twoside-card" data-sub_id="<?=$abonement['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>">
 									<div class="b-twoside-card__inner">
 										<div class="b-twoside-card__content"
 											style="background-image: url(<?=$imageSrc?>);">
@@ -123,8 +142,7 @@ $this->addExternalCss(SITE_TEMPLATE_PATH .'/libs/modalwindow/modalwindow.css');
 													<? endforeach; ?>
 												<? } ?>
 												
-												<a href="<?=$abonement['DETAIL_PAGE_URL']?>" class="b-twoside-card__prices-button button <?=$abonement['PROPERTIES']['ADDITIONAL_CLASS']['VALUE']?>"  data-sub_id="<?=$abonement['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>">Выбрать</a>
-												<? 
+												<?
 												$showLinkForPopup = false;
 												if($showLinkForPopup){ ?>
 													<a href="#" data-code1c="<?=$abonement['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>" data-clubnumber="<?=$arResult["PROPERTIES"]["NUMBER"]["VALUE"]?>" data-abonementid="<?=$abonement['ID']?>" data-abonementcode="<?=$abonement['CODE']?>" class="b-twoside-card__prices-button button js-form-abonement">Выбрать</a>
@@ -137,6 +155,10 @@ $this->addExternalCss(SITE_TEMPLATE_PATH .'/libs/modalwindow/modalwindow.css');
 											<? } ?>
 										</div>
 									</div>
+                                    <div class="b-twoside-card__footer">
+                                        <a class="button-outline b-twoside-card-detail-btn">Подробнее</a>
+                                        <a class="b-twoside-card__prices-button button <?=$abonement['PROPERTIES']['ADDITIONAL_CLASS']['VALUE']?> choose-abonement-btn" href="<?=$abonement['DETAIL_PAGE_URL']?>" data-sub_id="<?=$abonement['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>" style="display: none;">Выбрать</a>
+                                    </div>
 								</div>
 							</div>
 						<? } ?>
@@ -325,7 +347,7 @@ $this->addExternalCss(SITE_TEMPLATE_PATH .'/libs/modalwindow/modalwindow.css');
 	<? if($arResult['PROPERTIES']['SCHEDULE_JSON']['VALUE'] !== 'false' && !empty($arResult['PROPERTIES']['SCHEDULE_JSON']['VALUE'])){ ?>
 		<? $APPLICATION->IncludeComponent(
 			"custom:shedule.club", 
-			"", 
+			"profitator.style",
 			array(
 				"IBLOCK_TYPE" => "content",
 				"IBLOCK_CODE" => "clubs",
@@ -342,6 +364,7 @@ $this->addExternalCss(SITE_TEMPLATE_PATH .'/libs/modalwindow/modalwindow.css');
         					scrollTop: $("#timetable").offset().top - 120
     					}, 1);	
 					}
+
 				});
 			});
 		</script>
@@ -408,22 +431,87 @@ $this->addExternalCss(SITE_TEMPLATE_PATH .'/libs/modalwindow/modalwindow.css');
 								?>
 									<a class="b-map__button button-outline" href="#js-pjax-clubs">Отправить заявку</a>
 								<? } ?>
-								<? if(!empty($pathTo)){ ?>
-									<a class="b-map__button button-outline custom-button" href="#route-window" data-fancybox="route-window">Как добраться</a>
-								<? } ?>
+
+                                <?if (!empty($arResult['PROPERTIES']['PATH_TO_NEW']['VALUE'])):?>
+                                    <a class="b-map__button button-outline custom-button" href="#route-window" data-fancybox="route-window">Как добраться</a>
+                                <?endif;?>
 							</div>
-							<? if(!empty($pathTo) || !empty($pathToImageSrc)){ 
-								$pathTo['TEXT'] = htmlspecialcharsBack($pathTo['TEXT']);
-								?>
-								<div class="b-map__route is-hide" id="route-window">
-									<div class="content-area">
-										<?=$pathTo['TEXT']?>
-										<? if(!empty($pathToImageSrc)) { ?>
-											<img src="<?=$pathToImageSrc?>" alt="Как добраться" title="Как добраться">
-										<? } ?>
-									</div>
-								</div>
-							<? } ?>
+                                <?if (!empty($arResult['PROPERTIES']['PATH_TO_NEW']['VALUE'])):?>
+                                <div class="b-map__route is-hide" id="route-window">
+                                    <div class="b-map__route-header">
+                                        <h2>Как добраться</h2>
+                                        <div class="b-map__route-tabs">
+                                            <div class="b-map__route-tab-links">
+                                                <?for($index=0;$index<count($arResult['PROPERTIES']['PATH_TO_NEW']['VALUE']);$index++):?>
+                                                <?
+                                                    $PATH_TO=$arResult['PROPERTIES']['PATH_TO_NEW']['VALUE'][$index];
+                                                    $PATH_TO_NAME=$arResult['PROPERTIES']['PATH_TO_NEW']['DESCRIPTION'][$index];
+                                                    if (empty($PATH_TO) || empty($PATH_TO_NAME)){
+                                                        continue;
+                                                    }
+                                                ?>
+                                                <div class="b-map__route-tab-link <?if($index==0) echo "active";?>" data-routetypeid="<?=$index?>">
+                                                    <?=$PATH_TO_NAME?>
+                                                </div>
+                                                <div class="b-map__route-tabitem-desc <?if($index==0) echo "active";?> is-hide-desktop" data-routetypeid="<?=$index?>">
+                                                    <?=htmlspecialcharsBack($PATH_TO["TEXT"])?>
+                                                    <div class="b-map__route-mapiframe">
+                                                        <?
+                                                        $sContent=htmlspecialcharsBack($arResult['PROPERTIES']['PATH_TO_TOUR']['VALUE']);
+                                                        $sContent = preg_replace('|(width=").+(")|isU', 'width="100%"',$sContent);
+                                                        $sContent = preg_replace('|(height=").+(")|isU', 'height="100%"',$sContent);
+                                                        echo $sContent;
+                                                        ?>
+                                                        <div class="b-map__mapiframe-info">
+                                                            <div class="b-map__mapiframe-icon">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="24" viewBox="0 0 10 24" fill="none">
+                                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4.20511 0.112501C2.87975 0.453801 1.9954 1.38351 1.73816 2.70598C1.48795 3.9926 2.3051 5.49312 3.55381 6.03976C4.55054 6.47613 5.4913 6.47613 6.48803 6.03976C7.73674 5.49312 8.55389 3.9926 8.30368 2.70598C8.16761 2.0065 7.85163 1.40784 7.38084 0.95755C6.9092 0.506617 6.48594 0.279191 5.80084 0.1085C5.21523 -0.0373825 4.78293 -0.0362625 4.20511 0.112501ZM0.534561 8.06964C0.437406 8.10717 0.277322 8.23585 0.178912 8.35548C0.00803351 8.56322 0 8.65477 0 10.4014V12.2299L0.241255 12.4881C0.462343 12.7248 0.532134 12.749 1.07807 12.7785L1.67364 12.8107V15.9936V19.1764L1.07807 19.2086C0.532134 19.2381 0.462343 19.2624 0.241255 19.499L0 19.7572V21.5952V23.4332L0.244101 23.6946L0.488285 23.9559L4.96845 23.9779L9.4487 24L9.72435 23.7644L10 23.5289V21.5952V19.6615L9.7267 19.428C9.48452 19.2211 9.39188 19.1945 8.91255 19.1945H8.37163L8.34904 13.8264L8.32636 8.45815L8.05305 8.22472L7.77975 7.99122L4.24552 7.99626C2.30167 7.99906 0.631799 8.03211 0.534561 8.06964Z" fill="#FF7628"/>
+                                                                </svg>
+                                                            </div>
+                                                            Проводим вас до самой раздевалки
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?endfor;?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="b-map__route-body is-hide-mobile">
+                                        <div class="b-map__route-tab-desc">
+                                            <?for($index=0;$index<count($arResult['PROPERTIES']['PATH_TO_NEW']['VALUE']);$index++):?>
+                                                <?
+                                                $PATH_TO=$arResult['PROPERTIES']['PATH_TO_NEW']['VALUE'][$index];
+                                                $PATH_TO_NAME=$arResult['PROPERTIES']['PATH_TO_NEW']['DESCRIPTION'][$index];
+                                                if (empty($PATH_TO) || empty($PATH_TO_NAME)){
+                                                    continue;
+                                                }
+                                                ?>
+                                                <div class="b-map__route-tabitem-desc <?if($index==0) echo "active";?>" data-routetypeid="<?=$index?>">
+                                                    <?=htmlspecialcharsBack($PATH_TO["TEXT"])?>
+                                                </div>
+                                            <?endfor;?>
+                                        </div>
+                                        <?if (!empty($arResult['PROPERTIES']['PATH_TO_TOUR']['VALUE'])):?>
+                                        <div class="b-map__route-mapiframe">
+                                            <?
+                                            $sContent=htmlspecialcharsBack($arResult['PROPERTIES']['PATH_TO_TOUR']['VALUE']);
+                                            $sContent = preg_replace('|(width=").+(")|isU', 'width="300"',$sContent);
+                                            $sContent = preg_replace('|(height=").+(")|isU', 'height="300"',$sContent);
+                                            echo $sContent;
+                                            ?>
+                                            <div class="b-map__mapiframe-info">
+                                                <div class="b-map__mapiframe-icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="24" viewBox="0 0 10 24" fill="none">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.20511 0.112501C2.87975 0.453801 1.9954 1.38351 1.73816 2.70598C1.48795 3.9926 2.3051 5.49312 3.55381 6.03976C4.55054 6.47613 5.4913 6.47613 6.48803 6.03976C7.73674 5.49312 8.55389 3.9926 8.30368 2.70598C8.16761 2.0065 7.85163 1.40784 7.38084 0.95755C6.9092 0.506617 6.48594 0.279191 5.80084 0.1085C5.21523 -0.0373825 4.78293 -0.0362625 4.20511 0.112501ZM0.534561 8.06964C0.437406 8.10717 0.277322 8.23585 0.178912 8.35548C0.00803351 8.56322 0 8.65477 0 10.4014V12.2299L0.241255 12.4881C0.462343 12.7248 0.532134 12.749 1.07807 12.7785L1.67364 12.8107V15.9936V19.1764L1.07807 19.2086C0.532134 19.2381 0.462343 19.2624 0.241255 19.499L0 19.7572V21.5952V23.4332L0.244101 23.6946L0.488285 23.9559L4.96845 23.9779L9.4487 24L9.72435 23.7644L10 23.5289V21.5952V19.6615L9.7267 19.428C9.48452 19.2211 9.39188 19.1945 8.91255 19.1945H8.37163L8.34904 13.8264L8.32636 8.45815L8.05305 8.22472L7.77975 7.99122L4.24552 7.99626C2.30167 7.99906 0.631799 8.03211 0.534561 8.06964Z" fill="#FF7628"/>
+                                                    </svg>
+                                                </div>
+                                                Проводим вас до самой раздевалки
+                                            </div>
+                                        </div>
+                                        <?endif;?>
+                                    </div>
+                                </div>
+                                <?endif;?>
 						</div>
 					</div>
 				</div>

@@ -196,6 +196,13 @@ class Api
                 AddMessage2Log("------------------------");
                 break;
 
+            case "getqrcode":
+                $this->getqrcode($post['params']);
+                AddMessage2Log('getqrcode');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+
             //НОВАЯ ОПЛАТА
             case "orderreg":
                 $this->orderreg($post['params']);
@@ -243,6 +250,27 @@ class Api
             case "request2_new":
                 $this->request2_new($post['params']);
                 AddMessage2Log('request2_new');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+
+            //Пробная тренировка в ЛК
+            case "trialworkout":
+                $this->trialworkout($post["params"]);
+                AddMessage2Log('trialworkout');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "trialworkoutsignup":
+                $this->trialworkoutsignup($post["params"]);
+                AddMessage2Log('trialworkoutsignup');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+
+            case "lkloyalty":
+                $this->lkloyalty($post["params"]);
+                AddMessage2Log('lkloyalty');
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
@@ -851,8 +879,8 @@ class Api
 	
 	private function _send($url, $data, $header=null)
 	{
-		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", json_encode($data), FILE_APPEND);
-		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $url, FILE_APPEND);
+//		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", json_encode($data), FILE_APPEND);
+//		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $url, FILE_APPEND);
 
 
 		if($data) {
@@ -909,7 +937,7 @@ class Api
                 "http_code"=>curl_getinfo($ch, CURLINFO_HTTP_CODE),
 			);
 		}
-		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $result, FILE_APPEND);
+//		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $result, FILE_APPEND);
 		
 		curl_close($ch);
 	}
@@ -1135,7 +1163,7 @@ class Api
     }
 
     private function lkemailconfirm($params){
-        $token=Utils::getApiSpiritfitToken();
+        $token=API_SPIRITFIT_TOKEN;
         $arParams['token']=$token;
         $arParams['email']=$params['email'];
         $this->_send("https://api.spiritfit.ru/email-sendcode", $arParams, 'Content-Type: application/json');
@@ -1191,6 +1219,22 @@ class Api
             $this->_result=false;
         }
     }
+
+
+    private function getqrcode($params){
+        $params['token']=API_SPIRITFIT_TOKEN;
+        $this->_send("https://api.spiritfit.ru/qrcode", $params, 'Content-Type: application/json');
+
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
+    }
+
+
+
 
     //Новая оплата (закладываю на будущее)
     private function orderreg($params){
@@ -1254,6 +1298,7 @@ class Api
 
     private function orderpromocode($params){
         $this->_send($this->apiUrl."orderpromocode", $params);
+
 
         if ($this->_data['result']['errorCode'] === 0)
             $this->_result = true;
@@ -1319,5 +1364,28 @@ class Api
         } else {
             $this->_result = false;
         }
+    }
+
+
+    private function trialworkout($params){
+        $this->_send($this->apiUrl."trialworkout", $params);
+
+        if ($this->_data['result']['errorCode'] === 0)
+            $this->_result = true;
+    }
+
+    private function trialworkoutsignup($params){
+        $this->_send($this->apiUrl."trialworkoutsignup", $params);
+
+        if ($this->_data['result']['errorCode'] === 0)
+            $this->_result = true;
+    }
+
+    private function lkloyalty($params){
+        $this->_send($this->apiUrl."lkloyalty", $params);
+
+        if ($this->_data['result']['errorCode'] === 0)
+            $this->_result = true;
+
     }
 }

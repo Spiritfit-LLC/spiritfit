@@ -387,50 +387,50 @@ $(function () {
     });
 });
 $(function () {
-    $('.b-timetable').each(function () {
-        var $context = $(this);
-        var $scrollable = $('.b-timetable__content-wrap', $context);
-        var $content = $('.b-timetable__content', $context);
-        var $switch = $('.b-timetable__switch', $context);
-        var timetableData = $context.data('timetable');
-        $(document).on('click', function (e) {
-            var item = e.target.closest('.b-timetable-item');
-            var $itemObject = $(item);
-            var $closeBtn = $(e.target).closest('.b-timetable-item__close');
-            var $hiddenContent = $('.b-timetable-item__hidden-content', $itemObject);
-            var $items = $('.b-timetable-item', $context);
-
-            if ($closeBtn.length > 0) {
-                $itemObject.removeClass('is-open');
-            } else if ($itemObject.length > 0) {
-                var posLeft = item.getBoundingClientRect().left;
-                $items.removeClass('is-open');
-                $itemObject.addClass('is-open');
-                $hiddenContent.css('left', "".concat(posLeft, "px")).css('top', "".concat(item.offsetTop, "px"));
-            } else {
-                $items.removeClass('is-open');
-            }
-        });
-        $switch.on("select2:select", function () {
-            var $selectedOption = $(':selected', $(this));
-            var optionValue = $selectedOption.val();
-            var currentClub = timetableData.filter(function (data) {
-                return data.club === optionValue;
-            })[0];
-            $content.html('');
-            currentClub.data.map(function (day) {
-                var $dayElement = $("\n                    <div class=\"b-timetable__col\">\n                        <div class=\"b-timetable__head\">".concat(day.day, "</div>\n                    </div>\n               "));
-                day.info.map(function (activity) {
-                    var $activityElement = $("\n                        <div class=\"b-timetable-item\">\n                          <div class=\"b-timetable-item__name\">\n                            ".concat(activity.name, " ").concat(activity.duration, "\n                          </div>\n                          <div class=\"b-timetable-item__text\">\n                            ").concat(activity.time, ", ").concat(activity.person, "\n                          </div>\n                          <div class=\"b-timetable-item__hidden-content\">\n                            <button class=\"b-timetable-item__close\">\n                            </button>\n                            <div class=\"b-timetable-item__name\">\n                                ").concat(activity.name, " ").concat(activity.duration, "\n                            </div>\n                            <div class=\"b-timetable-item__text\">\n                                ").concat(activity.desc, "\n                            </div>\n                          </div>\n                        </div>\n                   "));
-                    $dayElement.append($activityElement);
-                });
-                $content.append($dayElement);
-            });
-        });
-        $scrollable.on('scroll', function () {
-            $('.b-timetable-item', $context).removeClass('is-open');
-        });
-    });
+    // $('.b-timetable').each(function () {
+    //     var $context = $(this);
+    //     var $scrollable = $('.b-timetable__content-wrap', $context);
+    //     var $content = $('.b-timetable__content', $context);
+    //     var $switch = $('.b-timetable__switch', $context);
+    //     var timetableData = $context.data('timetable');
+    //     $(document).on('click', function (e) {
+    //         var item = e.target.closest('.b-timetable-item');
+    //         var $itemObject = $(item);
+    //         var $closeBtn = $(e.target).closest('.b-timetable-item__close');
+    //         var $hiddenContent = $('.b-timetable-item__hidden-content', $itemObject);
+    //         var $items = $('.b-timetable-item', $context);
+    //
+    //         if ($closeBtn.length > 0) {
+    //             $itemObject.removeClass('is-open');
+    //         } else if ($itemObject.length > 0) {
+    //             var posLeft = item.getBoundingClientRect().left;
+    //             $items.removeClass('is-open');
+    //             $itemObject.addClass('is-open');
+    //             $hiddenContent.css('left', "".concat(posLeft, "px")).css('top', "".concat(item.offsetTop, "px"));
+    //         } else {
+    //             $items.removeClass('is-open');
+    //         }
+    //     });
+    //     $switch.on("select2:select", function () {
+    //         var $selectedOption = $(':selected', $(this));
+    //         var optionValue = $selectedOption.val();
+    //         var currentClub = timetableData.filter(function (data) {
+    //             return data.club === optionValue;
+    //         })[0];
+    //         $content.html('');
+    //         currentClub.data.map(function (day) {
+    //             var $dayElement = $("\n                    <div class=\"b-timetable__col\">\n                        <div class=\"b-timetable__head\">".concat(day.day, "</div>\n                    </div>\n               "));
+    //             day.info.map(function (activity) {
+    //                 var $activityElement = $("\n                        <div class=\"b-timetable-item\">\n                          <div class=\"b-timetable-item__name\">\n                            ".concat(activity.name, " ").concat(activity.duration, "\n                          </div>\n                          <div class=\"b-timetable-item__text\">\n                            ").concat(activity.time, ", ").concat(activity.person, "\n                          </div>\n                          <div class=\"b-timetable-item__hidden-content\">\n                            <button class=\"b-timetable-item__close\">\n                            </button>\n                            <div class=\"b-timetable-item__name\">\n                                ").concat(activity.name, " ").concat(activity.duration, "\n                            </div>\n                            <div class=\"b-timetable-item__text\">\n                                ").concat(activity.desc, "\n                            </div>\n                          </div>\n                        </div>\n                   "));
+    //                 $dayElement.append($activityElement);
+    //             });
+    //             $content.append($dayElement);
+    //         });
+    //     });
+    //     $scrollable.on('scroll', function () {
+    //         $('.b-timetable-item', $context).removeClass('is-open');
+    //     });
+    // });
 });
 $(function () {
     $('.b-top-menu').each(function () {
@@ -464,6 +464,20 @@ $(function () {
         $context.on('click', function (e) {
             var $card = $(e.target).closest('.b-twoside-card');
             $card.toggleClass('is-open');
+
+            if ($card.hasClass('is-open')){
+                $(e.target).closest('.b-twoside-card').find('.b-twoside-card-detail-btn').fadeOut(200);
+                setTimeout(function(){
+                    $(e.target).closest('.b-twoside-card').find('.choose-abonement-btn').fadeIn(200);
+                },250)
+                dataLayerSend('UX','clickFitnessSubscriptionBlock', $card.data('sub_id'));
+            }
+            else{
+                $(e.target).closest('.b-twoside-card').find('.choose-abonement-btn').fadeOut(200);
+                setTimeout(function(){
+                    $(e.target).closest('.b-twoside-card').find('.b-twoside-card-detail-btn').fadeIn(200);
+                },250)
+            }
         });
     });
 });

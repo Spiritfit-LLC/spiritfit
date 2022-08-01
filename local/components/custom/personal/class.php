@@ -159,7 +159,17 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                     new ActionFilter\Csrf(),
                 ],
                 'postfilters' => []
-            ]
+            ],
+            'loayaltyReg'=>[
+                'prefilters' => [
+                    new ActionFilter\Authentication,
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
+            ],
         ];
     }
 
@@ -191,20 +201,26 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
             $url = $_SERVER['REQUEST_URI'];
             $parts = parse_url($url);
 
-            parse_str($parts['query'], $query);
-            if (isset($query['reg'])){
-                $active='reg';
-            }
-            elseif (isset($query['forgot'])){
-                $active='forgot';
-            }
-            else{
-                $active='auth';
-            }
 
             $this->arResult['COMPONENT_NAME']=$this->GetName();
 
             $this->arResult['AUTH']=$USER->IsAuthorized();
+
+            parse_str($parts['query'], $query);
+            if ($query["SECTION"]){
+                $this->arResult["ACTIVE_SECTION"]=$query["SECTION"];
+            }
+            else{
+                if (isset($query['reg'])){
+                    $active='reg';
+                }
+                elseif (isset($query['forgot'])){
+                    $active='forgot';
+                }
+                else{
+                    $active='auth';
+                }
+            }
 
             if (!$this->arResult['AUTH']){
                 $this->arResult['FORM_FIELDS']=[
@@ -239,7 +255,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
 
 
                 $user_id=$USER->GetID();
-                $this->arResult['LK_FIELDS']=PersonalUtils::GetPersonalPageFormFields($user_id, false, [], false, $this->arParams['ACTIVE_FORM']);
+                $this->arResult['LK_FIELDS']=PersonalUtils::GetPersonalPageFormFields($user_id, false, [], false, $this->arResult["ACTIVE_SECTION"]??$this->arParams['ACTIVE_FORM']);
                 $this->IncludeComponentTemplate('personal');
             }
 
@@ -265,7 +281,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         0=>'',
         1=>'Не зарегистрированное действие',
         2=>'Не зарегистрированное действие: один или несколько параметров не переданы или переданы неправильно',
-        3=>'Пользователь не найден',
+        3=>'Пользователь не существует. <a href="/personal/?reg" class="form-message">Зарегистрироваться</a>',
         4=>'Возникли проблемы с сервером',
         5=>'Пользователь уже существует',
         6=>'Не верный код из СМС',
@@ -281,7 +297,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         16=>'Пользователь не авторизован',
         19=>'Не удалось загрузить файл',
         20=>'Ошибка обновления данных',
-        21=>'Пользователь не существует',
+        21=>'Пользователь не существует. <a href="/personal/?reg">Зарегистрироваться</a>',
         22=>'Вы не можете отправить подарок самому себе',
         23=>'Неверный формат номера',
         24=>'Превышен лимит списания.',
@@ -309,8 +325,10 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                 throw new Exception($FORM_FIELDS['errorText'], 2);
             }
             if (!$FORM_FIELDS['ISSET']){
-                throw new Exception($this->errorMessages[2], 2);
+//                throw new Exception($this->errorMessages[2], 2);
+                return ['result'=>false, 'errors'=>$FORM_FIELDS['ERRORS']];
             }
+
 
             switch ($DATA['FORM_STEP']){
                 case 1:
@@ -332,7 +350,10 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
 
                         //Пользователь найден в 1с, завершаем регистрацию
                         //Возвращаем на фронт инфу
-                        return ['result' => true, 'next_step' => 2, 'reg-code'=>true];
+                        return ['result' => true, 'next_step' => 2, 'reg-code'=>true, 'field_messages'=>[[
+                            'field_name'=>$FORM_FIELDS['FIELDS']['phone']['NAME'],
+                            'message'=>'На Ваш номер телефона отправлен код подтверждения',
+                        ]], '1cdata'=>$result['data']];
                     }
                     else{
                         if (boolval($user['UF_IS_CORRECT'])){
@@ -355,10 +376,13 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                             }
                             if ($result['success']==true){
                                 //Возвращаем на фронт инфу
-                                return ['result'=>true, 'next_action'=>'forgot', 'next_step'=>2, 'reg-code'=>true];
+                                return ['result'=>true, 'next_action'=>'forgot', 'next_step'=>2, 'reg-code'=>true, 'field_messages'=>[[
+                                    'field_name'=>$FORM_FIELDS['FIELDS']['phone']['NAME'],
+                                    'message'=>'На Ваш номер телефона отправлен код подтверждения',
+                                ]], '1cdata'=>$result['data']];
                             }
                             else{
-                                switch ($result['data']['result']['errorCode']){
+                                switch ($result["data"]['result']['errorCode']){
                                     case 3:
                                         throw new Exception($this->errorMessages[11], 11);
                                     default:
@@ -497,7 +521,8 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                 throw new Exception($FORM_FIELDS['errorText'], 2);
             }
             if (!$FORM_FIELDS['ISSET']){
-                throw new Exception($this->errorMessages[2], 2);
+//                throw new Exception($this->errorMessages[2], 2);
+                return ['result'=>false, 'errors'=>$FORM_FIELDS['ERRORS']];
             }
             switch ($DATA['FORM_STEP']){
                 case 1:
@@ -532,7 +557,10 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                     if ($result['success']==true){
                         unset($_SESSION['ID_1C']);
                         $_SESSION['ID_1C']=$result['data']['result']['result']['id1c'];
-                        return ['result'=>true, 'reload'=>false, 'reg-code'=>true, 'next_step'=>2];
+                        return ['result'=>true, 'reload'=>false, 'reg-code'=>true, 'next_step'=>2, 'field_messages'=>[[
+                            'field_name'=>$FORM_FIELDS['FIELDS']['phone']['NAME'],
+                            'message'=>'На Ваш номер телефона отправлен код подтверждения',
+                        ]]];
                     }
                     else{
                         switch ($result['data']['result']['errorCode']){
@@ -654,7 +682,8 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                 throw new Exception($FORM_FIELDS['errorText'], 2);
             }
             if (!$FORM_FIELDS['ISSET']){
-                throw new Exception($this->errorMessages[2], 2);
+//                throw new Exception($this->errorMessages[2], 2);
+                return ['result'=>false, 'errors'=>$FORM_FIELDS['ERRORS']];
             }
             switch ($DATA['FORM_STEP']){
                 case 1:
@@ -675,7 +704,10 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                         else{
                             //Пользователь найден в 1с, завершаем регистрацию
                             //Возвращаем на фронт инфу
-                            return ['result' => true, 'next_step' => 2, 'reg-code'=>true, 'next_action'=>'login'];
+                            return ['result' => true, 'next_step' => 2, 'reg-code'=>true, 'next_action'=>'login', 'field_messages'=>[[
+                                'field_name'=>$FORM_FIELDS['FIELDS']['phone']['NAME'],
+                                'message'=>'На Ваш номер телефона отправлен код подтверждения',
+                            ]]];
                         }
                     }
                     else{
@@ -695,7 +727,10 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                         }
                         if ($result['success']==true){
                             //Возвращаем на фронт инфу
-                            return ['result' => true, 'next_step' => 2, 'reg-code'=>true];
+                            return ['result' => true, 'next_step' => 2, 'reg-code'=>true, 'field_messages'=>[[
+                                'field_name'=>$FORM_FIELDS['FIELDS']['phone']['NAME'],
+                                'message'=>'На Ваш номер телефона отправлен код подтверждения',
+                            ]]];
                         }
                         else{
                             switch ($result['data']['result']['errorCode']){
@@ -779,7 +814,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
 
         //Не заполнены обязательные поля или несоответствие валидатору
         if (!$FORM_FIELDS['ISSET']){
-            throw new Exception($this->errorMessages[2], 2);
+            return ['result'=>false, 'errors'=>$FORM_FIELDS['ERRORS']];
         }
 
         if (is_array($_POST['SECTION_ID'])){
@@ -834,7 +869,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                 'action'=>'lkedit',
                 'params'=>$arParams,
             ));
-            return ['result'=>true, 'fields'=>$arParams, 'reload'=>$reload, 'message'=>'Ваши данные обновлены'];
+            return ['result'=>true, 'fields'=>$arParams, 'reload'=>$reload, 'message'=>'Ваши данные обновлены', 'section'=>Utils::GetIBlockSectionIDBySID('lk_profile')];
         }
         else{
             throw new Exception($USER->LAST_ERROR, 18);
@@ -844,6 +879,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
     public function update1cAction(){
         global $USER;
         $result=PersonalUtils::UpdatePersonalInfoFrom1C($USER->GetID());
+//        return $result;
         if ($result!=false){
             return ['result'=>true, 'reload'=>true, 'message'=>'Ваши данные обновлены'];
         }
@@ -991,7 +1027,8 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
 
         //Не заполнены обязательные поля или несоответствие валидатору
         if (!$FORM_FIELDS['ISSET']){
-            throw new Exception($this->errorMessages[2], 2);
+//            throw new Exception($this->errorMessages[2], 2);
+            return ['result'=>false, 'errors'=>$FORM_FIELDS['ERRORS']];
         }
 
         if (is_array($_POST['SECTION_ID'])){
@@ -1126,7 +1163,6 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
             else{
                 throw new Exception($USER->LAST_ERROR, 18);
             }
-            return array('result'=>true, 'reload'=>true, 'section'=>Context::getCurrent()->getRequest()->getPost('SECTION_ID')[0]);
         }
         else{
             $_SESSION['EMAIL_CODE_COUNT'].=1;
@@ -1164,7 +1200,6 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         if (!$result['success']){
             throw new Exception($result['data']['result']['userMessage'],100);
         }
-
         return ['result'=>true,'freezings'=>$result['data']['result']['result'], 'next_action'=>'postfreezing'];
     }
     //Отправка заморозки
@@ -1225,7 +1260,6 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         }
 
         sort($result['data']['result']['result']);
-
         return ['result'=>true,'freezings'=>$result['data']['result']['result'], 'next_action'=>'postfreezing'];
     }
     //Отправка бесплатной заморозки
@@ -1257,7 +1291,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
             throw new Exception($result['data']['result']['userMessage'], 100);
         }
         PersonalUtils::UpdatePersonalInfoFrom1C($USER->GetID());
-        return ['reload'=>true];
+        return ['reload'=>true, 'section'=>Utils::GetIBlockSectionIDBySID("lk_abonement")];
     }
 
 
@@ -1302,6 +1336,36 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         }
         else{
             throw new Exception($this->errorMessages[100], 100);
+        }
+    }
+
+    //Регистрация в ПЛ
+    public function loayaltyRegAction(){
+        global $USER;
+        $rsUser = CUser::GetByID($USER->GetID());
+        $arUser = $rsUser->Fetch();
+
+        $arParams=array(
+            'id1c'=>$arUser['UF_1CID'],
+            'login'=>$arUser['LOGIN'],
+        );
+
+        $api=new Api([
+            "action"=>"lkloyalty",
+            "params"=>$arParams
+        ]);
+
+        $response=$api->result();
+        if (!$response['success']){
+            if (empty($response['data']['result']['userMessage'])){
+                throw new Exception($this->errorMessages[100], 100);
+            }
+            else{
+                throw new Exception($response['data']['result']['userMessage'], 100);
+            }
+        }
+        else{
+            return $this->update1cAction();
         }
     }
 }

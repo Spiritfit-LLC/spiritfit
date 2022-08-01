@@ -22,12 +22,17 @@ if( !isset($arResult["ELEMENT"]["PRICES"][0]["PRICE"]) ) {
 
 //send name of club and abonement
 $abonementName=$arResult['ELEMENT']['PROPERTIES']['CODE_ABONEMENT']['VALUE'];
-
-if(!empty($arResult['SELECTED_CLUB'])) {
-    $clubName = strip_tags($arResult['SELECTED_CLUB']);
-} else {
-    $clubName = '-';
+if($FORM_FIELDS['club']["TYPE"]=="SELECT"){
+    if(!empty($arResult['SELECTED_CLUB'])) {
+        $clubName = strip_tags($arResult['SELECTED_CLUB']);
+    } else {
+        $clubName = '-';
+    }
 }
+else{
+    $clubName="Онлайн";
+}
+
 
 $CLUB=$arResult['CLUB'];
 $FORM_FIELDS=$arResult['FORM_FIELDS']['FIELDS'];
@@ -104,22 +109,26 @@ $ELEMENT=$arResult["ELEMENT"];
                 <?endforeach;?>
 
                 <div class="form-inputs">
-                    <div class="subscription__aside-form-row">
-                        <span class="subscription__total-text">Выберите клуб</span>
-                    </div>
-                    <div class="subscription__aside-form-row">
-                        <select class="input input--light input--long input--select get-abonement-club"
-                                name="<?=$FORM_FIELDS['club']['NAME']?>"
-                                autocomplete="off"
-                            <?if ($FORM_FIELDS['club']['REQUIRED']) echo 'required';?>>
-                            <option value="off" disabled selected>-</option>
-                            <? foreach ($FORM_FIELDS['club']['ITEMS'] as $club):?>
-                                <option value="<?=$club["VALUE"]?>"
-                                    <?if ($club['SELECTED']) echo 'selected';?>
-                                        data-club_num="<?=$club['NUMBER']?>"><?=$club["STRING"]?></option>
-                            <? endforeach; ?>
-                        </select>
-                    </div>
+                    <?if ($FORM_FIELDS['club']["TYPE"]=="SELECT"):?>
+                        <div class="subscription__aside-form-row">
+                            <span class="subscription__total-text">Выберите клуб</span>
+                        </div>
+                        <div class="subscription__aside-form-row">
+                            <select class="input input--light input--long input--select get-abonement-club"
+                                    name="<?=$FORM_FIELDS['club']['NAME']?>"
+                                    autocomplete="off"
+                                <?if ($FORM_FIELDS['club']['REQUIRED']) echo 'required';?>>
+                                <option value="off" disabled selected>-</option>
+                                <? foreach ($FORM_FIELDS['club']['ITEMS'] as $club):?>
+                                    <option value="<?=$club["VALUE"]?>"
+                                        <?if ($club['SELECTED']) echo 'selected';?>
+                                            data-club_num="<?=$club['NUMBER']?>"><?=$club["STRING"]?></option>
+                                <? endforeach; ?>
+                            </select>
+                        </div>
+                    <?else:?>
+                        <input type="hidden" name="<?=$FORM_FIELDS['club']['NAME']?>" value="<?=$FORM_FIELDS['club']["VALUE"]?>" class="get-abonement-club">
+                    <?endif;?>
 
                     <div class="subscription__aside-form-row">
                         <input class="input input--light input--short input--text"
@@ -162,7 +171,18 @@ $ELEMENT=$arResult["ELEMENT"];
                                id="pormocode-input"
                                type="<?=$FORM_FIELDS['promocode']['TYPE']?>"
                                placeholder="<?=$FORM_FIELDS['promocode']['PLACEHOLDER']?>"
-                               value="<?=$FORM_FIELDS['promocode']['VALUE']?>"
+                               <?
+                               if (!empty($FORM_FIELDS['promocode']['VALUE'])){
+                                   $PROMOCODE_VALUE=$FORM_FIELDS['promocode']['VALUE'];
+                               }
+                               elseif (!empty($_COOKIE["bn_promocode"]) && !boolval($ELEMENT["PROPERTIES"]["ONLINE"]["VALUE"])){
+                                   $PROMOCODE_VALUE=$_COOKIE["bn_promocode"];
+                               }
+                               else{
+                                   $PROMOCODE_VALUE=null;
+                               }
+                               ?>
+                               value="<?=$PROMOCODE_VALUE?>"
                                name="<?=$FORM_FIELDS['promocode']['NAME']?>"
                             <?if ($FORM_FIELDS['promocode']['REQUIRED']) echo 'required';?>
                             <?if (!empty($FORM_FIELDS['promocode']['VALIDATOR'])) echo $FORM_FIELDS['promocode']['VALIDATOR'];?>

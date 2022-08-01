@@ -111,7 +111,6 @@ $(document).ready(function(){
         });
 
     });
-
     //Обновление клуба
     function updateClub(e){
         var CLUB_ID=$(this).val()
@@ -177,8 +176,72 @@ $(document).ready(function(){
             ShowMessage(message);
         });
     }
-    $(clubSelector).change(updateClub)
-    $(clubSelector).trigger('change');
+
+    if (clubSelector.length>0){
+        $(clubSelector).change(updateClub)
+        $(clubSelector).trigger('change');
+    }
+    else{
+        var postData={
+            'CLUB_ID': clubSelector.val(),
+            'SUB_CODE': sub_code
+        };
+
+        BX.ajax.runComponentAction(componentName, 'getClub', {
+            mode: 'class',
+            data: postData,
+            method:'POST'
+        }).then(function (response) {
+            // console.log(response)
+            o();
+            var result_data=response['data'];
+
+            if (result_data['result']===false){
+                return;
+            }
+
+            var services=result_data['SERVICES'];
+            var prices=result_data['PRICE'];
+
+
+            if (services!=null){
+                $('.services-block').html(services);
+                CheckVisible($('.services-block'));
+            }
+            else{
+                $('.services-block').hide(300);
+            }
+
+            if (prices!=null){
+                $('.subscription__label-prices-block').html(prices);
+                CheckVisible($('.subscription__label-prices-block'));
+            }
+            else{
+                $('.subscription__label-prices-block').hide(300);
+            }
+
+            if (result_data['BASE_PRICE']===null){
+                $('.subscription__total-value-old').hide(300)
+            }
+            else{
+                $('.subscription__total-value-old').show(300)
+            }
+
+
+            $('.old-price').text(result_data['BASE_PRICE'])
+            $('.current_price').text(result_data['CURRENT_PRICE'])
+
+            CheckVisible($('.subscribtion__bottom-block'));
+
+
+        }, function (response) {
+            // console.log(response)
+            //Сообщение об ошибке
+            var message=response.errors[0].message;
+            ShowMessage(message);
+        });
+    }
+
 
 
     //показываем юр инфу
@@ -227,7 +290,7 @@ $(document).ready(function(){
                 data: postData,
                 method:'POST'
             }).then(function(responce){
-                // console.log(responce)
+                console.log(responce)
                 o();
 
                 //Разблокируем кнопку
@@ -265,6 +328,9 @@ $(document).ready(function(){
                     form.find('input[name="STEP"]').val(res_data['form-step'])
                 }
                 if (res_data['elements']!==undefined){
+                    if ($(window).innerWidth() < 1260){
+                        $('.subscription__aside').clone().appendTo('.subscription.fixed')
+                    }
                     for (const [key, value] of Object.entries(res_data['elements'])) {
                         document.querySelector(key).outerHTML=value;
                     }
@@ -356,8 +422,8 @@ $(document).ready(function(){
                     }
                 }
                 else if(action==='getOrder' || action==='checkCode'){
-                    form.find('.subscription__code-new').hide(300);
-                    form.find('input#smscode-input').removeAttr('required').val('');
+                    $('form.get-abonement').find('.subscription__code-new').hide(300);
+                    $('form.get-abonement').find('input#smscode-input').removeAttr('required').val('');
                     dataLayerSend('UX', 'openMembershipReadyPage', strSend);
                 }
             }, function(response){

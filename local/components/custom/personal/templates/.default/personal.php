@@ -14,7 +14,7 @@
             <div>
                 <div class="personal-profile__user-photo">
                     <img src="<?=$arResult['LK_FIELDS']['HEAD']['PERSONAL_PHOTO']?>" height="100%" width="100%">
-                    <form class="personal-profile__user-refresh-photo" method="post" enctype="multipart/form-data">
+                    <form class="personal-profile__user-refresh-photo" method="post" enctype="multipart/form-data" data-componentName="<?=$arResult['COMPONENT_NAME']?>">
                         <input type="hidden" name="ACTION" value="updatePhoto">
                         <input type="hidden" name="old-photo-id" value="<?=$arResult['LK_FIELDS']['OLD_PHOTO_ID']?>">
                         <input class="personal-profile__user-refresh-photo-file-input" type="file" name="new-photo-file" accept="image/*">
@@ -38,7 +38,7 @@
             <div class="personal-profile__tabs">
                 <?
                 foreach ($arResult['LK_FIELDS']['SECTIONS'] as $SECTION):?>
-                    <div class="personal-profile__tab-item <?if ($SECTION['ACTIVE']) echo 'active';?>" data-id="<?=$SECTION['ID']?>">
+                    <div class="personal-profile__tab-item <?if ($SECTION['ACTIVE']) echo 'active'; elseif($arResult["ACTIVE_SECTION"]==$SECTION['ID']) echo 'active';?>" data-id="<?=$SECTION['ID']?>">
                         <div class="tab-item__icon">
                             <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].$SECTION['ICON']);?>
                         </div>
@@ -49,7 +49,7 @@
                 <?
                 endforeach;
                 ?>
-                <div class="personal-profile__tab-item profile-exit-btn">
+                <div class="personal-profile__tab-item profile-exit-btn"  data-componentName="<?=$arResult['COMPONENT_NAME']?>">
                     <div class="tab-item__icon">
                         <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/exit-btn.svg');?>
                     </div>
@@ -74,8 +74,10 @@
                 str_replace($_SERVER['DOCUMENT_ROOT'], '',__DIR__) .'/includes/section_form.php',
                 array(
                     'SECTION_ID'=>$SECTION['ID'],
+                    "SECTION_CODE"=>$SECTION['CODE'],
                     'SECTION'=>$SECTION,
-                    'IS_CORRECT'=>$arResult['LK_FIELDS']['IS_CORRECT']
+                    'IS_CORRECT'=>$arResult['LK_FIELDS']['IS_CORRECT'],
+                    'COMPONENT_NAME'=>$arResult['COMPONENT_NAME'],
                 ),
                 array(
                     'SHOW_BORDER'=>true
