@@ -1,36 +1,36 @@
-<div class="LK_TRIALWORKOUT" data-type="modal" data-header="Выберите слот" >
-    <form class="tw_form" data-additional-timetable="<?=$arResult["ADDITIONAL_TIMETABLE"]?>" data-componentname="<?=$arResult['COMPONENT_NAME']?>">
-        <input type="hidden" name="ACTION" value="setSlot">
-        <input type="hidden" name="clubid" value="<?=$arResult["CLUB_ID"]?>">
-        <input type="hidden" name="date" value="<?=$arResult["DATE"]?>">
-        <input type="hidden" name="tw_time">
-
-        <?if (!empty($arResult["TW_ACTION"])):?>
-        <input type="hidden" name="tw_action" value="<?=$arResult["TW_ACTION"]?>">
-        <?endif;?>
-
-        <div class="tw_time tw_row">
-            <span class="tw_select_placeholder">Время</span>
-            <div class="tw_select_input">
-                <div style="width: 30%; margin-right: 20px; display: inline-flex;">
-                    <select name="tw_hour" class="hour-select"> </select>
-                    <select name="tw_minute" class="minute-select"></select>
+<div class="LK_TRIALWORKOUT" data-componentname="<?=$arResult["COMPONENT_NAME"]?>">
+    <div class="personal-section-form__item select-item">
+        <span class="personal-section-form__item-placeholder">Клуб</span>
+        <select class="input input--light input--select" name="club_num" autocomplete="off" required="required">
+            <?foreach ($arResult['CLUBS_ARR'] as $CLUB):?>
+                <option value="<?=$CLUB["VALUE"]?>" <?if ($_GET["CLUB"]==$CLUB["VALUE"]) echo "selected" ?>><?=$CLUB["STRING"]?></option>
+            <?endforeach; ?>
+        </select>
+    </div>
+    <div class="tw-dates__container">
+        <div class="tw-dates__date-month"></div>
+        <div class="tw-dates__days-container">
+            <?
+            $index=0;
+            foreach($arResult["DAYS"] as $DAY):?>
+                <div class="day-item  <?if ($DAY["WEEKEND"]) echo 'weekend '; if ($index==0) echo 'active '?>" data-date="<?=$DAY["DATE"]?>" data-month="<?=$DAY["MONTH"]?>" data-index="<?=$index?>">
+                    <span class="tw-day-item__day"><?=$DAY["DAY"]?></span>
+                    <span class="tw-day-item__week"><?=$DAY["WEEK"]?></span>
                 </div>
-                <a href="#choose_my_time" style="font-size: 16px;font-weight: 700;">Указать свое время</a>
-            </div>
-
+                <?
+                $index++;
+            endforeach;?>
         </div>
-
-        <div class="tw_coach tw_row">
-            <span class="tw_select_placeholder">Тренер</span>
-            <div class="tw_select_input">
-                <select name="tw_coach" class="name-select"></select>
-            </div>
+        <div class="tw-dates-controllers">
+            <div class="tw-dates__controller left"></div>
+            <div class="tw-dates__controller right"></div>
         </div>
-        <input type="submit" value="занять слот" class="button-outline tw_form_submit">
+    </div>
+    <div class="tw-days-timetable__container"></div>
+
+    <div class="loading-overlay">
         <div class="escapingBallG-animation">
             <div id="escapingBall_1" class="escapingBallG"></div>
         </div>
-        <div class="form-submit-result-text"></div>
-    </form>
+    </div>
 </div>

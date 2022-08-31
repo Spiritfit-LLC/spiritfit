@@ -122,31 +122,40 @@ $ELEMENT=$arResult["ELEMENT"];
                     </div>
 
                     <div class="subscription__aside-form-row">
-                        <input class="input input--light input--short input--text"
-                               type="<?=$FORM_FIELDS['name']['TYPE']?>"
-                               placeholder="<?=$FORM_FIELDS['name']['PLACEHOLDER']?>"
-                               value="<?=$FORM_FIELDS['name']['VALUE']?>"
-                               name="<?=$FORM_FIELDS['name']['NAME']?>"
-                            <?if ($FORM_FIELDS['name']['REQUIRED']) echo 'required';?>
-                            <?if (!empty($FORM_FIELDS['name']['VALIDATOR'])) echo $FORM_FIELDS['name']['VALIDATOR'];?>>
+                        <div style="width: 100%;">
+                            <input class="input input--light input--short input--text"
+                                   type="<?=$FORM_FIELDS['name']['TYPE']?>"
+                                   placeholder="<?=$FORM_FIELDS['name']['PLACEHOLDER']?>"
+                                   value="<?=$FORM_FIELDS['name']['VALUE']?>"
+                                   name="<?=$FORM_FIELDS['name']['NAME']?>"
+                                <?if ($FORM_FIELDS['name']['REQUIRED']) echo 'required';?>
+                                <?if (!empty($FORM_FIELDS['name']['VALIDATOR'])) echo $FORM_FIELDS['name']['VALIDATOR'];?>
+                                <?=$FORM_FIELDS['name']['PARAMS']?>>
+                        </div>
                     </div>
                     <div class="subscription__aside-form-row">
-                        <input class="input input--light input--short input--text"
-                               type="<?=$FORM_FIELDS['phone']['TYPE']?>"
-                               placeholder="<?=$FORM_FIELDS['phone']['PLACEHOLDER']?>"
-                               value="<?=$FORM_FIELDS['phone']['VALUE']?>"
-                               name="<?=$FORM_FIELDS['phone']['NAME']?>"
-                               data-upmetric="phone"
-                            <?if ($FORM_FIELDS['phone']['REQUIRED']) echo 'required';?>
-                            <?if (!empty($FORM_FIELDS['phone']['VALIDATOR'])) echo $FORM_FIELDS['phone']['VALIDATOR'];?>>
-                        <input class="input input--light input--short input--text"
-                               type="<?=$FORM_FIELDS['email']['TYPE']?>"
-                               placeholder="<?=$FORM_FIELDS['email']['PLACEHOLDER']?>"
-                               value="<?=$FORM_FIELDS['email']['VALUE']?>"
-                               name="<?=$FORM_FIELDS['email']['NAME']?>"
-                               data-upmetric="email"
-                            <?if ($FORM_FIELDS['email']['REQUIRED']) echo 'required';?>
-                            <?if (!empty($FORM_FIELDS['email']['VALIDATOR'])) echo $FORM_FIELDS['email']['VALIDATOR'];?>>
+                        <div>
+                            <input class="input input--light input--short input--text"
+                                   type="<?=$FORM_FIELDS['phone']['TYPE']?>"
+                                   placeholder="<?=$FORM_FIELDS['phone']['PLACEHOLDER']?>"
+                                   value="<?=$FORM_FIELDS['phone']['VALUE']?>"
+                                   name="<?=$FORM_FIELDS['phone']['NAME']?>"
+                                   data-upmetric="phone"
+                                <?if ($FORM_FIELDS['phone']['REQUIRED']) echo 'required';?>
+                                <?if (!empty($FORM_FIELDS['phone']['VALIDATOR'])) echo $FORM_FIELDS['phone']['VALIDATOR'];?>
+                                <?=$FORM_FIELDS['phone']['PARAMS']?>>
+                        </div>
+                        <div>
+                            <input class="input input--light input--short input--text"
+                                   type="<?=$FORM_FIELDS['email']['TYPE']?>"
+                                   placeholder="<?=$FORM_FIELDS['email']['PLACEHOLDER']?>"
+                                   value="<?=$FORM_FIELDS['email']['VALUE']?>"
+                                   name="<?=$FORM_FIELDS['email']['NAME']?>"
+                                   data-upmetric="email"
+                                <?if ($FORM_FIELDS['email']['REQUIRED']) echo 'required';?>
+                                <?if (!empty($FORM_FIELDS['email']['VALIDATOR'])) echo $FORM_FIELDS['email']['VALIDATOR'];?>
+                                <?=$FORM_FIELDS['email']['PARAMS']?>>
+                        </div>
                     </div>
                     <div class="subscription__code-new subscription__aside-form-row" style="display: none">
 

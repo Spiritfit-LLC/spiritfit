@@ -57,19 +57,23 @@ class Utils
 		}
 	}
 
-	public static function getClub($club = null) {
+	public static function getClub($club = null, $soon=false) {
 		Loader::includeModule('iblock');
-		
-		$arFilter = array("IBLOCK_CODE" => "clubs", "PROPERTY_SOON" => false, "ACTIVE" => "Y");
 
-		if ($club !== null) {
-			$arFilter["PROPERTY_NUMBER"] = $club;
-		}
-		$dbElements = CIBlockElement::GetList(array("PROPERTY_NUMBER" => "ASC"), $arFilter, false, array(), array());
+        $arFilter = array("IBLOCK_CODE" => "clubs", "ACTIVE" => "Y");
 
-		if ($res = $dbElements->fetch()) {
-			return $res;
+        if ($soon!==null){
+            $arFilter["PROPERTY_SOON"]=$soon;
 		}
+
+        if ($club !== null) {
+            $arFilter["PROPERTY_NUMBER"] = $club;
+        }
+        $dbElements = CIBlockElement::GetList(array("PROPERTY_NUMBER" => "ASC"), $arFilter, false, array(), array());
+
+        if ($res = $dbElements->fetch()) {
+            return $res;
+        }
 	}
 
 	public static function getClubById($club = '08') {
@@ -305,15 +309,33 @@ class Utils
 
 	// МЕТОДЫ ДЛЯ ИЗВЛЕЧЕНИЯ ID о символному коду
     public static function GetIBlockIDBySID($SID, $type="ID"){
-        $DBRes=CIBlock::GetList(Array("SORT"=>"ASC"), Array("CODE"=>$SID));
+        if (is_numeric($SID)){
+            $filter=Array("ID"=>$SID);
+        }
+        else{
+            $filter=Array("CODE"=>$SID);
+        }
+        $DBRes=CIBlock::GetList(Array("SORT"=>"ASC"), $filter);
         return $DBRes->Fetch()[$type];
     }
     public static function GetIBlockSectionIDBySID($SID, $type="ID"){
-        $DBRes=CIBlockSection::GetList(Array("SORT"=>"ASC"), Array("CODE"=>$SID));
+        if (is_numeric($SID)){
+            $filter=Array("ID"=>$SID);
+        }
+        else{
+            $filter=Array("CODE"=>$SID);
+        }
+        $DBRes=CIBlockSection::GetList(Array("SORT"=>"ASC"), $filter);
         return $DBRes->Fetch()[$type];
     }
     public static function GetIBlockElementIDBySID($SID, $type="ID"){
-        $DBRes=CIBlockElement::GetList(Array("SORT"=>"ASC"), Array("CODE"=>$SID));
+        if (is_numeric($SID)){
+            $filter=Array("ID"=>$SID);
+        }
+        else{
+            $filter=Array("CODE"=>$SID);
+        }
+        $DBRes=CIBlockElement::GetList(Array("SORT"=>"ASC"), $filter);
         return $DBRes->Fetch()[$type];
     }
     public static function GetFormIDBySID($SID, $type="ID"){

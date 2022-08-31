@@ -8,7 +8,7 @@ var AnimationsTypes={
 }
 
 class ModalWindow{
-    constructor(headertext, content, animation, clickable_overlay=true, closer=true) {
+    constructor(headertext, content, animation, clickable_overlay=true, closer=true, style='') {
         this.modal=null;
         this.header=null;
         this.closer=null;
@@ -16,8 +16,10 @@ class ModalWindow{
         this.onClose=null;
         this.id=Date.now().toString(36) + Math.random().toString(36).substr(2);
 
+        this.ContentStyle=style;
 
-        this.className='dlg-modal'
+
+        this.className='dlg-modal'+' '+this.ContentStyle
 
         this.content=content;
 
@@ -114,14 +116,21 @@ class ModalWindow{
         }
 
 
-        this.header=document.createElement('div');
-        this.header.className='dlg-header';
+        if (headertext!==''){
+            this.header=document.createElement('div');
+            this.header.className='dlg-header';
+        }
+
 
         if (closer){
             if (this.animation_type!=AnimationsTypes['justMe']){
                 this.closer=document.createElement('span');
                 this.closer.className='dlg-close-btn';
-                this.header.appendChild(this.closer);
+                if (headertext!=='') {
+                    this.header.appendChild(this.closer);
+                }else{
+                    this.view.appendChild(this.closer);
+                }
 
             }
             else{
@@ -136,10 +145,12 @@ class ModalWindow{
         header_text.className='dlg-header-text';
         header_text.innerText=headertext;
 
-        this.header.appendChild(header_text);
+        if (headertext!=='') {
+            this.header.appendChild(header_text);
+            this.view.appendChild(this.header);
+        }
 
 
-        this.view.appendChild(this.header);
 
         var dlgcontent=document.createElement('div')
         dlgcontent.className='dlg-content'

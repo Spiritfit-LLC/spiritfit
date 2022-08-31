@@ -290,7 +290,7 @@ $(document).ready(function(){
                 data: postData,
                 method:'POST'
             }).then(function(responce){
-                console.log(responce)
+                // console.log(responce)
                 o();
 
                 //Разблокируем кнопку
@@ -322,7 +322,7 @@ $(document).ready(function(){
                     }, 3000)
                 }
                 if (res_data['reload']===true){
-                    window.location.reload()
+                    window.location = window.location.pathname;
                 }
                 if (res_data['form-step']!==undefined){
                     form.find('input[name="STEP"]').val(res_data['form-step'])

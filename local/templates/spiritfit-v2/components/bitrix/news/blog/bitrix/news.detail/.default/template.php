@@ -18,14 +18,17 @@
 
 <div class="content-center">
 
-	<div class="blog">
+	<div class="blog" itemscope itemtype="http://schema.org/Article">
+        <meta itemprop="identifier" content="<?=$arResult["ID"]?>">
+        <link itemprop="mainEntityOfPage" href="<?=defined("MAIN_SITE_URL")?>"/>
+        <h1 class="is-hide" itemprop="headline name"><?=$APPLICATION->ShowTitle()?></h1>
 		<div class="blog-wrapper detail">
 			<div class="blog-items <?=(count($arResult["LEFT_ITEMS"]) > 0 || !empty($arParams["BANNER"])) ? "two" : "one" ?>">
 				<div class="blog-items-col">
                     <div class="blog-detail-seo-info">
-                        <div class="blog-detail-date">Дата: <?=$arResult["DATE"]?></div>
+                        <div class="blog-detail-date" itemprop="datePublished" content="<?=$arResult["datePublished"]?>">Дата: <?=$arResult["DATE"]?></div>
                         <div class="blog-detail-showing-count">Просмотры: <?=$arResult['PROPERTIES']['SHOWING_COUNT']["VALUE"]?></div>
-                        <div class="blog-detail-rating">Рейтинг:
+                        <div class="blog-detail-rating" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">Рейтинг:
                             <svg width="70" height="14" viewBox="0 0 160 32" style="margin: 0 5px;">
                                 <defs>
                                     <mask id="perc">
@@ -46,16 +49,21 @@
                                 </defs>
 
                                 <use xlink:href="#stars" fill="#ff7628" mask="url(#perc)"></use>
-                            </svg><?=round($arResult['PROPERTIES']['RATING']['VALUE'],2)?></div>
+                            </svg><?=round($arResult['PROPERTIES']['RATING']['VALUE'],2)?>
+                            <meta itemprop="bestRating" content="5">
+                            <meta itemprop="ratingValue" content="<?=round($arResult['PROPERTIES']['RATING']['VALUE'],1)?>">
+                        </div>
+
                     </div>
                     <div class="blog-head-items">
 					<? if( !empty($arResult["PICTURE_SRC"]) ) { ?>
 						<div class="blog-detail-picture">
+                            <link itemprop="image" href="<?=defined("MAIN_SITE_URL").$arResult["PICTURE_SRC"]?>">
 							<img src="<?=$arResult["PICTURE_SRC"]?>" alt="<?=strip_tags($arResult["NAME"])?>" title="<?=strip_tags($arResult["NAME"])?>">
 							<? if(!empty($arResult["SECTION_NAMES"])) {
 								?><div class="blog-detail-section items">
 									<? foreach($arResult["SECTION_NAMES"] as $name) {
-										?><a class="item" href="<?=$arResult['SECTION']['PATH'][0]['SECTION_PAGE_URL']?>"><?=$name?></a><?
+										?><a class="item" href="<?=$arResult['SECTION']['PATH'][0]['SECTION_PAGE_URL']?>" itemprop="articleSection"><?=$name?></a><?
 									} ?>
 								</div><?
 							} ?>
@@ -63,15 +71,17 @@
 					<? } ?>
                     </div>
                     <div class="blog-detail-text">
-                        <div><?=$arResult['~DETAIL_TEXT']?></div>
+                        <div itemprop="description"><?=$arResult['~DETAIL_TEXT']?></div>
 
                         <div class="show-sections-titles">СОДЕРЖАНИЕ</div>
-                        <?foreach ($arResult['TXT'] as $TXT):?>
-                            <div class="text-section" data-id="<?=$TXT['ID']?>">
-                                <div class="text-section__title"><?=$TXT['TITLE']?></div>
-                                <div class="text-section__text"><?=$TXT['TEXT']?></div>
-                            </div>
-                        <?endforeach;?>
+                        <div itemprop="articleBody">
+                            <?foreach ($arResult['TXT'] as $TXT):?>
+                                <div class="text-section" data-id="<?=$TXT['ID']?>">
+                                    <div class="text-section__title"><?=$TXT['TITLE']?></div>
+                                    <div class="text-section__text"><?=$TXT['TEXT']?></div>
+                                </div>
+                            <?endforeach;?>
+                        </div>
                     </div>
                     <?if (empty($_SESSION['USER_VOTES'][$arResult['ID']])):?>
                     <form class="blog-detail-rating-vote">

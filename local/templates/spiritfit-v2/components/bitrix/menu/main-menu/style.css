@@ -40,18 +40,7 @@ ul.left-menu li a.selected:hover
 	color:#FC8D3D;
 }
 
-a.b-top-menu__abonement-btn {
-	color: black;
-	font-size: 13px;
-	font-weight: 700;
-	/* padding: 0; */
-	padding: 10px 20px;
-	background-color: #ff7628;
-	border-radius: 5px;
-	display: block;
-	text-transform: uppercase;
-	/* margin-left: 50px; */
-}
+
 .b-top-menu__link{
 	display:block;
 	padding:15px;
@@ -70,3 +59,21 @@ a.b-top-menu__abonement-btn {
 }
 
 
+a.b-top-menu__abonement-btn {
+	color: black;
+	font-size: 13px;
+	font-weight: 700;
+	/* padding: 0; */
+	padding: 20px 40px;
+	background-color: #ff7628;
+	/* border-radius: 5px; */
+	display: block;
+	text-transform: uppercase;
+	margin-right: 50px;
+	white-space: nowrap;
+}
+@media screen and (max-width: 1280px){
+	a.b-top-menu__abonement-btn{
+		margin-right: 160px;
+	}
+}

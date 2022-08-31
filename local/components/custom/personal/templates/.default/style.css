@@ -111,6 +111,34 @@
     font-size: 24px;
     line-height: 32px;
 }
+.tab-item__notification{
+    background-image:url('/local/templates/spiritfit-v2/img/icons/personal-section-notification.white.png');
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    width: 10px;
+    height: 15px;
+    transform: translate(4px, -6px);
+    position: relative;
+    display: inline-block;
+}
+.tab-item__notification-count {
+    position: absolute;
+    bottom: 0;
+    right: -10px;
+    font-size: 10px;
+    border-radius: 50%;
+    background-color: #fc6120;
+    color: white;
+    width: 12px;
+    height: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.personal-section-form__item__notification {
+    font-size: 11px;
+}
 /*LEFT BLOCK*/
 
 /*USER BLOCK*/
@@ -295,6 +323,152 @@ a.confirm-email-btn {
     top: 50%;
     font-weight: 600;
 }
+
+.visits-count-container {
+    width: 20%;
+    display: inline-flex;
+    text-align: center;
+    flex: 0 0 20%;
+    padding: 0 15px;
+    flex-direction: column;
+    align-items: center;
+}
+.visits-count__block {
+    height: 90px;
+    background: #00000082;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    align-items: end;
+    display: grid;
+    position: relative;
+    width: 100%;
+}
+.visits-count__occupancy {
+    padding: 5px 0;
+    /* background: white; */
+    border-radius: 10px;
+    font-weight: 600;
+    min-height: 1px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fc6120;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+.visits-count__month {
+    font-weight: 500;
+}
+.personal-section__visits_count {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding-bottom: 10px;
+    position: relative;
+    margin-top: 10px;
+}
+.personal-section__visits_count::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    cursor: default;
+}
+.personal-section__visits_count::-webkit-scrollbar-track {
+    background-color: rgba(0,0,0,0);
+    cursor: default;
+}
+.personal-section__visits_count::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px #FC6120;
+    cursor: default;
+}
+.personal-section__visits_count-container {
+    position: relative;
+    padding: 0 20px;
+}
+.personal-section__visits_count-controllers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 90%;
+    width: 100%;
+}
+.visits-count__controller {
+    top: 40%;
+    width: 20px;
+    height: 30px;
+    position: absolute;
+    cursor: pointer;
+}
+.visits-count__controller.left{
+    left: -20px;
+}
+.visits-count__controller.left:before {
+    content: '';
+    transform: rotate(-45deg);
+    top: 7px;
+    /* top: 50%; */
+    height: 3px;
+    width: 20px;
+    background-color: #ff7628;
+    position: absolute;
+    left: 0;
+}
+.visits-count__controller.left:after {
+    content: '';
+    transform: rotate(45deg);
+    left: 0;
+    bottom: 7px;
+    height: 3px;
+    width: 20px;
+    background-color: #ff7628;
+    position: absolute;
+}
+.visits-count__controller.right {
+    right: -20px;
+}
+.visits-count__controller.right:before {
+    content: '';
+    transform: rotate(-135deg);
+    top: 7px;
+    /* top: 50%; */
+    height: 3px;
+    width: 20px;
+    background-color: #ff7628;
+    position: absolute;
+    right: 0;
+}
+.visits-count__controller.right:after {
+    content: '';
+    transform: rotate(135deg);
+    right: 0;
+    bottom: 7px;
+    height: 3px;
+    width: 20px;
+    background-color: #ff7628;
+    position: absolute;
+}
+@media screen and (max-width: 768px){
+    .personal-section__visits_count-container {
+        padding: 0 30px;
+    }
+    .visits-count__controller.left {
+        left: -10px;
+    }
+    .visits-count__controller.right {
+        right: -10px;
+    }
+    .visits-count-container {
+        width: 25%;
+        flex: 0 0 25%;
+        padding: 0 10px;
+    }
+    .visits-count__month {
+        font-weight: 400;
+        font-size: 11px;
+    }
+}
 /*SECTION BLOCK*/
 
 /*INPUTS*/
@@ -398,6 +572,7 @@ a.confirm-email-btn {
     width: 100%;
     border-color: #fc612042;
     margin-top: 30px;
+    color:white!important;
 }
 
 .personal-section-form__item.table-item {
@@ -631,6 +806,75 @@ span.field-error {
     font-size:18px!important;
 }
 /*INPUTS*/
+
+
+/*TOOLTIPS*/
+.tooltip-form{
+    width: 350px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: default;
+}
+
+.tooltip-form-title {
+    font-size: 20px;
+    color: #ff7628;
+    font-weight: 500;
+}
+
+input.tooltip-form-input {
+    margin: 20px 0 0 0;
+    border-bottom: 1px solid #fc6120;
+    box-sizing: border-box;
+    padding: 5px 10px;
+}
+
+input.tooltip-form-submit:hover{
+    background: #ff7628;
+}
+.tippy-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0000008a;
+    z-index: -1;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.tippy-background.active {
+    z-index: 100;
+    opacity: 1;
+}
+input.tooltip-form-submit {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    background: none;
+    color: white;
+    border: 1px solid #ff7628;
+    transition: 0.5s;
+    text-transform: lowercase;
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: 18px;
+}
+.tooltip-form .form-submit-result-text{
+    width: 100%;
+}
+.tooltip-form-body-text {
+    margin-top: 10px;
+    font-size: 13px;
+}
+span.bold {
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+/*TOOLTIPS*/
 
 /*FORM RESULT*/
 .form-submit-result-text {
@@ -926,7 +1170,7 @@ span.onpage-btn{
         width: 24px;
         height: 24px;
         position: absolute;
-        top: calc(50% - 12px);
+        top: 3px;
         right: 0;
         display: flex!important;
         align-items: center;

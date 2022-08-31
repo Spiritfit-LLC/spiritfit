@@ -27,7 +27,7 @@ class FeedCreator{
 
         $shop=$this->XMLDoc->addChild('shop');
         $shop->addChild('name', 'SPIRIT.');
-        $shop->addChild('company', 'Юр. Название компании');
+        $shop->addChild('company', 'ООО Рекорд Фитнес');
         $shop->addChild('url', $SITE_NAME);
 
         $currencies=$shop->addChild('currencies');
@@ -99,13 +99,30 @@ class FeedCreator{
             while($ob=$dbElements->GetNextElement()){
                 $element = $ob->GetFields();
                 $element['PROPERTIES'] = $ob->GetProperties();
+                if (!is_array($element['PROPERTIES']['FEED_DESC']['VALUE'])){
+                    $element['PROPERTIES']['FEED_DESC']['VALUE']=[$element['PROPERTIES']['FEED_DESC']['VALUE']];
+                }
 
-                $ABONEMENT_TITLE=$element['PROPERTIES']['FEED_TITLE']['VALUE'];
+                $desc_flag=false;
+                for ($i=0; $i<count($element['PROPERTIES']['FEED_DESC']['VALUE']); $i++){
+                    $DESC=$element['PROPERTIES']['FEED_DESC']['VALUE'][$i];
+                    $CLUB_CODE=$element["PROPERTIES"]["FEED_DESC"]["DESCRIPTION"][$i];
+                    if ($CLUB_CODE==$club["CODE"] || $CLUB_CODE==$club["ID"]){
+                        $ABONEMENT_DESC=HTMLToTxt(html_entity_decode($DESC['TEXT'], ENT_NOQUOTES, 'UTF-8'), "", [], false);
+                        $desc_flag=true;
+                    }
+                }
+
+                if (!$desc_flag){
+                    $ABONEMENT_DESC=HTMLToTxt(html_entity_decode($element['PROPERTIES']['FEED_DESC']['VALUE'][0]['TEXT'], ENT_NOQUOTES, 'UTF-8'), "", [], false);
+                }
+
+//                $ABONEMENT_TITLE=$element['PROPERTIES']['FEED_TITLE']['VALUE'];
                 $ABONEMENT_ID=$element['ID'];
-                $ABONEMENT_DESC=HTMLToTxt(html_entity_decode($element['PROPERTIES']['FEED_DESC']['VALUE']['TEXT'], ENT_NOQUOTES, 'UTF-8'), "", [], false);
+
                 $ABONEMENT_URL=$SITE_NAME.'/abonement/'.$element['CODE'].'/'.$CLUB_NUMBER;
 
-//                var_dump($element['PROPERTIES']['FEED_DESC']['VALUE']['TEXT']);
+                $typePrefix=$element['PROPERTIES']['FEED_TYPE_PREFIX']['VALUE'];
 
 
                 $OFFER_ID=$club['ID'].$ABONEMENT_ID;
@@ -143,10 +160,10 @@ class FeedCreator{
                 }
                 $ABONEMENT_OFFER->addChild('price', $PRICE);
                 $ABONEMENT_OFFER->addChild('currencyId', 'RUR');
-                $ABONEMENT_OFFER->addChild('typePrefix', 'Абонемент');
+                $ABONEMENT_OFFER->addChild('typePrefix', $typePrefix);
                 $ABONEMENT_OFFER->addChild('vendor', $VENDOR);
-                $ABONEMENT_OFFER->addChild('model', preg_match('/[а-яёА-ЯЁ]+/u', $CLUB_NAME));
-                $ABONEMENT_OFFER->addchild('name', $ABONEMENT_TITLE.' | '. $CLUB_NAME);
+                $ABONEMENT_OFFER->addChild('model', strip_tags($CLUB_NAME));
+                $ABONEMENT_OFFER->addchild('name', $typePrefix.' '.$VENDOR.' '.strip_tags($CLUB_NAME));
                 $ABONEMENT_OFFER->addChild('pickup', 'true');
                 $ABONEMENT_OFFER->addChild('delivery', 'true');
                 $ABONEMENT_OFFER->addChild('param', 'Черный')->addAttribute('name', "Цвет");

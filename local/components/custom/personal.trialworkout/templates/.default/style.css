@@ -1,93 +1,245 @@
-form.tw_form{
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    flex-direction: column;
-}
-form.tw_form span.select2-selection.select2-selection--single{
-    padding-left: 0!important;
-}
-.tw_select_input {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-}
-.tw_row{
-    width: 100%;
-    margin: 10px 0;
-    border: 1px solid #fc612042;
-    box-sizing: border-box;
-    padding: 5px 20px;
-}
-span.tw_select_placeholder {
-    font-family: 'Gotham Pro';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    color: #FC6120;
-}
-form.tw_form .select2-selection__arrow:before{
-    top: 5px!important;
-}
-.tw_form_submit{
-    width: 100%;
-    margin: 10px 0;
+.tw-dates__container {
+    position: relative;
 }
 
-.timepicker-ui-clock-face{
-    background-color: #FC6120!important;
+.tw-dates__days-container {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding-bottom: 10px;
+    position: relative;
+    margin-top: 10px;
+    z-index: 100;
 }
-.timepicker-ui-wrapper,.timepicker-ui-wrapper.mobile{
-    background-color:#171717fc!important;
-}
-.timepicker-ui-select-time, .timepicker-ui-select-time.mobile{
-    width: 100%;
+.tw-dates__days-container .day-item {
+    width: 10.5%;
+    display: inline-flex;
     text-align: center;
-    left:0px!important;
-    font-size: 14px;
+    flex: 0 0 10.5%;
+    flex-direction: column;
+    align-items: center;
+    height: 60px;
+    background: #00000066;
+    margin: 0 15px;
+    border-radius: 10px;
+    justify-content: center;
+    cursor:pointer;
+}
+.tw-dates__days-container .day-item.weekend {
+    background: #ff00008a;
+}
+.tw-dates__days-container .day-item.active{
+    background: #fc6120;
+}
+.tw-dates__days-container .day-item:hover{
+    background: #fc6120a1;
+}
+.tw-dates__days-container .day-item.active:hover{
+    background: #fc6120;
 }
 
-.timepicker-ui-hour:hover, .timepicker-ui-hour.active, .timepicker-ui-minutes:hover, .timepicker-ui-minutes.active, .timepicker-ui-hour.mobile:hover, .timepicker-ui-hour.mobile.active, .timepicker-ui-minutes.mobile:hover, .timepicker-ui-minutes.mobile.active {
-    color: #ff5722!important;
-    background-color: #303030!important;
+.tw-dates__days-container span{
+    cursor:pointer;
 }
-.timepicker-ui-hour:focus-visible, .timepicker-ui-minutes:focus-visible, .timepicker-ui-hour.mobile:focus-visible, .timepicker-ui-minutes.mobile:focus-visible {
-     outline: none!important;
+span.tw-day-item__week {
+    font-size: 13px;
 }
-.timepicker-ui-hour, .timepicker-ui-minutes, .timepicker-ui-hour.mobile, .timepicker-ui-minutes.mobile{
-    background-color: #000000!important;
-    color: #8f8f8f;
+span.tw-day-item__day {
+    font-weight: 600;
 }
-.timepicker-ui-dot, .timepicker-ui-circle-hand, .timepicker-ui-clock-hand{
-    background-color: black!important;
-}
-.timepicker-ui-wrapper-btn, .timepicker-ui-wrapper-btn.mobile{
+
+.tw-dates-controllers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 90%;
     width: 100%;
+    z-index: 10;
 }
-.timepicker-ui-cancel-btn, .timepicker-ui-ok-btn{
-    width: 90px!important;
-    color:#ff5722!important;
-    font-weight: 500!important;
+.tw-dates__controller {
+    top: 48%;
+    width: 20px;
+    height: 30px;
+    position: absolute;
+    cursor: pointer;
 }
-.timepicker-ui-cancel-btn:hover, .timepicker-ui-ok-btn:hover, .timepicker-ui-cancel-btn.mobile:hover, .timepicker-ui-ok.btn-mobile:hover{
-    background-color: transparent!important;
+.tw-dates__controller.left{
+    left: -30px;
 }
-.timepicker-ui-wrapper.crane-straight, .timepicker-ui-wrapper.mobile.crane-straight{
-    color:black!important;
+.tw-dates__controller.left:before {
+    content: '';
+    transform: rotate(-45deg);
+    top: 7px;
+    /* top: 50%; */
+    height: 3px;
+    width: 20px;
+    background-color: #ff7628;
+    position: absolute;
+    left: 0;
 }
-.timepicker-ui-value-tips.crane-straight{
-    color:unset!important;
+.tw-dates__controller.left:after {
+    content: '';
+    transform: rotate(45deg);
+    left: 0;
+    bottom: 7px;
+    height: 3px;
+    width: 20px;
+    background-color: #ff7628;
+    position: absolute;
 }
-.timepicker-ui-value-tips.active, .timepicker-ui-value-tips-24h.active{
-    color:white!important;;
+.tw-dates__controller.right {
+    right: -30px;
 }
-.timepicker-ui-modal{
-    background-color: rgb(0 0 0 / 64%)!important;
+.tw-dates__controller.right:before {
+    content: '';
+    transform: rotate(-135deg);
+    top: 7px;
+    /* top: 50%; */
+    height: 3px;
+    width: 20px;
+    background-color: #ff7628;
+    position: absolute;
+    right: 0;
+}
+.tw-dates__controller.right:after {
+    content: '';
+    transform: rotate(135deg);
+    right: 0;
+    bottom: 7px;
+    height: 3px;
+    width: 20px;
+    background-color: #ff7628;
+    position: absolute;
+}
+.tw-dates__date-month {
+    /*padding-left: 20px;*/
+}
+.tw-timetable__section-type {
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+.tw-timetable__section-times-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.tw-timetable__section-timeitem {
+    width: 17.9%;
+    flex: 0 0 17.9%;
+    text-align: center;
+    padding: 10px 20px;
+    margin: 5px;
+    background: #00000066;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+}
+.tw-timetable__section-timeitem.active{
+    background: #fc6120;
+}
+.tw-timetable__section-timeitem:hover{
+    background: #fc6120a1;
+}
+.tw-timetable__section-timeitem.active:hover{
+    background: #fc6120;
+}
+.tw-timetable__section {
+    margin-top: 20px;
+}
+
+.tw-timetable__choosen {
+    font-size: 18px;
+    margin-top: 20px;
+    font-weight: 500;
+    /*padding-left: 20px;*/
+    display: inline-block;
+}
+
+.tw-timetable__show {
+    color: #fc6120;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    /* padding-left: 20px; */
+    display: inline-block;
+    float: right;
+    /* margin-left: auto; */
+    margin-top: 20px;
+
+}
+
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #00000096;
+    z-index: -1;
+    box-shadow: 0 0 50px 400px #00000096;
+    transition: opacity 0.3s;
+    opacity: 0;
+}
+.loading-overlay.active {
+    z-index: 1000;
+    opacity: 1;
+}
+.loading-overlay .escapingBallG-animation{
+    position: relative;
+    width: 125px;
+    height: 43px;
+    margin: auto;
+    display: block;
+    top: 50%;
+    opacity: 0;
+}
+.loading-overlay.active .escapingBallG-animation{
+    opacity: 1;
+}
+.timeitem-warning svg {
+    height: 100%;
+    width: 100%;
+    fill: #FC6120;
+}
+.timeitem-warning {
+    height: 10px;
+    width: 10px;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 5px;
 }
 
 @media screen and (max-width: 768px){
-    a[href="#choose_my_time"]{
-        font-size:14px!important;
+    .tw-dates__days-container .day-item {
+        width: 14%;
+        flex: 0 0 14%;
+        margin: 0 5px;
+    }
+    .tw-dates__controller.left {
+        left: -15px;
+    }
+    .tw-dates__controller.right {
+        right: -15px;
+    }
+    .tw-dates__container {
+        padding: 0 15px;
+    }
+    .tw-timetable .input-radio-item-block {
+        width: 100%;
+        display: flex;
+        margin-top: 20px;
+    }
+    .tw-timetable__section-timeitem {
+        padding: 10px 10px;
+        flex: 0 0 21.5%;
+    }
+    .timeitem-warning {
+        height: 20px;
+        width: 20px;
+        top: -6px;
+        right: -3px;
     }
 }

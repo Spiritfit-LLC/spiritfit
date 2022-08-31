@@ -63,7 +63,7 @@ $arField = ['name', 'phone', 'email'];
                                 <label class="form-standart__label"><?=$arResult["arQuestions"][$itemField]["TITLE"]?></label>
                                 <div class="form-standart__item">
                                     <div class="form-standart__inputs">
-                                        <input class="form-standart__input" type="<?=$type?>" data-necessary="" name="form_<?= $arResult["arAnswers"][$itemField]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"][$itemField]['0']["ID"] ?>" <?=($arResult["arQuestions"][$itemField]["REQUIRED"] ? 'required="required"' : '')?> value="<?=$_REQUEST["form_" . $arResult["arAnswers"][$itemField]['0']["FIELD_TYPE"] . "_" . $arResult["arAnswers"][$itemField]['0']["ID"]] ?>" />
+                                        <input class="form-standart__input" type="<?=$type?>" data-necessary="" name="form_<?= $arResult["arAnswers"][$itemField]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"][$itemField]['0']["ID"] ?>" <?=($arResult["arQuestions"][$itemField]["REQUIRED"] ? 'required="required"' : '')?> value="<?=$_REQUEST["form_" . $arResult["arAnswers"][$itemField]['0']["FIELD_TYPE"] . "_" . $arResult["arAnswers"][$itemField]['0']["ID"]] ?>" <?=$arResult["arAnswers"][$itemField]['0']["FIELD_PARAM"]?>/>
                                     </div>
                                     <div class="form-standart__message">
                                         <div class="form-standart__none">Заполните поле</div>
@@ -154,6 +154,66 @@ $arField = ['name', 'phone', 'email'];
                 }
             }
 
+        });
+
+        var dadata_token="fa43a728a5f92101fcb6e4afa7ad6eda489da066";
+
+        $('input[data-dadata-type]').each(function(index, el){
+            if ($(el).data('dadata-type')==="NAME"){
+                var options= {
+                    token: dadata_token,
+                    type: "NAME",
+                    count:5,
+                    deferRequestBy:500,
+                    hint:false,
+                    params: {
+                        parts: [$(el).data('dadata-part')]
+                    }
+                }
+            }
+            else if ($(el).data('dadata-type')==="ADDRESS"){
+                options= {
+                    token: dadata_token,
+                    type: "ADDRESS",
+                    count: 5,
+                    deferRequestBy: 500,
+                    hint: false,
+                    minChars: 2,
+                    /* Вызывается, когда пользователь выбирает одну из подсказок */
+                    onSelect: function (suggestion) {
+                        if (suggestion.data.city === null) {
+                            var error_message = "Город не выбран";
+                        } else if (suggestion.data.street === null) {
+                            error_message = "Улица не заполнена";
+                        } else if (suggestion.data.house === null) {
+                            error_message = "Дом не выбран";
+                        } else {
+                            if ($(this).next('.field-error').length > 0) {
+                                $(this).next('.field-error').remove()
+                            }
+                            $(this).closest('form').find('input[type="submit"]').removeAttr('disabled');
+                            return;
+                        }
+                        if ($(this).next('.field-error').length > 0) {
+                            $(this).next('.field-error').text(error_message)
+                        } else {
+                            $(this).after(`<span class="field-error">${error_message}</span>`);
+                        }
+                        $(this).closest('form').find('input[type="submit"]').prop('disabled', 'disabled');
+                    }
+                }
+            }
+            var sgt = $(el).suggestions(options);
+        });
+
+        $('input[type="email"]').each(function(index, el){
+            $(el).suggestions({
+                token: dadata_token,
+                type: "EMAIL",
+                count:5,
+                deferRequestBy:500,
+                hint:false
+            });
         });
     });
 </script>

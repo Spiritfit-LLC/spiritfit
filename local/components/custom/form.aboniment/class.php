@@ -25,7 +25,7 @@ class FormAbonimentComponent extends CBitrixComponent{
                 }else{
                     $club = $clubField;
                 }
-                
+
                 if(empty($club)){
                     $club = '08'; // по умолчанию клуб Одинцово
                 }
@@ -40,8 +40,8 @@ class FormAbonimentComponent extends CBitrixComponent{
 
     private function checkStep() {
         $step = $this->request->get('step');
-		$this->arParams["PREV_STEP"] = $step;
-		
+        $this->arParams["PREV_STEP"] = $step;
+
         if (empty($step)) {
             return 1;
         }
@@ -51,7 +51,7 @@ class FormAbonimentComponent extends CBitrixComponent{
                 $this->arResult["HIDDEN_FILEDS"][$key] = $value;
             }
             if(strpos($key, "promo") !== false) {
-                $this->arResult["HIDDEN_FILEDS"][$key] = $value;   
+                $this->arResult["HIDDEN_FILEDS"][$key] = $value;
             }
         }
 
@@ -59,12 +59,12 @@ class FormAbonimentComponent extends CBitrixComponent{
         if ($this->arParams["SKIP_CHECKS"] == "Y") {
             $arParam = $this->getFormatFields();
             $arParam['type'] = 6;
-            
+
             $api = new Api(array(
                 "action" => "web_site_contact",
                 "params" => $arParam
             ));
-            
+
             if($RESULT_ID = CFormResult::Add($this->arParams["WEB_FORM_ID"], $_REQUEST, "N")) {
                 CFormResult::SetEvent($RESULT_ID);
                 CFormResult::Mail($RESULT_ID);
@@ -89,9 +89,9 @@ class FormAbonimentComponent extends CBitrixComponent{
                 }
                 return 3;
             } else if( !empty($this->arResult["RESPONSE"]) && $this->arResult["RESPONSE"]["data"]["result"]["errorCode"] == 6 ) {
-		        $this->arResult["ERROR"] = (!empty($this->arResult["ERROR"])) ? $this->arResult["ERROR"] : "Код введен неверно, повторите через 15 мин.";
-				return 1;
-			} else {
+                $this->arResult["ERROR"] = (!empty($this->arResult["ERROR"])) ? $this->arResult["ERROR"] : "Код введен неверно, повторите через 15 мин.";
+                return 1;
+            } else {
                 $this->arResult["ERROR"] = (!empty($this->arResult["ERROR"])) ? $this->arResult["ERROR"] : "Не правильно введен код";
                 return 2;
             }
@@ -111,7 +111,7 @@ class FormAbonimentComponent extends CBitrixComponent{
             $phoneName = "form_" . $this->arResult["arAnswers"]["phone"]['0']["FIELD_TYPE"] . "_" . $this->arResult["arAnswers"]["phone"]['0']["ID"];
             $phone = (!empty($this->request->get($phoneName))) ? $this->request->get($phoneName) : $this->request->get("phone");
         }
-		
+
         $phone = preg_replace('![^0-9]+!', '', $phone);
         $api = new Api(array(
             "action" => "request_sendcode",
@@ -121,7 +121,7 @@ class FormAbonimentComponent extends CBitrixComponent{
         ));
 
         $result = $api->result();
-        
+
         if(!$result["success"]) {
             $this->arResult["ERROR"] = $result['data']['result']['userMessage'];
         }
@@ -131,14 +131,14 @@ class FormAbonimentComponent extends CBitrixComponent{
         global $APPLICATION;
 
         $APPLICATION->RestartBuffer();
-                
+
         $api = new Api(array(
             "action" => "coupon",
             "params" => $coupon
         ));
-        
+
         $result = $api->result();
-        echo json_encode($result['data']['result']);   
+        echo json_encode($result['data']['result']);
         die;
     }
 
@@ -148,7 +148,7 @@ class FormAbonimentComponent extends CBitrixComponent{
             $_REQUEST["form_" . $answer['0']["FIELD_TYPE"] . "_" . $answer['0']["ID"]] = "";
         }
     }
-	
+
     private function getFormatFields() {
         $arParam = array();
         foreach ($this->arResult["arAnswers"] as $name => $answer) {
@@ -173,17 +173,17 @@ class FormAbonimentComponent extends CBitrixComponent{
         }
 
         $arFilter = array("IBLOCK_CODE" => "subscription", "CODE" => $code);
-		if( empty($code) ) {
-			unset($arFilter["CODE"]);
-			$arFilter["ACTIVE"] = "Y";
-		}
+        if( empty($code) ) {
+            unset($arFilter["CODE"]);
+            $arFilter["ACTIVE"] = "Y";
+        }
         $dbElements = CIBlockElement::GetList(array(), $arFilter, false, false, array());
 
         if ($res = $dbElements->GetNextElement()) {
             $this->arResult["ELEMENT"] = $res->GetFields();
             $this->arResult["ELEMENT"]["PROPERTIES"] = $res->GetProperties();
             //$this->arResult["ELEMENT"]["PROPERTIES"] = $res->GetProperties();  
-            /*Выбираем клуб с минимальной ценой абонемента*/     
+            /*Выбираем клуб с минимальной ценой абонемента*/
 
             $min_price = $this->arResult["ELEMENT"]["PROPERTIES"]["PRICE"]["VALUE"][0]["PRICE"];
             $list = $this->arResult["ELEMENT"]["PROPERTIES"]["PRICE"]["VALUE"][0]["LIST"];
@@ -213,10 +213,10 @@ class FormAbonimentComponent extends CBitrixComponent{
             $club = $clubField;
         }
 
-        if (!$club && $list){ 
+        if (!$club && $list){
             $selectedClub = Utils::getClubById($list);
         }else{
-            $selectedClub = Utils::getClub($club);    
+            $selectedClub = Utils::getClub($club);
         }
 
         foreach ($this->arResult["ELEMENT"]["PROPERTIES"]["FOR_PRESENT"]["VALUE"] as $service) {
@@ -235,7 +235,7 @@ class FormAbonimentComponent extends CBitrixComponent{
             $props[$res["NAME"]] = $res["PROPERTY_MONTH_VALUE"];
         }
         $clubField = $this->request["form_text_5"] ? $this->request["form_text_5"] : $this->request["form_text_15"];
-        
+
         if(!empty($this->request["club"])){
             $club = $this->request["club"];
         }elseif(!empty($_SESSION['CLUB_NUMBER'])){
@@ -250,18 +250,18 @@ class FormAbonimentComponent extends CBitrixComponent{
             $club = '08';
         }
 
-        if (!$club && $list){ 
-           $selectedClub = Utils::getClubById($list);
+        if (!$club && $list){
+            $selectedClub = Utils::getClubById($list);
         }else{
-            $selectedClub = Utils::getClub($club);    
+            $selectedClub = Utils::getClub($club);
         }
-		
+
         foreach ($this->arResult["ELEMENT"]["PROPERTIES"]["PRICE"]["VALUE"] as $key => $arPrice) {
             if ($arPrice["LIST"] == $selectedClub["ID"]) {
                 $this->arResult["ELEMENT"]["PRICES"][] = $arPrice;
                 if($this->arResult["ELEMENT"]['ID'] == ABONEMENTS_GOD_FITNESA_ID) {
                     break;
-                }        
+                }
             }
         }
 
@@ -278,16 +278,16 @@ class FormAbonimentComponent extends CBitrixComponent{
                 $priceSign[] = $arItem;
             }
         }
-		/*echo $selectedClub["ID"];
-		echo '<pre>';
-		print_r($this->arResult["ELEMENT"]["PROPERTIES"]["PRICE_SIGN_DETAIL"]);
-		echo '</pre>';*/
+        /*echo $selectedClub["ID"];
+        echo '<pre>';
+        print_r($this->arResult["ELEMENT"]["PROPERTIES"]["PRICE_SIGN_DETAIL"]);
+        echo '</pre>';*/
 
         foreach ($this->arResult["ELEMENT"]["PRICES"] as $key => $arPrice) {
             if ($arPrice["PRICE"] != $this->arResult["ELEMENT"]["BASE_PRICE"]["PRICE"] && $arPrice["NUMBER"] == $this->arResult["ELEMENT"]["BASE_PRICE"]["NUMBER"]) {
 
                 $this->arResult["ELEMENT"]["SALE"] = $arPrice["PRICE"];
-                
+
                 if ($this->request["form_hidden_10"] && !$this->request["no_save_price"]) {
                     $this->arResult["ELEMENT"]["SALE"] = $this->request["form_hidden_10"];
                 }
@@ -295,7 +295,7 @@ class FormAbonimentComponent extends CBitrixComponent{
                 if ($this->request["form_hidden_21"] && !$this->request["no_save_price"]) {
                     $this->arResult["ELEMENT"]["SALE"] = $this->request["form_hidden_21"];
                 }
-                
+
                 /**
                  * цена за второй месяц после применения промокода
                  */
@@ -307,13 +307,13 @@ class FormAbonimentComponent extends CBitrixComponent{
                 $this->arResult["ELEMENT"]["PRICES"][$key]["PRICE"] = $this->arResult["ELEMENT"]["BASE_PRICE"]["PRICE"];
             }
 
-            
+
             if ($priceSign) {
                 $sign = array_search($arPrice["NUMBER"], array_column($priceSign, "NUMBER"));
             } else {
                 $sign = false;
             }
-            
+
             if ($sign !== false) {
                 $this->arResult["ELEMENT"]["PRICES"][$key]["SIGN"] = $priceSign[$sign]["PRICE"];
             }
@@ -334,61 +334,64 @@ class FormAbonimentComponent extends CBitrixComponent{
         if ($this->request["num"]) {
             $arParam["code"] = $this->request["num"];
         }
-		
-		$phoneName = "form_" . $this->arResult["arAnswers"]["phone"]['0']["FIELD_TYPE"] . "_" . $this->arResult["arAnswers"]["phone"]['0']["ID"];
+
+        $phoneName = "form_" . $this->arResult["arAnswers"]["phone"]['0']["FIELD_TYPE"] . "_" . $this->arResult["arAnswers"]["phone"]['0']["ID"];
         $phone = $this->request->get($phoneName);
         $arParam["phone"] = preg_replace('![^0-9]+!', '', $phone);
-		
-		if($this->arResult["ELEMENT"]["PROPERTIES"]["ADD_TO_1C"]["VALUE"]){
+
+        if($this->arResult["ELEMENT"]["PROPERTIES"]["ADD_TO_1C"]["VALUE"]){
             $arParam["additional"] = $this->arResult["ELEMENT"]["PROPERTIES"]["ADD_TO_1C"]["VALUE"];
         }
-        
+
         if($this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"]){
             $arParam["subscriptionId"] = $this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"];
         }
-			
-		// if ($this->request["form_hidden_10"] == 0 || $this->request["form_hidden_21"] == 0) {
-		if ($this->request["form_hidden_10"] == 0) {
-			$arParam["type"] = 1;
+
+        // if ($this->request["form_hidden_10"] == 0 || $this->request["form_hidden_21"] == 0) {
+        if ($this->request["form_hidden_10"] == 0) {
+            $arParam["type"] = 1;
             if ($this->arResult["ELEMENT"]["CODE"] == "probnaya-trenirovka" || $this->arResult["ELEMENT"]["ID"] == "226") {
                 $arParam["type"] = 3;
             }
-			if( !empty($this->request["form_default_type"]) ) {
-				$arParam["type"] = intval($this->request["form_default_type"]);
-			}
-			
-			if( !empty($this->arParams["DEFAULT_TYPE_ID"]) ) {
-				$arParam["type"] = intval($this->arParams["DEFAULT_TYPE_ID"]);
-			}
+            if( !empty($this->request["form_default_type"]) ) {
+                $arParam["type"] = intval($this->request["form_default_type"]);
+            }
+
+            if( !empty($this->arParams["DEFAULT_TYPE_ID"]) ) {
+                $arParam["type"] = intval($this->arParams["DEFAULT_TYPE_ID"]);
+            }
 
             $api = new Api(array(
                 "action" => "request2",
                 "params" => $arParam
             ));
+
         } else {
-            
-			if( !empty($this->request["form_default_type"]) ) {
-				$arParam["type"] = intval($this->request["form_default_type"]);
-			}
+
+            if( !empty($this->request["form_default_type"]) ) {
+                $arParam["type"] = intval($this->request["form_default_type"]);
+            }
             if( !empty($this->arParams["DEFAULT_TYPE_ID"]) ) {
                 $arParam["type"] = intval($this->arParams["DEFAULT_TYPE_ID"]);
             }
 
-			$api = new Api(array(
+            $api = new Api(array(
                 "action" => "request",
-               	"params" => $arParam
+                "params" => $arParam
             ));
+
         }
-		
-		$result = $api->result();
-		$this->arResult["RESPONSE"] = $result;
-		
-		$smsResultArray = $api->result();
-		
-		if( !empty($smsResultArray['data']['result']['errorCode']) ) {
-			$this->arResult["ERROR"] = $smsResultArray['data']['result']['userMessage'];
-			$this->arResult["RESPONSE"] = false;
-		}
+
+
+        $result = $api->result();
+        $this->arResult["RESPONSE"] = $result;
+
+        $smsResultArray = $api->result();
+
+        if( !empty($smsResultArray['data']['result']['errorCode']) ) {
+            $this->arResult["ERROR"] = $smsResultArray['data']['result']['userMessage'];
+            $this->arResult["RESPONSE"] = false;
+        }
     }
 
     function executeComponent(){
@@ -396,27 +399,27 @@ class FormAbonimentComponent extends CBitrixComponent{
         Loader::IncludeModule("iblock");
 
         $this->arResult["COMPONENT_ID"] = CAjax::GetComponentID($this->GetName(), $this->GetTemplate(), '');
-        
+
         $this->getFields();
         $this->getElement();
-        
+
         if($this->arResult["ELEMENT"]["ACTIVE"] == 'N'){
             \Bitrix\Iblock\Component\Tools::process404(
-                '', 
+                '',
                 true,
-                true, 
-                true, 
-                false 
+                true,
+                true,
+                false
             );
         }
-		
-		$ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues($this->arResult["ELEMENT"]["IBLOCK_ID"], $this->arResult["ELEMENT"]["ID"]);
+
+        $ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues($this->arResult["ELEMENT"]["IBLOCK_ID"], $this->arResult["ELEMENT"]["ID"]);
         $seoValues = $ipropValues->getValues();
         if ($seoValues['ELEMENT_META_TITLE']) {
             $this->arResult['SEO']['ELEMENT_META_TITLE'] = $seoValues['ELEMENT_META_TITLE'];
         } else {
-			$this->arResult['SEO']['ELEMENT_META_TITLE'] = strip_tags($this->arResult["ELEMENT"]["~NAME"]);
-		}
+            $this->arResult['SEO']['ELEMENT_META_TITLE'] = strip_tags($this->arResult["ELEMENT"]["~NAME"]);
+        }
         if ($seoValues['ELEMENT_META_DESCRIPTION']) {
             $this->arResult['SEO']['ELEMENT_META_DESCRIPTION'] = $seoValues['ELEMENT_META_DESCRIPTION'];
         }
@@ -426,16 +429,16 @@ class FormAbonimentComponent extends CBitrixComponent{
         if ($seoValues['SECTION_META_KEYWORDS']) {
             $this->arResult['SEO']['ELEMENT_META_KEYWORDS'] = $seoValues['ELEMENT_META_KEYWORDS'];
         }
-		
-		$phoneName = "form_" . $this->arResult["arAnswers"]["phone"]['0']["FIELD_TYPE"] . "_" . $this->arResult["arAnswers"]["phone"]['0']["ID"];
-		if( $this->request->get($phoneName) ) {
-			$this->arResult["SMS_PHONE"] = $this->request->get($phoneName);
-		}
-		
+
+        $phoneName = "form_" . $this->arResult["arAnswers"]["phone"]['0']["FIELD_TYPE"] . "_" . $this->arResult["arAnswers"]["phone"]['0']["ID"];
+        if( $this->request->get($phoneName) ) {
+            $this->arResult["SMS_PHONE"] = $this->request->get($phoneName);
+        }
+
         if($this->request->get("mode")){
             switch($this->request->get("mode")){
                 case "try_sms":
-					if($this->request->get("phone")) {
+                    if($this->request->get("phone")) {
                         $this->sendSms($this->request->get("phone"));
                     }
                     break;
@@ -460,16 +463,9 @@ class FormAbonimentComponent extends CBitrixComponent{
         switch ($this->checkStep()) {
             case 2:
                 if( $prevStep == 1 ) $this->sendSms();
-                if( empty($this->arResult["ERROR"]) || intval($this->arResult["ERROR"]) === 1 ) {
-                    $this->includeComponentTemplate('step-2');
-                } else if( $prevStep > 1 ) {
-                	$this->includeComponentTemplate('step-2');
-                } else {
-					$this->includeComponentTemplate();
-				}
-                break;
-            case 3:
+
                 $type=!empty($this->arParams['DEFAULT_TYPE_ID']) ? $this->arParams['DEFAULT_TYPE_ID'] : 1;
+
                 $res = CIBlockElement::GetList(
                     Array("SORT"=>"ASC"),
                     Array('IBLOCK_ID'=>Utils::GetIBlockIDBySID('FORM_TYPES'), 'PROPERTY_FORM_TYPE'=>$type),
@@ -478,7 +474,7 @@ class FormAbonimentComponent extends CBitrixComponent{
                     Array("PROPERTY_GA_EACTION", "PROPERTY_GA_ELLABEL", "PROPERTY_GA_ECATEGORY",)
                 );
                 if ($ar_res=$res->Fetch()){
-                    $selectedClub = Utils::getClub($this->arParams["NUMBER"]);
+                    $selectedClub = Utils::getClub($this->arParams["NUMBER"], null);
                     $this->arResult["GA_SETTINGS"]=[
                         "eAction"=>$ar_res['PROPERTY_GA_EACTION_VALUE'],
                         "eCategory"=>$ar_res["PROPERTY_GA_ECATEGORY_VALUE"],
@@ -488,7 +484,18 @@ class FormAbonimentComponent extends CBitrixComponent{
                 else{
                     $this->arResult["GA_SETTINGS"]=false;
                 }
+                // file_put_contents($_SERVER['DOCUMENT_ROOT'].'/logs/test.txt', print_r($ar_res, true)."\n", FILE_APPEND);
 
+
+                if( empty($this->arResult["ERROR"]) || intval($this->arResult["ERROR"]) === 1 ) {
+                    $this->includeComponentTemplate('step-2');
+                } else if( $prevStep > 1 ) {
+                    $this->includeComponentTemplate('step-2');
+                } else {
+                    $this->includeComponentTemplate();
+                }
+                break;
+            case 3:
                 $this->includeComponentTemplate('step-3');
                 break;
             default:

@@ -117,124 +117,125 @@ $(document).ready(function(){
         })
     });
 
-    const instance = tippy(document.querySelector('a[href="#freefreezing"]'));
-    instance.setProps({
-        interactive: true,
-        trigger: 'manual',
-        allowHTML: true,
-        maxWidth:700,
-        appendTo: () => document.querySelector('body'),
-        onHide:()=>{
-            $('.tippy-background').removeClass('active');
-            $('.freefreezing-form').unbind();
-            freezingform.find('input[type="submit"]').fadeIn(300);
-        },
-        onMount: ()=>{
-            $('select[name="freezing"]').select2({
-                minimumResultsForSearch: Infinity,
-                width: '100%',
-                dropdownParent: $('.freefreezing-form')
-            });
-            $('.tippy-background').addClass('active');
-        },
-        onShown:(instance)=>{
-            freezingform.find('input[type="submit"]').fadeOut(300);
-
-            $('.freefreezing-form').unbind();
-            $('.freefreezing-form').submit(function(e){
-                e.preventDefault();
-
-                var disabled = $(this).find(':input:disabled').removeAttr('disabled');
-                var postData=new FormData(this);
-                disabled.attr('disabled','disabled');
-
-                var form=$(this);
-                form.find('.form-submit-result-text').html('').removeClass('active');
-
-                form.find('input[type="submit"]').attr('disabled','disabled');
-
-                form.find('.escapingBallG-animation').addClass('active');
-                form.find('input[type="submit"]').css({
-                    'opacity':0,
-                    'z-index':1
+    if ($('a[href="#freefreezing"]').length>0){
+        const instance = tippy(document.querySelector('a[href="#freefreezing"]'));
+        instance.setProps({
+            interactive: true,
+            trigger: 'manual',
+            allowHTML: true,
+            maxWidth:700,
+            appendTo: () => document.querySelector('body'),
+            onHide:()=>{
+                $('.tippy-background').removeClass('active');
+                $('.freefreezing-form').unbind();
+                freezingform.find('input[type="submit"]').fadeIn(300);
+            },
+            onMount: ()=>{
+                $('select[name="freezing"]').select2({
+                    minimumResultsForSearch: Infinity,
+                    width: '100%',
+                    dropdownParent: $('.freefreezing-form')
                 });
+                $('.tippy-background').addClass('active');
+            },
+            onShown:(instance)=>{
+                freezingform.find('input[type="submit"]').fadeOut(300);
 
-                BX.ajax.runComponentAction(componentName, postData.get('ACTION'), {
-                    mode: 'class',
-                    data: postData,
-                    method:'POST'
-                }).then(function(responce){
+                $('.freefreezing-form').unbind();
+                $('.freefreezing-form').submit(function(e){
+                    e.preventDefault();
 
-                    form.find('.escapingBallG-animation').removeClass('active');
+                    var disabled = $(this).find(':input:disabled').removeAttr('disabled');
+                    var postData=new FormData(this);
+                    disabled.attr('disabled','disabled');
+
+                    var form=$(this);
+                    form.find('.form-submit-result-text').html('').removeClass('active');
+
+                    form.find('input[type="submit"]').attr('disabled','disabled');
+
+                    form.find('.escapingBallG-animation').addClass('active');
                     form.find('input[type="submit"]').css({
-                        'opacity':1,
+                        'opacity':0,
+                        'z-index':1
                     });
 
-                    form.find('input[type="submit"]').removeAttr('disabled');
-                    var res_data=responce['data'];
-                    if (res_data['reload']===true){
-                        window.location.reload();
-                    }
-                }, function (responce){
-                    form.find('.escapingBallG-animation').removeClass('active');
-                    form.find('input[type="submit"]').css({
-                        'opacity':1,
-                    });
-                    form.find('input[type="submit"]').removeAttr('disabled');
-                    var error_id=0;
-                    responce.errors.forEach(function(err, index){
-                        if (err.code!==0){
-                            error_id=index
-                            return false;
+                    BX.ajax.runComponentAction(componentName, postData.get('ACTION'), {
+                        mode: 'class',
+                        data: postData,
+                        method:'POST'
+                    }).then(function(responce){
+
+                        form.find('.escapingBallG-animation').removeClass('active');
+                        form.find('input[type="submit"]').css({
+                            'opacity':1,
+                        });
+
+                        form.find('input[type="submit"]').removeAttr('disabled');
+                        var res_data=responce['data'];
+                        if (res_data['reload']===true){
+                            window.location = window.location.pathname;
                         }
-                    });
-                    var message=responce.errors[error_id].message;
-                    form.find('.form-submit-result-text').html(message).addClass('active');
-                })
+                    }, function (responce){
+                        form.find('.escapingBallG-animation').removeClass('active');
+                        form.find('input[type="submit"]').css({
+                            'opacity':1,
+                        });
+                        form.find('input[type="submit"]').removeAttr('disabled');
+                        var error_id=0;
+                        responce.errors.forEach(function(err, index){
+                            if (err.code!==0){
+                                error_id=index
+                                return false;
+                            }
+                        });
+                        var message=responce.errors[error_id].message;
+                        form.find('.form-submit-result-text').html(message).addClass('active');
+                    })
 
-                return false;
-            });
-        }
-    });
+                    return false;
+                });
+            }
+        });
 
-
-
-    $('a[href="#freefreezing"]').click(function(e){
-        e.preventDefault();
-        var loading_content='<div class="escapingBallG-animation active tippy-form loader">' +
-            '<div id="escapingBall_1" class="escapingBallG"></div>' +
-            '</div>';
-
-        instance.setContent(loading_content);
-        instance.show();
-
-        var form=$(this).closest('form');
-
-        BX.ajax.runComponentAction(componentName, 'getfreefreezing', {
-            mode: 'class',
-            method:'POST'
-        }).then(function(response){
-
-            var modal_content='<form class="freefreezing-form tooltip-form">' +
-                '<div class="tooltip-form-title">Использовать бесплатную заморозку</div>' +
-                '<input type="hidden" name="ACTION" value="freefreezingpost">' +
-                '<div class="tooltip-form-body-text">Укажите количество бесплтаных дней, которыми вы хотите воспользоваться</div>' +
-                '<div class="personal-section-form__item select-item"><select name="freezing" required>';
-
-            var freezings=response.data.freezings;
-            freezings.forEach(function(el){
-                modal_content+=`<option value="${el}">${el} дней</option>`
-            })
-            modal_content+='</select></div>' +
-                '<input type="submit" class="tooltip-form-submit" value="подтвердить">' +
-                '<div class="escapingBallG-animation tippy-form">' +
+        $('a[href="#freefreezing"]').click(function(e){
+            e.preventDefault();
+            var loading_content='<div class="escapingBallG-animation active tippy-form loader">' +
                 '<div id="escapingBall_1" class="escapingBallG"></div>' +
-                '</div>' +
-                '<span class="form-submit-result-text"></span>' +
-                '</form>'
-            instance.hide()
-            instance.setContent(modal_content);
+                '</div>';
+
+            instance.setContent(loading_content);
             instance.show();
-        })
-    });
+
+            var form=$(this).closest('form');
+
+            BX.ajax.runComponentAction(componentName, 'getfreefreezing', {
+                mode: 'class',
+                method:'POST'
+            }).then(function(response){
+
+                var modal_content='<form class="freefreezing-form tooltip-form">' +
+                    '<div class="tooltip-form-title">Использовать бесплатную заморозку</div>' +
+                    '<input type="hidden" name="ACTION" value="freefreezingpost">' +
+                    '<div class="tooltip-form-body-text">Укажите количество бесплтаных дней, которыми вы хотите воспользоваться</div>' +
+                    '<div class="personal-section-form__item select-item"><select name="freezing" required>';
+
+                var freezings=response.data.freezings;
+                freezings.forEach(function(el){
+                    modal_content+=`<option value="${el}">${el} дней</option>`
+                })
+                modal_content+='</select></div>' +
+                    '<input type="submit" class="tooltip-form-submit" value="подтвердить">' +
+                    '<div class="escapingBallG-animation tippy-form">' +
+                    '<div id="escapingBall_1" class="escapingBallG"></div>' +
+                    '</div>' +
+                    '<span class="form-submit-result-text"></span>' +
+                    '</form>'
+                instance.hide()
+                instance.setContent(modal_content);
+                instance.show();
+            })
+        });
+    }
+
 });

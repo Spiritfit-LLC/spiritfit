@@ -1,0 +1,467 @@
+.tw-dates__container {
+    position: relative;
+}
+
+.tw-dates__days-container {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding-bottom: 10px;
+    position: relative;
+    margin-top: 10px;
+    z-index: 100;
+}
+.tw-dates__days-container .day-item {
+    width: 10.5%;
+    display: inline-flex;
+    text-align: center;
+    flex: 0 0 10.5%;
+    flex-direction: column;
+    align-items: center;
+    height: 60px;
+    background: #00000066;
+    margin: 0 15px;
+    border-radius: 10px;
+    justify-content: center;
+    cursor:pointer;
+}
+.tw-dates__days-container .day-item.weekend {
+    background: #ff00008a;
+}
+.tw-dates__days-container .day-item.active{
+    background: #fc6120;
+}
+.tw-dates__days-container .day-item:hover{
+    background: #fc6120a1;
+}
+.tw-dates__days-container .day-item.active:hover{
+    background: #fc6120;
+}
+
+.tw-dates__days-container span{
+    cursor:pointer;
+}
+span.tw-day-item__week {
+    font-size: 13px;
+}
+span.tw-day-item__day {
+    font-weight: 600;
+}
+
+.tw-dates-controllers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 90%;
+    width: 100%;
+    z-index: 10;
+}
+.tw-dates__controller {
+    top: 48%;
+    width: 20px;
+    height: 30px;
+    position: absolute;
+    cursor: pointer;
+}
+.tw-dates__controller.left{
+    left: -30px;
+}
+.tw-dates__controller.left:before {
+    content: '';
+    transform: rotate(-45deg);
+    top: 7px;
+    /* top: 50%; */
+    height: 3px;
+    width: 20px;
+    background-color: #ff7628;
+    position: absolute;
+    left: 0;
+}
+.tw-dates__controller.left:after {
+    content: '';
+    transform: rotate(45deg);
+    left: 0;
+    bottom: 7px;
+    height: 3px;
+    width: 20px;
+    background-color: #ff7628;
+    position: absolute;
+}
+.tw-dates__controller.right {
+    right: -30px;
+}
+.tw-dates__controller.right:before {
+    content: '';
+    transform: rotate(-135deg);
+    top: 7px;
+    /* top: 50%; */
+    height: 3px;
+    width: 20px;
+    background-color: #ff7628;
+    position: absolute;
+    right: 0;
+}
+.tw-dates__controller.right:after {
+    content: '';
+    transform: rotate(135deg);
+    right: 0;
+    bottom: 7px;
+    height: 3px;
+    width: 20px;
+    background-color: #ff7628;
+    position: absolute;
+}
+.tw-dates__date-month {
+    /*padding-left: 20px;*/
+}
+
+.tw-timetable__section-type {
+    /* padding-left: 20px; */
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 20px;
+    color: #fc6120;
+    text-transform: uppercase;
+}
+.tw-timetable__section-times-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.tw-timetable__section-timeitem {
+    width: 19%;
+    flex: 0 0 19%;
+    text-align: center;
+    padding: 10px 20px;
+    margin: 6px 5px 6px 0;
+    background: #00000066;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: filter 0.5s;
+    color:white;
+}
+.tw-timetable__section-timeitem.busy{
+    background: #ce0000;
+}
+.tw-timetable__section-timeitem.free{
+    background: #1b9400;
+}
+.tw-timetable__section-timeitem.choose{
+    background: #fc61208a;
+}
+.tw-timetable__section-timeitem.choose.start, .tw-timetable__section-timeitem.choose.end{
+    background: #fc6120;
+}
+.tw-timetable__section {
+    margin-top: 20px;
+}
+
+.tw-timetable__choosen {
+    font-size: 18px;
+    margin-top: 20px;
+    font-weight: 500;
+    /*padding-left: 20px;*/
+    display: inline-block;
+}
+
+.tw-timetable__show {
+    color: #fc6120;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    /* padding-left: 20px; */
+    display: inline-block;
+    float: right;
+    /* margin-left: auto; */
+    margin-top: 20px;
+
+}
+
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #00000096;
+    z-index: -1;
+    box-shadow: 0 0 50px 400px #00000096;
+    transition: opacity 0.3s;
+    opacity: 0;
+}
+.loading-overlay.active {
+    z-index: 1000;
+    opacity: 1;
+}
+.loading-overlay .escapingBallG-animation{
+    position: relative;
+    width: 125px;
+    height: 43px;
+    margin: auto;
+    display: block;
+    top: 50%;
+    opacity: 0;
+}
+.loading-overlay.active .escapingBallG-animation{
+    opacity: 1;
+}
+
+.tw-timetable .input-radio-item-block{
+    margin-bottom: 30px;
+}
+.tw-timetable .input-radio-item-block:last-child{
+    margin-bottom: 0;
+}
+.tw-timetable-change-btn {
+    text-align: center;
+    color: #fc6120;
+    padding: 20px 0;
+    text-transform: uppercase;
+    font-weight: 400;
+    text-decoration: underline;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+.tw-timetable__change {
+    /* padding: 20px 0; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.tw-timetable-change-text {
+    margin-top: 20px;
+}
+
+.tw-function__item {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #fc61205c;
+    font-size: 16px;
+    /* color: #fc6120; */
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: -5px -9px;
+}
+
+.tw-function__item:first-child{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.tw-function__item:last-child{
+    border-bottom: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.tw-function__item:hover{
+    background-color: #fc6120;
+    color:black;
+}
+
+button.trainings-list-btn {
+    background: none;
+    border: none;
+    color: #fc6120;
+    text-decoration: underline;
+    font-size: 18px;
+    padding: 10px 0;
+}
+.tw-timetable__list-item {
+    /* padding: 0 20px; */
+    margin-bottom: 20px;
+    border-bottom: solid 1px #fc612082;
+    padding: 5px 0;
+    width: 100%;
+    flex: 0 0 100%;
+    position: relative;
+}
+.tw-timetable__list-item:last-child{
+    margin:0;
+}
+.tw-list__client {
+    font-size: 18px;
+    font-weight: 500;
+}
+.tw-list__time {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.busy-workout-item__slots-container {
+    display: flex;
+    flex-direction: row;
+    /*padding-left: 5px;*/
+    border: 3px solid;
+    margin: 0 5px 2px 0;
+    border-radius: 10px;
+    /* margin: 5px 5px 5px 0; */
+    background: #ce0000;
+    cursor:pointer;
+    transition: filter 0.5s;
+    position: relative;
+}
+.busy-workout-item__slots-container:after {
+    content: "";
+    width: 10px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    background-color: currentColor;
+    background-image: url(/local/templates/spiritfit-v2/img/icons/arrow-prev-black.png);
+    background-size: 50%;
+    background-repeat: no-repeat;
+    transform: rotate(180deg);
+    background-position-x: 0;
+    background-position-y: 48%;
+}
+.busy-workout-item__slots-container.active:after {
+    transform:rotate(0deg);
+    background-position-x: 50%;
+    background-position-y: 50%;
+}
+
+.busy-workout-item__slots-container .tw-timetable__section-timeitem{
+    margin: 3px;
+}
+
+
+.workout-info-tooltip {
+    width: 300px;
+    position: relative;
+}
+.training-info {
+    /* font-size: 16px; */
+    /* margin: 5px 0; */
+    /* font-weight: 500; */
+    /* color: white; */
+    /* border: 1px solid #ff600059; */
+    padding: 5px;
+}
+.training-info-placeholder {
+    font-size: 12px;
+    color: #ff6000;
+}
+.training-info-value {
+    font-size: 14px;
+    font-weight: 500;
+}
+.workout-info-tooltip__functions-btn, .workout-info-list__functions-btn {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    background-image: url('/local/templates/spiritfit-v2/img/icons/additionally.png');
+    background-size: cover;
+    top: 5px;
+    cursor: pointer;
+}
+.tooltip-functions, .workout-info-list-functions {
+    /* width: 70%; */
+    position: absolute;
+    background: black;
+    padding: 10px;
+    border-radius: 5px;
+    top: 0;
+    right: 5px;
+    cursor: pointer;
+    max-width: 70%;
+    z-index: 100;
+}
+.workout-info-list-functions{
+    padding: 10px 20px;
+    top:10px;
+}
+.workout-info-list__functions-btn{
+    top:10px;
+}
+
+.tooltip-function__item{
+    opacity: 0;
+    transition: opacity 1s;
+    padding: 10px 5px;
+}
+.tooltip-functions.active .tooltip-function__item{
+    opacity: 1;
+}
+.workout-choose-btn {
+    padding: 10px 0;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.tw-list__info {
+    margin: 10px 0;
+}
+.tw-list__info-placeholder {
+    font-size: 12px;
+    color: #fc6120;
+}
+.tw-list__info-value {
+     font-size: 16px;
+     font-weight: 500;
+}
+.tw-list__info.client .tw-list__info-value{
+    font-size: 20px;
+}
+
+.error-modal__message {
+    font-size: 20px;
+    font-weight: 300;
+}
+.add-workout__form {
+    width: 100%;
+}
+
+@media screen and (max-width: 768px){
+    .tw-dates__days-container .day-item {
+        width: 14%;
+        flex: 0 0 14%;
+        margin: 0 5px;
+    }
+    .tw-dates__controller.left {
+        left: -15px;
+    }
+    .tw-dates__controller.right {
+        right: -15px;
+    }
+    .tw-dates__container {
+        padding: 0 15px;
+    }
+
+    .tw-timetable__section-timeitem {
+        padding: 10px 10px;
+        flex: 0 0 21.5%;
+    }
+    .tw-timetable .input-radio-item-block {
+        width: 100%;
+        display: flex;
+        margin-top: 20px;
+        margin-bottom: 0;
+    }
+    .tw-timetable .input-radio-item-block:first-child{
+        margin:0;
+    }
+    .tw-timetable__section-timeitem {
+        padding: 10px 10px;
+        flex: 0 0 23%;
+        width: 23%;
+    }
+    .timeitem-warning {
+        height: 20px;
+        width: 20px;
+        top: -6px;
+        right: -3px;
+    }
+    .busy-workout-item__slots-container:after {
+        display: none;
+    }
+    .error-modal__message {
+        font-size: 16px;
+    }
+}

@@ -17,160 +17,267 @@ class PersonalTrialWorkout extends CBitrixComponent implements Controllerable{
                     new ActionFilter\Csrf(),
                 ],
                 'postfilters' => []
+            ],
+            'getTimetable'=>[
+                'prefilters' => [
+                    new ActionFilter\Authentication,
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
+            ],
+            'getTrainers'=>[
+                'prefilters' => [
+                    new ActionFilter\Authentication,
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
             ]
         ];
     }
 
     function onPrepareComponentParams($arParams){
-        $this->arResult["STATUS"]=1;
-        if (!empty($arParams["ADDITIONAL_TW_TABLE"])){
-            $this->arResult["ADDITIONAL_TIMETABLE"]=$arParams["ADDITIONAL_TW_TABLE"];
-            $this->arResult["STATUS"]=2;
-        }
-        if((empty($arParams['TW_TABLE']) || count($arParams['TW_TABLE'])==0) && empty($arParams["ADDITIONAL_TW_TABLE"])){
-            $this->arResult["STATUS"]=2;
-        }
-        elseif (empty($arParams["DATE"])){
-            $this->arResult["ERROR"]="День не выбран";
-        }
-        elseif (empty($arParams["CLUB_ID"])){
-            $this->arResult["ERROR"]="Клуб не выбран";
-        }
-        else{
-            $this->arResult["ERROR"]=false;
-        }
 
-        $this->arResult["TW_ACTION"]=$arParams["TW_ACTION"];
-        return $arParams;
     }
 
-    private function parseTimeTable(){
-        $result=[];
-        foreach($this->arParams['TW_TABLE'] as $TIME){
-            if (!is_array($result[mb_substr($TIME["time"], 0, 2)])){
-                $result[mb_substr($TIME["time"], 0, 2)]=[];
-            }
+    private function GetClubArr(){
+        $arFilter = array(
+            "IBLOCK_CODE" => 'clubs',
+            "PROPERTY_SOON" => false,
+            "ACTIVE" => "Y",
+            "PROPERTY_HIDE_LINK_VALUE"=>false
+        );
 
-            if (!is_array($result[mb_substr($TIME["time"], 0, 2)][mb_substr($TIME["time"], 3, 2)])){
-                $result[mb_substr($TIME["time"], 0, 2)][mb_substr($TIME["time"], 3, 2)]=[];
-            }
-            $TIME["name"]=str_replace("Пустой контрагент", "Дежурный тренер", $TIME["name"]);
-            array_push($result[mb_substr($TIME["time"], 0, 2)][mb_substr($TIME["time"], 3, 2)], $TIME);
-
-//            $TIME["name"]="TEST";
-//            array_push($result[mb_substr($TIME["time"], 0, 2)][mb_substr($TIME["time"], 3, 2)], $TIME);
+        $dbElements = CIBlockElement::GetList(array("SORT" => "ASC"), $arFilter, false, false, array("ID", "CODE", "NAME", "PROPERTY_NUMBER"));
+        while ($res = $dbElements->fetch()) {
+            $CLUBS[]=array(
+                'VALUE'=>$res["PROPERTY_NUMBER_VALUE"],
+                'STRING'=>$res["NAME"]
+            );
         }
-        if (count($result)>0){
-            return $result;
-        }
-        else{
-            return false;
-        }
+        return $CLUBS;
     }
 
     function executeComponent()
     {
+        $monthArr = [
+            'Январь',
+            'Февраль',
+            'Март',
+            'Апрель',
+            'Май',
+            'Июнь',
+            'Июль',
+            'Август',
+            'Сентябрь',
+            'Октябрь',
+            'Ноябрь',
+            'Декабрь'
+        ];
+        $weekArr=[
+            "ВС",
+            "ПН",
+            "ВТ",
+            "СР",
+            "ЧТ",
+            "ПТ",
+            "СБ"
+        ];
+        $date = date('m/d/Y');
+        for($i=0; $i<32; $i++){
+            list($day, $week, $month)=explode(';',date('d;w;n', strtotime($date)));
+
+            $this->arResult["DAYS"][]=
+                [
+                    "DATE"=>$date,
+                    "DAY"=>$day,
+                    "MONTH"=>$monthArr[$month-1],
+                    "WEEK"=>$weekArr[$week],
+                    "WEEKEND"=>$week==0 || $week==6?true:false,
+                ];
+            $date = date('m/d/Y', strtotime($date . "+1 days"));
+        }
+
+        $this->arResult["CLUBS_ARR"]=$this->GetClubArr();
         $this->arResult['COMPONENT_NAME']=$this->GetName();
-        $this->arResult["CLUB_ID"]=$this->arParams["CLUB_ID"];
-        $this->arResult["DATE"]=$this->arParams["DATE"];
 
-        if ($this->arResult["STATUS"]==1){
-            $this->arResult["TIMETABLE"]=$this->parseTimeTable();
-            $this->arResult["PAGE_TYPE"]="DEFAULT";
-
-            $this->arResult["ADDITIONAL_TIMETABLE"]=\Bitrix\Main\Component\ParameterSigner::signParameters(
-                $this->getName() . "_timetable",
-                $this->arParams["TW_TABLE"]
-            );
-
-            $this->IncludeComponentTemplate();
-        }
-        else{
-            $this->arResult["PAGE_TYPE"]="CHOOSETIME";
-            $this->IncludeComponentTemplate('choosetime');
-
-        }
-
-        $template = & $this->GetTemplate();
-        $template->addExternalJs(SITE_TEMPLATE_PATH . '/libs/timepicker-ui/timepicker-ui.umd.js');
-        $template->addExternalCss('https://fonts.googleapis.com/icon?family=Material+Icons');
+        $this->IncludeComponentTemplate();
     }
 
 
-//    AJAX
-    public function setSlotAction(){
+    public function getDayTimetable($date, $club_num, $action="new"){
+        $date=date('d.m.Y', strtotime($date));
+
         global $USER;
-
-        $id=Context::getCurrent()->getRequest()->getPost("tw_coach");
-        $time=Context::getCurrent()->getRequest()->getPost("tw_time");
-        $clubid=Context::getCurrent()->getRequest()->getPost("clubid");
-        $date=Context::getCurrent()->getRequest()->getPost("date");
-
-        $login=$USER->GetLogin();
-
         $rsUser = CUser::GetByID($USER->GetID());
         $arUser = $rsUser->Fetch();
         $id1c=$arUser['UF_1CID'];
 
-
-        $arParams=[
-            "date"=>$date,
-            "clubid"=>$clubid,
-            "time"=>$time,
-            "login"=>$login,
-            "id1c"=>$id1c,
-        ];
-
-
-        if(!empty(Context::getCurrent()->getRequest()->getPost("tw_action"))){
-            $action=Context::getCurrent()->getRequest()->getPost("tw_action");
-        }
-        else{
-            $action="new";
-        }
-        $arParams["action"]=$action;
-
-        if (empty($id) || $id=="none"){
-            if ($id=="none"){
-                $id="";
-            }
-            elseif (!empty(Context::getCurrent()->getRequest()->getPost("timetable"))){
-                $additional_timetable=\Bitrix\Main\Component\ParameterSigner::unsignParameters(
-                    $this->getName() . "_timetable",
-                    Context::getCurrent()->getRequest()->getPost("timetable")
-                );
-                $id="";
-                foreach ($additional_timetable as $time_item){
-                    if ($time_item["time"]==$time){
-                        $id=$time_item["id"];
-                        break;
-                    }
-                }
-            }
-            else{
-                $id="";
-            }
-        }
-        $arParams["id"]=$id;
-
-
         $api=new Api([
-            "action"=>"trialworkoutsignup",
-            "params"=>$arParams,
+            "action"=>"trialworkout",
+            "params"=>[
+                "id1c"=>$id1c,
+                "login"=>$USER->GetLogin(),
+                "action"=>$action,
+                "date"=>$date,
+                "clubid"=>$club_num
+            ]
         ]);
 
         $response=$api->result();
-        if (!$response["success"]){
-            if (!empty($response["data"]["result"]["userMessage"])){
-                throw new Exception($response["data"]["result"]["userMessage"], 1);
+        if (empty($response["data"]["result"]["result"]) && count($response["data"]["result"]["result"])==0){
+            return false;
+        }
+        $result=[];
+
+        $buffer_timetable=[];
+        foreach($response["data"]["result"]["result"] as $TIME){
+            if (!is_array($buffer_timetable[$TIME["time"]])){
+                $buffer_timetable[$TIME["time"]]=[];
+            }
+            array_push($buffer_timetable[$TIME["time"]], ["ID"=>$TIME["id"], "NAME"=>$TIME["name"]]);
+        }
+
+        $CURR_TIME="07:00";
+
+        while ($CURR_TIME<="23:00"){
+            if ($date==date("d.m.Y") && date("H:i")>$CURR_TIME){
+                $CURR_TIME=date('H:i',  strtotime("+15 minutes", strtotime($CURR_TIME)));
+                continue;
+            }
+            if ($CURR_TIME<"12:00"){
+                $key="0MORNING";
+            }
+            elseif ($CURR_TIME<"18:00"){
+                $key="1DAYTIME";
             }
             else{
+                $key="2EVENING";
+            }
+
+            if (key_exists($CURR_TIME, $buffer_timetable)){
+                if (!is_array($result[$key][$CURR_TIME])){
+                    $result[$key][$CURR_TIME]=[
+                        "TYPE"=>"FREE",
+                        "ITEMS"=>$buffer_timetable[$CURR_TIME]
+                    ];
+                }
+            }
+            else{
+                $result[$key][$CURR_TIME]=["TYPE"=>"NOTFREE"];
+            }
+            $CURR_TIME=date('H:i',  strtotime("+15 minutes", strtotime($CURR_TIME)));
+        }
+
+        ksort($result);
+        $_SESSION["TW_TIMETABLE"]=$result;
+        return $result;
+    }
+
+
+
+//    AJAX
+    public function getTimetableAction(){
+        $date=Context::getCurrent()->getRequest()->getPost('date');
+        if (empty($date)){
+            $date=date('d.m.Y');
+        }
+        $club_num=Context::getCurrent()->getRequest()->getPost('club');
+        $action=Context::getCurrent()->getRequest()->getPost('action');
+        if (empty($action)){
+            $action="new";
+        }
+
+        $this->arResult["TIMETABLE"]=$this->getDayTimetable($date, $club_num, $action);
+        ob_start();
+        $this->IncludeComponentTemplate('timetable');
+        $result=ob_get_clean();
+
+        return $result;
+    }
+
+    public function getTrainersAction(){
+        $time=trim(Context::getCurrent()->getRequest()->getPost('time'));
+
+        $result='';
+        foreach ($_SESSION["TW_TIMETABLE"] as $key=>$value){
+            if (key_exists($time,$value)){
+                if ($value[$time]["TYPE"]=="FREE"){
+                    $type="FREE";
+                    foreach($value[$time]["ITEMS"] as $coach){
+                        $result.='<option value="'.$coach["ID"].'">'.$coach["NAME"].'</option>';
+                    }
+                    break;
+                }
+                else{
+                    $type="NOTFREE";
+                }
+            }
+        }
+        return ['type'=>$type, "result"=>$result];
+    }
+
+
+
+    public function setSlotAction()
+    {
+        global $USER;
+
+        $id = Context::getCurrent()->getRequest()->getPost("coach");
+        $time = trim(Context::getCurrent()->getRequest()->getPost("time"));
+        $clubid = Context::getCurrent()->getRequest()->getPost("club");
+        $date=date('d.m.Y', strtotime(Context::getCurrent()->getRequest()->getPost("date")));
+
+        $login = $USER->GetLogin();
+
+        $rsUser = CUser::GetByID($USER->GetID());
+        $arUser = $rsUser->Fetch();
+        $id1c = $arUser['UF_1CID'];
+
+
+        $arParams = [
+            "date" => $date,
+            "clubid" => $clubid,
+            "time" => $time,
+            "login" => $login,
+            "id1c" => $id1c,
+        ];
+
+
+        if (!empty(Context::getCurrent()->getRequest()->getPost("action"))) {
+            $action = Context::getCurrent()->getRequest()->getPost("action");
+        } else {
+            $action = "new";
+        }
+        $arParams["action"] = $action;
+
+        if (empty($id)) {
+            $arParams["id"] = "";
+        } else {
+            $arParams["id"] = $id;
+        }
+
+        $api = new Api([
+            "action" => "trialworkoutsignup",
+            "params" => $arParams,
+        ]);
+
+        $response = $api->result();
+        if (!$response["success"]) {
+            if (!empty($response["data"]["result"]["userMessage"])) {
+                throw new Exception($response["data"]["result"]["userMessage"], 1);
+            } else {
                 throw new Exception("Непредвиденная ошибка", 100);
             }
         }
 
         PersonalUtils::UpdatePersonalInfoFrom1C($USER->GetID());
-        return ['reload'=>true, "section"=>Utils::GetIBlockSectionIDBySID("trialworkout")];
+        return ['reload' => true, "section" => Utils::GetIBlockSectionIDBySID("trialworkout")];
     }
 }
 
