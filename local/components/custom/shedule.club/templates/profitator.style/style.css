@@ -104,15 +104,18 @@ span.b-timetable__head-day {
 }
 
 /*LOADING*/
-.escapingBallG-animation{
+.timetable-overlay .escapingBallG-animation {
     display: block;
     opacity: 1;
     width: 125px;
     height: 43px;
     /* margin: auto; */
-    margin: -42px auto 0;
+    /* margin: -42px auto 0; */
     transition: opacity 0.3s;
-    z-index:2;
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
 
 .escapingBallG{
@@ -320,8 +323,8 @@ button.show-filters {
     background: none;
     color: white;
     padding: 5px;
-    border-bottom: 2px;
-    border-style: dashed;
+    border:none;
+    border-bottom: 2px dashed;
     font-size: 18px;
     font-weight: 500;
     position: relative;
@@ -335,6 +338,7 @@ button.show-filters .btn-arrow{
     width: 40px;
     height: 100%;
     position: absolute;
+    transition: 1s;
 }
 
 button.show-filters .btn-arrow:before{
@@ -348,6 +352,11 @@ button.show-filters .btn-arrow:before{
     border: 2px solid currentColor;
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
+    transition: 1s;
+}
+button.show-filters .btn-arrow.up:before{
+    transform: rotate(225deg);
+    top: 9px;
 }
 .b-timetable__training-item:first-child{
     margin-top:0;
@@ -358,7 +367,97 @@ button.show-filters .btn-arrow:before{
     font-weight: 500;
     font-size: 18px;
 }
+.b-timetable__body, .filter-not-found {
+    min-height: 500px;
+}
+.filter-not-found h3{
+    font-size: 20px;
+    font-weight: 500;
+    margin: 20px 0;
+}
 
+
+/*FILTERS*/
+.b-timetable__filter {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    border: solid 1px;
+    padding: 30px;
+    margin-top: 30px;
+}
+.b-timetable__filter-block {
+    width: calc(33% - 100px);
+    flex: 0 0 calc(33% - 100px);
+    margin: 0 50px;
+    /* margin-bottom: 0; */
+    /* max-width: 30%; */
+}
+.b-timetable__filter-block:first-child{
+    margin-left: 0;
+    width: calc(33% - 50px);
+    flex: 0 0 calc(33% - 50px);
+}
+.b-timetable__filter-block:last-child{
+    margin-right: 0;
+    width: calc(33% - 50px);
+    flex: 0 0 calc(33% - 50px);
+}
+.b-timetable__filter-checkbox {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+button.b-timetable__filter-clear {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+    margin-top: 30px;
+    float: right;
+}
+img.b-timetable__filter-clear-closer {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+    border: dotted 1px;
+    border-radius: 50%;
+    padding: 2px;
+}
+.b-timetable__filter-checkbox .b-checkbox__text{
+    padding-left: 30px;
+}
+@media screen and (max-width: 768px){
+    button.show-filters {
+        margin: 20px 0;
+        border: none;
+        border-bottom: 2px dashed;
+        width: 100%;
+        text-align: left;
+    }
+    .b-timetable__filter {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        padding: 20px;
+    }
+    .b-timetable__filter-block {
+        width: 100%;
+        flex: 0 0 100%;
+        margin: 20px 0;
+    }
+    .b-timetable__filter-block:first-child{
+        width: 100%;
+        flex: 0 0 100%;
+    }
+    .b-timetable__filter-block:last-child{
+        width: 100%;
+        flex: 0 0 100%;
+    }
+}
 @media screen and (max-width: 1024px){
     .b-timetable__column {
         width: 150px;
@@ -411,4 +510,23 @@ button.show-filters .btn-arrow:before{
         width: 40%;
         flex: 0 0 40%;
     }
+    .b-timetable__filter-checkbox {
+        display: flex;
+        flex-direction: column;
+    }
+    label.b-checkbox {
+        margin: 10px 0;
+    }
+}
+
+a.get-trialworkout {
+    width: 100%;
+    border: solid;
+    padding: 15px;
+    /* margin: 20px 0; */
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 20px;
 }

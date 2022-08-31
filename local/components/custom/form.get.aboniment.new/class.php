@@ -125,7 +125,9 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         $this->arResult['FORM_TYPE']=$this->arParams['FORM_TYPE'];
         $this->arResult["ELEMENT_CODE"]=$this->arParams['ELEMENT_CODE'];
 
-        $this->GetElement();
+        if (!$this->GetElement()){
+            $this->set404();
+        }
         $this->GetSeo();
         $this->arResult['ACTION']=$this->arParams['FORM_ACTION'];
 
@@ -159,7 +161,11 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             $elArray = $ob->GetFields();
             $elArray["PROPERTIES"] = $ob->GetProperties();
         }
+        else{
+            return false;
+        }
         $this->arResult['ELEMENT']=$elArray;
+        return true;
     }
 
     private function CheckClub(){
@@ -234,14 +240,19 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
 
         //Дефолт SIGN
         foreach ($result['PRICE'] as $key=>&$value){
-            $value['SIGN']=$defaultSign[(int)$key];
+            $DBRes=CIBlockElement::GetList(array("SORT" => "ASC"), ["IBLOCK_ID"=>Utils::GetIBlockIDBySID("price_sign"), "ACTIVE"=>"Y", "NAME"=>$key], false, false, array("PROPERTY_MONTH"));
+            if ($signRes=$DBRes->Fetch()){
+                $value['SIGN']=$signRes["PROPERTY_MONTH_VALUE"];
+            }
+            else{
+                $value['SIGN']=$defaultSign[(int)$key];
+            }
         }
 
+        //Если есть такая подпись
         foreach ($SIGN as $sign){
             $result['PRICE'][$sign['NUMBER']]['SIGN']=$sign['PRICE'];
         }
-
-
 
         //Услуги:
         foreach($ELEMENT['PROPERTIES']['FOR_PRESENT']['VALUE'] as $key=>$arPrice){
@@ -304,7 +315,8 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                 'PLACEHOLDER'=>$FORM["arQuestions"][$key]["TITLE"],
                 'TYPE'=>$key=="phone" ? "tel" : $value['0']["FIELD_TYPE"],
                 'REQUIRED'=>$FORM["arQuestions"][$key]["REQUIRED"]=="Y" ? true:false,
-                "COMMENT"=>$FORM["arQuestions"][$key]["COMMENTS"]
+                "COMMENT"=>$FORM["arQuestions"][$key]["COMMENTS"],
+                "PARAMS"=>$value['0']["FIELD_PARAM"],
             ];
             if ($value['0']["FIELD_TYPE"]=='radio' || $value['0']["FIELD_TYPE"]=='checkbox'){
                 $FORM_FIELDS['FIELDS'][$key]['NAME']="form_".$value['0']["FIELD_TYPE"]."_".$FORM['arQuestions'][$key]['SID'];
@@ -343,7 +355,6 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                         }
                         $FORM_FIELDS['FIELDS'][$key]['TYPE']='SELECT';
                         $FORM_FIELDS['FIELDS'][$key]['ITEMS']=$CLUBS;
-                        $FORM_FIELDS['FIELDS'][$key]['PARAMS']=$value['0']["FIELD_PARAM"];
                     }
                 }
                 elseif ($FORM_FIELDS['FIELDS'][$key]['TYPE']=='checkbox'){
@@ -741,7 +752,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                         'user-action'=>'code',
                         'next-action'=>'checkCode',
                         'promocode'=>!empty($promocode),
-                        'code'=>$_SESSION['code'],
+//                        'code'=>$_SESSION['code'],
                         'btn'=>'Подтвердить',
                         'step'=>2
                     ];
@@ -933,14 +944,13 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                 'user-action'=>'code',
                 'next-action'=>'checkCode',
                 'promocode'=>!empty($promocode),
-                'code'=>$_SESSION['code'],
+//                'code'=>$_SESSION['code'],
                 'btn'=>'Подтвердить'
             ];
         }
     }
 
     public function getTrialAction(){
-
         $this->componentParams();
         $this->GetClient();
 
@@ -964,6 +974,22 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             throw new Exception('Клуб не может быть выбран', 7);
         }
 
+        global $USER;
+        if ($USER->IsAuthorized() && $USER->GetLogin()==$FORM_FIELDS['FIELDS']['phone']['VALUE']){
+            $currUser=PersonalUtils::UpdatePersonalInfoFrom1C($USER->GetID());
+            if (!empty($currUser["UF_USAGETW"])){
+                return ['href'=>'/personal/?SECTION='.Utils::GetIBlockSectionIDBySID('trialworkout_zapis').'&CLUB='.$this->arResult["CLUB_NUMBER"]];
+            }
+            elseif (!empty($currUser["UF_TRIALWORKOUT"])){
+                return ['href'=>'/personal/?SECTION='.Utils::GetIBlockSectionIDBySID('trialworkout_zapis').'&CLUB='.$this->arResult["CLUB_NUMBER"]];
+            }
+            else{
+                throw new Exception("К сожалению, вам недоступна пробная тренировка. <br>Мы свяжемся с Вами для уточнения дополнительной информации.", 20);
+            }
+        }
+
+        $currUser=CUser::GetByLogin($FORM_FIELDS['FIELDS']['phone']['VALUE']);
+
         $arParam= [
             'type'=>$FORM_TYPE,
 
@@ -983,6 +1009,19 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
 
             'subscriptionId'=>$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"]
         ];
+
+        if ($arUser=$currUser->Fetch()){
+            $userArr=PersonalUtils::UpdatePersonalInfoFrom1C($arUser["ID"]);
+            if (empty($userArr["UF_USAGETW"]) && empty($userArr["UF_TRIALWORKOUT"])){
+                $api = new Api(array(
+                    "action" => "contact",
+                    "params" => $arParam
+                ));
+
+                throw new Exception("К сожалению, вам недоступна пробная тренировка. <br>Мы свяжемся с Вами для уточнения дополнительной информации.", 20);
+            }
+        }
+
         $api = new Api(array(
             "action" => "request_sendcode_new",
             "params" => $arParam
@@ -1000,9 +1039,9 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
 
         return [
             'next-action'=>'checkCodeTrial',
-            'code'=>$responce["data"]["result"]["userMessage"],
             'btn'=>'Подтвердить',
-            'step'=>2
+            'step'=>2,
+//            'response'=>$responce
         ];
     }
 
@@ -1037,7 +1076,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         }
 
         $arParam= [
-            'type'=>$FORM_TYPE,
+            'type'=>(int)$FORM_TYPE,
 
             'source'=>$this->arResult['CLIENT']['src'],
             'channel'=>$this->arResult['CLIENT']['mdm'],
@@ -1055,7 +1094,8 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
 
             'subscriptionId'=>$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"],
 
-            "code"=>$code
+            "code"=>$code,
+            "event"=>"registration"
         ];
         $api = new Api(array(
             "action" => "request2_new",
@@ -1075,19 +1115,89 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             }
         }
 
-        ob_start();
-        $this->IncludeComponentTemplate('trial-done');
-        $content=ob_get_clean();
+        global $USER;
+        $currUser=CUser::GetByLogin($FORM_FIELDS['FIELDS']['phone']['VALUE']);
+        if ($arUser=$currUser->Fetch()){
+            $USER_ID=$arUser["ID"];
+        }
+        else{
+            //Заранее добавялем пользователя с имеющимися полями и авторизовываем его
+            $user=new CUser;
+            $user1Carr=$responce['data']['result']['result'];
 
+            function generateRandomString($length = 10) {
+                $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $charactersLength = strlen($characters);
+                $randomString = '';
+                for ($i = 0; $i < $length; $i++) {
+                    $randomString .= $characters[rand(0, $charactersLength - 1)];
+                }
+                return $randomString;
+            }
 
-        return [
-            'elements'=>[
-                '.subscription__main'=>$content,
-                '.get-abonement-agree.subscription__total-btn'=>null,
-                '.subscription__code-new'=>null
-            ],
-            'step'=>3
-        ];
+            $passwd=generateRandomString();
+            $arFields=array(
+                'UF_IS_CORRECT'=>false,
+                'NAME'=>$user1Carr['name'],
+                'LAST_NAME'=>$user1Carr['surname'],
+                'EMAIL'=>$user1Carr['email'],
+                'LOGIN'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                'ACTIVE'=>'Y',
+                "GROUP_ID"=>array(Utils::GetUGroupIDBySID('CLIENTS')),
+                'UF_1CID'=>$user1Carr['id1c'],
+                'PERSONAL_BIRTHDAY'=>$user1Carr['birthday'],
+                'PERSONAL_PHONE'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                'PERSONAL_GENDER'=>$user1Carr['gender'],
+                "PASSWORD"=>$passwd,
+                "CONFIRM_PASSWORD"=>$passwd,
+                "UF_ADDRESS"=>$user1Carr['address'],
+            );
+            if (empty($user1Carr['imageurl'])) {
+                $settings = Utils::getInfo();
+                $imgPath = $settings["PROPERTIES"]['PROFILE_DEFAULT_PHOTO']['VALUE'];
+            }
+            else{
+                $imgPath = $user1Carr['imageurl'];
+            }
+            $arImage=CFile::MakeFileArray($imgPath);
+            $arImage["MODULE_ID"] = "main";
+            $arFields['PERSONAL_PHOTO']=$arImage;
+            $ID = $user->Add($arFields);
+            if (intval($ID) > 0){
+                $USER_ID=$ID;
+            }
+            else{
+                throw new Exception($user->LAST_ERROR, 17);
+            }
+        }
+
+        $userArr=PersonalUtils::UpdatePersonalInfoFrom1C($USER_ID);
+
+        if (!empty($userArr["UF_USAGETW"])){
+            $USER->Authorize($USER_ID);
+            return ['href'=>'/personal/?SECTION='.Utils::GetIBlockSectionIDBySID('trialworkout_zapis').'&CLUB='.$this->arResult["CLUB_NUMBER"]];
+        }
+        elseif (!empty($userArr["UF_TRIALWORKOUT"])){
+            $USER->Authorize($USER_ID);
+            return ['href'=>'/personal/?SECTION='.Utils::GetIBlockSectionIDBySID('trialworkout_zapis').'&CLUB='.$this->arResult["CLUB_NUMBER"]];
+        }
+        else{
+            throw new Exception("К сожалению, вам недоступна пробная тренировка. <br>Мы свяжемся с Вами для уточнения дополнительной информации.", 20);
+        }
+
+//        ob_start();
+//        $this->IncludeComponentTemplate('trial-done');
+//        $content=ob_get_clean();
+//
+//
+//        return [
+//            'elements'=>[
+//                '.subscription__main'=>$content,
+//                '.get-abonement-agree.subscription__total-btn'=>null,
+//                '.subscription__code-new'=>null
+//            ],
+//            'step'=>3
+//        ];
     }
 
 }

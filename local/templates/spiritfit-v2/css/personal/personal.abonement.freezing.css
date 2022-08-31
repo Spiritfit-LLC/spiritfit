@@ -1,8 +1,9 @@
-span.select2-selection.select2-selection--single{
-    padding-left: 0!important;
-}
+/*span.select2-selection.select2-selection--single{*/
+/*    padding-left: 0!important;*/
+/*}*/
 div#freezingdays{
-    margin-top:50px;
+    /*margin-top:50px;*/
+    border:none;
 }
 .freezing-description {
     font-size: 16px;
@@ -28,11 +29,14 @@ div#freezingdays{
 }
 .freefreezing-form.tooltip-form{
     width: auto!important;
-    max-width: 500px;
+    max-width: 430px;
 }
 .freefreezing-form input.tooltip-form-submit{
     margin-top:0;
 }
 .loader.escapingBallG-animation{
     margin: 100px 100px;
+}
+#freezingdays .select2-selection.select2-selection--single{
+    padding: 0;
 }

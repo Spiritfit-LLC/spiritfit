@@ -34,7 +34,9 @@ class PersonalUtils{
                     'TYPE'=>$key=="phone" ? "tel" : $value['0']["FIELD_TYPE"],
                     'REQUIRED'=>$arResult["arQuestions"][$key]["REQUIRED"]=="Y" ? true:false,
                     "COMMENT"=>$arResult["arQuestions"][$key]["COMMENTS"],
+                    "PARAMS"=>$value[0]["FIELD_PARAM"],
                 ];
+
                 if ($value['0']["FIELD_TYPE"]=='radio'){
                     $FORM_FIELDS['FIELDS'][$key]['NAME']="form_" . $value['0']["FIELD_TYPE"] . "_" . $arResult['arQuestions'][$key]['SID'];
                 }
@@ -142,7 +144,7 @@ class PersonalUtils{
     }
 
     public static function GetPersonalPageFormFields($user_id, $request_info=false, $code=[], $section_id=false, $active_form=false, $photo_size=300){
-        function GetSectionFields(&$ar_SectionList, $request_info, $code, $is_correct, $arUser, &$HEAD){
+        function GetSectionFields(&$ar_SectionList, $request_info, $code, $is_correct, $arUser, &$HEAD, $NOTIFICATIONS){
             foreach ($ar_SectionList as $key=>$section){
                 $SECTION_ID[]=$section['ID'];
             }
@@ -166,6 +168,7 @@ class PersonalUtils{
 
             $issetFLAG=true;
             $GROUPS=[];
+
 
             $i=0;
             foreach ($objects as $id=>$element){
@@ -195,12 +198,12 @@ class PersonalUtils{
 
                             switch($operator){
                                 case 0:
-                                    if ($arUser[$usField]<$parameter){
+                                    if ($arUser[$usField]<=$parameter){
                                         $cont_flag=true;
                                     }
                                     break;
                                 case 1:
-                                    if ($arUser[$usField]>$parameter){
+                                    if ($arUser[$usField]>=$parameter){
                                         $cont_flag=true;
                                     }
                                     break;
@@ -234,6 +237,10 @@ class PersonalUtils{
                     'CLUE'=>!empty($element['PROPERTIES']['CLUE']['VALUE'])?$element['PROPERTIES']['CLUE']['VALUE']:false,
                     'HTML_ID'=>!empty($element['PROPERTIES']['HTML_ID']['VALUE'])?$element['PROPERTIES']['HTML_ID']['VALUE']:"form_" . $element['CODE'] . "_" . $id,
                 ];
+
+                if (key_exists($element["IBLOCK_SECTION_ID"], $NOTIFICATIONS) && in_array($element['PROPERTIES']['USER_FIELD_CODE']['VALUE'], $NOTIFICATIONS[$element["IBLOCK_SECTION_ID"]])){
+                    $FIELD["NOTIFICATION"]=true;
+                }
 
                 if ($FIELD['TYPE']=='password' && !$is_correct){
                     $FIELD["REQUIRED"]=true;
@@ -331,6 +338,9 @@ class PersonalUtils{
                             $FIELD['TYPE']='SELECT';
                             $FIELD['ITEMS']=$CLUBS;
                             break;
+                        case "component":
+                            $FIELD['COMPONENT_NAME']=$element['PROPERTIES']['COMPONENT_NAME']['VALUE'];
+                            $FIELD["COMPONENT_STYLE"]=!empty($element['PROPERTIES']['COMPONENT_STYLE']['VALUE'])?$element['PROPERTIES']['COMPONENT_STYLE']['VALUE']:'';
                         default:
                             $FIELD['VALUE']=$arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']];
                             break;
@@ -442,8 +452,6 @@ class PersonalUtils{
             return $issetFLAG;
         }
 
-
-
         $rsUser = CUser::GetByID($user_id);
         $arUser = $rsUser->Fetch();
         $IBLOCK_ID=Utils::GetIBlockIDBySID('LK_FIELDS');
@@ -473,6 +481,9 @@ class PersonalUtils{
             $ar_SectionList = array();
             $ar_DepthLavel = array();
             $active_flag=false;
+
+            $NOTIFICATIONS=unserialize($arUser["UF_NOTIFICATION"]);
+
             while($ar_Section = $rs_Section->GetNext(true, false))
             {
                 if (!empty($ar_Section['UF_USER_FIELD_'])){
@@ -496,12 +507,12 @@ class PersonalUtils{
 
                                 switch($operator){
                                     case 0:
-                                        if ($arUser[$usField]<$parameter){
+                                        if ($arUser[$usField]<=$parameter){
                                             $cont_flag=true;
                                         }
                                         break;
                                     case 1:
-                                        if ($arUser[$usField]>$parameter){
+                                        if ($arUser[$usField]>=$parameter){
                                             $cont_flag=true;
                                         }
                                         break;
@@ -542,6 +553,54 @@ class PersonalUtils{
                     'DEPTH_LEVEL'=>$ar_Section['DEPTH_LEVEL'],
                     'SORT'=>$ar_Section['SORT'],
                 ];
+
+                if ($ar_Section["CODE"]=="lk_loyalty_program"){
+                    $monthArr = [
+                        'январь',
+                        'февраль',
+                        'март',
+                        'апрель',
+                        'май',
+                        'июнь',
+                        'июль',
+                        'август',
+                        'сентябрь',
+                        'октябрь',
+                        'ноябрь',
+                        'декабрь'
+                    ];
+
+                    $USER_VISITS_LIST=unserialize($arUser["UF_MONTH_VISITS"]);
+                    $now=strtotime(date('d-m-Y'));
+                    $currentDate=strtotime(str_replace('.', '-', end($USER_VISITS_LIST)["month"]));
+                    $VISITS=[];
+
+
+                    while($now>$currentDate){
+                        $month = date('n', $currentDate)-1;
+                        $VISITS[date('Y m', $currentDate)]=[
+                            "VALUE"=>0,
+                            "MONTH"=>$monthArr[$month],
+                        ];
+                        $currentDate=strtotime(date('d-m-Y', $currentDate).' +1 months');
+                    }
+
+                    foreach($USER_VISITS_LIST as $MONTHVISIT){
+                        $date = str_replace('.', '-', $MONTHVISIT["month"]);
+                        $month = date('n', strtotime($date))-1;
+                        $VISITS[date('Y m', strtotime($date))]=[
+                            "VALUE"=>$MONTHVISIT["days"],
+                            "MONTH"=>$monthArr[$month],
+                        ];
+                    }
+                    ksort($VISITS);
+                    $ar_SectionList[$ar_Section['ID']]['USER_VISITS_LIST']=array_slice($VISITS, -12);
+                }
+
+                if (key_exists($ar_Section['ID'], $NOTIFICATIONS)){
+                    $ar_SectionList[$ar_Section['ID']]["NOTIFICATIONS"]=count($NOTIFICATIONS[$ar_Section['ID']]);
+                }
+
                 switch ($ar_Section['UF_FORM_TYPE']){
                     case 1:
                         $ar_SectionList[$ar_Section['ID']]['FORM_TYPE']='in_parent';
@@ -587,7 +646,7 @@ class PersonalUtils{
                 }
             }
 
-            $LK_FIELDS['ISSET']=GetSectionFields($ar_SectionList, $request_info, $code, $LK_FIELDS['IS_CORRECT'], $arUser, $LK_FIELDS['HEAD']);
+            $LK_FIELDS['ISSET']=GetSectionFields($ar_SectionList, $request_info, $code, $LK_FIELDS['IS_CORRECT'], $arUser, $LK_FIELDS['HEAD'], $NOTIFICATIONS);
 
             if (!$request_info){
                 $ar_DepthLavelResult = array_unique($ar_DepthLavel);
@@ -610,7 +669,7 @@ class PersonalUtils{
         }
         elseif (is_numeric($section_id)){
             $ar_SectionList[$section_id]=[];
-            $LK_FIELDS['ISSET']=GetSectionFields($ar_SectionList, $request_info, $code, $LK_FIELDS['IS_CORRECT'], $arUser, $LK_FIELDS['HEAD']);
+            $LK_FIELDS['ISSET']=GetSectionFields($ar_SectionList, $request_info, $code, $LK_FIELDS['IS_CORRECT'], $arUser, $LK_FIELDS['HEAD'], $NOTIFICATIONS);
         }
 
 
@@ -698,12 +757,14 @@ class PersonalUtils{
             unset($row);
         }
         CIBlockElement::GetPropertyValuesArray($objects, $filter['IBLOCK_ID'], $filter, ['CODE'=>['CODE_1C', 'USER_FIELD_CODE', 'SERIALIZE', 'FIELD_TYPE', 'VALUE_HANDLER', 'ONLY_1C_CHANGE']]);
-        foreach ($objects as $id=>$element){$RESULT[$element['PROPERTIES']['CODE_1C']['VALUE']][]=[
+        foreach ($objects as $id=>$element){
+            $RESULT[$element['PROPERTIES']['CODE_1C']['VALUE']][]=[
                 'VALUE'=>$element['PROPERTIES']['USER_FIELD_CODE']['VALUE'],
                 'SERIALIZE'=>$element['PROPERTIES']['SERIALIZE']['VALUE_XML_ID']=='Y' ? true:false,
                 'TYPE'=>$element['PROPERTIES']['FIELD_TYPE']['VALUE_XML_ID'],
                 'VALUE_HANDLER'=>$element['PROPERTIES']['VALUE_HANDLER']['VALUE'],
                 'ONLY_CHANGE'=>$element['PROPERTIES']['ONLY_1C_CHANGE']['VALUE_XML_ID']=='Y'?true:false,
+                "SECTION_ID"=>$element["IBLOCK_SECTION_ID"]
             ];
         }
         return $RESULT;
@@ -711,6 +772,7 @@ class PersonalUtils{
 
     public static function UpdatePersonalInfoFrom1C($user_id, $user=false){
         $UPDATEBLE_FIELDS=self::GetUpdatebleFrom1CPersonalInfo();
+//        file_put_contents($_SERVER["DOCUMENT_ROOT"].'/logs/test.txt', print_r($UPDATEBLE_FIELDS, true), FILE_APPEND);
 //        return $UPDATEBLE_FIELDS;
 
 
@@ -725,6 +787,12 @@ class PersonalUtils{
                 $login=$arUser2['LOGIN'];
                 $ID_1C=$arUser2['UF_1CID'];
                 $USER_ID=$user_id;
+//                if (!empty($arUser2["UF_MONTH_VISITS"])){
+//                    $USER_VISITS_LIST=unserialize($arUser2["UF_MONTH_VISITS"]);
+//                }
+//                else{
+//                    $USER_VISITS_LIST=[];
+//                }
             }
             else{
                 return false;
@@ -745,14 +813,6 @@ class PersonalUtils{
         $result=$api->result();
 
         if ($result['success']){
-            $arGroups = CUser::GetUserGroup($USER_ID);
-            $potential_id=Utils::GetUGroupIDBySID('POTENTIAL_CLIENTS');
-            if (in_array($potential_id, $arGroups)){
-                $resArr = array_diff($arGroups, [$potential_id]);
-                $resArr[]=Utils::GetUGroupIDBySID('CLIENTS');
-                CUser::SetUserGroup($USER_ID, $resArr);
-            }
-
             $fields=$result['data']['result']['result'];
 
             foreach($UPDATEBLE_FIELDS as $key=>$val){
@@ -761,6 +821,7 @@ class PersonalUtils{
                         continue;
                     }
                     if (key_exists($key, $fields)){
+
                         if ($value['TYPE']=='list'){
                             $CURRENT_VAL=[];
                             foreach($fields[$key] as $field){
@@ -780,7 +841,6 @@ class PersonalUtils{
                                 }
                             }
                             $usUpdateArr[$value['VALUE']]=$CURRENT_VAL;
-                            file_put_contents($_SERVER['DOCUMENT_ROOT'].'/logs/test.txt', print_r($CURRENT_VAL, true)."\n", FILE_APPEND);
                             continue;
                         }
 
@@ -788,10 +848,33 @@ class PersonalUtils{
                         if ($key=='bankcard' && !empty($CURRENT_VAL)){
                             $CURRENT_VAL=substr_replace($CURRENT_VAL,'******',0, 6);
                         }
+                        elseif($key=='group'){
+                            switch ($CURRENT_VAL){
+                                case "ПЧК":
+                                    CUser::SetUserGroup($USER_ID, [Utils::GetUGroupIDBySID('POTENTIAL_CLIENTS')]);
+                                    break;
+                                case "БЧК":
+                                case "ЧК":
+                                    $arGroups = CUser::GetUserGroup($USER_ID);
+                                    $potential_id=Utils::GetUGroupIDBySID('POTENTIAL_CLIENTS');
+                                    if (in_array($potential_id, $arGroups)){
+                                        $resArr = array_diff($arGroups, [$potential_id]);
+                                        $resArr[]=Utils::GetUGroupIDBySID('CLIENTS');
+                                        CUser::SetUserGroup($USER_ID, $resArr);
+                                    }
+                                    break;
+                            }
+
+                        }
+                        elseif ($key=="promisedpayment"){
+                            if ($CURRENT_VAL["statusid"]<=2 && $CURRENT_VAL["statusid"]<4){
+                                $usUpdateArr["UF_PROMISEDPAYMENT_APPEAL_CLICK"]=false;
+                            }
+                        }
 
                         if (!empty($value['VALUE_HANDLER'])){
                             $value['VALUE_HANDLER']=str_replace('#VALUE#', '$CURRENT_VAL', $value['VALUE_HANDLER']);
-                            $CURRENT_VAL=eval($value['VALUE_HANDLER']);
+                            $CURRENT_VAL=eval(html_entity_decode($value['VALUE_HANDLER']));
                         }
 
                         if (boolval($value['SERIALIZE'])){
@@ -801,12 +884,12 @@ class PersonalUtils{
                     else{
                         $CURRENT_VAL=null;
                     }
-
                     $usUpdateArr[$value['VALUE']]=$CURRENT_VAL;
                 }
             }
             global $USER;
             $usUpdateArr['UF_LAST_UPDATE_TIME']=date('d.m.Y H:i:s');
+
             if ($USER->Update($USER_ID, $usUpdateArr, false)){
                 return $usUpdateArr;
             }
@@ -815,18 +898,16 @@ class PersonalUtils{
             }
         }
         else{
-            CUser::SetUserGroup($USER_ID, [Utils::GetUGroupIDBySID('POTENTIAL_CLIENTS')]);
             return false;
         }
     }
 
     public function UpdateFieldsAfterLogin($arUser){
         $rsUser = CUser::GetByID($arUser['user_fields']['ID']);
-        $arGroups = CUser::GetUserGroup($arUser['user_fields']['ID']);
 
         if ($arUser2 = $rsUser->Fetch())
         {
-            if (in_array(Utils::GetUGroupIDBySID('POTENTIAL_CLIENTS'), $arGroups) || in_array(Utils::GetUGroupIDBySID('CLIENTS'), $arGroups)){
+            if (!empty($arUser2["UF_1CID"])){
                 if (!empty($arUser2['UF_LAST_UPDATE_TIME'])){
                     $update_time = new DateTime($arUser2['UF_LAST_UPDATE_TIME']);
                     $now=new DateTime();

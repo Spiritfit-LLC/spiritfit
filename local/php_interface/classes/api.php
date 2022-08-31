@@ -121,7 +121,15 @@ class Api
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
-            
+
+            case "contact":
+                $this->contact($post['params']);
+                AddMessage2Log('contact');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+
+
             //МЕТОДЫ ДЛЯ ЛК
             case 'lkreg':
                 $this->lkreg($post['params']);
@@ -202,6 +210,18 @@ class Api
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
+            case "lkloyaltyhistory":
+                $this->lkloyaltyhistory($post["params"]);
+                AddMessage2Log('lkloyaltyhistory');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "promisedpayment":
+                $this->promisedpayment($post["params"]);
+                AddMessage2Log('promisedpayment');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
 
             //НОВАЯ ОПЛАТА
             case "orderreg":
@@ -274,6 +294,24 @@ class Api
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
+
+            //Тренерский ЛК
+            case "coachworkouts":
+                $this->coachworkouts($post["params"]);
+                AddMessage2Log('coachtrainings');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+
+
+
+            default:
+                $this->httpRequest($post['action'], $post["params"]);
+                AddMessage2Log($post['action']);
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+
         }
     }
 
@@ -1354,11 +1392,10 @@ class Api
             }
 
             $this->_send($this->apiUrl."contact", $params);
+//            file_put_contents($_SERVER["DOCUMENT_ROOT"].'/logs/test.txt', print_r($params, true), FILE_APPEND);
+//            file_put_contents($_SERVER["DOCUMENT_ROOT"].'/logs/test.txt', print_r($this->_data, true), FILE_APPEND);
 
             if ($this->_data['result']['errorCode'] === 0)
-                $this->_result = true;
-
-            if ($this->_data['result']['errorCode'] == 0)
                 $this->_result = true;
 
         } else {
@@ -1387,5 +1424,46 @@ class Api
         if ($this->_data['result']['errorCode'] === 0)
             $this->_result = true;
 
+    }
+
+    private function lkloyaltyhistory($params){
+        $this->_send($this->apiUrl."lkloyaltyhistory", $params);
+
+        if ($this->_data['result']['errorCode'] === 0)
+            $this->_result = true;
+    }
+
+
+    private function coachworkouts($params){
+        $this->_send($this->apiUrl."coachworkouts", $params);
+
+        if ($this->_data["result"]["errorCode"]===0){
+            $this->_result=true;
+        }
+    }
+
+    private function contact($params){
+        $this->_send($this->apiUrl."contact", $params);
+
+        if ($this->_data["result"]["errorCode"]===0){
+            $this->_result=true;
+        }
+    }
+
+    private function promisedpayment($params){
+        $this->_send($this->apiUrl."promisedpayment", $params);
+
+        if ($this->_data["result"]["result"]===true){
+            $this->_result=true;
+        }
+    }
+
+    //Общая функция (чет расплодились однотипные функции)
+    private function httpRequest($action, $params){
+        $this->_send($this->apiUrl.$action, $params);
+
+        if ($this->_data["result"]["errorCode"]===0){
+            $this->_result=true;
+        }
     }
 }

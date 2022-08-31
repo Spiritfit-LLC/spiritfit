@@ -8,6 +8,48 @@ if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 	
 }
 global $settings;
+
+?>
+
+<?if (!(empty($settings["PROPERTIES"]["UTP_MAIN_ICONS"]["VALUE"]))):?>
+    <style>
+        .b-screen{
+            margin-bottom: 0!important;
+        }
+        .b-screen:after{
+            content: none;
+        }
+        .content-center.map-title{
+            margin-top: 30px;
+        }
+    </style>
+<?php $utp_width=round(100/count($settings["PROPERTIES"]["UTP_MAIN_ICONS"]["VALUE"]), 2);?>
+<div class="main-utp">
+    <?for ($i=0; $i<count($settings["PROPERTIES"]["UTP_MAIN_ICONS"]["VALUE"]); $i++):?>
+        <div class="main-utp__item" style="width: <?=$utp_width?>%; flex: 0 0 <?=$utp_width?>%">
+            <div class="main-utp__item-icon" style='background-image: url("<?=CFile::GetPath($settings["PROPERTIES"]["UTP_MAIN_ICONS"]["VALUE"][$i])?>")'></div>
+            <div class="main-utp__item-title">
+                <span><?=htmlspecialcharsBack($settings["PROPERTIES"]["UTP_MAIN_ICONS"]['DESCRIPTION'][$i])?></span>
+            </div>
+            <?if (!empty($settings["PROPERTIES"]["UTP_MAIN_DESC"]["VALUE"][$i]["TEXT"])):?>
+                <div class="main-utp__desc">
+                    <?=htmlspecialcharsBack($settings["PROPERTIES"]["UTP_MAIN_DESC"]['VALUE'][$i]['TEXT'])?>
+                </div>
+            <?endif;?>
+        </div>
+    <?endfor;?>
+</div>
+<?endif;?>
+<?php
+$APPLICATION->IncludeComponent(
+    "custom:promocode.banner",
+    "gray-purple",
+    Array(
+        "BANNER_DISCOUNT" => "-500 &#x20bd;",
+        "BANNER_TIME" => 3000,
+        "PROMOCODE" => "FITSUMMER",
+    )
+);
 ?>
 <div class="b-page__heading b-page__heading_absolute  ">
     <div class="content-center">
@@ -159,7 +201,17 @@ global $settings;
 	),
 	false
 );?>
-
+<?php
+$APPLICATION->IncludeComponent(
+    "custom:promocode.banner",
+    "gray-purple",
+    Array(
+        "BANNER_DISCOUNT" => "-500 &#x20bd;",
+        "BANNER_TIME" => 3000,
+        "PROMOCODE" => "FITSUMMER",
+    )
+);
+?>
 <?
 if (!isset($_SERVER['HTTP_X_PJAX'])) {
     require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");

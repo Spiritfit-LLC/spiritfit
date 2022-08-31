@@ -1,5 +1,4 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();?>
-
 <div class="promocode-banner__container">
     <div class="promocode-banner" style="background-image: url('<?=SITE_TEMPLATE_PATH.'/img/cube-background_fitsummer.png'?>')">
         <div class="promocode-banner__closer">
@@ -18,7 +17,11 @@
                 <div class="promocode-body-container">
                     <div class="promocode-content__text">скидка</div>
                     <div class="promocode-content__discount"><?=$arResult["BANNER_DISCOUNT"]?></div>
-                    <div class="promocode-content__text">на любой абоменемент</div>
+                    <?if (!empty($arResult["CLUB"])):?>
+                    <div class="promocode-content__text">на абонемент в клуб "<?=$arResult["CLUB"]?>"</div>
+                    <?else:?>
+                    <div class="promocode-content__text">на любой абонемент</div>
+                    <?endif?>
                     <hr>
                     <div class="promocode-content__present">+ подарки при покупке онлайн</div>
                     <button class="promocode-btn">Скопировать промокод</button>
@@ -30,4 +33,5 @@
 <script>
     var bannerTime=<?=CUtil::PhpToJSObject($arResult['BANNER_TIME'])?>;
     var bannerPromocode=<?=CUtil::PhpToJSObject($arResult['PROMOCODE'])?>;
+    var bannerPromocodePage=<?=empty($arResult["PAGE"])?CUtil::PhpToJSObject(""):CUtil::PhpToJSObject($arResult["PAGE"])?>
 </script>

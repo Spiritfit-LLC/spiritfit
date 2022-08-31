@@ -10,3 +10,6 @@ div.news-list img.preview_picture
 .news-date-time {
 	color:#486DAA;
 }
+.b-screen__bg-holder img.is-hide-desktop{
+	width: 100%;
+}

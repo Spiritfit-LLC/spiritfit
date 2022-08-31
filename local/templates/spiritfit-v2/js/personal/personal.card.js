@@ -49,7 +49,7 @@ $(document).ready(function(){
             mode:'class',
             method:'GET',
         }).then(function(response){
-            console.log(response)
+            // console.log(response)
 
 
             var html_content='<form class="card-qr-code-form tooltip-form">' +
@@ -65,7 +65,7 @@ $(document).ready(function(){
             instance.setContent(html_content);
             instance.show();
         }, function(response){
-            console.log(response)
+            // console.log(response)
 
             var error_id=0;
             response.errors.forEach(function(err, index){

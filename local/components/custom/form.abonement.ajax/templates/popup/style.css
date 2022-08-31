@@ -1,0 +1,90 @@
+input.form-field-item__input{
+    padding: 5px 10px 0;
+    font-size: 18px;
+}
+
+label.form-field-item__label {
+    padding: 0 10px;
+}
+
+
+.form-field-item {
+    margin: 30px 0;
+}
+.trial-workout-form__modal {
+    padding: 10px 50px 30px 50px;
+}
+span.b-checkbox__text {
+    font-size: 12px;
+    font-weight: 500;
+}
+label.form-field-item__label {
+    font-weight: 500;
+    font-size: 13px;
+}
+.b-checkbox__text:before, .b-radio__text:before{
+    width: 15px!important;
+    height: 15px!important;
+}
+
+.resend-icon{
+    height: 24px;
+    width: 24px;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: transform 0.5s;
+    transform: rotate(0deg);
+}
+.resend-icon:hover{
+    transform:rotate(180deg);
+}
+.resend-icon svg{
+    width: 24px;
+    height: 24px;
+    fill: black;
+}
+input.smscode-input{
+    width: calc(100% - 30px) !important;
+    display: inline-block!important;
+}
+.get-abonement__done {
+    font-size: 22px;
+    font-weight: 500;
+}
+.form-abonement__container .form-submit-result-text {
+    font-size: 16px;
+    font-weight: 500;
+    height: 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.form-abonement__container .form-submit-result-text.active{
+    opacity: 1;
+}
+
+.form-abonement__container .escapingBallG-animation{
+    position: relative;
+    width: 125px;
+    height: 43px;
+    /* margin: auto; */
+    display: none;
+    margin: -42px auto 0;
+    opacity:0;
+    transition: opacity 0.3s;
+    z-index:2;
+}
+
+.form-abonement__container .escapingBallG-animation.active{
+    display: block;
+    opacity: 1;
+
+}
+@media screen and (max-width: 1024px){
+    .trial-workout-form__modal {
+        padding: 0 15px 10px 15px;
+    }
+    .form-field-item {
+        margin: 15px 0;
+    }
+}

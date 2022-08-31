@@ -959,3 +959,9 @@ ul li p {
 		width: initial;
 	}
 }}
+
+.blog-detail-text video{
+	width: 100%;
+	max-height: 600px;
+	margin: 20px 0;
+}

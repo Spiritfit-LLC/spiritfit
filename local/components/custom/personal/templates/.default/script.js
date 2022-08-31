@@ -65,14 +65,20 @@ $(document).ready(function(){
     //ПОКАЗ РАЗДЕЛОВ
     $('.personal-section').hide(300).removeClass('active');
     $(`.personal-section[data-id="${$('.personal-profile__tab-item.active').data('id')}"`).show(300).addClass('active');
+
+
+
     function showSection(){
         var data_id=$(this).data('id');
         if (data_id===$('.personal-section.active').data('id')){
             return;
         }
+        removeNotification();
+        $('.personal-profile__tab-item.active').find('.tab-item__notification').fadeOut(300);
         $('.personal-profile__tab-item').removeClass('active');
         $(this).addClass('active');
 
+        $('.personal-section.active').find('.personal-section-form__item__notification').fadeOut(300);
         $('.personal-section').hide(300).removeClass('active');
         $(`.personal-section[data-id="${data_id}"`).show(300).addClass('active');
 
@@ -81,7 +87,6 @@ $(document).ready(function(){
             $('.personal-profile__tab-item:not(.active):not(.child)').hide(300);
         }
     }
-
     $('.personal-profile__tab-item:not(.child)').click(showSection);
     $('.personal-profile__tab-item.child').click(function(){
         var data_id=$(this).data('id');
@@ -94,6 +99,31 @@ $(document).ready(function(){
             $(this).addClass('active');
         }
     });
+
+    //Удаление просмотренных уведомлений
+    function removeNotification(){
+        var active_tab=$('.personal-profile__tab-item.active');
+        if (active_tab.find('.tab-item__notification').length>0){
+            var sections=[];
+            active_tab.find('.tab-item__notification').each(function(index, el){
+                sections.push($(el).data('id'));
+                $(el).remove();
+            });
+
+            $(`.personal-section[data-id="${active_tab.data('id')}"`).find('.personal-section-form__item__notification').each(function(index, el){
+                $(el).remove();
+            });
+
+            var postData={
+                "SECTIONS":sections
+            }
+            BX.ajax.runComponentAction(componentName, 'removeNotification', {
+                mode: 'class',
+                method:'POST',
+                data:postData,
+            });
+        }
+    }
 
 
     //CHECKBOX
@@ -128,7 +158,7 @@ $(document).ready(function(){
             mode: 'class',
             method:'POST'
         }).then(function(res){
-            window.location.reload();
+            window.location = window.location.pathname;
         });
     });
 
@@ -264,7 +294,7 @@ $(document).ready(function(){
                         }
 
                         if (res_data['reload']===true){
-                            window.location.reload();
+                            window.location = window.location.pathname;
                             return;
                         }
                     }, function (responce){
@@ -379,6 +409,7 @@ $(document).ready(function(){
         }).then(function(responce){
             console.log(responce)
 
+
             form.find('.escapingBallG-animation').removeClass('active');
             form.find('input[type="submit"]').css({
                 'opacity':1,
@@ -405,17 +436,21 @@ $(document).ready(function(){
                     console.log(e);
                 }
             }
-
-            if (res_data['reload']===true){
-                if (res_data.section!==undefined){
-                    window.location.href=window.location.href+'?SECTION='+res_data.section;
+            if (res_data['upmetric']!==undefined){
+                try{
+                    var sendData={
+                        "setTypeClient":res_data['upmetric']['setTypeClient'],
+                        "phone":res_data['upmetric']['phone']
+                    }
+                    if (res_data['upmetric']['email']!==undefined){
+                        sendData['email']=res_data['upmetric']['email'];
+                    }
+                    sendToUpMetrika(sendData);
                 }
-                else{
-                    window.location.reload();
+                catch (e) {
+                    console.log(e);
                 }
-                return;
             }
-
 
             if (res_data['message']!==undefined){
                 form.find('.form-submit-result-text').html(res_data['message']).addClass('active');
@@ -449,8 +484,20 @@ $(document).ready(function(){
                 form.find('.auth-password input').prop('required', true)
             }
 
+            if (res_data['reload']===true){
+                setTimeout(function(){
+                    if (res_data.section!==undefined){
+                        window.location.search='?SECTION='+res_data.section;
+                    }
+                    else{
+                        window.location = window.location.pathname;
+                    }
+                }, 500);
+
+            }
+
         }, function(responce){
-            console.log(responce)
+            // console.log(responce)
 
             form.find('.escapingBallG-animation').removeClass('active');
             form.find('input[type="submit"]').css({

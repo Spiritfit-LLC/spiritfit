@@ -170,6 +170,36 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                 ],
                 'postfilters' => []
             ],
+            'removeNotification'=>[
+                'prefilters' => [
+                    new ActionFilter\Authentication,
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
+            ],
+            'getHistory'=>[
+                'prefilters' => [
+                    new ActionFilter\Authentication,
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_GET)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
+            ],
+            'promisedPayment'=>[
+                'prefilters' => [
+                    new ActionFilter\Authentication,
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
+            ]
         ];
     }
 
@@ -267,6 +297,10 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
             $template->addExternalCss(SITE_TEMPLATE_PATH . '/css/datepicker.min.css');
             $template->addExternalJs(SITE_TEMPLATE_PATH . '/js/tippy/popper.min.js');
             $template->addExternalJs(SITE_TEMPLATE_PATH . '/js/tippy/tippy-bundle.umd.min.js');
+            if ($this->arResult['AUTH']){
+                $template->addExternalJs(SITE_TEMPLATE_PATH . '/js/chart.min.js');
+                $template->addExternalJs(SITE_TEMPLATE_PATH . '/js/moment-with-locales.min.js');
+            }
 
         }
         else{
@@ -353,7 +387,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                         return ['result' => true, 'next_step' => 2, 'reg-code'=>true, 'field_messages'=>[[
                             'field_name'=>$FORM_FIELDS['FIELDS']['phone']['NAME'],
                             'message'=>'На Ваш номер телефона отправлен код подтверждения',
-                        ]], '1cdata'=>$result['data']];
+                        ]]/*, '1cdata'=>$result['data']*/];
                     }
                     else{
                         if (boolval($user['UF_IS_CORRECT'])){
@@ -379,7 +413,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                                 return ['result'=>true, 'next_action'=>'forgot', 'next_step'=>2, 'reg-code'=>true, 'field_messages'=>[[
                                     'field_name'=>$FORM_FIELDS['FIELDS']['phone']['NAME'],
                                     'message'=>'На Ваш номер телефона отправлен код подтверждения',
-                                ]], '1cdata'=>$result['data']];
+                                ]]/*, '1cdata'=>$result['data']*/];
                             }
                             else{
                                 switch ($result["data"]['result']['errorCode']){
@@ -455,6 +489,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                             'PERSONAL_GENDER'=>$user1Carr['gender'],
                             "PASSWORD"=>$passwd,
                             "CONFIRM_PASSWORD"=>$passwd,
+                            "UF_ADDRESS"=>$user1Carr['address'],
                         );
                         if (empty($user1Carr['imageurl'])) {
                             $settings = Utils::getInfo();
@@ -477,7 +512,11 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                                     'action'=>'update'
                                 ],
                             ));
-                            return ['result'=>true, 'reload'=>true];
+                            return ['result'=>true, 'reload'=>true, 'upmetric'=>[
+                                'setTypeClient'=>'login',
+                                'phone'=>'7'.$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                                'email'=>$user1Carr['email']
+                            ]];
                         }
                         else{
                             throw new Exception($user->LAST_ERROR, 17);
@@ -497,7 +536,10 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                                 'action'=>'update'
                             ],
                         ));
-                        return ['result'=>true, 'reload'=>true];
+                        return ['result'=>true, 'reload'=>true, 'upmetric'=>[
+                            'setTypeClient'=>'login',
+                            'phone'=>'7'.$FORM_FIELDS['FIELDS']['phone']['VALUE']
+                        ]];
                     }
                     else{
                         throw new Exception($this->errorMessages[8], 8, null);
@@ -524,6 +566,21 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
 //                throw new Exception($this->errorMessages[2], 2);
                 return ['result'=>false, 'errors'=>$FORM_FIELDS['ERRORS']];
             }
+            if((float)$DATA["geo_lat"]<54.288991 || (float)$DATA["geo_lat"]>56.929291){
+                $ERRORS=[[
+                    'form_name'=>$FORM_FIELDS["FIELDS"]["address"]["NAME"],
+                    'message'=>'Адрес находится за пределами Москвы или области'
+                ]];
+                return ['result'=>false, 'errors'=>$ERRORS];
+            }
+            if((float)$DATA["geo_lon"]>40.180157 || (float)$DATA["geo_lon"]<35.177239){
+                $ERRORS=[[
+                    'form_name'=>$FORM_FIELDS["FIELDS"]["address"]["NAME"],
+                    'message'=>'Адрес находится за пределами Москвы или области'
+                ]];
+                return ['result'=>false, 'errors'=>$ERRORS];
+            }
+
             switch ($DATA['FORM_STEP']){
                 case 1:
                     //Не выбран клуб
@@ -544,6 +601,9 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                         "email"=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
                         'clubid'=>(string)$FORM_FIELDS['FIELDS']['club']['VALUE'],
                         'event'=>$FORM_FIELDS['FIELDS']['EVENT_1C']['VALUE'],
+                        "address"=>$FORM_FIELDS["FIELDS"]["address"]["VALUE"],
+                        "geo_lat"=>$DATA["geo_lat"],
+                        "geo_lon"=>$DATA["geo_lon"],
                     ];
                     $api=new Api(array(
                         'action'=>'lkreg',
@@ -600,6 +660,9 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                             "gender"=>$FORM_FIELDS['FIELDS']['gender']['VALUE'],
                             "birthday"=>$FORM_FIELDS['FIELDS']['birthday']['VALUE'],
                             "email"=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
+                            "address"=>$FORM_FIELDS["FIELDS"]["address"]["VALUE"],
+                            "geo_lat"=>$DATA["geo_lat"],
+                            "geo_lon"=>$DATA["geo_lon"],
                         ];
 
                         $api=new Api(array(
@@ -633,6 +696,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                                 'PERSONAL_BIRTHDAY'=>$FORM_FIELDS['FIELDS']['birthday']['VALUE'],
                                 'PERSONAL_PHONE'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
                                 'PERSONAL_GENDER'=>$FORM_FIELDS['FIELDS']['gender']['VALUE'],
+                                'UF_ADDRESS'=>$FORM_FIELDS['FIELDS']['address']['VALUE'],
                             );
                             unset($_SESSION['ID_1C']);
 
@@ -647,7 +711,11 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                                         'action'=>'update'
                                     ],
                                 ));
-                                return ['result'=>true, 'reload'=>true, 'dataLayer'=>['eLabel'=>'', 'eAction'=>'sendRegistrationForm']];
+                                return ['result'=>true, 'reload'=>true, 'dataLayer'=>['eLabel'=>'', 'eAction'=>'sendRegistrationForm'], 'upmetric'=>[
+                                    'setTypeClient'=>'login',
+                                    'phone'=>'7'.$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                                    'email'=>$FORM_FIELDS['FIELDS']['email']['VALUE']
+                                ]];
                             }
                             else{
                                 throw new Exception($user->LAST_ERROR, 17);
@@ -779,7 +847,10 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                                         'action'=>'update'
                                     ],
                                 ));
-                                return ['result'=>true, 'reload'=>true];
+                                return ['result'=>true, 'reload'=>true, 'upmetric'=>[
+                                    'setTypeClient'=>'login',
+                                    'phone'=>'7'.$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                                ]];
                             } else {
                                 throw new Exception($this->errorMessages[8], 8);
                             }
@@ -863,7 +934,10 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                 'id1c'=>$FORM_FIELDS['USER_1CID'],
                 'login'=>$FORM_FIELDS['USER_LOGIN'],
                 'imageurl'=>$FORM_FIELDS['PERSONAL_PHOTO'],
-                'action'=>'edit'
+                'action'=>'edit',
+                "address"=>$CHANGEARR["UF_ADDRESS"],
+                "geo_lat"=>$DATA["geo_lat"],
+                "geo_lon"=>$DATA["geo_lon"],
             );
             $api=new Api(array(
                 'action'=>'lkedit',
@@ -894,7 +968,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                 throw new Exception($this->errorMessages[19].': '.$_FILES['file']['error'], 19);
             }
             else{
-                $fileId = CFile::SaveFile($_FILES["new-photo-file"],'avatar');
+                $fileId = CFile::SaveFile($_FILES["new-photo-file"], 'avatar');
                 $arFile = CFile::MakeFileArray($fileId);
                 $arFile['del'] = "Y";
                 $arFile['old_file'] = $_POST['old-photo-id'];
@@ -919,7 +993,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                     'id1c'=>$arUser['UF_1CID'],
                     'login'=>$arUser['LOGIN'],
                     'imageurl'=>CFile::GetPath($arUser['PERSONAL_PHOTO']),
-                    'action'=>'edit'
+                    'action'=>'edit',
                 );
                 $api=new Api(array(
                     'action'=>'lkedit',
@@ -929,9 +1003,6 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                 return ['result'=>true, 'reload'=>true];
             }
         }
-
-
-
     }
     //Подарок другу
     public function presentAction(){
@@ -954,6 +1025,27 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
 
         $rsUser = CUser::GetByID($USER->GetID());
         $arUser = $rsUser->Fetch();
+
+        if (empty($arUser["UF_ADDRESS"])){
+            $FORM_FIELDS=PersonalUtils::GetPersonalPageFormFields($USER->GetID(), false, ['lk_address'], [Utils::GetIBlockSectionIDBySID("lk_profile")]);
+            return ['result'=>false, 'section'=>Utils::GetIBlockSectionIDBySID("lk_profile"),
+                'errors'=>[[
+                    'form_name'=>$FORM_FIELDS["SECTIONS"][0]["FIELDS"][0]["NAME"],
+                    'message'=>'Необходимо заполнить адрес'
+                ]]
+            ];
+        }
+        if (empty($arUser["UF_EMAIL_IS_CONFIRM"])){
+            $FORM_FIELDS=PersonalUtils::GetPersonalPageFormFields($USER->GetID(), false, ['client-email'], [Utils::GetIBlockSectionIDBySID("lk_profile")]);
+            return ['result'=>false, 'section'=>Utils::GetIBlockSectionIDBySID("lk_profile"),
+                'errors'=>[[
+                    'form_name'=>$FORM_FIELDS["SECTIONS"][0]["FIELDS"][0]["NAME"],
+                    'message'=>'Необходимо подтвердить почту'
+                ]]
+            ];
+        }
+
+
         $arParams=[
             'id1c'=>$arUser['UF_1CID'],
             'login'=>$arUser['LOGIN'],
@@ -993,6 +1085,25 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
             throw new Exception($this->errorMessages[24], 24);
         }
 
+        if (empty($arUser["UF_ADDRESS"])){
+            $FORM_FIELDS=PersonalUtils::GetPersonalPageFormFields($USER->GetID(), false, ['lk_address'], [Utils::GetIBlockSectionIDBySID("lk_profile")]);
+            return ['result'=>false, 'section'=>Utils::GetIBlockSectionIDBySID("lk_profile"),
+                'errors'=>[[
+                    'form_name'=>$FORM_FIELDS["SECTIONS"][0]["FIELDS"][0]["NAME"],
+                    'message'=>'Необходимо заполнить адрес'
+                ]]
+            ];
+        }
+        if (empty($arUser["UF_EMAIL_IS_CONFIRM"])){
+            $FORM_FIELDS=PersonalUtils::GetPersonalPageFormFields($USER->GetID(), false, ['client-email'], [Utils::GetIBlockSectionIDBySID("lk_profile")]);
+            return ['result'=>false, 'section'=>Utils::GetIBlockSectionIDBySID("lk_profile"),
+                'errors'=>[[
+                    'form_name'=>$FORM_FIELDS["SECTIONS"][0]["FIELDS"][0]["NAME"],
+                    'message'=>'Необходимо подтвердить почту'
+                ]]
+            ];
+        }
+
         $arParams=[
             'id1c'=>$arUser['UF_1CID'],
             'login'=>$arUser['LOGIN'],
@@ -1009,6 +1120,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         if (!$result['success']){
             throw new Exception($result['data']['result']['userMessage']);
         }
+
 
         $result=PersonalUtils::UpdatePersonalInfoFrom1C($USER->GetID());
         if ($result!=false){
@@ -1180,9 +1292,6 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
     //Запрос заморозки
     public function getfreezingAction(){
         global $USER;
-        $rsUser = CUser::GetByID($USER->GetID());
-        $arUser = $rsUser->Fetch();
-
         $rsUser = CUser::GetByID($USER->GetID());
         $arUser = $rsUser->Fetch();
         $arParams=[
@@ -1367,5 +1476,99 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         else{
             return $this->update1cAction();
         }
+    }
+
+    //Удалить уведомление
+    public function removeNotificationAction(){
+        global $USER;
+        $SECTIONS=Context::getCurrent()->getRequest()->getPost("SECTIONS");
+
+        $USER=new CUser;
+        $rsUser=CUser::GetByLogin($USER->GetID());
+        $arUser = $rsUser->Fetch();
+        $NOTIFICATIONS=$arUser["UF_NOTIFICATION"];
+
+        foreach ($SECTIONS as $SECTION){
+            unset($NOTIFICATIONS[$SECTION]);
+        }
+
+        $USER->Update($USER->GetID(), ["UF_NOTIFICATION"=>$NOTIFICATIONS], false);
+    }
+
+    //Запрос истории по лояльности
+    public function getHistoryAction(){
+        global $USER;
+        $rsUser = CUser::GetByID($USER->GetID());
+        $arUser = $rsUser->Fetch();
+
+        $arParams=array(
+            'id1c'=>$arUser['UF_1CID'],
+            'login'=>$arUser['LOGIN'],
+        );
+
+        $api=new Api([
+            "action"=>"lkloyaltyhistory",
+            "params"=>$arParams
+        ]);
+
+        $response=$api->result();
+        if (!$response['success']){
+            if (empty($response['data']['result']['userMessage'])){
+                throw new Exception($this->errorMessages[100], 100);
+            }
+            else{
+                throw new Exception($response['data']['result']['userMessage'], 100);
+            }
+        }
+
+        $currentPoint=0;
+        foreach ($response['data']['result']['result'] as $data){
+            $labels[]=$data['date'];
+            $currentPoint+=(float)$data['count'];
+            $dataset[]=['count'=>$currentPoint, 'basis'=>$data['basis'], 'x'=>$data['date'], 'diff'=>(float)$data['count']];
+        }
+
+        return ['labels'=>$labels, 'dataset'=>$dataset];
+    }
+
+    //Отложенный платеж
+    public function promisedPaymentAction(){
+        $DATA=Context::getCurrent()->getRequest()->toArray();
+
+        global $USER;
+        $rsUser = CUser::GetByID($USER->GetID());
+        $arUser = $rsUser->Fetch();
+
+        $api=new Api([
+            "action"=>"promisedpayment",
+            "params"=>[
+                "id1c"=>$arUser["UF_1CID"],
+                "action"=>$DATA["action"],
+                "login"=>$arUser["LOGIN"]
+            ]
+        ]);
+
+        $response=$api->result();
+        if (!$response['success']){
+            if (empty($response['data']['result']['userMessage'])){
+                throw new Exception($this->errorMessages[100], 100);
+            }
+            else{
+                throw new Exception($response['data']['result']['userMessage'], 100);
+            }
+        }
+
+        $this->update1cAction();
+
+        if ($DATA["action"]=="appeal"){
+            $USER->Update($USER->GetID(), [
+                "UF_PROMISEDPAYMENT_APPEAL_CLICK"=>true
+            ], false);
+        }
+
+        return [
+            'reload'=>true,
+            'section'=>Utils::GetIBlockSectionIDBySID("lk_abonement"),
+        ];
     }
 }

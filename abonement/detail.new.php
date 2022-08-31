@@ -15,10 +15,10 @@ $is404=false;
 $url = strtok($_SERVER['REQUEST_URI'], '?');
 $urlArr = explode('/', $url);
 
-//Выдаем 404 если в ссылке что то лишнее
-if (count($urlArr)>4){
-    $is404=true;
-}
+////Выдаем 404 если в ссылке что то лишнее
+//if (count($urlArr)>4){
+//    $is404=true;
+//}
 
 //ELEMENT CODE
 $elementCode = !empty($urlArr[2]) ? $urlArr[2] : false;

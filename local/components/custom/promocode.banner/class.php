@@ -22,6 +22,8 @@ class PersonalTrialWorkout extends CBitrixComponent{
             $this->arResult["PROMOCODE"]=$this->arParams["PROMOCODE"];
             $this->arResult["BANNER_DISCOUNT"]=$this->arParams["BANNER_DISCOUNT"];
             $this->arResult["BANNER_TIME"]=$this->arParams["BANNER_TIME"];
+            $this->arResult["PAGE"]=$this->arParams["PAGE"];
+            $this->arResult["CLUB"]=$this->arParams["CLUB"];
 
             $this->IncludeComponentTemplate();
         }

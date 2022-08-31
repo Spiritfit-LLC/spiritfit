@@ -1,220 +1,169 @@
 $(document).ready(function (){
+    var tw_timetable_component=$('.LK_TRIALWORKOUT').data('componentname');
+    var offset=6;
+    var current_visit_el_index=0;
 
 
-    function timePicker(FORM){
-        $(FORM).unbind();
-        $(FORM).submit(function(e){
-            e.preventDefault();
+    function scrollDaysCount(index){
+        var parent=$('.tw-dates__days-container');
+        var element=parent.find(`.day-item[data-index="${index}"]`);
+        $(parent).stop().animate({scrollLeft:element.offset().left + parent.scrollLeft() - parent.offset().left}, 500);
 
-            var postData=new FormData(this);
-            postData.append("timetable", $(this).data("additional-timetable"))
 
-            var form=$(this);
-            form.find('.form-submit-result-text').html('').removeClass('active');
-
-            BX.ajax.runComponentAction(form.data("componentname"), postData.get('ACTION'), {
-                mode: 'class',
-                data: postData,
-                method:'POST'
-            }).then(function(response){
-                console.log(response)
-
-                var res_data=response['data'];
-                if (res_data['reload']===true){
-                    window.location.reload();
-                    return;
-                }
-
-            },function(response){
-                console.log(response);
-
-                var error_id=0;
-                response.errors.forEach(function(err, index){
-                    if (err.code!==0){
-                        error_id=index
-                        return false;
-                    }
-                });
-                var message=response.errors[error_id].message;
-                form.find('.form-submit-result-text').html(message).addClass('active');
-            });
-        });
-
-        const DOMElement = document.querySelector('.timepicker-ui');
-        const options = {
-            clockType:'24h',
-            incrementMinutes:15,
-            disabledTime:{
-                "hours":[
-                    0,1,2,3,4,5,6
-                ],
-                "minutes":[5,10,20,25,35,40,50,55]
-            },
-            cancelLabel:"Отмена",
-            okLabel:"Выбрать",
-            timeLabel:"Выберите время",
-            switchToMinutesAfterSelectHour:true,
-            appendModalSelector:'form.tw_form',
-            theme:'crane-straight'
-        };
-        const myTimePicker = new window.tui.TimepickerUI(DOMElement, options);
-        myTimePicker.create();
-        myTimePicker.open();
-
-        DOMElement.addEventListener('accept', function(event){
-            $('form.tw_form').submit();
-            myTimePicker.destroy();
-        }, {once:true});
-        DOMElement.addEventListener('cancel', function(){
-            myTimePicker.destroy();
-        }, {once:true});
+        var month=parent.find(`.day-item[data-index="${index}"]`).data('month');
+        if (month!==parent.find(`.day-item[data-index="${index+offset}"]`).data('month') && parent.find(`.day-item[data-index="${index+offset}"]`).length>0){
+            month+='-'+parent.find(`.day-item[data-index="${index+offset}"]`).data('month');
+        }
+        $('.tw-dates__date-month').text(month)
     }
+    setTimeout(function(){
+        scrollDaysCount(current_visit_el_index);
+    },500)
 
-    if (pageType==="DEFAULT"){
-        $('select.hour-select').unbind();
-        $("select.minute-select").unbind();
+    $('.tw-dates__controller').on(clickHandler, function(){
+        if ($(this).hasClass('left')){
+            var ind=current_visit_el_index-offset;
+            if (ind<0){
+                ind=0;
+            }
+        }
+        else if ($(this).hasClass('right')){
+            ind=current_visit_el_index+offset;
+            if (ind>$('.tw-dates__days-container').find('.day-item').length-offset){
+                ind=$('.tw-dates__days-container').find('.day-item').length-offset;
+            }
+        }
+        scrollDaysCount(current_visit_el_index=ind);
+    });
 
-        Object.keys(tw_timetable).sort().forEach(function(key, index) {
-            if (index===0){
-                $("select.hour-select").append(`<option value="${key}">${key}</option>`);
-                Object.keys(tw_timetable[key]).sort().forEach(function(key2, index2) {
-                    if (index2===0){
-                        $("select.minute-select").append(`<option value="${key2}">${key2}</option>`);
-                        Object.values(tw_timetable[key][key2]).forEach(function(value, index3){
-                            $('select.name-select').append(`<option value=${value.id}>${value.name}</option>`)
+
+
+
+    function getTimetable(){
+        $('.LK_TRIALWORKOUT').find('.loading-overlay').addClass('active');
+        var postData={
+            'club':$('select[name="club_num"]').val(),
+            'date':$('.tw-dates__days-container').find('.day-item.active').data('date')
+        }
+        if ($('input[name="tw_action"]').length>0){
+            postData['action']=$('input[name="tw_action"]').val()
+        }
+        BX.ajax.runComponentAction(tw_timetable_component, 'getTimetable', {
+            mode: 'class',
+            data: postData,
+            method:'POST'
+        }).then(
+            function(response){
+                // console.log(response)
+                $('.LK_TRIALWORKOUT').find('.loading-overlay').removeClass('active');
+                $('.tw-days-timetable__container').html(response.data);
+                $('.tw-timetable__section-timeitem').click(function(){
+                    var $this=$(this);
+
+                    BX.ajax.runComponentAction(tw_timetable_component, 'getTrainers', {
+                        mode: 'class',
+                        data: {
+                            'time':$this.text()
+                        },
+                        method:'POST',
+                    }).then(function(response){
+                        // console.log(response)
+                        if (response.data.type==="FREE"){
+                            $('select[name="coach"]').closest('.personal-section-form__item').show();
+                            $('select[name="coach"]').html(response.data.result).select2({
+                                minimumResultsForSearch: Infinity,
+                                width:'100%',
+                                dropdownParent: $('.tw-timetable__controllers')
+                            });
+                        }
+                        else if (response.data.type==="NOTFREE"){
+                            $('select[name="coach"]').html('').closest('.personal-section-form__item').hide();
+                        }
+
+                    })
+
+                    $(".tw-timetable").slideUp( "slow", function() {
+                        $('.tw-timetable__choosen').text('Время: '+$this.text()).data('time', $this.text());
+                        $('.tw-timetable__controllers').show(300);
+                        $('.tw-timetable__show').click(function(){
+                            $('.tw-timetable__controllers').hide(300, function(){
+                                $(".tw-timetable").slideDown('slow');
+                            });
+                        });
+                    });
+                })
+
+                $('input[name="slots"]').click(function(){
+                    var radio_val=$(this).val();
+                    if (radio_val==="FREE"){
+                        $('.tw-timetable__section-timeitem.not-free').hide();
+                        $('.tw-timetable__section-times-container').each(function(index, el){
+                            if ($(el).find(":visible").length===0){
+                                $(el).closest('.tw-timetable__section').hide();
+                            }
                         });
                     }
-                    else{
-                        $("select.minute-select").append(`<option value="${key2}">${key2}</option>`);
+                    else if (radio_val==="ALL"){
+                        $('.tw-timetable__section-timeitem.not-free').show();
+                        $('.tw-timetable__section').show();
                     }
                 });
-            }
-            else{
-                $("select.hour-select").append(`<option value="${key}">${key}</option>`);
-            }
-        });
 
-        $('select').select2({
-            minimumResultsForSearch: Infinity,
-            width:'100%',
-            dropdownParent: $('form.tw_form')
-        });
-
-        $('select.hour-select').change(function(){
-            $("select.minute-select option").remove();
-            $('select.name-select option').remove();
-            var key1=$(this).val();
-            Object.keys(tw_timetable[key1]).sort().forEach(function(key2, index2) {
-                if (index2===0){
-                    $("select.minute-select").append(`<option value="${key2}">${key2}</option>`);
-                    Object.values(tw_timetable[key1][key2]).forEach(function(value, index3){
-                        $('select.name-select').append(`<option value=${value.id}>${value.name}</option>`)
-                    });
-                }
-                else{
-                    $("select.minute-select").append(`<option value="${key2}">${key2}</option>`);
-                }
-            });
-        });
-        $("select.minute-select").change(function(){
-            $('select.name-select option').remove();
-            var key1=$("select.hour-select").val();
-            var key2=$(this).val();
-            Object.values(tw_timetable[key1][key2]).forEach(function(value, index3){
-                $('select.name-select').append(`<option value=${value.id}>${value.name}</option>`)
-            });
-        });
-
-        $('form.tw_form').unbind()
-        $('form.tw_form').submit(function(e){
-            e.preventDefault();
-
-            var tw_time=$('.hour-select').find(':selected').val()+':'+$('.minute-select').find(':selected').val();
-            var coach=$(`.name-select`).find(':selected').val();
-
-            var disabled = $(this).find(':input:disabled').removeAttr('disabled');
-
-            var formdata=new FormData(this);
-            var postData={
-                "tw_time":tw_time,
-                "tw_coach":coach,
-                "clubid":formdata.get('clubid'),
-                "date":formdata.get('date'),
-                "tw_action":formdata.get("tw_action")
-            };
-            disabled.attr('disabled','disabled');
-
-            $('.field-error').fadeOut(300);
-
-            var form=$(this);
-            form.find('.form-submit-result-text').html('').removeClass('active');
-
-            form.find('input[type="submit"]').attr('disabled','disabled');
-
-            form.find('.escapingBallG-animation').addClass('active');
-            form.find('input[type="submit"]').css({
-                'opacity':0,
-                'z-index':1
-            });
-
-            BX.ajax.runComponentAction(form.data("componentname"), formdata.get('ACTION'), {
-                mode: 'class',
-                data: postData,
-                method:'POST'
-            }).then(function(response){
-                console.log(response)
-
-                form.find('.escapingBallG-animation').removeClass('active');
-                form.find('input[type="submit"]').css({
-                    'opacity':1,
+                //Подсказки
+                tippy.createSingleton(tippy('.tw-timetable__section-timeitem.not-free', {
+                    content: 'К сожалению, сейчас в это время нет свободного тренера, однако мы постараемся вам его найти!',
+                    theme: 'light',
+                }), {
+                    allowHTML: true,
+                    delay: 500, // ms
+                    placement: 'top',
+                    arrow: false,
+                    animation: 'fade',
+                    theme: 'material',
+                    interactive: true,
                 });
 
-                form.find('input[type="submit"]').removeAttr('disabled');
-                var res_data=response['data'];
-
-                if (res_data.result===false){
-                    $('.field-error').remove();
-                    res_data.errors.forEach(function(el){
-                        form.find(`input[name="${el.form_name}"]`).after(`<span class="field-error" style="display: none">${el.message}</span>`);
-                    });
-
-                    $('.field-error').fadeIn(300);
-                    return;
-                }
-
-                if (res_data['reload']===true){
-                    if (res_data.section!==undefined){
-                        window.location.href=window.location.href+'?SECTION='+res_data.section;
+                $('input.trialworkout[type="submit"]').click(function(){
+                    var postData={
+                        'club':$('select[name="club_num"]').val(),
+                        'date':$('.tw-dates__days-container').find('.day-item.active').data('date'),
+                        'time':$('.tw-timetable__choosen').data('time'),
                     }
-                    else{
-                        window.location.reload();
+                    if ($('select[name="coach"]').is(":visible")){
+                        postData['coach']=$('select[name="coach"]').val();
                     }
-                    return;
-                }
+                    if ($('input[name="tw_action"]').length>0){
+                        postData['action']=$('input[name="tw_action"]').val();
+                    }
+                    BX.ajax.runComponentAction(tw_timetable_component, 'setSlot', {
+                        mode: 'class',
+                        data: postData,
+                        method:'POST',
+                    }).then(function(response){
+                        var res_data=response.data;
+                        if (res_data['reload']===true){
+                            if (res_data.section!==undefined){
+                                window.location.search='?SECTION='+res_data.section;
+                            }
+                            else{
+                                window.location = window.location.pathname;
+                            }
+                            return;
+                        }
 
-            },function(response){
-                console.log(response);
-
-                form.find('.escapingBallG-animation').removeClass('active');
-                form.find('input[type="submit"]').css({
-                    'opacity':1,
+                    })
                 });
-
-                form.find('input[type="submit"]').removeAttr('disabled');
-                var error_id=0;
-                response.errors.forEach(function(err, index){
-                    if (err.code!==0){
-                        error_id=index
-                        return false;
-                    }
-                });
-                var message=response.errors[error_id].message;
-                var code=response.errors[error_id].code;
-                form.find('.form-submit-result-text').html(message).addClass('active');
             });
-        });
     }
-    else if(pageType==="CHOOSETIME"){
-        timePicker('form.tw_form');
-    }
+    getTimetable();
+
+    $('select[name="club_num"]').change(getTimetable);
+
+    $('.tw-dates__days-container').find('.day-item').click(function(){
+        $('.tw-dates__days-container').find('.day-item.active').removeClass('active');
+        $(this).addClass('active');
+
+        getTimetable();
+    });
+
 });

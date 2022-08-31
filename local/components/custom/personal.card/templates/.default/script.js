@@ -14,8 +14,6 @@ $(document).ready(function(){
             link.href = URL.createObjectURL(file);
             link.download = filename;
             link.click();
-        }, function (response){
-            console.log(response)
         });
     });
 });

@@ -56,7 +56,7 @@
                                                 value="<?=$FIELD['VALUE'][$i]?>"
                                                 id="<?=$FIELD['NAME'].'_'.$i?>"
                                                 <?if ($FIELD['REQUIRED']) echo 'required';?>
-                                            >
+                                                <?=$FIELD['PARAMS']?>>
                                             <label for="<?=$FIELD['NAME'].'_'.$i?>"><?=$FIELD['VALUE_DESC'][$i]?></label>
                                         </div>
                                     <?endfor;?>
@@ -79,6 +79,7 @@
                                     <?if ($FIELD['TYPE']=='date'):?> data-toggle="datepicker" <?endif;?>
                                     <?if ($FIELD['TYPE']=='checkbox' && (int)$FIELD['VALUE']==1) echo 'checked'?>
                                     <?if (!empty($FIELD['VALIDATOR'])){ echo $FIELD['VALIDATOR'];}?>
+                                    <?=$FIELD['PARAMS']?>
                                 >
                                 <?if ($FIELD['TYPE']=='password'):?>
                                     <div class="show-password-icon">

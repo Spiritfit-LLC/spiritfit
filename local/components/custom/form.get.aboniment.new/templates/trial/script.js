@@ -171,6 +171,7 @@ $(document).ready(function(){
             data: postData,
             method:'POST'
         }).then(function(responce){
+            // console.log(responce)
             o();
 
             //Разблокируем кнопку
@@ -197,7 +198,7 @@ $(document).ready(function(){
                 }, 3000)
             }
             if (res_data['reload']===true){
-                window.location.reload()
+                window.location = window.location.pathname;
             }
             if (res_data['form-step']!==undefined){
                 form.find('input[name="STEP"]').val(res_data['form-step'])
@@ -217,6 +218,7 @@ $(document).ready(function(){
             if (res_data['step']!==undefined){
                 $(`.subscription__stage-item[data-step="${res_data['step']}"]`).addClass('subscription__stage-item--done');
             }
+
             /////////////////СТАНДАРТ///////////////////
 
 
@@ -230,31 +232,39 @@ $(document).ready(function(){
 
                 form.find('.form-checkboxes').hide(300);
 
-                form.find('input#smscode-input').prop('required', 'required').removeAttr('disabled');
+                if (res_data["href"]!==undefined){
+                    window.location.href=res_data["href"];
+                }
+                else{
+                    form.find('input#smscode-input').prop('required', 'required').removeAttr('disabled');
 
-                form.find('.subscription__code-new').show(300);
+                    form.find('.subscription__code-new').show(300);
 
-                $('input#smscode-input').inputmask(
-                    {
-                        mask: '9 9 9 9 9',
-                        placeholder: "*",
-                    }
-                );
+                    $('input#smscode-input').inputmask(
+                        {
+                            mask: '9 9 9 9 9',
+                            placeholder: "*",
+                        }
+                    );
 
-                $('a[href="#resend"]').unbind();
-                $('a[href="#resend"]').click(function(e){
-                    e.preventDefault();
-                    form.find('input[name="ACTION"]').val(action);
-                    form.submit();
-                });
+                    $('a[href="#resend"]').unbind();
+                    $('a[href="#resend"]').click(function(e){
+                        e.preventDefault();
+                        form.find('input[name="ACTION"]').val(action);
+                        form.submit();
+                    });
 
-                $('input.get-abonement-agree').val('Подтвердить')
+                    $('input.get-abonement-agree').val('Подтвердить')
+                }
             }
             else if(action==='checkCodeTrial'){
-                dataLayerSend('UX', 'openMembershipReadyPage', strSend);
+                if (res_data["href"]!==undefined){
+                    window.location.href=res_data["href"];
+                }
+                else{
+                    dataLayerSend('UX', 'openMembershipReadyPage', strSend);
+                }
             }
-
-
         }, function(response){
 
             form.find('input[type="submit"]').removeAttr('disabled');
@@ -276,13 +286,13 @@ $(document).ready(function(){
 
             ShowMessage(message);
 
-            if (code===7){
+            if (code===7 || code===20){
                 form.find('input.input').removeAttr('disabled');
                 form.find('select.input').removeAttr('disabled');
             }
 
             if (action==='checkCodeTrial'){
-                if (code===7){
+                if (code===7 || code===20){
                     $('a[href="#resend"]').unbind();
                     form.find('input[name="ACTION"]').val('getTrial');
                     form.find('.subscription__code-new').hide(300);

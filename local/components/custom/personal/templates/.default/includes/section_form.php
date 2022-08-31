@@ -1,9 +1,17 @@
-<?php
+<?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+
+
 if(!function_exists('GetPersonalSection')) {
     function GetPersonalSection($FIELD){?>
             <?if ($FIELD['TYPE']=='hidden'):?>
                 <input type="hidden" name="<?=$FIELD['NAME']?>" value="<?=$FIELD['VALUE']?>" id="<?=$FIELD['HTML_ID']?>">
-            <?return?>
+            <?return;?>
+            <?elseif($FIELD["TYPE"]=="component"):?>
+            <?
+                global $APPLICATION;
+                $APPLICATION->IncludeComponent($FIELD["COMPONENT_NAME"], $FIELD["COMPONENT_STYLE"]);
+                return;
+            ?>
             <?endif;?>
         <div class="personal-section-form__item <?if($FIELD['TYPE']=='radio') echo 'radio-item';?>
                                                                <?if($FIELD['TYPE']=='table') echo 'table-item';?>
@@ -91,7 +99,7 @@ if(!function_exists('GetPersonalSection')) {
                 <input
                     class="personal-section-form__item-value <?if ($FIELD['TYPE']=='checkbox') echo 'checkbox-input';?>
                                                                             <?if ($FIELD['TYPE']=='password') echo 'passwd-input'?>"
-                    type="<?if ($FIELD['TYPE']=='date' || $FIELD['TYPE']=='table') echo 'text'; else echo $FIELD['TYPE'];?>"
+                    type="<?if ($FIELD['TYPE']=='date' || $FIELD['TYPE']=='table' || $FIELD["TYPE"]=="address") echo 'text'; else echo $FIELD['TYPE'];?>"
                     name="<?=$FIELD['NAME']?>"
                     value="<?=$FIELD['VALUE']?>"
                     id="<?=$FIELD['HTML_ID']?>"
@@ -104,6 +112,9 @@ if(!function_exists('GetPersonalSection')) {
                     data-code="<?=$FIELD['USER_FIELD_CODE']?>"
                     data-value="<?=$FIELD['DATA_VALUE']?>"
                     <?if (!empty($FIELD['VALIDATOR'])) echo $FIELD['VALIDATOR']?>
+                    <?if ($FIELD["TYPE"]=="address"):?>
+                    data-dadata="true" data-dadata-type="ADDRESS"
+                    <?endif;?>
                 >
                 <?if ($FIELD['TYPE']=='password'):?>
                     <div class="show-password-icon">
@@ -127,6 +138,9 @@ if(!function_exists('GetPersonalSection')) {
                     </div>
                 <?endif;?>
             <?endif;?>
+            <?if(!empty($FIELD["NOTIFICATION"])):?>
+                <div class="personal-section-form__item__notification" data-field="<?=$FIELD["USER_FIELD_CODE"]?>">Данные были обновлены</div>
+            <?endif;?>
         </div>
         <?
     }
@@ -146,8 +160,18 @@ if(!function_exists('GetPersonalSection')) {
 
         <div class="sub-section__header">
             <div class="tab-item__name">
-                <?=$arParams['SECTION']['NAME']?>
+                <div style="display: inline-block">
+                    <?=$arParams['SECTION']['NAME']?>
+                </div>
+                <?if(!empty($SECTION["NOTIFICATIONS"])):?>
+                    <div class="tab-item__notification" data-id="<?=$SECTION["ID"]?>">
+                        <div class="tab-item__notification-count">
+                            <?=$SECTION["NOTIFICATIONS"];?>
+                        </div>
+                    </div>
+                <?endif;?>
             </div>
+
             <div class="sub-section__arrow-icon">
                 <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/arrow-down.svg');?>
             </div>
@@ -160,7 +184,52 @@ if(!function_exists('GetPersonalSection')) {
         <div class="personal-section__title is-hide-mobile"><?=$arParams['SECTION']['NAME']?></div>
     <?endif?>
 
-    <?if (!$arParams['IS_CORRECT']):?>
+    <?if ($arParams['SECTION_CODE']=="lk_loyalty_program"):?>
+<!--    <div class="personal-section__visits_count-container">-->
+<!--        <span class="personal-section-form__item-placeholder" style="margin-left: -20px;margin-bottom: 10px;">Мои посещения</span>-->
+<!--        <div class="personal-section__visits_count">-->
+<!---->
+<!--            --><?//$visit_container_index=0?>
+<!--            --><?//foreach($arParams["SECTION"]['USER_VISITS_LIST'] as $key=>$value):?>
+<!--                <div class="visits-count-container" data-index="--><?//=$visit_container_index?><!--">-->
+<!--                    <div class="visits-count__block">-->
+<!--                        <div class="visits-count__occupancy" data-count="--><?//=$value["VALUE"]?><!--">-->
+<!--                            --><?//=$value["VALUE"]?>
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="visits-count__month">-->
+<!--                        --><?//=$value["MONTH"]?>
+<!--                    </div>-->
+<!--                </div>-->
+<!--                --><?//$visit_container_index++;?>
+<!--            --><?//endforeach;?>
+<!--        </div>-->
+<!--        --><?//if ($visit_container_index>5):?>
+<!--        <div class="personal-section__visits_count-controllers">-->
+<!--            <div class="visits-count__controller left"></div>-->
+<!--            <div class="visits-count__controller right"></div>-->
+<!--        </div>-->
+<!--        --><?//endif;?>
+<!--    </div>-->
+    <a class="personal-section-form__item-placeholder" href="#getHistory" style="margin-bottom: 10px;font-size: 16px;font-weight: 500;">Детали накопления бонусов</a>
+    <div class="loyaltyhistory is-hide">
+        <div class="loyaltyhistory-controls">
+            <div class="loyaltyhistory-controls__item chart active">
+                График
+            </div>
+            <div class="loyaltyhistory-controls__item list">
+                Список
+            </div>
+        </div>
+        <canvas id="loyaltyhistory-chart" class="loyaltyhistories-block chart"></canvas>
+        <div class="loyaltyhistory-list is-hide loyaltyhistories-block list"></div>
+        <span class="personal-section-form__item-placeholder" style="padding: 10px 0;float: right;">Так менялась сумма ваших бонусов за все время</span>
+    </div>
+
+
+    <?endif;?>
+
+    <?if (!$arParams['IS_CORRECT'] && $SECTION['CODE']=="lk_profile"):?>
         <div class="profile-warnig-message">Пожалуйста, заполните все поля, чтобы активировать ваш профиль</div>
     <?endif;?>
     <?if (empty($arParams['PARENT']) || (!empty($arParams['PARENT']) && $arParams['SECTION']['FORM_TYPE']=='independent')):?>

@@ -45,6 +45,13 @@
                         <div class="tab-item__name">
                             <?=$SECTION['NAME']?>
                         </div>
+                        <?if(!empty($SECTION["NOTIFICATIONS"])):?>
+                            <div class="tab-item__notification" data-id="<?=$SECTION["ID"]?>">
+                                <div class="tab-item__notification-count">
+                                    <?=$SECTION["NOTIFICATIONS"];?>
+                                </div>
+                            </div>
+                        <?endif;?>
                     </div>
                 <?
                 endforeach;

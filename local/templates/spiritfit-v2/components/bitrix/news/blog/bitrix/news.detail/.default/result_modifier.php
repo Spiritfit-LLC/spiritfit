@@ -138,3 +138,6 @@ if(empty($arResult['PROPERTIES']['RATING']['VALUE'])){
     $arResult['PROPERTIES']['RATING']['VALUE']=0;
 }
 $arResult['PROPERTIES']['RATING_PROCENT']=$arResult['PROPERTIES']['RATING']['VALUE']/5*100;
+
+$date = str_replace('.', '-', $arResult["DATE"]);
+$arResult["datePublished"]=date('Y-m-d', strtotime($date));

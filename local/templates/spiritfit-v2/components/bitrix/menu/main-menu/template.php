@@ -24,14 +24,7 @@
                 </li>
 		<?endforeach?>
 
-        <?if (!$isClient):?>
-        <li class="b-top-menu__item is-hide-mobile">
-            <a class="b-top-menu__abonement-btn" href="/abonement/"
-               data-layer="true"
-               data-layercategory="UX"
-               data-layeraction="clickBuyAbonementButton"
-               data-layerlabel="header">купить абонемент</a>
-        </li>
-        <?endif;?>
+
 	</ul>
+
 <?endif?>
