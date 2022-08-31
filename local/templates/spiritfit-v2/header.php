@@ -1,5 +1,17 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
+global $USER;
+if ($USER->IsAuthorized())
+{
+    $USER->SavePasswordHash();
+}
+else{
+    if (!is_object($USER)) $USER = new CUser;
+    $cookie_login = ${COption::GetOptionString("main", "cookie_name", "BITRIX_SM")."_LOGIN"};
+    $cookie_md5pass = ${COption::GetOptionString("main", "cookie_name", "BITRIX_SM")."_UIDH"};
+    $USER->LoginByHash($cookie_login, $cookie_md5pass);
+}
+
 use \Bitrix\Main\Page\Asset;
 
 $arInfoProps = Utils::getInfo()['PROPERTIES'];
@@ -75,7 +87,7 @@ foreach( $clubs as $club ) {
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/custom.js");
     Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . '/libs/modalwindow/modalwindow.js');
     Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . '/libs/modalwindow/modalwindow.css');
-
+    Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/jquery.suggestions.css');
     CJSCore::Init();
 
 
@@ -112,6 +124,8 @@ foreach( $clubs as $club ) {
     </script>
     <script src="https://api.mindbox.ru/scripts/v1/tracker.js" async></script>
     <link rel="canonical" href="<?= 'https://' . $_SERVER['HTTP_HOST'] . $page; ?>"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/suggestions-jquery@21.12.0/dist/js/jquery.suggestions.min.js"></script>
 </head>
 <? $APPLICATION->ShowPanel(); ?>
 <?
@@ -123,6 +137,7 @@ foreach( $clubs as $club ) {
     }
 ?>
 <body class="b-page <?=$classPage?>">
+<!--    --><?//$APPLICATION->IncludeComponent('custom:banner', 'last.change', array("URL"=>"ALL", "BACKGROUND"=>"/upload/medialibrary/8f2/9frwkezz1ehaxj5m5tb0u10nfubij2mi.jpg"), false)?>
     <!-- VK counter -->
     <script defer type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?160",t.onload=function(){VK.Retargeting.Init("VK-RTRG-333642-hybZ4"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-333642-hybZ4" style="position:fixed; left:-999px;" alt=""/></noscript>    
 
@@ -223,6 +238,13 @@ foreach( $clubs as $club ) {
                         </div>
                     </nav>
                 </div>
+                <?if (!PersonalUtils::IsClient()):?>
+                    <a class="b-top-menu__abonement-btn is-hide-mobile" href="/abonement/"
+                       data-layer="true"
+                       data-layercategory="UX"
+                       data-layeraction="clickBuyAbonementButton"
+                       data-layerlabel="header">купить абонемент</a>
+                <?endif;?>
 				<a class="b-header-phone phone-btn main-phone-btn is-hide-mobile" data-position="header" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a>
                 <a href="/personal/" class="personal-btn is-hide-mobile header-personal-btn"
                 data-layer="true"
