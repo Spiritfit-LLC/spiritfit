@@ -76,6 +76,11 @@ $settings = Utils::getInfo();
         })(document, 'script', '//upmetrics.ru/upmetric.min.js');
     </script>
     <script>
+        window.addEventListener('onBitrixLiveChat', function(event){
+            var widget = event.detail.widget;
+            widget.setOption('checkSameDomain', false);
+        });
+
         (function(w,d,u){
             var s=d.createElement('script');s.async=true;s.src=u+'?'+(Date.now()/60000|0);
             var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);
@@ -125,6 +130,18 @@ $settings = Utils::getInfo();
         }
         button.b24-form-btn{
             background-image: linear-gradient(90deg, #7f4790, #ff4f38);
+        }
+        .bx-imopenlines-form-result-container.bx-imopenlines-form-success {
+            background-image: linear-gradient(90deg, #7f4790, #ff4f38)!important;
+            border:none!important;
+        }
+        .b24-form-control-container input:-webkit-autofill {
+            -webkit-box-shadow: inset 0 0 0 50px #272c2f !important; /* Цвет фона */
+            -webkit-text-fill-color: #999 !important; /* цвет текста */
+            color: #999 !important; /* цвет текста */
+        }
+        .bx-imopenlines-message-dialog-number{
+            display: none!important;
         }
     </style>
 </body>
