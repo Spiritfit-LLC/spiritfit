@@ -116,9 +116,9 @@ $(document).ready(function () {
 				$('.club-utp').appendTo('.b-screen__content');
 			}
 			else{
-				$('.club-utp').appendTo('.b-screen');
+				$('<div class="content-center" style="z-index: 100;"></div>').appendTo('.b-screen');
+				$('.club-utp').appendTo('.b-screen .content-center');
 				$('.club-utp').css({
-					'z-index': '1000',
 					'margin-left':'auto'
 				})
 			}
