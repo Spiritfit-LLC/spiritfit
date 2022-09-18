@@ -67,6 +67,10 @@
             <div class="popup__success"><?=$arResult["ERROR"]?></div>
         </div>
     </div>
+<?else:?>
+<?if (!empty($arResult['GA_SETTINGS'])):?>
+    <script>dataLayerSend('<?=$arResult['GA_SETTINGS']["eCategory"]?>', '<?=$arResult['GA_SETTINGS']["eAction"]?>', '<?=$arResult['GA_SETTINGS']["elLabel"]?>');</script>
+<?endif;?>
 <? endif; ?>
 <script>
 setTimeout(function() {
@@ -83,7 +87,6 @@ setTimeout(function() {
     });
 }, 500);
 </script>
-<script>dataLayerSend('conversion', 'sendFormTrialWorkout', '');</script>
 <script>
 	var getCodeUrl = '<?=$templateFolder?>/sendCode.php';
 </script>

@@ -1,0 +1,180 @@
+.b-screen.b-screen_short:after{
+    content:none;
+}
+
+.page-error-text {
+    font-size: 28px;
+    padding: 50px;
+}
+
+.personalcard-block {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+.personalcard-column{
+    width: 500px;
+}
+.personalcard-photo {
+    padding: 35px;
+    width: 500px;
+    height: 500px;
+    /*margin: auto;*/
+}
+.personalcard-photo img{
+    border-radius: 50%;
+    border: 5px solid #ff7628;
+    object-fit: cover;
+}
+.personalcard-head_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.personalcard-name {
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+.personalcard-position {
+    font-size: 20px;
+}
+.personalcard-block__right {
+    /* border-left: 1px solid #fc612030; */
+    padding-left: 20px;
+    margin-top: 35px;
+    min-height: 550px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+}
+.personalcard-info {
+    font-size: 20px;
+    font-weight: 100;
+}
+.mainfield-item__icon-block svg {
+    max-height: 100%;
+    max-width: 100%;
+    fill: #ff7628;
+}
+.mainfield-item {
+    display: flex;
+    align-items: center;
+    /* margin: 20px 0; */
+    /* border-bottom: 1px solid #ff5722; */
+}
+.personalcard-mainfields {
+    margin-top: 50px;
+}
+.mainfield-item__icon-block {
+    height: 50px;
+    width: 50px;
+    /* background-color: #ff7628; */
+    padding: 10px;
+    /* border-top: 1px solid black; */
+    /*cursor: pointer;*/
+    /* box-shadow: inset 0px 0px 2px 0px black; */
+    border-top: 1px solid #ff7628;
+}
+/*.mainfield-item__icon-block:hover{*/
+/*    box-shadow: inset 0px 0px 5px 0px black;*/
+/*}*/
+.mainfield-item__text-block {
+    font-size: 16px;
+    font-weight: 600;
+    padding-left: 30px;
+    height: 50px;
+    border-top: 1px solid #ff7628;
+    width: 100%;
+    border-left: 1px solid #ff7628;
+}
+.mainfield-item__text-block {
+    display: flex;
+    align-items: center;
+}
+
+.personalcard-mainfields:last-child .mainfield-item__text-block{
+    border-bottom: none!important;
+}
+button.personalcard-savebtn {
+    margin: 20px 0;
+    padding: 0;
+    border: 1px solid #ff7628;
+    width: 100%;
+    height: 60px;
+    background: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+button.personalcard-savebtn:hover{
+    background: #ff7628;
+}
+.personalcard-social {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* border: 1px solid; */
+}
+.social-item {
+    height: 30px;
+    WIDTH: 30px;
+    /* background-color: #ff7628; */
+    /* border: 1px solid #ff7628; */
+    /* vertical-align: middle; */
+    /* text-align: center; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 20px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+/*.social-item:hover{*/
+/*    background-color: #ff7628;*/
+/*}*/
+
+.social-item:hover svg{
+    fill:#ff7628;
+}
+
+.social-item:first-child{
+    margin-left: 0;
+}
+.social-item:last-child{
+    margin-right: 0;
+}
+
+.social-item__icon {
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    margin: auto;
+}
+.social-item__icon svg{
+    height: 100%;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px){
+    .personalcard-photo {
+        width: 350px;
+        height: 350px;
+    }
+    .personalcard-column{
+        width: 100%;
+    }
+    .personalcard-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .personalcard-block__right.personalcard-column {
+        padding: 0;
+    }
+
+}

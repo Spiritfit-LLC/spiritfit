@@ -57,19 +57,23 @@ class Utils
 		}
 	}
 
-	public static function getClub($club = null) {
+	public static function getClub($club = null, $soon=false) {
 		Loader::includeModule('iblock');
-		
-		$arFilter = array("IBLOCK_CODE" => "clubs", "PROPERTY_SOON" => false, "ACTIVE" => "Y");
 
-		if ($club !== null) {
-			$arFilter["PROPERTY_NUMBER"] = $club;
-		}
-		$dbElements = CIBlockElement::GetList(array("PROPERTY_NUMBER" => "ASC"), $arFilter, false, array(), array());
+        $arFilter = array("IBLOCK_CODE" => "clubs", "ACTIVE" => "Y");
 
-		if ($res = $dbElements->fetch()) {
-			return $res;
+        if ($soon!==null){
+            $arFilter["PROPERTY_SOON"]=$soon;
 		}
+
+        if ($club !== null) {
+            $arFilter["PROPERTY_NUMBER"] = $club;
+        }
+        $dbElements = CIBlockElement::GetList(array("PROPERTY_NUMBER" => "ASC"), $arFilter, false, array(), array());
+
+        if ($res = $dbElements->fetch()) {
+            return $res;
+        }
 	}
 
 	public static function getClubById($club = '08') {
@@ -304,24 +308,47 @@ class Utils
     }
 
 	// МЕТОДЫ ДЛЯ ИЗВЛЕЧЕНИЯ ID о символному коду
-    public static function GetIBlockIDBySID($SID){
-        $DBRes=CIBlock::GetList(Array("SORT"=>"ASC"), Array("CODE"=>$SID));
-        return $DBRes->Fetch()['ID'];
+    public static function GetIBlockIDBySID($SID, $type="ID"){
+        if (is_numeric($SID)){
+            $filter=Array("ID"=>$SID);
+        }
+        else{
+            $filter=Array("CODE"=>$SID);
+        }
+        $DBRes=CIBlock::GetList(Array("SORT"=>"ASC"), $filter);
+        return $DBRes->Fetch()[$type];
     }
-    public static function GetIBlockSectionIDBySID($SID){
-        $DBRes=CIBlockSection::GetList(Array("SORT"=>"ASC"), Array("CODE"=>$SID));
-        return $DBRes->Fetch()['ID'];
+    public static function GetIBlockSectionIDBySID($SID, $type="ID"){
+        if (is_numeric($SID)){
+            $filter=Array("ID"=>$SID);
+        }
+        else{
+            $filter=Array("CODE"=>$SID);
+        }
+        $DBRes=CIBlockSection::GetList(Array("SORT"=>"ASC"), $filter);
+        return $DBRes->Fetch()[$type];
     }
-    public static function GetIBlockElementIDBySID($SID){
-        $DBRes=CIBlockElement::GetList(Array("SORT"=>"ASC"), Array("CODE"=>$SID));
-        return $DBRes->Fetch()['ID'];
+    public static function GetIBlockElementIDBySID($SID, $type="ID"){
+        if (is_numeric($SID)){
+            $filter=Array("ID"=>$SID);
+        }
+        else{
+            $filter=Array("CODE"=>$SID);
+        }
+        $DBRes=CIBlockElement::GetList(Array("SORT"=>"ASC"), $filter);
+        return $DBRes->Fetch()[$type];
     }
-    public static function GetFormIDBySID($SID){
+    public static function GetFormIDBySID($SID, $type="ID"){
         Loader::IncludeModule("form");
         $rsForm = CForm::GetBySID($SID);
         $arForm = $rsForm->Fetch();
-        return $arForm['ID'];
+        return $arForm[$type];
     }
+    public static function GetUGroupIDBySID($SID){
+        $DBRes=CGroup::GetList(($by="c_sort"), ($order="desc"), Array("STRING_ID"=>$SID));
+        return $DBRes->Fetch()['ID'];
+    }
+
 
 	// ИЗВЛЕЧЕНИЕ API URL
 	public static function getApiURL(){
@@ -333,6 +360,18 @@ class Utils
             $API_URL = false;
 
         return $API_URL;
+    }
+
+    // ИЗВЛЕЧЕНИЕ API TOKEN
+    public static function getApiSpiritfitToken(){
+        Loader::includeModule('iblock');
+        $db_props = CIBlockElement::GetProperty(SETTINGS_IBLOCK_ID, SETTINGS_ELEMENT_ID, array("sort" => "asc"), Array("CODE"=>"API_SPIRITFIT_TOKEN"));
+        if($ar_props = $db_props->Fetch())
+            $TOKEN = $ar_props["VALUE"];
+        else
+            $TOKEN = false;
+
+        return $TOKEN;
     }
 
 	//IMG RESIZE

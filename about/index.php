@@ -3,9 +3,10 @@
 	define('HOLDER_CLASS', 'company-holder');
 	
 	require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+$APPLICATION->SetTitle("О нас");
 	
-	$APPLICATION->SetPageProperty("description", "");
-	$APPLICATION->SetPageProperty("title", "");
+	$APPLICATION->SetPageProperty("description", "Спирит Фитнес – это сеть фитнес клубов в Москве и Московской области 🏋 Вас впечатлит атмосфера наших клубов, тренера и оборудование 📞 8 (495) 266-40-95");
+	$APPLICATION->SetPageProperty("title", "О компании | SpiritFit.ru");
 	
 	$settings = Utils::getInfo();
 	

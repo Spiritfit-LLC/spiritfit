@@ -4,8 +4,8 @@ define('BREADCRUMB_H1_ABSOLUTE', true);
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 $APPLICATION->SetTitle("Клубы");
-$APPLICATION->SetPageProperty("description", "Адреса фитнес-клубов сети 🗺 Найдите клуб рядом 🏡 доступные цены, удобная ежемесячная оплата 💯 Запишитесь на бесплатную 💸 пробную тренировку!");
-$APPLICATION->SetPageProperty("title", "Клубы Spirit. Fitness - адреса фитнес-клубов сети в Москве и Московской области");
+$APPLICATION->SetPageProperty("description", "Адреса фитнес-клубов сети 🗺 Найдите клуб рядом 🏡 доступные цены, удобная ежемесячная оплата от 1700 ₽ 👌 Запишитесь на бесплатную 💸 пробную тренировку!");
+$APPLICATION->SetPageProperty("title", "Клубы Spirit Fitness - адреса фитнес-клубов сети в Москве и Московской области с оплатой за месяц от 1700₽");
 ?>
 
 <? $APPLICATION->IncludeFile('/local/include/clubs.php'); ?>
@@ -69,4 +69,15 @@ $APPLICATION->SetPageProperty("title", "Клубы Spirit. Fitness - адрес�
         )
     );?>
 </div>
+<?php
+$APPLICATION->IncludeComponent(
+    "custom:promocode.banner",
+    "gray-purple",
+    Array(
+        "BANNER_DISCOUNT" => "-500 &#x20bd;",
+        "BANNER_TIME" => 3000,
+        "PROMOCODE" => "FITSUMMER",
+    )
+);
+?>
 <? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>,

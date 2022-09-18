@@ -146,7 +146,7 @@ $arField = ['name', 'email', 'phone'];
             	<div class="popup__success"><?=(!empty($arParams["CLUB_FORM_SUCCESS"])) ? $arParams["CLUB_FORM_SUCCESS"] : "Спасибо, ваша заявка принята!" ?></div>
         	</div>
     	</div>
-		<?
+    <?
 	}
 ?>
 <script src="<?=SITE_TEMPLATE_PATH?>/js/form-standart.js"></script>
@@ -162,6 +162,7 @@ $(document).ready(function(){
     $('.form-standart:not(.is-ready)').each(function() {
         initFormFields($(this));
     });
+
 })
 </script>
 

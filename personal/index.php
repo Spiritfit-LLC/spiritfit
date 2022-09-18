@@ -26,13 +26,13 @@ Asset::getInstance()->addString('<meta name="robots" content="noindex, follow" /
     <h1 class="b-page__title is-hide-mobile"><?=$APPLICATION->ShowTitle(false)?></h1>
     <?php
     $APPLICATION->IncludeComponent(
-        "custom:personal.onpageinfo",
+        "custom:personal",
         "",
         Array(
-            "PROFILE_URL" => "/personal/",
             "AUTH_FORM_CODE" => "AUTH",
             "REGISTER_FORM_CODE" => "REGISTRATION",
             "PASSFORGOT_FORM_CODE"=>'PASSFORGOT',
+            "ACTIVE_FORM"=>"lk_loyalty_program",
             "SHOW_ERRORS" => "Y"
         ),
         false

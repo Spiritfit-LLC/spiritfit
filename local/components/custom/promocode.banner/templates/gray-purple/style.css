@@ -1,0 +1,121 @@
+.promocode-gp-banner__container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    /*display: flex;*/
+    align-items: center;
+    background-color: #000000d4;
+    justify-content: center;
+    z-index: 1000;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display:none;
+}
+.promocode-gp-banner {
+    width: 400px;
+    height: 650px;
+    background-repeat: repeat;
+    background-size: cover;
+    background-color: white;
+    background-position: 50% 50%;
+    border-radius: 8px;
+    position: relative;
+    color: black;
+}
+.promocode-gp-banner__closer {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    transition: 0.5s;
+    cursor: pointer;
+    z-index: 1000;
+}
+.promocode-gp-banner__closer svg{
+    width: 100%;
+    height: 100%;
+}
+.promocode-gp-banner__closer:hover{
+    transform: rotate(180deg);
+}
+
+.promocode-gp-banner__content {
+    width: 100%;
+    height: 100%;
+    padding: 32px;
+    text-align: center;
+}
+.promocode-gp-content__logo {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+.promocode-gp-content__body {
+    position: absolute;
+    bottom: 0;
+}
+.promocode-gp-content__text {
+    color: white;
+    width: 100%;
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 26px;
+}
+.promocode-gp-content__code {
+    color: white;
+    width: max-content;
+    margin: 10px auto;
+    padding: 5px 10px;
+    font-size: 30px;
+    font-weight: 800;
+    background: linear-gradient(144deg, #7909fb, #fc3f00);
+}
+.promocode-gp-content__discount {
+    position: relative;
+    margin: 10px 0;
+}
+.promocode-gp-content__discount-value {
+    max-width: max-content;
+    background-color: #2AA5A0;
+    background-image: linear-gradient(90deg, #7909fb, #fc3f00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: auto;
+    font-size: 36px;
+    font-weight: 800;
+    z-index: 2;
+    position: relative;
+}
+.promocode-gp-content__discount-shadow {
+    color: white;
+    font-size: 36px;
+    font-weight: 800;
+    position: absolute;
+    left: 1px;
+    width: 100%;
+    text-align: center;
+    top: 1px;
+    z-index: 1;
+}
+.promocode-gp-content__text2 {
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+}
+button.promocode-gp-btn {
+    background: white;
+    border: none;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    margin: 20px 0 30px;
+    font-weight: 800;
+    border-radius: 20px;
+}

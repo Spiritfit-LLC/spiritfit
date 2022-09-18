@@ -61,6 +61,18 @@ jQuery(function($) {
 					$(this).attr('disabled', true);
 					$(this).attr("value", "Обработка...");
 					$('body').css('overflow', '');
+
+
+					if ($(formElement).find('input[name="typeSetClient"]').length > 0){
+						var setClientData= {
+							'phone':$(formElement).find('[type="tel"]').val(),
+							'email':$(formElement).find('input[type="email"]').val(),
+							'setTypeClient':$(formElement).find('input[name="typeSetClient"]').val()
+						};
+						sendToUpMetrika(setClientData);
+					}
+
+
 					$(formElement).submit();
 				});
 			}

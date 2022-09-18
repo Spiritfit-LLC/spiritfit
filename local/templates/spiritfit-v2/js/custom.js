@@ -1,25 +1,23 @@
+var clickHandler = ("ontouchstart" in window ? "touchend" : "click");
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
 function sendToUpMetrika(sendData){
-    // console.log(sendData)
-
-
     sendData['phone']=sendData['phone'].replace(/[^0-9]/g,"");
-
-    // console.log({
-    //     'phoneMd5': CryptoJS.MD5(sendData['phone']).toString(),
-    //     'emailMd5': CryptoJS.MD5(sendData['email']).toString(),
-    //     'phoneSha256': CryptoJS.SHA256(sendData['phone']).toString(),
-    //     'emailSha256': CryptoJS.SHA256(sendData['email']).toString(),
-    //     'typeSetClient': sendData['setTypeClient']
-    // })
-
-    acfp.setClient({
+    var options={
         'phoneMd5': CryptoJS.MD5(sendData['phone']).toString(),
-        'emailMd5': CryptoJS.MD5(sendData['email']).toString(),
         'phoneSha256': CryptoJS.SHA256(sendData['phone']).toString(),
-        'emailSha256': CryptoJS.SHA256(sendData['email']).toString(),
         'typeSetClient': sendData['setTypeClient']
-    });
-        
+    }
+    if (sendData['email']!==undefined){
+        options['emailMd5']=CryptoJS.MD5(sendData['email']).toString();
+        options['emailSha256']=CryptoJS.SHA256(sendData['email']).toString();
+    }
+    acfp.setClient(options);
 }
 
 function setScrollFormModal(){
@@ -174,7 +172,7 @@ function initFormFields($context) {
             var placeholder = $select.attr('data-placeholder');
             $select.select2({
                 width: '100%',
-                minimumResultsForSearch: 100,
+                // minimumResultsForSearch: 100,
                 placeholder: placeholder,
                 dropdownParent: $select.parent(),
                 "language": {
@@ -425,6 +423,16 @@ function clickBtn(el){
     $('.subscription__promo-btn_v2').trigger('click', ["is-form-submit"]);
 }
 
+//Кнопка звонка
+function phone_btn_position(){
+    if (window.innerWidth<=1024){
+        $('.main-phone-btn').data('position', 'mobileRoundButton');
+    }
+    else{
+        $('.main-phone-btn').data('position', 'header');
+    }
+}
+
 $(document).ready(function() {
 	
 	/* Slick init on loyalty */
@@ -529,10 +537,6 @@ $(document).ready(function() {
             e.preventDefault();
             window.open(link, '_blank');
         }
-
-        if(link !== undefined && link.indexOf('tel') != -1){
-            dataLayerSend('UX', 'clickCallButton', '');
-        }
     })
     
     $(document).on("click", ".js-callback-submit_v2", function(e) {
@@ -613,7 +617,7 @@ $(document).ready(function() {
 
             var isMacLike = navigator.platform.match(/(iPhone|iPod|iPad)/i) ? true : false;
             $('select.custom--select').select2({
-                minimumResultsForSearch: Infinity
+                // minimumResultsForSearch: Infinity
             });
             if (!isMacLike) {
                 // $('select.input--select').styler({
@@ -656,7 +660,7 @@ $(document).ready(function() {
 
             var isMacLike = navigator.platform.match(/(iPhone|iPod|iPad)/i) ? true : false;
             $('select.custom--select').select2({
-                minimumResultsForSearch: Infinity
+                // minimumResultsForSearch: Infinity
             });
             if (!isMacLike) {
                 // $('select.input--select.js-msg-select').styler({
@@ -1178,4 +1182,192 @@ $(document).ready(function() {
     // $('.subscription__aside-form:not(.is-ready)').each(function () {
     //     initFormFields($(this));
     // });
+
+
+    //Отправка в GA по клику на ПРОБНУЮ ТРЕНИРОВКУ
+    $('.trial-training-btn').click(function(){
+        if ($(this).data('position')){
+            var eLabel=$(this).data('position')
+        }
+        else{
+            eLabel=window.location.href;
+        }
+        var eAction='clickTrialWorkoutButton';
+        dataLayerSend('UX', eAction, eLabel);
+    });
+
+    $('.header-personal-btn').click(function(){
+        dataLayerSend('UX', 'clickLKbutton', '');
+    });
+
+    $('.b-map__switch').on("select2:open", function(){
+       dataLayerSend('UX','useClubSearchForm', 'clubsPage');
+    });
+
+    $('.b-club-search__input').click(function(){
+        dataLayerSend('UX','useClubSearchForm', 'bottomFixedBar');
+    });
+
+    // $('a[data-sub_id]').click(function(){
+    //     dataLayerSend('UX','clickFitnessSubscriptionBlock', $(this).data('sub_id'));
+    // });
+
+    $('a.b-info-slider__btn').click(function(e){
+        dataLayerSend('UX','clickLinkSliderPromo', $(this).siblings('.b-info-slider__title').text());
+    });
+
+    phone_btn_position();
+    $(window).resize(phone_btn_position);
+
+    //Общая функция отправки в ГА
+    $('[data-layer="true"]').unbind(clickHandler).on(clickHandler, function(){
+        if ($(this).data("layercategory")!==undefined){
+            var ecategory=$(this).data("layercategory");
+        }
+        else{
+            ecategory="UX";
+        }
+
+        if ($(this).data("layerlabel")!==undefined){
+            var elabel=$(this).data("layerlabel");
+        }
+        else{
+            elabel="";
+        }
+
+        var eaction=$(this).data("layeraction");
+
+        dataLayerSend(ecategory, eaction, elabel);
+    });
+
+
+    $('.phone-btn').click(function(){
+        if ($(this).data('position')==='page'){
+            position=document.location.protocol+'//'+document.location.host+document.location.pathname
+        }
+        else{
+            position=$(this).data('position');
+        }
+        dataLayerSend('UX','clickCallButton', position);
+    });
+
+
+
+    //Футер всплывашка
+    if (localStorage.getItem('footer-hide')==="1"){
+        $('.b-club-search').removeClass('active');
+        $('.b-club-search__show-btn').addClass('active');
+    }
+    else{
+        $('.b-club-search').addClass('active');
+        $('.b-club-search__show-btn').removeClass('active');
+    }
+
+    $('.b-club-search__hide-btn').click(function(){
+        $('.b-club-search').removeClass('active');
+        $('.b-club-search__show-btn').addClass('active');
+        localStorage.setItem('footer-hide', "1");
+    });
+
+    $('.b-club-search__show-btn').click(function(){
+        $('.b-club-search').addClass('active');
+        $('.b-club-search__show-btn').removeClass('active');
+        localStorage.setItem('footer-hide', "0");
+    });
+
+
+
+    //DADATA
+    var dadata_token="fa43a728a5f92101fcb6e4afa7ad6eda489da066";
+
+    $('input[data-dadata-type]').each(function(index, el){
+        if ($(el).data('dadata-type')==="NAME"){
+           var options= {
+               token: dadata_token,
+               type: "NAME",
+               count:5,
+               deferRequestBy:500,
+               hint:false,
+               params: {
+                   parts: [$(el).data('dadata-part')]
+               }
+           }
+        }
+        else if ($(el).data('dadata-type')==="ADDRESS"){
+            options= {
+                token: dadata_token,
+                type: "ADDRESS",
+                count: 5,
+                deferRequestBy: 500,
+                hint: false,
+                minChars: 2,
+                triggerSelectOnBlur:true,
+                triggerSelectOnEnter:true,
+                triggerSelectOnSpace:true,
+                /* Вызывается, когда пользователь выбирает одну из подсказок */
+                onSelect: function (suggestion) {
+                    if (suggestion.data.city === null) {
+                        var error_message = "Город не выбран";
+                    } else if (suggestion.data.house === null) {
+                        error_message = "Дом не выбран";
+                    } else if (parseFloat(suggestion.data.geo_lat)<54.288991 || parseFloat(suggestion.data.geo_lat)>56.929291){
+                        error_message = "Адрес находится за пределами Москвы или области";
+                    }
+                    else if (parseFloat(suggestion.data.geo_lon)>40.180157 || parseFloat(suggestion.data.geo_lon)<35.177239){
+                        error_message = "Адрес находится за пределами Москвы или области";
+                    }
+                    else {
+                        if ($(this).next('.field-error').length > 0) {
+                            $(this).next('.field-error').remove()
+                        }
+                        if ($(this).closest('form').find('input[name="geo_lat"]').length===0){
+                            $(this).closest('form').append($(`<input name="geo_lat" type="hidden" value="${suggestion.data.geo_lat}">`));
+                        }
+                        else{
+                            $(this).closest('form').find('input[name="geo_lat"]').val(suggestion.data.geo_lat);
+                        }
+                        if ($(this).closest('form').find('input[name="geo_lon"]').length===0){
+                            $(this).closest('form').append($(`<input name="geo_lon" type="hidden" value="${suggestion.data.geo_lon}">`));
+                        }
+                        else{
+                            $(this).closest('form').find('input[name="geo_lon"]').val(suggestion.data.geo_lon);
+                        }
+                        $(this).closest('form').find('input[type="submit"]').removeAttr('disabled');
+                        return;
+                    }
+                    if ($(this).next('.field-error').length > 0) {
+                        $(this).next('.field-error').text(error_message)
+                    } else {
+                        $(this).after(`<span class="field-error">${error_message}</span>`);
+                    }
+                    $(this).closest('form').find('input[type="submit"]').prop('disabled', 'disabled');
+
+                },
+                onSelectNothing:function(){
+                    var error_message = "Не удалось определить адрес";
+                    if ($(this).next('.field-error').length > 0) {
+                        $(this).next('.field-error').text(error_message)
+                    } else {
+                        $(this).after(`<span class="field-error">${error_message}</span>`);
+                    }
+                    $(this).closest('form').find('input[type="submit"]').prop('disabled', 'disabled');
+                }
+            }
+        }
+        var sgt = $(el).suggestions(options);
+
+    });
+
+    $('input[type="email"]').each(function(index, el){
+        $(el).suggestions({
+            token: dadata_token,
+            type: "EMAIL",
+            count:5,
+            deferRequestBy:500,
+            hint:false
+        });
+    });
 })
+
+
+

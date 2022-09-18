@@ -12,6 +12,9 @@ $arClubs = [];
 foreach ($arResult["ITEMS"] as $key => $arItem) {
     $arResult["ITEMS"][$key]["MIN_PRICE"] = min(array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE"));
 
+//    Сделал это отдельно, потому что лень разбираться за что отвечает MIN_PRICE
+    $arResult['ITEMS'][$key]['MIN_PRICE2']=$arResult["ITEMS"][$key]["MIN_PRICE"];
+
     foreach ($arItem["PROPERTIES"]["PRICE"]["VALUE"] as $arPrice) {
         if ($arPrice["NUMBER"] > 2) {
             if ($arPrice["PRICE"] == $arResult["ITEMS"][$key]["MIN_PRICE"]) {

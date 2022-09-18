@@ -27,6 +27,9 @@ if(!empty($files['VALUE'])){
 		if($files['DESCRIPTION'][$k] == $page){
 			$currentFileID = $itemFile;
 		}
+        if ($files["DESCRIPTION"][$k][0]=='m' && substr($files["DESCRIPTION"][$k], 1)==$page){
+            $currentMobileFileID = $itemFile;
+        }
 
 		if(empty($files['DESCRIPTION'][$k])){
 			$generalFileID = $itemFile;
@@ -61,6 +64,13 @@ if(!empty($files['VALUE'])){
 		}
 	}
 
+    if (!empty($currentMobileFileID)){
+        $dbFile = CFile::GetByID($currentMobileFileID);
+        $arFileMobile = $dbFile->Fetch();
+
+        $srcMobile = CFile::GetPath($currentMobileFileID);
+    }
+
 	if(!empty($arFile)){
 		if(strpos($arFile['CONTENT_TYPE'], 'video') !== false){
 			$video = true;
@@ -69,26 +79,44 @@ if(!empty($files['VALUE'])){
 			$image = true;
 		}
 	}
+
+    if(!empty($arFileMobile)){
+        if(strpos($arFileMobile['CONTENT_TYPE'], 'video') !== false){
+            $videoMobile = true;
+        }
+        if(strpos($arFileMobile['CONTENT_TYPE'], 'image') !== false) {
+            $imageMobile = true;
+        }
+    }
 }
 
 ?>
 
 <section class="b-screen b-screen_with-page-heading <?//=($page != '/' ? 'b-screen_with-page-heading' : '')?>">
-	<div class="b-screen__bg-holder">
+	<div class="b-screen__bg-holder" >
 		<? if($video){ ?>
-			<video class="b-screen__bg-video" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline src="<?=$src?>" type="video/mp4">
+			<video class="b-screen__bg-video <?if (!empty($currentMobileFileID)) echo 'is-hide-mobile';?>" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline src="<?=$src?>" type="video/mp4">
 			</video>
 		<? }elseif($image){ ?>
-			<img src="<?=$imageType1["src"]?>" srcset="<?=$imageType3["src"]?> 450w, <?=$imageType2["src"]?> 800w, <?=$imageType1["src"]?> 1280w" alt="">
+			<img src="<?=$imageType1["src"]?>" srcset="<?=$imageType3["src"]?> 450w, <?=$imageType2["src"]?> 800w, <?=$imageType1["src"]?> 1280w" alt="" class="<?if (!empty($currentMobileFileID)) echo 'is-hide-mobile';?>">
 		<? }else{ ?>
-			<video class="b-screen__bg-video" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline src="<?=SITE_TEMPLATE_PATH?>/video/spirit-screen.mp4" type="video/mp4">
+			<video class="b-screen__bg-video <?if (!empty($currentMobileFileID)) echo 'is-hide-mobile';?>" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline src="<?=SITE_TEMPLATE_PATH?>/video/spirit-screen.mp4" type="video/mp4">
 			</video>
 		<? } ?>
+
+        <?if (!empty($currentMobileFileID)):?>
+            <? if($videoMobile){ ?>
+                <video class="b-screen__bg-video is-hide-desktop" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline src="<?=$srcMobile?>" type="video/mp4">
+                </video>
+            <? }elseif($imageMobile){ ?>
+                <img src="<?=$srcMobile?>" alt="" class="is-hide-desktop">
+            <? } ?>
+        <?endif?>
+
 	</div>
 	<? if(!empty($arResult["ITEMS"])){  ?>
 		<div class="content-center">
 			<div class="b-screen__content">
-				<button class="b-screen__sound-btn"></button>
 				<div class="b-screen__slider">
 					<div class="b-info-slider">
 						<div class="b-info-slider__nav"></div>
@@ -119,7 +147,29 @@ if(!empty($files['VALUE'])){
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
 	<? } ?>
 </section>
+
+<script>
+    $(document).ready(function(){
+        function resizeSliderTitle(){
+            try {
+                var current_width = document.querySelector('.b-info-slider__title').scrollWidth;
+                var real_width = document.querySelector('.b-info-slider__title').clientWidth;
+
+                if (current_width > real_width) {
+                    var curr_text = $('.b-info-slider__title').text().toLowerCase();
+                    var new_text = curr_text.split('spirit.')[0] + 'spirit. ' + curr_text.split('spirit.')[1]
+                    $('.b-info-slider__title').text(new_text)
+                }
+            }
+            catch (e) {
+                console.log(e)
+            }
+        }
+        resizeSliderTitle();
+    })
+</script>

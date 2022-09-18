@@ -5,8 +5,8 @@
 	require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 	
 	$APPLICATION->SetTitle("Блог");
-	$APPLICATION->SetPageProperty("description", "");
-	$APPLICATION->SetPageProperty("title", "");
+	$APPLICATION->SetPageProperty("description", "Мы собрали для вас самые полезные интересные темы и сделали экспертные статьи о тренировках, питании и упражнениях! Читайте на здоровье, ваш SpiritFit.ru");
+	$APPLICATION->SetPageProperty("title", " Блог | SpiritFit.ru");
 	
 	$settings = Utils::getInfo();
 	$currUrl = $APPLICATION->GetCurPage(false);

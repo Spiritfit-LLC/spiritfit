@@ -107,3 +107,37 @@
 		$arItem["PROPERTIES"] = $obItem->GetProperties();
 		$arResult["LEFT_ITEMS"][] = getAdditionaBlogItem($arItem, $isSafari);
 	}
+
+    function remove_empty_html_tags($html)
+    {
+        return preg_replace("/\xEF\xBB\xBF/", "", $html);
+    }
+
+    for ($i=0; $i<count($arResult['PROPERTIES']['BLOG_TEXT']['VALUE']); $i++){
+        $arResult['TXT'][]=[
+            'TEXT'=>remove_empty_html_tags(htmlspecialchars_decode($arResult['PROPERTIES']['BLOG_TEXT']['VALUE'][$i]['TEXT'])),
+            'TITLE'=>$arResult['PROPERTIES']['BLOG_TEXT']['DESCRIPTION'][$i],
+            'ID'=>'section_'.$i,
+        ];
+    }
+
+/* Получаем значения SEO */
+$ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues(Utils::GetIBlockIDBySID('blog'), $arResult["ID"]);
+$seoValues = $ipropValues->getValues();
+
+if (empty($seoValues['ELEMENT_META_TITLE'])){
+    $APPLICATION->SetPageProperty('title',$arResult["NAME"].' - Блог фитнес-клуба Spirit Fitness');
+}
+if (empty($seoValues['ELEMENT_META_DESCRIPTION'])){
+    $APPLICATION->SetPageProperty('description',$arResult["NAME"].'. В разделе «Блог» вы можете узнать много полезной информации о тренировках. Блог фитнес-клуба Spirit Fitness.');
+}
+
+CIBlockElement::SetPropertyValues($arResult['ID'], $arResult['IBLOCK_ID'], (int)$arResult['PROPERTIES']['SHOWING_COUNT']['VALUE']+1, "SHOWING_COUNT");
+
+if(empty($arResult['PROPERTIES']['RATING']['VALUE'])){
+    $arResult['PROPERTIES']['RATING']['VALUE']=0;
+}
+$arResult['PROPERTIES']['RATING_PROCENT']=$arResult['PROPERTIES']['RATING']['VALUE']/5*100;
+
+$date = str_replace('.', '-', $arResult["DATE"]);
+$arResult["datePublished"]=date('Y-m-d', strtotime($date));

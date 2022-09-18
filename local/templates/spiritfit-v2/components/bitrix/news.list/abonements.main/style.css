@@ -44,3 +44,87 @@
     font-size: 10pt;
     line-height: 11pt;
 }
+/*.abonement-min-price {*/
+/*	width: 100%;*/
+/*	position: absolute;*/
+/*	left: 0;*/
+/*	bottom: 100px;*/
+/*}*/
+/*.abonement-min-price__face {*/
+/*	width: 100%;*/
+/*	position: absolute;*/
+/*	bottom: 10px;*/
+/*	left: 10px;*/
+/*}*/
+/*.b-twoside-card__prices-face {*/
+/*	float: left;*/
+/*	padding: 10px 10px;*/
+/*	font-size: 14px;*/
+/*	text-transform: lowercase;*/
+/*	color: #ff7628;*/
+/*}*/
+
+/*.abonement-min-price .b-twoside-card__prices-title{*/
+/*	display:inline-block;*/
+/*}*/
+/*.abonement-min-price .b-twoside-card__prices-current{*/
+/*	display:inline-block;*/
+/*	font-size: 16px;*/
+/*}*/
+
+/*TEST*/
+.b-twoside-card__footer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	/* transform: scale(-1, 1); */
+	padding-bottom: 20px;
+	background: black;
+}
+.abonement-min-price__face {
+	width: 100%;
+	/* position: absolute; */
+	/* bottom: 10px; */
+	/* left: 10px; */
+	/* margin: 20px 0; */
+}
+.b-twoside-card__prices-face {
+	/* float: left; */
+	padding: 20px 10px;
+	font-size: 20px;
+	text-transform: lowercase;
+	color: #ff7628;
+	text-align: center;
+	font-weight: 600;
+}
+.b-twoside-card__inner {
+	position: relative;
+	display: block;
+	margin: 48px 24px;
+	color: #fff;
+	overflow: hidden;
+	background-color: #000;
+	cursor: pointer;
+	transition: transform .4s ease 0s;
+	margin-bottom: 10px;
+}
+.b-twoside-card.is-open .b-twoside-card__inner {
+	transform: scale(1.05) rotateY(180deg)!important;
+	transform-style: preserve-3d!important;
+}
+.choose-abonement-btn{
+	padding: 20px 60px!important;
+}
+
+@media screen and (max-width: 768px){
+	.b-twoside-card__inner {
+		margin: 0 8px!important;
+	}
+	.b-twoside-card__footer {
+		margin: 0 8px!important;
+	}
+	.choose-abonement-btn{
+		width: 100%;
+		margin: 0 8px!important;
+	}
+}

@@ -1,5 +1,17 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
+global $USER;
+if ($USER->IsAuthorized())
+{
+    $USER->SavePasswordHash();
+}
+else{
+    if (!is_object($USER)) $USER = new CUser;
+    $cookie_login = ${COption::GetOptionString("main", "cookie_name", "BITRIX_SM")."_LOGIN"};
+    $cookie_md5pass = ${COption::GetOptionString("main", "cookie_name", "BITRIX_SM")."_UIDH"};
+    $USER->LoginByHash($cookie_login, $cookie_md5pass);
+}
+
 use \Bitrix\Main\Page\Asset;
 
 $arInfoProps = Utils::getInfo()['PROPERTIES'];
@@ -73,6 +85,10 @@ foreach( $clubs as $club ) {
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/blocks.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/form-standart.js");
     Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/custom.js");
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . '/libs/modalwindow/modalwindow.js');
+    Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . '/libs/modalwindow/modalwindow.css');
+    Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/jquery.suggestions.css');
+    CJSCore::Init();
 
 
     ?>
@@ -108,6 +124,8 @@ foreach( $clubs as $club ) {
     </script>
     <script src="https://api.mindbox.ru/scripts/v1/tracker.js" async></script>
     <link rel="canonical" href="<?= 'https://' . $_SERVER['HTTP_HOST'] . $page; ?>"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/suggestions-jquery@21.12.0/dist/js/jquery.suggestions.min.js"></script>
 </head>
 <? $APPLICATION->ShowPanel(); ?>
 <?
@@ -119,27 +137,25 @@ foreach( $clubs as $club ) {
     }
 ?>
 <body class="b-page <?=$classPage?>">
+<!--    --><?//$APPLICATION->IncludeComponent('custom:banner', 'last.change', array("URL"=>"ALL", "BACKGROUND"=>"/upload/medialibrary/8f2/9frwkezz1ehaxj5m5tb0u10nfubij2mi.jpg"), false)?>
     <!-- VK counter -->
     <script defer type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?160",t.onload=function(){VK.Retargeting.Init("VK-RTRG-333642-hybZ4"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-333642-hybZ4" style="position:fixed; left:-999px;" alt=""/></noscript>    
 
     <header class="b-header">
         <div class="content-center">
-            <div class="b-header__content"><a class="b-header__logo-holder" href="/"><img class="b-header__logo-img"
+            <div class="b-header__content">
+                <a class="b-header__logo-holder is-hide-mobile" href="/"><img class="b-header__logo-img"
                         src="<?= $settings["PROPERTIES"]["SVG_WHITE"]["src"] ?>" alt="Spirit Fitness" title="" /></a>
-
-                <div class="b-header__mobile-clubs is-hide-desktop">
-                    <form action="/clubs/" method="get"> 
-                        <div class="b-club-search__input-wrap">
-                            <input class="b-club-search__input" type="text" id="club-search" name="club" placeholder="Название клуба" />
-                            <button class="b-club-search__submit" type="submit">Найти</button>
-                        </div>
-                    </form>
-                </div>
+<!--            INDEV-->
+                <a class="b-header__logo-holder is-hide-desktop" href="/"><img class="b-header__logo-img"
+                        src="<?= CFile::GetPath($settings["PROPERTIES"]["SVG_WHITE_MINI"]['VALUE'] );?>" alt="Spirit Fitness" title="" /></a>
+                <a class="phone-btn is-hide-desktop" data-position="mobile-header" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a>
+                <!--INDEV-->
                 <div class="b-header__nav">
                     <nav class="b-top-menu">
                         <button class="b-top-menu__toggle is-hide-desktop">Меню</button>
                         <div class="b-top-menu__holder">
-                            <div class="b-club-search">
+                            <div class="b-club-search active">
                                 <form action="/clubs/" method="get"> 
                                     <label class="b-club-search__label" for="#club-search">Найти клуб
                                     </label>
@@ -148,7 +164,25 @@ foreach( $clubs as $club ) {
                                         <button class="b-club-search__submit" type="submit">Найти</button>
                                     </div>
                                 </form>
+                                <? if(false) { ?><a class="b-header__btn button-outline is-hide-mobile js-form-abonement" href="#" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a><? } ?>
+				                <a class="b-header__btn button-outline is-hide-mobile trial-training-btn" href="/abonement/probnaya-trenirovka-/#js-pjax-container" data-position="bottomFixedBar">Пробная тренировка</a>
+<!--INDEV-->
+                                <button class="b-club-search__hide-btn b-club-search-btn"
+                                data-layer="true"
+                                data-layercategory="BottomFixedBar"
+                                data-layeraction="clickBottomFixedBarCloseButton">
+                                <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/cross_footer_icon.svg');?>
+                                </button>
+<!--INDEV-->
+
                             </div>
+<!--INDEV-->
+                            <button class="b-club-search__show-btn b-club-search-btn"
+                            data-layer="true"
+                            data-layercategory="BottomFixedBar"
+                            data-layeraction="clickBottomFixedBarShowButton" style="background-image: url('<?=SITE_TEMPLATE_PATH.'/img/icons/arrow_up_footer_gantel.png'?>')"></button>
+<!--INDEV-->
+
                             <?$APPLICATION->IncludeComponent(
                                 "bitrix:menu", 
                                 "main-menu", 
@@ -169,13 +203,68 @@ foreach( $clubs as $club ) {
                                 false
                             );?>
                             <? if(false) { ?><a class="b-top-menu__btn button-outline is-hide-desktop js-form-abonement" href="javascript:;" data-webform-fancybox="./form-request.html" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a><? } ?>
-							<a class="b-top-menu__btn button-outline is-hide-desktop" href="/abonement/probnaya-trenirovka-/#js-pjax-container">Пробная тренировка</a>
+							<? if(false) { ?><a class="b-top-menu__btn button-outline is-hide-desktop header-personal-btn" style="margin-bottom: 20px;" href="/personal/"
+							    data-layer="true"
+                                data-layercategory="UX"
+                                data-layeraction="clickLKbutton">Личный кабинет</a><? } ?>
+
+							<?if (!PersonalUtils::IsClient()):?>
+                                <a class="b-top-menu__btn button-outline is-hide-desktop trial-training-btn" href="/abonement/probnaya-trenirovka-/#js-pjax-container" data-position="burgerMenu" style="margin-bottom: 20px;">Пробная тренировка</a>
+								<a class="b-top-menu__btn button is-hide-desktop" href="/abonement/"
+								    data-layer="true"
+                                    data-layercategory="UX"
+                                    data-layeraction="clickBuyAbonementButton"
+                                    data-layerlabel="burgerMenu">Купить абонемент</a>
+							<?endif;?>
+
+							<a href="/personal/" class="b-top-menu__link is-hide-desktop auth-btn"
+							data-layer="true"
+                            data-layercategory="UX"
+                            data-layeraction="clickLKbutton">
+                            <?
+                            global $USER;
+                            if (!$USER->IsAuthorized()):?>
+                                <div class="personal-btn__icon">
+                                    <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/exit-btn.svg');?>
+                                </div>
+                                Личный кабинет
+                            <?endif;?>
+                            </a>
+                            <!--INDEV-->
+<!--                            <a class="b-top-menu__btn button-outline is-hide-desktop header-personal-btn" style="margin-bottom: 20px;" href="/personal/">Личный кабинет</a>-->
+<!--                            <a class="b-top-menu__btn button-outline is-hide-desktop trial-training-btn" href="/abonement/probnaya-trenirovka-/#js-pjax-container" data-position="burgerMenu">Пробная тренировка</a>-->
+                            <!--INDEV-->
+
                         </div>
                     </nav>
                 </div>
-				<a class="b-header-phone" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a>
-                <? if(false) { ?><a class="b-header__btn button-outline is-hide-mobile js-form-abonement" href="#" data-type="trial" data-abonementid="226" data-abonementcode="probnaya-trenirovka" data-code1c="pb">Пробная тренировка</a><? } ?>
-				<a class="b-header__btn button-outline is-hide-mobile" href="/abonement/probnaya-trenirovka-/#js-pjax-container">Пробная тренировка</a>
+                <?if (!PersonalUtils::IsClient()):?>
+                    <a class="b-top-menu__abonement-btn is-hide-mobile" href="/abonement/"
+                       data-layer="true"
+                       data-layercategory="UX"
+                       data-layeraction="clickBuyAbonementButton"
+                       data-layerlabel="header">купить абонемент</a>
+                <?endif;?>
+				<a class="b-header-phone phone-btn main-phone-btn is-hide-mobile" data-position="header" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a>
+                <a href="/personal/" class="personal-btn is-hide-mobile header-personal-btn"
+                data-layer="true"
+                data-layercategory="UX"
+                data-layeraction="clickLKbutton">
+                    <?
+                    if ($USER->IsAuthorized()):?>
+                        Личный кабинет
+                        <div class="personal-btn__icon">
+                            <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/profile_icon.svg');?>
+                        </div>
+                    <?else:?>
+                        Личный кабинет
+                        <div class="personal-btn__icon">
+                            <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/exit-btn.svg');?>
+                        </div>
+                    <?endif;?>
+                </a>
+
+
             </div>
         </div>
     </header>

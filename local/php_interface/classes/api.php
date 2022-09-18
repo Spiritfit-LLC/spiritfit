@@ -121,7 +121,15 @@ class Api
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
-            
+
+            case "contact":
+                $this->contact($post['params']);
+                AddMessage2Log('contact');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+
+
             //МЕТОДЫ ДЛЯ ЛК
             case 'lkreg':
                 $this->lkreg($post['params']);
@@ -131,16 +139,179 @@ class Api
                 break;
             case 'lkcode':
                 $this->lkcode($post['params']);
-                AddMessage2Log('lkreg');
+                AddMessage2Log('lkcode');
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
             case 'lkinfo':
                 $this->lkinfo($post['params']);
-                AddMessage2Log('lkreg');
+                AddMessage2Log('lkinfo');
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
+            case "lkcheck":
+                $this->lkcheck($post['params']);
+                AddMessage2Log('lkcheck');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "lkedit":
+                $this->lkedit($post['params']);
+                AddMessage2Log('lkedit');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "lkpresent":
+                $this->lkpresent($post['params']);
+                AddMessage2Log('lkpresent');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case 'lkpayments':
+                $this->lkpayments($post['params']);
+                AddMessage2Log('lkpayments');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case 'lkemailconfirm':
+                $this->lkemailconfirm($post['params']);
+                AddMessage2Log('lkemailconfirm');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "lkfreezingget":
+                $this->lkfreezingget($post['params']);
+                AddMessage2Log('lkfreezingget');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "lkfreezingpost":
+                $this->lkfreezingpost($post['params']);
+                AddMessage2Log('lkfreezingpost');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "lkfreefreezingget":
+                $this->lkfreefreezingget($post['params']);
+                AddMessage2Log('lkfreefreezingget');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "lkfreefreezingpost":
+                $this->lkfreefreezingpost($post['params']);
+                AddMessage2Log('lkfreefreezingpost');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+
+            case "getqrcode":
+                $this->getqrcode($post['params']);
+                AddMessage2Log('getqrcode');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "lkloyaltyhistory":
+                $this->lkloyaltyhistory($post["params"]);
+                AddMessage2Log('lkloyaltyhistory');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "promisedpayment":
+                $this->promisedpayment($post["params"]);
+                AddMessage2Log('promisedpayment');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+
+            //НОВАЯ ОПЛАТА
+            case "orderreg":
+                $this->orderreg($post['params']);
+                AddMessage2Log('orderreg');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "ordercode":
+                $this->ordercode($post['params']);
+                AddMessage2Log('orderreg');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "ordercodecheck":
+                $this->ordercodecheck($post['params']);
+                AddMessage2Log('ordercodecheck');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "ordercreate":
+                $this->ordercreate($post['params']);
+                AddMessage2Log('ordercreate');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "orderpromocode":
+                $this->orderpromocode($post['params']);
+                AddMessage2Log('orderpromocode');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "getorder":
+                $this->getorder($post['params']);
+                AddMessage2Log('getorder');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+
+            case "request_sendcode_new":
+                $this->request_sendcode_new($post['params']);
+                AddMessage2Log('request_sendcode_new');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "request2_new":
+                $this->request2_new($post['params']);
+                AddMessage2Log('request2_new');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+
+            //Пробная тренировка в ЛК
+            case "trialworkout":
+                $this->trialworkout($post["params"]);
+                AddMessage2Log('trialworkout');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+            case "trialworkoutsignup":
+                $this->trialworkoutsignup($post["params"]);
+                AddMessage2Log('trialworkoutsignup');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+
+            case "lkloyalty":
+                $this->lkloyalty($post["params"]);
+                AddMessage2Log('lkloyalty');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+
+            //Тренерский ЛК
+            case "coachworkouts":
+                $this->coachworkouts($post["params"]);
+                AddMessage2Log('coachtrainings');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+
+
+
+            default:
+                $this->httpRequest($post['action'], $post["params"]);
+                AddMessage2Log($post['action']);
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
+
         }
     }
 
@@ -374,12 +545,12 @@ class Api
 			if(isset($additionFields['email'])) $request['email'] = $_REQUEST[$additionFields['email']];
 
 
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\ordernew\n", true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r($_REQUEST, true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r($request, true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+//             file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
+//             file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\ordernew\n", true), FILE_APPEND);
+//             file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
+//             file_put_contents(__DIR__.'/myTest_.txt', print_r($_REQUEST, true), FILE_APPEND);
+//             file_put_contents(__DIR__.'/myTest_.txt', print_r($request, true), FILE_APPEND);
+//             file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
 			
 			$this->_send($this->apiUrl."ordernew", $request);
 
@@ -412,7 +583,7 @@ class Api
             $client_id = explode('.', $client_id);
             $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
         }
-		
+        file_put_contents(__DIR__.'/myTest_.txt', print_r($params["type"]."\n", true), FILE_APPEND);
         $this->_send($this->apiUrl."code", array(
 			"phone" => substr($phone, 1),
             "code" => $code,
@@ -455,10 +626,7 @@ class Api
 			if(isset($additionFields['email'])) $arParams['email'] = $_REQUEST[$additionFields['email']];
 
 
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\contact(request2)\n", true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r($arParams, true), FILE_APPEND);
-            // file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+
 			
             $this->_send($this->apiUrl."contact", $arParams);
             
@@ -697,7 +865,6 @@ class Api
         // file_put_contents(__DIR__.'/debug_reg.txt', print_r($_REQUEST, true), FILE_APPEND);
         // file_put_contents(__DIR__.'/debug_reg.txt', print_r($arParams, true), FILE_APPEND);
         // file_put_contents(__DIR__.'/debug_reg.txt', print_r("\n ================ \n", true), FILE_APPEND);
-
         // file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\reg\n", true), FILE_APPEND);
         // file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
         // file_put_contents(__DIR__.'/myTest_.txt', print_r($arParams, true), FILE_APPEND);
@@ -748,10 +915,10 @@ class Api
 			$this->_result = true;			
     }
 	
-	private function _send($url, $data) 
+	private function _send($url, $data, $header=null)
 	{
-		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", json_encode($data), FILE_APPEND);
-		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $url, FILE_APPEND);
+//		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", json_encode($data), FILE_APPEND);
+//		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $url, FILE_APPEND);
 
 
 		if($data) {
@@ -770,7 +937,7 @@ class Api
                 CURLOPT_URL => $url, 
                 CURLOPT_PORT => 443,
                 CURLOPT_RETURNTRANSFER => 1, 
-                CURLOPT_TIMEOUT => 10,
+                CURLOPT_TIMEOUT => 20,
                 CURLOPT_POSTFIELDS => json_encode($data)
             ); 
         }else{
@@ -779,13 +946,20 @@ class Api
                 CURLOPT_URL => $url, 
                 CURLOPT_PORT => 443,
                 CURLOPT_RETURNTRANSFER => 1, 
-                CURLOPT_TIMEOUT => 10,
+                CURLOPT_TIMEOUT => 20,
             ); 
-        }       
+        }
+
+        if (!empty($header)){
+            $options[CURLOPT_HTTPHEADER]=array(
+                    $header,
+            );
+        }
         
 		$ch = curl_init();
 		
 		curl_setopt_array($ch, $options);
+
 
 		if( ! $result = curl_exec($ch)) {
 			$this->_data = array(
@@ -797,10 +971,11 @@ class Api
 			$this->_data = array(
 				"error" => false,
 				"message" => "",
-				"result" => json_decode($result, true)
+				"result" => json_decode($result, true),
+                "http_code"=>curl_getinfo($ch, CURLINFO_HTTP_CODE),
 			);
 		}
-		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $result, FILE_APPEND);
+//		file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", $result, FILE_APPEND);
 		
 		curl_close($ch);
 	}
@@ -949,28 +1124,27 @@ class Api
         else{
             $this->_result=false;
         }
-        file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\lkregistration\n", true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($params, true)."\n", FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($this->_data, true)."\n", FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\lkregistration\n", true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r($params, true)."\n", FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r($this->_data, true)."\n", FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
     }
 
     private function lkcode($params){
         $this->_send($this->apiUrl."lkcode", $params);
         // $this->_send("https://app.spiritfit.ru/fitness-test1/hs/website/lkcode", $params);
         if (empty($this->_data['result'])){
-
             $this->_result=false;
         }
         else{
             $this->_result = $this->_data['result']['result'];
         }
-        file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\lkcode\n", true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($params, true)."\n", FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($this->_data, true)."\n", FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\lkcode\n", true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r($params, true)."\n", FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r($this->_data, true)."\n", FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
     }
 
     private function lkinfo($params){
@@ -983,10 +1157,313 @@ class Api
             $this->_result=false;
         }
 
-        file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\lkinfo\n", true), FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($params, true)."\n", FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($this->_data, true)."\n", FILE_APPEND);
-        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r(date("Y-m-d H:i:s"), true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r("website\\lkinfo\n", true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r($params, true)."\n", FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r($this->_data, true)."\n", FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
+    }
+
+    private function lkcheck($params){
+        $this->_send($this->apiUrl."lkcheck", $params);
+        if ($this->_data['result']['result'] === true){
+            $this->_result = true;
+        }
+        else{
+            $this->_result = false;
+        }
+    }
+
+    private function lkedit($params){
+        $this->_send($this->apiUrl."lkedit", $params);
+    }
+
+    private function lkpresent($params){
+        $this->_send($this->apiUrl."lkpresent", $params);
+
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
+    }
+
+    private function lkpayments($params){
+        $this->_send($this->apiUrl."lkpayments", $params);
+
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
+    }
+
+    private function lkemailconfirm($params){
+        $token=API_SPIRITFIT_TOKEN;
+        $arParams['token']=$token;
+        $arParams['email']=$params['email'];
+        $this->_send("https://api.spiritfit.ru/email-sendcode", $arParams, 'Content-Type: application/json');
+
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
+    }
+
+    private function lkfreezingget($params){
+        $this->_send($this->apiUrl."lkfreezingget", $params);
+
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
+    }
+
+    private function lkfreezingpost($params){
+        $this->_send($this->apiUrl."lkfreezingpost", $params);
+
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
+    }
+
+    private function lkfreefreezingget($params){
+        $this->_send($this->apiUrl."lkfreefreezingget", $params);
+
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
+    }
+
+    private function lkfreefreezingpost($params){
+        $this->_send($this->apiUrl."lkfreefreezingpost", $params);
+
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
+    }
+
+
+    private function getqrcode($params){
+        $params['token']=API_SPIRITFIT_TOKEN;
+        $this->_send("https://api.spiritfit.ru/qrcode", $params, 'Content-Type: application/json');
+
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
+    }
+
+
+
+
+    //Новая оплата (закладываю на будущее)
+    private function orderreg($params){
+        $params['clubid']=sprintf("%02d", $params['clubid']);
+
+        /*Костыль для работы клуба с одинаковым ID*/
+        if(!empty($params['clubid']) && intval($params['clubid']) == 9999) {
+            $params['clubid'] = "11";
+        }
+        /*Костыль для работы клуба с одинаковым ID*/
+
+        if(!empty($params['subscriptionId'])) {
+            $params['subscriptionId'] = trim($params['subscriptionId']);
+        }
+
+
+        $this->_send($this->apiUrl."orderreg", $params);
+
+        if ($this->_data['result']['errorCode'] === 0)
+            $this->_result = true;
+    }
+
+    private function ordercode($params){
+        if(empty($params['phone'])){
+            return false;
+        }
+        $this->_send($this->apiUrl."ordercode", $params);
+
+        if ($this->_data['result']['errorCode'] === 0)
+            $this->_result = true;
+    }
+
+    private function ordercodecheck($params){
+        $this->_send($this->apiUrl."ordercodecheck", $params);
+        if ($this->_data['result']['result'] === true){
+            $this->_result = true;
+        }
+        else{
+            $this->_result = false;
+        }
+    }
+
+    private function ordercreate($params){
+        $params['clubid']=sprintf("%02d", $params['clubid']);
+
+        /*Костыль для работы клуба с одинаковым ID*/
+        if(!empty($params['clubid']) && intval($params['clubid']) == 9999) {
+            $params['clubid'] = "11";
+        }
+        /*Костыль для работы клуба с одинаковым ID*/
+
+        if(!empty($params['subscriptionId'])) {
+            $params['subscriptionId'] = trim($params['subscriptionId']);
+        }
+
+        $this->_send($this->apiUrl."ordercreate", $params);
+        if ($this->_data['result']['errorCode'] === 0)
+            $this->_result = true;
+    }
+
+
+    private function orderpromocode($params){
+        $this->_send($this->apiUrl."orderpromocode", $params);
+
+
+        if ($this->_data['result']['errorCode'] === 0)
+            $this->_result = true;
+    }
+
+    private function getorder($params){
+        $this->_send($this->apiUrl."getorder", $params);
+
+        if ($this->_data['result']['errorCode'] === 0)
+            $this->_result = true;
+    }
+
+
+    private function request_sendcode_new($params){
+        $params['clubid']=sprintf("%02d", $params['clubid']);
+
+        /*Костыль для работы клуба с одинаковым ID*/
+        if(!empty($params['clubid']) && intval($params['clubid']) == 9999) {
+            $params['clubid'] = "11";
+        }
+        /*Костыль для работы клуба с одинаковым ID*/
+
+        if(!empty($params['subscriptionId'])) {
+            $params['subscriptionId'] = trim($params['subscriptionId']);
+        }
+
+        $this->_send($this->apiUrl."reg", $params);
+
+        if ($this->_data['result']['errorCode'] === 0)
+            $this->_result = true;
+    }
+
+    private function request2_new($params){
+        $this->_send($this->apiUrl."code", array(
+            "phone" => $params["phone"],
+            "code" => $params["code"],
+            "type" => $params["type"] ? $params["type"] : 0
+        ));
+
+        if ($this->_data['result']['errorCode'] == 0) {
+            unset($params['code']);
+
+            $params['clubid']=sprintf("%02d", $params['clubid']);
+
+            /*Костыль для работы клуба с одинаковым ID*/
+            if(!empty($params['clubid']) && intval($params['clubid']) == 9999) {
+                $params['clubid'] = "11";
+            }
+            /*Костыль для работы клуба с одинаковым ID*/
+
+            if(!empty($params['subscriptionId'])) {
+                $params['subscriptionId'] = trim($params['subscriptionId']);
+            }
+
+            $this->_send($this->apiUrl."contact", $params);
+//            file_put_contents($_SERVER["DOCUMENT_ROOT"].'/logs/test.txt', print_r($params, true), FILE_APPEND);
+//            file_put_contents($_SERVER["DOCUMENT_ROOT"].'/logs/test.txt', print_r($this->_data, true), FILE_APPEND);
+
+            if ($this->_data['result']['errorCode'] === 0)
+                $this->_result = true;
+
+        } else {
+            $this->_result = false;
+        }
+    }
+
+
+    private function trialworkout($params){
+        $this->_send($this->apiUrl."trialworkout", $params);
+
+        if ($this->_data['result']['errorCode'] === 0)
+            $this->_result = true;
+    }
+
+    private function trialworkoutsignup($params){
+        $this->_send($this->apiUrl."trialworkoutsignup", $params);
+
+        if ($this->_data['result']['errorCode'] === 0)
+            $this->_result = true;
+    }
+
+    private function lkloyalty($params){
+        $this->_send($this->apiUrl."lkloyalty", $params);
+
+        if ($this->_data['result']['errorCode'] === 0)
+            $this->_result = true;
+
+    }
+
+    private function lkloyaltyhistory($params){
+        $this->_send($this->apiUrl."lkloyaltyhistory", $params);
+
+        if ($this->_data['result']['errorCode'] === 0)
+            $this->_result = true;
+    }
+
+
+    private function coachworkouts($params){
+        $this->_send($this->apiUrl."coachworkouts", $params);
+
+        if ($this->_data["result"]["errorCode"]===0){
+            $this->_result=true;
+        }
+    }
+
+    private function contact($params){
+        $this->_send($this->apiUrl."contact", $params);
+
+        if ($this->_data["result"]["errorCode"]===0){
+            $this->_result=true;
+        }
+    }
+
+    private function promisedpayment($params){
+        $this->_send($this->apiUrl."promisedpayment", $params);
+
+        if ($this->_data["result"]["result"]===true){
+            $this->_result=true;
+        }
+    }
+
+    //Общая функция (чет расплодились однотипные функции)
+    private function httpRequest($action, $params){
+        $this->_send($this->apiUrl.$action, $params);
+
+        if ($this->_data["result"]["errorCode"]===0){
+            $this->_result=true;
+        }
     }
 }

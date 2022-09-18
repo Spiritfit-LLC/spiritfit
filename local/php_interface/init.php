@@ -15,6 +15,7 @@ define("IBLOCK_CLUBS_ID", 6);// ID инфоблока "Клубы"
 define("POST_FORM_CORP_ACTION_URI", "/local/templates/spiritfit-corp/ajax/modal-trial.php");
 define("POST_FORM_CAREER_ACTION_URI", "/local/templates/spiritfit-career/ajax/modal-trial.php");
 define("MAIN_SITE_URL", "https://spiritfit.ru");
+define("API_SPIRITFIT_TOKEN", "65a0e413b0224cb198096c7e4a297aa0");
 
 $currentUrl = strtok($_SERVER["REQUEST_URI"], "?");
 $enableNoIndexPages = [
@@ -53,6 +54,16 @@ if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/Abonem
 if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/EventHandlersClass.php')) {
     require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/EventHandlersClass.php');
 }
+
+if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/PersonalUtils.php')) {
+    require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/PersonalUtils.php');
+}
+if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/FeedCreator.php')) {
+    require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/FeedCreator.php');
+}
+
+AddEventHandler("main", "OnAfterUserAuthorize", Array("PersonalUtils", "UpdateFieldsAfterLogin"));
+
 
 CModule::AddAutoloadClasses("", array(
     '\ImageConverter\Picture' => '/local/php_interface/classes/ImageConverter.php',
@@ -163,6 +174,13 @@ $arTraficAnswer = array(
 		'trm' => 'form_text_228',
 		'ClientId' => 'form_text_229',
 	),
+    Utils::GetFormIDBySID('PAYMENT_NEW')=>array(
+        'src' => 'form_text_230',
+        'mdm' => 'form_text_231',
+        'cmp' => 'form_text_232',
+        'cnt' => 'form_text_233',
+        'trm' => 'form_text_234',
+    ),
 );
 
 $arAdditionAnswer = array(
@@ -217,25 +235,25 @@ function getClientParams($webFormId) {
 	    				$('input[name=<?=$arIdAnswer["cnt"]?>]').val(current.cnt);
 	    				$('input[name=<?=$arIdAnswer["trm"]?>]').val(current.trm);
 
-						ym(48440750, 'getClientID', function(clientID) {
-							$('input[name=<?=$arIdAnswer["yaClientID"]?>]').val(clientID)
-						});
-	    				
-	    				var ClientId = '';
-	    				//if( typeof ga !== 'undefined' ) {
-							var ga = getCookie('_ga');
-							if( ga !== null ) {
-								var i = ga.lastIndexOf('.');
-	    						if(i > 0) {
-	    							i = ga.lastIndexOf('.', i-1);
-	    							if(i > 0) {
-	    								ClientId = ga.substring(i+1);
-	    							}
-	    						}
-							}
-						//}
-						
-	    				$('input[name=<?=$arIdAnswer["ClientId"]?>]').val(ClientId);
+						//ym(48440750, 'getClientID', function(clientID) {
+						//	$('input[name=<?//=$arIdAnswer["yaClientID"]?>//]').val(clientID)
+						//});
+	    				//
+	    				//var ClientId = '';
+	    				////if( typeof ga !== 'undefined' ) {
+						//	var ga = getCookie('_ga');
+						//	if( ga !== null ) {
+						//		var i = ga.lastIndexOf('.');
+	    				//		if(i > 0) {
+	    				//			i = ga.lastIndexOf('.', i-1);
+	    				//			if(i > 0) {
+	    				//				ClientId = ga.substring(i+1);
+	    				//			}
+	    				//		}
+						//	}
+						////}
+						//
+	    				//$('input[name=<?//=$arIdAnswer["ClientId"]?>//]').val(ClientId);
 
 						
 	                }

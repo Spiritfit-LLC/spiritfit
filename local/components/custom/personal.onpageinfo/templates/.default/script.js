@@ -3,6 +3,11 @@ $(document).ready(function(){
     $('html, body').animate({scrollTop: 0},500);
 
 
+    //анимация
+    // $('.personal-onpage').animate({
+    //     'left':`-120px`
+    // }, 500, "swing")
+
 //    НАСТРЙОКИ ДЛЯ ДАТЫ
     $('[data-toggle="datepicker"]').each(function(){
         $(this).inputmask({
@@ -158,12 +163,15 @@ $(document).ready(function(){
             data:postData,
             cache:false,
             success:function (res){
-                console.log(res);
+                // console.log(res);
                 form.find('input[type="submit"]').removeAttr('disabled');
                 var ACTION=form.find('input[name="ACTION"]').val();
                 if (res['result']===true){
                     if (ACTION==='UPDATE_USER'){
                         form.find('.form-submit-result-text').html('Ваши данные обновлены').addClass('active');
+                        if (res['type']==='is_correct'){
+                            window.location.reload();
+                        }
 
                         form.find('input[data-code]').each(function(){
                             $('.personal-profile__user-head-items').find(`[data-code="${$(this).data('code')}"]`).text($(this).val());
@@ -176,15 +184,54 @@ $(document).ready(function(){
                         }
                         form.find('.form-submit-result-text').html('Ваши данные обновлены').addClass('active');
                     }
-                    else if(ACTION==='LOGIN'){
+                    else if(ACTION==='LOGIN_1'){
+                        var user_type=res['type'];
+                        if (user_type==='site'){
+                            form.find('.auth-password').show(300)
+                            form.find('.auth-password input').prop('required', true)
+                            form.find('input[name="ACTION"]').val(ACTION.replace('1', '3'))
+                        }
+                        else if (user_type==='1c'){
+                            form.find('input[name="ACTION"]').val(ACTION.replace('1', '2'));
+                            form.find('input:not([type="submit"]):not(.reg_code)').prop( "disabled", true );
+                            form.find('input[type="submit"]').val('подтвердить');
+
+                            createCodeEl(form, ACTION);
+                        }
+                        else if (user_type==='site2'){
+                            form.find('input[name="ACTION"]').val('FORGOT_2');
+                            form.find('input:not([type="submit"]):not(.reg_code)').prop( "disabled", true );
+                            form.find('input[type="submit"]').val('подтвердить');
+
+                            createCodeEl(form, ACTION);
+                        }
+                    }
+                    else if(ACTION==='LOGIN_3' || ACTION==='LOGIN_2'){
                         window.location.reload();
                     }
-                    else if (ACTION==='REG_1' || ACTION==='FORGOT_1'){
+                    else if (ACTION==='REG_1'){
                         form.find('input[name="ACTION"]').val(ACTION.replace('1', '2'));
                         form.find('input:not([type="submit"]):not(.reg_code)').prop( "disabled", true );
                         form.find('input[type="submit"]').val('подтвердить');
 
                         createCodeEl(form, ACTION);
+                    }
+                    else if (ACTION==='FORGOT_1'){
+                        user_type=res['type'];
+                        if (user_type==='site'){
+                            form.find('input[name="ACTION"]').val('FORGOT_2');
+                            form.find('input:not([type="submit"]):not(.reg_code)').prop( "disabled", true );
+                            form.find('input[type="submit"]').val('подтвердить');
+
+                            createCodeEl(form, ACTION);
+                        }
+                        else if (user_type==='1c'){
+                            form.find('input[name="ACTION"]').val('LOGIN_2');
+                            form.find('input:not([type="submit"]):not(.reg_code)').prop( "disabled", true );
+                            form.find('input[type="submit"]').val('подтвердить');
+
+                            createCodeEl(form, ACTION);
+                        }
                     }
                     else if (ACTION==='REG_2' || ACTION==='FORGOT_2'){
                         window.location.href=personal_page_url;
@@ -200,7 +247,10 @@ $(document).ready(function(){
                         disabled.removeAttr('disabled');
                     }
                 }
-            }
+            },
+            // error:function(err){
+            //     console.log(err);
+            // }
         })
     })
 
@@ -240,7 +290,7 @@ $(document).ready(function(){
                 contentType: false,
                 enctype: 'multipart/form-data',
                 success:function(res){
-                    console.log(res);
+                    // console.log(res);
                     var success=res['result'];
                     var message=res['message'];
                     if (success){
@@ -257,5 +307,37 @@ $(document).ready(function(){
         $('.personal-profile__user-refresh-photo-file-input').trigger('click');
 
     })
+
+
+    //Подсказки
+    tippy.createSingleton(tippy('.clue-icon', {
+        content: (reference) =>
+        {
+            return $(reference).find('.clue-text').text();
+        },
+        theme: 'light',
+    }), {
+        allowHTML: true,
+        delay: 500, // ms
+        placement: 'top',
+        arrow: false,
+        animation: 'fade',
+        theme: 'material',
+        interactive: true,
+    })
+
+    //Временное решение
+    tippy('.spisat-btn', {
+        content: 'Списание бонусов возможно спустя месяц после регистрации.',
+        theme: 'light',
+        trigger: 'click',
+    });
+    tippy('.podarok-btn', {
+        content: 'Можно подарить бонусы другу, мы отправим вам промокод на скидку = сумме бонусов, по промокоду можно купить любой абонемент. Бонусы нельзя подарить действующему члену клуба.',
+        theme: 'light',
+        trigger: 'click',
+        arrow: false,
+    })
+    //Временное решение
 
 });

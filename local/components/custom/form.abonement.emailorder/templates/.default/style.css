@@ -1,0 +1,16 @@
+.form-inputs__row {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 2px solid #ffffff80;
+    padding: 5px 0;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+span.form-inputs__row-placeholder {
+    font-size: 12px;
+    margin: 5px 0;
+}
+span.form-inputs__value {
+    font-size: 18px;
+    font-weight: 500;
+}

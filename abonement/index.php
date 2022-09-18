@@ -1,5 +1,6 @@
 <?
 define('BREADCRUMB_H1_ABSOLUTE', true);
+define('HIDE_SLIDER', true);
 
 if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
     require_once($_SERVER['DOCUMENT_ROOT'] . "/bitrix/modules/main/include/prolog_before.php");
@@ -8,8 +9,8 @@ if (isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 }
 
 $APPLICATION->SetTitle("Абонементы");
-$APPLICATION->SetPageProperty("description", "Удобная ежемесячная оплата 💥 Полный безлимит по времени и услугам 💯 Специальные условия на покупку в этом месяце. Пробная тренировка бесплатно 💸");
-$APPLICATION->SetPageProperty("title", "Абонементы фитнес-клуба Spirit Fitness");
+$APPLICATION->SetPageProperty("description", "Удобная оплата от 1700 ₽ в месяц 💥 Полный безлимит по времени и услугам 💯 Специальные условия на покупку в этом месяце. Пробная тренировка бесплатно 💸");
+$APPLICATION->SetPageProperty("title", "Абонементы фитнес-клуба Spirit Fitness: абонементы от 1700 ₽ в месяц");
 ?>
 
 <? if(isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true' && $_REQUEST["ajax_send"] == 'Y'): ?>
@@ -96,4 +97,15 @@ $APPLICATION->SetPageProperty("title", "Абонементы фитнес-клу
 	);?>
 	<? $APPLICATION->IncludeFile('/local/include/blocks.abonements.php', ['ELEMENT_CODE' => 'trenazhernyy-zal-main'], ['SHOW_BORDER' => false]); ?>
 <? endif; ?>
+<?
+//$APPLICATION->IncludeComponent(
+//    "custom:promocode.banner",
+//    "purple",
+//    Array(
+//        "BANNER_DISCOUNT" => "1000 &#x20bd;",
+//        "BANNER_TIME" => 3000,
+//        "PROMOCODE" => "FITSUMMER"
+//    )
+//);
+?>
 <? if (!isset($_SERVER['HTTP_X_PJAX']))  require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

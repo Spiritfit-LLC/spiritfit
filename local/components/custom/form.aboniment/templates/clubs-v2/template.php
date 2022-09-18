@@ -4,7 +4,6 @@
 $arField = ['name', 'email', 'phone'];
 ?>
 
-
 <div class="content-center block-margin">
     <div class="form-standart form-standart_tpl-hor form-standart_black-bg">
         <div class="form-standart__plate">
@@ -43,7 +42,7 @@ $arField = ['name', 'email', 'phone'];
                             <label class="form-standart__label"><?=$arResult["arQuestions"][$itemField]["TITLE"]?></label>
                             <div class="form-standart__item">
                                 <div class="form-standart__inputs">
-                                    <input class="form-standart__input" type="<?=$type?>" data-necessary="" name="form_<?= $arResult["arAnswers"][$itemField]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"][$itemField]['0']["ID"] ?>" <?=($arResult["arQuestions"][$itemField]["REQUIRED"] ? 'required="required"' : '')?> value="<?=$_REQUEST["form_" . $arResult["arAnswers"][$itemField]['0']["FIELD_TYPE"] . "_" . $arResult["arAnswers"][$itemField]['0']["ID"]] ?>" />
+                                    <input class="form-standart__input" type="<?=$type?>" data-necessary="" name="form_<?= $arResult["arAnswers"][$itemField]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"][$itemField]['0']["ID"] ?>" <?=($arResult["arQuestions"][$itemField]["REQUIRED"] ? 'required="required"' : '')?> value="<?=$_REQUEST["form_" . $arResult["arAnswers"][$itemField]['0']["FIELD_TYPE"] . "_" . $arResult["arAnswers"][$itemField]['0']["ID"]] ?>" <?=$arResult["arAnswers"][$itemField]['0']["FIELD_PARAM"]?>/>
                                 </div>
                                 <div class="form-standart__message">
                                     <div class="form-standart__none">Заполните поле</div>

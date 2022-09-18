@@ -41,4 +41,39 @@ ul.left-menu li a.selected:hover
 }
 
 
+.b-top-menu__link{
+	display:block;
+	padding:15px;
+	color:#fff;
+	font-size:13px;
+	font-weight:700;
+	text-transform:uppercase;
+	text-decoration:none
+}
+@media screen and (max-width:1024px){
+	.b-top-menu__link{
+		padding:15px 0;
+		font-size:24px;
+		font-weight:500
+	}
+}
 
+
+a.b-top-menu__abonement-btn {
+	color: black;
+	font-size: 13px;
+	font-weight: 700;
+	/* padding: 0; */
+	padding: 20px 40px;
+	background-color: #ff7628;
+	/* border-radius: 5px; */
+	display: block;
+	text-transform: uppercase;
+	margin-right: 50px;
+	white-space: nowrap;
+}
+@media screen and (max-width: 1280px){
+	a.b-top-menu__abonement-btn{
+		margin-right: 160px;
+	}
+}

@@ -90,7 +90,7 @@ $page = $APPLICATION->GetCurPage();
 <body class="b-page">
     <header class="b-header">
         <div class="content-center">
-            <div class="b-header__content"><a class="b-header__logo-holder" href="https://spiritfit.ru/"><img class="b-header__logo-img"
+            <div class="b-header__content"><a class="b-header__logo-holder" href="/" target="_self"><img class="b-header__logo-img"
                         src="<?= $settings["PROPERTIES"]["SVG_WHITE"]["src"] ?>" alt="Spirit Fitness" title="" /></a>
 
                 <div class="b-header__mobile-clubs is-hide-desktop">

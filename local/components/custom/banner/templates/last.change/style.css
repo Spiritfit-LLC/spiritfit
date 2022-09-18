@@ -1,0 +1,85 @@
+div.last-change-banner {
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    border: 2px solid #ff7628;
+}
+div.last-change__background {
+    position: absolute;
+    width: 110%;
+    height: 110%;
+    top: -5%;
+    left: -5%;
+    background-size: cover;
+    background-position: 50% 50%;
+    z-index: 1;
+    filter: blur(2px);
+}
+.last-change-banner__content {
+    z-index: 2;
+    position: relative;
+}
+.banner__header-text {
+    font-size: 21px;
+    font-weight: 600;
+    margin: 30px 0;
+}
+.banner__body-text {
+    font-size: 21px;
+    font-weight: 600;
+    margin: 30px 0;
+}
+.last-change.dlg-modal{
+    width: 350px;
+    min-width: unset;
+}
+.last-change .dlg-content{
+    padding: 0!important;
+}
+.last-change__input-block {
+    text-align: start;
+}
+span.last-change__placeholder {
+    font-size: 12px;
+    padding: 0 5px;
+    color: #ff7628;
+}
+input.last-change__input {
+    padding: 5px 5px;
+    font-size: 18px;
+}
+input.last-change__submit {
+    width: 100%;
+    margin: 30px 0 0;
+    background: #ff7628;
+    border: none;
+    color: white;
+    font-weight: 500;
+    text-transform: uppercase;
+    height: 50px;
+    font-size: 16px;
+}
+.last-change__checkbox {
+    margin: 10px 0;
+}
+.last-change__checkbox .input-label__text {
+    text-align: start;
+}
+.last-change__checkbox .input-label{
+    align-items: flex-start;
+}
+.last-change__checkbox .input--checkbox {
+    border: 1px solid #fff;
+}
+.last-change__checkbox a {
+    color: #ff7628;
+    font-weight: 600;
+}
+.last-change span.error-message {
+    width: 100%;
+    /* text-align: start; */
+    font-size: 14px;
+    color: #ff7628;
+}
