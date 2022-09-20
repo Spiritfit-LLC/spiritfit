@@ -26,9 +26,9 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             $this->arResult["ERROR"] = "Не выбранна веб форма";
         }
         if (!empty(Context::getCurrent()->getRequest()->get("has_leaders"))){
-            $arParams['LEADER_ID'] = 0;
+            $arParams['SELECTED_LEADER_ID'] = 0;
             if($leaderId = Context::getCurrent()->getRequest()->get("leader_id")){
-                $arParams['LEADER_ID'] = intval($leaderId);
+                $arParams['SELECTED_LEADER_ID'] = intval($leaderId);
             }
         }
         return $arParams;
@@ -357,9 +357,9 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                         $FORM_FIELDS['FIELDS'][$key]['ITEMS']=$CLUBS;
                     }
                 }
-                elseif ($key=='leaders' && isset($this->arParams['LEADER_ID'])){
+                elseif ($key=='leaders' && isset($this->arParams['SELECTED_LEADER_ID'])){
 					$FORM_FIELDS['FIELDS'][$key]['VALUE_STRING'] = '';
-					$FORM_FIELDS['FIELDS'][$key]['VALUE']=$this->arParams['LEADER_ID'];	
+					$FORM_FIELDS['FIELDS'][$key]['VALUE']=$this->arParams['SELECTED_LEADER_ID'];
 					
                     $FORM_FIELDS['FIELDS'][$key]['TYPE']='SELECT';
                     $FORM_FIELDS['FIELDS'][$key]['ITEMS']=[];
@@ -413,10 +413,9 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                         throw new Exception('Телефон не заполнен', 7);
                     }
                 }
-                elseif ($key=='leaders' && isset($this->arParams['LEADER_ID'])){
+                elseif ($key=='leaders' && isset($this->arParams['SELECTED_LEADER_ID'])){
 					$FORM_FIELDS['FIELDS'][$key]['VALUE_STRING'] = '';
                     $FORM_FIELDS['FIELDS'][$key]['VALUE']=intval(Context::getCurrent()->getRequest()->getPost($FORM_FIELDS['FIELDS'][$key]['NAME']));
-                    $this->arParams['LEADER_ID']=$value['0']['ID'];
                     
                     if( !empty($FORM_FIELDS['FIELDS'][$key]['VALUE']) ){
                         $arFilter = array(
