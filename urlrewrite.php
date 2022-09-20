@@ -56,4 +56,20 @@ $arUrlRewrite=array (
     'PATH' => '/blog/index.php',
     'SORT' => 100,
   ),
+  7 => 
+  array (
+    'CONDITION' => '#^/landings/v1/([\\.\\-0-9a-zA-Z]+)/.*$#',
+    'RULE' => 'ELEMENT_CODE=$1',
+    'ID' => '',
+    'PATH' => '/landings/v1/index.php',
+    'SORT' => 100,
+  ),
+  8 => 
+  array (
+    'CONDITION' => '#^/landings/v2/([\\.\\-0-9a-zA-Z]+)/.*$#',
+    'RULE' => 'ELEMENT_CODE=$1',
+    'ID' => '',
+    'PATH' => '/landings/v2/index.php',
+    'SORT' => 100,
+  ),
 );

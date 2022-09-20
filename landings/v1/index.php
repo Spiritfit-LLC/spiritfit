@@ -6,7 +6,6 @@
     //РАЗБИРАЕМ URL
     $url = strtok($_SERVER['REQUEST_URI'], '?');
     $urlArr = explode('/', $url);
-
     if( empty($urlArr['3']) ) {
         header("HTTP/1.1 301 Moved Permanently");
         header("Location: /");
@@ -17,8 +16,8 @@
 
     $landingIblockCode = 'landing_v1';
     $landingIblockId = Utils::GetIBlockIDBySID($landingIblockCode);
-    $elementCode = !empty($urlArr['3']) ? $urlArr['3'] : '';
-
+    $elementCode = !empty($_REQUEST['ELEMENT_CODE']) ? $_REQUEST['ELEMENT_CODE'] : '';
+	
     if( empty($landingIblockId) || empty($elementCode) ) {
         global $APPLICATION;
         $APPLICATION->RestartBuffer();
@@ -29,7 +28,7 @@
     }
 
     //Подключаем компонент
-    $APPLICATION->IncludeComponent("bitrix:news.detail","landing_v1",Array(
+    $APPLICATION->IncludeComponent("bitrix:news.detail",$landingIblockCode,Array(
         "DISPLAY_DATE" => "N",
         "DISPLAY_NAME" => "Y",
         "DISPLAY_PICTURE" => "N",
