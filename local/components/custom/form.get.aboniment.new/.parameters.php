@@ -2,6 +2,7 @@
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
 if (!CModule::IncludeModule("form")) return;
+if (!CModule::IncludeModule("iblock")) return;
 
 $arrForms = array();
 $rsForm = CForm::GetList($by='s_sort', $order='asc', array("SITE" => $_REQUEST["site"]), $v3);
@@ -14,6 +15,18 @@ $form_actions=[
     "getAbonement"=>"[getAbonement] Оплата абонемента",
     "getTrial"=>"[getTrial] Пробная тренировка"
 ];
+
+$leaders=[
+    "-"=>"[-] Не выводить",
+	"0"=>"[0] Выводить список"
+];
+$leadersIblockId=Utils::GetIBlockIDBySID('leaders');
+if(!empty($leadersIblockId)){
+    $dbElements = CIBlockElement::GetList(array('NAME' => 'ASC'), ['IBLOCK_ID' => $leadersIblockId, 'ACTIVE' => 'Y'], false, false, array("ID", "CODE", "NAME"));
+    while ($arFields = $dbElements->fetch()) {
+        $leaders[$arFields['ID']] = sprintf('[%d] Выводить список (По умолчанию - %s)', $arFields['ID'], $arFields['NAME']);
+	}
+}
 
 $arComponentParameters = array(
     "GROUPS" => array(),
@@ -51,6 +64,21 @@ $arComponentParameters = array(
             "TYPE" => "LIST",
             "VALUES" => $form_actions,
             "ADDITIONAL_VALUES"	=> "Y",
+            "PARENT" => "DATA_SOURCE",
+        ),
+		"FORM_ACTION" => array(
+            "NAME" => "Событие формы",
+            "TYPE" => "LIST",
+            "VALUES" => $form_actions,
+            "ADDITIONAL_VALUES"	=> "Y",
+            "PARENT" => "DATA_SOURCE",
+        ),
+		"SELECTED_LEADER_ID" => array(
+            "NAME" => "Cписок для выбора тренера",
+            "TYPE" => "LIST",
+            "VALUES" => $leaders,
+            "ADDITIONAL_VALUES"	=> "Y",
+			"MULTIPLE" => "N",
             "PARENT" => "DATA_SOURCE",
         ),
     ),

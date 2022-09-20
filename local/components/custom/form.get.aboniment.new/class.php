@@ -25,12 +25,9 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         if( empty($arParams["WEB_FORM_ID"]) ){
             $this->arResult["ERROR"] = "Не выбранна веб форма";
         }
-        if (!empty(Context::getCurrent()->getRequest()->get("has_leaders"))){
-            $arParams['SELECTED_LEADER_ID'] = 0;
-            if($leaderId = Context::getCurrent()->getRequest()->get("leader_id")){
-                $arParams['SELECTED_LEADER_ID'] = intval($leaderId);
-            }
-        }
+        if( !empty($arParams["SELECTED_LEADER_ID"]) && $arParams["SELECTED_LEADER_ID"]=="-" ){
+            unset($arParams["SELECTED_LEADER_ID"]);
+	    }
         return $arParams;
     }
 

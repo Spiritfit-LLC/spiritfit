@@ -128,17 +128,26 @@ else{
     $form_action="getAbonement";
 }
 
+$arParams = array(
+    "AJAX_MODE" => "N",
+    "ELEMENT_CODE"=>$elementCode,
+    "CLUB_ID"=>$club["ID"],
+    "WEB_FORM_ID"=>$WEB_FORM_ID,
+    "FORM_TYPE"=>$formType,
+    "FORM_ACTION"=>$form_action,
+);
+
+if (!empty(\Bitrix\Main\Context::getCurrent()->getRequest()->get("has_leaders"))){
+    $arParams["SELECTED_LEADER_ID"] = 0;
+    if($leaderId = \Bitrix\Main\Context::getCurrent()->getRequest()->get("leader_id")){
+        $arParams["SELECTED_LEADER_ID"] = intval($leaderId);
+    }
+}
+
 $APPLICATION->IncludeComponent(
     'custom:form.get.aboniment.new',
     $formTemplate,
-    array(
-        "AJAX_MODE" => "N",
-        "ELEMENT_CODE"=>$elementCode,
-        "CLUB_ID"=>$club["ID"],
-        "WEB_FORM_ID"=>$WEB_FORM_ID,
-        "FORM_TYPE"=>$formType,
-        "FORM_ACTION"=>$form_action,
-    ),
+    $arParams,
     false
 );
 ?>
