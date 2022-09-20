@@ -268,7 +268,8 @@ $(document).ready(function(){
                 return false;
             }
 
-            var disabled = $(this).find(':input:disabled').removeAttr('disabled');
+            var disabled = $(this).find(':input:disabled');
+            disabled.removeAttr('disabled');
             var postData=new FormData(this);
             disabled.attr('disabled','disabled');
 

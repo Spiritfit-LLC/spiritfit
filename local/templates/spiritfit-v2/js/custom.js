@@ -524,7 +524,7 @@ $(document).ready(function() {
 	
 	$('.b-info-slider__btn').click(function(){
         var titleSale = $(this).parents('.b-info-slider__item').find('.b-info-slider__title').text();
-        dataLayerSend('UX', 'clickOrderLinkSliderPromo', titleSale);
+        // dataLayerSend('UX', 'clickOrderLinkSliderPromo', titleSale);
     });
 
     $('[data-fancybox="feedback-choice"]').click(function(){
@@ -1310,10 +1310,10 @@ $(document).ready(function() {
                         var error_message = "Город не выбран";
                     } else if (suggestion.data.house === null) {
                         error_message = "Дом не выбран";
-                    } else if (parseFloat(suggestion.data.geo_lat)<54.288991 || parseFloat(suggestion.data.geo_lat)>56.929291){
+                    } else if ($(el).data('moscow')!==false && (parseFloat(suggestion.data.geo_lat)<54.288991 || parseFloat(suggestion.data.geo_lat)>56.929291)){
                         error_message = "Адрес находится за пределами Москвы или области";
                     }
-                    else if (parseFloat(suggestion.data.geo_lon)>40.180157 || parseFloat(suggestion.data.geo_lon)<35.177239){
+                    else if ($(el).data('moscow')!==false && (parseFloat(suggestion.data.geo_lon)>40.180157 || parseFloat(suggestion.data.geo_lon)<35.177239)){
                         error_message = "Адрес находится за пределами Москвы или области";
                     }
                     else {
@@ -1367,6 +1367,42 @@ $(document).ready(function() {
             hint:false
         });
     });
+
+
+    //BIG_HEADER_COLORFUL
+    if ($(window).width()<768 && $('.title__big-colorful').height()>80){
+        $('.title__big-colorful').find('.b-page__title').css('font-size', '30px');
+    }
+
+    try{
+        if (typeof owlOtions !== "undefined"){
+            $('.owl-carousel').owlCarousel(owlOtions);
+        }
+        else{
+            $('.owl-carousel').owlCarousel(
+                {
+                    loop:true,
+                    margin:10,
+                    nav:true,
+                    items:1,
+                    dots:false,
+                    navText: [
+                        '<svg width="35" height="35" viewBox="0 0 64 64"><path d="M45.69,62.84,16,33.15a1.6,1.6,0,0,1,0-2.3L45.69,1.16a1.59,1.59,0,0,1,2.31,0,1.61,1.61,0,0,1,0,2.31L19.47,32,48,60.53a1.61,1.61,0,0,1,0,2.31,1.61,1.61,0,0,1-2.31,0Z" transform="translate(-15.51 -0.67)"/></svg>',
+                        '<svg width="35" height="35" viewBox="0 0 64 64"><path d="M17.16,63.33A1.5,1.5,0,0,1,16,62.84a1.61,1.61,0,0,1,0-2.31L44.53,32,16,3.47a1.61,1.61,0,0,1,0-2.31,1.6,1.6,0,0,1,2.31,0L48,30.85a1.6,1.6,0,0,1,0,2.3L18.31,62.84A1.49,1.49,0,0,1,17.16,63.33Z" transform="translate(-15.51 -0.67)"/></svg>'
+                    ],
+                    // navText:[
+                    //     '<div class="b-image-plate-block__arrow b-image-plate-block__arrow--left slick-arrow owl-nav-arrow" style=""></div>',
+                    //     '<div class="b-image-plate-block__arrow b-image-plate-block__arrow--right slick-arrow owl-nav-arrow" style=""></div>'
+                    // ],
+                    autoplay:true,
+
+                }
+            );
+        }
+    }
+    catch (e) {
+        console.log(e)
+    }
 })
 
 

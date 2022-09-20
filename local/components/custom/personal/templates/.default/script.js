@@ -198,7 +198,7 @@ $(document).ready(function(){
             content: (reference) =>
             {
                 var string='<form class="email-confirm-form tooltip-form">' +
-                    '<div class="tooltip-form-title">Подстверждение почты</div>' +
+                    '<div class="tooltip-form-title">Подтверждение почты</div>' +
                     '<div class="tooltip-form-body-text">Проверьте вашу почту</div>' +
                     '<input type="hidden" name="ACTION" value="emailCodeConfirm">' +
                     '<input type="text" class="tooltip-form-input number" name="code" placeholder="Код из письма" required>' +
@@ -253,7 +253,8 @@ $(document).ready(function(){
                 $('.email-confirm-form').submit(function(e){
                     e.preventDefault();
 
-                    var disabled = $(this).find(':input:disabled').removeAttr('disabled');
+                    var disabled = $(this).find(':input:disabled');
+                    disabled.removeAttr('disabled');
                     var postData=new FormData(this);
                     disabled.attr('disabled','disabled');
 
@@ -357,7 +358,8 @@ $(document).ready(function(){
     $('.personal-section-form').on('submit', function (e){
         e.preventDefault();
 
-        var disabled = $(this).find(':input:disabled').removeAttr('disabled');
+        var disabled = $(this).find(':input:disabled');
+        disabled.removeAttr('disabled');
         var postData=new FormData(this);
         disabled.attr('disabled','disabled');
 
@@ -407,7 +409,7 @@ $(document).ready(function(){
             data: postData,
             method:'POST'
         }).then(function(responce){
-            console.log(responce)
+            // console.log(responce)
 
 
             form.find('.escapingBallG-animation').removeClass('active');

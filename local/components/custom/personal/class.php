@@ -199,6 +199,16 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                     new ActionFilter\Csrf(),
                 ],
                 'postfilters' => []
+            ],
+            'deletePersonal'=>[
+                'prefilters' => [
+                    new ActionFilter\Authentication,
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
             ]
         ];
     }
@@ -1570,5 +1580,37 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
             'reload'=>true,
             'section'=>Utils::GetIBlockSectionIDBySID("lk_abonement"),
         ];
+    }
+
+    //Удаление информации о пользователе
+    public function deletePersonalAction(){
+        global $USER;
+        $rsUser = CUser::GetByID($USER->GetID());
+        $arUser = $rsUser->Fetch();
+
+        if (!empty($arUser["UF_DELETE_PERSONAL_UNIXTIME"])){
+            return [
+                "result" => false,
+                "message" => "Заявка на удаление персональной информации уже подана. Крайний срок выполнения: ".date('d.m.Y H:i', $arUser["UF_DELETE_PERSONAL_UNIXTIME"]),
+            ];
+        }
+
+        $date=strtotime("+1 days");
+
+        if ($USER->Update($USER->GetID(), ["UF_DELETE_PERSONAL_UNIXTIME"=>$date])){
+            return [
+                "result"=>true,
+                "message"=>"Заявка на удаление персональной информации успешно подана. Крайний срок выполнения: ".date('d.m.Y H:i', $date),
+                "reload"=>true,
+                "section"=>Utils::GetIBlockSectionIDBySID("lk_profile")
+            ];
+        }
+        else{
+            return [
+                "result"=>false,
+                "message"=>$USER->LAST_ERROR,
+            ];
+        }
+
     }
 }

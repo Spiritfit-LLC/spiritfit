@@ -143,9 +143,9 @@ class PersonalTrialWorkout extends CBitrixComponent implements Controllerable{
             array_push($buffer_timetable[$TIME["time"]], ["ID"=>$TIME["id"], "NAME"=>$TIME["name"]]);
         }
 
-        $CURR_TIME="07:00";
+        $CURR_TIME="10:00";
 
-        while ($CURR_TIME<="23:00"){
+        while ($CURR_TIME<="21:00"){
             if ($date==date("d.m.Y") && date("H:i")>$CURR_TIME){
                 $CURR_TIME=date('H:i',  strtotime("+15 minutes", strtotime($CURR_TIME)));
                 continue;
@@ -277,7 +277,10 @@ class PersonalTrialWorkout extends CBitrixComponent implements Controllerable{
         }
 
         PersonalUtils::UpdatePersonalInfoFrom1C($USER->GetID());
-        return ['reload' => true, "section" => Utils::GetIBlockSectionIDBySID("trialworkout")];
+
+        $club=Utils::getClub($clubid, null);
+        $clubName=str_replace('<br>', ' ', $club['NAME']);
+        return ['reload' => true, "section" => Utils::GetIBlockSectionIDBySID("trialworkout"), 'dataLayer'=>['eLabel'=>$clubName, 'eAction'=>'SendFormTrialWorkout-PersonalAccount', 'eCategory'=>'UX'],];
     }
 }
 

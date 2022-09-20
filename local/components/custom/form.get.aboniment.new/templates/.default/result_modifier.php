@@ -30,6 +30,7 @@ if (!empty($arResult["SEO"]["ELEMENT_META_TITLE"])) {
     $APPLICATION->SetPageProperty('title', $arResult["SEO"]["ELEMENT_META_TITLE"]);
 }
 
+
 if (!empty($arResult["SEO"]["ELEMENT_META_DESCRIPTION"])) {
     $APPLICATION->SetPageProperty('description',$arResult["SEO"]["ELEMENT_META_DESCRIPTION"]);
 }

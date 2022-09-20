@@ -1,0 +1,199 @@
+.form-request-new__fields-list {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: -25px -25px 25px;
+}
+.form-request-new__field {
+    width: calc(33.3% - 50px);
+    margin: 25px;
+    flex: 0 0 calc(33.3% - 50px);
+    position: relative;
+}
+
+label.form-request-new__label{
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-weight: 500;
+    font-size: 14px;
+    pointer-events: none;
+    transform: translate(12px,28px);
+    transition: transform ease .35s;
+}
+label.form-request-new__label.select-item {
+    transform: none;
+    top: -28px;
+}
+.form-request-new__field.is-focused label.form-request-new__label,
+.form-request-new__field.is-not-empty label.form-request-new__label{
+    transform: none;
+}
+.form-request-new__none, .form-request-new__error {
+    position: absolute;
+    right: 0;
+    bottom: -17px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #ff4701;
+    display: none;
+}
+
+.is-empty .form-request-new__none{
+    display: block;
+}
+.is-error .form-request-new__error{
+    display: block;
+}
+
+.form-request-new__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+    margin: 0 -25px;
+}
+.form-request-new__field_agreement {
+    width: auto;
+    margin: 25px;
+}
+.form-request-new__buttons {
+    margin: 25px;
+    width: calc(33.3% - 50px);
+    min-width: 200px;
+    text-align: center;
+}
+.form-request-new__field.code-field{
+    width: calc(33.3% - 50px);
+    flex:0 0 calc(33.3% - 50px);
+}
+.form-request-new__code {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-request-new__input:disabled{
+    border-color: white!important;
+}
+.form-request-new__fields-list .select2-container--default.select2-container--disabled .select2-selection--single {
+    background-color: #eee0!important;
+    cursor: default;
+}
+input.form-request-new__input.code-input {
+    font-size: 26px;
+}
+.code-field label.form-request-new__label{
+    transform: none;
+}
+.subscription__sent-text {
+    margin-bottom: 10px!important;
+    font-size: 14px!important;
+}
+.subscription__sent-tel {
+     margin-bottom: 0;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+    /*AUTOFILL*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-transition-delay: 9999s;
+    -webkit-transition: color 9999s ease-out, background-color 9999s ease-out;
+    outline: none;
+    -webkit-box-shadow: inset 0 0 0 50px #000000 !important;
+
+}
+/*AUTOFILL*/
+
+
+.message-modal {
+    background: #0000006e;
+    z-index: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position:static;
+}
+.message-modal.active{
+    z-index: 1000;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.message-body {
+    padding: 50px 100px;
+    background: white;
+    color: black;
+    border-radius: 3px;
+    font-size: 32px;
+    font-weight: 500;
+    position: relative;
+    max-width: 100%;
+}
+
+.form-request-new__field span.field-error {
+    font-size: 12px;
+    font-weight: 500;
+    color: #ff4701;
+    float: right;
+}
+
+@media screen and (max-width: 1024px) {
+    .form-request-new__fields-list{
+        flex-direction: column;
+        margin: 50px 0 25px;
+    }
+    .form-request-new__field {
+        width: calc(100% - 50px);
+        flex: 0 0 calc(100% - 50px);
+    }
+    .form-request-new__footer{
+        margin:0
+    }
+}
+
+@media screen and (max-width: 849px) {
+    .form-request-new__footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        /* margin: 0 -25px; */
+        flex-direction: column;
+    }
+}
+@media screen and (max-width: 496px) {
+    .form-request-new__field{
+        margin:15px 0;
+        width: 100%;
+        flex: 0 0 100%
+    }
+    .form-request-new__field.code-field {
+        width: calc(80% - 50px);
+        flex: 0 0 calc(80% - 50px);
+    }
+    .message-body {
+        font-size: 26px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .form-request-new__field.code-field {
+        width: calc(50% - 50px);
+        flex: 0 0 calc(50% - 50px);
+    }
+    .message-body {
+        /* width: 100%; */
+        padding: 30px 50px;
+        text-align: center;
+    }
+}

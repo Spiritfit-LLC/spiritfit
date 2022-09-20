@@ -13,7 +13,7 @@
 $this->setFrameMode(true);
 $arInfoProps = Utils::getInfo()['PROPERTIES'];
 ?>
-<section class="b-cards-slider">
+<section class="b-cards-slider" <?if (!empty($arParams["SLIDES_TO_SHOW_AND_SCROLL"])){?> data-slides="<?=$arParams["SLIDES_TO_SHOW_AND_SCROLL"]?>" <?}?>>
     <? if( isset($arParams['TITLE_BLOCK']) && $arParams['TITLE_BLOCK'] !== "N" ) { ?>
 		<div class="content-center">
         	<div class="b-cards-slider__heading">
@@ -29,6 +29,9 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
             <div class="b-cards-slider__slider">
                 <?foreach($arResult["ITEMS"] as $key => $arItem):?>
                     <?
+                    if (!empty($arParams["ITEMS_ID"]) && !in_array($arItem["ID"], $arParams["ITEMS_ID"])){
+                        continue;
+                    }
                     $this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
                     $this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"),array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
 
@@ -79,7 +82,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                                     <div class="b-twoside-card__prices-face">от <?=$arItem["MIN_PRICE2"]?> <span class="rub">₽</span></div>
                                 </div>
                                 <a class="button-outline b-twoside-card-detail-btn">Подробнее</a>
-                                <a class="button <?=$arItem['PROPERTIES']['ADDITIONAL_CLASS']['VALUE']?> choose-abonement-btn" href="<?=$arItem['DETAIL_PAGE_URL']?>" data-sub_id="<?=$arItem['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>" style="display: none;">Выбрать</a>
+                                <a class="button <?=$arItem['PROPERTIES']['ADDITIONAL_CLASS']['VALUE']?> choose-abonement-btn" href="<?=$arItem['DETAIL_PAGE_URL']?>" data-sub_id="<?=$arItem['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>" style="display: none;">Купить</a>
                             </div>
                         </div>
                     </div>
