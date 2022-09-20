@@ -130,6 +130,7 @@ if( $elementCode ) {
         exit;
     }
 }
+
 if ($_REQUEST["ajax_menu"] == 'true' && isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true') {
 } else {
     ?>

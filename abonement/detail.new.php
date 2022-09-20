@@ -102,9 +102,6 @@ else{
     $is404 = true;
 }
 
-
-
-
 if($is404){
     global $APPLICATION;
     $APPLICATION->RestartBuffer();
@@ -140,7 +137,7 @@ $APPLICATION->IncludeComponent(
         "CLUB_ID"=>$club["ID"],
         "WEB_FORM_ID"=>$WEB_FORM_ID,
         "FORM_TYPE"=>$formType,
-        "FORM_ACTION"=>$form_action
+        "FORM_ACTION"=>$form_action,
     ),
     false
 );

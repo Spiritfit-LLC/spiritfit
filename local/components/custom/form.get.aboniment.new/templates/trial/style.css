@@ -90,7 +90,11 @@ a.get-abonement-code:hover{
     text-align: center;
 }
 
-
+/*LEADERS*/
+.subscription__aside-form-row.leaders-row {
+    margin-top: 50px;
+}
+/*LEADERS*/
 
 /*.bonusessum-placeholder {*/
 /*    text-align: center;*/

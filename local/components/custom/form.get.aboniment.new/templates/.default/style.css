@@ -122,6 +122,11 @@ input#bonuses-input {
     font-size: 15px;
 }
 
+/*LEADERS*/
+.subscription__aside-form-row.leaders-row {
+    margin-top: 50px;
+}
+/*LEADERS*/
 
 /*AUTH*/
 .auth-request-form {
