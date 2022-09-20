@@ -56,4 +56,20 @@ $arUrlRewrite=array (
     'PATH' => '/blog/index.php',
     'SORT' => 100,
   ),
+    7 =>
+    array (
+        'CONDITION' => '#^/thank-you/#',
+        'RULE' => '',
+        'ID' => NULL,
+        'PATH' => '/thank-you.php',
+        'SORT' => 100,
+    ),
+    8 =>
+    array (
+        'CONDITION' => '#^/events/([\\.\\-_0-9a-zA-Z]+)/.*$#',
+        'RULE' => 'ELEMENT_CODE=$1',
+        'ID' => '',
+        'PATH' => '/events/detail.php',
+        'SORT' => 100,
+    ),
 );

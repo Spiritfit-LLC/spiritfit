@@ -26,9 +26,9 @@ class FormAbonimentComponent extends CBitrixComponent{
                     $club = $clubField;
                 }
 
-                if(empty($club)){
-                    $club = '08'; // по умолчанию клуб Одинцово
-                }
+//                if(empty($club)){
+//                    $club = '08'; // по умолчанию клуб Одинцово
+//                }
                 $this->arResult["arAnswers"]["club"][0]['ITEMS'] = Utils::getClubsForm($club);
                 $this->arResult["CLUB_ID"] = $club;
             }

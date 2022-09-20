@@ -110,6 +110,7 @@ $(document).ready(function () {
 	//UTP
 	if ($(window).width()>=1280){
 		if ($('.club-utp').length>0){
+			$('.b-screen').find('.content-center').css('margin-top', '80px');
 
 			if ($('.b-screen__slider').length>0){
 				$('.b-screen__slider').addClass('slider-club-utp');

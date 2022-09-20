@@ -145,7 +145,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
                                                 <?
                                                 $showLinkForPopup = false;
                                                 if($showLinkForPopup){ ?>
-                                                    <a href="#" data-code1c="<?=$abonement['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>" data-clubnumber="<?=$arResult["PROPERTIES"]["NUMBER"]["VALUE"]?>" data-abonementid="<?=$abonement['ID']?>" data-abonementcode="<?=$abonement['CODE']?>" class="b-twoside-card__prices-button button js-form-abonement">Выбрать</a>
+                                                    <a href="#" data-code1c="<?=$abonement['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>" data-clubnumber="<?=$arResult["PROPERTIES"]["NUMBER"]["VALUE"]?>" data-abonementid="<?=$abonement['ID']?>" data-abonementcode="<?=$abonement['CODE']?>" class="b-twoside-card__prices-button button js-form-abonement">Купить</a>
                                                 <? } ?>
 
                                             </div>
@@ -157,7 +157,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
                                     </div>
                                     <div class="b-twoside-card__footer">
                                         <a class="button-outline b-twoside-card-detail-btn">Подробнее</a>
-                                        <a class="b-twoside-card__prices-button button <?=$abonement['PROPERTIES']['ADDITIONAL_CLASS']['VALUE']?> choose-abonement-btn" href="<?=$abonement['DETAIL_PAGE_URL']?>" data-sub_id="<?=$abonement['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>" style="display: none;">Выбрать</a>
+                                        <a class="b-twoside-card__prices-button button <?=$abonement['PROPERTIES']['ADDITIONAL_CLASS']['VALUE']?> choose-abonement-btn" href="<?=$abonement['DETAIL_PAGE_URL']?>" data-sub_id="<?=$abonement['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>" style="display: none;">Купить</a>
                                     </div>
                                 </div>
                             </div>
@@ -175,51 +175,52 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
     <? if($arResult["PROPERTIES"]["SOON"]["VALUE"] == 'Y') { ?>
         <div id="js-pjax-clubs">
             <?
-            // $APPLICATION->IncludeComponent(
-            // 	"custom:form.request",
-            // 	"clubs",
-            // 	array(
-            // 		"AJAX_MODE" => "N",
-            // 		"WEB_FORM_ID" => "5",
-            // 		"NUMBER" => $arResult["PROPERTIES"]["NUMBER"]["VALUE"],
-            // 		"TEXT_FORM" => $arResult["FORM_TITLE"],
-            // 		"DEFAULT_TYPE_ID" => $arResult["FORM_TYPE"],
-            // 	),
-            // 	false
-            // );
             $APPLICATION->IncludeComponent(
-                "custom:form.aboniment",
-                "clubs-v2",
+                "custom:form.request.new",
+                "on.page.block",
                 array(
                     "AJAX_MODE" => "N",
-                    "WEB_FORM_ID" => "3",
-                    "CLUB_FORM_SUCCESS" => $arParams["CLUB_FORM_SUCCESS"],
-                    "NUMBER" => $arResult["PROPERTIES"]["NUMBER"]["VALUE"],
+                    "COMPONENT_TEMPLATE" => "on.page.block",
+                    "WEB_FORM_ID" => "23",
+                    "WEB_FORM_FIELDS" => array(
+                        0 => "name",
+                        1 => "phone",
+                        2 => "email",
+                        3 => "personaldata",
+                        4 => "rules",
+                        5 => "privacy",
+                    ),
+                    "FORM_TYPE" => $arResult["FORM_TYPE"],
+                    "CLUB_ID" => $arResult["ID"],
                     "TEXT_FORM" => $arResult["FORM_TITLE"],
-                    "DEFAULT_TYPE_ID" => $arResult["FORM_TYPE"],
                     "CLIENT_TYPE"=>$arResult["PROPERTIES"]["CLIENT_TYPE"]["VALUE"],
                 ),
-                false
-            );
+                false);
             ?>
         </div>
     <? } else { ?>
-        <div id="js-pjax-clubs">
             <?
             $APPLICATION->IncludeComponent(
-                "custom:form.aboniment",
-                "clubs-v2",
+                "custom:form.request.new",
+                "on.page.block",
                 array(
                     "AJAX_MODE" => "N",
-                    "WEB_FORM_ID" => "3",
-                    "CLUB_FORM_SUCCESS" => $arParams["CLUB_FORM_SUCCESS"],
-                    "NUMBER" => $arResult["PROPERTIES"]["NUMBER"]["VALUE"],
+                    "COMPONENT_TEMPLATE" => "on.page.block",
+                    "WEB_FORM_ID" => "23",
+                    "WEB_FORM_FIELDS" => array(
+                        0 => "name",
+                        1 => "phone",
+                        2 => "email",
+                        3 => "personaldata",
+                        4 => "rules",
+                        5 => "privacy",
+                    ),
+                    "FORM_TYPE" => $arResult["FORM_TYPE"],
                     "TEXT_FORM" => $arResult["FORM_TITLE"],
-                    "DEFAULT_TYPE_ID" => $arResult["FORM_TYPE"],
+                    "CLUB_ID"=>$arResult["ID"],
                     "CLIENT_TYPE"=>$arResult["PROPERTIES"]["CLIENT_TYPE"]["VALUE"],
                 ),
-                false
-            );
+                false);
             ?>
         </div>
     <? } ?>
@@ -560,15 +561,15 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
     </div>
 
 <? } ?>
-<?
-if ($arResult["CODE"]!="sevastopolskaya"){
-    $APPLICATION->IncludeComponent(
-        "custom:promocode.banner",
-        "gray-purple",
-        Array(
-            "BANNER_DISCOUNT" => "-500 &#x20bd;",
-            "BANNER_TIME" => 3000,
-            "PROMOCODE" => "FITSUMMER",
-        )
-    );
-}?>
+<?//
+//if ($arResult["CODE"]!="sevastopolskaya"){
+//    $APPLICATION->IncludeComponent(
+//        "custom:promocode.banner",
+//        "gray-purple",
+//        Array(
+//            "BANNER_DISCOUNT" => "-500 &#x20bd;",
+//            "BANNER_TIME" => 3000,
+//            "PROMOCODE" => "FITSUMMER",
+//        )
+//    );
+//}?>

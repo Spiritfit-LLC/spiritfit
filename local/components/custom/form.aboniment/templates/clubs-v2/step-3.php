@@ -17,7 +17,7 @@ $arField = ['name', 'email', 'phone'];
             <input type="hidden" name="WEB_FORM_ID" value="<?= $arParams["WEB_FORM_ID"] ?>">
             <input type="hidden" name="step" value="1">
             <input type="hidden" name="sub_id" value="<?=$arResult["ELEMENT"]["PROPERTIES"]['CODE_ABONEMENT']['VALUE']?>">
-            <input type="hidden" class="club" name="form_<?= $arResult["arAnswers"]["club"]['0']["FIELD_TYPE"]?>_<?= $arResult["arAnswers"]["club"]['0']["ID"] ?>" value="01">
+            <input type="hidden" class="club" name="form_<?= $arResult["arAnswers"]["club"]['0']["FIELD_TYPE"]?>_<?= $arResult["arAnswers"]["club"]['0']["ID"] ?>" value="<?= $arParams["NUMBER"]?>">
             <input type="hidden" name="form_<?= $arResult["arAnswers"]["price"]['0']["FIELD_TYPE"]?>_<?= $arResult["arAnswers"]["price"]['0']["ID"] ?>" value="0">
 
 
@@ -69,6 +69,15 @@ $arField = ['name', 'email', 'phone'];
                         <label class="b-checkbox">
                             <input class="b-checkbox__input" type="checkbox" required="required" name="form_<?= $arResult["arAnswers"]["rules"]['0']["FIELD_TYPE"] ?>_rules[]" <?= $arResult["arAnswers"]["rules"]['0']["FIELD_PARAM"] ?> value="<?= $arResult["arAnswers"]["rules"]['0']["ID"] ?>" id="agr2" data-necessary="">
                             <span class="b-checkbox__text"><?= $arResult["arQuestions"]["rules"]["TITLE"] ?></span>
+                        </label>
+                        <div class="form-standart__message">
+                            <div class="form-standart__error">Необходимо ваше согласие</div>
+                        </div>
+                    </div>
+                    <div class="form-standart__field form-standart__field_agreement form-standart__field_checkbox">
+                        <label class="b-checkbox">
+                            <input class="b-checkbox__input" type="checkbox" required="required" name="form_<?= $arResult["arAnswers"]["privacy"]['0']["FIELD_TYPE"] ?>_privacy[]" <?= $arResult["arAnswers"]["privacy"]['0']["FIELD_PARAM"] ?> value="<?= $arResult["arAnswers"]["privacy"]['0']["ID"] ?>" id="agr2" data-necessary="">
+                            <span class="b-checkbox__text"><?= $arResult["arQuestions"]["privacy"]["TITLE"] ?></span>
                         </label>
                         <div class="form-standart__message">
                             <div class="form-standart__error">Необходимо ваше согласие</div>

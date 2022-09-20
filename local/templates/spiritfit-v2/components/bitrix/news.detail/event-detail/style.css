@@ -1,0 +1,174 @@
+.event-map__plan img{
+    max-width: 100%;
+    max-height: 900px;
+}
+section.event-map__plan {
+    background: white;
+}
+
+.event-schedule__title.purple-red-quads {
+    width: 100%;
+    padding: 20px 100px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 26px;
+    text-align: center;
+    background: linear-gradient(to right, #ff3e00, #7900fe);
+    border-radius: 20px;
+    margin: 10px 0;
+}
+.event-schedule__item.purple-red-quads {
+    width: calc(25% - 13px);
+    flex: 0 0 calc(25% - 13px);
+    padding: 30px;
+    margin: 10px 0;
+    border-radius: 20px;
+    height: 500px;
+    position: relative;
+}
+.event-schedule__item.purple-red-quads:nth-child(4n+1){
+    background: #ff3e00;
+}
+.event-schedule__item.purple-red-quads:nth-child(4n+2){
+    background: #df3034;
+}
+.event-schedule__item.purple-red-quads:nth-child(4n+3){
+    background: #b5198b;
+}
+.event-schedule__item.purple-red-quads:nth-child(4n){
+    background: #7b00fa;
+}
+.event-schedule__list.purple-red-quads {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.event-schedule__item-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+.event-schedule__item-desc {
+    /* margin-bottom: 30px; */
+    height: 150px;
+}
+.event-schedule__item-block {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+    margin: 2px 0;
+}
+.event-schedule__time {
+    font-weight: 800;
+}
+.event-schedule__time.half-width{
+    width: 80px;
+}
+.event-schedule__add-text {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    width: calc(100% - 60px);
+    font-weight: 500;
+    font-size: 16px;
+}
+a.event-schedule__add-text {
+    color: white;
+    text-decoration: underline;
+}
+section.event-schedule.purple-red-quads {
+    padding: 80px 0;
+}
+.event-schedule__desc {
+    text-transform: uppercase;
+}
+@media screen and (max-width: 1728px) {
+    .event-schedule__item-title {
+        font-size: 30px;
+    }
+}
+@media screen and (max-width: 1660px){
+    .event-schedule__item.purple-red-quads {
+        width: calc(33.3% - 20px);
+        flex: 0 0 calc(33.3% - 20px);
+        margin: 10px 10px;
+    }
+    .event-schedule__list.purple-red-quads {
+        justify-content: center;
+    }
+    .event-schedule__item.purple-red-quads:nth-child(3n+1){
+        margin-left: 0;
+    }
+    .event-schedule__item.purple-red-quads:nth-child(3n+3){
+        margin-right: 0;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .event-schedule__item.purple-red-quads {
+        width: calc(50% - 20px);
+        flex: 0 0 calc(50% - 20px);
+    }
+    .event-schedule__item.purple-red-quads:nth-child(3n+1){
+        margin-left: 10px;
+    }
+    .event-schedule__item.purple-red-quads:nth-child(3n+3){
+        margin-right: 10px;
+    }
+    .event-schedule__item.purple-red-quads:nth-child(2n+1){
+        margin-left: 0;
+    }
+    .event-schedule__item.purple-red-quads:nth-child(2n+2){
+        margin-right: 0;
+    }
+    section.event-map__plan {
+        background: black;
+    }
+}
+@media screen and (max-width: 748px) {
+    .event-schedule__item-title {
+        font-size: 26px;
+    }
+    .event-schedule__item-block{
+        font-size: 18px;
+    }
+}
+@media screen and (max-width: 668px){
+    .event-schedule__item.purple-red-quads {
+        width: 100%;
+        flex: 0 0 100%;
+        margin: 10px 0;
+        height: 400px;
+    }
+    .event-schedule__item.purple-red-quads:nth-child(n){
+        margin-right: 0;
+        margin-left: 0;
+    }
+    .event-schedule__item-desc {
+        height: 100px;
+    }
+    .event-schedule__item-block {
+        font-size: 20px;
+    }
+    .event-schedule__item-title {
+        font-size: 30px;
+    }
+    .event-schedule__title.purple-red-quads {
+        padding: 20px 20px;
+    }
+}
+@media screen and (max-width: 478px){
+    .event-schedule__item.purple-red-quads {
+        height: 500px;
+    }
+    .event-schedule__item-desc {
+        height: 150px;
+    }
+    .event-schedule__title.purple-red-quads {
+        padding: 20px 10px;
+        font-size: 20px;
+    }
+    section.event-schedule.purple-red-quads {
+        padding: 30px 0;
+    }
+}

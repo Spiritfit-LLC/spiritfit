@@ -1,44 +1,114 @@
 <?
-	define('HIDE_SLIDER', true);
-	define('HOLDER_CLASS', 'company-holder');
-	
-	require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
-	
-	$APPLICATION->SetPageProperty("description", "");
-	$APPLICATION->SetPageProperty("title", "");
-	
-	$settings = Utils::getInfo();
-	$APPLICATION->SetTitle($settings["PROPERTIES"]["ADV_TITLE1"]["VALUE"]);
-	
-	?>
-	<div class="content-center company">
-        <? if( false && !empty($settings["PROPERTIES"]["ADV_TITLE1"]["VALUE"]) ) { ?>
-        	<div class="b-cards-slider__heading">
-            	<div class="b-cards-slider__title">
-                	<h2><?=$settings["PROPERTIES"]["ADV_TITLE1"]["VALUE"]?></h2>
-            	</div>
-			</div>
-		<? } ?>
+define('HIDE_SLIDER', true);
+//define('HOLDER_CLASS', 'company-holder');
+//define('H1_BIG_COLORFUL', true);
+define('BREADCRUMB_H1_ABSOLUTE', true);
 
-		<div class="company-description">
-			<?=!empty($settings["PROPERTIES"]["ADV_TEXT"]["~VALUE"]["TEXT"]) ? $settings["PROPERTIES"]["ADV_TEXT"]["~VALUE"]["TEXT"] : "" ?>
-		</div>
+
+require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+use Bitrix\Main\Page\Asset;
+
+Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/libs/owl.carousel/owl.carousel.min.js');
+Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/libs/owl.carousel/owl.carousel.min.css');
+
+
+$APPLICATION->SetTitle("Рекламные возможности");
+
+$APPLICATION->SetPageProperty("description", "Сеть Spirit. Fitness приглашает рекламодателей к сотрудничеству. Предлагаем размещение рекламы в наших клубах, группах в соцсетях и на Spirit. TV.");
+$APPLICATION->SetPageProperty("title", "Рекламные возможности | SpiritFit.ru");
+
+
+
+
+$settings = Utils::getInfo();
+?>
+<style>
+    .b-screen:after{
+        content:none;
+    }
+</style>
+<div class="content-center">
+    <div class="page-hiden-slider__header">
+        <div class="page-desc-short">
+            <div class="page-desc-short__text">
+                <?=htmlspecialcharsback($settings["PROPERTIES"]["ADV_SHORT_DESC"]["VALUE"]["TEXT"])?>
+            </div>
+            <div class="page-desc-short__btn">
+                <a class="page-desc__request-btn button-outline" href="#form-request">Оставить заявку</a>
+            </div>
+        </div>
+        <div class="page-desc-banner <?if (defined('H1_BIG_COLORFUL')) echo "big-colorful"?>">
+            <div class="owl-carousel">
+                <?foreach ($settings["PROPERTIES"]["ADV_BANNER_IMGS"]["VALUE"] as $IMG):?>
+                <div class="owl-slide normal-size" style="background-image: url('<?=CFile::GetPath($IMG)?>')">
+
+                </div>
+                <?
+                endforeach;?>
+            </div>
+        </div>
     </div>
-	<?
+</div>
 
-	$APPLICATION->IncludeFile('/local/include/blocks.php', ['ELEMENT_CODE' => 'reklamnye-vozmozhnosti', 'blockTitle' => $settings["PROPERTIES"]["ADV_TITLE2"]["VALUE"]], ['SHOW_BORDER' => false]);
-	
-	$APPLICATION->IncludeComponent(
-		"custom:form.callback.v2",
-		"", 
-		array(
-			"AJAX_MODE" => "N",
-			"WEB_FORM_ID" => "10",
-			"FORM_TYPE" => "14",
-			"ACTION_TYPE" => "web_site_contact",
-			"BLOCK_TITLE" => $settings["PROPERTIES"]["ADV_TITLE3"]["VALUE"]
-		),
-		false
-	);
-	
-	require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
+
+
+    <section class="adv-opportunities">
+        <div class="content-center">
+            <?if (!empty($settings["PROPERTIES"]["ADV_ADVANTAGES"]["VALUE"])):?>
+                <?if (!is_array($settings["PROPERTIES"]["ADV_ADVANTAGES"]["VALUE"])){
+                    $settings["PROPERTIES"]["ADV_ADVANTAGES"]["VALUE"]=[$settings["PROPERTIES"]["ADV_ADVANTAGES"]["VALUE"]];
+                    $settings["PROPERTIES"]["ADV_ADVANTAGES"]["DESCRIPTION"]=[$settings["PROPERTIES"]["ADV_ADVANTAGES"]["DESCRIPTION"]];
+                }?>
+                <div class="adv-advantages__list">
+                    <?for ($i=0; $i<count($settings["PROPERTIES"]["ADV_ADVANTAGES"]["VALUE"]); $i++):?>
+                        <?
+                        $DESC=$settings["PROPERTIES"]["ADV_ADVANTAGES"]["DESCRIPTION"][$i];
+                        $VALUE=$settings["PROPERTIES"]["ADV_ADVANTAGES"]["VALUE"][$i];
+                        if (empty($DESC) || empty($VALUE)){
+                            continue;
+                        }
+                        ?>
+                        <div class="adv-advantages__item">
+                            <div class="adv-advantages__val">
+                                <?=$VALUE?>
+                            </div>
+                            <div class="adv-advantages__desc">
+                                <?=$DESC?>
+                            </div>
+                        </div>
+                    <?endfor;?>
+                </div>
+            <?endif;?>
+            <?if (!empty($settings["PROPERTIES"]["ADV_TEXT"]["VALUE"]["TEXT"])):?>
+                <div class="adv-opportunities__text">
+                    <?=htmlspecialcharsback($settings["PROPERTIES"]["ADV_TEXT"]["VALUE"]["TEXT"])?>
+                </div>
+            <?endif;?>
+        </div>
+    </section>
+    <section id="form-request">
+        <?
+        $APPLICATION->IncludeComponent(
+            "custom:form.request.new",
+            "on.page.block",
+            array(
+                "COMPONENT_TEMPLATE" => "on.page.block",
+                "WEB_FORM_ID" => "24",
+                "WEB_FORM_FIELDS" => array(
+                    0 => "name",
+                    1 => "phone",
+                    2 => "email",
+                    3 => "address",
+                    4 => "personaldata",
+                    5 => "rules",
+                    6 => "privacy",
+                ),
+                "FORM_TYPE" => "X",
+                "CLUB_ID" => "",
+                "TEXT_FORM" => "Оставьте заявку на размещение рекламы в клубах сети SPIRIT.FITNESS"
+            ),
+            false);
+        ?>
+    </section>
+
+<?require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

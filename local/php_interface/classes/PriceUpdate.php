@@ -4,7 +4,7 @@ use \Bitrix\Main\Loader;
 
 class PriceUpdate {
 
-    public static $apiUrl = "https://app.spiritfit.ru/Fitness/hs/website/0/pricenew";
+    public static $apiUrl = "https://1c.spiritfit.ru/fitness-test1/hs/website/0/pricenew";
  
     public static $logFile = "/logs/update-price.txt";
 
@@ -38,18 +38,18 @@ class PriceUpdate {
             unset($arResultElements["reload2"]);
         }
 		
-		if( isset($arResultElements["presalesmonth2"]) ) {
-            unset($arResultElements["presalesmonth2"]);
-        }
-		if( isset($arResultElements["presalesmonth"]) ) {
-            unset($arResultElements["presalesmonth"]);
-        }
-		if( isset($arResultElements["presalesyear"]) ) {
-            unset($arResultElements["presalesyear"]);
-        }
-		if( isset($arResultElements["presalesyear2"]) ) {
-            unset($arResultElements["presalesyear2"]);
-        }
+//		if( isset($arResultElements["presalesmonth2"]) ) {
+//            unset($arResultElements["presalesmonth2"]);
+//        }
+//		if( isset($arResultElements["presalesmonth"]) ) {
+//            unset($arResultElements["presalesmonth"]);
+//        }
+//		if( isset($arResultElements["presalesyear"]) ) {
+//            unset($arResultElements["presalesyear"]);
+//        }
+//		if( isset($arResultElements["presalesyear2"]) ) {
+//            unset($arResultElements["presalesyear2"]);
+//        }
         /* Временно отключаем обноление цен у абонементов с кодами 1С */
 
         foreach ($arResultElements as $key => $arTypeAbonement) {

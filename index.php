@@ -40,17 +40,6 @@ global $settings;
     <?endfor;?>
 </div>
 <?endif;?>
-<?php
-$APPLICATION->IncludeComponent(
-    "custom:promocode.banner",
-    "gray-purple",
-    Array(
-        "BANNER_DISCOUNT" => "-500 &#x20bd;",
-        "BANNER_TIME" => 3000,
-        "PROMOCODE" => "FITSUMMER",
-    )
-);
-?>
 <div class="b-page__heading b-page__heading_absolute  ">
     <div class="content-center">
 		<div class="b-page__heading-inner">
@@ -201,17 +190,6 @@ $APPLICATION->IncludeComponent(
 	),
 	false
 );?>
-<?php
-$APPLICATION->IncludeComponent(
-    "custom:promocode.banner",
-    "gray-purple",
-    Array(
-        "BANNER_DISCOUNT" => "-500 &#x20bd;",
-        "BANNER_TIME" => 3000,
-        "PROMOCODE" => "FITSUMMER",
-    )
-);
-?>
 <?
 if (!isset($_SERVER['HTTP_X_PJAX'])) {
     require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");

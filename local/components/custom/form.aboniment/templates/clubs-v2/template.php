@@ -10,20 +10,32 @@ $arField = ['name', 'email', 'phone'];
             <div class="form-standart__title h2"><?if($arParams["TEXT_FORM"]){?><?=$arParams["TEXT_FORM"]?><?}else{?>Записаться на пробную тренировку<?}?></div>
 
             <form class="training__aside-form_v2" name="<?= $arResult["WEB_FORM_NAME"] ?>" action="<?= POST_FORM_ACTION_URI ?>" method="POST" enctype="multipart/form-data">
-                <?= getClientParams($arParams["WEB_FORM_ID"]) ?>
+                <?=getClientParams($arParams["WEB_FORM_ID"]) ?>
 
                 <input type="hidden" name="WEB_FORM_ID" value="<?=$arParams["WEB_FORM_ID"] ?>">
                 <input type="hidden" name="step" value="1">
-                <input type="hidden" name="sub_id" value="<?= $arResult["ELEMENT"]["PROPERTIES"]['CODE_ABONEMENT']['VALUE'] ?>">
-                <input type="hidden" class="club" name="form_<?= $arResult["arAnswers"]["club"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["club"]['0']["ID"] ?>" value="<?= $arParams["NUMBER"] ?>">
+                <input type="hidden" name="sub_id" value="<?=$arResult["ELEMENT"]["PROPERTIES"]['CODE_ABONEMENT']['VALUE'] ?>">
                 <input type="hidden" class="text_form" name="text_form" value="<?= $arParams["TEXT_FORM"] ?>">
                 <input type="hidden" name="form_<?= $arResult["arAnswers"]["price"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["price"]['0']["ID"] ?>" value="0">
                 <?if ($arResult["CLIENT_TYPE"]):?>
                 <input type="hidden" name="typeSetClient" value="<?=$arResult["CLIENT_TYPE"]?>">
                 <?endif;?>
 
+                <?if ($arParams["INCLUDE_CLUB_FIELD"]=="Y"):?>
+                <div class="subscription__aside-form-row">
+                    <select name="form_<?= $arResult["arAnswers"]["club"]['0']["FIELD_TYPE"]?>_<?= $arResult["arAnswers"]["club"]['0']["ID"]?>" required="required">
+                        <option disabled>Выберите клуб</option>
+                        <? foreach ($arResult["arAnswers"]["club"][0]['ITEMS'] as $key => $arItem):?>
+                            <option value="<?= $arItem["NUMBER"] ?>" <?= $arItem["SELECTED"] ?>><?= $arItem["MESSAGE"] ?></option>
+                        <? endforeach; ?>
+                    </select>
+                </div>
+                <?else:?>
+                    <input type="hidden" class="club" name="form_<?= $arResult["arAnswers"]["club"]['0']["FIELD_TYPE"] ?>_<?= $arResult["arAnswers"]["club"]['0']["ID"] ?>" value="<?= $arParams["NUMBER"] ?>">
+                <?endif;?>
+
                 <div class="form-standart__fields-list">
-                    <? foreach ($arField as $itemField) { 
+                    <? foreach ($arField as $itemField) {
                         switch ($itemField) {
                             case 'phone':
                                 $type = 'tel';
@@ -32,7 +44,7 @@ $arField = ['name', 'email', 'phone'];
                             case 'email':
                                 $type = 'email';
                                 break;
-                            
+
                             default:
                                 $type = 'text';
                                 break;

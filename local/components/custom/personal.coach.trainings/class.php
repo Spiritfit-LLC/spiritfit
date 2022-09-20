@@ -84,7 +84,7 @@ class PersonalCoachTrainings extends CBitrixComponent implements Controllerable{
             $date=date('d.m.Y');
         }
 
-        $CURR_TIME="07:00";
+        $CURR_TIME="10:00";
 
         //тут надо по апи принять расписание тренера конкретного
 //        global $USER;
@@ -252,7 +252,7 @@ class PersonalCoachTrainings extends CBitrixComponent implements Controllerable{
         ];
 
         $result=[];
-        while ($CURR_TIME<"23:00"){
+        while ($CURR_TIME<="21:00"){
             if ($date==date("d.m.Y") && date("H:i")>$CURR_TIME){
                 $CURR_TIME=date('H:i',  strtotime("+15 minutes", strtotime($CURR_TIME)));
                 continue;

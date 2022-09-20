@@ -27,7 +27,7 @@ $(document).ready(function(){
 
             }
         }, function(response){
-            console.log(response)
+            // console.log(response)
         })
     });
 
@@ -60,7 +60,7 @@ $(document).ready(function(){
             }
 
         }, function(response){
-            console.log(response)
+            // console.log(response)
         })
     });
 });

@@ -157,14 +157,21 @@ if(!empty($files['VALUE'])){
     $(document).ready(function(){
         function resizeSliderTitle(){
             try {
-                var current_width = document.querySelector('.b-info-slider__title').scrollWidth;
-                var real_width = document.querySelector('.b-info-slider__title').clientWidth;
+                $('.b-info-slider__item').each(function(index, el){
+                    var current_width = $(el).find('.b-info-slider__title').get(0).scrollWidth;
+                    var real_width = $(el).find('.b-info-slider__title').get(0).clientWidth;
 
-                if (current_width > real_width) {
-                    var curr_text = $('.b-info-slider__title').text().toLowerCase();
-                    var new_text = curr_text.split('spirit.')[0] + 'spirit. ' + curr_text.split('spirit.')[1]
-                    $('.b-info-slider__title').text(new_text)
-                }
+                    if (current_width > real_width) {
+                        var curr_text = $(el).find('.b-info-slider__title').text().toLowerCase();
+                        if (curr_text.split('spirit.').length>1){
+                            var new_text = curr_text.split('spirit.')[0] + 'spirit. ' + curr_text.split('spirit.')[1]
+                            $(el).find('.b-info-slider__title').text(new_text)
+                        }
+                        else{
+                            $(el).find('.b-info-slider__title').css("font-size", '28px');
+                        }
+                    }
+                })
             }
             catch (e) {
                 console.log(e)

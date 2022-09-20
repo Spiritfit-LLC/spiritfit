@@ -341,13 +341,27 @@ class PersonalUtils{
                         case "component":
                             $FIELD['COMPONENT_NAME']=$element['PROPERTIES']['COMPONENT_NAME']['VALUE'];
                             $FIELD["COMPONENT_STYLE"]=!empty($element['PROPERTIES']['COMPONENT_STYLE']['VALUE'])?$element['PROPERTIES']['COMPONENT_STYLE']['VALUE']:'';
+
                         default:
                             $FIELD['VALUE']=$arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']];
                             break;
                     }
 
                     if (!empty($element["PROPERTIES"]["STATIC_VALUE"]["VALUE"])){
-                        $FIELD['VALUE']=$element["PROPERTIES"]["STATIC_VALUE"]["VALUE"];
+                        $FIELD['VALUE']=$element["PROPERTIES"]["STATIC_VALUE"]["VALUE"]["TEXT"];
+
+                        $params=[
+                            "#VALUE#"=>'$FIELD["VALUE"]=str_replace($param, $arUser[$element["PROPERTIES"]["USER_FIELD_CODE"]["VALUE"]], $FIELD["VALUE"]);',
+                            "#VALUE_UNIXTIME#"=>'$FIELD["VALUE"]=str_replace($param, strtotime($arUser[$element["PROPERTIES"]["USER_FIELD_CODE"]["VALUE"]]), $FIELD["VALUE"]);',
+                            "#VALUE_DATETIME_DMYHI#"=>'$FIELD["VALUE"]=str_replace($param, date("d.m.Y H:i", $arUser[$element["PROPERTIES"]["USER_FIELD_CODE"]["VALUE"]]), $FIELD["VALUE"]);',
+                        ];
+
+                        foreach ($params as $param=>$func){
+                            if (strpos($FIELD['VALUE'], $param)){
+                                eval($func);
+                            }
+                        }
+
                     }
 
                     if ($FIELD['USER_FIELD_CODE']=='UF_PAYMENT_SUM' && !empty($arUser['UF_PAYMENT_BONUSES'])){

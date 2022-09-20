@@ -180,11 +180,17 @@ if ($seoValues['ELEMENT_META_KEYWORDS']) {
  */
 
 
-$abonements=array(
-    'LOGIC' => 'OR',
-    array('ID' => $arResult['PROPERTIES']['ABONEMENTS']['VALUE']),
-    array('!PROPERTY_HIDDEN' => 40),
-);
+if (!empty($arResult["PROPERTIES"]["NOT_OPEN_YET"]["VALUE"])){
+    $abonements=array('ID' => $arResult['PROPERTIES']['ABONEMENTS']['VALUE']);
+}
+else{
+    $abonements=array(
+        'LOGIC' => 'OR',
+        array('ID' => $arResult['PROPERTIES']['ABONEMENTS']['VALUE']),
+        array('!PROPERTY_HIDDEN' => 40),
+    );
+}
+
 $arFilter = array("IBLOCK_CODE" => "subscription", "ACTIVE" => "Y", $abonements);
 $dbElements = CIBlockElement::GetList(array("SORT"=>"ASC"), $arFilter, false, false);
 

@@ -141,6 +141,19 @@ $(document).ready(function (){
                         method:'POST',
                     }).then(function(response){
                         var res_data=response.data;
+                        if (res_data['dataLayer']!==undefined){
+                            var category='UX';
+                            if (res_data['dataLayer'].eCategory!==undefined){
+                                category=res_data['dataLayer'].eCategory;
+                            }
+                            try{
+                                dataLayerSend(category, res_data['dataLayer'].eAction, res_data['dataLayer'].eLabel)
+                            }
+                            catch (e) {
+                                console.log(e);
+                            }
+                        }
+
                         if (res_data['reload']===true){
                             if (res_data.section!==undefined){
                                 window.location.search='?SECTION='+res_data.section;

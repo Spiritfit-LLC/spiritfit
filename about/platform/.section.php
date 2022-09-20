@@ -1,6 +1,6 @@
 <?
-$sSectionName = "Площадки";
+$sSectionName = "Площадки под клубы";
 $arDirProperties = Array(
-   "description" => ""
+   "description" => "Площадки под клубы компании | SpiritFit.ru"
 );
 ?>

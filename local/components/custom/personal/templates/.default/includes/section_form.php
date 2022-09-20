@@ -23,7 +23,7 @@ if(!function_exists('GetPersonalSection')) {
 
             <?if ($FIELD['TYPE']!='checkbox' && $FIELD['TYPE']!='link'):?>
                 <span class="personal-section-form__item-placeholder"><?=$FIELD['PLACEHOLDER']?>
-                    <?if (!empty($FIELD['CLUE'])):?>
+                    <?if (!empty($FIELD['CLUE']) && $FIELD["TYPE"]!="info"):?>
                         <div class="clue-icon">
                                     <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/info-icon.svg');?>
                                     <span class="clue-text" style="display: none"><?echo $FIELD['CLUE']['TEXT']?></span>
@@ -91,7 +91,13 @@ if(!function_exists('GetPersonalSection')) {
                     <? endforeach; ?>
                 </select>
             <?elseif ($FIELD['TYPE']=='info'):?>
-                <span class="personal-section-form__item-value"><?=$FIELD['VALUE']?></span>
+                <span class="personal-section-form__item-value"><?=htmlspecialcharsback($FIELD['VALUE'])?></span>
+                <?if (!empty($FIELD['CLUE'])):?>
+                    <div class="clue-icon">
+                        <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/info-icon.svg');?>
+                        <span class="clue-text" style="display: none"><?echo $FIELD['CLUE']['TEXT']?></span>
+                    </div>
+                <?endif;?>
             <?else:?>
                 <?if (!empty($FIELD['OLD_SUM'])):?>
                     <div class="old-sum"><s><?=$FIELD['OLD_SUM']?></s>

@@ -5,6 +5,7 @@
 			<li><a href="https://career.spiritfit.ru/" class="dont-touch">Карьера</a></li>
 			<li><a href="/about/adv/" class="dont-touch">Рекламные возможности</a></li>
 			<li><a href="/about/platform/" class="dont-touch">Площадки под новые клубы</a></li>
+            <li><a href="/upload/form/Политика.pdf">Политика обработки персональных данных</a></li>
 		</ul>
 	</div>
 	<div class="footer-menu-cell">

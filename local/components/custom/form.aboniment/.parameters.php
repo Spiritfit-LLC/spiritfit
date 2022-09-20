@@ -31,6 +31,13 @@ $arComponentParameters = array(
 			"COLS" => 25,
 			"REFRESH"=> "N",
 		),
+        "INCLUDE_CLUB_FIELD"=>array(
+            "NAME"=>"Включить поле выбора клуба?",
+            "DEFAULT"=>"N",
+            "TYPE"=>"CHECKBOX",
+            "MULTIPLE" => "N",
+            "PARENT" => "DATA_SOURCE",
+        )
 	),
 );
 ?>
