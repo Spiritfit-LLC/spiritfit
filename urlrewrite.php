@@ -56,7 +56,23 @@ $arUrlRewrite=array (
     'PATH' => '/blog/index.php',
     'SORT' => 100,
   ),
-  7 => 
+    7 =>
+    array (
+        'CONDITION' => '#^/thank-you/#',
+        'RULE' => '',
+        'ID' => NULL,
+        'PATH' => '/thank-you.php',
+        'SORT' => 100,
+    ),
+    8 =>
+    array (
+        'CONDITION' => '#^/events/([\\.\\-_0-9a-zA-Z]+)/.*$#',
+        'RULE' => 'ELEMENT_CODE=$1',
+        'ID' => '',
+        'PATH' => '/events/detail.php',
+        'SORT' => 100,
+    ),
+  9 =>
   array (
     'CONDITION' => '#^/landings/v1/([\\.\\-0-9a-zA-Z]+)/.*$#',
     'RULE' => 'ELEMENT_CODE=$1',
@@ -64,7 +80,7 @@ $arUrlRewrite=array (
     'PATH' => '/landings/v1/index.php',
     'SORT' => 100,
   ),
-  8 => 
+  10 =>
   array (
     'CONDITION' => '#^/landings/v2/([\\.\\-0-9a-zA-Z]+)/.*$#',
     'RULE' => 'ELEMENT_CODE=$1',

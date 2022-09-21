@@ -284,3 +284,41 @@ function getThemeSelector() {
 	return $resultString;
 }
 
+
+//Новый стандарт для utm меток
+function printGaFormInputs(){
+    for ($i=0; $i<5; $i++){
+        $inputsId[]='gainp_'.uniqid();
+    }
+    ?>
+    <input type="hidden" name="ga_src" id="<?=$inputsId[0]?>" value="">
+    <input type="hidden" name="ga_mdm" id="<?=$inputsId[1]?>" value="">
+    <input type="hidden" name="ga_cmp" id="<?=$inputsId[2]?>" value="">
+    <input type="hidden" name="ga_cnt" id="<?=$inputsId[3]?>" value="">
+    <input type="hidden" name="ga_trm" id="<?=$inputsId[4]?>" value="">
+    <script>
+        $(document).ready(function(){
+            setTimeout(function(){
+                if (window.sbjs.get.current !== undefined) {
+                    var current = window.sbjs.get.current;
+                    $('#<?=$inputsId[0]?>').val(current.src);
+                    $('#<?=$inputsId[1]?>').val(current.mdm);
+                    $('#<?=$inputsId[2]?>').val(current.cmp);
+                    $('#<?=$inputsId[3]?>').val(current.cnt);
+                    $('#<?=$inputsId[4]?>').val(current.trm);
+                }
+            }, 1000);
+        })
+    </script>
+<?}
+
+function getGaFormInputs($request){
+    $arClient["src"]=$request["ga_src"];
+    $arClient["mdm"]=$request["ga_mdm"];
+    $arClient["cmp"]=$request["ga_cmp"];
+    $arClient["cnt"]=$request["ga_cnt"];
+    $arClient["trm"]=$request["ga_trm"];
+
+    return $arClient;
+}
+

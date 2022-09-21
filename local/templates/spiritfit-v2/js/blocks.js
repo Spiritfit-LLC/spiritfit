@@ -69,12 +69,22 @@ $(function () {
         var $context = $(this);
         var $navPlace = $('.b-cards-slider__slider-nav', $context);
         var $slider = $('.b-cards-slider__slider', $context);
+        if ($context.data('slides') !== undefined){
+            var slides=parseInt($context.data('slides'));
+            var slides1770=slides;
+            var slides1256=slides;
+        }
+        else{
+            slides=4;
+            slides1770=3;
+            slides1256=2;
+        }
         $slider.slick({
             dots: true,
             appendDots: $navPlace,
             arrows: true,
-            slidesToShow: 4,
-            slidesToScroll: 4,
+            slidesToShow: slides,
+            slidesToScroll: slides,
             infinite: false,
             variableWidth: true,
             touchThreshold: 50,
@@ -83,14 +93,14 @@ $(function () {
             responsive: [{
                 breakpoint: 1770,
                 settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3
+                    slidesToShow: slides1770,
+                    slidesToScroll: slides1770
                 }
             }, {
                 breakpoint: 1256,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2
+                    slidesToShow: slides1256,
+                    slidesToScroll: slides1256
                 }
             }, {
                 breakpoint: 850,

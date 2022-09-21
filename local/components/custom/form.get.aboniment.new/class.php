@@ -477,13 +477,15 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         if ($seoValues['ELEMENT_META_TITLE']) {
             $this->arResult['SEO']['ELEMENT_META_TITLE'] = $seoValues['ELEMENT_META_TITLE'];
         } else {
-            $this->arResult['SEO']['ELEMENT_META_TITLE'] = strip_tags($this->arResult["ELEMENT"]["~NAME"]);
+            $this->arResult['SEO']['ELEMENT_META_TITLE'] = strip_tags($this->arResult["ELEMENT"]["~NAME"]).' - '.'Абонементы сети фитнес-залов Spirit.Fitness';
+
         }
         if ($seoValues['ELEMENT_META_DESCRIPTION']) {
             $this->arResult['SEO']['ELEMENT_META_DESCRIPTION'] = $seoValues['ELEMENT_META_DESCRIPTION'];
         }
-        if ($seoValues['SECTION_META_DESCRIPTION']) {
-            $this->arResult['SEO']['ELEMENT_META_DESCRIPTION'] = $seoValues['ELEMENT_META_DESCRIPTION'];
+        else{
+            $this->arResult['SEO']['ELEMENT_META_DESCRIPTION']=$this->arResult["ELEMENT"]["~NAME"].'. 💸 Удобная ежемесячная оплата 💥 Полный безлимит по времени и услугам 💯';
+
         }
         if ($seoValues['SECTION_META_KEYWORDS']) {
             $this->arResult['SEO']['ELEMENT_META_KEYWORDS'] = $seoValues['ELEMENT_META_KEYWORDS'];

@@ -379,7 +379,36 @@ foreach( $clubs as $club ) {
                             )
                         ); ?>
                         <? if(!defined('H1_HIDE')){ ?>
+                            <?if (defined('H1_BIG_COLORFUL')):?>
+                            <div class="title__big-colorful">
+                            <?$APPLICATION->AddBufferContent('ShowCondTitle');?>
+                            </div>
+                            <?
+                            function ShowCondTitle()
+                            {
+                                global $APPLICATION;
+                                if (!$APPLICATION->GetTitle())
+                                    return "";
+                                else
+                                {
+                                    $title=explode(" ", $APPLICATION->GetTitle());
+                                    $title_white='';
+                                    $title_orange='';
+                                    for($i=0; $i<count($title); $i++){
+                                        if ($i<round(count($title)/2)){
+                                            $title_white.=$title[$i].' ';
+                                        }
+                                        else{
+                                            $title_orange.=$title[$i].' ';
+                                        }
+                                    }
+                                    return '<h1 class="b-page__title white">'.$title_white.'</h1>'.'<h1 class="b-page__title orange">'.$title_orange.'</h1>';
+                                }
+                            }
+                            ?>
+                            <?else:?>
                             <h1 class="b-page__title <?=(strpos($page, "/blog/") !== false) ? "has-selector" : ""?>"><?=$APPLICATION->ShowTitle(false)?><?=(strpos($page, "/blog/") !== false) ? getThemeSelector() : ""?></h1>
+                            <?endif;?>
                         <? } ?>
                     </div>
                 </div>

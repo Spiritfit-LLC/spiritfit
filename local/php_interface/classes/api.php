@@ -232,7 +232,7 @@ class Api
                 break;
             case "ordercode":
                 $this->ordercode($post['params']);
-                AddMessage2Log('orderreg');
+                AddMessage2Log('ordercode');
                 AddMessage2Log($post['params']);
                 AddMessage2Log("------------------------");
                 break;
@@ -583,7 +583,7 @@ class Api
             $client_id = explode('.', $client_id);
             $client_id = $client_id[count($client_id)-2].'.'.$client_id[count($client_id)-1];
         }
-        file_put_contents(__DIR__.'/myTest_.txt', print_r($params["type"]."\n", true), FILE_APPEND);
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r(array("phone" => substr($phone, 1),"code" => $code, "type" => $params["type"] ? $params["type"] : 0), true)."\n", FILE_APPEND);
         $this->_send($this->apiUrl."code", array(
 			"phone" => substr($phone, 1),
             "code" => $code,
@@ -819,7 +819,9 @@ class Api
 			'type' => $type,
             'yaClientID' => $_REQUEST[$trafic['yaClientID']]
         );
-		if( empty($arParams["email"]) && !empty($params["email"]) ) {
+
+
+        if( empty($arParams["email"]) && !empty($params["email"]) ) {
 			$arParams["email"] = $params["email"];
 		}
 		if( !empty($params["club"]) ) {
@@ -869,8 +871,11 @@ class Api
         // file_put_contents(__DIR__.'/myTest_.txt', print_r($_SERVER['REQUEST_URI']."\n", true), FILE_APPEND);
         // file_put_contents(__DIR__.'/myTest_.txt', print_r($arParams, true), FILE_APPEND);
         // file_put_contents(__DIR__.'/myTest_.txt', print_r("\n ================ \n", true), FILE_APPEND);
-        
-		$this->_send($this->apiUrl."reg", $arParams);
+
+//        file_put_contents(__DIR__.'/myTest_.txt', print_r($arParams, true)."\n", FILE_APPEND);
+
+
+        $this->_send($this->apiUrl."reg", $arParams);
 
 		if ($this->_data['result']['errorCode'] === 0)
 			$this->_result = true;			

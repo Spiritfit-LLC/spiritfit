@@ -1,31 +1,37 @@
 <?php
 
+use \Bitrix\Main\Loader;
+
 
 class FeedCreator{
-    private $XMLDoc;
-    private $XMLOffers;
-    private $docLocalAddr;
+    private static $XMLDoc;
+    private static $XMLOffers;
+    private static $docLocalAddr;
 
-    public function __construct(){
-        $this->docLocalAddr=$_SERVER['DOCUMENT_ROOT'].'/feeds/spiritfeeds.xml';
-        $this->_checkFeedsDoc();
-        $this->_saveXML();
+    public static function init(){
+        if (!Loader::includeModule('iblock')) {
+            return false;
+        }
+        self::$docLocalAddr=$_SERVER['DOCUMENT_ROOT'].'/feeds/spiritfeeds.xml';
+        self::_checkFeedsDoc();
+        self::_saveXML();
+        return "FeedCreator::init();";
     }
 
-    private function _checkFeedsDoc(){
+    private static function _checkFeedsDoc(){
         $date = new DateTime();
 
-        $this->XMLDoc=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><yml_catalog></yml_catalog>');
-        $this->XMLDoc->addAttribute('date', $date->format('Y-m-d H:i:s'));
-        $this->_createXMLStruct();
+        self::$XMLDoc=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><yml_catalog></yml_catalog>');
+        self::$XMLDoc->addAttribute('date', $date->format('Y-m-d H:i:s'));
+        self::_createXMLStruct();
 
     }
 
-    private function _createXMLStruct(){
+    private static function _createXMLStruct(){
         $SITE_NAME=((!empty($_SERVER['HTTPS'])) ? 'https' : 'http').'://'.$_SERVER['SERVER_NAME'];
 
 
-        $shop=$this->XMLDoc->addChild('shop');
+        $shop=self::$XMLDoc->addChild('shop');
         $shop->addChild('name', 'SPIRIT.');
         $shop->addChild('company', 'ООО Рекорд Фитнес');
         $shop->addChild('url', $SITE_NAME);
@@ -50,7 +56,7 @@ class FeedCreator{
         $buffer->addAttribute('id', 1111);
         $buffer->addAttribute('parentId',111);
 
-        $this->XMLOffers=$shop->addChild('offers');
+        self::$XMLOffers=$shop->addChild('offers');
 
 
         //Константы
@@ -146,7 +152,7 @@ class FeedCreator{
                     continue;
                 }
 
-                $ABONEMENT_OFFER=$this->XMLOffers->addChild('offer');
+                $ABONEMENT_OFFER=self::$XMLOffers->addChild('offer');
                 $ABONEMENT_OFFER->addAttribute('type', 'vendor.model');
                 $ABONEMENT_OFFER->addAttribute('id', $OFFER_ID);
                 $ABONEMENT_OFFER->addAttribute('available', 'true');
@@ -175,15 +181,15 @@ class FeedCreator{
         }
     }
 
-    private function _saveXML(){
+    private static function _saveXML(){
         if (!file_exists($_SERVER['DOCUMENT_ROOT'].'/feeds')) {
             mkdir($_SERVER['DOCUMENT_ROOT'].'/feeds', 0775, true);
         }
         $dom = new DOMDocument('1.0',  'UTF-8');
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
-        $dom->loadXML($this->XMLDoc->asXML());
+        $dom->loadXML(self::$XMLDoc->asXML());
 
-        $dom->save($this->docLocalAddr);
+        $dom->save(self::$docLocalAddr);
     }
 }

@@ -13,6 +13,12 @@ $APPLICATION->SetPageProperty("description", "Удобная оплата от 1
 $APPLICATION->SetPageProperty("title", "Абонементы фитнес-клуба Spirit Fitness: абонементы от 1700 ₽ в месяц");
 ?>
 
+<style>
+	.b-cards-slider__slider {
+		margin: 20px -24px!important;
+	}
+</style>
+
 <? if(isset($_SERVER['HTTP_X_PJAX']) && $_SERVER['HTTP_X_PJAX'] == 'true' && $_REQUEST["ajax_send"] == 'Y'): ?>
 	<? 
 		$component = ($_REQUEST["WEB_FORM_ID"] == "5" ? "custom:form.request" : "custom:form.aboniment");
@@ -36,7 +42,7 @@ $APPLICATION->SetPageProperty("title", "Абонементы фитнес-клу
 		false
 	);?>
 <? else: ?>
-	<? $GLOBALS['arrFilterAbonement'] = ['PROPERTY_HIDDEN_VALUE' => false]?>
+	<?$GLOBALS['arrFilterAbonement'] = ['PROPERTY_HIDDEN_VALUE' => false]?>
 	<?$APPLICATION->IncludeComponent(
 		"bitrix:news.list",
 		"abonements",

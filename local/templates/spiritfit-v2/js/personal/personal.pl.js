@@ -59,7 +59,8 @@ $(document).ready(function(){
                     e.preventDefault();
 
 
-                    var disabled = $(this).find(':input:disabled').removeAttr('disabled');
+                    var disabled = $(this).find(':input:disabled');
+                    disabled.removeAttr('disabled');
                     var postData=new FormData(this);
                     disabled.attr('disabled','disabled');
 
@@ -179,7 +180,8 @@ $(document).ready(function(){
                 $('.spend-form').submit(function(e){
                     e.preventDefault();
 
-                    var disabled = $(this).find(':input:disabled').removeAttr('disabled');
+                    var disabled = $(this).find(':input:disabled');
+                    disabled.removeAttr('disabled');
                     var postData=new FormData(this);
                     disabled.attr('disabled','disabled');
 
@@ -208,6 +210,19 @@ $(document).ready(function(){
 
                         form.find('input[type="submit"]').removeAttr('disabled');
                         var res_data=responce['data'];
+                        if (res_data.result===false){
+                            $('.field-error').remove();
+                            res_data.errors.forEach(function(el){
+                                $(`input[name="${el.form_name}"]`).after(`<span class="field-error" style="display: none">${el.message}</span>`);
+                            });
+                            if (res_data.section!==undefined){
+                                $(`.personal-profile__tab-item[data-id="${res_data.section}"]`).click();
+                            }
+                            $('.field-error').fadeIn(300);
+                            instance.unmount();
+                            return;
+                        }
+
                         if (res_data['reload']===true){
                             window.location = window.location.pathname;
                             return;
