@@ -410,9 +410,9 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                         throw new Exception('Телефон не заполнен', 7);
                     }
                 }
-                elseif ($key=='leaders' && isset($this->arParams['SELECTED_LEADER_ID'])){
+                elseif ($key=='leaders' && !empty( $valueId = Context::getCurrent()->getRequest()->getPost($FORM_FIELDS['FIELDS'][$key]['NAME']) )){
 					$FORM_FIELDS['FIELDS'][$key]['VALUE_STRING'] = '';
-                    $FORM_FIELDS['FIELDS'][$key]['VALUE']=intval(Context::getCurrent()->getRequest()->getPost($FORM_FIELDS['FIELDS'][$key]['NAME']));
+                    $FORM_FIELDS['FIELDS'][$key]['VALUE']=intval($valueId);
                     
                     if( !empty($FORM_FIELDS['FIELDS'][$key]['VALUE']) ){
                         $arFilter = array(
