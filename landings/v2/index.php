@@ -31,7 +31,7 @@
     $APPLICATION->IncludeComponent("bitrix:news.detail",$landingIblockCode,Array(
         "DISPLAY_DATE" => "N",
         "DISPLAY_NAME" => "Y",
-        "DISPLAY_PICTURE" => "N",
+        "DISPLAY_PICTURE" => "Y",
         "DISPLAY_PREVIEW_TEXT" => "Y",
         "USE_SHARE" => "N",
         "SHARE_HIDE" => "N",
@@ -46,7 +46,38 @@
         "ELEMENT_CODE" => $elementCode,
         "CHECK_DATES" => "Y",
         "FIELD_CODE" => Array("ID"),
-        "PROPERTY_CODE" => Array(),
+        "PROPERTY_CODE" => Array(
+			0 => "HEADER_IMAGE",
+			1 => "HEADER_DESCRIPTION",
+			2 => "HEADER_SORT",
+			3 => "BLOCK2_IMAGE",
+			4 => "BLOCK2_TITLE1",
+			5 => "BLOCK2_TITLE2",
+			6 => "BLOCK2_LIST1",
+			7 => "BLOCK2_LIST2",
+			8 => "BLOCK2_SORT",
+			9 => "BLOCK3_TITLE",
+			10 => "BLOCK3_LIST",
+			11 => "BLOCK3_SORT",
+			12 => "BLOCK4_TITLE",
+			13 => "BLOCK4_LIST",
+			14 => "BLOCK4_SORT",
+			15 => "BLOCK5_TITLE",
+			16 => "BLOCK5_LIST",
+			17 => "BLOCK5_IMAGE",
+			18 => "BLOCK5_VIDEO",
+			19 => "BLOCK5_SORT",
+			20 => "BLOCK6_TITLE",
+			21 => "BLOCK6_LIST",
+			22 => "BLOCK6_SORT",
+			23 => "BLOCK7_TITLE",
+			24 => "BLOCK7_LIST",
+			25 => "BLOCK7_GIFT_LIST",
+			26 => "BLOCK7_SORT",
+			27 => "BLOCK8_TITLE",
+			28 => "BLOCK8_LIST",
+			29 => "BLOCK8_SORT"
+		),
         "IBLOCK_URL" => "/home/bitrix/www/landings/v2/",
         "DETAIL_URL" => "",
         "SET_TITLE" => "Y",
@@ -82,6 +113,6 @@
         "AJAX_OPTION_JUMP" => "N",
         "AJAX_OPTION_STYLE" => "Y",
         "AJAX_OPTION_HISTORY" => "N"
-    ));
+	));
 
     require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");

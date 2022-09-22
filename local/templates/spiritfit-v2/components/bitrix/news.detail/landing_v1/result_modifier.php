@@ -25,13 +25,15 @@
 		],
 		"block4" => [
 			"BLOCK4_FORM_ID",
+			"BLOCK4_SORT",
 		],
+	];
+	$imageSizes = [
 	];
 	
 	$arResult['BLOCKS'] = [];
-	
 	foreach( $pageBlocks as $blockName => $items ) {
-		reset($items);
+		end($items);
 		$lastKey = key($items);
 		
 		$resArr = [
@@ -42,13 +44,13 @@
 		
 		foreach( $items as $k => $propName ) {
 			if( $k == $lastKey ) continue;
-			if( !empty($arResult["PROPERTIES"][$items[$propName]]["VALUE"]) ) {
-				if( empty($arResult["PROPERTIES"][$items[$propName]]["LINK_IBLOCK_ID"]) && $arResult["PROPERTIES"][$items[$propName]]["LINK_IBLOCK_ID"] != $abonementsIBlockId ) {
+			if( !empty($arResult["PROPERTIES"][$propName]["VALUE"]) ) {
+				if( !empty($arResult["PROPERTIES"][$propName]["LINK_IBLOCK_ID"]) && $arResult["PROPERTIES"][$items[$propName]]["LINK_IBLOCK_ID"] != $abonementsIBlockId ) {
 					$values = [];
-					if( !is_array($arResult["PROPERTIES"][$items[$propName]]["VALUE"]) ) {
-						$values[] = $arResult["PROPERTIES"][$items[$propName]]["VALUE"];
+					if( !is_array($arResult["PROPERTIES"][$propName]["VALUE"]) ) {
+						$values[] = $arResult["PROPERTIES"][$propName]["VALUE"];
 					} else {
-						$values = $arResult["PROPERTIES"][$items[$propName]]["VALUE"];;
+						$values = $arResult["PROPERTIES"][$propName]["VALUE"];;
 					}
 					foreach( $values as $id ) {
 						$res = CIBlockElement::GetByID($id);
@@ -56,11 +58,58 @@
 							$arFields = $resObj->GetFields();
 							$arFields["PROPERTIES"] = $resObj->GetProperties();
 							
+							foreach( $arFields["PROPERTIES"] as &$property ) {
+								if( !is_array($property["VALUE"]) ) {
+									$property["VALUE"] =
+									[
+										"SRC" => CFile::GetPath($property["VALUE"]),
+										"DESCRIPTION" => !empty($property["~DESCRIPTION"]) ? $property["~DESCRIPTION"] : ""
+									];
+								} else {
+									$resPropsArr = [];
+									foreach($property["VALUE"] as $num => $imageId) {
+										$resPropsArr[] =
+										[
+											"SRC" => CFile::GetPath($imageId),
+											"DESCRIPTION" => !empty($property["~DESCRIPTION"][$num]) ? $property["~DESCRIPTION"][$num] : ""
+										];
+									}
+									$property["VALUE"] = $resPropsArr;
+									unset($resPropsArr);
+								}
+							}
+							unset($property);
+							
+							if( !empty($arFields["PREVIEW_PICTURE"]) ) $arFields["PREVIEW_PICTURE"] = CFile::ResizeImageGet($arFields["PREVIEW_PICTURE"], array("width" => 280, "height" => 280), BX_RESIZE_IMAGE_PROPORTIONAL, false)["src"];
+							if( !empty($arFields["DETAIL_PICTURE"]) ) $arFields["DETAIL_PICTURE"] = CFile::ResizeImageGet($arFields["DETAIL_PICTURE"], array("width" => 650, "height" => 650), BX_RESIZE_IMAGE_PROPORTIONAL, false)["src"];
+							
 							$resArr["PROPERTIES"][$propName][] = $arFields;
 						}
 					}
+				} else if( !empty($arResult["PROPERTIES"][$propName]["~VALUE"]["TEXT"]) ) {
+					$resArr["PROPERTIES"][$propName] = $arResult["PROPERTIES"][$propName]["~VALUE"]["TEXT"];
+				} else if($arResult["PROPERTIES"][$propName]["PROPERTY_TYPE"] == "F") {
+					
+					$hasSizes = isset($imageSizes[$propName]);
+					
+					if( !is_array($arResult["PROPERTIES"][$propName]["VALUE"]) ) {
+						$resArr["PROPERTIES"][$propName] =
+						[
+							"SRC" => $hasSizes ? CFile::ResizeImageGet($arResult["PROPERTIES"][$propName]["VALUE"], array("width" => $imageSizes[$propName][0], "height" => $imageSizes[$propName][1]), BX_RESIZE_IMAGE_PROPORTIONAL, false)["src"] : CFile::GetPath($arResult["PROPERTIES"][$propName]["VALUE"]),
+							"DESCRIPTION" => !empty($arResult["PROPERTIES"][$propName]["~DESCRIPTION"]) ? $arResult["PROPERTIES"][$propName]["~DESCRIPTION"] : ""
+						];
+					} else {
+						$resArr["PROPERTIES"][$propName] = [];
+						foreach($arResult["PROPERTIES"][$propName]["VALUE"] as $num => $imageId) {
+							$resArr["PROPERTIES"][$propName][] =
+							[
+								"SRC" => $hasSizes ? CFile::ResizeImageGet($imageId, array("width" => $imageSizes[$propName][0], "height" => $imageSizes[$propName][1]), BX_RESIZE_IMAGE_PROPORTIONAL, false)["src"] : CFile::GetPath($imageId),
+								"DESCRIPTION" => !empty($arResult["PROPERTIES"][$propName]["~DESCRIPTION"][$num]) ? $arResult["PROPERTIES"][$propName]["~DESCRIPTION"][$num] : ""
+							];
+						}
+					}
 				} else {
-					$resArr["PROPERTIES"][$propName] = $arResult["PROPERTIES"][$items[$propName]]["VALUE"];
+					$resArr["PROPERTIES"][$propName] = $arResult["PROPERTIES"][$propName]["VALUE"];
 				}
 			}
 		}
