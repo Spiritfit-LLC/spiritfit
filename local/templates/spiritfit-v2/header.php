@@ -134,7 +134,9 @@ foreach( $clubs as $club ) {
     }
     if( isset($_COOKIE["theme_type"]) && intval($_COOKIE["theme_type"]) === 2 && strpos($page, "/blog/") !== false ) {
 	    if( isset($classPage) ) $classPage += " white"; else $classPage = "white";
-    }
+    } else if( strpos($page, "/landings/") !== false ) {
+		if( isset($classPage) ) $classPage += " white"; else $classPage = "white";
+	}
 ?>
 <body class="b-page <?=$classPage?>">
 <!--    --><?//$APPLICATION->IncludeComponent('custom:banner', 'last.change', array("URL"=>"ALL", "BACKGROUND"=>"/upload/medialibrary/8f2/9frwkezz1ehaxj5m5tb0u10nfubij2mi.jpg"), false)?>
