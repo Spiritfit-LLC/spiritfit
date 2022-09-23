@@ -26,7 +26,7 @@
         require $_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/footer.php';
         exit;
     }
-
+    
     //Подключаем компонент
     $APPLICATION->IncludeComponent("bitrix:news.detail",$landingIblockCode,Array(
         "DISPLAY_DATE" => "N",

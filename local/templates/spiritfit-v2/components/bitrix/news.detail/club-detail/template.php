@@ -181,7 +181,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
                 array(
                     "AJAX_MODE" => "N",
                     "COMPONENT_TEMPLATE" => "on.page.block",
-                    "WEB_FORM_ID" => "23",
+                    "WEB_FORM_ID" => Utils::GetFormIDBySID('TRIAL_TRAINING_NEW'),
                     "WEB_FORM_FIELDS" => array(
                         0 => "name",
                         1 => "phone",
@@ -206,7 +206,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
                 array(
                     "AJAX_MODE" => "N",
                     "COMPONENT_TEMPLATE" => "on.page.block",
-                    "WEB_FORM_ID" => "23",
+                    "WEB_FORM_ID" => Utils::GetFormIDBySID('TRIAL_TRAINING_NEW'),
                     "WEB_FORM_FIELDS" => array(
                         0 => "name",
                         1 => "phone",

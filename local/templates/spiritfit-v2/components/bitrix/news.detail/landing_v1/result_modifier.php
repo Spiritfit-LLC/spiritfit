@@ -24,7 +24,8 @@
 			"BLOCK3_SORT",
 		],
 		"block4" => [
-			"BLOCK4_FORM_ID",
+			"BLOCK4_FORM_TYPE",
+			"BLOCK4_CLIENT_TYPE",
 			"BLOCK4_SORT",
 		],
 	];
@@ -41,11 +42,10 @@
 			"SORT" => !empty($arResult["PROPERTIES"][$items[$lastKey]]["VALUE"]) ? intval($arResult["PROPERTIES"][$items[$lastKey]]["VALUE"]) : 0,
 			"PROPERTIES" => []
 		];
-		
 		foreach( $items as $k => $propName ) {
 			if( $k == $lastKey ) continue;
 			if( !empty($arResult["PROPERTIES"][$propName]["VALUE"]) ) {
-				if( !empty($arResult["PROPERTIES"][$propName]["LINK_IBLOCK_ID"]) && $arResult["PROPERTIES"][$items[$propName]]["LINK_IBLOCK_ID"] != $abonementsIBlockId ) {
+				if( !empty($arResult["PROPERTIES"][$propName]["LINK_IBLOCK_ID"]) && $arResult["PROPERTIES"][$propName]["LINK_IBLOCK_ID"] != $abonementsIBlockId ) {
 					$values = [];
 					if( !is_array($arResult["PROPERTIES"][$propName]["VALUE"]) ) {
 						$values[] = $arResult["PROPERTIES"][$propName]["VALUE"];
@@ -59,19 +59,24 @@
 							$arFields["PROPERTIES"] = $resObj->GetProperties();
 							
 							foreach( $arFields["PROPERTIES"] as &$property ) {
+								if( $property["PROPERTY_TYPE"] !== "F" || empty($property["VALUE"]) ) continue;
 								if( !is_array($property["VALUE"]) ) {
+									$path = CFile::GetPath($property["VALUE"]);
 									$property["VALUE"] =
 									[
-										"SRC" => CFile::GetPath($property["VALUE"]),
-										"DESCRIPTION" => !empty($property["~DESCRIPTION"]) ? $property["~DESCRIPTION"] : ""
+										"SRC" => $path,
+										"DESCRIPTION" => !empty($property["~DESCRIPTION"]) ? $property["~DESCRIPTION"] : "",
+										"TYPE" => pathinfo($path, PATHINFO_EXTENSION)
 									];
 								} else {
 									$resPropsArr = [];
 									foreach($property["VALUE"] as $num => $imageId) {
+										$path = CFile::GetPath($imageId);
 										$resPropsArr[] =
 										[
-											"SRC" => CFile::GetPath($imageId),
-											"DESCRIPTION" => !empty($property["~DESCRIPTION"][$num]) ? $property["~DESCRIPTION"][$num] : ""
+											"SRC" => $path,
+											"DESCRIPTION" => !empty($property["~DESCRIPTION"][$num]) ? $property["~DESCRIPTION"][$num] : "",
+											"TYPE" => pathinfo($path, PATHINFO_EXTENSION)
 										];
 									}
 									$property["VALUE"] = $resPropsArr;
@@ -109,7 +114,7 @@
 						}
 					}
 				} else {
-					$resArr["PROPERTIES"][$propName] = $arResult["PROPERTIES"][$propName]["VALUE"];
+					$resArr["PROPERTIES"][$propName] = $arResult["PROPERTIES"][$propName]["~VALUE"];
 				}
 			}
 		}
@@ -118,3 +123,5 @@
 	}
 	
 	usort($arResult['BLOCKS'], function($item1, $item2) { return $item1['SORT'] <=> $item2['SORT']; });
+	
+	$this->__component->SetResultCacheKeys(["BLOCKS"]);

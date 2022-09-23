@@ -1,0 +1,459 @@
+.b-page__main  {
+	color: black;
+}
+.is-landing .b-screen:after {
+	display: none;
+}
+.is-landing .b-breadcrumbs__link.is-current:hover {
+	color: initial;
+}
+
+.landing-title {
+	display: block;
+	position: relative;
+	font-weight: bold;
+	font-size: 56px;
+	line-height: 60px;
+	margin-bottom: 48px;
+}
+.landing-description {
+	display: block;
+	position: relative;
+	font-size: 24px;
+	line-height: 36px;
+	margin-bottom: 48px;
+}
+
+.b-abonements {
+	display: block;
+	position: relative;
+	margin: 66px 0px 66px;
+	overflow: hidden;
+	max-width: 100vw;
+}
+.b-abonements .slick-slider {
+	margin-left: -8px;
+    margin-right: -8px;
+}
+
+.is-landing .b-cards-slider__arrow::before,
+.is-landing .b-cards-slider__arrow::after {
+	height: 4px;
+}
+.is-landing .b-cards-slider__arrow.b-cards-slider__arrow--right::before,
+.is-landing .b-cards-slider__arrow.b-cards-slider__arrow--right::after {
+	background: linear-gradient(45deg, #E43932 3.26%, #7827F6 98.07%);
+}
+.is-landing .b-cards-slider__arrow.b-cards-slider__arrow--left::before,
+.is-landing .b-cards-slider__arrow.b-cards-slider__arrow--left::after {
+	background: linear-gradient(45deg, #7827F6 3.26%, #E43932 98.07%);
+}
+.is-landing .b-cards-slider__arrow-wrapper--right {
+	background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 8%, rgba(255,255,255,1) 100%);
+}
+.is-landing .b-cards-slider__arrow-wrapper--left {
+	background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 92%, rgba(255,255,255,0) 100%);
+}
+.is-landing .b-cards-slider__arrow-wrapper:hover {
+	background-color: transparent;
+}
+.is-landing .b-cards-slider__arrow::after {
+	bottom: 12px;
+}
+.blockitem {
+	margin-bottom: 96px;
+}
+
+/* Форма */
+.is-landing .b-form {
+	display: block;
+    position: relative;
+    background: #171717;
+    color: #FFF;
+}
+.b-form .landing-title {
+	text-align: center;
+    padding-top: 76px;
+    margin-bottom: 60px;
+}
+.b-form .landing-title b {
+	background: linear-gradient(90deg, #E33932 3.67%, #7827F5 105.05%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	text-fill-color: transparent;
+}
+.b-form > .content-center {
+	margin-bottom: 0;
+}
+.b-form .form-standart_black-bg .form-standart__plate {
+	border: 0;
+	padding: 35px 8% 100px;
+}
+.b-form .form-request-new__buttons {
+	text-align: right;
+}
+.b-form .b-checkbox__text:before,
+.b-form .b-radio__text:before {
+	background: linear-gradient(180deg, #E33933 0%, #7A27F2 100%);
+	border-radius: 4px;
+}
+.b-form .b-checkbox__input:checked+.b-checkbox__text:before,
+.b-form .b-radio__input:checked+.b-checkbox__text:before,
+.b-form .b-checkbox__input:checked+.b-radio__text:before,
+.b-form .b-radio__input:checked+.b-radio__text:before {
+	box-shadow: inset #fff 0 0 0 4px;
+}
+
+.b-form .button-outline {
+	border: 0;
+	background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);
+	border-radius: 8px;
+	font-size: 14px;
+    line-height: 1;
+	transition: all .3s;
+}
+.b-form .button-outline:hover {
+	background: linear-gradient(90deg, #E43932 23.26%, #7827F6 98.07%);
+}
+.b-form .form-standart {
+	border-bottom: 1px solid #ff7628;
+}
+/* Форма */
+
+/* Лидеры проекта */
+.b-treners__item .b-twoside-card__inner {
+	margin: 0;
+	background: #F5F5F4;
+	color: #000;
+}
+.b-treners .b-treners__item.is-open .b-twoside-card__inner {
+	transform: scale(1) rotateY(180deg);
+}
+.b-treners__wrapper {
+    display: grid;
+	grid-gap: 24px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+.b-treners .b-twoside-card__content {
+	height: 510px;
+}
+.b-treners__item .b-twoside-card__inner {
+	display: block;
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+}
+.b-treners .b-twoside-card.is-open .b-twoside-card__content {
+	opacity: 0;
+}
+.b-treners .b-twoside-card__hidden-content {
+	background: #000;
+	color: #FFF;
+}
+.b-twoside-card__video {
+	display: block;
+    position: relative;
+	margin-bottom: 40px;
+}
+.b-twoside-card__video img {
+	display: block;
+    position: relative;
+    max-width: 240px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+.b-twoside-card__video .play {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: #FFF;
+    font-size: 10px;
+    line-height: 10px;
+    transition: all .3s;
+    align-items: center;
+    justify-content: center;
+}
+.b-twoside-card__video .play svg {
+	margin-right: 6px;
+}
+.b-twoside-card__video .play:hover {
+	color: white;
+	text-decoration: underline;
+}
+.b-twoside-card__video .play svg,
+.b-twoside-card__open svg {
+	display: inline-block;
+    vertical-align: middle;
+}
+.b-treners .b-twoside-card__content .b-twoside-card__name {
+	display: block;
+    position: relative;
+	font-weight: bold;
+	font-size: 28px;
+	line-height: 36px;
+	text-align: center;
+	text-transform: uppercase;
+	background: linear-gradient(90deg, #E33932 0%, #7827F4 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	text-fill-color: transparent;
+}
+.b-twoside-card__open {
+	display: block;
+    position: absolute;
+    bottom: 32px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    line-height: 18px;
+    text-transform: uppercase;
+}
+.b-twoside-card__open svg {
+	margin-right: 2px;
+}
+.b-treners .button {
+	display: block;
+    position: absolute;
+	background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);
+	border-radius: 8px;
+	padding: 20px 60px;
+	transition: all .3s;
+}
+.b-treners .b-twoside-card.is-open .b-twoside-card__hidden-content {
+	padding: 33px 24px;
+}
+.b-treners .setTrener {
+	position: absolute;
+	bottom: 32px;
+}
+.b-treners .b-twoside-card__name {
+	display: block;
+    position: relative;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 18px;
+	text-align: center;
+	text-transform: uppercase;
+	margin-bottom: 16px;
+}
+.b-treners .b-twoside-card__description {
+	display: block;
+    position: relative;
+	font-size: 14px;
+	line-height: 19px;
+	overflow: visible;
+}
+.b-treners .b-twoside-card__description::-webkit-scrollbar {
+	width: 5px;
+}
+.b-treners .b-twoside-card__description::-webkit-scrollbar-track {
+	box-shadow: none;
+	background-color: rgb(245 245 244 / 20%);
+}
+.b-treners .b-twoside-card__description::-webkit-scrollbar-thumb {
+	background-color: #F5F5F4;
+	outline: 0;
+}
+.b-treners__item.selected .b-twoside-card__inner {
+	border: 1px solid #7827F6;
+}
+.b-treners {
+	margin-bottom: 96px;
+	overflow: hidden;
+}
+/* Лидеры проекта */
+
+/* Победители */
+.b-winners-wrapper {
+	display: grid;
+    grid-gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(453px, 1fr));
+    grid-template-rows: 1fr;
+}
+.b-winners-wrapper__item {
+	position: relative;
+	background: #F5F5F4;
+    color: #000;
+	border-radius: 24px;
+}
+.b-winners-wrapper__item-image {
+	display: block;
+    position: relative;
+	margin-bottom: 35px;
+}
+.b-winners-wrapper__item-image img {
+	display: block;
+    position: relative;
+	max-width: 100%;
+	margin: 0 auto;
+}
+.b-winners-wrapper__item-desc {
+	display: block;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0px 44px 44px;
+    font-size: 20px;
+    line-height: 28px;
+    text-align: center;
+}
+.b-winners-wrapper__item-desc b {
+	display: block;
+    position: relative;
+	font-weight: bold;
+	font-size: 20px;
+	line-height: 28px;
+	margin-bottom: 24px;
+}
+.b-winners-wrapper__item.last {
+	background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);
+	color: #FFF;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 24px;
+	box-sizing: border-box;
+}
+.b-winners-wrapper__item-line {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: left;
+	margin-bottom: 28px;
+}
+.b-winners-wrapper__item-line:last-child {
+	margin-bottom: 0;
+}
+.item-line__img {
+	display: block;
+    position: relative;
+	margin-right: 28px;
+	width: 28px;
+}
+.item-line__img img {
+	display: block;
+    position: relative;
+	max-width: 100%;
+}
+.b-winners-wrapper__item-line:nth-child(1) .item-line__img img {
+	top: -10px;
+}
+.item-line__desc {
+	font-size: 20px;
+	line-height: 24px;
+}
+/* Победители */
+
+@media screen and (max-width: 1024px) {
+	.b-form .landing-title {
+		padding-top: 32px;
+	}
+	.landing-title,
+	.b-form .landing-title {
+		font-size: 36px;
+		line-height: 40px;
+	}
+	.landing-description {
+		font-size: 20px;
+		line-height: 28px;
+	}
+	.b-form .landing-title {
+		margin-bottom: 0;
+	}
+	.b-form .form-standart_black-bg .form-standart__plate {
+		padding-top: 0;
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.b-form .form-request-new__fields-list {
+		margin: 32px 0 25px;
+	}
+}
+@media screen and (max-width: 768px) {
+	.landing-title,
+	.b-form .landing-title {
+		font-size: 28px;
+		line-height: 32px;
+		margin-bottom: 25px;
+	}
+	.landing-description {
+		font-size: 16px;
+		line-height: 24px;
+	}
+	.b-treners__wrapper {
+        display: block;
+	    grid-gap: initial;
+        grid-template-columns: initial;
+        grid-template-rows: initial;
+	}
+	.b-treners__item {
+		margin-right: 28px;
+	}
+	.b-treners {
+		overflow: hidden;
+	}
+	.blockitem {
+		margin-bottom: 56px;
+	}
+	.b-winners-wrapper__item-desc,
+	.item-line__desc,
+	.b-winners-wrapper__item-desc b {
+		font-size: 14px;
+		line-height: 20px;
+	}
+	.b-winners-wrapper__item-desc {
+		padding: 0px 24px 24px;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.is-landing .b-cards-slider__slider-nav {
+		display: flex;
+	}
+	.is-landing .b-cards-slider__arrow-wrapper--right,
+	.is-landing .b-cards-slider__arrow-wrapper--left {
+		background: transparent;
+	}
+	.is-landing .slick-list {
+		overflow: hidden;
+	}
+	.is-landing .b-cards-slider__arrow-wrapper {
+		height: 19px;
+		top: initial;
+		bottom: -9px;
+	}
+	.is-landing .b-cards-slider__arrow::before,
+	.is-landing .b-cards-slider__arrow::after {
+		height: 2px;
+	}
+	.is-landing .b-cards-slider__arrow::after {
+		bottom: 14px;
+	}
+	.is-landing .slick-dots {
+		margin: 32px 0px 0px;
+		justify-content: center;
+	}
+	.is-landing .slick-dots li > button {
+		background: #EEEEEE;
+		margin: 4px;
+		border-radius: 50%;
+		border: 1px solid #EEEEEE;
+	}
+	.is-landing .slick-dots .slick-active > button {
+		background: linear-gradient(180deg, #E23835 0%, #7827F6 100%);
+		border: 0;
+	}
+	.b-treners__item {
+		margin-right: 0;
+	}
+	.b-winners-wrapper {
+    	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	}
+}

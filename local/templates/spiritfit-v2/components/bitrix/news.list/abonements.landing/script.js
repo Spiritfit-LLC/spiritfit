@@ -1,42 +1,40 @@
 $( document ).ready(function() {
-    $(".form-request-new__field").addClass("is-not-empty");
+    $('.landing__abonements-wrapper').each(function () {
+        var context = $(this);
+        var navPlace = $(context).find(".b-cards-slider__slider-nav").eq(0);
+        var slider = $(context).find(".landing__abonements-slider").eq(0);
 
-    var videoOpen = false;
-    $(".b-treners__item").unbind();
-    $(".b-treners__item").click(function () {
-        if( videoOpen ) {
-            videoOpen = false;
-        } else {
-            $(this).toggleClass("is-open");
-        }
-    });
+        slider.on('init', function(event, slick) {
+            $(".v3-abonement .b-twoside-card").unbind();
+            $(".v3-abonement .b-twoside-card").click(function() {
+                $(this).toggleClass("is-open");
+            });
 
-    $(".b-twoside-card__video.has-video").click(function () {
-        $.fancybox.open( atob($(this).data("source")) );
-        videoOpen = true;
-    });
+            $(".v3-abonement .get-abonement").unbind();
+            $(".v3-abonement .get-abonement").click(function(e) {
+                e.preventDefault();
 
-    function setTrenerInit() {
-        $(".setTrener").unbind();
-        $(".setTrener").click(function (e) {
-            e.preventDefault();
+                if( $(this).hasClass("trial-training-btn") ) {
+                    if ($(this).data('position')){
+                        var eLabel = $(this).data('position')
+                    } else {
+                        eLabel = window.location.href;
+                    }
+                    var eAction='clickTrialWorkoutButton';
+                    dataLayerSend('UX', eAction, eLabel);
+                }
 
-            var id = $(this).data("id");
-            $(".v3-abonement .get-abonement").data("leaderid", id);
+                var location = $(this).attr("href") + "?has_leaders=1";
+                var leaderId = $(this).data("leaderid");
+                if( typeof leaderId !== "undefined" || leaderId !== "" ) {
+                    location += "&leaderId=" + leaderId;
+                }
 
-            $(this).parents(".b-treners__wrapper").find(".b-treners__item").removeClass("selected");
-
-            var item = $(this).parents(".b-treners__item");
-            $(item).addClass("selected");
-
-            $('html, body').animate({
-                scrollTop: $(".b-abonements").eq(0).offset().top
-            }, 1000);
+                window.location.href = location;
+            });
         });
-    }
-    if ($(window).width() < 768) {
-        var trenersSlider = $(".b-treners__wrapper");
-        trenersSlider.slick({
+
+        slider.slick({
             dots: false,
             arrows: true,
             slidesToShow: 4,
@@ -84,7 +82,5 @@ $( document ).ready(function() {
                 }
             }]
         });
-    } else {
-        setTrenerInit();
-    }
+    });
 });

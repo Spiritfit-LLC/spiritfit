@@ -14,14 +14,3 @@
 	/** @var CBitrixComponent $component */
 	
 	$this->setFrameMode(true);
-	
-	foreach( $arResult['BLOCKS'] as $block ) {
-		$filePath = $templateFolder . "/blocks/" . $block["FILE_NAME"];
-		$APPLICATION->IncludeFile( $filePath, $block["PROPERTIES"], 
-			[
-				"MODE" => "php",
-				"NAME" => "Редактирование включаемой области раздела",
-				"TEMPLATE"  => ""
-			]
-		);
-	}

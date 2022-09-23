@@ -20,8 +20,8 @@ class Abonement
             $taggedCache->startTagCache($cacheDir);
             $taggedCache->registerTag($cacheKey);		
             
-
-            $dbElement = CIBlockElement::GetList([], ['IBLOCK_ID' => ABONEMENTS_IBLOCK_ID, 'ACTIVE' => 'Y'], false, false, ['NAME', 'ID', 'PROPERTY_PRICE', 'PROPERTY_BASE_PRICE', 'PROPERTY_PRICE_SIGN_DETAIL', 'PROPERTY_DESCRIPTION_SALE']);
+            /* ! Изменено для уменьшения используемой памяти в запросе к БД */
+            /*$dbElement = CIBlockElement::GetList([], ['IBLOCK_ID' => ABONEMENTS_IBLOCK_ID, 'ACTIVE' => 'Y'], false, false, ['NAME', 'ID', 'PROPERTY_PRICE', 'PROPERTY_BASE_PRICE', 'PROPERTY_PRICE_SIGN_DETAIL', 'PROPERTY_DESCRIPTION_SALE']);
 
             while ($arElement = $dbElement->Fetch()) {
                 $arResult['ITEMS'][$arElement['ID']]['PRICES'][$arElement['PROPERTY_PRICE_VALUE']['LIST']."_".$arElement['PROPERTY_PRICE_VALUE']['NUMBER']] = $arElement['PROPERTY_PRICE_VALUE'];
@@ -35,8 +35,35 @@ class Abonement
                 }
 
                 $arResult['ITEMS'][$arElement['ID']]['DESCRIPTION_SALE'] = $arElement['PROPERTY_DESCRIPTION_SALE_VALUE'];
+            }*/
+            
+            $dbElement = CIBlockElement::GetList([], ['IBLOCK_ID' => ABONEMENTS_IBLOCK_ID, 'ACTIVE' => 'Y'], false, false);
+            while ($dbObj = $dbElement->GetNextElement()) {
+                $arElement = $dbObj->GetFields();
+                $arElement["PROPERTIES"] = $dbObj->GetProperties();
+                
+                foreach($arElement['PROPERTIES']['PRICE']['VALUE'] as $value) {
+                    $arResult['ITEMS'][$arElement['ID']]['PRICES'][$value['LIST']."_".$value['NUMBER']] = $value;
+                    	
+                    if(!in_array($value['LIST'], $arResult['ITEMS'][$arElement['ID']]['LIST'])){
+                        $arResult['ITEMS'][$arElement['ID']]['LIST'][] = $value['LIST'];
+                    }
+                }
+                
+                foreach($arElement['PROPERTIES']['BASE_PRICE']['VALUE'] as $value) {
+                    $arResult['ITEMS'][$arElement['ID']]['BASE_PRICE'][$value['LIST']."_".$value['NUMBER']] = $value;
+                }
+                
+                foreach($arElement['PROPERTIES']['PRICE_SIGN_DETAIL']['VALUE'] as $value) {
+                    $arResult['ITEMS'][$arElement['ID']]['PRICE_SIGN_DETAIL'][$value['LIST']."_".$value['NUMBER']] = $value;
+                }
+                
+                $arResult['ITEMS'][$arElement['ID']]['DESCRIPTION_SALE'] = $arElement['PROPERTIES']['DESCRIPTION_SALE']['VALUE'];
+                
+                unset($arElement);
             }
-
+            /* ! Изменено для уменьшения используемой памяти в запросе к БД */
+			
             if (empty($arResult)) {
                 $taggedCache->abortTagCache();
                 $cache->abortDataCache();
@@ -53,7 +80,7 @@ class Abonement
     {
         $arAbonement = self::getList();
         $arResult = [];
-
+		
         foreach ($arAbonement['ITEMS'] as $id => $abonement) {
             if($abonementID == $id){
                 $arResult['DESCRIPTION_SALE'] = $abonement['DESCRIPTION_SALE'];
