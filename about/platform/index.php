@@ -79,7 +79,7 @@ $settings = Utils::getInfo();
         "on.page.block",
         array(
             "COMPONENT_TEMPLATE" => "on.page.block",
-            "WEB_FORM_ID" => "24",
+            "WEB_FORM_ID" => Utils::GetFormIDBySID($settings["PROPERTIES"]["PLATFORM_FORM_SID"]["VALUE"]),
             "WEB_FORM_FIELDS" => array(
                 0 => "name",
                 1 => "phone",
@@ -89,9 +89,8 @@ $settings = Utils::getInfo();
                 5 => "rules",
                 6 => "privacy",
             ),
-            "FORM_TYPE" => "X",
-            "CLUB_ID" => "",
-            "TEXT_FORM" => "Оставьте заявку на предоставление площадки под клуб сети SPIRIT.FITNESS"
+            "FORM_TYPE" =>$settings["PROPERTIES"]["PLATFORM_FORM_TYPE"]["VALUE"],
+            "TEXT_FORM" => $settings["PROPERTIES"]["PLATFORM_FORM_TITLE"]["VALUE"]
         ),
         false);
     ?>

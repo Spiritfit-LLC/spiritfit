@@ -124,7 +124,7 @@ $settings = Utils::getInfo();
         "on.page.block",
         array(
             "COMPONENT_TEMPLATE" => "on.page.block",
-            "WEB_FORM_ID" => "23",
+            "WEB_FORM_ID" => Utils::GetFormIDBySID($settings["PROPERTIES"]["CHEAP_FORM_SID"]["VALUE"]),
             "WEB_FORM_FIELDS" => array(
                 0 => "club",
                 1 => "name",
@@ -134,9 +134,8 @@ $settings = Utils::getInfo();
                 5 => "rules",
                 6 => "privacy",
             ),
-            "FORM_TYPE" => "X",
-            "CLUB_ID" => "",
-            "TEXT_FORM" => "Оставьте заявку на разовое посещение в клуба сети SPIRIT.FITNESS"
+            "FORM_TYPE" =>$settings["PROPERTIES"]["CHEAP_FORM_TYPE"]["VALUE"],
+            "TEXT_FORM" => $settings["PROPERTIES"]["CHEAP_FORM_TITLE"]["VALUE"]
         ),
         false);
     ?>

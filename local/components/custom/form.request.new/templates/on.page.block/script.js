@@ -152,6 +152,19 @@ $(document).ready(function(){
             if (data["clear-inputs"]===true){
                 $form.find('input.form-request-new__input').val('');
             }
+            if (data.dataLayer!==undefined){
+                if (typeof data.dataLayer.eLabel==='undefined'){
+                    data.dataLayer.eLabel='';
+                }
+                dataLayerSend(data.dataLayer.eCategory, data.dataLayer.eAction, data.dataLayer.eLabel)
+            }
+            if (data.upmetric!==undefined){
+                sendToUpMetrika({
+                    'phone':data.upmetric.PHONE,
+                    'email':data.upmetric.EMAIL,
+                    'setTypeClient':data.upmetric.CLIENT_TYPE
+                });
+            }
 
             //STANDART
             if (data['next-action']==="code"){
