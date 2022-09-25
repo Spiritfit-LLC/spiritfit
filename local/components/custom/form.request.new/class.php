@@ -300,6 +300,13 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
             'email'=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
         ];
 
+        if (!empty($FORM_FIELDS['FIELDS']["company"]["VALUE"])){
+            $arParams["company"]=$FORM_FIELDS["FIELDS"]["company"]["VALUE"];
+        }
+        if (!empty($FORM_FIELDS['FIELDS']["address"]["VALUE"])){
+            $arParams["address"]=$FORM_FIELDS["FIELDS"]["address"]["VALUE"];
+        }
+
         $res = CIBlockElement::GetList(
             Array("SORT"=>"ASC"),
             Array('IBLOCK_ID'=>Utils::GetIBlockIDBySID('FORM_TYPES'), 'PROPERTY_FORM_TYPE'=>$this->arResult["FORM_TYPE"]),
@@ -312,7 +319,7 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
             $DATALAYER=[
                 "eAction"=>$ar_res['PROPERTY_GA_EACTION_VALUE'],
                 "eCategory"=>$ar_res["PROPERTY_GA_ECATEGORY_VALUE"],
-                "elLabel"=>str_replace('<br>', ' ', $this->arResult['CLUB_NAME']).'/'.$ar_res["PROPERTY_GA_ELLABEL_VALUE"]
+                "eLabel"=>str_replace('<br>', ' ', $this->arResult['CLUB_NAME']).'/'.$ar_res["PROPERTY_GA_ELLABEL_VALUE"]
             ];
 
             if (!empty($ar_res["PROPERTY_UPMETRIC_CLIENT_TYPE_VALUE"])){
@@ -357,6 +364,13 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
                 "enable-inputs"=>true,
                 "clear-inputs"=>true,
             ];
+
+            if (!empty($DATALAYER)){
+                $result["dataLayer"]=$DATALAYER;
+            }
+            if (!empty($UPMETRIC)){
+                $result["upmetric"]=$UPMETRIC;
+            }
 
             return $result;
         }
@@ -492,6 +506,13 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
             'surname'=>$FORM_FIELDS['FIELDS']['surname']['VALUE'],
             'email'=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
         ];
+
+        if (!empty($FORM_FIELDS['FIELDS']["company"]["VALUE"])){
+            $arParams["company"]=$FORM_FIELDS["FIELDS"]["company"]["VALUE"];
+        }
+        if (!empty($FORM_FIELDS['FIELDS']["address"]["VALUE"])){
+            $arParams["address"]=$FORM_FIELDS["FIELDS"]["address"]["VALUE"];
+        }
 
         $api=new Api([
             "action"=>"contact",

@@ -142,7 +142,7 @@ $settings = Utils::getInfo();
             "on.page.block",
             array(
                 "COMPONENT_TEMPLATE" => "on.page.block",
-                "WEB_FORM_ID" => Utils::GetFormIDBySID('TRIAL_TRAINING_NEW'),
+                "WEB_FORM_ID" => Utils::GetFormIDBySID($settings["PROPERTIES"]["SINGLE_VISIT_FORM_SID"]["VALUE"]),
                 "WEB_FORM_FIELDS" => array(
                     0 => "club",
                     1 => "name",
@@ -152,8 +152,8 @@ $settings = Utils::getInfo();
                     5 => "rules",
                     6 => "privacy",
                 ),
-                "FORM_TYPE" => "3",
-                "TEXT_FORM" => "Оставьте заявку на разовое посещение в клуба сети SPIRIT.FITNESS"
+                "FORM_TYPE" =>$settings["PROPERTIES"]["SINGLE_VISIT_FORM_TYPE"]["VALUE"],
+                "TEXT_FORM" => $settings["PROPERTIES"]["SINGLE_VISIT_FORM_TITLE"]["VALUE"]
             ),
             false);
         ?>

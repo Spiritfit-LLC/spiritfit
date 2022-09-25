@@ -93,19 +93,18 @@ $settings = Utils::getInfo();
             "on.page.block",
             array(
                 "COMPONENT_TEMPLATE" => "on.page.block",
-                "WEB_FORM_ID" => "24",
+                "WEB_FORM_ID" => Utils::GetFormIDBySID($settings["PROPERTIES"]["ADV_FORM_SID"]["VALUE"]),
                 "WEB_FORM_FIELDS" => array(
                     0 => "name",
                     1 => "phone",
                     2 => "email",
-                    3 => "address",
+                    3 => "company",
                     4 => "personaldata",
                     5 => "rules",
                     6 => "privacy",
                 ),
-                "FORM_TYPE" => "X",
-                "CLUB_ID" => "",
-                "TEXT_FORM" => "Оставьте заявку на размещение рекламы в клубах сети SPIRIT.FITNESS"
+                "FORM_TYPE" =>$settings["PROPERTIES"]["ADV_FORM_TYPE"]["VALUE"],
+                "TEXT_FORM" => $settings["PROPERTIES"]["ADV_FORM_TITLE"]["VALUE"]
             ),
             false);
         ?>
