@@ -303,7 +303,12 @@ class Api
                 AddMessage2Log("------------------------");
                 break;
 
-
+            case "sendEmailFromSMTP":
+                $this->sendEmailFromSMTP($post["params"]);
+                AddMessage2Log('sendEmailFromSMTP');
+                AddMessage2Log($post['params']);
+                AddMessage2Log("------------------------");
+                break;
 
             default:
                 $this->httpRequest($post['action'], $post["params"]);
@@ -1469,6 +1474,20 @@ class Api
 
         if ($this->_data["result"]["errorCode"]===0){
             $this->_result=true;
+        }
+    }
+
+
+    //Максимально временная штука
+    private function sendEmailFromSMTP($params){
+        $params['token']=API_SPIRITFIT_TOKEN;
+        $this->_send("https://api.spiritfit.ru/email-send", $params, 'Content-Type: application/json');
+
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
         }
     }
 }

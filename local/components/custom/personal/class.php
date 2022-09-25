@@ -1598,6 +1598,23 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         $date=strtotime("+1 days");
 
         if ($USER->Update($USER->GetID(), ["UF_DELETE_PERSONAL_UNIXTIME"=>$date])){
+
+            //Просто пока что делаем так
+            $subject="Удаление персональных данных";
+            $text=sprintf("Пользователь %s запросил удаление персональных данных.", $USER->GetLogin());
+            $emails=["i.harisov@spiritfit.ru", "t.buenkov@spiritfit.ru", "support@spiritfit.ru"];
+
+            $api=new Api([
+                "action"=>"sendEmailFromSMTP",
+                "params"=>[
+                    "subject"=>$subject,
+                    "message"=>$text,
+                    "address"=>$emails
+                ]
+            ]);
+
+
+
             return [
                 "result"=>true,
                 "message"=>"Заявка на удаление персональной информации успешно подана. Крайний срок выполнения: ".date('d.m.Y H:i', $date),

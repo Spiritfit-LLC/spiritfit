@@ -149,6 +149,9 @@ $(document).ready(function(){
                 disabled.removeAttr('disabled');
                 $form.find('select').removeAttr('disabled');
             }
+            if (data["clear-inputs"]===true){
+                $form.find('input.form-request-new__input').val('');
+            }
 
             //STANDART
             if (data['next-action']==="code"){
@@ -168,6 +171,9 @@ $(document).ready(function(){
                     $form.data('action', action);
                     $form.submit();
                 });
+            }
+            if (data['next-action']==="reg"){
+                $form.find(".form-request-new__footer").css("justify-content", "space-between");
             }
 
 
