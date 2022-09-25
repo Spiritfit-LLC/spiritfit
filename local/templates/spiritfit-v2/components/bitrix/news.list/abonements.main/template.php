@@ -64,9 +64,11 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 									</div>
 									<? if( !empty($arItem["PROPERTIES"]["INCLUDE"]["VALUE"]) ) { ?>
 										<div class="corp-abonement__front-list">
+                                            <!--noindex-->
 											<? foreach($arItem["PROPERTIES"]["INCLUDE"]["VALUE"] as $listItem) { ?>
 												<div class="corp-abonement__front-list-item"><?=$listItem?></div>
 											<? } ?>
+                                            <!--/noindex-->
 										</div>
 									<? } ?>
 

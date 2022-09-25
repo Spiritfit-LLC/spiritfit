@@ -70,14 +70,14 @@ $APPLICATION->SetPageProperty("title", "Клубы Spirit Fitness - адреса
     );?>
 </div>
 <?php
-$APPLICATION->IncludeComponent(
-    "custom:promocode.banner",
-    "gray-purple",
-    Array(
-        "BANNER_DISCOUNT" => "-500 &#x20bd;",
-        "BANNER_TIME" => 3000,
-        "PROMOCODE" => "FITSUMMER",
-    )
-);
-?>
+//$APPLICATION->IncludeComponent(
+//    "custom:promocode.banner",
+//    "gray-purple",
+//    Array(
+//        "BANNER_DISCOUNT" => "-500 &#x20bd;",
+//        "BANNER_TIME" => 3000,
+//        "PROMOCODE" => "FITSUMMER",
+//    )
+//);
+//?>
 <? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>,

@@ -101,9 +101,11 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
                                             <!--<div class="b-twoside-card__text"><?//=$abonement['PREVIEW_TEXT']?></div>-->
                                             <? if( !empty($abonement["PROPERTIES"]["INCLUDE"]["VALUE"]) ) { ?>
                                                 <div class="corp-abonement__front-list">
+                                                    <!--noindex-->
                                                     <? foreach($abonement["PROPERTIES"]["INCLUDE"]["VALUE"] as $listItem) { ?>
                                                         <div class="corp-abonement__front-list-item"><?=$listItem?></div>
                                                     <? } ?>
+                                                    <!--/noindex-->
                                                 </div>
                                             <? } ?>
                                             <div class="b-twoside-card__prices">
@@ -181,7 +183,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
                 array(
                     "AJAX_MODE" => "N",
                     "COMPONENT_TEMPLATE" => "on.page.block",
-                    "WEB_FORM_ID" => "23",
+                    "WEB_FORM_ID" => Utils::GetFormIDBySID('TRIAL_TRAINING_NEW'),
                     "WEB_FORM_FIELDS" => array(
                         0 => "name",
                         1 => "phone",
@@ -206,7 +208,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
                 array(
                     "AJAX_MODE" => "N",
                     "COMPONENT_TEMPLATE" => "on.page.block",
-                    "WEB_FORM_ID" => "23",
+                    "WEB_FORM_ID" => Utils::GetFormIDBySID('TRIAL_TRAINING_NEW'),
                     "WEB_FORM_FIELDS" => array(
                         0 => "name",
                         1 => "phone",
@@ -311,7 +313,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
                                         </div>
                                         <div class="b-twoside-card__hidden-content">
                                             <div class="b-twoside-card__title"><?=$trainer['NAME']?></div>
-                                            <div class="b-twoside-card__text"><?=$trainer['PROPERTIES']['BACK_TEXT']['VALUE']['TEXT']?></div>
+                                            <div class="b-twoside-card__text"><!--noindex--><?=$trainer['PROPERTIES']['BACK_TEXT']['VALUE']['TEXT']?><!--/noindex--></div>
                                         </div>
                                     </div>
                                 </div>

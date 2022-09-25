@@ -50,6 +50,10 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
 
     function executeComponent()
     {
+        if (!Loader::includeModule('iblock')) {
+            $this->arResult["ERROR"]="Не удалось загрузить модуль iblock";
+        }
+
         if (!empty($this->arResult["ERROR"])) {
             echo $this->arResult["ERROR"];
             return;
@@ -250,6 +254,7 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
 
 //    AJAX
     public function regAction(){
+        Loader::includeModule('iblock');
         $this->componentParams();
         $this->GetClient();
 
@@ -349,7 +354,8 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
                     '.form-request-new__agreements'=>"show"
                 ],
                 'message'=>"Спасибо! Ваша заявка успешно отправлена!",
-                "enable-inputs"=>true
+                "enable-inputs"=>true,
+                "clear-inputs"=>true,
             ];
 
             return $result;
@@ -398,6 +404,7 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
     }
 
     public function codeAction(){
+        Loader::includeModule('iblock');
         $this->componentParams();
         $this->GetClient();
 
@@ -456,7 +463,8 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
                         ]]
                     ],
                     'message'=>"Не удалось подтвердить код. Пожалуйста, попробуйте еще раз!",
-                    "enable-inputs"=>true
+                    "enable-inputs"=>true,
+                    "clear-inputs"=>true,
                 ];
             }
             if (!empty($response["data"]["result"]["userMessage"])) {
@@ -509,7 +517,8 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
                 '.form-request-new__agreements'=>"show"
             ],
             'message'=>"Спасибо! Ваша заявка успешно отправлена!",
-            "enable-inputs"=>true
+            "enable-inputs"=>true,
+            "clear-inputs"=>true,
         ];
 
         return $result;
