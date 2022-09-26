@@ -25,6 +25,7 @@ $pageBlocks = [
     ],
     "block4" => [
         "BLOCK4_FORM_TYPE",
+		"BLOCK4_TITLE",
         "BLOCK4_CLIENT_TYPE",
         "BLOCK4_SORT",
     ],

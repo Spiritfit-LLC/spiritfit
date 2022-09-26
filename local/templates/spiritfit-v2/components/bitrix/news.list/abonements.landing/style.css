@@ -177,3 +177,9 @@
 		bottom: 13px;
 	}
 }
+
+@media screen and (max-width: 550px) {
+	.landing__abonements-slider .b-cards-slider__arrow::after {
+		bottom: 14px;
+	}
+}

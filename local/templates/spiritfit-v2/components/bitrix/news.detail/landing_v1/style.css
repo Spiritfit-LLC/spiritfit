@@ -7,7 +7,7 @@
 .is-landing .b-breadcrumbs__link.is-current:hover {
 	color: initial;
 }
-.is-landing {
+.is-landing main {
 	font-size: 24px;
 	line-height: 36px;
 }
@@ -79,6 +79,48 @@
 }
 .is-landing a.personal-btn {
 	line-height: 18px;
+	color: #FFF;
+}
+.is-landing .button-outline {
+	border-radius: 8px;
+	border: 1px solid #FFF;
+	padding: 20px 60px;
+}
+.is-landing .b-footer .button-outline:hover,
+.is-landing .b-footer .button-outline:active,
+.is-landing .b-footer .button-outline:focus {
+	border-color: #171717;
+	color: #FFF;
+}
+.is-landing .button-outline.js-popup-call_v2,
+.is-landing .button-outline.js-popup-message_v2 {
+	border: 1px solid #7827F6;
+}
+.is-landing .button-outline.js-popup-call_v2:hover,
+.is-landing .button-outline.js-popup-message_v2:hover {
+	border: 1px solid #FFF;
+}
+.is-landing a.b-top-menu__abonement-btn,
+.is-landing .button-outline:hover,
+.is-landing .b-top-menu__btn.button {
+	background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);
+	border-radius: 8px;
+	padding: 20px 60px;
+	transition: all .3s;
+}
+.is-landing .button-outline:hover {
+	background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%) !important;
+}
+.is-landing a.b-top-menu__abonement-btn {
+	color: #FFF;
+}
+.is-landing a.b-top-menu__abonement-btn:hover,
+.is-landing .b-top-menu__btn.button:hover {
+	background: linear-gradient(90deg, #E43932 23.26%, #7827F6 98.07%);
+}
+.is-landing .b-header__content .phone-btn,
+.is-landing .footer-phone {
+	background-image: url(img/icon-phone-landing.svg);
 }
 
 /* Форма */
@@ -136,6 +178,10 @@
 .b-form .form-standart {
 	border-bottom: 1px solid #ff7628;
 }
+.b-form .form-request-new__none,
+.b-form .form-request-new__error {
+	bottom: -27px;
+}
 /* Форма */
 
 @media screen and (max-width: 1024px) {
@@ -148,7 +194,7 @@
 		line-height: 40px;
 	}
 	.landing-description,
-	.is-landing {
+	.is-landing main {
 		font-size: 20px;
 		line-height: 28px;
 	}
@@ -173,5 +219,10 @@
 		font-size: 28px;
 		line-height: 32px;
 		margin-bottom: 25px;
+	}
+	.landing-description,
+	.is-landing main {
+		font-size: 16px;
+		line-height: 24px;
 	}
 }

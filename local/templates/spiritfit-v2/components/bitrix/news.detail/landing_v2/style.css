@@ -7,7 +7,7 @@
 .is-landing .b-breadcrumbs__link.is-current:hover {
 	color: initial;
 }
-.is-landing {
+.is-landing main {
 	font-size: 24px;
 	line-height: 36px;
 }
@@ -18,9 +18,14 @@
 	display: none;
 }
 .is-landing .b-screen.b-screen_short {
-	min-height: 65px;
+	min-height: 96px;
 	margin-bottom: 10px;
 	padding: 0;
+}
+
+.is-landing .b-header__content .phone-btn,
+.is-landing .footer-phone {
+	background-image: url(img/icon-phone-landing.svg);
 }
 
 .landing-title {
@@ -82,6 +87,30 @@
 }
 .is-landing a.personal-btn {
 	line-height: 18px;
+	color: #FFF;
+}
+.is-landing .button-outline {
+	border-radius: 8px;
+	border: 1px solid #FFF;
+	padding: 20px 60px;
+}
+.is-landing .b-footer .button-outline:hover,
+.is-landing .b-footer .button-outline:active,
+.is-landing .b-footer .button-outline:focus {
+	border-color: #171717;
+	color: #FFF;
+	background: transparent;
+}
+.is-landing .button-outline.js-popup-call_v2,
+.is-landing .button-outline.js-popup-message_v2 {
+	border: 1px solid #7827F6;
+}
+.is-landing .button-outline.js-popup-call_v2:hover,
+.is-landing .button-outline.js-popup-message_v2:hover {
+	border: 1px solid #FFF;
+}
+.is-landing .footer-phone-wrapper a:hover {
+	color: #FFF;
 }
 
 /* Форма */
@@ -138,6 +167,10 @@
 }
 .b-form .form-standart {
 	border-bottom: 1px solid #ff7628;
+}
+.b-form .form-request-new__none,
+.b-form .form-request-new__error {
+	bottom: -27px;
 }
 /* Форма */
 
@@ -250,15 +283,27 @@
 }
 .b-treners .button,
 .b-want .button,
-.b-main .button {
+.b-main .button,
+.is-landing a.b-top-menu__abonement-btn,
+.is-landing .button-outline:hover,
+.is-landing .b-top-menu__btn.button {
 	background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);
 	border-radius: 8px;
+	border-color: transparent;
 	padding: 20px 60px;
 	transition: all .3s;
 }
+.is-landing .button-outline:hover {
+	background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%) !important;
+}
+.is-landing a.b-top-menu__abonement-btn {
+	color: #FFF;
+}
 .b-treners .button:hover,
 .b-want .button:hover,
-.b-main .button:hover {
+.b-main .button:hover,
+.is-landing a.b-top-menu__abonement-btn:hover,
+.is-landing .b-top-menu__btn.button:hover {
 	background: linear-gradient(90deg, #E43932 23.26%, #7827F6 98.07%);
 }
 .b-treners .b-twoside-card.is-open .b-twoside-card__hidden-content {
@@ -807,7 +852,7 @@
 		line-height: 40px;
 	}
 	.landing-description,
-	.is-landing {
+	.is-landing main {
 		font-size: 20px;
 		line-height: 28px;
 	}
@@ -882,7 +927,7 @@
 		min-width: 268px;
 	}
 	.is-landing .b-screen.b-screen_short {
-		min-height: 32px;
+		min-height: 68px;
 	}
 }
 @media screen and (max-width: 768px) {
@@ -893,7 +938,8 @@
 		margin-bottom: 25px;
 	}
 	.landing-description,
-	.is-landing {
+	.is-landing main,
+	.b-participation__item {
 		font-size: 16px;
 		line-height: 24px;
 	}
@@ -1021,10 +1067,26 @@
 		line-height: 26px;
 	}
 	.b-main__banner {
-		padding: 32px 0px 62px;
+		padding: 32px 0px 32px;
 		background-size: auto 380px;
+		background-position: 50% 170%;
 	}
 	.b-main__banner-button {
 		margin-top: 240px;
+	}
+}
+
+@media screen and (max-width: 550px) {
+	.landing__abonements-slider .b-cards-slider__arrow::after {
+		bottom: 14px;
+	}
+}
+
+@media screen and (max-width: 492px) {
+	.b-main__banner {
+		background-position: 50% 150%;
+	}
+	.b-main__banner-button {
+    	margin-top: 220px;
 	}
 }

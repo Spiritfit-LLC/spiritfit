@@ -27,7 +27,7 @@ $( document ).ready(function() {
                 var location = $(this).attr("href") + "?has_leaders=1";
                 var leaderId = $(this).data("leaderid");
                 if( typeof leaderId !== "undefined" || leaderId !== "" ) {
-                    location += "&leaderId=" + leaderId;
+                    location += "&leader_id=" + leaderId;
                 }
 
                 window.location.href = location;
