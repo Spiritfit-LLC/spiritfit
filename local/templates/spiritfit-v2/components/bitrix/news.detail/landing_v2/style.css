@@ -354,7 +354,7 @@
 .b-winners-wrapper {
 	display: grid;
 	grid-gap: 24px;
-	grid-template-columns: repeat(auto-fit, minmax(453px, 1fr));
+	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr;
 }
 .b-winners-wrapper__item {
@@ -841,6 +841,9 @@
 		font-size: 78px;
 		line-height: 82px;
 	}
+	.b-winners-wrapper {
+		grid-template-columns: repeat(auto-fit, minmax(353px, 1fr));
+	}
 }
 @media screen and (max-width: 1024px) {
 	.b-form .landing-title {
@@ -1047,15 +1050,16 @@
 		border: 0;
 	}
 	.b-treners__item {
-		margin-right: 0;
+		margin: 0 2px;
 	}
 	.b-winners-wrapper {
 		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 	}
 	.b-participation__item {
-		width: 100%;
 		min-height: initial !important;
 		padding: 22px 42px 38px;
+		margin: 0px 2px;
+		min-height: 230px !important;
 	}
 	.b-main__banner-content b {
 		font-size: 36px;

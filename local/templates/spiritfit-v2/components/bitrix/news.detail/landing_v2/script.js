@@ -90,7 +90,8 @@ $( document ).ready(function() {
                     arrows: true,
                     slidesToScroll: 1,
                     variableWidth: false,
-                    dots: true
+                    dots: true,
+					adaptiveHeight: true
                 }
             }, {
                 breakpoint: 456,
