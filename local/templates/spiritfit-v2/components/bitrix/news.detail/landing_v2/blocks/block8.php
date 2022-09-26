@@ -8,7 +8,7 @@
 		$abonementsFilter = ["ACTIVE" => "Y", "ID" => $BLOCKS["BLOCK8_LIST"]];
 		
 		?>
-		<div class="b-abonements">
+		<div id="abonementbuy" class="b-abonements">
 			<div class="content-center">
 				<div class="landing-title">
 					<?=$BLOCKS["BLOCK8_TITLE"]?>

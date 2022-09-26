@@ -16,6 +16,25 @@ $( document ).ready(function() {
         videoOpen = true;
     });
 
+    $(".autoplay-video").click(function() {
+        let video = $(this).find("video");
+        if( $(video)[0].paused ) {
+            $(video)[0].play();
+            $(this).find("svg").hide();
+        } else {
+            $(video)[0].pause();
+            $(this).find("svg").show();
+        }
+    });
+
+    $(".moveto").unbind();
+    $(".moveto").click(function(e) {
+        e.preventDefault();
+        $('html, body').animate({
+            scrollTop: $(".b-abonements").eq(0).offset().top
+        }, 1000);
+    });
+
     function setTrenerInit() {
         $(".setTrener").unbind();
         $(".setTrener").click(function (e) {
