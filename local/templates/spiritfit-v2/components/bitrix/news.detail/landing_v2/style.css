@@ -163,7 +163,7 @@
 	transition: all .3s;
 }
 .b-form .button-outline:hover {
-	background: linear-gradient(90deg, #E43932 23.26%, #7827F6 98.07%);
+	background: linear-gradient(90deg, #E43932 46.26%, #7827F6 98.07%);
 }
 .b-form .form-standart {
 	border-bottom: 1px solid #ff7628;
@@ -294,7 +294,7 @@
 	transition: all .3s;
 }
 .is-landing .button-outline:hover {
-	background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%) !important;
+	background: linear-gradient(90deg, #E43932 46.26%, #7827F6 98.07%) !important;
 }
 .is-landing a.b-top-menu__abonement-btn {
 	color: #FFF;
@@ -304,7 +304,7 @@
 .b-main .button:hover,
 .is-landing a.b-top-menu__abonement-btn:hover,
 .is-landing .b-top-menu__btn.button:hover {
-	background: linear-gradient(90deg, #E43932 23.26%, #7827F6 98.07%);
+	background: linear-gradient(90deg, #E43932 46.26%, #7827F6 98.07%);
 }
 .b-treners .b-twoside-card.is-open .b-twoside-card__hidden-content {
 	padding: 33px 24px 95px;
@@ -490,6 +490,7 @@
 	position: absolute;
 	top: calc(50% - 49px);
 	left: calc(50% - 49px);
+	cursor: pointer;
 }
 .button.second {
 	display: none;
@@ -515,9 +516,8 @@
 	text-fill-color: transparent;
 }
 .b-fond .button:hover,
-.b-fond .button:focus,
-.b-fond .button::selection {
-	background: #FFF;
+.b-fond .button:focus {
+	background: rgb(255, 255, 255, .8);
 }
 .b-fond__table {
 	display: table;
@@ -1081,8 +1081,9 @@
 }
 
 @media screen and (max-width: 550px) {
-	.landing__abonements-slider .b-cards-slider__arrow::after {
-		bottom: 14px;
+	.landing__abonements-slider .b-cards-slider__arrow::after,
+	.is-landing .b-cards-slider__arrow::after {
+		bottom: 15px;
 	}
 }
 

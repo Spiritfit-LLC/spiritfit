@@ -101,7 +101,6 @@
 	border: 1px solid #FFF;
 }
 .is-landing a.b-top-menu__abonement-btn,
-.is-landing .button-outline:hover,
 .is-landing .b-top-menu__btn.button {
 	background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);
 	border-radius: 8px;
@@ -109,14 +108,14 @@
 	transition: all .3s;
 }
 .is-landing .button-outline:hover {
-	background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%) !important;
-}
-.is-landing a.b-top-menu__abonement-btn {
-	color: #FFF;
+	background: linear-gradient(90deg, #E43932 46.26%, #7827F6 98.07%) !important;
 }
 .is-landing a.b-top-menu__abonement-btn:hover,
 .is-landing .b-top-menu__btn.button:hover {
-	background: linear-gradient(90deg, #E43932 23.26%, #7827F6 98.07%);
+	background: linear-gradient(90deg, #E43932 46.26%, #7827F6 98.07%);
+}
+.is-landing a.b-top-menu__abonement-btn {
+	color: #FFF;
 }
 .is-landing .b-header__content .phone-btn,
 .is-landing .footer-phone {
