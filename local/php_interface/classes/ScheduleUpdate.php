@@ -4,7 +4,7 @@ use \Bitrix\Main\Loader;
 
 class ScheduleUpdate {
 
-    public static $apiUrl = "https://1c.spiritfit.ru/fitness-test1/hs/website/%s/schedule";
+    public static $apiUrl = "https://app.spiritfit.ru/Fitness/hs/website/%s/schedule";
 
     public static function init() {
         if (!Loader::includeModule('iblock')) {
@@ -40,7 +40,7 @@ class ScheduleUpdate {
 
 //            $arResult = preg_replace_callback('/\\\\u([a-f0-9]{4})/i', create_function('$m', 'return chr(hexdec($m[1])-1072+224);'), json_encode($arResult));
 //            $props["SCHEDULE_JSON"] = iconv('cp1251', 'utf-8', $arResult);
-            $props["SCHEDULE_JSON"]=$arResult;
+            $props["SCHEDULE_JSON"] = json_encode($arResult);
 
             CIBlockElement::SetPropertyValuesEx($id, false, $props);
         }

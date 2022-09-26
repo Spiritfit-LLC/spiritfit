@@ -12,7 +12,7 @@ class FeedCreator{
         if (!Loader::includeModule('iblock')) {
             return false;
         }
-        self::$docLocalAddr=$_SERVER['DOCUMENT_ROOT'].'/feeds/spiritfeeds.xml';
+        self::$docLocalAddr=$_SERVER["DOCUMENT_ROOT"].'/feeds/spiritfeeds.xml';
         self::_checkFeedsDoc();
         self::_saveXML();
         return "FeedCreator::init();";
@@ -28,7 +28,7 @@ class FeedCreator{
     }
 
     private static function _createXMLStruct(){
-        $SITE_NAME=((!empty($_SERVER['HTTPS'])) ? 'https' : 'http').'://'.$_SERVER['SERVER_NAME'];
+        $SITE_NAME='https://spiritfit.ru';
 
 
         $shop=self::$XMLDoc->addChild('shop');
