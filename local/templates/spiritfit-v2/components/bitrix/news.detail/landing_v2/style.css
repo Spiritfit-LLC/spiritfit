@@ -268,6 +268,14 @@
 	font-size: 12px;
 	line-height: 18px;
 	text-transform: uppercase;
+	transition: all .3s;
+}
+.b-treners .b-twoside-card__inner:hover .b-twoside-card__open {
+	background: linear-gradient(90deg, #E33932 0%, #7827F4 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	text-fill-color: transparent;
 }
 .b-twoside-card__open svg {
 	margin-right: 2px;

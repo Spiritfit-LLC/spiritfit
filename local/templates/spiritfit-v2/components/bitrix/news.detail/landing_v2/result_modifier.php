@@ -47,6 +47,7 @@ $pageBlocks = [
         "BLOCK6_DESCRIPTION",
         "BLOCK6_LIST",
         "BLOCK6_ACTIVE",
+        "BLOCK6_BUTTON_TITLE",
 		"BLOCK6_SORT"
     ],
     "block7" => [

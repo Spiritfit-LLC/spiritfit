@@ -83,7 +83,8 @@
 			33 => "BLOCK5_ACTIVE",
 			34 => "BLOCK6_ACTIVE",
 			35 => "BLOCK7_ACTIVE",
-			36 => "BLOCK8_ACTIVE"
+            36 => "BLOCK6_BUTTON_TITLE",
+			37 => "BLOCK8_ACTIVE"
 		),
         "IBLOCK_URL" => "/home/bitrix/www/landings/v2/",
         "DETAIL_URL" => "",
