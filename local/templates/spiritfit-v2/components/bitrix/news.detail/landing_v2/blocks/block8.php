@@ -1,6 +1,6 @@
 <?
 	if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
-	if( !empty($BLOCKS["BLOCK8_LIST"]) ) {
+	if( !empty($BLOCKS["BLOCK8_ACTIVE"]) ) {
 		global $abonementsFilter;
 		
 		$abonementsIBlockId = Utils::GetIBlockIDBySID('subscription');

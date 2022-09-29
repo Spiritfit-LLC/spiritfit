@@ -76,7 +76,14 @@
 			26 => "BLOCK7_SORT",
 			27 => "BLOCK8_TITLE",
 			28 => "BLOCK8_LIST",
-			29 => "BLOCK8_SORT"
+			29 => "BLOCK8_SORT",
+			30 => "BLOCK2_ACTIVE",
+			31 => "BLOCK3_ACTIVE",
+			32 => "BLOCK4_ACTIVE",
+			33 => "BLOCK5_ACTIVE",
+			34 => "BLOCK6_ACTIVE",
+			35 => "BLOCK7_ACTIVE",
+			36 => "BLOCK8_ACTIVE"
 		),
         "IBLOCK_URL" => "/home/bitrix/www/landings/v2/",
         "DETAIL_URL" => "",

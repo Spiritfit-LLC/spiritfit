@@ -62,7 +62,10 @@
 			12 => "BLOCK3_LOGOS",
 			13 => "BLOCK3_SORT",
 			14 => "BLOCK4_FORM_ID",
-			15 => "BLOCK4_SORT"
+			15 => "BLOCK4_SORT",
+			16 => "BLOCK2_ACTIVE",
+			17 => "BLOCK3_ACTIVE",
+			18 => "BLOCK4_ACTIVE"
 		),
         "IBLOCK_URL" => "/home/bitrix/www/landings/v1/",
         "DETAIL_URL" => "",

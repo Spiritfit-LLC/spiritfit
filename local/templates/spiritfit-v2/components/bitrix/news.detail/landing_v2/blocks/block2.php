@@ -1,5 +1,5 @@
 <? if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die(); ?>
-<? if( !empty($BLOCKS["BLOCK2_IMAGE"]["SRC"]) ) { ?>
+<? if( !empty($BLOCKS["BLOCK2_ACTIVE"]) ) { ?>
     <div class="b-block2 blockitem">
         <div class="content-center">
             <div class="b-block2__table" style="background-image: url(<?=$BLOCKS["BLOCK2_IMAGE"]["SRC"]?>)">

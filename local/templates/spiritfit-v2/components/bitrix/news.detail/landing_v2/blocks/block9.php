@@ -1,5 +1,5 @@
 <? if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die(); ?>
-<? if(!empty($BLOCKS["BLOCK9_FORM_TYPE"])) { ?>
+<? if(!empty($BLOCKS["BLOCK9_ACTIVE"])) { ?>
     <div class="b-form">
         <div class="content-center">
 		    <div class="landing-title">

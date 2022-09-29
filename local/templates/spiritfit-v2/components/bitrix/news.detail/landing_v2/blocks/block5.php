@@ -1,5 +1,5 @@
 <? if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die(); ?>
-<? if(!empty($BLOCKS["BLOCK5_LIST"])) { ?>
+<? if(!empty($BLOCKS["BLOCK5_ACTIVE"])) { ?>
     <div class="b-want blockitem">
         <div class="content-center">
             <div class="b-want-banner">

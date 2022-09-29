@@ -1,5 +1,5 @@
 <? if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die(); ?>
-<? if( !empty($BLOCKS["BLOCK7_LIST"]) ) { ?>
+<? if( !empty($BLOCKS["BLOCK7_ACTIVE"]) ) { ?>
 	<div class="b-winners blockitem">
 		<div class="content-center">
 			<div class="landing-title"><?=$BLOCKS["BLOCK7_TITLE"]?></div>

@@ -1,5 +1,5 @@
 <? if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die(); ?>
-<? if(!empty($BLOCKS["BLOCK3_LIST"])) { ?>
+<? if(!empty($BLOCKS["BLOCK3_ACTIVE"])) { ?>
     <div class="b-participation blockitem">
         <div class="content-center">
             <div class="landing-title"><?=$BLOCKS["BLOCK3_TITLE"]?></div>

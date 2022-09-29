@@ -16,19 +16,22 @@ $pageBlocks = [
         "BLOCK2_TITLE2",
         "BLOCK2_LIST1",
         "BLOCK2_LIST2",
-        "BLOCK2_SORT",
+        "BLOCK2_ACTIVE",
+		"BLOCK2_SORT"
     ],
     "block3" => [
         "BLOCK3_TITLE",
         "BLOCK3_LIST",
-        "BLOCK3_SORT",
+        "BLOCK3_ACTIVE",
+		"BLOCK3_SORT"
     ],
     "block4" => [
         "BLOCK4_TITLE",
         "BLOCK4_LIST",
         "BLOCK4_BUTTON",
         "BLOCK4_BUTTON_LINK",
-        "BLOCK4_SORT",
+        "BLOCK4_ACTIVE",
+		"BLOCK4_SORT"
     ],
     "block5" => [
         "BLOCK5_TITLE",
@@ -36,31 +39,36 @@ $pageBlocks = [
         "BLOCK5_BUTTON",
         "BLOCK5_BUTTON_LINK",
         "BLOCK5_VIDEO",
-        "BLOCK5_SORT",
+        "BLOCK5_ACTIVE",
+		"BLOCK5_SORT"
     ],
     "block6" => [
         "BLOCK6_TITLE",
         "BLOCK6_DESCRIPTION",
         "BLOCK6_LIST",
-        "BLOCK6_SORT",
+        "BLOCK6_ACTIVE",
+		"BLOCK6_SORT"
     ],
     "block7" => [
         "BLOCK7_TITLE",
         "BLOCK7_DESCRIPTION",
         "BLOCK7_LIST",
         "BLOCK7_GIFT_LIST",
-        "BLOCK7_SORT",
+        "BLOCK7_ACTIVE",
+		"BLOCK7_SORT"
     ],
     "block8" => [
         "BLOCK8_TITLE",
         "BLOCK8_LIST",
-        "BLOCK8_SORT",
+        "BLOCK8_ACTIVE",
+		"BLOCK8_SORT"
     ],
     "block9" => [
         "BLOCK9_TITLE",
         "BLOCK9_FORM_TYPE",
         "BLOCK9_CLIENT_TYPE",
-        "BLOCK9_SORT",
+		"BLOCK9_ACTIVE",
+        "BLOCK9_SORT"
     ],
 ];
 $imageSizes = [
@@ -83,8 +91,9 @@ foreach( $pageBlocks as $blockName => $items ) {
     ];
     foreach( $items as $k => $propName ) {
         if( $k == $lastKey ) continue;
+		
         if( !empty($arResult["PROPERTIES"][$propName]["VALUE"]) ) {
-            if( !empty($arResult["PROPERTIES"][$propName]["LINK_IBLOCK_ID"]) && $arResult["PROPERTIES"][$propName]["LINK_IBLOCK_ID"] != $abonementsIBlockId ) {
+			if( !empty($arResult["PROPERTIES"][$propName]["LINK_IBLOCK_ID"]) && $arResult["PROPERTIES"][$propName]["LINK_IBLOCK_ID"] != $abonementsIBlockId ) {
                 $values = [];
                 if( !is_array($arResult["PROPERTIES"][$propName]["VALUE"]) ) {
                     $values[] = $arResult["PROPERTIES"][$propName]["VALUE"];
@@ -157,14 +166,13 @@ foreach( $pageBlocks as $blockName => $items ) {
                     }
                 }
             } else {
-                $resArr["PROPERTIES"][$propName] = $arResult["PROPERTIES"][$propName]["~VALUE"];
+			   $resArr["PROPERTIES"][$propName] = $arResult["PROPERTIES"][$propName]["~VALUE"];
             }
         }
     }
 
     $arResult['BLOCKS'][] = $resArr;
 }
-
 usort($arResult['BLOCKS'], function($item1, $item2) { return $item1['SORT'] <=> $item2['SORT']; });
 
 $this->__component->SetResultCacheKeys(["BLOCKS"]);
