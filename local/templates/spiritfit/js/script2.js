@@ -67,11 +67,17 @@ $(document).ready(function() {
     }
     
     $('a').on('click', function(){
-        var href = $(this).attr('href');
-
-        if(href.indexOf('http') !== -1){
-            dataLayerSend('UX', 'clickExternalLink', href);
+        var href = $(this).attr("href");
+        if (href.indexOf('http') !== -1){
+            var url = new URL(href);
+            if (url.hostname!==location.hostname){
+                dataLayerSend('UX', 'clickExternalLink', url.href);
+            }
         }
+
+        // if(href.indexOf('http') !== -1){
+        //     dataLayerSend('UX', 'clickExternalLink', href);
+        // }
     })
 
 

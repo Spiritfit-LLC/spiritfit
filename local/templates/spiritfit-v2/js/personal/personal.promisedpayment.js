@@ -34,7 +34,7 @@ $(document).ready(function(){
     $('a[href="#promisedpayment"]').click(function(e){
         e.preventDefault();
 
-        var answr=confirm();
+        var answr=confirm('Подтвердите действие на сайте spiritfit.ru');
         if (!answr)
             return;
 

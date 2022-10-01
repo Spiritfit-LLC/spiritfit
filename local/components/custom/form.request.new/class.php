@@ -286,8 +286,8 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
 
             'source'=>$this->arResult['CLIENT']['src'],
             'channel'=>$this->arResult['CLIENT']['mdm'],
-            'campania'=>$this->arResult['CLIENT']['cnt'],
-            'message'=>$this->arResult['CLIENT']['cmp'],
+            'campania'=>$this->arResult['CLIENT']['cmp'],
+            'message'=>$this->arResult['CLIENT']['cnt'],
             'kword'=>$this->arResult['CLIENT']['trm'],
             'cid'=>$this->arResult['CLIENT']['google'],
             'yaClientID'=>$this->arResult['CLIENT']['yandex'],
@@ -493,8 +493,8 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
 
             'source'=>$this->arResult['CLIENT']['src'],
             'channel'=>$this->arResult['CLIENT']['mdm'],
-            'campania'=>$this->arResult['CLIENT']['cnt'],
-            'message'=>$this->arResult['CLIENT']['cmp'],
+            'campania'=>$this->arResult['CLIENT']['cmp'],
+            'message'=>$this->arResult['CLIENT']['cnt'],
             'kword'=>$this->arResult['CLIENT']['trm'],
             'cid'=>$this->arResult['CLIENT']['google'],
             'yaClientID'=>$this->arResult['CLIENT']['yandex'],

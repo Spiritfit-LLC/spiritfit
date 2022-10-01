@@ -38,8 +38,19 @@ class Clubs
     public static function clubsJson($clubs, $linkAnchor = "")
     {
         $arResult = [];
+        $arFilter = array("IBLOCK_CODE" => "subscription", "ACTIVE" => "Y", "PROPERTY_CODE_ABONEMENT"=>"month2");
+        $dbElements = CIBlockElement::GetList(array("SORT"=>"ASC"), $arFilter);
+
+        if ($res = $dbElements->GetNextElement()) {
+            $subsFields = $res->GetFields();
+            $properties = $res->GetProperties();
+            $subFields['PROPERTIES'] = $properties;
+//            var_dump(array_column($subFields["PROPERTIES"]["PRICE"]["VALUE"], "LIST"));
+
+        }
         
         foreach ($clubs as $itemClub) {
+//            var_dump($itemClub);
             if(strpos($itemClub['PROPERTY_CORD_YANDEX_VALUE'], ',')){
                 $itemClub['PROPERTY_CORD_YANDEX_VALUE'] = explode(',', $itemClub['PROPERTY_CORD_YANDEX_VALUE']);
             }else{
@@ -55,7 +66,15 @@ class Clubs
                     $itemClub['PROPERTY_WORK_VALUE'] = [$itemClub['PROPERTY_WORK_VALUE']]; 
                 }
             }
-            
+
+
+            $indexes=array_keys(array_column($subFields["PROPERTIES"]["PRICE"]["VALUE"], "LIST"), $itemClub["ID"]);
+            $priceArr=[];
+            foreach($indexes as $i){
+                $priceArr[]=$subFields["PROPERTIES"]["PRICE"]["VALUE"][$i]["PRICE"];
+            }
+            $minPrice=(int)min($priceArr);
+//            var_dump($minPrice);
 
             $address = HTMLToTxt($itemClub['PROPERTY_ADRESS_VALUE']['TEXT']);
 
@@ -75,6 +94,7 @@ class Clubs
                 'page' => (!empty($itemClub['PROPERTY_HIDE_LINK_VALUE'])) ? '' : '/clubs/'.$itemClub['CODE'].'/'.$linkAnchor,
                 'club_not_open' => ($itemClub['PROPERTY_SOON_VALUE']  == 'Y' ? 'Y' : 'N'),
                 'club_soon_open' => ($itemClub['PROPERTY_NOT_OPEN_YET_VALUE'] == 'Да' ? 'Y' : 'N'),
+                'min_price' => $minPrice
             ];
         }
         

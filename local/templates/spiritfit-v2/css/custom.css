@@ -404,7 +404,10 @@ form .input--num {
 	padding-top: 40px;
 }
 .b-map_page.b-map_page-main .b-map__map {
-	height: 650px;
+	height: 700px;
+}
+.b-map_page .b-map__map{
+    height: 1000px;
 }
 .b-map_page.b-map_page-main .b-map__info-plate:after,
 /*.b-map_page.b-map_page-main .b-map__switch-holder,*/
@@ -432,6 +435,9 @@ form .input--num {
 }
 .b-map_page.margin-top {
 	margin-top: 80px;
+}
+.b-map.b-map_page{
+    max-height: 1000px;
 }
 @media screen and (max-width: 1440px) {
 	.main-clubs__title {
@@ -506,12 +512,15 @@ form .input--num {
 .margin-top-20 {
     margin-top: 20px;
 }
+.margin-top-80{
+    margin-top:80px;
+}
 .b-twoside-card__footnote {
     height: 23px;
     overflow: hidden;
 }
 .b-map_page .b-map__map {
-    /* height: 1000px; */
+     height: 1000px;
 }
 
 .training__aside .training__aside-title {
