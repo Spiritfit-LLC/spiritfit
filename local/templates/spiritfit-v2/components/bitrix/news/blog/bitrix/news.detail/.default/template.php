@@ -17,10 +17,9 @@
 ?>
 
 <div class="content-center">
-
 	<div class="blog" itemscope itemtype="http://schema.org/Article">
         <meta itemprop="identifier" content="<?=$arResult["ID"]?>">
-        <link itemprop="mainEntityOfPage" href="<?=defined("MAIN_SITE_URL")?>"/>
+        <link itemprop="mainEntityOfPage" href="<?=MAIN_SITE_URL?>"/>
         <h1 class="is-hide" itemprop="headline name"><?=$APPLICATION->ShowTitle()?></h1>
 		<div class="blog-wrapper detail">
 			<div class="blog-items <?=(count($arResult["LEFT_ITEMS"]) > 0 || !empty($arParams["BANNER"])) ? "two" : "one" ?>">
@@ -28,7 +27,7 @@
                     <div class="blog-detail-seo-info">
                         <div class="blog-detail-date" itemprop="datePublished" content="<?=$arResult["datePublished"]?>">Дата: <?=$arResult["DATE"]?></div>
                         <div class="blog-detail-showing-count">Просмотры: <?=$arResult['PROPERTIES']['SHOWING_COUNT']["VALUE"]?></div>
-                        <div class="blog-detail-rating" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">Рейтинг:
+                        <div class="blog-detail-rating">Рейтинг:
                             <svg width="70" height="14" viewBox="0 0 160 32" style="margin: 0 5px;">
                                 <defs>
                                     <mask id="perc">
@@ -50,15 +49,13 @@
 
                                 <use xlink:href="#stars" fill="#ff7628" mask="url(#perc)"></use>
                             </svg><?=round($arResult['PROPERTIES']['RATING']['VALUE'],2)?>
-                            <meta itemprop="bestRating" content="5">
-                            <meta itemprop="ratingValue" content="<?=round($arResult['PROPERTIES']['RATING']['VALUE'],1)?>">
                         </div>
 
                     </div>
                     <div class="blog-head-items">
 					<? if( !empty($arResult["PICTURE_SRC"]) ) { ?>
 						<div class="blog-detail-picture">
-                            <link itemprop="image" href="<?=defined("MAIN_SITE_URL").$arResult["PICTURE_SRC"]?>">
+                            <link itemscope itemprop="image" href="<?=defined("MAIN_SITE_URL").$arResult["PICTURE_SRC"]?>">
 							<img src="<?=$arResult["PICTURE_SRC"]?>" alt="<?=strip_tags($arResult["NAME"])?>" title="<?=strip_tags($arResult["NAME"])?>">
 							<? if(!empty($arResult["SECTION_NAMES"])) {
 								?><div class="blog-detail-section items">
@@ -154,5 +151,15 @@
 				</div>
 			<? } ?>
 		</div>
+        <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+            <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                <img itemprop="url" src="/images/logo_white.svg"/>
+            </div>
+            <meta itemprop="name" content="SPIRIT.">
+            <meta itemprop="telephone" content="+7 495 105 97 97">
+            <meta itemprop="address" content="г. Москва">
+        </div>
+
 	</div>
+
 </div>

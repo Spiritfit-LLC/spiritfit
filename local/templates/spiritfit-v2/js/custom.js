@@ -1407,3 +1407,76 @@ $(document).ready(function() {
 
 
 
+function getGaId()
+{
+    var id;
+    if (typeof window.ga === 'function')
+    {
+        ga(function(tracker) {
+            id = tracker.get('clientId');
+        });
+        if (id)
+        {
+            return id;
+        }
+
+        if (ga.getAll && ga.getAll()[0])
+        {
+            id = ga.getAll()[0].get('clientId');
+        }
+    }
+
+    if (id)
+    {
+        return id;
+    }
+
+    id = (document.cookie || '').match(/_ga=(.+?);/);
+    if (id)
+    {
+        id = (id[1] || '').split('.').slice(-2).join(".")
+    }
+
+    return id ? id : null;
+}
+
+function  getYaId()
+{
+    var id;
+    if (window.Ya)
+    {
+        var yaId;
+        if (Ya.Metrika && Ya.Metrika.counters()[0])
+        {
+            yaId = Ya.Metrika.counters()[0].id;
+        }
+        else if (Ya.Metrika2 && Ya.Metrika2.counters()[0])
+        {
+            yaId = Ya.Metrika2.counters()[0].id;
+        }
+
+        if (!yaId)
+        {
+            return null;
+        }
+
+        if (window.ym && typeof window.ym === 'object')
+        {
+            ym(yaId, 'getClientID', function(clientID) {
+                id = clientID;
+            });
+        }
+
+        if (!id && window['yaCounter' + yaId])
+        {
+            id = window['yaCounter' + yaId].getClientID();
+        }
+    }
+
+    if (!id)
+    {
+        id = webPacker.cookie.get('_ym_uid');
+    }
+
+    return id ? id : null;
+}

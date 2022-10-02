@@ -140,3 +140,4 @@ $settings = Utils::getInfo();
         false);
     ?>
 </section>
+<?require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

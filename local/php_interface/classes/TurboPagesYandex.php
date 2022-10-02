@@ -1,19 +1,26 @@
 <?php
 use \ImageConverter\Picture;
+use \Bitrix\Main\Loader;
 
 class TurboPagesYandex{
 
-    private $XMLDoc;
-    private $XMLOffers;
-    private $docLocalAddr;
+    private static $XMLDoc;
+    private static $XMLOffers;
+    private static $docLocalAddr;
 
-    public function __construct(){
-        $this->docLocalAddr=$_SERVER['DOCUMENT_ROOT'].'/blog/rss.xml';
-        $this->_createRSS();
-        $this->_saveXML();
+    public static function init(){
+        if (!Loader::includeModule('iblock')) {
+            return false;
+        }
+
+        self::$docLocalAddr=$_SERVER['DOCUMENT_ROOT'].'/blog/rss.xml';
+        self::_createRSS();
+        self::_saveXML();
+
+        return "TurboPagesYandex::init();";
     }
 
-    private function _saveXML(){
+    private static function _saveXML(){
 //        $dom = new DOMDocument('1.0',  'UTF-8');
 //        $dom->preserveWhiteSpace = false;
 //        $dom->formatOutput = true;
@@ -22,39 +29,37 @@ class TurboPagesYandex{
 //
 //
 //        $dom->save();
-        file_put_contents($this->docLocalAddr, html_entity_decode($this->XMLDoc->asXML(), ENT_HTML401, "UTF-8"));
-//        $this->XMLDoc->saveXML($this->docLocalAddr);
+        file_put_contents(self::$docLocalAddr, html_entity_decode(self::$XMLDoc->asXML(), ENT_HTML401, "UTF-8"));
     }
 
-    private function _createRSS(){
-        $SITE_NAME=((!empty($_SERVER['HTTPS'])) ? 'https' : 'http').'://'.$_SERVER['SERVER_NAME'];
+    private static function _createRSS(){
         $aMenuLinks = Array(
             Array(
                 "Клубы",
-                $SITE_NAME."/clubs/",
+                MAIN_SITE_URL."/clubs/",
             ),
             Array(
                 "Тренировки",
-                $SITE_NAME."/trenirovki/",
+                MAIN_SITE_URL."/trenirovki/",
             ),
             Array(
                 "Приложение",
-                $SITE_NAME."/mobilnoe-prilozheniya/",
+                MAIN_SITE_URL."/mobilnoe-prilozheniya/",
             ),
             Array(
                 "Абонементы",
-                $SITE_NAME."/abonement/",
+                MAIN_SITE_URL."/abonement/",
             ),
             Array(
                 "Программа лояльности",
-                $SITE_NAME."/loyalty-program/",
+                MAIN_SITE_URL."/loyalty-program/",
             ),
         );
 
-        $this->XMLDoc=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><rss xmlns:yandex="http://news.yandex.ru" xmlns:media="http://search.yahoo.com/mrss/" xmlns:turbo="http://turbo.yandex.ru"></rss>');
-        $this->XMLDoc->registerXPathNamespace("yandex", "http://news.yandex.ru");
-        $this->XMLDoc->registerXPathNamespace("media", "http://search.yahoo.com/mrss/");
-        $this->XMLDoc->registerXPathNamespace("turbo", "http://turbo.yandex.ru");
+        self::$XMLDoc=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><rss xmlns:yandex="http://news.yandex.ru" xmlns:media="http://search.yahoo.com/mrss/" xmlns:turbo="http://turbo.yandex.ru"></rss>');
+        self::$XMLDoc->registerXPathNamespace("yandex", "http://news.yandex.ru");
+        self::$XMLDoc->registerXPathNamespace("media", "http://search.yahoo.com/mrss/");
+        self::$XMLDoc->registerXPathNamespace("turbo", "http://turbo.yandex.ru");
 
         $NS = array(
             'yandex' => 'http://news.yandex.ru',
@@ -63,16 +68,16 @@ class TurboPagesYandex{
         );
 
         foreach ($NS as $prefix => $name) {
-            $this->XMLDoc->registerXPathNamespace($prefix, $name);
+            self::$XMLDoc->registerXPathNamespace($prefix, $name);
         }
         $NS = (object) $NS;
 
-        $this->XMLDoc->addAttribute("version", "2.0");
+        self::$XMLDoc->addAttribute("version", "2.0");
 
 
-        $channel=$this->XMLDoc->addChild('channel');
+        $channel=self::$XMLDoc->addChild('channel');
         $channel->addChild('title', 'Блог Spirit Fitness');
-        $channel->addChild('link', $SITE_NAME);
+        $channel->addChild('link', MAIN_SITE_URL);
         $channel->addChild('description', 'Статьи про здоровье, тренировки и питание');
         $channel->addChild('language', 'ru');
         $channel->addChild('turbo:analytics');
@@ -127,7 +132,7 @@ class TurboPagesYandex{
             $readAlso[$blog_item["ID"]]='<div data-block="feed-item" '.
                 'data-title="'.$blog_item["NAME"].'" '.
                 'data-description="'.$desc.'" '.
-                'data-href="'.$SITE_NAME.'/blog/'.Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "CODE").'/'.$blog_item['CODE'].'/'.'" '.
+                'data-href="'.MAIN_SITE_URL.'/blog/'.Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "CODE").'/'.$blog_item['CODE'].'/'.'" '.
                 'data-thumb="'.$PICTURE_SRC.'" '.
                 'data-thumb-position="left" '.
                 'data-thumb-ratio="4x3"></div>';
@@ -142,7 +147,7 @@ class TurboPagesYandex{
             $item->addAttribute('turbo', 'true');
 
             $item->addChild('extendedHtml', 'true', $NS->turbo);
-            $item->addChild('link', $SITE_NAME.'/blog/'.Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "CODE").'/'.$blog_item['CODE'].'/');
+            $item->addChild('link', MAIN_SITE_URL.'/blog/'.Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "CODE").'/'.$blog_item['CODE'].'/');
 
             $item->addChild("pubDate", date(DATE_RFC822, strtotime($blog_item["DATE_CREATE_UNIX"])));
             $yandex=$item->addChild("yandex");
@@ -152,19 +157,19 @@ class TurboPagesYandex{
 
             //Хлеб крошки
             $breadcrumb=$breadcrumblist->addChild("breadcrumb");
-            $breadcrumb->addAttribute("url", $SITE_NAME.'/');
+            $breadcrumb->addAttribute("url", MAIN_SITE_URL.'/');
             $breadcrumb->addAttribute("text", "Главная");
 
             $breadcrumb=$breadcrumblist->addChild("breadcrumb");
-            $breadcrumb->addAttribute("url", $SITE_NAME.'/blog/');
+            $breadcrumb->addAttribute("url", MAIN_SITE_URL.'/blog/');
             $breadcrumb->addAttribute("text", "Блог");
 
             $breadcrumb=$breadcrumblist->addChild("breadcrumb");
-            $breadcrumb->addAttribute("url", $SITE_NAME.'/blog/'.Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "CODE").'/');
+            $breadcrumb->addAttribute("url", MAIN_SITE_URL.'/blog/'.Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "CODE").'/');
             $breadcrumb->addAttribute("text", Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "NAME"));
 
             $breadcrumb=$breadcrumblist->addChild("breadcrumb");
-            $breadcrumb->addAttribute("url", $SITE_NAME.'/blog/'.Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "CODE").'/'.$blog_item['CODE'].'/');
+            $breadcrumb->addAttribute("url", MAIN_SITE_URL.'/blog/'.Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "CODE").'/'.$blog_item['CODE'].'/');
             $breadcrumb->addAttribute("text", $blog_item["NAME"]);
 
 
@@ -183,7 +188,7 @@ class TurboPagesYandex{
             '<header>'.
                 '<h1>'.$blog_item["NAME"].'</h1>'.
                     '<figure>'.
-                        '<img src="'.$SITE_NAME.$PICTURE_SRC.'"/>'.
+                        '<img src="'.MAIN_SITE_URL.$PICTURE_SRC.'"/>'.
                     '</figure>'.
                     '<menu>';
             foreach ($aMenuLinks as $menuLink){
@@ -191,10 +196,10 @@ class TurboPagesYandex{
             }
             $cntnt_header.='</menu>';
             $cntnt_header.='<div data-block="breadcrumblist">'.
-                '<a href="'.$SITE_NAME.'/">Главная</a>'.
-                '<a href="'.$SITE_NAME.'/blog/">Блог</a>'.
-                '<a href="'.$SITE_NAME.'/blog/'.Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "CODE").'/">'.Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "NAME").'</a>'.
-                '<a href="'.$SITE_NAME.'/blog/'.Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "CODE").'/'.$blog_item['CODE'].'/">'.$blog_item["NAME"].'</a></div>';
+                '<a href="'.MAIN_SITE_URL.'/">Главная</a>'.
+                '<a href="'.MAIN_SITE_URL.'/blog/">Блог</a>'.
+                '<a href="'.MAIN_SITE_URL.'/blog/'.Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "CODE").'/">'.Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "NAME").'</a>'.
+                '<a href="'.MAIN_SITE_URL.'/blog/'.Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "CODE").'/'.$blog_item['CODE'].'/">'.$blog_item["NAME"].'</a></div>';
 
             $cntnt_header.='</header>';
             $cntnt_header.='<div itemscope itemtype="http://schema.org/Rating"><meta itemprop="bestRating" content="5"><meta itemprop="ratingValue" content="'.round($blog_item['PROPERTIES']['RATING']['VALUE'],1).'"></div><div class="blog-detail-text"><div>'.HTMLToTxt(html_entity_decode($blog_item["DETAIL_TEXT"], ENT_NOQUOTES, 'UTF-8'), "", [], false).'</div>';

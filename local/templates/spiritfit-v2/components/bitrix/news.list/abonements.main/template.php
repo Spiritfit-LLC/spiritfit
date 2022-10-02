@@ -79,7 +79,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                             </div>
                             <div class="b-twoside-card__footer">
                                 <div class="abonement-min-price__face">
-                                    <div class="b-twoside-card__prices-face">от <?=$arItem["MIN_PRICE2"]?> <span class="rub">₽</span></div>
+                                    <div class="b-twoside-card__prices-face">от <?=$arItem["MIN_PRICE"]?> <span class="rub">₽</span><?if ($arItem["MIN_PRICE_PER_MONTH"]):?> в месяц<?endif;?></div>
                                 </div>
                                 <a class="button-outline b-twoside-card-detail-btn">Подробнее</a>
                                 <a class="button <?=$arItem['PROPERTIES']['ADDITIONAL_CLASS']['VALUE']?> choose-abonement-btn" href="<?=$arItem['DETAIL_PAGE_URL']?>" data-sub_id="<?=$arItem['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>" style="display: none;">Купить</a>

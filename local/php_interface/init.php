@@ -61,6 +61,12 @@ if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/Person
 if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/FeedCreator.php')) {
     require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/FeedCreator.php');
 }
+if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/TurboPagesYandex.php')) {
+    require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/TurboPagesYandex.php');
+}
+if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/api/WebAnalytics.php')) {
+    require_once($_SERVER["DOCUMENT_ROOT"] . '/local/api/WebAnalytics.php');
+}
 
 AddEventHandler("main", "OnAfterUserAuthorize", Array("PersonalUtils", "UpdateFieldsAfterLogin"));
 
