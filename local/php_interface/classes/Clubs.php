@@ -38,7 +38,7 @@ class Clubs
     public static function clubsJson($clubs, $linkAnchor = "")
     {
         $arResult = [];
-        $arFilter = array("IBLOCK_CODE" => "subscription", "ACTIVE" => "Y", "PROPERTY_CODE_ABONEMENT"=>"month2");
+        $arFilter = array("IBLOCK_CODE" => "subscription", "ACTIVE" => "Y", "PROPERTY_CODE_ABONEMENT"=>"base");
         $dbElements = CIBlockElement::GetList(array("SORT"=>"ASC"), $arFilter);
 
         if ($res = $dbElements->GetNextElement()) {

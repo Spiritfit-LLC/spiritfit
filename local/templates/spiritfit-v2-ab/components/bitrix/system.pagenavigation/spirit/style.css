@@ -1,0 +1,32 @@
+.blog-page-navigation {
+	display: flex;
+    position: relative;
+    flex-direction: row;
+    flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	row-gap: 16px;
+    margin: 25px 0px 60px;
+}
+.blog-page-navigation > span,
+.blog-page-navigation > a {
+	font-size: 18px;
+	line-height: 18px;
+	border: 1px solid #414141;
+	padding: 10px 15px;
+	color: #FFF;
+	text-decoration: none;
+}
+.blog-page-navigation > a:hover,
+.blog-page-navigation .blog-page-current {
+	border: 1px solid #FC6120;
+	color: #FFF;
+}
+
+body.white .blog-page-navigation > a:hover,
+body.white .blog-page-navigation .blog-page-current,
+body.white .blog-page-navigation > span,
+body.white .blog-page-navigation > a {
+	color: #000;
+}

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33">
+  <defs>
+    <style>
+      .cls-1 {
+        opacity: 0.6;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #777;
+        stroke-width: 2px;
+      }
+
+      .cls-3 {
+        fill: #777;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <g id="instagram_" data-name="instagram " class="cls-1">
+    <g id="иконка">
+      <rect id="Rounded_Rectangle_2_copy" data-name="Rounded Rectangle 2 copy" class="cls-2" x="1" y="1" width="30" height="31" rx="8" ry="8"/>
+      <circle class="cls-2" cx="16" cy="16.515" r="7"/>
+      <path class="cls-3" d="M63.49,827.2a1.563,1.563,0,1,1-1.485,1.561A1.524,1.524,0,0,1,63.49,827.2Z" transform="translate(-39 -823)"/>
+    </g>
+  </g>
+</svg>

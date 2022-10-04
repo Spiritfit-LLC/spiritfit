@@ -1,0 +1,42 @@
+/*span.select2-selection.select2-selection--single{*/
+/*    padding-left: 0!important;*/
+/*}*/
+div#freezingdays{
+    /*margin-top:50px;*/
+    border:none;
+}
+.freezing-description {
+    font-size: 16px;
+}
+.freezing-price {
+    margin: 20px 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+.select2-container--disabled .select2-selection--single{
+    background-color:rgba(0,0,0,0)!important;
+}
+.freefreezing-form .tooltip-form-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+.freefreezing-form .personal-section-form__item.select-item{
+    width: 100%;
+}
+.select2-dropdown{
+    z-index: 10000!important;
+}
+.freefreezing-form.tooltip-form{
+    width: auto!important;
+    max-width: 430px;
+}
+.freefreezing-form input.tooltip-form-submit{
+    margin-top:0;
+}
+.loader.escapingBallG-animation{
+    margin: 100px 100px;
+}
+#freezingdays .select2-selection.select2-selection--single{
+    padding: 0;
+}
