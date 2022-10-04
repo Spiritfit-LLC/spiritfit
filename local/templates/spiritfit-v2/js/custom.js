@@ -1257,6 +1257,9 @@ $(document).ready(function() {
     if (localStorage.getItem('footer-hide')==="1"){
         $('.b-club-search').removeClass('active');
         $('.b-club-search__show-btn').addClass('active');
+        $('.b-footer').animate({
+            "margin-bottom":"-=133px"
+        }, 300);
     }
     else{
         $('.b-club-search').addClass('active');
@@ -1267,12 +1270,18 @@ $(document).ready(function() {
         $('.b-club-search').removeClass('active');
         $('.b-club-search__show-btn').addClass('active');
         localStorage.setItem('footer-hide', "1");
+        $('.b-footer').animate({
+            "margin-bottom":"-=133px"
+        }, 200);
     });
 
     $('.b-club-search__show-btn').click(function(){
         $('.b-club-search').addClass('active');
         $('.b-club-search__show-btn').removeClass('active');
         localStorage.setItem('footer-hide', "0");
+        $('.b-footer').animate({
+            "margin-bottom":"133px"
+        }, 300);
     });
 
 
