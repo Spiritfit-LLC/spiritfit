@@ -1,6 +1,6 @@
 let mapL;
 let usLocation;
-let polyline;
+// let polyline;
 
 document.addEventListener("DOMContentLoaded", function () {
 	let cord1 = 55.756115;
@@ -379,75 +379,75 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-		mapL.on('click', function(e){
-			var URL_API="https://api.geotree.ru/address.php?";
-			var url=URL_API+"limit=1&lon="+e.latlng.lng+"&lat="+e.latlng.lat;
-
-
-
-			jQuery.get(url)
-				.done(function(data) {
-					let item=data[0]; //ближайший найденный объект
-					let value=item.address; //полное наименование
-					$("#map-point-from").val(value)
-
-					if (item.type=="address") {
-						var coords=item.geo_inside;
-					} else if (item.type=="place") {
-						let level_info=item.levels[item.level];
-						coords=level_info.geo_inside;
-					}
-					if (usLocation==null){
-						usLocation = new L.marker(coords, {draggable: false});
-					}
-					else{
-						usLocation.setLatLng(coords);
-					}
-
-					mapL.addLayer(usLocation);
-
-					if (polyline==null){
-						var plan=new L.Routing.Plan([
-							coords,
-							marker._latlng
-						], {
-							addWaypoints:false,
-							draggableWaypoints:false,
-							createMarker: function(i, waypoint, n) {
-								if (i==1) return false;
-
-								console.log(waypoint)
-								var pointMarker = L.marker(waypoint.latLng, {
-									draggable:false,
-									// icon: markerIcon,
-								});
-								return pointMarker;
-							}
-						})
-						polyline=new L.Routing.Control({
-							waypoints: [
-								coords,
-								marker._latlng
-							],
-							plan:plan,
-							lineOptions:{
-								addWaypoints:false,
-								styles: [{color: '#ff7628', opacity: 1, weight: 5}]
-							},
-							show:false,
-							containerClassName:'is-hide',
-						});
-						polyline.addTo(mapL);
-					}
-					else{
-						polyline.setWaypoints([coords, marker._latlng]);
-						console.log(polyline)
-					}
-
-
-				})
-
-		})
+		// mapL.on('click', function(e){
+		// 	var URL_API="https://api.geotree.ru/address.php?";
+		// 	var url=URL_API+"limit=1&lon="+e.latlng.lng+"&lat="+e.latlng.lat;
+		//
+		//
+		//
+		// 	jQuery.get(url)
+		// 		.done(function(data) {
+		// 			let item=data[0]; //ближайший найденный объект
+		// 			let value=item.address; //полное наименование
+		// 			$("#map-point-from").val(value)
+		//
+		// 			if (item.type=="address") {
+		// 				var coords=item.geo_inside;
+		// 			} else if (item.type=="place") {
+		// 				let level_info=item.levels[item.level];
+		// 				coords=level_info.geo_inside;
+		// 			}
+		// 			if (usLocation==null){
+		// 				usLocation = new L.marker(coords, {draggable: false});
+		// 			}
+		// 			else{
+		// 				usLocation.setLatLng(coords);
+		// 			}
+		//
+		// 			mapL.addLayer(usLocation);
+		//
+		// 			if (polyline==null){
+		// 				var plan=new L.Routing.Plan([
+		// 					coords,
+		// 					marker._latlng
+		// 				], {
+		// 					addWaypoints:false,
+		// 					draggableWaypoints:false,
+		// 					createMarker: function(i, waypoint, n) {
+		// 						if (i==1) return false;
+		//
+		// 						console.log(waypoint)
+		// 						var pointMarker = L.marker(waypoint.latLng, {
+		// 							draggable:false,
+		// 							// icon: markerIcon,
+		// 						});
+		// 						return pointMarker;
+		// 					}
+		// 				})
+		// 				polyline=new L.Routing.Control({
+		// 					waypoints: [
+		// 						coords,
+		// 						marker._latlng
+		// 					],
+		// 					plan:plan,
+		// 					lineOptions:{
+		// 						addWaypoints:false,
+		// 						styles: [{color: '#ff7628', opacity: 1, weight: 5}]
+		// 					},
+		// 					show:false,
+		// 					containerClassName:'is-hide',
+		// 				});
+		// 				polyline.addTo(mapL);
+		// 			}
+		// 			else{
+		// 				polyline.setWaypoints([coords, marker._latlng]);
+		// 				console.log(polyline)
+		// 			}
+		//
+		//
+		// 		})
+		//
+		// })
 
 	}
 	else {
