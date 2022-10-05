@@ -151,13 +151,7 @@ $settings = Utils::getInfo();
         window.addEventListener('b24:form:send:success', (event)=>{
             let form = event.detail.object;
             if (form.identification.id==10){
-                BX.ajax.runComponentAction("custom:conversion", 'setConversion', {
-                    mode: 'class',
-                    data: {
-                        "module":"CallbackConversion"
-                    },
-                    method:'POST'
-                });
+                setConversion("CallbackConversion");
             }
         });
 

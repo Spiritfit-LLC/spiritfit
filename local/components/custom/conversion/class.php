@@ -40,7 +40,6 @@ class ConversionComponent extends CBitrixComponent implements Controllerable{
             else{
                 $callback=$query["callback"];
             }
-
             $module=$query["module"];
             $func = array($module, $callback);
             try{

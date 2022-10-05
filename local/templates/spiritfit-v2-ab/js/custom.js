@@ -1489,3 +1489,14 @@ function  getYaId()
 
     return id ? id : null;
 }
+
+function setConversion(module, callback=null){
+    BX.ajax.runComponentAction("custom:conversion", 'setConversion', {
+        mode: 'class',
+        data: {
+            "module":module,
+            "callback":callback
+        },
+        method:'POST'
+    });
+}
