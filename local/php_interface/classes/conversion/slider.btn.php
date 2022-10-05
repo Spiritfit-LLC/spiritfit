@@ -1,14 +1,14 @@
 <?php
 
-class CallbackConversion{
-    // накрутка наших счетчиков
+class SliderBtnConversion{
+    // накрутка счетчиков
     static function addCounters()
     {
         if (Bitrix\Main\Loader::includeModule('conversion'))
         {
             $context = Bitrix\Conversion\DayContext::getInstance();
-            $context->addDayCounter('callback_day', 1);
-            $context->addCounter('callback_all', 1);
+            $context->addDayCounter('slider_click_day', 1);
+            $context->addCounter('slider_click_all', 1);
         }
     }
 
@@ -16,8 +16,8 @@ class CallbackConversion{
     static function getCounterTypes()
     {
         return array(
-            'callback_day' => array('MODULE' => 'callback', 'NAME' => 'Количество заявок на обратный звонок в день', 'GROUP' => 'day'),
-            'callback_all' => array('MODULE' => 'callback', 'NAME' => 'Общее количество заявок на обратный звонок'),
+            'slider_click_day' => array('MODULE' => 'slider.btn', 'NAME' => 'Количество кликов по кнопке слайдера акций', 'GROUP' => 'day'),
+            'slider_click_all' => array('MODULE' => 'slider.btn', 'NAME' => 'Общее количество кликов по кнопке слайдера акций'),
         );
     }
 
@@ -25,21 +25,21 @@ class CallbackConversion{
     static function getRateTypes()
     {
         return array(
-            'callback' => array(
-                'NAME'      => 'Количество заявок обратного звонка',
-                'MODULE'    => 'callback',
+            'slider.btn' => array(
+                'NAME'      => 'Количество кликов по кнопке слайдера акций',
+                'MODULE'    => 'slider.btn',
                 'SORT'      => 100, // порядок отображения конверсии
                 'SCALE'     => array(0.5, 1, 1.5, 2, 5), // шкала: Плохо 0% - Отлично 5%
 
                 // счетчики которые будут переданы в функцию вычисления конверсии
-                'COUNTERS'  => array('conversion_visit_day', 'callback_day', 'callback_all'),
+                'COUNTERS'  => array('conversion_visit_day', 'slider_click_day', 'slider_click_all'),
 
                 // функция вычисления конверсии
                 'CALCULATE' => function (array $counters)
                 {
                     $denominator = $counters['conversion_visit_day'] ?: 0; // знаменатель
-                    $numerator   = $counters['callback_day'] ?: 0; // числитель
-                    $quantity    = $counters['callback_all'] ?: 0;
+                    $numerator   = $counters['slider_click_day'] ?: 0; // числитель
+                    $quantity    = $counters['slider_click_all'] ?: 0;
 
                     return array(
                         'DENOMINATOR' => $denominator,
@@ -55,5 +55,5 @@ class CallbackConversion{
 
 
 $eventManager = \Bitrix\Main\EventManager::getInstance();
-$eventManager->addEventHandler('conversion', 'OnGetCounterTypes', array('CallbackConversion', 'getCounterTypes'));
-$eventManager->addEventHandler('conversion', 'OnGetRateTypes'   , array('CallbackConversion', 'getRateTypes'   ));
+$eventManager->addEventHandler('conversion', 'OnGetCounterTypes', array('SliderBtnConversion', 'getCounterTypes'));
+$eventManager->addEventHandler('conversion', 'OnGetRateTypes'   , array('SliderBtnConversion', 'getRateTypes'   ));

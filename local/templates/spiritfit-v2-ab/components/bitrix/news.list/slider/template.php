@@ -141,7 +141,7 @@ if(!empty($files['VALUE'])){
 									<div class="b-info-slider__suptitle"><?=(!empty($arItem['PROPERTIES']['BANNER_TITLE']['VALUE'])) ? $arItem['PROPERTIES']['BANNER_TITLE']['VALUE'] : "Акция"?></div>
 									<div class="b-info-slider__title"><?=$arItem["NAME"]?></div>
 									<div class="b-info-slider__text"><?=$arItem["~PREVIEW_TEXT"]?></div>
-									<a class="b-info-slider__btn button-outline" href="<?=(!empty($btnLink) ? $btnLink : '#')?>"><?=(!empty($btnText) ? $btnText : 'Заказать')?></a>
+									<a class="b-info-slider__btn button" href="<?=(!empty($btnLink) ? $btnLink : '#')?>" onclick="setConversion('SliderBtnConversion');" style="width: 100%"><?=(!empty($btnText) ? $btnText : 'Заказать')?></a>
 								</div>
 							<?endforeach;?>
 						</div>
