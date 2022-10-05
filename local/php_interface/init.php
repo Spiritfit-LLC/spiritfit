@@ -68,6 +68,19 @@ if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/api/WebAnalytics.php')) {
     require_once($_SERVER["DOCUMENT_ROOT"] . '/local/api/WebAnalytics.php');
 }
 
+
+//Конверсия
+$files = scandir($_SERVER["DOCUMENT_ROOT"].'/local/php_interface/classes/conversion');
+foreach($files as $file) {
+    if (($file !== '.') and ($file !== '..'))
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/conversion/' . $file;
+}
+if (CModule::IncludeModule('conversion')){
+    $context = Bitrix\Conversion\DayContext::getInstance(); // контекст текущего дня и текущего пользователя
+    $context->addDayCounter('conversion_visit_day', 1);
+}
+
+
 AddEventHandler("main", "OnAfterUserAuthorize", Array("PersonalUtils", "UpdateFieldsAfterLogin"));
 
 
@@ -327,4 +340,3 @@ function getGaFormInputs($request){
 
     return $arClient;
 }
-

@@ -156,6 +156,7 @@ $settings = Utils::getInfo();
             var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);
         })(window,document,'https://portal.spiritfit.ru/upload/crm/site_button/loader_1_v48yzw.js');
     </script>
+
 <?
 $APPLICATION->IncludeComponent("bitrix:b24connector.openline.info","", Array(
         "COMPOSITE_FRAME_MODE" => "A",
