@@ -148,6 +148,19 @@ $settings = Utils::getInfo();
             });
         });
 
+        window.addEventListener('b24:form:send:success', (event)=>{
+            let form = event.detail.object;
+            if (form.identification.id==10){
+                BX.ajax.runComponentAction("custom:conversion", 'setConversion', {
+                    mode: 'class',
+                    data: {
+                        "module":"CallbackConversion"
+                    },
+                    method:'POST'
+                });
+            }
+        });
+
         (function(w,d,u){
             var s=d.createElement('script');s.async=true;s.src=u+'?'+(Date.now()/60000|0);
             var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);

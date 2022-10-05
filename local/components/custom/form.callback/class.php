@@ -195,6 +195,7 @@ class FormAbonimentComponent extends CBitrixComponent{
                 $this->includeComponentTemplate('step-2');
                 break;
             case 3:
+                CallbackConversion::addCounters();
                 $this->includeComponentTemplate('step-3');
                 break;
             default:
