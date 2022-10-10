@@ -105,6 +105,7 @@ document.addEventListener("DOMContentLoaded", function(){
       refactoredPhone = '+' + refactoredPhone;
     }
     let shedule = '';
+    let min_price=0;
 
     if(marker.options.club_soon_open == 'Y' || marker.options.page === ''){
       $titlePlace.html("<span>" + marker.options.title + "</span>");
@@ -115,6 +116,9 @@ document.addEventListener("DOMContentLoaded", function(){
       shedule = `<div class="b-map__contact-item">
               <a href="${marker.options.page}#timetable">Расписание</a>
 	  </div>`;
+      if (marker.options.minPrice!==undefined && marker.options.minPrice>0){
+          min_price = `<div class="b-map__min-price" style="font-weight: 500">Ежемесячный платеж <span style="color: #ff7628">от ${marker.options.minPrice} <span class="rub">₽</span></span></div>`
+      }
     }
     
     
@@ -144,7 +148,8 @@ document.addEventListener("DOMContentLoaded", function(){
         <div><a href="tel:${refactoredPhone}" class="invisible-link" onclick="dataLayerSend('UX','clickCallButton', document.location.protocol+'//'+document.location.host+document.location.pathname);">${marker.options.phone}</a></div>
         <div><a href="mailto:${marker.options.email}" class="invisible-link">${marker.options.email}</a></div>
     </div>
-    <div class="b-map__contact-item">${workHoursBlock}</div>${shedule}`;
+    <div class="b-map__contact-item">${workHoursBlock}</div>${shedule}${min_price}`;
+
 
     $contactsPlace.html(contactLayout);
   }
@@ -286,6 +291,7 @@ document.addEventListener("DOMContentLoaded", function(){
 				icon: markerIcon,
 				map: mapL,
 				description: window.club.description,
+                minPrice: window.club.min_price,
 			});
 			marker.addTo(mapL);
 			markers.push(marker);
@@ -338,7 +344,8 @@ document.addEventListener("DOMContentLoaded", function(){
 					description: locations[i].description,
 					club_not_open: locations[i].club_not_open,
 					club_soon_open: locations[i].club_soon_open,
-					isActive: false
+					isActive: false,
+                    minPrice:locations[i].min_price,
 			});
 
 			marker.on('click', function(e){

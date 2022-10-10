@@ -12,16 +12,25 @@ $arClubs = [];
 foreach ($arResult["ITEMS"] as $key => $arItem) {
     $arResult["ITEMS"][$key]["MIN_PRICE"] = min(array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE"));
 
-//    Сделал это отдельно, потому что лень разбираться за что отвечает MIN_PRICE
-    $arResult['ITEMS'][$key]['MIN_PRICE2']=$arResult["ITEMS"][$key]["MIN_PRICE"];
-
-    foreach ($arItem["PROPERTIES"]["PRICE"]["VALUE"] as $arPrice) {
-        if ($arPrice["NUMBER"] > 2) {
-            if ($arPrice["PRICE"] == $arResult["ITEMS"][$key]["MIN_PRICE"]) {
-                $arResult["ITEMS"][$key]["MIN_PRICE"] = ceil($arResult["ITEMS"][$key]["MIN_PRICE"] / $arPrice["NUMBER"]);
-                break;
-            }
+    $minPrice=(int)array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE")[0];
+    $minPriceClub=array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "LIST")[0];
+    foreach($arItem["PROPERTIES"]["PRICE"]["VALUE"] as $arPrice){
+        if (empty($arPrice["PRICE"]) || empty($arPrice["LIST"])){
+            continue;
         }
+
+        if (((int)$arPrice["PRICE"]<=$minPrice) || (empty($minPriceClub) || empty($minPrice))){
+            $minPrice=(int)$arPrice["PRICE"];
+            $minPriceClub=$arPrice["LIST"];
+        }
+    }
+
+    $index=array_search($minPriceClub, array_column($arItem["PROPERTIES"]["BASE_PRICE"]["VALUE"], "LIST"));
+    $monthCount=$arItem["PROPERTIES"]["BASE_PRICE"]["VALUE"][$index]["NUMBER"];
+    $arResult["ITEMS"][$key]["MIN_RPICE_PER_MONTH"]=false;
+    if ($monthCount>1){
+        $arResult["ITEMS"][$key]["MIN_PRICE"]=ceil($arResult["ITEMS"][$key]["MIN_PRICE"]/$monthCount);
+        $arResult["ITEMS"][$key]["MIN_PRICE_PER_MONTH"]=true;
     }
 
     $index = $key % 2 == 0 ? $key + 1 : $key - 1;

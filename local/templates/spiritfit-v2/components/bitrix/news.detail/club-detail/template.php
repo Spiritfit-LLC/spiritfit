@@ -175,7 +175,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
 <? if( (empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']) && !empty($arResult['PROPERTIES']['SHOW_FORM']['VALUE']))
     || (!empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']) && !empty($arResult['PROPERTIES']['HIDE_LINK_FORM']['VALUE'])) ) { ?>
     <? if($arResult["PROPERTIES"]["SOON"]["VALUE"] == 'Y') { ?>
-        <div id="js-pjax-clubs">
+        <div id="form-request">
             <?
             $APPLICATION->IncludeComponent(
                 "custom:form.request.new",
@@ -201,7 +201,8 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
             ?>
         </div>
     <? } else { ?>
-            <?
+        <div id="form-request">
+        <?
             $APPLICATION->IncludeComponent(
                 "custom:form.request.new",
                 "on.page.block",
@@ -406,6 +407,8 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
         <?$APPLICATION->AddHeadString('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>',true)?>
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
         <script src="<?=SITE_TEMPLATE_PATH?>/js/map-leafletjs.js?version=<?=uniqid()?>"></script>
+        <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
         <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" type="text/css">
         <script src="//unpkg.com/leaflet-gesture-handling"></script>
 
@@ -416,7 +419,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
             <div class="b-map__map-wrap">
                 <div class="b-map__map map-clubs-detail" id="mapid"></div>
                 <div class="b-map__content">
-                    <div class="content-center">
+                    <div class="content-center"  style="display: flex; justify-content: space-between">
                         <div class="b-map__info-plate">
                             <div class="b-map__info">
                                 <h2 class="b-map__info-title"><?=$arResult['~NAME']?></h2>
@@ -446,7 +449,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
                                 if( (empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']) && !empty($arResult['PROPERTIES']['SHOW_FORM']['VALUE']))
                                     || (!empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']) && !empty($arResult['PROPERTIES']['HIDE_LINK_FORM']['VALUE'])) ) {
                                     ?>
-                                    <a class="b-map__button button-outline" href="#js-pjax-clubs">Отправить заявку</a>
+                                    <a class="b-map__button button-outline" href="#form-request">Отправить заявку</a>
                                 <? } ?>
 
                                 <?if (!empty($arResult['PROPERTIES']['PATH_TO_NEW']['VALUE'])):?>
@@ -532,10 +535,61 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
                                 </div>
                             <?endif;?>
                         </div>
+<!--                        <div class="b-map__route">-->
+<!--                            <div class="b-map__route-title">Построить маршрут</div>-->
+<!--                            <div class="b-map__route-points">-->
+<!--                                <div class="b-map__route-point-item">-->
+<!--                                    <span class="b-map__route-point-name">Откуда</span>-->
+<!--                                    <input class="b-map__route-point" id="map-point-from"/>-->
+<!--                                </div>-->
+<!--                                <div class="b-map__route-point-item">-->
+<!--                                    <span class="b-map__route-point-name">Куда</span>-->
+<!--                                    <span class="b-map__route-point">--><?//=$arResult['~NAME']?><!--</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
         </div>
+        <style>
+            .b-map__route {
+                margin-top: 20px;
+                background-color: rgba(3,3,3,.7);
+                height: max-content;
+                padding: 30px;
+                text-align: center;
+                pointer-events: auto;
+            }
+            .b-map__route-title{
+                text-transform: uppercase;
+                font-weight: 900;
+                font-size: 22px;
+                margin-bottom: 15px;
+            }
+            .b-map__route-point-item {
+                display: flex;
+                align-items: baseline;
+                margin: 20px 0;
+            }
+            span.b-map__route-point-name {
+                font-weight: 100;
+                text-transform: lowercase;
+                /* margin-right: 20px; */
+                width: 100px;
+                text-align: start;
+            }
+            input#map-point-from {
+                background: transparent;
+                border: none;
+                border-bottom: 2px solid white;
+                color: white;
+                font-weight: 600;
+            }
+            span.b-map__route-point {
+                font-weight: 600;
+            }
+        </style>
     <? } ?>
     <div itemscope itemtype="http://schema.org/ExerciseGym" style="display: none;">
         <span itemprop="name">Spirit.Fitness</span>

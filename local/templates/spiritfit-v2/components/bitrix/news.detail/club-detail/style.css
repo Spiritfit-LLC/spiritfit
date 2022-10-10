@@ -498,7 +498,7 @@ div.news-detail img.detail_picture
 		flex-direction: column;
 	}
 	.b-map__route-tab-link{
-		width: 100%;
+		width: 100% !important;
 	}
 	.b-map__route-tab-link{
 		border-width: 0 2px 2px 2px!important;

@@ -4,7 +4,7 @@ use \Bitrix\Main\Loader;
 
 class PriceUpdate {
 
-    public static $apiUrl = "https://1c.spiritfit.ru/fitness-test1/hs/website/0/pricenew";
+    public static $apiUrl = "https://app.spiritfit.ru/Fitness/hs/website/0/pricenew";
  
     public static $logFile = "/logs/update-price.txt";
 

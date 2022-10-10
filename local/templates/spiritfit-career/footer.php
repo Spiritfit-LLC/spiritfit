@@ -5,10 +5,11 @@ $settings = Utils::getInfo();
     <footer class="b-footer">
         <div class="content-center">
             <div class="b-footer__content">
-                <div class="b-footer__social"><a class="b-social-link" href="<?=$settings["PROPERTIES"]["LINK_INSTAGRAM"]["VALUE"]?>"
-                        target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img"
-                                src="<?=SITE_TEMPLATE_PATH?>/img/icon-inst.svg" alt="@spiritmoscow" title="" /></span><span
-                            class="b-social-link__text">Instagram</span></a>
+                <div class="b-footer__social">
+                    <a class="b-social-link" href="https://zen.yandex.ru/id/6017f57288bc0d2cb7405dc6" target="_blank">
+                        <span class="b-social-link__img-holder"><img class="b-social-link__img" src="<?=SITE_TEMPLATE_PATH?>/img/zen-brands.png"></span><span class="b-social-link__text"></span>
+                    </a>
+
                 </div>
                 <div class="b-footer__app-buttons">
                     <div class="b-app-list"><a class="b-app-list__button"

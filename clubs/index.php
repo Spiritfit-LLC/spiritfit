@@ -10,7 +10,7 @@ $APPLICATION->SetPageProperty("title", "Клубы Spirit Fitness - адреса
 
 <? $APPLICATION->IncludeFile('/local/include/clubs.php'); ?>
 
-<div class="margin-top-20">
+<div class="margin-top-80">
     <?$APPLICATION->IncludeComponent(
         "bitrix:news.list",
         "clubs",
