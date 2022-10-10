@@ -738,6 +738,21 @@
 }
 /*Шапка*/
 
+/*Партнеры проекта*/
+.partners {
+	display: grid;
+	grid-gap: 24px;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-rows: 1fr;
+}
+.partner img {
+	display: block;
+	position: relative;
+	max-width: 100%;
+	border-radius: 24px;
+}
+/*Партнеры проекта*/
+
 @media screen and (max-width: 1660px) {
 	.b-fond__table .left {
 		font-size: 41px;
@@ -814,6 +829,9 @@
 	.b-main__banner-button {
 		text-align: center;
 		margin-top: 280px;
+	}
+	.partners {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
 }
 @media screen and (max-width: 1140px) {
@@ -940,6 +958,9 @@
 	.is-landing .b-screen.b-screen_short {
 		min-height: 68px;
 	}
+	.partners {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
 }
 @media screen and (max-width: 768px) {
 	.landing-title,
@@ -1018,6 +1039,9 @@
 		font-size: 28px;
 		line-height: 28px;
 	}
+	.partners {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
 }
 
 @media screen and (max-width: 640px) {
@@ -1085,6 +1109,10 @@
 	}
 	.b-main__banner-button {
 		margin-top: 240px;
+	}
+	.partners {
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 14px;
 	}
 }
 

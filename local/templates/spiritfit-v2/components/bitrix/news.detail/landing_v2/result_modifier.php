@@ -17,13 +17,13 @@ $pageBlocks = [
         "BLOCK2_LIST1",
         "BLOCK2_LIST2",
         "BLOCK2_ACTIVE",
-		"BLOCK2_SORT"
+        "BLOCK2_SORT"
     ],
     "block3" => [
         "BLOCK3_TITLE",
         "BLOCK3_LIST",
         "BLOCK3_ACTIVE",
-		"BLOCK3_SORT"
+        "BLOCK3_SORT"
     ],
     "block4" => [
         "BLOCK4_TITLE",
@@ -31,7 +31,7 @@ $pageBlocks = [
         "BLOCK4_BUTTON",
         "BLOCK4_BUTTON_LINK",
         "BLOCK4_ACTIVE",
-		"BLOCK4_SORT"
+        "BLOCK4_SORT"
     ],
     "block5" => [
         "BLOCK5_TITLE",
@@ -40,7 +40,7 @@ $pageBlocks = [
         "BLOCK5_BUTTON_LINK",
         "BLOCK5_VIDEO",
         "BLOCK5_ACTIVE",
-		"BLOCK5_SORT"
+        "BLOCK5_SORT"
     ],
     "block6" => [
         "BLOCK6_TITLE",
@@ -48,7 +48,7 @@ $pageBlocks = [
         "BLOCK6_LIST",
         "BLOCK6_ACTIVE",
         "BLOCK6_BUTTON_TITLE",
-		"BLOCK6_SORT"
+        "BLOCK6_SORT"
     ],
     "block7" => [
         "BLOCK7_TITLE",
@@ -56,20 +56,26 @@ $pageBlocks = [
         "BLOCK7_LIST",
         "BLOCK7_GIFT_LIST",
         "BLOCK7_ACTIVE",
-		"BLOCK7_SORT"
+        "BLOCK7_SORT"
     ],
     "block8" => [
         "BLOCK8_TITLE",
         "BLOCK8_LIST",
         "BLOCK8_ACTIVE",
-		"BLOCK8_SORT"
+        "BLOCK8_SORT"
     ],
     "block9" => [
         "BLOCK9_TITLE",
         "BLOCK9_FORM_TYPE",
         "BLOCK9_CLIENT_TYPE",
-		"BLOCK9_ACTIVE",
+        "BLOCK9_ACTIVE",
         "BLOCK9_SORT"
+    ],
+    "block10" => [
+        "BLOCK10_TITLE",
+        "BLOCK10_IMAGES",
+        "BLOCK10_ACTIVE",
+        "BLOCK10_SORT"
     ],
 ];
 $imageSizes = [
@@ -78,7 +84,13 @@ $imageSizes = [
     "BLOCK3_LIST" => [44, 55],
     "BLOCK7_LIST" => [83, 72],
     "BLOCK7_GIFT_LIST" => [42, 42],
+    "BLOCK10_IMAGES" => [320, 240],
 ];
+
+/*Рандомная сортировка для наставников*/
+if( !empty($arResult["PROPERTIES"]["BLOCK6_LIST"]["VALUE"]) ) {
+    shuffle($arResult["PROPERTIES"]["BLOCK6_LIST"]["VALUE"]);
+}
 
 $arResult['BLOCKS'] = [];
 foreach( $pageBlocks as $blockName => $items ) {
@@ -92,9 +104,9 @@ foreach( $pageBlocks as $blockName => $items ) {
     ];
     foreach( $items as $k => $propName ) {
         if( $k == $lastKey ) continue;
-		
+
         if( !empty($arResult["PROPERTIES"][$propName]["VALUE"]) ) {
-			if( !empty($arResult["PROPERTIES"][$propName]["LINK_IBLOCK_ID"]) && $arResult["PROPERTIES"][$propName]["LINK_IBLOCK_ID"] != $abonementsIBlockId ) {
+            if( !empty($arResult["PROPERTIES"][$propName]["LINK_IBLOCK_ID"]) && $arResult["PROPERTIES"][$propName]["LINK_IBLOCK_ID"] != $abonementsIBlockId ) {
                 $values = [];
                 if( !is_array($arResult["PROPERTIES"][$propName]["VALUE"]) ) {
                     $values[] = $arResult["PROPERTIES"][$propName]["VALUE"];
@@ -167,7 +179,7 @@ foreach( $pageBlocks as $blockName => $items ) {
                     }
                 }
             } else {
-			   $resArr["PROPERTIES"][$propName] = $arResult["PROPERTIES"][$propName]["~VALUE"];
+                $resArr["PROPERTIES"][$propName] = $arResult["PROPERTIES"][$propName]["~VALUE"];
             }
         }
     }
