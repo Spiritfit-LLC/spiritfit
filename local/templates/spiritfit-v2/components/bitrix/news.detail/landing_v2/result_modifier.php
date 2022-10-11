@@ -88,7 +88,8 @@ $imageSizes = [
 ];
 
 /*Рандомная сортировка для наставников*/
-if( !empty($arResult["PROPERTIES"]["BLOCK6_LIST"]["VALUE"]) ) {
+if( !empty($arResult["PROPERTIES"]["BLOCK6_RANDOMIZE"]["VALUE"])
+    && !empty($arResult["PROPERTIES"]["BLOCK6_LIST"]["VALUE"]) ) {
     shuffle($arResult["PROPERTIES"]["BLOCK6_LIST"]["VALUE"]);
 }
 

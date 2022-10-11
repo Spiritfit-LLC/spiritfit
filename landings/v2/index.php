@@ -88,7 +88,8 @@
             38 => "BLOCK10_TITLE",
             39 => "BLOCK10_IMAGES",
             40 => "BLOCK10_ACTIVE",
-            41  => "BLOCK10_SORT",
+            41 => "BLOCK10_SORT",
+            42 => "BLOCK6_RANDOMIZE"
 		),
         "IBLOCK_URL" => "/home/bitrix/www/landings/v2/",
         "DETAIL_URL" => "",
