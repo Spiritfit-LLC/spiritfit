@@ -1,0 +1,185 @@
+.landing__abonements-slider .b-twoside-card__inner {
+	margin: 0px 12px 0px;
+	border-radius: 24px;
+}
+.landing__abonements-slider .b-twoside-card.is-open .b-twoside-card__inner {
+	transform: scale(1) rotateY(180deg)!important;
+}
+.landing__abonements-slider .b-cards-slider__item {
+	width: 415px;
+}
+.landing__abonements-slider .b-twoside-card__content {
+	padding: 25px;
+}
+.landing__abonements-slider .b-twoside-card__price {
+	display: block;
+    position: absolute;
+    bottom: 70px;
+    width: calc(100% - 50px);
+    font-family: 'Gotham Pro';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+	background: linear-gradient(90deg, #E33932 3.67%, #7827F5 105.05%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	text-fill-color: transparent;
+}
+.landing__abonements-slider .b-twoside-card__price .val {
+	font-size: 32px;
+}
+.landing__abonements-slider .b-twoside-card__price .rub {
+	font-size: 20px;
+}
+.landing__abonements-slider .b-twoside-card__detail {
+	display: block;
+    position: absolute;
+    bottom: 100px;
+    width: calc(100% - 50px);
+	bottom: 30px;
+	text-transform: uppercase;
+	text-align: center;
+	font-size: 16px;
+    line-height: 18px;
+}
+.landing__abonements-slider .b-cards-slider__arrow::before,
+.landing__abonements-slider .b-cards-slider__arrow::after {
+	height: 4px;
+}
+.landing__abonements-slider .b-cards-slider__arrow.b-cards-slider__arrow--right::before,
+.landing__abonements-slider .b-cards-slider__arrow.b-cards-slider__arrow--right::after {
+	background: linear-gradient(45deg, #E43932 3.26%, #7827F6 98.07%);
+}
+.landing__abonements-slider .b-cards-slider__arrow.b-cards-slider__arrow--left::before,
+.landing__abonements-slider .b-cards-slider__arrow.b-cards-slider__arrow--left::after {
+	background: linear-gradient(45deg, #7827F6 3.26%, #E43932 98.07%);
+}
+.landing__abonements-slider .b-cards-slider__arrow-wrapper--right {
+	background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 8%, rgba(255,255,255,1) 100%);
+}
+.landing__abonements-slider .b-cards-slider__arrow-wrapper--left {
+	background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 92%, rgba(255,255,255,0) 100%);
+}
+.landing__abonements-slider .b-cards-slider__arrow-wrapper:hover {
+	background-color: transparent;
+}
+.landing__abonements-slider .b-cards-slider__arrow::after {
+	bottom: 12px;
+}
+.landing__abonements-slider .get-abonement {
+	display: block;
+    position: absolute;
+	width: calc(100% - 52px);
+	bottom: 40px;
+	background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);
+	border-radius: 8px;
+	padding: 20px 60px;
+	transition: all .3s;
+}
+.landing__abonements-slider .get-abonement:hover {
+	background: linear-gradient(90deg, #E43932 23.26%, #7827F6 98.07%);
+}
+.landing__abonements-slider .corp-abonement__front-list {
+	display: block;
+    position: relative;
+	font-size: 14px;
+	line-height: 18px;
+	list-style-type: none;
+	overflow: auto;
+}
+.landing__abonements-slider .corp-abonement__front-list-item {
+	display: block;
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    background-position: 0px 5px;
+    background-repeat: no-repeat;
+	background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxNCAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCjxwYXRoIGQ9Ik0yIDQuMTQyODZMNS45MTMwNCA4TDEyIDIiIHN0cm9rZT0idXJsKCNwYWludDBfbGluZWFyXzQzM18xMDkpIiBzdHJva2Utd2lkdGg9IjMiLz4NCjxkZWZzPg0KPGxpbmVhckdyYWRpZW50IGlkPSJwYWludDBfbGluZWFyXzQzM18xMDkiIHgxPSItNC45NTY1MiIgeTE9IjgiIHgyPSIxNC44NTQ5IiB5Mj0iLTUuOTgxNTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4NCjxzdG9wIHN0b3AtY29sb3I9IiNFMjM4MzQiLz4NCjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzdCMjdGMCIvPg0KPC9saW5lYXJHcmFkaWVudD4NCjwvZGVmcz4NCjwvc3ZnPg0K)
+}
+.landing__abonements-slider .b-twoside-card__hidden-content {
+	padding: 37px 26px 110px;
+}
+.landing__abonements-slider .b-twoside-card__name {
+	display: block;
+    position: relative;
+	margin-bottom: 12px;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 22px;
+	text-transform: uppercase;
+	text-align: center;
+}
+.landing__abonements-slider .b-twoside-card__footnote {
+	font-size: 12px;
+	line-height: 12px;
+	height: initial;
+}
+.landing__abonements-slider .slick-list {
+	overflow: visible;
+}
+
+.landing__abonements-slider .corp-abonement__front-list::-webkit-scrollbar {
+	width: 5px;
+}
+.landing__abonements-slider .corp-abonement__front-list::-webkit-scrollbar-track {
+	box-shadow: none;
+	background-color: rgb(245 245 244 / 20%);
+}
+.landing__abonements-slider .corp-abonement__front-list::-webkit-scrollbar-thumb {
+	background-color: #F5F5F4;
+	outline: 0;
+}
+.landing__abonements-wrapper .slick-dots {
+	margin: 32px 0px 0px;
+	justify-content: center;
+}
+.landing__abonements-wrapper .slick-dots li > button {
+	background: #EEEEEE;
+	margin: 4px;
+	border-radius: 50%;
+	border: 1px solid #EEEEEE;
+}
+.landing__abonements-wrapper .slick-dots .slick-active > button {
+	background: linear-gradient(180deg, #E23835 0%, #7827F6 100%);
+	border: 0;
+}
+
+@media screen and (max-width: 640px) {
+	.landing__abonements-wrapper .b-cards-slider__slider-nav {
+		display: flex;
+	}
+	.landing__abonements-slider .b-cards-slider__arrow-wrapper--right,
+	.landing__abonements-slider .b-cards-slider__arrow-wrapper--left {
+		background: transparent;
+	}
+	.landing__abonements-slider .b-twoside-card__footnote {
+		padding: 0px 10px;
+		box-sizing: border-box;
+		bottom: 10px;
+	}
+	.landing__abonements-slider .slick-list {
+		overflow: hidden;
+	}
+	.landing__abonements-wrapper .b-cards-slider__arrow-wrapper {
+		height: 19px;
+		top: initial;
+		bottom: -9px;
+	}
+	.landing__abonements-slider .b-cards-slider__arrow::before,
+	.landing__abonements-slider .b-cards-slider__arrow::after {
+		height: 2px;
+	}
+	.landing__abonements-slider .b-cards-slider__arrow::after {
+		bottom: 13px;
+	}
+}
+
+@media screen and (max-width: 550px) {
+	.landing__abonements-slider .b-cards-slider__arrow::after {
+		bottom: 14px;
+	}
+}
