@@ -131,7 +131,23 @@ else{
                     <?else:?>
                         <input type="hidden" name="<?=$FORM_FIELDS['club']['NAME']?>" value="<?=$FORM_FIELDS['club']["VALUE"]?>" class="get-abonement-club">
                     <?endif;?>
-
+                    <?if (!empty($arResult["LEADERS"])):?>
+                        <div class="subscription__aside-form-row">
+                            <span class="subscription__total-text">Выберите тренера</span>
+                        </div>
+                        <div class="subscription__aside-form-row">
+                            <select class="input input--light input--long input--select get-abonement-leader"
+                                    name="<?=$arResult["LEADERS"]['NAME']?>"
+                                    autocomplete="off"
+                                <?if ($arResult["LEADERS"]['REQUIRED']) echo 'required';?>>
+                                <option value="off" disabled selected>-</option>
+                                <? foreach ($arResult["LEADERS"]['ITEMS'] as $leader):?>
+                                    <option value="<?=$leader["VALUE"]?>"
+                                        <?if ($leader['SELECTED']) echo 'selected';?>><?=$leader["STRING"]?></option>
+                                <? endforeach; ?>
+                            </select>
+                        </div>
+                    <?endif?>
                     <div class="subscription__aside-form-row">
                         <div>
                             <input class="input input--light input--short input--text"
