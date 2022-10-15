@@ -665,6 +665,12 @@ button.b-club-search__hide-btn {
     }
 }
 @media screen and (max-width: 654px) {
+    .main-utp__item:hover .main-utp__desc{
+        opacity: 0;
+    }
+    .main-utp__item.active .main-utp__desc{
+        opacity: 1;
+    }
     .main-utp__item{
         width: 50%!important;
         flex: 0 0 50%!important;
@@ -693,11 +699,11 @@ button.b-club-search__hide-btn {
         font-size: 14px;
     }
     .main-utp__item{
-        height: 150px;
+        height: 180px;
     }
     .main-utp__item-icon {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
     }
     .main-utp__desc{
         font-size: 14px;
