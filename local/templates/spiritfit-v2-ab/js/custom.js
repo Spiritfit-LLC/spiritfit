@@ -1412,6 +1412,13 @@ $(document).ready(function() {
     catch (e) {
         console.log(e)
     }
+
+
+    if ($(window).width()<=654){
+        $(".main-utp__item").on(clickHandler, function (){
+            $(this).toggleClass("active");
+        })
+    }
 })
 
 
