@@ -674,6 +674,7 @@ button.b-club-search__hide-btn {
     .main-utp__item{
         width: 50%!important;
         flex: 0 0 50%!important;
+        padding: 20px!important;
     }
     .main-utp__item:nth-child(3n+2):after{
         content: none;
