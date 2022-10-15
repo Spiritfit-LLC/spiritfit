@@ -372,7 +372,7 @@ a.b-map__contact-full-close {
     background-position-y: top;
     transition:filter ease .35s
 }
-    .b-twoside-card.is-open .b-twoside-card__content{filter:brightness(0)}@media screen and (max-width:1024px){.b-twoside-card__content{height:500px;padding:30px}}
+    .b-twoside-card.is-open .b-twoside-card__content{filter:brightness(0)}@media screen and (max-width:1024px){.b-twoside-card__content{height:500px;padding:30px}.landing__abonements-slider .b-twoside-card__content{height:540px;}}
 .b-twoside-card__label{
     display:flex;
     flex-direction:column;
