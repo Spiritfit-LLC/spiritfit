@@ -12,7 +12,10 @@ $( document ).ready(function() {
     });
 
     $(".b-twoside-card__video.has-video").click(function () {
-        $.fancybox.open( atob($(this).data("source")) );
+        /*$.fancybox.open( atob($(this).data("source")) );*/
+        if( $(this).find("video").length == 0 ) {
+            $(this).html( atob($(this).data("source")) );
+        }
         videoOpen = true;
     });
 
@@ -91,7 +94,7 @@ $( document ).ready(function() {
                     slidesToScroll: 1,
                     variableWidth: false,
                     dots: true,
-					adaptiveHeight: true
+                    adaptiveHeight: true
                 }
             }, {
                 breakpoint: 456,

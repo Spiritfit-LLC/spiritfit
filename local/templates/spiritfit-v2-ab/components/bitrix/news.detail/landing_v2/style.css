@@ -210,12 +210,17 @@
 	position: relative;
 	margin-bottom: 40px;
 }
+.b-twoside-card__video video,
 .b-twoside-card__video img {
 	display: block;
 	position: relative;
 	max-width: 240px;
 	border-radius: 50%;
 	margin: 0 auto;
+}
+.b-twoside-card__video video {
+	width: 240px;
+	height: 240px;
 }
 .b-twoside-card__video .play {
 	display: flex;
@@ -738,6 +743,21 @@
 }
 /*Шапка*/
 
+/*Партнеры проекта*/
+.partners {
+	display: grid;
+	grid-gap: 24px;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-rows: 1fr;
+}
+.partner img {
+	display: block;
+	position: relative;
+	max-width: 100%;
+	border-radius: 24px;
+}
+/*Партнеры проекта*/
+
 @media screen and (max-width: 1660px) {
 	.b-fond__table .left {
 		font-size: 41px;
@@ -814,6 +834,9 @@
 	.b-main__banner-button {
 		text-align: center;
 		margin-top: 280px;
+	}
+	.partners {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
 }
 @media screen and (max-width: 1140px) {
@@ -940,6 +963,9 @@
 	.is-landing .b-screen.b-screen_short {
 		min-height: 68px;
 	}
+	.partners {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
 }
 @media screen and (max-width: 768px) {
 	.landing-title,
@@ -1018,6 +1044,9 @@
 		font-size: 28px;
 		line-height: 28px;
 	}
+	.partners {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
 }
 
 @media screen and (max-width: 640px) {
@@ -1086,6 +1115,10 @@
 	.b-main__banner-button {
 		margin-top: 240px;
 	}
+	.partners {
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 14px;
+	}
 }
 
 @media screen and (max-width: 550px) {
@@ -1100,6 +1133,6 @@
 		background-position: 50% 150%;
 	}
 	.b-main__banner-button {
-    	margin-top: 220px;
+		margin-top: 220px;
 	}
 }
