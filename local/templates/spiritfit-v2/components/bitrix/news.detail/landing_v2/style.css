@@ -210,12 +210,17 @@
 	position: relative;
 	margin-bottom: 40px;
 }
+.b-twoside-card__video video,
 .b-twoside-card__video img {
 	display: block;
 	position: relative;
 	max-width: 240px;
 	border-radius: 50%;
 	margin: 0 auto;
+}
+.b-twoside-card__video video {
+	width: 240px;
+	height: 240px;
 }
 .b-twoside-card__video .play {
 	display: flex;
@@ -1128,6 +1133,6 @@
 		background-position: 50% 150%;
 	}
 	.b-main__banner-button {
-    	margin-top: 220px;
+		margin-top: 220px;
 	}
 }
