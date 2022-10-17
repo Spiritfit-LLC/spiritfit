@@ -24,7 +24,7 @@
                                             </svg>
                                             Смотреть видео
                                         </span>-->
-                                        <video autoplay="true" muted="muted" loop><source src="<?=$leader["PROPERTIES"]["VIDEO"]["VALUE"]["SRC"]?>" type="video/<?=$leader["PROPERTIES"]["VIDEO"]["VALUE"]["TYPE"]?>"></video>
+                                        <video autoplay muted loop playsinline><source src="<?=$leader["PROPERTIES"]["VIDEO"]["VALUE"]["SRC"]?>" type="video/<?=$leader["PROPERTIES"]["VIDEO"]["VALUE"]["TYPE"]?>"></video>
                                     <? } else { ?>
                                         <img src="<?=$leader["PREVIEW_PICTURE"]?>" alt="<?=$leader["NAME"]?>" title="<?=$leader["NAME"]?>">
                                     <? } ?>
