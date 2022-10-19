@@ -91,6 +91,11 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
         if ($this->arParams["CLUB_ID"]){
             $this->arResult["CLUB_ID"]=$this->arParams["CLUB_ID"];
         }
+        else{
+            if (!key_exists("club", $this->arResult["FORM_FIELDS"]["FIELDS"])){
+                $this->arResult["CLUB_ID"]=Utils::GetIBlockElementIDBySID("setevoy-abonement-");
+            }
+        }
         $this->IncludeComponentTemplate();
 
     }
