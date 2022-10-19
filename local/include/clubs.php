@@ -20,7 +20,9 @@ crossorigin=""></script>
 <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" type="text/css">
 <script src="//unpkg.com/leaflet-gesture-handling"></script>
 
-<div class="b-map b-map_page margin-top">
+<!--//ДЕЛАЕМ НА ВРЕМЯ ТРАНСФОРМАЦИИ-->
+<div class="b-map b-map_page margin-top" style="margin-top:30px">
+<!--<div class="b-map b-map_page margin-top">-->
     <div class="b-map__map-wrap">
         <div class="b-map__map" id="mapid"></div>
         <div class="b-map__content">
