@@ -138,7 +138,40 @@ $(document).ready(function () {
 		}
 	}
 
+	//TEAM GIF
+	if ($(window).width()>=1024){
+		$('.b-twoside-card__content').mouseenter(function(){
+			var $this=$(this);
+			if ($this.data('hover-gif')==true){
+				setTimeout(function(){
+					if ($this.is(':hover')){
+						$this.find('.b-twoside-card__background').css('opacity', 0);
+						$this.find('.b-twoside-card__hover-gif').css('opacity', 1);
+					}
+				}, 1000)
+			}
+		}).mouseleave(function(){
+			$(this).find('.b-twoside-card__background').css('opacity', 1);
+			$(this).find('.b-twoside-card__hover-gif').css('opacity', 0);
+		});
+	}
+	else{
+		$('.b-twoside-card__show-gif-btn').click(function(){
+			if ($(this).hasClass("active")){
+				$(this).closest('.b-twoside-card__label-container').siblings('.b-twoside-card__background').css('opacity', 1);
+				$(this).closest('.b-twoside-card__label-container').siblings('.b-twoside-card__hover-gif').css('opacity', 0);
+				$(this).find(".b-twoside-card__show-gif-text").text("Смотреть")
+				$(this).removeClass("active");
+			}
+			else{
+				$(this).closest('.b-twoside-card__label-container').siblings('.b-twoside-card__background').css('opacity', 0);
+				$(this).closest('.b-twoside-card__label-container').siblings('.b-twoside-card__hover-gif').css('opacity', 1);
+				$(this).find(".b-twoside-card__show-gif-text").text("Закрыть");
+				$(this).addClass("active");
+			}
 
+		})
+	}
 
 
 
