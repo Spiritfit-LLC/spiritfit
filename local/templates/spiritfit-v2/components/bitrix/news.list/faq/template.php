@@ -39,11 +39,9 @@ $this->setFrameMode(true);
                                         $this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
                                         $this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
                                         ?>
-                                        <div class="b-accordion__item" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
-                                            <div class="b-accordion__heading" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                                                <div itemprop="name">
-                                                    <?=$arItem['NAME']?>
-                                                </div>
+                                        <div class="b-accordion__item" id="<?=$this->GetEditAreaId($arItem['ID']);?>" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                                            <div class="b-accordion__heading" itemprop="name">
+                                                <?=$arItem['NAME']?>
                                             </div>
                                             <div class="b-accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                                                 <div itemprop="text"><?=$arItem['~PREVIEW_TEXT']?></div>
