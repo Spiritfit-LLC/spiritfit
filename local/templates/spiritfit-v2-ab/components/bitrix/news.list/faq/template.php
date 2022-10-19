@@ -13,7 +13,7 @@
 $this->setFrameMode(true);
 
 ?>
-<section class="b-faq">
+<section class="b-faq" itemscope itemtype="https://schema.org/FAQPage">
     <div class="content-center">
         <div id="faq" class="b-faq__content">
             <h2><?=!empty($arParams["BLOCK_TITLE"]) ? $arParams["BLOCK_TITLE"] : "FAQ" ?></h2>
@@ -40,8 +40,14 @@ $this->setFrameMode(true);
                                         $this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
                                         ?>
                                             <div class="b-accordion__item" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
-                                                <div class="b-accordion__heading"><?=$arItem['NAME']?></div>
-                                                <div class="b-accordion__content"><?=$arItem['~PREVIEW_TEXT']?></div>
+                                                <div class="b-accordion__heading" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                                                    <div itemprop="name">
+                                                        <?=$arItem['NAME']?>
+                                                    </div>
+                                                </div>
+                                                <div class="b-accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                                                    <div itemprop="text"><?=$arItem['~PREVIEW_TEXT']?></div>
+                                                </div>
                                             </div>
                                     <?endforeach;?>
                                 </div>
