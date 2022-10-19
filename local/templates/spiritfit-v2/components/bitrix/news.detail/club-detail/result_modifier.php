@@ -79,7 +79,7 @@ if ($arResult["PROPERTIES"]["LINK_VIDEO"]["VALUE"]) {
 
 $order=array('SORT' => 'ASC', 'NAME' => 'ASC');
 $filter=array("IBLOCK_ID" => $arResult["PROPERTIES"]["TEAM"]["LINK_IBLOCK_ID"], "ID" => $arResult["PROPERTIES"]["TEAM"]["VALUE"], "ACTIVE" => "Y");
-$select=array("ID", "NAME", "IBLOCK_ID", "PREVIEW_PICTURE", "PREVIEW_TEXT");
+$select=array("ID", "NAME", "IBLOCK_ID", "PREVIEW_PICTURE", "PREVIEW_TEXT", "HOVER_GIF");
 $itemRes=CIBlockElement::GetList($order, $filter, false, false, $select);
 while($item=$itemRes->Fetch()){
     $item["PICTURE"] = CFile::ResizeImageGet($item["PREVIEW_PICTURE"], array("width" => "379", "height" => "580", BX_RESIZE_IMAGE_PROPORTIONAL))["src"];
@@ -106,6 +106,9 @@ while($item=$itemRes->Fetch()){
             $item['BACK']['COLOR'] = $color['CODE'];
         }
     }
+//    if (!empty($item["PROPERTIES"]["HOVER_GIF"]["VALUE"])){
+//        $item["HOVER_GIF"]["SRC"]=CFile::GetPath($item["PROPERTIES"]["HOVER_GIF"]["VALUE"]);
+//    }
     $arResult["PROPERTIES"]["TEAM"]["ITEMS"][] = $item;
 }
 
