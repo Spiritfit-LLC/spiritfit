@@ -173,7 +173,9 @@ class ScheduleClubomponent extends CBitrixComponent implements Controllerable{
                     $this->arResult["LK_TRIALWORKOUT"]=true;
                     $this->arResult["LK_TRIALWORKOUT_SECTION"]=Utils::GetIBlockSectionIDBySID('trialworkout_zapis');
                 }
-                $this->arResult["SHOW_TRIALWORKOUT_BTN"]=false;
+                else{
+                    $this->arResult["SHOW_TRIALWORKOUT_BTN"]=false;
+                }
             }
             else{
                 $this->arResult["LK_TRIALWORKOUT"]=false;
