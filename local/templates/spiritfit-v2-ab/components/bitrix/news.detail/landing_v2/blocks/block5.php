@@ -13,6 +13,9 @@
                     <? if( !empty($BLOCKS["BLOCK5_BUTTON_LINK"]) && !empty($BLOCKS["BLOCK5_BUTTON"]) ) { ?>
                         <a class="button first" href="<?=$BLOCKS["BLOCK5_BUTTON_LINK"]?>"><?=$BLOCKS["BLOCK5_BUTTON"]?></a>
                     <? } ?>
+                    <div class="landing__info-link first">
+                        <a href="/upload/form/polozhenie-transformation.pdf" style="color: #484848;text-decoration: underline;">Положение о проведении мероприятия</a>
+                    </div>
                 </div>
                 <div class="right">
                     <? if(!empty($BLOCKS["BLOCK5_VIDEO"])) { ?>
@@ -35,6 +38,9 @@
                     <? if( !empty($BLOCKS["BLOCK5_BUTTON_LINK"]) && !empty($BLOCKS["BLOCK5_BUTTON"]) ) { ?>
                         <a class="button second" href="<?=$BLOCKS["BLOCK5_BUTTON_LINK"]?>"><?=$BLOCKS["BLOCK5_BUTTON"]?></a>
                     <? } ?>
+                    <div class="landing__info-link second">
+                        <a href="/upload/form/polozhenie-transformation.pdf" style="color: #484848;text-decoration: underline;">Положение о проведении мероприятия</a>
+                    </div>
                 </div>
             </div>
         </div>

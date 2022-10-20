@@ -508,6 +508,9 @@
 .button.second {
 	display: none;
 }
+.landing__info-link.second{
+	display: none;
+}
 /*Учавствовать*/
 
 /*Фонд*/
@@ -916,8 +919,14 @@
 	.button.first {
 		display: none;
 	}
+	.landing__info-link.first{
+		display: none;
+	}
 	.button.second {
 		display: inline-block;
+	}
+	.landing__info-link.second{
+		display: block;
 	}
 	.b-want-banner .right {
 		text-align: center;
@@ -1135,4 +1144,9 @@
 	.b-main__banner-button {
 		margin-top: 220px;
 	}
+}
+
+.landing__info-link{
+	padding: 20px 0;
+	font-size: 16px;
 }
