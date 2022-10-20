@@ -67,6 +67,9 @@ if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/TurboP
 if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/api/WebAnalytics.php')) {
     require_once($_SERVER["DOCUMENT_ROOT"] . '/local/api/WebAnalytics.php');
 }
+if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/local/php_interface/classes/SpiritNetUtils.php")){
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/local/php_interface/classes/SpiritNetUtils.php");
+}
 
 
 //Конверсия
@@ -76,8 +79,8 @@ foreach($files as $file) {
         require_once $_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/conversion/' . $file;
 }
 if (CModule::IncludeModule('conversion')){
-    $context = Bitrix\Conversion\DayContext::getInstance(); // контекст текущего дня и текущего пользователя
-    $context->addDayCounter('conversion_visit_day', 1);
+    $day_context = Bitrix\Conversion\DayContext::getInstance(); // контекст текущего дня и текущего пользователя
+    $day_context->addDayCounter('conversion_visit_day', 1);
 }
 
 

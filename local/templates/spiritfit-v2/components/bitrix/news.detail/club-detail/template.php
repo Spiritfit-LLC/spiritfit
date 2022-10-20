@@ -103,7 +103,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
                                                 <div class="corp-abonement__front-list">
                                                     <!--noindex-->
                                                     <? foreach($abonement["PROPERTIES"]["INCLUDE"]["VALUE"] as $listItem) { ?>
-                                                        <div class="corp-abonement__front-list-item"><?=$listItem?></div>
+                                                        <div class="corp-abonement__front-list-item"><?=htmlspecialcharsback($listItem)?></div>
                                                     <? } ?>
                                                     <!--/noindex-->
                                                 </div>
