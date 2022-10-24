@@ -472,6 +472,9 @@ $(function () {
     $('.b-cards-slider').each(function () {
         var $context = $(this);
         $context.on('click', function (e) {
+            if ($(e.target).hasClass('b-twoside-card__show-gif-btn') || $(e.target).closest('.b-twoside-card__show-gif-btn').length>0){
+                return;
+            }
             var $card = $(e.target).closest('.b-twoside-card');
             $card.toggleClass('is-open');
 
