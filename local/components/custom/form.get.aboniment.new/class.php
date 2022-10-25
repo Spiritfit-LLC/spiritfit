@@ -716,7 +716,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         if ($_SESSION["HAS_LEADERS"]){
             $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
             if (empty($LEADER_ID)){
-                throw new Exception("Тренер не выбран", 7);
+                throw new Exception("Пожалуйста, выберите тренера", 7);
             }
             $dbRes=CIBlockElement::GetByID($LEADER_ID);
             if (!$rsLeader=$dbRes->GetNextElement()){
@@ -865,7 +865,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         if ($_SESSION["HAS_LEADERS"]){
             $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
             if (empty($LEADER_ID)){
-                throw new Exception("Тренер не выбран", 7);
+                throw new Exception("Пожалуйста, выберите тренера", 7);
             }
             $dbRes=CIBlockElement::GetByID($LEADER_ID);
             if (!$rsLeader=$dbRes->GetNextElement()){
@@ -1018,7 +1018,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         if ($_SESSION["HAS_LEADERS"]){
             $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
             if (empty($LEADER_ID)){
-                throw new Exception("Тренер не выбран", 7);
+                throw new Exception("Пожалуйста, выберите тренера", 7);
             }
             $dbRes=CIBlockElement::GetByID($LEADER_ID);
             if (!$rsLeader=$dbRes->GetNextElement()){
@@ -1130,7 +1130,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         if ($_SESSION["HAS_LEADERS"]){
             $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
             if (empty($LEADER_ID)){
-                throw new Exception("Тренер не выбран", 7);
+                throw new Exception("Пожалуйста, выберите тренера", 7);
             }
             $dbRes=CIBlockElement::GetByID($LEADER_ID);
             if (!$rsLeader=$dbRes->GetNextElement()){
