@@ -688,7 +688,6 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
     }
 
     public function getAbonementAction(){
-//        return Context::getCurrent()->getRequest()->toArray();
         $this->componentParams();
         $this->GetClient();
 
@@ -712,6 +711,18 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
 
         if (!$this->CheckClub() || !$this->GetClubNumber()){
             throw new Exception('Клуб не может быть выбран', 7);
+        }
+
+        if ($_SESSION["HAS_LEADERS"]){
+            $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
+            if (empty($LEADER_ID)){
+                throw new Exception("Тренер не выбран", 7);
+            }
+            $dbRes=CIBlockElement::GetByID($LEADER_ID);
+            if (!$rsLeader=$dbRes->GetNextElement()){
+                throw new Exception("Не удалось выбрать тренера", 7);
+            }
+            $leader=$rsLeader->GetProperties();
         }
 
         $promocode=!empty($_SESSION['promocode'])?$_SESSION['promocode']:null;
@@ -1004,6 +1015,18 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             throw new Exception('Клуб не может быть выбран', 7);
         }
 
+        if ($_SESSION["HAS_LEADERS"]){
+            $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
+            if (empty($LEADER_ID)){
+                throw new Exception("Тренер не выбран", 7);
+            }
+            $dbRes=CIBlockElement::GetByID($LEADER_ID);
+            if (!$rsLeader=$dbRes->GetNextElement()){
+                throw new Exception("Не удалось выбрать тренера", 7);
+            }
+            $leader=$rsLeader->GetProperties();
+        }
+
         global $USER;
         if ($USER->IsAuthorized() && $USER->GetLogin()==$FORM_FIELDS['FIELDS']['phone']['VALUE']){
             $currUser=PersonalUtils::UpdatePersonalInfoFrom1C($USER->GetID());
@@ -1103,6 +1126,17 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
 
         if (!$this->CheckClub() || !$this->GetClubNumber()){
             throw new Exception('Клуб не может быть выбран', 7);
+        }
+        if ($_SESSION["HAS_LEADERS"]){
+            $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
+            if (empty($LEADER_ID)){
+                throw new Exception("Тренер не выбран", 7);
+            }
+            $dbRes=CIBlockElement::GetByID($LEADER_ID);
+            if (!$rsLeader=$dbRes->GetNextElement()){
+                throw new Exception("Не удалось выбрать тренера", 7);
+            }
+            $leader=$rsLeader->GetProperties();
         }
 
         $arParam= [
