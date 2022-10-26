@@ -3,8 +3,8 @@
 		<div class="footer-menu-title"><a href="/about/" class="dont-touch">О компании</a></div>
 		<ul>
 			<li><a href="https://career.spiritfit.ru/" class="dont-touch">Карьера</a></li>
-			<li><a href="/about/adv/" class="dont-touch">Рекламные возможности</a></li>
-			<li><a href="/about/platform/" class="dont-touch">Площадки под новые клубы</a></li>
+			<li><a href="/about/adv/">Рекламные возможности</a></li>
+			<li><a href="/about/platform/">Площадки под новые клубы</a></li>
             <li><a href="/upload/form/Политика.pdf">Политика обработки персональных данных</a></li>
 		</ul>
 	</div>
@@ -15,7 +15,7 @@
 			<li><a href="/gruppovye-trenirovki/" class="dont-touch">Групповые тренировки</a></li>
 			<li><a href="/trenirovki/personal-training/" class="dont-touch">Персональный тренинг</a></li>
 			<li><a href="/trenirovki/onlayn-trenirovki/" class="dont-touch">Тренировки онлайн</a></li>
-			<li><a href="/trenirovki/fitnes-testing/" class="dont-touch">Фитнес-тестирование</a></li>
+			<li><a href="/trenirovki/fitnes-testirovanie/">Фитнес-тестирование</a></li>
 		</ul>
 	</div>
 	<div class="footer-menu-cell">
@@ -24,7 +24,7 @@
 			<li><a href="/club-members/#abonements" class="dont-touch">Абонементы</a></li>
 			<li><a href="https://corp.spiritfit.ru/" class="dont-touch">Корпоративная программа</a></li>
 			<li><a href="/loyalty-program/">Программа лояльности</a></li>
-			<li><a href="/trenirovki/partnery-i-privilegii/" class="dont-touch">Партнёры и привилегии</a></li>
+			<li><a href="/club-members/partners">Партнёры и привилегии</a></li>
 			<li><a href="/#faq">FAQ</a></li>
 		</ul>
 	</div>
