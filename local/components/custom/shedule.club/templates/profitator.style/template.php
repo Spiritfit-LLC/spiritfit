@@ -9,6 +9,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
     <div class="content-center">
         <div class="b-timetable__heading">
             <h2 class="b-timetable__title">Расписание групповых занятий</h2>
+            <!--noindex-->
             <div class="timetable-controls">
                 <div class="b-timetable__switch-holder">
                     <select class="b-timetable__switch">
@@ -46,7 +47,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
                                 $filter.=$name[$i];
                             }
                             ?>
-                            <option value="<?=strtolower($filter)?>"><?=$filter?></option>
+                            <option value="<?=strtolower($filter)?>"><?=$iteEx['name']?></option>
                         <? } ?>
                     </select>
                 </div>
@@ -63,7 +64,9 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
                     </button>
                 </div>
             </div>
+            <!--/noindex-->
         </div>
+        <!--noindex-->
         <div class="b-timetable__content-wrap">
             <div class="b-timetable__content">
 
@@ -164,6 +167,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
                 </div>
             </div>
         </div>
+        <!--/noindex-->
     </div>
 </section>
 <?endif;?>

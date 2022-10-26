@@ -103,7 +103,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
                                                 <div class="corp-abonement__front-list">
                                                     <!--noindex-->
                                                     <? foreach($abonement["PROPERTIES"]["INCLUDE"]["VALUE"] as $listItem) { ?>
-                                                        <div class="corp-abonement__front-list-item"><?=$listItem?></div>
+                                                        <div class="corp-abonement__front-list-item"><?=htmlspecialcharsback($listItem)?></div>
                                                     <? } ?>
                                                     <!--/noindex-->
                                                 </div>
@@ -234,7 +234,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
         $photoCount = count($arResult["PROPERTIES"]["PHOTO_GALLERY"]["ITEMS"]) - 1;
 
         ?>
-        <section class="b-image-plate-block b-image-plate-block_simple-mobile">
+        <section class="b-image-plate-block b-image-plate-block_simple-mobile" id="club-about">
             <div class="content-center">
                 <div class="b-image-plate-block__content">
                     <div class="b-image-plate-block__slider-nav">
@@ -307,10 +307,27 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
                             <div class="b-cards-slider__item">
                                 <div class="b-twoside-card">
                                     <div class="b-twoside-card__inner">
-                                        <div class="b-twoside-card__content"
-                                             style="background-image: url('<?=$trainer['PICTURE']?>');">
-                                            <!--<img style="display: none;" src="<?=$imageSrc?>" alt="<?=$trainer['NAME']?>">-->
-                                            <div class="b-twoside-card__label"><?=$trainer['NAME']?></div>
+                                        <div class="b-twoside-card__content" <?if (!empty($trainer["PROPERTIES"]["HOVER_GIF"]["VALUE"])):?> data-hover-gif="true" <?endif;?>>
+                                            <img class="b-twoside-card__background" src="<?=$trainer['PICTURE']?>">
+                                            <?if (!empty($trainer["PROPERTIES"]["HOVER_GIF"]["VALUE"])):?>
+                                                <img class="b-twoside-card__hover-gif" src="<?=CFile::GetPath($trainer["PROPERTIES"]["HOVER_GIF"]["VALUE"])?>">
+                                            <?endif;?>
+                                            <div class="b-twoside-card__label-container">
+                                                <div class="b-twoside-card__label"><?=$trainer['NAME']?></div>
+                                                <?if (!empty($trainer["PROPERTIES"]["HOVER_GIF"]["VALUE"])):?>
+                                                    <div class="b-twoside-card__show-gif-btn is-hide-desktop">
+                                                        <div class="b-twoside-card__show-gif-btn-icon">
+                                                            <div class="b-twoside-card__play-icon">
+                                                                <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/circularplaybutton.svg')?>
+                                                            </div>
+                                                            <div class="b-twoside-card__stop-icon">
+                                                                <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/circularstopbutton.svg')?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="b-twoside-card__show-gif-text">Смотреть</div>
+                                                    </div>
+                                                <?endif;?>
+                                            </div>
                                         </div>
                                         <div class="b-twoside-card__hidden-content">
                                             <div class="b-twoside-card__title"><?=$trainer['NAME']?></div>
@@ -535,19 +552,6 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
                                 </div>
                             <?endif;?>
                         </div>
-<!--                        <div class="b-map__route">-->
-<!--                            <div class="b-map__route-title">Построить маршрут</div>-->
-<!--                            <div class="b-map__route-points">-->
-<!--                                <div class="b-map__route-point-item">-->
-<!--                                    <span class="b-map__route-point-name">Откуда</span>-->
-<!--                                    <input class="b-map__route-point" id="map-point-from"/>-->
-<!--                                </div>-->
-<!--                                <div class="b-map__route-point-item">-->
-<!--                                    <span class="b-map__route-point-name">Куда</span>-->
-<!--                                    <span class="b-map__route-point">--><?//=$arResult['~NAME']?><!--</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
                     </div>
                 </div>
             </div>

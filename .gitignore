@@ -36,6 +36,7 @@ log.txt
 web.config
 /test2
 *test*
+!fitnes-testirovanie
 /uploads
 .cache
 /logs

@@ -134,9 +134,12 @@ foreach( $clubs as $club ) {
     }
     if( isset($_COOKIE["theme_type"]) && intval($_COOKIE["theme_type"]) === 2 && strpos($page, "/blog/") !== false ) {
 	    if( isset($classPage) ) $classPage += " white"; else $classPage = "white";
-    } else if( strpos($page, "/landings/") !== false ) {
+    }
+    else if( strpos($page, "/landings/") !== false ) {
 		if( isset($classPage) ) $classPage += " white is-landing"; else $classPage = "white is-landing";
 	}
+
+
 ?>
 <body class="b-page <?=$classPage?>">
 <!--    --><?//$APPLICATION->IncludeComponent('custom:banner', 'last.change', array("URL"=>"ALL", "BACKGROUND"=>"/upload/medialibrary/8f2/9frwkezz1ehaxj5m5tb0u10nfubij2mi.jpg"), false)?>
@@ -269,6 +272,11 @@ foreach( $clubs as $club ) {
 
             </div>
         </div>
+        <?
+        //ДЕЛАЕМ НА ВРЕМЯ ТРАНСФОРМАЦИИ
+        if (strpos($page, "/landings/") === false):?>
+            <div class="is-hide-desktop" style="text-align: center;padding: 5px;background: #fe6000;font-weight: 500;font-size: 13px; background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);">Марафон похудения <a style="color: #e1e1e1;text-decoration: underline;" href="/landings/v2/transformation/">Spirit.Трансформация</a></div>
+        <?endif;?>
     </header>
     <main class="b-page__main <?=(defined('HOLDER_CLASS') ? HOLDER_CLASS : '')?>" role="main">
         <?if (!defined('HIDE_SLIDER')){?>
@@ -368,7 +376,13 @@ foreach( $clubs as $club ) {
 					<div class="b-screen__bg-holder"></div>
 				</section>
 			<? } ?>
-			<div class="b-page__heading <?=(defined('BREADCRUMB_H1_ABSOLUTE') ? 'b-page__heading_absolute' : '')?>  <?=(!$showSlider) ? "b-page__heading-simple" : "" ?>">
+			<?
+            //ДЕЛАЕМ НА ВРЕМЯ ТРАНСФОРМАЦИИ
+            if (!strpos($page, "/landings/")):?>
+                <div class="b-page__heading <?=(defined('BREADCRUMB_H1_ABSOLUTE') ? 'b-page__heading_absolute' : '')?>  <?=(!$showSlider) ? "b-page__heading-simple" : "" ?>" style="top: 100px;">
+            <?else:?>
+                <div class="b-page__heading <?=(defined('BREADCRUMB_H1_ABSOLUTE') ? 'b-page__heading_absolute' : '')?>  <?=(!$showSlider) ? "b-page__heading-simple" : "" ?>">
+            <?endif;?>
                 <div class="content-center">
                     <div class="b-page__heading-inner">
                         <? $APPLICATION->IncludeComponent(

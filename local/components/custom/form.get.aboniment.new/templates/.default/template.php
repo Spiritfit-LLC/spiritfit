@@ -82,7 +82,7 @@ else{
                 <div class="subscription__subheading">Включено в абонемент:</div>
                 <ul class="subscription__include">
                     <?foreach($ELEMENT["PROPERTIES"]["INCLUDE"]["VALUE"] as $value):?>
-                        <li class="subscription__include-item"><?=$value?></li>
+                        <li class="subscription__include-item"><?=htmlspecialcharsback($value)?></li>
                     <?endforeach;?>
                 </ul>
             <?endif;?>
@@ -131,25 +131,23 @@ else{
                     <?else:?>
                         <input type="hidden" name="<?=$FORM_FIELDS['club']['NAME']?>" value="<?=$FORM_FIELDS['club']["VALUE"]?>" class="get-abonement-club">
                     <?endif;?>
-                    
-					<?if (!empty($FORM_FIELDS['leaders']['ITEMS'])):?>
-                        <input type="hidden" value="Y" name="has_leaders">
-                        <div class="subscription__aside-form-row leaders-row">
+                    <?if (!empty($arResult["LEADERS"])):?>
+                        <div class="subscription__aside-form-row">
                             <span class="subscription__total-text">Выберите тренера</span>
                         </div>
                         <div class="subscription__aside-form-row">
-                            <select class="input input--light input--long input--select"
-                                name="<?=$FORM_FIELDS['leaders']['NAME']?>"
-                                autocomplete="off"
-                                <?if ($FORM_FIELDS['leaders']['REQUIRED']) echo 'required';?>>
-                                    <option value="off" disabled selected>-</option>
-                                    <? foreach ($FORM_FIELDS['leaders']['ITEMS'] as $leader):?>
-                                        <option value="<?=$leader["VALUE"]?>" <?if ($leader['SELECTED']) echo 'selected';?>><?=$leader["NAME"]?></option>
-                                    <? endforeach; ?>
+                            <select class="input input--light input--long input--select get-abonement-leader"
+                                    name="<?=$arResult["LEADERS"]['NAME']?>"
+                                    autocomplete="off"
+                                <?if ($arResult["LEADERS"]['REQUIRED']) echo 'required';?>>
+                                <option value="off" disabled selected>-</option>
+                                <? foreach ($arResult["LEADERS"]['ITEMS'] as $leader):?>
+                                    <option value="<?=$leader["VALUE"]?>"
+                                        <?if ($leader['SELECTED']) echo 'selected';?>><?=$leader["STRING"]?></option>
+                                <? endforeach; ?>
                             </select>
                         </div>
-                    <?endif;?>
-                    
+                    <?endif?>
                     <div class="subscription__aside-form-row">
                         <div>
                             <input class="input input--light input--short input--text"

@@ -74,7 +74,7 @@ $ELEMENT=$arResult["ELEMENT"];
                 <div class="subscription__subheading">Включено в абонемент:</div>
                 <ul class="subscription__include">
                     <?foreach($ELEMENT["PROPERTIES"]["INCLUDE"]["VALUE"] as $value):?>
-                        <li class="subscription__include-item"><?=$value?></li>
+                        <li class="subscription__include-item"><?=htmlspecialcharsback($value)?></li>
                     <?endforeach;?>
                 </ul>
             <?endif;?>

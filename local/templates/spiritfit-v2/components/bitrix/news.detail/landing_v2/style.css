@@ -210,12 +210,17 @@
 	position: relative;
 	margin-bottom: 40px;
 }
+.b-twoside-card__video video,
 .b-twoside-card__video img {
 	display: block;
 	position: relative;
 	max-width: 240px;
 	border-radius: 50%;
 	margin: 0 auto;
+}
+.b-twoside-card__video video {
+	width: 240px;
+	height: 240px;
 }
 .b-twoside-card__video .play {
 	display: flex;
@@ -501,6 +506,9 @@
 	cursor: pointer;
 }
 .button.second {
+	display: none;
+}
+.landing__info-link.second{
 	display: none;
 }
 /*Учавствовать*/
@@ -911,8 +919,14 @@
 	.button.first {
 		display: none;
 	}
+	.landing__info-link.first{
+		display: none;
+	}
 	.button.second {
 		display: inline-block;
+	}
+	.landing__info-link.second{
+		display: block;
 	}
 	.b-want-banner .right {
 		text-align: center;
@@ -1128,6 +1142,11 @@
 		background-position: 50% 150%;
 	}
 	.b-main__banner-button {
-    	margin-top: 220px;
+		margin-top: 220px;
 	}
+}
+
+.landing__info-link{
+	padding: 20px 0;
+	font-size: 16px;
 }

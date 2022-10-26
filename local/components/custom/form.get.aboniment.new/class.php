@@ -25,9 +25,6 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         if( empty($arParams["WEB_FORM_ID"]) ){
             $this->arResult["ERROR"] = "Не выбранна веб форма";
         }
-        if( !empty($arParams["SELECTED_LEADER_ID"]) && $arParams["SELECTED_LEADER_ID"]=="-" ){
-            unset($arParams["SELECTED_LEADER_ID"]);
-	    }
         return $arParams;
     }
 
@@ -116,6 +113,8 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             return;
         }
 
+
+
         unset($_SESSION['BONUS_LIMIT']);
         unset($_SESSION['promocode']);
         unset($_SESSION['CURRENT_PRICE']);
@@ -148,8 +147,29 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             $this->arResult["OFERTA_TEXT"] = $siteSettings["PROPERTIES"]["TEXT_OFERTA"]["~VALUE"]['TEXT'];
         }
 
+        //ХАРДКОДИМ НА ВРЕМЯ СПИРИТ ТРАНСФОРМАЦИИ, ТК АРХИТЕКТУРА ЕЩЕ НЕ ПРИДУМАНА
+        $_SESSION["HAS_LEADERS"]=boolval($_GET["has_leaders"]);
+        if ($_SESSION["HAS_LEADERS"]){
+            $this->arResult["LEADERS"]=[
+                "NAME"=>"leader_id",
+                "REQUIRED"=>true,
+            ];
+            $filter=["IBLOCK_ID"=>Utils::GetIBlockIDBySID("leaders"), "ACTIVE"=>"Y"];
+            $dbRes=CIBlockElement::GetList(Array("SORT"=>"ASC"), $filter, false, false, array('ID', 'NAME'));
+            while($leader=$dbRes->Fetch()){
+                $this->arResult["LEADERS"]["ITEMS"][]=[
+                    "VALUE"=>$leader["ID"],
+                    "STRING"=>$leader["NAME"],
+                    "SELECTED"=>$_GET["leader_id"]==$leader["ID"]?true:false,
+                ];
+            }
+        }
+
         $this->IncludeComponentTemplate();
     }
+
+
+
 
     private function GetElement(){
         $elArray = [];
@@ -321,10 +341,10 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             else{
                 $FORM_FIELDS['FIELDS'][$key]['NAME']="form_".$value['0']["FIELD_TYPE"]."_".$value['0']["ID"];
             }
-            
+
             if (!$request){
                 $validator=CFormValidator::GetList($FORM["arQuestions"][$key]['ID'], array(), $by,$order)->Fetch();
-				if ($key=="club"){
+                if ($key=="club"){
                     if (boolval($this->arResult["ELEMENT"]["PROPERTIES"]["ONLINE"]["VALUE"])){
                         $FORM_FIELDS['FIELDS'][$key]["TYPE"]="hidden";
                         $FORM_FIELDS['FIELDS'][$key]["VALUE"]=Utils::GetIBlockElementIDBySID("setevoy-abonement-");
@@ -352,22 +372,6 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                         }
                         $FORM_FIELDS['FIELDS'][$key]['TYPE']='SELECT';
                         $FORM_FIELDS['FIELDS'][$key]['ITEMS']=$CLUBS;
-                    }
-                }
-                elseif ($key=='leaders' && isset($this->arParams['SELECTED_LEADER_ID'])){
-					$FORM_FIELDS['FIELDS'][$key]['VALUE_STRING'] = '';
-					$FORM_FIELDS['FIELDS'][$key]['VALUE']=$this->arParams['SELECTED_LEADER_ID'];
-					
-                    $FORM_FIELDS['FIELDS'][$key]['TYPE']='SELECT';
-                    $FORM_FIELDS['FIELDS'][$key]['ITEMS']=[];
-                    $arFilter = array(
-                        'IBLOCK_ID' => Utils::GetIBlockIDBySID('leaders'),
-                        'ACTIVE' => 'Y'
-                    );
-                    $dbElements = CIBlockElement::GetList(array('SORT' => 'ASC'), $arFilter, false, false, array("ID", "CODE", "NAME"));
-                    while ($arFields = $dbElements->fetch()) {
-						if($FORM_FIELDS['FIELDS'][$key]['VALUE']==$arFields['ID']) $FORM_FIELDS['FIELDS'][$key]['VALUE_STRING']=$arFields['NAME'];
-						$FORM_FIELDS['FIELDS'][$key]['ITEMS'][] = ['VALUE' => $arFields['ID'], 'NAME' => $arFields['NAME'], 'SELECTED' => ($FORM_FIELDS['FIELDS'][$key]['VALUE']==$arFields['ID']) ? true:false];
                     }
                 }
                 elseif ($FORM_FIELDS['FIELDS'][$key]['TYPE']=='checkbox'){
@@ -408,25 +412,6 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                     }
                     else{
                         throw new Exception('Телефон не заполнен', 7);
-                    }
-                }
-                elseif ($key=='leaders' && !empty( $valueId = Context::getCurrent()->getRequest()->getPost($FORM_FIELDS['FIELDS'][$key]['NAME']) )){
-					$FORM_FIELDS['FIELDS'][$key]['VALUE_STRING'] = '';
-                    $FORM_FIELDS['FIELDS'][$key]['VALUE']=intval($valueId);
-                    
-                    if( !empty($FORM_FIELDS['FIELDS'][$key]['VALUE']) ){
-                        $arFilter = array(
-                            'IBLOCK_ID' => Utils::GetIBlockIDBySID('leaders'),
-                            'ACTIVE' => 'Y',
-						    'ID' => $FORM_FIELDS['FIELDS'][$key]['VALUE']
-                        );
-                        $dbElements = CIBlockElement::GetList(array('SORT' => 'ASC'), $arFilter, false, false, array("ID", "CODE", "NAME"));
-                        if ($arFields = $dbElements->fetch()) {
-						    $FORM_FIELDS['FIELDS'][$key]['VALUE_STRING']=$arFields['NAME'];
-                        }
-                    }
-                    else{
-                        throw new Exception('Выберите тренера', 7);
                     }
                 }
                 elseif($FORM_FIELDS['FIELDS'][$key]['TYPE']=='checkbox'){
@@ -698,10 +683,11 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         if ($this->checkCode($FORM_FIELDS['FIELDS']['phone']['VALUE'], $code)){
             return $this->getOrderAction();
         }
+
+
     }
 
     public function getAbonementAction(){
-//        return Context::getCurrent()->getRequest()->toArray();
         $this->componentParams();
         $this->GetClient();
 
@@ -721,11 +707,22 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         }
         $this->arParams['CLUB_ID']=$FORM_FIELDS['FIELDS']['club']['VALUE'];
 
-
         $this->GetElement();
 
         if (!$this->CheckClub() || !$this->GetClubNumber()){
             throw new Exception('Клуб не может быть выбран', 7);
+        }
+
+        if ($_SESSION["HAS_LEADERS"]){
+            $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
+            if (empty($LEADER_ID)){
+                throw new Exception("Пожалуйста, выберите тренера", 7);
+            }
+            $dbRes=CIBlockElement::GetByID($LEADER_ID);
+            if (!$rsLeader=$dbRes->GetNextElement()){
+                throw new Exception("Не удалось выбрать тренера", 7);
+            }
+            $leader=$rsLeader->GetProperties();
         }
 
         $promocode=!empty($_SESSION['promocode'])?$_SESSION['promocode']:null;
@@ -748,11 +745,8 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             'clubid'=>$this->arResult["CLUB_NUMBER"],
             'promocode'=>$promocode,
 
-            'subscriptionId'=>$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"]
+            'subscriptionId'=>$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"],
         ];
-        
-        if(!empty($FORM_FIELDS['FIELDS']['leaders']['VALUE_STRING'])) $arParams['leader']=$FORM_FIELDS['FIELDS']['leaders']['VALUE_STRING'];
-        
 //        return $arParams;
 
         $api=new Api([
@@ -868,6 +862,17 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         }
 
         $this->arParams['CLUB_ID']=$FORM_FIELDS['FIELDS']['club']['VALUE'];
+        if ($_SESSION["HAS_LEADERS"]){
+            $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
+            if (empty($LEADER_ID)){
+                throw new Exception("Пожалуйста, выберите тренера", 7);
+            }
+            $dbRes=CIBlockElement::GetByID($LEADER_ID);
+            if (!$rsLeader=$dbRes->GetNextElement()){
+                throw new Exception("Не удалось выбрать тренера", 7);
+            }
+            $leader=$rsLeader->GetProperties();
+        }
 
 
         $this->GetElement();
@@ -900,10 +905,9 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
 
             'action'=>'cloudpayments',
             'price'=>(int)($_SESSION['CURRENT_PRICE']),
+            "leaderId"=>!empty($leader)?$leader["CODE_1C"]["VALUE"]:null
         ];
-        
-        if(!empty($FORM_FIELDS['FIELDS']['leaders']['VALUE_STRING'])) $arParams['leader']=$FORM_FIELDS['FIELDS']['leaders']['VALUE_STRING'];
-        
+
         $bonuses=(int)Context::getCurrent()->getRequest()->getPost('bonuses');
         if (!empty($bonuses)){
             $arParams['bonusessum']=$bonuses;
@@ -1011,6 +1015,18 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             throw new Exception('Клуб не может быть выбран', 7);
         }
 
+        if ($_SESSION["HAS_LEADERS"]){
+            $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
+            if (empty($LEADER_ID)){
+                throw new Exception("Пожалуйста, выберите тренера", 7);
+            }
+            $dbRes=CIBlockElement::GetByID($LEADER_ID);
+            if (!$rsLeader=$dbRes->GetNextElement()){
+                throw new Exception("Не удалось выбрать тренера", 7);
+            }
+            $leader=$rsLeader->GetProperties();
+        }
+
         global $USER;
         if ($USER->IsAuthorized() && $USER->GetLogin()==$FORM_FIELDS['FIELDS']['phone']['VALUE']){
             $currUser=PersonalUtils::UpdatePersonalInfoFrom1C($USER->GetID());
@@ -1046,9 +1062,6 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
 
             'subscriptionId'=>$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"]
         ];
-        
-        if(!empty($FORM_FIELDS['FIELDS']['leaders']['VALUE_STRING'])) $arParam['leader']=$FORM_FIELDS['FIELDS']['leaders']['VALUE_STRING'];
-        
 
         if ($arUser=$currUser->Fetch()){
             $userArr=PersonalUtils::UpdatePersonalInfoFrom1C($arUser["ID"]);
@@ -1070,7 +1083,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         $responce=$api->result();
 
         if(empty($responce["success"]) ) {
-			if(!empty($responce["data"]["result"]["userMessage"]) ) {
+            if(!empty($responce["data"]["result"]["userMessage"]) ) {
                 throw new Exception($responce["data"]["result"]["userMessage"], 7);
             } else {
                 throw new Exception("Непредвиденная ошибка", 7);
@@ -1114,6 +1127,17 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         if (!$this->CheckClub() || !$this->GetClubNumber()){
             throw new Exception('Клуб не может быть выбран', 7);
         }
+        if ($_SESSION["HAS_LEADERS"]){
+            $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
+            if (empty($LEADER_ID)){
+                throw new Exception("Пожалуйста, выберите тренера", 7);
+            }
+            $dbRes=CIBlockElement::GetByID($LEADER_ID);
+            if (!$rsLeader=$dbRes->GetNextElement()){
+                throw new Exception("Не удалось выбрать тренера", 7);
+            }
+            $leader=$rsLeader->GetProperties();
+        }
 
         $arParam= [
             'type'=>(int)$FORM_TYPE,
@@ -1137,9 +1161,6 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             "code"=>$code,
             "event"=>"registration"
         ];
-		
-        if(!empty($FORM_FIELDS['FIELDS']['leaders']['VALUE_STRING'])) $arParam['leader']=$FORM_FIELDS['FIELDS']['leaders']['VALUE_STRING'];
-        
         $api = new Api(array(
             "action" => "request2_new",
             "params" => $arParam

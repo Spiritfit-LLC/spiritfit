@@ -526,3 +526,85 @@ div.news-detail img.detail_picture
 	}
 }
 /*КАК ДОБРАТЬСЯ*/
+
+
+.b-twoside-card__content{
+	position: relative;
+}
+img.b-twoside-card__background{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1;
+	opacity: 1;
+	transition: opacity 300ms;
+}
+.b-twoside-card__label-container {
+	position: absolute;
+	z-index: 3;
+	width: 100%;
+	text-align: center;
+	left: 0;
+	bottom: 60px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+.b-twoside-card__label{
+	padding: 0 50px;
+}
+img.b-twoside-card__hover-gif {
+	position: absolute;
+	z-index: 2;
+	width: 100%;
+	left: 0;
+	top: 0;
+	opacity: 0;
+	transition: opacity 300ms;
+}
+.b-twoside-card__show-gif-btn {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	font-weight: 500;
+	font-size: 18px;
+	background-color: black;
+	padding-bottom: 40px;
+}
+.b-twoside-card__show-gif-btn svg{
+	fill: #ff7628;
+	height: 25px;
+	width: 25px;
+}
+.b-twoside-card__stop-icon{
+	opacity: 0;
+}
+.b-twoside-card__show-gif-btn.active .b-twoside-card__play-icon{
+	opacity: 0;
+}
+.b-twoside-card__show-gif-btn.active .b-twoside-card__stop-icon{
+	opacity: 1;
+}
+.b-twoside-card__stop-icon {
+	height: 25px;
+	width: 25px;
+	position: absolute;
+}
+.b-twoside-card__play-icon {
+	height: 25px;
+	width: 25px;
+	position: absolute;
+}
+.b-twoside-card__show-gif-btn-icon {
+	position: relative;
+	margin-right: 15px;
+	height: 25px;
+	width: 25px;
+}
+@media screen and (max-width: 1024px){
+	.b-twoside-card__label-container{
+		bottom: 0;
+	}
+}
