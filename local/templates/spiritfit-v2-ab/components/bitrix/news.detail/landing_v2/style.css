@@ -1171,6 +1171,7 @@
 }
 .partners .b-twoside-card__inner{
 	margin:0!important;
+	border-radius: 10px;
 }
 .partners .b-twoside-card__description {
 	font-size: 18px;

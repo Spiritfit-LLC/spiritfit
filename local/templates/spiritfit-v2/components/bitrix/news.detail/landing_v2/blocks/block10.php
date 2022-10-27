@@ -42,7 +42,7 @@
                                         </div>
                                         <div class="b-twoside-card__hidden-content">
                                             <div class="b-twoside-card__description">
-                                                <?=$element["PROPERTIES"]["DESCRIPTION"]["VALUE"]["TEXT"]?>
+                                                <?=htmlspecialcharsback($element["PROPERTIES"]["DESCRIPTION"]["VALUE"]["TEXT"])?>
                                             </div>
                                             <a class="button" href="<?=$element["PROPERTIES"]["BTN"]["DESCRIPTION"]?>"><?=$element["PROPERTIES"]["BTN"]["VALUE"]?></a>
                                         </div>
