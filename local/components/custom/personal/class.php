@@ -18,6 +18,14 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         if( empty($arParams["PASSFORGOT_FORM_CODE"]) ){
             $this->arResult["ERROR"] = "Не выбранна веб форма восстановления пароля";
         }
+
+        /* Для конкурса */
+        $arParams["HAS_NICKNAME_HIDE_FIELDS"] = ['club', 'gender', 'birthday', 'surname', 'name'];
+        if( Loader::includeModule('outcode.quiz') ) {
+            $arParams["HAS_NICKNAME"] = !empty(Context::getCurrent()->getRequest()->get('nickname'));
+            $arParams["BONUS_ID"] = Context::getCurrent()->getRequest()->get('bonusid');
+        }
+
         return $arParams;
     }
 
@@ -349,7 +357,9 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         26=>'Не удалось подтвердить Email. Обновите страницу и попробуйте еще раз',
         27=>'Время подтверждения Email истекло. Попробуйте еще раз',
         28=>'Некорректный E-mail адрес',
-        100=>'Непредвиденная ошибка'
+        100=>'Непредвиденная ошибка',
+        101=>'Заполните поле',
+        102=>'Пользователь с таким ником уже зарегистрирован',
     ];
 
     //ВЫХОД
@@ -568,6 +578,30 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         $DATA=Context::getCurrent()->getRequest()->toArray();
         if (!empty($DATA['WEB_FORM_ID'])){
             $FORM_FIELDS=PersonalUtils::GetFormFileds($DATA['WEB_FORM_ID'], false, true);
+
+            /* Для регистрации с ником */
+            if(!$this->arParams['HAS_NICKNAME']) {
+                $errStr = '';
+                foreach( $this->arParams['HAS_NICKNAME_HIDE_FIELDS'] as $fieldsCode ){
+                    if( empty($FORM_FIELDS['FIELDS'][$fieldsCode]['VALUE']) ) {
+                        $errStr .= $FORM_FIELDS['FIELDS'][$fieldsCode]['NAME'] . ': ' . $this->errorMessages[101] . '<br>';
+                    }
+                }
+                $errStr .= strlen($FORM_FIELDS['FIELDS']['name']['VALUE']) < 100 ? '' : $FORM_FIELDS['FIELDS'][$fieldsCode]['NAME'] . ': ' . $this->errorMessages[101] . '<br>';
+                $errStr .= strlen($FORM_FIELDS['FIELDS']['surname']['VALUE']) < 20 ? '' : $FORM_FIELDS['FIELDS'][$fieldsCode]['NAME'] . ': ' . $this->errorMessages[101] . '<br>';
+                if( !empty($errStr) ) {
+                    throw new Exception($errStr, 2);
+                }
+            }
+            if( $this->arParams['HAS_NICKNAME'] && isset($FORM_FIELDS['FIELDS']['nickname']['NAME']) ) {
+                if( empty($FORM_FIELDS['FIELDS']['nickname']['VALUE']) ) {
+                    throw new Exception('Ник: ' . $this->errorMessages[101], 2);
+                } else if( \Bitrix\Main\UserTable::getCount(['WORK_POSITION' => $FORM_FIELDS['FIELDS']['nickname']['VALUE']]) != 0 ) {
+                    throw new Exception($this->errorMessages[102], 2);
+                }
+            }
+            /* Для регистрации с ником */
+
             //Не заполнены обязательные поля или несоответствие валидатору
             if (isset($FORM_FIELDS['result']) && $FORM_FIELDS['result']==false){
                 throw new Exception($FORM_FIELDS['errorText'], 2);
@@ -614,6 +648,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                         "address"=>$FORM_FIELDS["FIELDS"]["address"]["VALUE"],
                         "geo_lat"=>$DATA["geo_lat"],
                         "geo_lon"=>$DATA["geo_lon"],
+                        'is_play'=>!empty($this->arParams["HAS_NICKNAME"]) ? $this->arParams["HAS_NICKNAME"] : false
                     ];
                     $api=new Api(array(
                         'action'=>'lkreg',
@@ -673,6 +708,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                             "address"=>$FORM_FIELDS["FIELDS"]["address"]["VALUE"],
                             "geo_lat"=>$DATA["geo_lat"],
                             "geo_lon"=>$DATA["geo_lon"],
+                            'is_play'=>!empty($this->arParams["HAS_NICKNAME"]) ? $this->arParams["HAS_NICKNAME"] : false
                         ];
 
                         $api=new Api(array(
@@ -707,12 +743,18 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                                 'PERSONAL_PHONE'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
                                 'PERSONAL_GENDER'=>$FORM_FIELDS['FIELDS']['gender']['VALUE'],
                                 'UF_ADDRESS'=>$FORM_FIELDS['FIELDS']['address']['VALUE'],
+                                'WORK_POSITION'=>$FORM_FIELDS['FIELDS']['nickname']['VALUE'],
                             );
                             unset($_SESSION['ID_1C']);
 
                             $ID = $user->Add($arFields);
                             if (intval($ID) > 0){
                                 $user->Login($FORM_FIELDS['FIELDS']['phone']['VALUE'], $FORM_FIELDS['FIELDS']['passwd']['VALUE'],"Y","Y");
+
+                                if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')) {
+                                    \Outcode\Quiz::addBonus($this->arParams['BONUS_ID'], 10);
+                                }
+
                                 $api=new Api(array(
                                     'action'=>'lkedit',
                                     'params'=>[

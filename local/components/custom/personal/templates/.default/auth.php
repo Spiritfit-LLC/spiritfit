@@ -27,10 +27,16 @@
                 <form class="personal-section-form" autocomplete="off" method="post" enctype="multipart/form-data" data-componentName="<?=$arResult['COMPONENT_NAME']?>">
                     <input type="hidden" name="WEB_FORM_ID" value="<?=$SECTION['WEB_FORM_ID']?>">
                     <input type="hidden" name="FORM_STEP" value="1">
+                    <? if($arParams["HAS_NICKNAME"]) {
+                        ?>
+                        <input type="hidden" name="nickname" value="y">
+                        <input type="hidden" name="bonusid" value="<?=$arParams["BONUS_ID"]?>">
+                        <?
+                    } ?>
                     <?if (!empty($SECTION['ACTION'])):?>
                         <input type="hidden" name="ACTION" value="<?=$SECTION['ACTION']?>">
                     <?endif;?>
-                    <?foreach ($SECTION['FIELDS'] as $FIELD):?>
+                    <?foreach ($SECTION['FIELDS'] as $FCODE => $FIELD):?>
                         <?if ($FIELD['TYPE']=='hidden'):?>
                             <input type="hidden" value="<?=$FIELD['VALUE']?>" name="<?=$FIELD['NAME']?>">
                             <?
@@ -41,7 +47,8 @@
                                                            <?if($FIELD['TYPE']=='checkbox') echo 'checkbox-item';?>
                                                            <?if($FIELD['TYPE']=='SELECT') echo 'select-item';?>
                                                         <?if ($FIELD['TYPE']=='password') echo 'auth-password';?>"
-                            <?if ($FIELD['TYPE']=='password'&&$arResult['AUTH_FORM_CODE']==$ID):?> style="display: none"<?endif;?>>
+                            <?if (($FIELD['TYPE']=='password'&&$arResult['AUTH_FORM_CODE']==$ID) || (!$arParams["HAS_NICKNAME"]&&$FCODE=='nickname')
+                                || ($arParams["HAS_NICKNAME"]&&in_array($FCODE, $arParams["HAS_NICKNAME_HIDE_FIELDS"]))):?> style="display: none"<?endif;?>>
                             <?if ($FIELD['TYPE']!='checkbox'):?>
                                 <span class="personal-section-form__item-placeholder"><?=$FIELD['PLACEHOLDER']?></span>
                             <?endif;?>

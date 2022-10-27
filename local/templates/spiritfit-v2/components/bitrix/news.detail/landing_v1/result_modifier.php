@@ -32,6 +32,11 @@ $pageBlocks = [
         "BLOCK4_ACTIVE",
 		"BLOCK4_SORT"
     ],
+    "block5" => [
+		"BLOCK5_TITLE",
+        "BLOCK5_ACTIVE",
+		"BLOCK5_SORT"
+    ],
 ];
 $imageSizes = [
 ];

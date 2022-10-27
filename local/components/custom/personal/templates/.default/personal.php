@@ -56,6 +56,18 @@
                 <?
                 endforeach;
                 ?>
+                <? if( defined('QUIZ_AVTIVE') && IS_QUIZ_AVTIVE ) {
+                    ?>
+                    <div class="personal-profile__tab-item profile-quiz-btn"  data-link="<?=QUIZ_LINK?>">
+                        <div class="tab-item__icon">
+                            <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/quiz-btn.svg');?>
+                        </div>
+                        <div class="tab-item__name">
+                            <?=QUIZ_LINK_TITLE?>
+                        </div>
+                    </div>
+                    <?
+                } ?>
                 <div class="personal-profile__tab-item profile-exit-btn"  data-componentName="<?=$arResult['COMPONENT_NAME']?>">
                     <div class="tab-item__icon">
                         <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/exit-btn.svg');?>

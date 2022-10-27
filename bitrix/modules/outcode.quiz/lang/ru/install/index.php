@@ -1,0 +1,22 @@
+<?
+$MESS['QUIZ_NAME'] = 'Викторина';
+$MESS['MODULE_DESCRIPTION'] = '';
+$MESS['QUIZ_PROPERTY_DATE_START'] = 'Дата начала активности';
+$MESS['QUIZ_PROPERTY_DATE_END'] = 'Дата окончания активности';
+$MESS['QUIZ_PROPERTY_TYPE'] = 'Тип вопроса';
+$MESS['QUIZ_PROPERTY_TYPE_1'] = 'Text';
+$MESS['QUIZ_PROPERTY_TYPE_2'] = 'Strings';
+$MESS['QUIZ_PROPERTY_TYPE_3'] = 'Images';
+$MESS['QUIZ_PROPERTY_ANSWERS_STRING'] = 'Ответы (строка)';
+$MESS['QUIZ_PROPERTY_ANSWERS_IMAGE'] = 'Ответы (изображение)';
+$MESS['QUIZ_IBLOCK_NAME'] = 'Вопросы викторины';
+$MESS['QUIZ_HIGHTLOAD_BLOCK_NAME'] = 'Ответы викторины';
+$MESS['QUIZ_HIGHTLOAD_PROPERTY_1'] = 'ID Вопроса';
+$MESS['QUIZ_HIGHTLOAD_PROPERTY_2'] = 'Вопрос';
+$MESS['QUIZ_HIGHTLOAD_PROPERTY_3'] = 'ID пользователя';
+$MESS['QUIZ_HIGHTLOAD_PROPERTY_4'] = 'Телефон пользователя';
+$MESS['QUIZ_HIGHTLOAD_PROPERTY_5'] = 'Email пользователя';
+$MESS['QUIZ_HIGHTLOAD_PROPERTY_6'] = 'Ответ';
+$MESS['QUIZ_HIGHTLOAD_PROPERTY_7'] = 'Начислено баллов';
+$MESS['QUIZ_HIGHTLOAD_PROPERTY_8'] = 'Дата начисления';
+$MESS['QUIZ_HIGHTLOAD_PROPERTY_9'] = 'Отправлено в 1С';

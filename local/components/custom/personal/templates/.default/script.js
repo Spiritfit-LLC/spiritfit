@@ -162,6 +162,12 @@ $(document).ready(function(){
         });
     });
 
+    //КОНКУРС
+    $('.profile-quiz-btn').unbind();
+    $('.profile-quiz-btn').click(function(){
+        window.location = $(this).data('link');
+    });
+
     //Моб Версия. Показать все разделы
     $('.show-all-section-icon').unbind()
     $('.show-all-section-icon').click(function(){
