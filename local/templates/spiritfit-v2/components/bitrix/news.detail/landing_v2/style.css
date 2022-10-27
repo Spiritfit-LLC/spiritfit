@@ -747,12 +747,12 @@
 /*Шапка*/
 
 /*Партнеры проекта*/
-.partners {
-	display: grid;
-	grid-gap: 24px;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-	grid-template-rows: 1fr;
-}
+/*.partners {*/
+/*	display: grid;*/
+/*	grid-gap: 24px;*/
+/*	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;*/
+/*	grid-template-rows: 1fr;*/
+/*}*/
 .partner img {
 	display: block;
 	position: relative;
@@ -838,9 +838,7 @@
 		text-align: center;
 		margin-top: 280px;
 	}
-	.partners {
-		grid-template-columns: 1fr 1fr 1fr 1fr;
-	}
+
 }
 @media screen and (max-width: 1140px) {
 	.b-fond__table .left {
@@ -972,9 +970,6 @@
 	.is-landing .b-screen.b-screen_short {
 		min-height: 68px;
 	}
-	.partners {
-		grid-template-columns: 1fr 1fr 1fr;
-	}
 }
 @media screen and (max-width: 768px) {
 	.landing-title,
@@ -1053,9 +1048,6 @@
 		font-size: 28px;
 		line-height: 28px;
 	}
-	.partners {
-		grid-template-columns: 1fr 1fr 1fr;
-	}
 }
 
 @media screen and (max-width: 640px) {
@@ -1124,10 +1116,6 @@
 	.b-main__banner-button {
 		margin-top: 240px;
 	}
-	.partners {
-		grid-template-columns: 1fr 1fr;
-		grid-gap: 14px;
-	}
 }
 
 @media screen and (max-width: 550px) {
@@ -1149,4 +1137,54 @@
 .landing__info-link{
 	padding: 20px 0;
 	font-size: 16px;
+}
+
+.partners{
+	display: block;
+	position: relative;
+	margin: 66px 0px 66px;
+	max-width: 100vw;
+}
+.partners .button{
+	display: block;
+	position: absolute;
+	width: calc(100% - 52px);
+	bottom: 40px;
+	background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);
+	border-radius: 8px;
+	padding: 20px 60px;
+	transition: all .3s;
+}
+.partners .button:hover {
+	background: linear-gradient(90deg, #E43932 23.26%, #7827F6 98.07%);
+}
+
+.partners .b-cards-slider__item{
+	width: 400px;
+	margin-right: 20px;
+}
+.partners .b-twoside-card__content{
+	height: 400px;
+}
+.partners .b-twoside-card.is-open .b-twoside-card__inner{
+	transform: scale(1) rotateY(180deg)!important;
+}
+.partners .b-twoside-card__inner{
+	margin:0!important;
+}
+.partners .b-twoside-card__description {
+	font-size: 18px;
+}
+.partners .slick-list.draggable {
+	overflow: visible;
+}
+@media screen and (max-width: 639px) {
+	.partners .b-cards-slider__item{
+		margin-left: 20px;
+	}
+}
+@media screen and (max-width: 1024px) {
+	.partners {
+		margin-top: 0;
+	}
 }

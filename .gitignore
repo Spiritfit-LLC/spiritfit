@@ -35,7 +35,7 @@ log.txt
 .htaccess
 web.config
 /test2
-*test*
+test*
 !fitnes-testirovanie
 /uploads
 .cache

@@ -110,4 +110,69 @@ $( document ).ready(function() {
     } else {
         setTrenerInit();
     }
+
+    $('.partners-wrapper').each(function () {
+        var context = $(this);
+        var navPlace = $(context).find(".b-cards-slider__slider-nav").eq(0);
+        var slider = $(context).find(".partners-slider").eq(0);
+
+        slider.on('init', function(event, slick) {
+            $(".v3-abonement .b-twoside-card").unbind();
+            $(".v3-abonement .b-twoside-card").click(function() {
+                $(this).toggleClass("is-open");
+            });
+        });
+
+        slider.slick({
+            dots: false,
+            arrows: true,
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            infinite: false,
+            variableWidth: true,
+            touchThreshold: 50,
+            prevArrow: '<div class="b-cards-slider__arrow-wrapper b-cards-slider__arrow-wrapper--left"><div class="b-cards-slider__arrow b-cards-slider__arrow--left"></div></div>',
+            nextArrow: '<div class="b-cards-slider__arrow-wrapper b-cards-slider__arrow-wrapper--right"><div class="b-cards-slider__arrow b-cards-slider__arrow--right"></div></div>',
+            responsive: [{
+                breakpoint: 1276,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    dots: false
+                }
+            }, {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }, {
+                breakpoint: 640,
+                settings: {
+                    slidesToShow: 1,
+                    arrows: true,
+                    slidesToScroll: 1,
+                    variableWidth: false,
+                    dots: true
+                }
+            }, {
+                breakpoint: 456,
+                settings: {
+                    slidesToShow: 1,
+                    arrows: true,
+                    slidesToScroll: 1,
+                    variableWidth: false,
+                    dots: true
+                }
+            }]
+        });
+
+        if ($(window).width()<=639){
+            $(".partners").find(".b-twoside-card__content").each(function(){
+                var partner_card_width=$(this).width();
+                $(this).height(partner_card_width);
+            });
+        }
+    });
 });
+

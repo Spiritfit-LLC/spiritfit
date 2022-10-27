@@ -75,7 +75,8 @@ $pageBlocks = [
         "BLOCK10_TITLE",
         "BLOCK10_IMAGES",
         "BLOCK10_ACTIVE",
-        "BLOCK10_SORT"
+        "BLOCK10_PARTNERS",
+        "BLOCK10_SORT",
     ],
 ];
 $imageSizes = [

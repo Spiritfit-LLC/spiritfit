@@ -34,7 +34,10 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                 $imageSrc = $arItem['PREVIEW_PICTURE_WEBP']['WEBP_SRC'];
             }
             ?>
-            <div class="b-cards-slider__item v3-abonement">
+            <div class="b-cards-slider__item v3-abonement" data-layer="true"
+                 data-layercategory="UX"
+                 data-layeraction="clickFitnessSubscriptionBlock"
+                 data-layerlabel="<?=$arItem["~NAME"]?>">
                 <div class="b-twoside-card"  data-sub_id="<?=$arItem['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>">
                     <div class="b-twoside-card__inner">
                         <div class="b-twoside-card__content" style="background-image: url(<?=$imageSrc?>);">
@@ -45,7 +48,7 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                         </div>
                         <div class="b-twoside-card__hidden-content">
                             <div class="b-twoside-card__name"><?=$arItem["~NAME"]?></div>
-							<? if( !empty($arItem["PROPERTIES"]["INCLUDE"]["VALUE"]) ) { ?>
+                            <? if( !empty($arItem["PROPERTIES"]["INCLUDE"]["VALUE"]) ) { ?>
                                 <div class="corp-abonement__front-list">
                                     <? foreach($arItem["PROPERTIES"]["INCLUDE"]["VALUE"] as $listItem) { ?>
                                         <div class="corp-abonement__front-list-item"><?=$listItem?></div>
@@ -55,7 +58,10 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                             <? if ($arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"]): ?>
                                 <div class="b-twoside-card__footnote"><?= $arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] ?></div>
                             <? endif; ?>
-                            <a class="button get-abonement <?=$arItem['PROPERTIES']['ADDITIONAL_CLASS']['VALUE']?> choose-abonement-btn" href="<?=$arItem['DETAIL_PAGE_URL']?>" data-sub_id="<?=$arItem['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>" data-leaderid=""><?=GetMessage("LANDING_ABONEMENT_GET")?></a>
+                            <a class="button get-abonement <?=$arItem['PROPERTIES']['ADDITIONAL_CLASS']['VALUE']?> choose-abonement-btn" href="<?=$arItem['DETAIL_PAGE_URL']?>" data-sub_id="<?=$arItem['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>" data-leaderid=""
+                               data-layercategory="UX"
+                               data-layeraction="clickFitnessSubscriptionBlockChooseButton"
+                               data-layerlabel="<?=$arItem["~NAME"]?>"><?=GetMessage("LANDING_ABONEMENT_GET")?></a>
                         </div>
                     </div>
                 </div>
