@@ -15,17 +15,19 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
 ?>
 <section class="b-cards-slider" <?if (!empty($arParams["SLIDES_TO_SHOW_AND_SCROLL"])){?> data-slides="<?=$arParams["SLIDES_TO_SHOW_AND_SCROLL"]?>" <?}?>>
     <? if( isset($arParams['TITLE_BLOCK']) && $arParams['TITLE_BLOCK'] !== "N" ) { ?>
-		<div class="content-center">
-        	<div class="b-cards-slider__heading">
-            	<div class="b-cards-slider__title">
-                	<h2><?=($arParams['TITLE_BLOCK'] ? $arParams['TITLE_BLOCK'] : 'Абонементы')?></h2>
-            	</div>
-            	<div class="b-cards-slider__slider-nav"></div>
-        	</div>
-    	</div>
-	<? } ?>
-    <div class="b-cards-slider__slider-wrap">
         <div class="content-center">
+            <div class="b-cards-slider__heading">
+                <div class="b-cards-slider__title">
+                    <h2><?=($arParams['TITLE_BLOCK'] ? $arParams['TITLE_BLOCK'] : 'Абонементы')?></h2>
+                </div>
+                <div class="b-cards-slider__slider-nav"></div>
+            </div>
+        </div>
+    <? } ?>
+    <div class="b-cards-slider__slider-wrap">
+        <?if (!empty($arParams["CONTENT_CENTER"])):?>
+        <div class="content-center">
+            <?endif;?>
             <div class="b-cards-slider__slider">
                 <?foreach($arResult["ITEMS"] as $key => $arItem):?>
                     <?
@@ -38,42 +40,42 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                     $arItem["PREVIEW_TEXT"] = strip_tags($arItem["PREVIEW_TEXT"]);
                     $arItem["PREVIEW_TEXT"] = mb_strimwidth($arItem["PREVIEW_TEXT"], 0, 325, "...");
 
-                    $arDataAbonement = Abonement::getItem($arItem['ID'], 265); 
-					$arDataAbonement = CUtil::PhpToJSObject($arDataAbonement);
-					$arDataAbonement = str_replace("'", '"', $arDataAbonement);
-					
-					$imageSrc = "";
-					if( !empty($arItem['PREVIEW_PICTURE']) && empty($arItem['PREVIEW_PICTURE_WEBP']['WEBP_SRC']) ) {
-						$imageSrc = CFile::ResizeImageGet($arItem['PREVIEW_PICTURE'], array('width' => 379, 'height' => 580), BX_RESIZE_IMAGE_EXACT)["src"]; 
-					} else {
-						$imageSrc = $arItem['PREVIEW_PICTURE_WEBP']['WEBP_SRC'];
-					}
-					?>
-					<script>
-						if(window.abonement === undefined){ window.abonement = {} };
-						window.abonement["<?=$arItem['ID']?>"] = <?=$arDataAbonement?>;
-					</script>
-                    
+                    $arDataAbonement = Abonement::getItem($arItem['ID'], 265);
+                    $arDataAbonement = CUtil::PhpToJSObject($arDataAbonement);
+                    $arDataAbonement = str_replace("'", '"', $arDataAbonement);
+
+                    $imageSrc = "";
+                    if( !empty($arItem['PREVIEW_PICTURE']) && empty($arItem['PREVIEW_PICTURE_WEBP']['WEBP_SRC']) ) {
+                        $imageSrc = CFile::ResizeImageGet($arItem['PREVIEW_PICTURE'], array('width' => 379, 'height' => 580), BX_RESIZE_IMAGE_EXACT)["src"];
+                    } else {
+                        $imageSrc = $arItem['PREVIEW_PICTURE_WEBP']['WEBP_SRC'];
+                    }
+                    ?>
+                    <script>
+                        if(window.abonement === undefined){ window.abonement = {} };
+                        window.abonement["<?=$arItem['ID']?>"] = <?=$arDataAbonement?>;
+                    </script>
+
                     <div class="b-cards-slider__item v2-abonement">
                         <div class="b-twoside-card"  data-sub_id="<?=$arItem['PROPERTIES']['CODE_ABONEMENT']['VALUE']?>">
                             <div class="b-twoside-card__inner">
                                 <div class="b-twoside-card__content"
-                                    style="background-image: url(<?=$imageSrc?>);">
+                                     style="background-image: url(<?=$imageSrc?>);">
                                     <div class="b-twoside-card__label"><?=$arItem['~NAME']?></div>
                                 </div>
                                 <div class="b-twoside-card__hidden-content">
                                     <div class="corp-abonement__back-title">
-										<?=$arItem['~NAME']?>
-									</div>
-									<? if( !empty($arItem["PROPERTIES"]["INCLUDE"]["VALUE"]) ) { ?>
-										<div class="corp-abonement__front-list">
+                                        <?=$arItem['~NAME']?>
+                                    </div>
+                                    <? if( !empty($arItem["PROPERTIES"]["INCLUDE"]["VALUE"]) ) { ?>
+                                        <div class="corp-abonement__front-list">
                                             <!--noindex-->
-											<? foreach($arItem["PROPERTIES"]["INCLUDE"]["VALUE"] as $listItem) { ?>
-												<div class="corp-abonement__front-list-item"><?=htmlspecialcharsback($listItem)?></div>
-											<? } ?>
+                                            <? foreach($arItem["PROPERTIES"]["INCLUDE"]["VALUE"] as $listItem) { ?>
+                                                <div class="corp-abonement__front-list-item"><?=htmlspecialcharsback($listItem)?></div>
+                                            <? } ?>
                                             <!--/noindex-->
-										</div>
-									<? } ?>
+                                        </div>
+                                    <? } ?>
                                     <? if ($arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"]): ?>
                                         <div class="b-twoside-card__footnote"><?= $arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"] ?></div>
                                     <? endif; ?>
@@ -90,6 +92,8 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                     </div>
                 <?endforeach;?>
             </div>
+            <?if (!empty($arParams["CONTENT_CENTER"])):?>
         </div>
+    <?endif;?>
     </div>
 </section>

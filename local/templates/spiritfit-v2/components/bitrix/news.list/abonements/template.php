@@ -25,7 +25,9 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
     	</div>
 	<? } ?>
     <div class="b-cards-slider__slider-wrap">
+        <?if (!empty($arParams["CONTENT_CENTER"])):?>
         <div class="content-center">
+        <?endif;?>
             <div class="b-cards-slider__slider">
                 <?foreach($arResult["ITEMS"] as $key => $arItem):?>
                     <?
@@ -90,6 +92,8 @@ $arInfoProps = Utils::getInfo()['PROPERTIES'];
                     </div>
                 <?endforeach;?>
             </div>
+        <?if (!empty($arParams["CONTENT_CENTER"])):?>
         </div>
+        <?endif;?>
     </div>
 </section>
