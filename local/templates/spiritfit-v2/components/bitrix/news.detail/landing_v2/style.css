@@ -1174,14 +1174,14 @@
 	border-radius: 10px;
 }
 .partners .b-twoside-card__description {
-	font-size: 18px;
+	font-size: 15px;
 }
 .partners .slick-list.draggable {
 	overflow: visible;
 }
 @media screen and (max-width: 639px) {
 	.partners .b-cards-slider__item{
-		margin-left: 20px;
+		/*margin-left: 20px;*/
 	}
 }
 @media screen and (max-width: 1024px) {
