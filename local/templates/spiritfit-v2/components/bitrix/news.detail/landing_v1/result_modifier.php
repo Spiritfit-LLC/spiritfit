@@ -15,7 +15,7 @@ $pageBlocks = [
         "BLOCK2_DESCRIPTION",
         "BLOCK2_LIST",
         "BLOCK2_ACTIVE",
-		"BLOCK2_SORT"
+        "BLOCK2_SORT"
     ],
     "block3" => [
         "BLOCK3_TITLE",
@@ -23,19 +23,20 @@ $pageBlocks = [
         "BLOCK3_LIST",
         "BLOCK3_LOGOS",
         "BLOCK3_ACTIVE",
-		"BLOCK3_SORT"
+        "BLOCK3_SORT"
     ],
     "block4" => [
         "BLOCK4_FORM_TYPE",
-		"BLOCK4_TITLE",
+        "BLOCK4_TITLE",
         "BLOCK4_CLIENT_TYPE",
         "BLOCK4_ACTIVE",
-		"BLOCK4_SORT"
+        "BLOCK4_SORT"
     ],
     "block5" => [
-		"BLOCK5_TITLE",
+        "BLOCK5_TITLE",
         "BLOCK5_ACTIVE",
-		"BLOCK5_SORT"
+        "BLOCK5_DATE",
+        "BLOCK5_SORT"
     ],
 ];
 $imageSizes = [

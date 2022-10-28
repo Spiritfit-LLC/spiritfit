@@ -45,6 +45,9 @@
             if( !isset($arParams['PERSONAL_PATH']) ) {
                 $arParams['PERSONAL_PATH'] = '';
             }
+            if( empty($arParams['SHOW_RESULT_ON_TIME']) ) {
+                $arParams['SHOW_RESULT_ON_TIME'] = '00:00';
+            }
 			
 			return $arParams;
         }
@@ -81,21 +84,20 @@
                 return $resultArr;
             }
 
-            if( !empty($arParams['SHOW_QUESTION_ON_TIME']) && is_array($arParams['SHOW_QUESTION_ON_TIME']) ) {
-                if (in_array(date('h'), $arParams['SHOW_QUESTION_ON_TIME'])) {
-                    $questionId = Context::getCurrent()->getRequest()->getPost('QUESTION_ID');
-                    $answerString = Context::getCurrent()->getRequest()->getPost('ANSWER');
+            $questionId = Context::getCurrent()->getRequest()->getPost('QUESTION_ID');
+            $answerString = Context::getCurrent()->getRequest()->getPost('ANSWER');
 
-                    if( empty($answerString) ) {
-                        $resultArr['error'] = Loc::getMessage('CANT_QUIZ_ANSWER_EMPTY');
-                        return $resultArr;
-                    }
-
-                    $quiz = new \Outcode\Quiz($this->arParams["API_PATH"]);
-                    $resultArr['result'] = $quiz->addResult($questionId, $answerString);
-
-                    if( empty($resultArr['result']) ) $resultArr['error'] = Loc::getMessage('CANT_QUIZ_ANSWER_COMPONENT');
+            $quiz = new \Outcode\Quiz($arParams["API_PATH"]);
+            $question = $quiz->getQuestionByTime(time());
+            if( !empty($question) || $questionId != $question['ID'] ) {
+                if( empty($answerString) ) {
+                    $resultArr['error'] = Loc::getMessage('CANT_QUIZ_ANSWER_EMPTY');
+                    return $resultArr;
                 }
+
+                $resultArr['result'] = $quiz->addResult($questionId, $answerString);
+                if( empty($resultArr['result']) ) $resultArr['error'] = Loc::getMessage('CANT_QUIZ_ANSWER_COMPONENT');
+
             } else {
                 $resultArr['error'] = Loc::getMessage('CANT_QUIZ_ANSWER_TIME');
             }
@@ -111,64 +113,40 @@
 
             global $USER;
 
-            $date = new DateTime('now');
-            $date->modify('last day of this month');
-            $lastDayOfMonth = $date->format('d');
-            $dayOfWeek = date('l');
-            $startDateWeek = strtotime( date('d-m-Y', strtotime('-1 week')) );
-            $startDateMonth = strtotime( date('d-m-Y', strtotime('-1 month')) );
-            //$startDateWeek = 315532800;
-            //$startDateMonth = 315532800;
+            $showStartTime = strtotime(date('d-m-Y '.$this->arParams["SHOW_RESULT_ON_TIME"]));
+
+            $startDateAll = 315532800;
+            $startDateWeek = strtotime( date('d-m-Y', strtotime('-1 week')) ); //315532800; FOR ALL RESULTS
+
+            $endDate = strtotime(date('d-m-Y'));
+
             $currentTime = time();
 
             $cacheTime = !empty($this->arParams['CACHE_TIME']) && !empty($this->arParams['CACHE_TYPE']) && $this->arParams['CACHE_TYPE'] == 'A' ? $this->arParams['CACHE_TIME'] : 0;
-            $cacheHash = 'QuizComponent' . SITE_ID . $dayOfWeek;
+            $cacheHash = 'QuizComponent' . SITE_ID . date('l');
             $cacheDir = '/outcode/quiz';
 
             $quiz = new \Outcode\Quiz($this->arParams["API_PATH"]);
 
-            $this->arResult['RESULT_TABLE_WEEK'] = [];
-            $this->arResult['RESULT_TABLE_MONTH'] = [];
+            $this->arResult['RESULT_TABLE'] = [];
             $this->arResult['RESULT_TABLE_USER'] = $quiz->getUserResults($startDateWeek, time());
 
             $obCache = new CPHPCache();
             if($obCache->InitCache($cacheTime, $cacheHash, $cacheDir)) {
-                $cacheVars = $obCache->GetVars();
-
-                $this->arResult["RESULT_TABLE_WEEK"] = $cacheVars['RESULT_TABLE_WEEK'];
-                $this->arResult["RESULT_TABLE_MONTH"] = $cacheVars['RESULT_TABLE_MONTH'];
-
-                unset($cacheVars);
+                $this->arResult['RESULT_TABLE'] = $obCache->GetVars();
             } else {
                 $obCache->StartDataCache();
 
-                $cacheVars = ['RESULT_TABLE_WEEK' => [], 'RESULT_TABLE_MONTH' => []];
-
-                if( $dayOfWeek == $this->arParams['SHOW_RESULTS_DAY'] ) {
-                    //$cacheVars['RESULT_TABLE_WEEK'] = $quiz->getAllResults($startDateWeek, strtotime(date('d-m-Y')));
-                    $cacheVars['RESULT_TABLE_WEEK'] = $quiz->getAllResults($startDateWeek, time());
+                $isShowAlways = !empty($this->arParams['SHOW_RESULTS_ON_LAST_ALWAYS']) && $this->arParams['SHOW_RESULTS_ON_LAST_ALWAYS'] == 'Y';
+                if( $isShowAlways || ( $showStartTime < $currentTime) ) {
+                    $this->arResult['RESULT_TABLE'] = $isShowAlways ? $quiz->getAllResults($startDateAll, $endDate) : $quiz->getAllResults($startDateWeek, $endDate);
                 }
 
-                if( ( !empty($this->arParams['SHOW_RESULTS_ON_LAST']) && $this->arParams['SHOW_RESULTS_ON_LAST'] == 'Y'
-                    && $lastDayOfMonth == date('d') )
-                    || (!empty($this->arParams['SHOW_RESULTS_ON_LAST_ALWAYS']) && $this->arParams['SHOW_RESULTS_ON_LAST_ALWAYS'] == 'Y') ) {
-                    $cacheVars['RESULT_TABLE_MONTH'] = $quiz->getAllResults($startDateMonth, strtotime(date('d-m-Y')));
-                }
-
-                $this->arResult['RESULT_TABLE_WEEK'] = $cacheVars['RESULT_TABLE_WEEK'];
-                $this->arResult['RESULT_TABLE_MONTH'] = $cacheVars["RESULT_TABLE_MONTH"];
-
-                $obCache->EndDataCache($cacheVars);
+                $obCache->EndDataCache($this->arResult['RESULT_TABLE']);
             }
 
             /* Получаем вопрос */
-            $this->arResult['QUESTION'] = [];
-            if( !empty($this->arParams['SHOW_QUESTION_ON_TIME']) && is_array($this->arParams['SHOW_QUESTION_ON_TIME']) ) {
-                if( in_array(date('h'), $this->arParams['SHOW_QUESTION_ON_TIME']) ) {
-                    $interval = intval($this->arParams['SHOW_QUESTION_INTERVAL']);
-                    $this->arResult['QUESTION'] = $quiz->getQuestionByTime($currentTime, $currentTime + $interval);
-                }
-            }
+            $this->arResult['QUESTION'] = $quiz->getQuestionByTime(time());
             if( !empty($this->arResult['QUESTION']['PROPERTIES']['ANSWERS_STRING']['VALUE']) ) {
                 foreach($this->arResult['QUESTION']['PROPERTIES']['ANSWERS_STRING']['VALUE'] as &$strValue) {
                     $strValue = str_replace('#', '', $strValue);
@@ -184,8 +162,8 @@
             /* Получаем вопрос */
 
             $uid = $quiz->getUserUid();
-            $this->arResult['LINK_LOGIN'] = $USER->IsAuthorized() ? '' : $this->arParams['PERSONAL_PATH'] . '?type=play';
-            $this->arResult['LINK_GET_BONUS'] = !empty($uid) ? $this->arParams['PERSONAL_PATH'] . '?type=play&uid=' . $uid : '';
+            $this->arResult['LINK_LOGIN'] = $USER->IsAuthorized() ? '' : $this->arParams['PERSONAL_PATH'] . '?nickname=y';
+            $this->arResult['LINK_GET_BONUS'] = !empty($uid) ? $this->arParams['PERSONAL_PATH'] . '?nickname=y&bonusid=' . $uid : '';
             $this->arResult['USER_ID'] = $USER->IsAuthorized() ? $USER->GetID() : 0;
 
 			

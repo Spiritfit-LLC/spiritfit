@@ -128,25 +128,25 @@
             <?
         }
 
-        $arResult['RESULT_TABLE_WEEK'] = !empty($arResult['RESULT_TABLE_MONTH']) ? $arResult['RESULT_TABLE_MONTH'] : $arResult['RESULT_TABLE_WEEK'];
-        $arResult['RESULT_TABLE_TITLE'] = !empty($arResult['RESULT_TABLE_MONTH']) ? GetMessage('QUIZ_QUESTION_RESULTS_MONTH') : GetMessage('QUIZ_QUESTION_RESULTS_WEEK');
-        if( !empty($arResult['RESULT_TABLE_WEEK']) ) {
+        if( !empty($arResult['RESULT_TABLE']) ) {
             ?>
             <div class="results-table">
-                <div class="results-table__title"><?=$arResult['RESULT_TABLE_TITLE']?></div>
+                <div class="results-table__title"><?=GetMessage('QUIZ_QUESTION_RESULTS')?></div>
                 <div class="results-table-content two">
                     <div class="results-table__row">
                         <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_USER')?></div><div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_VALUE')?></div>
                     </div>
-                    <? foreach($arResult['RESULT_TABLE_WEEK']['TOTAL_RESULT'] as $result) { ?>
+                    <? $count = 0; ?>
+                    <? foreach($arResult['RESULT_TABLE']['TOTAL_RESULT'] as $result) { ?>
                         <div class="results-table__row">
                             <div class="results-table__cell"><?=$result['LOGIN']?></div><div class="results-table__cell"><?=$result['VALUE']?></div>
                         </div>
+                        <? $count += 1; if($count > 50) break; ?>
                     <? } ?>
                 </div>
                 <div class="results-table__subtitle"><?=GetMessage('QUIZ_TABLE_BYQ')?></div>
                 <div class="results-table-content one">
-                    <? foreach($arResult['RESULT_TABLE_WEEK']['BY_QUESTIONS'] as $question => $results) { ?>
+                    <? foreach($arResult['RESULT_TABLE']['BY_QUESTIONS'] as $question => $results) { ?>
                         <div class="results-table__row">
                             <div class="results-table__cell">
                                 <?=$question?>
@@ -154,10 +154,12 @@
                                     <div class="results-table__row">
                                         <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_USER')?></div><div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_VALUE')?></div>
                                     </div>
+                                    <? $count = 0; ?>
                                     <? foreach($results as $result) { ?>
                                         <div class="results-table__row">
                                             <div class="results-table__cell"><?=$result['LOGIN']?></div><div class="results-table__cell"><?=$result['VALUE']?></div>
                                         </div>
+                                        <? $count += 1; if($count > 50) break; ?>
                                     <? } ?>
                                 </div>
                             </div>

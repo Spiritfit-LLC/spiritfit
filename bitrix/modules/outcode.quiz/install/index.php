@@ -2,6 +2,7 @@
 use \Bitrix\Main\Localization\Loc;
 use \Bitrix\Highloadblock as HL;
 use \Bitrix\Main\Loader;
+use \Bitrix\Main\EventManager;
 
 class outcode_quiz extends CModule
 {
@@ -78,7 +79,8 @@ class outcode_quiz extends CModule
         /* Создание инфоблока */
         $iBlockType = 'outcode_quiz';
         $iBlockProperties = [
-            'DATE_START' => ['TYPE' => 'S:DateTime', 'NAME' => Loc::getMessage('QUIZ_PROPERTY_DATE_START'), 'VALUES' => [], 'MULTIPLE' => 'N', 'PROPERTY_WITH_DESCRIPTION' => 'N'],
+            'DATE_START' => ['TYPE' => 'S:DateTime', 'NAME' => Loc::getMessage('QUIZ_PROPERTY_DATE_START'), 'VALUES' => [], 'MULTIPLE' => 'N', 'PROPERTY_WITH_DESCRIPTION' => 'N', 'IS_REQUIRED' => 'Y'],
+            'DATE_END' => ['TYPE' => 'S:DateTime', 'NAME' => Loc::getMessage('QUIZ_PROPERTY_DATE_END'), 'VALUES' => [], 'MULTIPLE' => 'N', 'PROPERTY_WITH_DESCRIPTION' => 'N', 'IS_REQUIRED' => 'Y'],
             'TYPE' => ['TYPE' => 'L', 'NAME' => Loc::getMessage('QUIZ_PROPERTY_TYPE'), 'VALUES' => [
                 0 => [
                     'VALUE' => Loc::getMessage('QUIZ_PROPERTY_TYPE_1'),
@@ -95,9 +97,9 @@ class outcode_quiz extends CModule
                     'DEF' => 'N',
                     'SORT' => '300'
                 ],
-            ], 'MULTIPLE' => 'N', 'PROPERTY_WITH_DESCRIPTION' => 'N'],
-            'ANSWERS_STRING' => ['TYPE' => 'S', 'NAME' => Loc::getMessage('QUIZ_PROPERTY_ANSWERS_STRING'), 'MULTIPLE' => 'Y', 'PROPERTY_WITH_DESCRIPTION' => 'N'],
-            'ANSWERS_IMAGE' => ['TYPE' => 'F', 'NAME' => Loc::getMessage('QUIZ_PROPERTY_ANSWERS_IMAGE'), 'MULTIPLE' => 'Y', 'PROPERTY_FILE_TYPE' => 'png, jpg, gif, webp', 'PROPERTY_WITH_DESCRIPTION' => 'Y'],
+            ], 'MULTIPLE' => 'N', 'PROPERTY_WITH_DESCRIPTION' => 'N', 'IS_REQUIRED' => 'Y'],
+            'ANSWERS_STRING' => ['TYPE' => 'S', 'NAME' => Loc::getMessage('QUIZ_PROPERTY_ANSWERS_STRING'), 'MULTIPLE' => 'Y', 'PROPERTY_WITH_DESCRIPTION' => 'N', 'IS_REQUIRED' => 'N'],
+            'ANSWERS_IMAGE' => ['TYPE' => 'F', 'NAME' => Loc::getMessage('QUIZ_PROPERTY_ANSWERS_IMAGE'), 'MULTIPLE' => 'Y', 'PROPERTY_FILE_TYPE' => 'png, jpg, gif, webp', 'PROPERTY_WITH_DESCRIPTION' => 'Y', 'IS_REQUIRED' => 'N'],
         ];
 
         $iblockTypeArr = [];
@@ -165,6 +167,7 @@ class outcode_quiz extends CModule
                                 'MULTIPLE' => !empty($propertyItem['MULTIPLE']) ? $propertyItem['MULTIPLE'] : 'N',
                                 'IBLOCK_ID' => $iBlock['ID'],
                                 'WITH_DESCRIPTION' => !empty($propertyItem['PROPERTY_WITH_DESCRIPTION']) ? $propertyItem['PROPERTY_WITH_DESCRIPTION'] : 'N',
+                                'IS_REQUIRED' => !empty($propertyItem['IS_REQUIRED']) ? $propertyItem['IS_REQUIRED'] : 'N'
                             );
                             $ibpObj->Add($propertyArr);
                             break;
@@ -179,6 +182,7 @@ class outcode_quiz extends CModule
                                 'MULTIPLE' => !empty($propertyItem['MULTIPLE']) ? $propertyItem['MULTIPLE'] : 'N',
                                 'IBLOCK_ID' => $iBlock['ID'],
                                 'WITH_DESCRIPTION' => !empty($propertyItem['PROPERTY_WITH_DESCRIPTION']) ? $propertyItem['PROPERTY_WITH_DESCRIPTION'] : 'N',
+                                'IS_REQUIRED' => !empty($propertyItem['IS_REQUIRED']) ? $propertyItem['IS_REQUIRED'] : 'N'
                             );
                             $ibpObj->Add($propertyArr);
                             break;
@@ -192,7 +196,8 @@ class outcode_quiz extends CModule
                                 "IBLOCK_ID" => $iBlock['ID'],
                                 'MULTIPLE' => !empty($propertyItem['MULTIPLE']) ? $propertyItem['MULTIPLE'] : 'N',
                                 'VALUES' => !empty($propertyItem['VALUES']) ? $propertyItem['VALUES'] : [],
-                                'WITH_DESCRIPTION' => !empty($propertyItem['PROPERTY_WITH_DESCRIPTION']) ? $propertyItem['PROPERTY_WITH_DESCRIPTION'] : 'N'
+                                'WITH_DESCRIPTION' => !empty($propertyItem['PROPERTY_WITH_DESCRIPTION']) ? $propertyItem['PROPERTY_WITH_DESCRIPTION'] : 'N',
+                                'IS_REQUIRED' => !empty($propertyItem['IS_REQUIRED']) ? $propertyItem['IS_REQUIRED'] : 'N'
                             );
                             $ibpObj->Add($propertyArr);
                             break;
@@ -206,7 +211,8 @@ class outcode_quiz extends CModule
                                 "IBLOCK_ID" => $iBlock['ID'],
                                 'MULTIPLE' => !empty($propertyItem['MULTIPLE']) ? $propertyItem['MULTIPLE'] : 'N',
                                 'WITH_DESCRIPTION' => !empty($propertyItem['PROPERTY_WITH_DESCRIPTION']) ? $propertyItem['PROPERTY_WITH_DESCRIPTION'] : 'N',
-                                'FILE_TYPE' => !empty($propertyItem['PROPERTY_FILE_TYPE']) ? $propertyItem['PROPERTY_FILE_TYPE'] : ''
+                                'FILE_TYPE' => !empty($propertyItem['PROPERTY_FILE_TYPE']) ? $propertyItem['PROPERTY_FILE_TYPE'] : '',
+                                'IS_REQUIRED' => !empty($propertyItem['IS_REQUIRED']) ? $propertyItem['IS_REQUIRED'] : 'N'
                             );
                             $ibpObj->Add($propertyArr);
                             break;
@@ -344,8 +350,12 @@ class outcode_quiz extends CModule
 
         /* Добавляем свойства */
         $cipherKey = Bitrix\Main\Security\Random::GetString(32);
-
         $APPLICATION->throwException(\Bitrix\Main\Config\Option::set($this->MODULE_ID, "CIPHER_KEY", $cipherKey));
+
+        /* Добавляем события */
+        EventManager::getInstance()->registerEventHandler('main', 'OnBeforeUserRegister', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName');
+        EventManager::getInstance()->registerEventHandler('main', 'OnBeforeUserUpdate', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName'); 
+        EventManager::getInstance()->registerEventHandler('main', 'OnBeforeUserAdd', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName');
 
         $APPLICATION->IncludeAdminFile(\Bitrix\Main\Localization\Loc::getMessage("QUIZ_MODULE_INSTALL"), $DOCUMENT_ROOT."/bitrix/modules/".$this->MODULE_ID."/install/step.php");
         return true;
@@ -393,6 +403,11 @@ class outcode_quiz extends CModule
 
         /* Удаляем свойства */
         \Bitrix\Main\Config\Option::delete($this->MODULE_ID, ["name" => "CIPHER_KEY"]);
+
+        /* Удаляем события */
+        EventManager::getInstance()->unRegisterEventHandler('main', 'OnBeforeUserRegister', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName');
+        EventManager::getInstance()->unRegisterEventHandler('main', 'OnBeforeUserUpdate', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName'); 
+        EventManager::getInstance()->unRegisterEventHandler('main', 'OnBeforeUserAdd', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName');
 
         /* Отменяем регистрацию модуля */
         UnRegisterModule($this->MODULE_ID);

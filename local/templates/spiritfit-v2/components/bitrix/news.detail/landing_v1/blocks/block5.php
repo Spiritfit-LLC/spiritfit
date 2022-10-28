@@ -11,15 +11,8 @@
                         Array(
                             "API_PATH" => "",
                             "PERSONAL_PATH" => "/personal/",
-                            "SHOW_QUESTION_ON_TIME" => [
-                                0 => "13",
-                                1 => "15",
-                                2 => "18",
-                            ],
-                            "SHOW_QUESTION_INTERVAL" => 3600,
-                            "SHOW_RESULTS_DAY" => "Sunday",
-                            "SHOW_RESULTS_ON_LAST" => "Y",
-                            "SHOW_RESULTS_ON_LAST_ALWAYS" => "N",
+                            "SHOW_RESULT_ON_TIME" => "22:00",
+                            "SHOW_RESULTS_ON_LAST_ALWAYS" => (!empty($BLOCKS["BLOCK5_DATE"]) && strtotime($BLOCKS["BLOCK5_DATE"]) < time()) ? "Y" : "N",
                             "CACHE_GROUPS" => "N",
                             "CACHE_TIME" => "86400",
                             "CACHE_TYPE" => "A",

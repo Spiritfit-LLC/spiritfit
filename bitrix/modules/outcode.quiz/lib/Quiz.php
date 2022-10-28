@@ -42,18 +42,15 @@ class Quiz {
         return [];
     }
 
-    public function getQuestionByTime(int $timeStart, int $timeEnd) : array {
+    public function getQuestionByTime(int $time) : array {
         if( empty($this->settings['I_BLOCK_ID']) ) return [];
-
-        $firstTime = $timeStart - ($timeEnd - $timeStart);
-        $secondTime = $timeStart;
 
         $res = \CIBlockElement::GetList([],
             [
                 'IBLOCK_ID' => $this->settings['I_BLOCK_ID'],
                 'ACTIVE' => 'Y',
-                '<=PROPERTY_DATE_START' => date('Y-m-d H:i:s', $secondTime),
-                '>PROPERTY_DATE_START' => date('Y-m-d H:i:s', $firstTime)
+                '<=PROPERTY_DATE_START' => date('Y-m-d H:i:s', $time),
+                '>=PROPERTY_DATE_END' => date('Y-m-d H:i:s', $time)
             ],
             false
         );
@@ -188,8 +185,9 @@ class Quiz {
         $requestArr = [
             "select" => ["*"],
             "order" => ['UF_RESULT_DATE' => 'ASC'],
-            "filter" => ['>UF_RESULT_DATE' => $timeStartSystem->toString(), '<UF_RESULT_DATE' => $timeEndSystem->toString()]
+            "filter" => ['>UF_RESULT_DATE' => $timeStartSystem->toString(), '<UF_RESULT_DATE' => $timeEndSystem->toString(), '>UF_RESULT' => 0]
         ];
+
         if( !empty($limit) ) $requestArr['limit'] = $limit;
 
         $rsObj = $this->hlEntityDataClass::getList($requestArr);
@@ -200,12 +198,12 @@ class Quiz {
             $arResult['TOTAL_RESULT'][$rsData['UF_USER_ID']] += intval($rsData['UF_RESULT']);
 
             if( !isset($arResult['BY_QUESTIONS'][$rsData['UF_QUESTION_VALUE']][$rsData['UF_USER_ID']]) ) $arResult['BY_QUESTIONS'][$rsData['UF_QUESTION_VALUE']][$rsData['UF_USER_ID']] = 0;
-            if( $rsData['UF_ANSWER'] != 'QUIZ_BONUS' ) $arResult['BY_QUESTIONS'][$rsData['UF_QUESTION_VALUE']][$rsData['UF_USER_ID']] += intval($rsData['UF_RESULT']);
+            $arResult['BY_QUESTIONS'][$rsData['UF_QUESTION_VALUE']][$rsData['UF_USER_ID']] += intval($rsData['UF_RESULT']);
         }
 
         /* Добавляем пользователей к результатам */
         $usersObj = \Bitrix\Main\UserTable::getList([
-            'select' => ['ID', 'LOGIN', 'EMAIL', 'WORK_POSITION'],
+            'select' => ['ID', 'LOGIN', 'EMAIL', 'PERSONAL_PROFESSION'],
             'filter' => ['ID' => $filterArr]
         ]);
         while( $userArr = $usersObj->Fetch() ) {
@@ -213,7 +211,7 @@ class Quiz {
                 $arResult['TOTAL_RESULT'][$userArr['ID']] = [
                     'VALUE' => $arResult['TOTAL_RESULT'][$userArr['ID']],
                     'EMAIL' => $userArr['EMAIL'],
-                    'LOGIN' => empty($userArr['WORK_POSITION']) ? Tools::getLoginFromEmail($userArr['EMAIL']) : $userArr['WORK_POSITION'],
+                    'LOGIN' => empty($userArr['PERSONAL_PROFESSION']) ? Tools::getLoginFromEmail($userArr['EMAIL']) : $userArr['PERSONAL_PROFESSION'],
                 ];
             }
 
@@ -222,7 +220,7 @@ class Quiz {
                     $item[$userArr['ID']] = [
                         'VALUE' => $item[$userArr['ID']],
                         'EMAIL' => $userArr['EMAIL'],
-                        'LOGIN' => empty($userArr['WORK_POSITION']) ? Tools::getLoginFromEmail($userArr['EMAIL']) : $userArr['WORK_POSITION'],
+                        'LOGIN' => empty($userArr['PERSONAL_PROFESSION']) ? Tools::getLoginFromEmail($userArr['EMAIL']) : $userArr['PERSONAL_PROFESSION'],
                     ];
                 } else {
                     $item[$userArr['ID']] = [

@@ -5,3 +5,4 @@ $MESS["OUTCODE_QUIZ_RESULT3"] = "Результаты конкурса за вс
 $MESS["TABLE_TITLE_EMAIL"] = "Email пользователя";
 $MESS["TABLE_TITLE_SCORE"] = "Счет";
 $MESS["QUIZ_IS_EMPTY"] = "Результатов, пока, нет";
+$MESS["QUIZ_TITLE"] = "Викторина";

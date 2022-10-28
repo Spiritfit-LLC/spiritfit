@@ -4,7 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_admi
 
 IncludeModuleLangFile($_SERVER['DOCUMENT_ROOT'].BX_ROOT.'/modules/main/options.php');
 
-$APPLICATION->SetTitle(\Bitrix\Main\Localization\Loc::getMessage("FLYVI_TOKEN_TITLE"));
+$APPLICATION->SetTitle(\Bitrix\Main\Localization\Loc::getMessage("QUIZ_TITLE"));
 
 use Bitrix\Main\Loader;
 
@@ -18,15 +18,6 @@ if( $RIGHT >= "R" ) {
     $quiz = new Outcode\Quiz();
 
     $date = new DateTime('now');
-    $date->modify('last day of this month');
-    $lastDayOfMonth = $date->format('d');
-
-    $startDate = strtotime(date('01-m-Y')); //;
-    $endDate = strtotime(date($lastDayOfMonth.'-m-Y 23:59:59'));
-
-    $resultTableMonth = $quiz->getAllResults($startDate, $endDate);
-
-    $date = new DateTime('now');
     $date->modify('Last Monday');
 
     $startDate = strtotime($date->format('d-m-Y 00:00:00'));
@@ -37,9 +28,8 @@ if( $RIGHT >= "R" ) {
 
     $arAllOptions = [];
     $aTabs = array(
-        ['DIV' => 'edit1', 'TAB' => \Bitrix\Main\Localization\Loc::getMessage('OUTCODE_QUIZ_RESULT'), 'ICON' => 'perfmon_settings', 'TITLE' => ''],
-        ['DIV' => 'edit2', 'TAB' => \Bitrix\Main\Localization\Loc::getMessage('OUTCODE_QUIZ_RESULT2'), 'ICON' => 'perfmon_settings', 'TITLE' => ''],
-        ['DIV' => 'edit3', 'TAB' => \Bitrix\Main\Localization\Loc::getMessage('OUTCODE_QUIZ_RESULT3'), 'ICON' => 'perfmon_settings', 'TITLE' => ''],
+        ['DIV' => 'edit1', 'TAB' => \Bitrix\Main\Localization\Loc::getMessage('OUTCODE_QUIZ_RESULT2'), 'ICON' => 'perfmon_settings', 'TITLE' => ''],
+        ['DIV' => 'edit2', 'TAB' => \Bitrix\Main\Localization\Loc::getMessage('OUTCODE_QUIZ_RESULT3'), 'ICON' => 'perfmon_settings', 'TITLE' => ''],
     );
 
     $tabControl = new CAdminTabControl('tabControl', $aTabs);
@@ -64,32 +54,6 @@ if( $RIGHT >= "R" ) {
         $tabControl->BeginNextTab();
         $arNotes = [];
         ?>
-
-        <tr class="heading">
-            <td width="40%" nowrap>
-                <?=\Bitrix\Main\Localization\Loc::getMessage('TABLE_TITLE_EMAIL')?>
-            </td>
-            <td width="60%">
-                <?=\Bitrix\Main\Localization\Loc::getMessage('TABLE_TITLE_SCORE')?>
-            </td>
-        </tr>
-        <? foreach($resultTableMonth['TOTAL_RESULT'] as $result) { ?>
-            <tr >
-                <td width="40%" style="text-align: left; font-weight: bold;">
-                    <?=$result['EMAIL']?> (<?=$result['LOGIN']?>)
-                </td>
-                <td width="60%" style="text-align: center;">
-                    <?=$result['VALUE']?>
-                </td>
-            </tr>
-        <? } ?>
-        <? if( empty($resultTableMonth['TOTAL_RESULT']) ) { ?>
-            <tr>
-                <td width="100%" colspan="2" style="color:red"><?=\Bitrix\Main\Localization\Loc::getMessage('QUIZ_IS_EMPTY')?></td>
-            </tr>
-        <? } ?>
-
-        <? $tabControl->BeginNextTab(); ?>
 
         <tr class="heading">
             <td width="40%" nowrap>

@@ -596,7 +596,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
             if( $this->arParams['HAS_NICKNAME'] && isset($FORM_FIELDS['FIELDS']['nickname']['NAME']) ) {
                 if( empty($FORM_FIELDS['FIELDS']['nickname']['VALUE']) ) {
                     throw new Exception('Ник: ' . $this->errorMessages[101], 2);
-                } else if( \Bitrix\Main\UserTable::getCount(['WORK_POSITION' => $FORM_FIELDS['FIELDS']['nickname']['VALUE']]) != 0 ) {
+                } else if( \Bitrix\Main\UserTable::getCount(['PERSONAL_PROFESSION' => $FORM_FIELDS['FIELDS']['nickname']['VALUE']]) != 0 ) {
                     throw new Exception($this->errorMessages[102], 2);
                 }
             }
@@ -743,7 +743,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                                 'PERSONAL_PHONE'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
                                 'PERSONAL_GENDER'=>$FORM_FIELDS['FIELDS']['gender']['VALUE'],
                                 'UF_ADDRESS'=>$FORM_FIELDS['FIELDS']['address']['VALUE'],
-                                'WORK_POSITION'=>$FORM_FIELDS['FIELDS']['nickname']['VALUE'],
+                                'PERSONAL_PROFESSION'=>$FORM_FIELDS['FIELDS']['nickname']['VALUE'],
                             );
                             unset($_SESSION['ID_1C']);
 
