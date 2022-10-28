@@ -69,37 +69,33 @@
         public function sendAnswerAction() {
             $resultArr = ['result' => [], 'error' => ''];
             if( empty($this->arParams["USER_ID"]) ) {
-                $resultArr['error'] = Loc::getMessage('CANT_QUIZ_ANSWER_USER');
-                return $resultArr;
+                throw new Exception(Loc::getMessage('CANT_QUIZ_ANSWER_USER'), 1);
             }
 
             $componentId = Context::getCurrent()->getRequest()->getPost('COMPONENT_ID');
             if( empty($componentId) ) {
-                $resultArr['error'] = Loc::getMessage('CANT_QUIZ_ANSWER_COMPONENT');
-                return $resultArr;
+                throw new Exception(Loc::getMessage('CANT_QUIZ_ANSWER_COMPONENT'), 2);
             }
             $arParams = !empty($_SESSION[$componentId]) ? $_SESSION[$componentId] : [];
             if( empty($arParams) ) {
-                $resultArr['error'] = Loc::getMessage('CANT_QUIZ_ANSWER_COMPONENT');
-                return $resultArr;
+                throw new Exception(Loc::getMessage('CANT_QUIZ_ANSWER_COMPONENT'), 3);
             }
 
             $questionId = Context::getCurrent()->getRequest()->getPost('QUESTION_ID');
             $answerString = Context::getCurrent()->getRequest()->getPost('ANSWER');
-
+            
             $quiz = new \Outcode\Quiz($arParams["API_PATH"]);
             $question = $quiz->getQuestionByTime(time());
             if( !empty($question) || $questionId != $question['ID'] ) {
                 if( empty($answerString) ) {
-                    $resultArr['error'] = Loc::getMessage('CANT_QUIZ_ANSWER_EMPTY');
-                    return $resultArr;
+                    throw new Exception(Loc::getMessage('CANT_QUIZ_ANSWER_EMPTY'), 5);
                 }
 
                 $resultArr['result'] = $quiz->addResult($questionId, $answerString);
-                if( empty($resultArr['result']) ) $resultArr['error'] = Loc::getMessage('CANT_QUIZ_ANSWER_COMPONENT');
+                if( empty($resultArr['result']) ) throw new Exception(Loc::getMessage('CANT_QUIZ_ANSWER_COMPONENT'), 7);
 
             } else {
-                $resultArr['error'] = Loc::getMessage('CANT_QUIZ_ANSWER_TIME');
+                throw new Exception(Loc::getMessage('CANT_QUIZ_ANSWER_TIME'), 4);
             }
 
             return $resultArr;
