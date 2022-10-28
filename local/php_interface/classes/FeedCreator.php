@@ -140,17 +140,18 @@ class FeedCreator{
                     }
                 }
 
-                $flag=false;
-                foreach($element['PROPERTIES']['PRICE']['VALUE'] as $key=>$arPrice){
-                    if ($arPrice['LIST']==$club['ID']){
-                        $PRICE=$arPrice['PRICE'];
-                        $flag=true;
-                        break;
-                    }
-                }
-                if (!$flag){
-                    continue;
-                }
+//                $flag=false;
+//                foreach($element['PROPERTIES']['PRICE']['VALUE'] as $key=>$arPrice){
+//                    if ($arPrice['LIST']==$club['ID']){
+//                        $PRICE=$arPrice['PRICE'];
+//                        $flag=true;
+//                        break;
+//                    }
+//                }
+//                if (!$flag){
+//                    continue;
+//                }
+                $PRICE=min(array_column($element['PROPERTIES']['PRICE']['VALUE'], "PRICE"));
 
                 $ABONEMENT_OFFER=self::$XMLOffers->addChild('offer');
                 $ABONEMENT_OFFER->addAttribute('type', 'vendor.model');
