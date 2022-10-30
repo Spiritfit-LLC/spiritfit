@@ -33,17 +33,24 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
         ];
     }
 
-    private function componentParams(){
-        if(empty($arParams["WEB_FORM_ID"])){
-            $this->arResult["WEB_FORM_ID"]=Context::getCurrent()->getRequest()->getPost('WEB_FORM_ID');
-        }
-        $this->arResult['COMPONENT_NAME']=$this->GetName();
-        $this->arResult["SALT"]=$this->GetName();
+    protected function listKeysSignedParameters()
+    {
+        return [  //массива параметров которые надо брать из параметров компонента
+            "WEB_FORM_ID",
+            "WEB_FORM_FIELDS",
+            "FORM_TYPE",
+            "REQUEST_TYPE",
+            "EMAIL",
+            "REQUEST_HEADER"
+        ];
     }
 
     function onPrepareComponentParams($arParams){
         if( empty($arParams["WEB_FORM_ID"]) ){
             $this->arResult["ERROR"] = "Не выбранна веб форма";
+        }
+        if($arParams["REQUEST_TYPE"] == "EMAIL" && empty($arParams["EMAIL"])){
+            $this->arResult["ERROR"] = "Не задан EMAIL";
         }
         return $arParams;
     }
@@ -59,23 +66,14 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
             return;
         }
 
-        $this->arResult['FORM_TYPE']=$this->arParams['FORM_TYPE'];
-
-        $this->componentParams();
-        $this->arResult["WEB_FORM_ID"]=$this->arParams['WEB_FORM_ID'];
-        $this->arResult["WEB_FORM_FIELDS"]=$this->arParams["WEB_FORM_FIELDS"];
-
-        $this->arResult["SIGNED"]=[
-            "WEB_FORM_FIELDS"=>$this->arParams["WEB_FORM_FIELDS"],
-        ];
-        $this->arResult["SIGNED"]=\Bitrix\Main\Component\ParameterSigner::signParameters($this->arResult["SALT"], $this->arResult["SIGNED"]);
+        $this->arResult['COMPONENT_NAME']=$this->GetName();
 
         $this->arResult["FORM_FIELDS"]=$this->GetFormFields();
 
         if (empty($this->arParams["TEXT_FORM"])){
             $res = CIBlockElement::GetList(
                 Array("SORT"=>"ASC"),
-                Array('IBLOCK_ID'=>Utils::GetIBlockIDBySID('FORM_TYPES'), 'PROPERTY_FORM_TYPE'=>$this->arResult["FORM_TYPE"]),
+                Array('IBLOCK_ID'=>Utils::GetIBlockIDBySID('FORM_TYPES'), 'PROPERTY_FORM_TYPE'=>$this->arParams["FORM_TYPE"]),
                 false,
                 false,
                 Array("PROPERTY_FORM_TITLE")
@@ -104,20 +102,20 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
         $FORM_FIELDS=[];
         $FORM_FIELDS['ISSET']=true;
         if ($request && $check){
-            $error = CForm::Check($this->arResult['WEB_FORM_ID'], Context::getCurrent()->getRequest()->toArray());
+            $error = CForm::Check($this->arParams['WEB_FORM_ID'], Context::getCurrent()->getRequest()->toArray());
             if (strlen($error)>0){
                 return false;
             }
         }
 
-        $status = CForm::GetDataByID($this->arResult['WEB_FORM_ID'], $this->arResult['FORM']["arForm"], $this->arResult['FORM']["arQuestions"], $this->arResult['FORM']["arAnswers"], $this->arResult['FORM']["arDropDown"], $this->arResult['FORM']["arMultiSelect"]);
+        $status = CForm::GetDataByID($this->arParams['WEB_FORM_ID'], $this->arResult['FORM']["arForm"], $this->arResult['FORM']["arQuestions"], $this->arResult['FORM']["arAnswers"], $this->arResult['FORM']["arDropDown"], $this->arResult['FORM']["arMultiSelect"]);
         $FORM=$this->arResult['FORM'];
         if(!$status) {
             return ['result'=>false, 'error'=>'Не удалось выполнить запрос'];
         }
 
-        if (!empty($this->arResult["WEB_FORM_FIELDS"])){
-            $WEB_FORM_FIELDS=$this->arResult["WEB_FORM_FIELDS"];
+        if (!empty($this->arParams["WEB_FORM_FIELDS"])){
+            $WEB_FORM_FIELDS=$this->arParams["WEB_FORM_FIELDS"];
         }
 
         foreach($FORM["arAnswers"] as $key=>$value) {
@@ -260,15 +258,9 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
 //    AJAX
     public function regAction(){
         Loader::includeModule('iblock');
-        $this->componentParams();
         $this->GetClient();
 
-        $this->arResult["SIGNED"]=\Bitrix\Main\Component\ParameterSigner::unsignParameters($this->arResult["SALT"], Context::getCurrent()->getRequest()->getPost("signed_params"));
-        $this->arResult["WEB_FORM_FIELDS"]=$this->arResult["SIGNED"]["WEB_FORM_FIELDS"];
-
         $FORM_FIELDS=$this->GetFormFields(true, false);
-
-//        return $FORM_FIELDS;
 
         if (empty($FORM_FIELDS) || !$FORM_FIELDS['ISSET']){
             throw new Exception('Не заполнены обязательные поля');
@@ -284,10 +276,8 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
             throw new Exception('Клуб не может быть выбран');
         }
 
-        $this->arResult['FORM_TYPE']=Context::getCurrent()->getRequest()->getPost('FORM_TYPE');
-
         $arParams=[
-            'type'=>$this->arResult['FORM_TYPE'],
+            'type'=>$this->arParams['FORM_TYPE'],
 
             'source'=>$this->arResult['CLIENT']['src'],
             'channel'=>$this->arResult['CLIENT']['mdm'],
@@ -314,7 +304,7 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
 
         $res = CIBlockElement::GetList(
             Array("SORT"=>"ASC"),
-            Array('IBLOCK_ID'=>Utils::GetIBlockIDBySID('FORM_TYPES'), 'PROPERTY_FORM_TYPE'=>$this->arResult["FORM_TYPE"]),
+            Array('IBLOCK_ID'=>Utils::GetIBlockIDBySID('FORM_TYPES'), 'PROPERTY_FORM_TYPE'=>$this->arParams["FORM_TYPE"]),
             false,
             false,
             Array("PROPERTY_GA_EACTION", "PROPERTY_GA_ELLABEL", "PROPERTY_GA_ECATEGORY", "PROPERTY_FORM_TITLE", "PROPERTY_UPMETRIC_CLIENT_TYPE")
@@ -342,42 +332,95 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
         global $USER;
         if ($USER->IsAuthorized() && $USER->GetLogin()==$FORM_FIELDS['FIELDS']['phone']['VALUE']){
             //СМС не нужна, пользователь авторизован и ввел свои данные, отправялем contact
-            $api=new Api([
-                "action"=>"contact",
-                "params"=>$arParams
-            ]);
+            if ($this->arParams["REQUEST_TYPE"]=="EMAIL"){
+                if (empty($this->arParams["REQUEST_HEADER"])){
+                    $this->arParams["REQUEST_HEADER"]="Заявка с сайта spiritfit.ru";
+                }
+                $txt=$this->arParams["REQUEST_HEADER"]."\n\n";
+                foreach ($FORM_FIELDS["FIELDS"] as $key=>$FIELD){
+                    if (strpos($FIELD["PARAMS"], "data-to-email")!==false){
+                        $txt.=str_replace("*", "", $FIELD["PLACEHOLDER"]).": ".$FIELD["VALUE"]."\n";
+                    }
+                }
 
-            $response=$api->result();
-            if (!$response["success"]){
-                if (!empty($response["data"]["result"]["userMessage"])) {
-                    throw new Exception($response["data"]["result"]["userMessage"]);
-                } else {
-                    throw new Exception("Непредвиденная ошибка");
+                $subject=$this->arParams["REQUEST_HEADER"];
+                $emails=$this->arParams["EMAIL"];
+
+                $api=new Api([
+                    "action"=>"sendEmailFromSMTP",
+                    "params"=>[
+                        "subject"=>$subject,
+                        "message"=>$txt,
+                        "address"=>$emails
+                    ]
+                ]);
+                $response=$api->result();
+                if ($response["success"]){
+                    $result=[
+                        'next-action'=>'reg',
+                        'btn'=>'Отправить',
+                        'elements'=>[
+                            '.subscription__sent-tel'=>'<div class="subscription__sent-tel"></div>',
+                            '.form-request-new__code'=>"hide",
+                            '.form-request-new__fields-list'=>"show",
+                            '.form-request-new__agreements'=>"show"
+                        ],
+                        'message'=>"Спасибо! Ваша заявка успешно отправлена!",
+                        "enable-inputs"=>true,
+                        "clear-inputs"=>true,
+                    ];
+
+                    if (!empty($DATALAYER)){
+                        $result["dataLayer"]=$DATALAYER;
+                    }
+                    if (!empty($UPMETRIC)){
+                        $result["upmetric"]=$UPMETRIC;
+                    }
+
+                    return $result;
+                }
+                else{
+                    throw new Exception('Произошла ошибка при отправке заявки.');
                 }
             }
+            elseif ($this->arParams["REQUEST_TYPE"]=="1C"){
+                $api=new Api([
+                    "action"=>"contact",
+                    "params"=>$arParams
+                ]);
 
-            $result=[
-                'next-action'=>'reg',
-                'btn'=>'Отправить',
-                'elements'=>[
-                    '.subscription__sent-tel'=>'<div class="subscription__sent-tel"></div>',
-                    '.form-request-new__code'=>"hide",
-                    '.form-request-new__fields-list'=>"show",
-                    '.form-request-new__agreements'=>"show"
-                ],
-                'message'=>"Спасибо! Ваша заявка успешно отправлена!",
-                "enable-inputs"=>true,
-                "clear-inputs"=>true,
-            ];
+                $response=$api->result();
+                if (!$response["success"]){
+                    if (!empty($response["data"]["result"]["userMessage"])) {
+                        throw new Exception($response["data"]["result"]["userMessage"]);
+                    } else {
+                        throw new Exception("Непредвиденная ошибка");
+                    }
+                }
 
-            if (!empty($DATALAYER)){
-                $result["dataLayer"]=$DATALAYER;
+                $result=[
+                    'next-action'=>'reg',
+                    'btn'=>'Отправить',
+                    'elements'=>[
+                        '.subscription__sent-tel'=>'<div class="subscription__sent-tel"></div>',
+                        '.form-request-new__code'=>"hide",
+                        '.form-request-new__fields-list'=>"show",
+                        '.form-request-new__agreements'=>"show"
+                    ],
+                    'message'=>"Спасибо! Ваша заявка успешно отправлена!",
+                    "enable-inputs"=>true,
+                    "clear-inputs"=>true,
+                ];
+
+                if (!empty($DATALAYER)){
+                    $result["dataLayer"]=$DATALAYER;
+                }
+                if (!empty($UPMETRIC)){
+                    $result["upmetric"]=$UPMETRIC;
+                }
+
+                return $result;
             }
-            if (!empty($UPMETRIC)){
-                $result["upmetric"]=$UPMETRIC;
-            }
-
-            return $result;
         }
         else{
             //СМС НУЖНА, отправляем reg
@@ -424,11 +467,7 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
 
     public function codeAction(){
         Loader::includeModule('iblock');
-        $this->componentParams();
         $this->GetClient();
-
-        $this->arResult["SIGNED"]=\Bitrix\Main\Component\ParameterSigner::unsignParameters($this->arResult["SALT"], Context::getCurrent()->getRequest()->getPost("signed_params"));
-        $this->arResult["WEB_FORM_FIELDS"]=$this->arResult["SIGNED"]["WEB_FORM_FIELDS"];
 
         $FORM_FIELDS=$this->GetFormFields(true, false);
 
@@ -444,8 +483,6 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
         if (!$this->GetClubNumber()){
             throw new Exception('Клуб не может быть выбран');
         }
-
-        $this->arResult['FORM_TYPE']=Context::getCurrent()->getRequest()->getPost('FORM_TYPE');
 
         $code=Context::getCurrent()->getRequest()->getPost('request-code');
         if (empty($code)){
@@ -494,7 +531,7 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
         }
 
         $arParams=[
-            'type'=>$this->arResult['FORM_TYPE'],
+            'type'=>$this->arParams['FORM_TYPE'],
 
             'source'=>$this->arResult['CLIENT']['src'],
             'channel'=>$this->arResult['CLIENT']['mdm'],
@@ -518,36 +555,88 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
         if (!empty($FORM_FIELDS['FIELDS']["address"]["VALUE"])){
             $arParams["address"]=$FORM_FIELDS["FIELDS"]["address"]["VALUE"];
         }
+        if ($this->arParams["REQUEST_TYPE"]=="EMAIL"){
+            if (empty($this->arParams["REQUEST_HEADER"])){
+                $this->arParams["REQUEST_HEADER"]="Заявка с сайта spiritfit.ru";
+            }
+            $txt=$this->arParams["REQUEST_HEADER"]."\n\n";
+            foreach ($FORM_FIELDS["FIELDS"] as $key=>$FIELD){
+                if (strpos($FIELD["PARAMS"], "data-to-email")!==false){
+                    $txt.=str_replace("*", "", $FIELD["PLACEHOLDER"]).": ".$FIELD["VALUE"]."\n";
+                }
+            }
 
-        $api=new Api([
-            "action"=>"contact",
-            "params"=>$arParams
-        ]);
+            $subject=$this->arParams["REQUEST_HEADER"];
+            $emails=$this->arParams["EMAIL"];
 
-        $response=$api->result();
-        if (!$response["success"]){
-            if (!empty($response["data"]["result"]["userMessage"])) {
-                throw new Exception($response["data"]["result"]["userMessage"]);
-            } else {
-                throw new Exception("Непредвиденная ошибка");
+            $api=new Api([
+                "action"=>"sendEmailFromSMTP",
+                "params"=>[
+                    "subject"=>$subject,
+                    "message"=>$txt,
+                    "address"=>$emails
+                ]
+            ]);
+            $response=$api->result();
+            if ($response["success"]){
+                $result=[
+                    'next-action'=>'reg',
+                    'btn'=>'Отправить',
+                    'elements'=>[
+                        '.subscription__sent-tel'=>'<div class="subscription__sent-tel"></div>',
+                        '.form-request-new__code'=>"hide",
+                        '.form-request-new__fields-list'=>"show",
+                        '.form-request-new__agreements'=>"show"
+                    ],
+                    'message'=>"Спасибо! Ваша заявка успешно отправлена!",
+                    "enable-inputs"=>true,
+                    "clear-inputs"=>true,
+                ];
+
+                if (!empty($DATALAYER)){
+                    $result["dataLayer"]=$DATALAYER;
+                }
+                if (!empty($UPMETRIC)){
+                    $result["upmetric"]=$UPMETRIC;
+                }
+
+                return $result;
+            }
+            else{
+                throw new Exception('Произошла ошибка при отправке заявки.');
             }
         }
+        elseif ($this->arParams["REQUEST_TYPE"]=="1C"){
+            $api=new Api([
+                "action"=>"contact",
+                "params"=>$arParams
+            ]);
 
-        $result=[
-            'next-action'=>'reg',
-            'btn'=>'Отправить',
-            'elements'=>[
-                '.subscription__sent-tel'=>'<div class="subscription__sent-tel"></div>',
-                '.form-request-new__code'=>"hide",
-                '.form-request-new__fields-list'=>"show",
-                '.form-request-new__agreements'=>"show"
-            ],
-            'message'=>"Спасибо! Ваша заявка успешно отправлена!",
-            "enable-inputs"=>true,
-            "clear-inputs"=>true,
-        ];
+            $response=$api->result();
+            if (!$response["success"]){
+                if (!empty($response["data"]["result"]["userMessage"])) {
+                    throw new Exception($response["data"]["result"]["userMessage"]);
+                } else {
+                    throw new Exception("Непредвиденная ошибка");
+                }
+            }
 
-        return $result;
+            $result=[
+                'next-action'=>'reg',
+                'btn'=>'Отправить',
+                'elements'=>[
+                    '.subscription__sent-tel'=>'<div class="subscription__sent-tel"></div>',
+                    '.form-request-new__code'=>"hide",
+                    '.form-request-new__fields-list'=>"show",
+                    '.form-request-new__agreements'=>"show"
+                ],
+                'message'=>"Спасибо! Ваша заявка успешно отправлена!",
+                "enable-inputs"=>true,
+                "clear-inputs"=>true,
+            ];
+
+            return $result;
+        }
     }
 
 }

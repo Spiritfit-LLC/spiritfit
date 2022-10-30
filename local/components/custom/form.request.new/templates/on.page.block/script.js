@@ -84,10 +84,9 @@ $(document).ready(function(){
         BX.ajax.runComponentAction(componentname, action, {
             mode: 'class',
             data: postData,
-            method:'POST'
+            method:'POST',
+            signedParameters:params.signedParameters
         }).then(function(response){
-            // console.log(response)
-
             //Конец Анимация
             $form.find('.escapingBallG-animation').removeClass('active');
             $form.find('input[type="submit"]').css({
