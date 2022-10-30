@@ -5,7 +5,13 @@
 	
 	if( !function_exists("getAdditionaBlogItem") ) {
 		function getAdditionaBlogItem( $arItem, $isSafari ) {
-			$item = ["ID" => $arItem["ID"], "NAME" => !empty($arItem["PROPERTIES"]["TITLE"]["~VALUE"]) ? $arItem["PROPERTIES"]["TITLE"]["~VALUE"] : $arItem["NAME"], "LINK" => $arItem["DETAIL_PAGE_URL"]];
+			$item = [
+                "ID" => $arItem["ID"],
+                "NAME" => !empty($arItem["PROPERTIES"]["TITLE"]["~VALUE"]) ? $arItem["PROPERTIES"]["TITLE"]["~VALUE"] : $arItem["NAME"],
+                "LINK" => $arItem["DETAIL_PAGE_URL"],
+                "RATING"=>$arItem["PROPERTIES"]["RATING"]["VALUE"],
+                "SHOWING_COUNT"=>$arItem["PROPERTIES"]["SHOWING_COUNT"]["VALUE"]
+            ];
     		
 			if( !empty($arItem["PREVIEW_PICTURE"]) && !is_array($arItem["PREVIEW_PICTURE"]) ) {
 				$arItem["PREVIEW_PICTURE"] = ["ID" => $arItem["PREVIEW_PICTURE"]];

@@ -378,11 +378,11 @@ div.news-detail img.detail_picture
 		flex:0 0 50%;
 		width: 50%;
 		max-width: 50%;
-		height: unset;
+		height: 150px;
 	}
 	.club-utp{
 		padding: 0px;
-		margin-top:30px;
+		/*margin-top:30px;*/
 	}
 	.club-utp__btn{
 		width: 100%;

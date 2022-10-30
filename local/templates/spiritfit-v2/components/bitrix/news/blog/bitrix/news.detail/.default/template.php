@@ -80,33 +80,44 @@
                             <?endforeach;?>
                         </div>
                     </div>
-                    <?if (empty($_SESSION['USER_VOTES'][$arResult['ID']])):?>
-                    <form class="blog-detail-rating-vote">
-                        <input type="hidden" name="blog-id" value="<?=$arResult["ID"]?>">
-                        <div class="rating-area">
-                            <input type="radio" id="star-5" name="rating" value="5">
-                            <label for="star-5" title="Оценка «5»"></label>
-                            <input type="radio" id="star-4" name="rating" value="4">
-                            <label for="star-4" title="Оценка «4»"></label>
-                            <input type="radio" id="star-3" name="rating" value="3">
-                            <label for="star-3" title="Оценка «3»"></label>
-                            <input type="radio" id="star-2" name="rating" value="2">
-                            <label for="star-2" title="Оценка «2»"></label>
-                            <input type="radio" id="star-1" name="rating" value="1" required>
-                            <label for="star-1" title="Оценка «1»"></label>
+                    <div class="blog-text__footer">
+                        <?if (empty($_SESSION['USER_VOTES'][$arResult['ID']])):?>
+                            <form class="blog-detail-rating-vote">
+                                <input type="hidden" name="blog-id" value="<?=$arResult["ID"]?>">
+                                <div class="rating-area">
+                                    <input type="radio" id="star-5" name="rating" value="5">
+                                    <label for="star-5" title="Оценка «5»"></label>
+                                    <input type="radio" id="star-4" name="rating" value="4">
+                                    <label for="star-4" title="Оценка «4»"></label>
+                                    <input type="radio" id="star-3" name="rating" value="3">
+                                    <label for="star-3" title="Оценка «3»"></label>
+                                    <input type="radio" id="star-2" name="rating" value="2">
+                                    <label for="star-2" title="Оценка «2»"></label>
+                                    <input type="radio" id="star-1" name="rating" value="1" required>
+                                    <label for="star-1" title="Оценка «1»"></label>
+                                </div>
+                                <input type="submit" value="Оценить работу автора">
+                                <div class="thnks-message">Спасибо, будем писать еще!</div>
+                            </form>
+                        <?else:?>
+                            <div class="rating-area">
+                                <?for ($i=5; $i>=1; $i--):?>
+                                    <input type="radio" id="star-<?=$i?>>" name="rating" value="<?=$i?>" disabled <?if ($i==$_SESSION['USER_VOTES'][$arResult['ID']]) echo "checked";?>>
+                                    <label for="star-<?=$i?>" title="Оценка «<?=$i?>»"></label>
+                                <?endfor;?>
+                                <div class="thnks-message active">Спасибо, будем писать еще!</div>
+                            </div>
+                        <?endif;?>
+                        <div class="blog-share__social is-hide-mobile">
+                            <script src="https://yastatic.net/share2/share.js"></script>
+                            <div class="ya-share2" data-curtain data-size="l" data-shape="round" data-color-scheme="blackwhite" data-limit="3" data-services="vkontakte,odnoklassniki,telegram,whatsapp"></div>
                         </div>
-                        <input type="submit" value="Оценить работу автора">
-                        <div class="thnks-message">Спасибо, будем писать еще!</div>
-                    </form>
-                    <?else:?>
-                        <div class="rating-area">
-                            <?for ($i=5; $i>=1; $i--):?>
-                                <input type="radio" id="star-<?=$i?>>" name="rating" value="<?=$i?>" disabled <?if ($i==$_SESSION['USER_VOTES'][$arResult['ID']]) echo "checked";?>>
-                                <label for="star-<?=$i?>" title="Оценка «<?=$i?>»"></label>
-                            <?endfor;?>
-                            <div class="thnks-message active">Спасибо, будем писать еще!</div>
+                        <div class="blog-share__social is-hide-desktop">
+                            <script src="https://yastatic.net/share2/share.js"></script>
+                            <div class="ya-share2" data-curtain data-size="s" data-shape="round" data-color-scheme="blackwhite" data-limit="3" data-services="vkontakte,odnoklassniki,telegram,whatsapp"></div>
                         </div>
-                    <?endif;?>
+                    </div>
+
 				</div>
                 <div class="blog-items-col is-hide-mobile">
                     <ul class="text-section-titles">
