@@ -52,6 +52,12 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
         if($arParams["REQUEST_TYPE"] == "EMAIL" && empty($arParams["EMAIL"])){
             $this->arResult["ERROR"] = "Не задан EMAIL";
         }
+        if (empty($arParams["REQUEST_HEADER"])){
+            $arParams["REQUEST_HEADER"]="Заявка с сайта spiritfit.ru";
+        }
+        if (empty($arParams["REQUEST_TYPE"])){
+            $arParams["REQUEST_TYPE"]="1C";
+        }
         return $arParams;
     }
 
@@ -325,9 +331,6 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
                 ];
             }
         }
-
-
-
 
         global $USER;
         if ($USER->IsAuthorized() && $USER->GetLogin()==$FORM_FIELDS['FIELDS']['phone']['VALUE']){
