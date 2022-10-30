@@ -1,5 +1,7 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
-
+<script>
+    var params=<?=\Bitrix\Main\Web\Json::encode(['signedParameters'=>$this->getComponent()->getSignedParameters()])?>;
+</script>
 
 <div class="content-center block-margin">
     <div class="form-standart form-standart_tpl-hor form-standart_black-bg">
@@ -12,8 +14,6 @@
                     <div class="message-body">
                     </div>
                 </div>
-                <input type="hidden" name="WEB_FORM_ID" value="<?=$arResult["WEB_FORM_ID"] ?>">
-                <input type="hidden" name="FORM_TYPE" value="<?=$arResult['FORM_TYPE']?>">
                 <?if (!empty($arResult["CLUB_ID"])):?>
                 <input type="hidden" name="CLUB_ID" value="<?=$arResult["CLUB_ID"]?>">
                 <?endif;?>

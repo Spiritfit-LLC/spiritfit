@@ -46,6 +46,15 @@ $arComponentParameters = array(
             "TYPE"=>"INTEGER",
             "MULTIPLE" => "N",
             "DEFAULT" => 0,
+        ),
+        "REQUEST_TYPE"=>array(
+            "PARENT"=>"DATA_SOURCE",
+            "NAME"=>"Куда падают заявки",
+            "TYPE"=>"LIST",
+            "MULTIPLE" => "N",
+            "VALUES" => ["1C"=>"[1C] 1C", "EMAIL"=>"[EMAIL] EMAIL"],
+            "DEFAULT" => "1C",
+            "REFRESH"=>"Y"
         )
     ),
 );
@@ -65,6 +74,23 @@ if (0 < intval($arCurrentValues['WEB_FORM_ID']))
         "MULTIPLE" => "Y",
         "DEFAULT" => "",
         "VALUES"=>$arFields
+    );
+}
+
+if ($arCurrentValues["REQUEST_TYPE"]=="EMAIL"){
+    $arComponentParameters['PARAMETERS']['EMAIL'] = array(
+        "PARENT" => "DATA_SOURCE",
+        "NAME" => "EMAIL",
+        "TYPE" => "STRING",
+        "MULTIPLE" => "N",
+        "DEFAULT" => "",
+    );
+    $arComponentParameters['PARAMETERS']['REQUEST_HEADER'] = array(
+        "PARENT" => "DATA_SOURCE",
+        "NAME" => "Заголовок заявки",
+        "TYPE" => "STRING",
+        "MULTIPLE" => "N",
+        "DEFAULT" => "Заявка с сайта spiritfit.ru",
     );
 }
 ?>
