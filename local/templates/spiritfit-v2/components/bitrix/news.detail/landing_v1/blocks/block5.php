@@ -12,6 +12,7 @@
                             "API_PATH" => "",
                             "PERSONAL_PATH" => "/personal/",
                             "SHOW_RESULT_ON_TIME" => "22:00",
+                            "SHOW_RESULT_AFTER" => "1800",
                             "SHOW_RESULTS_ON_LAST_ALWAYS" => (!empty($BLOCKS["BLOCK5_DATE"]) && strtotime($BLOCKS["BLOCK5_DATE"]) < time()) ? "Y" : "N",
                             "CACHE_GROUPS" => "N",
                             "CACHE_TIME" => "86400",

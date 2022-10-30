@@ -47,7 +47,7 @@
                                                            <?if($FIELD['TYPE']=='checkbox') echo 'checkbox-item';?>
                                                            <?if($FIELD['TYPE']=='SELECT') echo 'select-item';?>
                                                         <?if ($FIELD['TYPE']=='password') echo 'auth-password';?>"
-                            <?if (($FIELD['TYPE']=='password'&&$arResult['AUTH_FORM_CODE']==$ID) || (!$arParams["HAS_NICKNAME"]&&$FCODE=='nickname')
+                            <?if (($FIELD['TYPE']=='password'&&$arResult['AUTH_FORM_CODE']==$ID)
                                 || ($arParams["HAS_NICKNAME"]&&in_array($FCODE, $arParams["HAS_NICKNAME_HIDE_FIELDS"]))):?> style="display: none"<?endif;?>>
                             <?if ($FIELD['TYPE']!='checkbox'):?>
                                 <span class="personal-section-form__item-placeholder"><?=$FIELD['PLACEHOLDER']?></span>

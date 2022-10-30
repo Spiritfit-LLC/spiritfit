@@ -593,10 +593,8 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                     throw new Exception($errStr, 2);
                 }
             }
-            if( $this->arParams['HAS_NICKNAME'] && isset($FORM_FIELDS['FIELDS']['nickname']['NAME']) ) {
-                if( empty($FORM_FIELDS['FIELDS']['nickname']['VALUE']) ) {
-                    throw new Exception('Ник: ' . $this->errorMessages[101], 2);
-                } else if( \Bitrix\Main\UserTable::getCount(['PERSONAL_PROFESSION' => $FORM_FIELDS['FIELDS']['nickname']['VALUE']]) != 0 ) {
+            if( isset($FORM_FIELDS['FIELDS']['nickname']['NAME']) ) {
+                if( \Bitrix\Main\UserTable::getCount(['PERSONAL_PROFESSION' => $FORM_FIELDS['FIELDS']['nickname']['VALUE']]) != 0 ) {
                     throw new Exception($this->errorMessages[102], 2);
                 }
             }

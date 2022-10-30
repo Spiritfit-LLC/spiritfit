@@ -35,6 +35,12 @@ $arComponentParameters = [
             'VALUES' => $standartTimes,
             'REFRESH' => 'Y',
         ),
+		"SHOW_RESULT_AFTER" => array(
+            'PARENT' => 'BASE',
+			'NAME' => GetMessage('SHOW_RESULT_AFTER'),
+			'TYPE' => 'STRING',
+			'DEFAULT' => '',
+        ),
 		'SHOW_RESULTS_ON_LAST_ALWAYS' => array(
 			'PARENT' => 'BASE',
 			'NAME' => GetMessage("SHOW_RESULTS_ON_LAST_ALWAYS"),

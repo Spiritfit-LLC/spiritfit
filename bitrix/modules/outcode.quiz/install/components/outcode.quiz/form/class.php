@@ -48,6 +48,9 @@
             if( empty($arParams['SHOW_RESULT_ON_TIME']) ) {
                 $arParams['SHOW_RESULT_ON_TIME'] = '00:00';
             }
+            if( empty($arParams['SHOW_RESULT_AFTER']) ) {
+                $arParams['SHOW_RESULT_AFTER'] = 1800;
+            }
 			
 			return $arParams;
         }
@@ -83,7 +86,7 @@
 
             $questionId = Context::getCurrent()->getRequest()->getPost('QUESTION_ID');
             $answerString = Context::getCurrent()->getRequest()->getPost('ANSWER');
-            
+
             $quiz = new \Outcode\Quiz($arParams["API_PATH"]);
             $question = $quiz->getQuestionByTime(time());
             if( !empty($question) || $questionId != $question['ID'] ) {
@@ -91,7 +94,7 @@
                     throw new Exception(Loc::getMessage('CANT_QUIZ_ANSWER_EMPTY'), 5);
                 }
 
-                $resultArr['result'] = $quiz->addResult($questionId, $answerString);
+                $resultArr['result'] = $quiz->addResult($questionId, $answerString, true);
                 if( empty($resultArr['result']) ) throw new Exception(Loc::getMessage('CANT_QUIZ_ANSWER_COMPONENT'), 7);
 
             } else {
@@ -125,7 +128,7 @@
             $quiz = new \Outcode\Quiz($this->arParams["API_PATH"]);
 
             $this->arResult['RESULT_TABLE'] = [];
-            $this->arResult['RESULT_TABLE_USER'] = $quiz->getUserResults($startDateWeek, time());
+            $this->arResult['RESULT_TABLE_USER'] = $quiz->getUserResults($startDateWeek, ($currentTime - intval($this->arParams['SHOW_RESULT_AFTER'])));
 
             $obCache = new CPHPCache();
             if($obCache->InitCache($cacheTime, $cacheHash, $cacheDir)) {
@@ -154,6 +157,7 @@
                 if( $this->arResult['QUESTION']['IS_ANSWERED'] ) {
                     $this->arResult['QUESTION']['IS_ANSWERED_SCORE'] = $quiz->getQuestionScore($this->arResult['QUESTION']['ID']);
                 }
+                $this->arResult['QUESTION']['POSITION'] = $quiz->getQuestionPosition($startDateWeek, $currentTime, $this->arResult['QUESTION']['ID']);
             }
             /* Получаем вопрос */
 

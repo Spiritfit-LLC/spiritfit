@@ -29,6 +29,7 @@
             } else if( !empty($arResult['QUESTION']['IS_ANSWERED']) ) {
                 ?>
                 <div class="question-form">
+                    <div class="question-form__info"><?=str_replace(['#CURRENT#', '#TOTAL#'], [$arResult['QUESTION']['POSITION']['CURRENT'], $arResult['QUESTION']['POSITION']['TOTAL']], GetMessage('QUIZ_QUESTION_POSITION'))?></div>
                     <div class="question-form__title"><?=$arResult['QUESTION']['NAME']?></div>
                     <div class="success"><?=GetMessage('QUIZ_QUESTION_EXISTS')?> <?=$arResult['QUESTION']['IS_ANSWERED_SCORE']?></div>
                 </div>
@@ -127,43 +128,24 @@
             </div>
             <?
         }
-
         if( !empty($arResult['RESULT_TABLE']) ) {
             ?>
             <div class="results-table">
                 <div class="results-table__title"><?=GetMessage('QUIZ_QUESTION_RESULTS')?></div>
                 <div class="results-table-content two">
                     <div class="results-table__row">
-                        <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_USER')?></div><div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_VALUE')?></div>
+                        <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_USER')?></div>
+                        <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_QUESTION_COUNT')?></div>
+                        <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_VALUE')?></div>
                     </div>
                     <? $count = 0; ?>
                     <? foreach($arResult['RESULT_TABLE']['TOTAL_RESULT'] as $result) { ?>
                         <div class="results-table__row">
-                            <div class="results-table__cell"><?=$result['LOGIN']?></div><div class="results-table__cell"><?=$result['VALUE']?></div>
+                            <div class="results-table__cell"><?=$result['LOGIN']?></div>
+                            <div class="results-table__cell"><?=!empty($arResult['RESULT_TABLE']['BY_QUESTIONS'][$result['USER_ID']]) ? count($arResult['RESULT_TABLE']['BY_QUESTIONS'][$result['USER_ID']]) : 0?></div>
+                            <div class="results-table__cell"><?=$result['VALUE']?></div>
                         </div>
                         <? $count += 1; if($count > 50) break; ?>
-                    <? } ?>
-                </div>
-                <div class="results-table__subtitle"><?=GetMessage('QUIZ_TABLE_BYQ')?></div>
-                <div class="results-table-content one">
-                    <? foreach($arResult['RESULT_TABLE']['BY_QUESTIONS'] as $question => $results) { ?>
-                        <div class="results-table__row">
-                            <div class="results-table__cell">
-                                <?=$question?>
-                                <div class="results-table-content two">
-                                    <div class="results-table__row">
-                                        <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_USER')?></div><div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_VALUE')?></div>
-                                    </div>
-                                    <? $count = 0; ?>
-                                    <? foreach($results as $result) { ?>
-                                        <div class="results-table__row">
-                                            <div class="results-table__cell"><?=$result['LOGIN']?></div><div class="results-table__cell"><?=$result['VALUE']?></div>
-                                        </div>
-                                        <? $count += 1; if($count > 50) break; ?>
-                                    <? } ?>
-                                </div>
-                            </div>
-                        </div>
                     <? } ?>
                 </div>
             </div>

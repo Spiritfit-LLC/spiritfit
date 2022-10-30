@@ -82,7 +82,34 @@ class Quiz {
         return !empty($rsData['UF_RESULT']) ? $rsData['UF_RESULT'] : 0;
     }
 
-    public function addResult(int $questionId, string $value) : array {
+    public function getQuestionPosition(int $timeStart, int $timeEnd, int $questionId = 0) : array
+    {
+        $resultArr = ['TOTAL' => 0, 'CURRENT' => 0];
+        $res = \CIBlockElement::GetList([],
+            [
+                'IBLOCK_ID' => $this->settings['I_BLOCK_ID'],
+                'ACTIVE' => 'Y',
+                '>=PROPERTY_DATE_START' => date('Y-m-d H:i:s', $timeStart),
+                '<=PROPERTY_DATE_START' => date('Y-m-d H:i:s', $timeEnd)
+            ],
+            false,
+            false,
+            ['ID']
+        );
+
+        $counter = 0;
+        if($resArr = $res->GetNext()) {
+            $counter += 1;
+            if( $questionId == $resArr['ID'] ) {
+                $resultArr['CURRENT'] = $counter;
+            }
+        }
+        $resultArr['TOTAL'] = $counter;
+
+        return $resultArr;
+    }
+
+    public function addResult(int $questionId, string $value, $isGetQuestionDate = false) : array {
         if( empty($this->userId) || !isset($this->hlEntityDataClass) ) return [];
 
         $currentDate = new DateTime();
@@ -154,7 +181,7 @@ class Quiz {
             'UF_USER_EMAIL' => $userInfo['EMAIL'],
             'UF_ANSWER' => $outStingResult,
             'UF_RESULT' => $outResult,
-            'UF_RESULT_DATE' => $currentDate->toString()
+            'UF_RESULT_DATE' => $isGetQuestionDate ? $currentQuestion['PROPERTIES']['DATE_END']['VALUE'] : $currentDate->toString()
         ];
 
         $result = $this->hlEntityDataClass::add($dataArr);
@@ -187,7 +214,6 @@ class Quiz {
             "order" => ['UF_RESULT_DATE' => 'ASC'],
             "filter" => ['>UF_RESULT_DATE' => $timeStartSystem->toString(), '<UF_RESULT_DATE' => $timeEndSystem->toString(), '>UF_RESULT' => 0]
         ];
-
         if( !empty($limit) ) $requestArr['limit'] = $limit;
 
         $rsObj = $this->hlEntityDataClass::getList($requestArr);
@@ -197,8 +223,10 @@ class Quiz {
             if( !isset($arResult['TOTAL_RESULT'][$rsData['UF_USER_ID']]) ) $arResult['TOTAL_RESULT'][$rsData['UF_USER_ID']] = 0;
             $arResult['TOTAL_RESULT'][$rsData['UF_USER_ID']] += intval($rsData['UF_RESULT']);
 
-            if( !isset($arResult['BY_QUESTIONS'][$rsData['UF_QUESTION_VALUE']][$rsData['UF_USER_ID']]) ) $arResult['BY_QUESTIONS'][$rsData['UF_QUESTION_VALUE']][$rsData['UF_USER_ID']] = 0;
-            $arResult['BY_QUESTIONS'][$rsData['UF_QUESTION_VALUE']][$rsData['UF_USER_ID']] += intval($rsData['UF_RESULT']);
+            if( !isset($arResult['BY_QUESTIONS'][$rsData['UF_USER_ID']]) ) $arResult['BY_QUESTIONS'][$rsData['UF_USER_ID']] = [];
+            if( !in_array($rsData['UF_QUESTION_VALUE'], $arResult['BY_QUESTIONS'][$rsData['UF_USER_ID']]) ) {
+                $arResult['BY_QUESTIONS'][$rsData['UF_USER_ID']][] = $rsData['UF_QUESTION_VALUE'];
+            }
         }
 
         /* Добавляем пользователей к результатам */
@@ -212,34 +240,10 @@ class Quiz {
                     'VALUE' => $arResult['TOTAL_RESULT'][$userArr['ID']],
                     'EMAIL' => $userArr['EMAIL'],
                     'LOGIN' => empty($userArr['PERSONAL_PROFESSION']) ? Tools::getLoginFromEmail($userArr['EMAIL']) : $userArr['PERSONAL_PROFESSION'],
+                    'USER_ID' => $userArr['ID']
                 ];
             }
-
-            foreach( $arResult['BY_QUESTIONS'] as &$item) {
-                if( isset($item[$userArr['ID']]) ) {
-                    $item[$userArr['ID']] = [
-                        'VALUE' => $item[$userArr['ID']],
-                        'EMAIL' => $userArr['EMAIL'],
-                        'LOGIN' => empty($userArr['PERSONAL_PROFESSION']) ? Tools::getLoginFromEmail($userArr['EMAIL']) : $userArr['PERSONAL_PROFESSION'],
-                    ];
-                } else {
-                    $item[$userArr['ID']] = [
-                        'VALUE' => $item[$userArr['ID']],
-                        'EMAIL' => '',
-                        'LOGIN' => '',
-                    ];
-                }
-            }
-            unset($item);
         }
-
-        /* Сортировка */
-        foreach( $arResult['BY_QUESTIONS'] as &$items ) {
-            usort($items, function ($item1, $item2) {
-                return $item2['VALUE'] <=> $item1['VALUE'];
-            });
-        }
-        unset($item);
 
         usort($arResult['TOTAL_RESULT'], function ($item1, $item2) {
             return $item2['VALUE'] <=> $item1['VALUE'];
@@ -248,18 +252,21 @@ class Quiz {
         return $arResult;
     }
 
-    public function getUserResults(int $timeStart, int $timeEnd) : array {
+    public function getUserResults(int $timeStart, int $timeEnd, $limit = 0) : array {
         if( empty($this->userId) ) return [];
 
         $timeStartSystem = \Bitrix\Main\Type\DateTime::createFromTimestamp($timeStart);
         $timeEndSystem = \Bitrix\Main\Type\DateTime::createFromTimestamp($timeEnd);
 
-        $arResult = ['QUESTIONS' => [], 'TOTAL_RESULT' => 0];
-        $rsObj = $this->hlEntityDataClass::getList([
+        $requestArr = [
             "select" => ["*"],
-            "order" => ['UF_RESULT_DATE' => 'DESC'],
+            "order" => ['UF_RESULT_DATE' => 'ASC'],
             "filter" => ['UF_USER_ID' => $this->userId, '>UF_RESULT_DATE' => $timeStartSystem->toString(), '<UF_RESULT_DATE' => $timeEndSystem->toString()]
-        ]);
+        ];
+        if( !empty($limit) ) $requestArr['limit'] = $limit;
+
+        $arResult = ['QUESTIONS' => [], 'TOTAL_RESULT' => 0];
+        $rsObj = $this->hlEntityDataClass::getList($requestArr);
         while( $rsData = $rsObj->Fetch() ) {
             $arResult['TOTAL_RESULT'] += intval($rsData['UF_RESULT']);
             $arResult['QUESTIONS'][$rsData['UF_QUESTION_VALUE']] = [
