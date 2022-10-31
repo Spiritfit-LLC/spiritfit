@@ -332,6 +332,7 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
             }
         }
 
+
         global $USER;
         if ($USER->IsAuthorized() && $USER->GetLogin()==$FORM_FIELDS['FIELDS']['phone']['VALUE']){
             //СМС не нужна, пользователь авторизован и ввел свои данные, отправялем contact
@@ -427,10 +428,21 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
         }
         else{
             //СМС НУЖНА, отправляем reg
-            $api=new Api([
-                "action"=>"reg",
-                "params"=>$arParams
-            ]);
+            if ($this->arParams["REQUEST_TYPE"]=="EMAIL"){
+                $api=new Api([
+                    "action"=>"smscode",
+                    "params"=>[
+                        "phone"=>$arParams["phone"]
+                    ]
+                ]);
+            }
+            elseif ($this->arParams["REQUEST_TYPE"]=="1C"){
+                $api=new Api([
+                    "action"=>"reg",
+                    "params"=>$arParams
+                ]);
+            }
+
 
             $response=$api->result();
             if (!$response["success"]) {
@@ -498,13 +510,24 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
             throw new Exception("Некорректный код");
         }
 
-        $api=new Api([
-            "action"=>"code",
-            "params"=>[
-                "phone"=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
-                "code"=>$code,
-            ]
-        ]);
+        if ($this->arParams["REQUEST_TYPE"]=="EMAIL"){
+            $api=new Api([
+                "action"=>"smscodecheck",
+                "params"=>[
+                    "phone"=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                    "code"=>$code,
+                ]
+            ]);
+        }
+        elseif ($this->arParams["REQUEST_TYPE"]=="1C"){
+            $api=new Api([
+                "action"=>"code",
+                "params"=>[
+                    "phone"=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                    "code"=>$code,
+                ]
+            ]);
+        }
 
         $response=$api->result();
         if (!$response["success"]) {
