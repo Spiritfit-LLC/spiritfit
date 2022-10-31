@@ -37,9 +37,10 @@ $propertyFilter=[
         "PLATFORM_BUTTON",
         "PLATFORM_IMAGES",
         "PLATFORM_PAGE_DESC",
-        "PLATFORM_FORM_TYPE",
+        "PLATFORM_FORM_EMAIL",
         "PLATFORM_FORM_SID",
-        "PLATFORM_FORM_TITLE"
+        "PLATFORM_FORM_TITLE",
+        "PLATFORM_FORM_EMAIL_HEADER"
     ]
 ];
 
@@ -71,7 +72,7 @@ $APPLICATION->IncludeFile("/local/include/service/header.php", $includeParams);
             </div>
         </div>
     </section>
-<?if (!empty($objects[$ELEMENT_ID]["PROPERTIES"]["PLATFORM_FORM_TYPE"]["VALUE"])):?>
+<?if (!empty($objects[$ELEMENT_ID]["PROPERTIES"]["PLATFORM_FORM_EMAIL"]["VALUE"])):?>
     <section id="form-request" style="margin-top: 80px;">
         <?
         $APPLICATION->IncludeComponent(
@@ -89,8 +90,10 @@ $APPLICATION->IncludeFile("/local/include/service/header.php", $includeParams);
                     5 => "rules",
                     6 => "privacy",
                 ),
-                "FORM_TYPE" =>$objects[$ELEMENT_ID]["PROPERTIES"]["PLATFORM_FORM_TYPE"]["VALUE"],
-                "TEXT_FORM" => $objects[$ELEMENT_ID]["PROPERTIES"]["PLATFORM_FORM_TITLE"]["VALUE"]
+                "TEXT_FORM"=>$objects[$ELEMENT_ID]["PROPERTIES"]["PLATFORM_FORM_TITLE"]["VALUE"],
+                "REQUEST_TYPE"=>"EMAIL",
+                "EMAIL"=>$objects[$ELEMENT_ID]["PROPERTIES"]["PLATFORM_FORM_EMAIL"]["VALUE"],
+                "REQUEST_HEADER"=>$objects[$ELEMENT_ID]["PROPERTIES"]["PLATFORM_FORM_EMAIL_HEADER"]["VALUE"]
             ),
             false);
         ?>

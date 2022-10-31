@@ -22,10 +22,30 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
             </div>
             <div class="b-timetable__filter is-hide">
                 <div class="b-timetable__filter-block">
-                    <select class="filter-direction__switch">
-                        <option value="all">Все направления</option>
-                        <? foreach ($arResult["DIRECTIONS"] as $iteDirection) { ?>
-                            <option value="<?=$iteDirection['id']?>"><?=$iteDirection['name']?></option>
+<!--                    <select class="filter-direction__switch">-->
+<!--                        <option value="all">Все направления</option>-->
+<!--                        --><?// foreach ($arResult["DIRECTIONS"] as $iteDirection) { ?>
+<!--                            <option value="--><?//=$iteDirection['id']?><!--">--><?//=$iteDirection['name']?><!--</option>-->
+<!--                        --><?// } ?>
+<!--                    </select>-->
+                    <select class="filter-loadlevel__switch filter-switch" multiple="multiple" data-placeholder="Уровень нагрузки" data-close="false">
+                        <option value="all" class="all-select">Выбрать все</option>
+                        <? foreach ($arResult["FILTERS"]["LOAD_LEVEL"] as $ID=>$LOAD_LEVEL) { ?>
+                            <option value="<?=$ID?>"><?=$LOAD_LEVEL?></option>
+                        <? } ?>
+                    </select>
+                    <div class="b-timetable__filter-checkbox">
+                        <label class="b-checkbox">
+                            <input type="checkbox" class="b-checkbox__input" name="not-virtual">
+                            <span class="b-checkbox__text">Не показывать VIRTUAL</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="b-timetable__filter-block">
+                    <select class="filter-iwant__switch filter-switch" multiple="multiple" data-placeholder="Что я хочу" data-close="false">
+                        <option value="all">Выбрать все</option>
+                        <? foreach ($arResult["FILTERS"]["I_WANT"] as $ID=>$I_WANT) { ?>
+                            <option value="<?=$ID?>"><?=$I_WANT?></option>
                         <? } ?>
                     </select>
                     <div class="b-timetable__filter-checkbox">
@@ -38,24 +58,10 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
                     </div>
                 </div>
                 <div class="b-timetable__filter-block">
-                    <select class="filter-exercise__switch">
-                        <option value="all">Все занятия</option>
-                        <? foreach ($arResult["EXERCISES"] as $iteEx) {
-                            $name = explode(' ', $iteEx['name']);
-                            $filter="";
-                            for ($i = 0; $i < count($name) - 1; $i++) {
-                                $filter.=$name[$i];
-                            }
-                            ?>
-                            <option value="<?=strtolower($filter)?>"><?=$iteEx['name']?></option>
-                        <? } ?>
-                    </select>
-                </div>
-                <div class="b-timetable__filter-block">
-                    <select class="filter-coach__switch">
-                        <option value="all">Любой тренер</option>
-                        <? foreach ($arResult["COACHES"] as $iteCoach) { ?>
-                            <option value="<?=$iteCoach['id']?>"><?=$iteCoach['firstname']?> <?=$iteCoach['secondname']?></option>
+                    <select class="filter-musculegroups__switch filter-switch" multiple="multiple" data-placeholder="Какие группы мышц" data-close="false">
+                        <option value="all">Выбрать все</option>
+                        <? foreach ($arResult["FILTERS"]["MUSCULE_GROUPS"] as $ID=>$MUSCULE_GROUP) { ?>
+                            <option value="<?=$ID?>"><?=$MUSCULE_GROUP?></option>
                         <? } ?>
                     </select>
                     <button class="b-timetable__filter-clear" type="button">
@@ -84,17 +90,11 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
                                 <?foreach ($arDaySchedule["TRAININGS"] as $TRAINING):?>
                                     <div class="b-timetable__training-item <?if($TRAINING["ACTIVE"]){ echo "active current-item";}?> filter"
                                          data-id="<?=$TRAINING['UID']?>"
-                                         data-filter-direction="<?=$TRAINING['FILTER']["DIRECTION"]?>"
                                          data-filter-time="<?=$TRAINING['FILTER']["TIME"]?>"
-                                         data-filter-coach="<?=$TRAINING["COACH_ID"]?>"
-                                         <?
-                                         $name = explode(' ', $TRAINING['NAME']);
-                                         $filter="";
-                                         for ($i = 0; $i < count($name) - 1; $i++) {
-                                             $filter.=$name[$i];
-                                         }
-                                         ?>
-                                         data-filter-exercise="<?=strtolower($filter)?>">
+                                         data-filter-musculegroup="<?=implode("|", array_column($TRAINING["FILTER"]["MUSCULE_GROUP"], "ID"))?>"
+                                         data-filter-loadlevel="<?=implode("|", array_column($TRAINING["FILTER"]["LOAD_LEVEL"], "ID"))?>"
+                                         data-filter-iwant="<?=implode("|", array_column($TRAINING["FILTER"]["I_WANT"], "ID"))?>"
+                                         data-filter-virtual="<?=$TRAINING["VIRTUAL"] ? 'true' : 'false';?>">
                                         <div class="training-item__name"><?=$TRAINING['NAME']?></div>
                                         <div class="training-item__body">
                                             <div class="trainin-time"><?=$TRAINING["TIME"]?></div>
@@ -134,7 +134,13 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
                                             <?endif;?>
                                         </div>
                                         <div class="training-item__photo">
-
+                                            <?if (!empty($TRAINING["MEDIA"]) && $TRAINING["MEDIA_TYPE"]=="IMG"):?>
+                                                <img src="<?=$TRAINING["MEDIA"]?>" loading="lazy">
+                                            <?elseif (!empty($TRAINING["MEDIA"]) && $TRAINING["MEDIA_TYPE"]=="VIDEO"):?>
+                                                <video autoplay loop muted playsinline>
+                                                    <source src="<?=$TRAINING["MEDIA"]?>" type="video/<?=pathinfo($TRAINING["MEDIA"], PATHINFO_EXTENSION)?>">
+                                                </video>
+                                            <?endif;?>
                                         </div>
                                     </div>
                                 <?endforeach;?>
