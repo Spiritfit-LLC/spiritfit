@@ -172,9 +172,43 @@ $(document).ready(function(){
     })
     //Время
     $('input[name="b-timetable__time-filter"]').on("click", showFiltered);
-    $('select.filter-coach__switch').on('select2:select', showFiltered);
-    $('select.filter-direction__switch').on('select2:select', showFiltered);
-    $('select.filter-exercise__switch').on('select2:select', showFiltered);
+    $('input[name="not-virtual"]').on("click", showFiltered);
+
+
+    //Выбор фильтра
+    $('.filter-switch').on("select2:selecting select2:unselecting", function(e){
+        var lastSelectedItem=e.params.args.data.id;
+        var selectionItems=$(this).val();
+        if (selectionItems.includes("all") && lastSelectedItem!=="all"){
+            selectionItems = selectionItems.filter(function(item) {
+                return item !== "all"
+            });
+            $(this).val(selectionItems).trigger("change");
+        }
+        else if (selectionItems.includes("all") && lastSelectedItem==="all"){
+            $(this).val(null);
+            $(this).val(null).trigger("change");
+        }
+        else if (lastSelectedItem==="all" && !selectionItems.includes("all")){
+            e.preventDefault();
+            $(this).val(null).trigger("change");
+            $(this).select2("close");
+        }
+    });
+    $(".filter-switch").on('change', showFiltered);
+
+    $(".filter-switch").on("select2:select select2:unselect", function(e){
+        var selectionItems=$(this).val();
+        var select_container=$(this).data('select2').$container;
+        var select_selecttion=$(select_container).find(".select2-selection__rendered");
+
+        let countPlus = selectionItems.length-1;
+        $(select_selecttion).find(".plus-selection").remove();
+        if(countPlus>0) {
+            $(select_selecttion)
+                .append($(`<span class="plus-selection">+ ${countPlus}</span>`))
+        }
+    })
 
     //Функция отображения отфильтрованных элементов
     function showFiltered() {
@@ -189,18 +223,45 @@ $(document).ready(function(){
             $('.b-timetable__training-item').addClass('filter');
         }
 
-        var coach = $('select.filter-coach__switch').val();
-        if (coach !== 'all') {
-            $('.b-timetable__training-item.filter').not(`[data-filter-coach="${coach}"]`).removeClass('filter');
-        }
-        var direction = $('select.filter-direction__switch').val();
-        if (direction !== 'all') {
-            $('.b-timetable__training-item.filter').not(`[data-filter-direction="${direction}"]`).removeClass('filter');
-        }
+        var loadLevels=$(".filter-loadlevel__switch").select2("val");
+        var musculeGroups=$(".filter-musculegroups__switch").select2("val");
+        var iwants=$(".filter-iwant__switch").select2("val");
+        $('.b-timetable__training-item.filter').each(function(){
+            var hide=true;
+            if (loadLevels.length===0){
+                hide=false;
+            }
+            loadLevels.forEach((loadlevel)=>{
+                if ($(this).data("filter-loadlevel").includes(loadlevel)){
+                    hide=false;
+                    return false;
+                }
+            });
+            if (!hide){
+                hide = musculeGroups.length !== 0;
+                musculeGroups.forEach((musculegroup)=>{
+                    if ($(this).data("filter-musculegroup").includes(musculegroup)){
+                        hide=false;
+                        return false;
+                    }
+                });
+            }
+            if (!hide){
+                hide = iwants.length !== 0;
+                iwants.forEach((iwant)=>{
+                    if ($(this).data("filter-iwant").includes(iwant)){
+                        hide=false;
+                        return false;
+                    }
+                });
+            }
+            if (hide){
+                $(this).removeClass("filter");
+            }
+        });
 
-        var exercise=$('select.filter-exercise__switch').val();
-        if (exercise !== 'all') {
-            $('.b-timetable__training-item.filter').not(`[data-filter-exercise="${exercise}"]`).removeClass('filter');
+        if ($('input[name="not-virtual"]:checked').length>0){
+            $('.b-timetable__training-item.filter').not('[data-filter-virtual="false"]').removeClass("filter");
         }
 
         $('.b-timetable__training-item').not('.filter').hide(200);
@@ -216,9 +277,18 @@ $(document).ready(function(){
     //Сброс фильтров
     $('.b-timetable__filter-clear').on(clickHandler, function(){
         $('input[name="b-timetable__time-filter"]').prop('checked', false);
-        $('select.filter-coach__switch').val('all').trigger('change');
-        $('select.filter-direction__switch').val('all').trigger('change');
-
-        showFiltered();
+        $('input[name="not-virtual"]').prop('checked', false);
+        $('.filter-switch').val(null).trigger("change");
     })
+
+
+    $('.filter-switch').on('select2:opening select2:closing', function( event ) {
+        var $searchfield = $(this).parent().find('.select2-search__field');
+        $searchfield.prop('disabled', true);
+    });
+
+    if ($(window).width()<=768){
+        // var new_checkbox_block=$('<div class="b-timetable__filter-block"></div>').appendTo(".b-timetable__filter");
+        $(".b-timetable__filter-checkbox").insertBefore(".b-timetable__filter-clear")
+    }
 })

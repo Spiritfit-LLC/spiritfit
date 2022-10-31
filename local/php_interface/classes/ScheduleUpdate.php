@@ -40,6 +40,25 @@ class ScheduleUpdate {
 
 //            $arResult = preg_replace_callback('/\\\\u([a-f0-9]{4})/i', create_function('$m', 'return chr(hexdec($m[1])-1072+224);'), json_encode($arResult));
 //            $props["SCHEDULE_JSON"] = iconv('cp1251', 'utf-8', $arResult);
+            foreach ($arResult as $training){
+                $filter = ['ACTIVE'=>'Y', 'IBLOCK_ID'=>Utils::GetIBlockIDBySID("club-schedule"), "PROPERTY_ID1C"=>$training["lessonType"]["id"]];
+                $DBRes=CIBlockElement::GetList(array(), $filter);
+                if (!$DBRes->Fetch()){
+                    $el = new CIBlockElement;
+                    $PROP=[
+                        "ID1C"=>$training["lessonType"]["id"]
+                    ];
+                    $arLoadProductArray = Array(
+                        "IBLOCK_SECTION_ID" => false,          // элемент лежит в корне раздела
+                        "IBLOCK_ID"      => Utils::GetIBlockIDBySID("club-schedule"),
+                        "PROPERTY_VALUES"=> $PROP,
+                        "NAME"           => $training["lessonType"]["name"],
+                        "ACTIVE"         => "Y",            // активен
+                        "CODE"           => uniqid("club-schedule")
+                    );
+                    $el->Add($arLoadProductArray);
+                }
+            }
             $props["SCHEDULE_JSON"] = json_encode($arResult);
 
             CIBlockElement::SetPropertyValuesEx($id, false, $props);

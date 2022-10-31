@@ -60,10 +60,31 @@ class ScheduleClubomponent extends CBitrixComponent implements Controllerable{
     private function prepareShedule($schedule) {
         $result = array();
         $arSchedule = json_decode($schedule, true);
+        function cmp($a, $b) {
+            return strcmp($a["beginDate"], $b["beginDate"]);
+        }
+        usort($arSchedule, "cmp");
 
         $this->arResult["COACHES"]=[];
 
         $CHOOSE_TRAINING=false;
+
+        $LESSONS_ID=[];
+        foreach ($arSchedule as $key => $item){
+            if (!in_array($item["lessonType"]["id"], $LESSONS_ID)){
+                $LESSONS_ID[]=$item["lessonType"]["id"];
+            }
+        }
+
+        $LESSONS=[];
+        $filter = ['ACTIVE'=>'Y', 'IBLOCK_ID'=>Utils::GetIBlockIDBySID("club-schedule"), "PROPERTY_ID1C"=>$LESSONS_ID];
+        CIBlockElement::GetPropertyValuesArray($LESSONS, $filter['IBLOCK_ID'], $filter);
+        foreach ($LESSONS as $key=>$LESSON){
+            $LESSONS[$LESSON["ID1C"]["VALUE"]]=$LESSON;
+            unset($LESSONS[$key]);
+        }
+
+        $this->arResult["FILTERS"]=[];
         foreach ($arSchedule as $key => $item) {
             $date = FormatDate("D",  strtotime("- 3 hours", $item["beginDate"]));
 
@@ -77,9 +98,55 @@ class ScheduleClubomponent extends CBitrixComponent implements Controllerable{
             else{
                 $ACTIVE=false;
             }
+
+            //Группа мышц
+            $MUSCULE_GROUPS=[];
+            if (!is_array($LESSONS[$item["lessonType"]["id"]]["MUSCULE_GROUPS"]["VALUE"])){
+                $LESSONS[$item["lessonType"]["id"]]["MUSCULE_GROUPS"]["VALUE"]=[$LESSONS[$item["lessonType"]["id"]]["MUSCULE_GROUPS"]["VALUE"]];
+            }
+            foreach ($LESSONS[$item["lessonType"]["id"]]["MUSCULE_GROUPS"]["VALUE"] as $MUSCULE_GROUP){
+                if (!key_exists(base64_encode($MUSCULE_GROUP), $this->arResult["FILTERS"]["LOAD_LEVEL"])  && !empty($MUSCULE_GROUP)){
+                    $this->arResult["FILTERS"]["MUSCULE_GROUPS"][base64_encode($MUSCULE_GROUP)]=$MUSCULE_GROUP;
+                }
+                $MUSCULE_GROUPS[]=[
+                    "ID"=>base64_encode($MUSCULE_GROUP)
+                ];
+            }
+
+            //Что я хочу
+            $I_WANTS=[];
+            if (!is_array($LESSONS[$item["lessonType"]["id"]]["I_WANT"]["VALUE"])){
+                $LESSONS[$item["lessonType"]["id"]]["I_WANT"]["VALUE"]=[$LESSONS[$item["lessonType"]["id"]]["I_WANT"]["VALUE"]];
+            }
+            foreach ($LESSONS[$item["lessonType"]["id"]]["I_WANT"]["VALUE"] as $I_WANT){
+                if (!key_exists(base64_encode($I_WANT), $this->arResult["FILTERS"]["LOAD_LEVEL"]) && !empty($I_WANT)){
+                    $this->arResult["FILTERS"]["I_WANT"][base64_encode($I_WANT)]=$I_WANT;
+                }
+                $I_WANTS[]=[
+                    "ID"=>base64_encode($I_WANT)
+                ];
+            }
+
+            //Уровень нагрузки
+            $LOAD_LEVELS=[];
+            if (!is_array($LESSONS[$item["lessonType"]["id"]]["LOAD_LEVEL"]["VALUE"])){
+                $LESSONS[$item["lessonType"]["id"]]["LOAD_LEVEL"]["VALUE"]=[$LESSONS[$item["lessonType"]["id"]]["LOAD_LEVEL"]["VALUE"]];
+            }
+            foreach ($LESSONS[$item["lessonType"]["id"]]["LOAD_LEVEL"]["VALUE"] as $LOAD_LEVEL){
+                if (!key_exists(base64_encode($LOAD_LEVEL), $this->arResult["FILTERS"]["LOAD_LEVEL"])  && !empty($LOAD_LEVEL)){
+                    $this->arResult["FILTERS"]["LOAD_LEVEL"][base64_encode($LOAD_LEVEL)]=$LOAD_LEVEL;
+                }
+                $LOAD_LEVELS[]=[
+                    "ID"=>base64_encode($LOAD_LEVEL)
+                ];
+            }
+
             $FILTER=[
-                "DIRECTION"=>$item["direction"]["id"],
+                "MUSCULE_GROUP"=>$MUSCULE_GROUPS,
+                "I_WANT"=>$I_WANTS,
+                "LOAD_LEVEL"=>$LOAD_LEVELS
             ];
+
             if (FormatDate("H:i", strtotime("- 3 hours", $item["beginDate"]))<"12:00"){
                 $FILTER["TIME"]="MORNING";
             }
@@ -90,6 +157,16 @@ class ScheduleClubomponent extends CBitrixComponent implements Controllerable{
                 $FILTER["TIME"]="EVENING";
             }
 
+            $MEDIA=null;
+            if (!empty($LESSONS[$item["lessonType"]["id"]]["VIDEO"]["VALUE"])){
+                $type="VIDEO";
+                $MEDIA=CFile::GetPath($LESSONS[$item["lessonType"]["id"]]["VIDEO"]["VALUE"]);
+            }
+            elseif (!empty($LESSONS[$item["lessonType"]["id"]]["IMAGE"]["VALUE"])){
+                $type="IMG";
+                $MEDIA=CFile::GetPath($LESSONS[$item["lessonType"]["id"]]["IMAGE"]["VALUE"]);
+            }
+
             $result[$date]["TRAININGS"][] = array(
                 "NAME" => $item["lessonType"]["name"],
                 "TIME" => FormatDate("H:i", strtotime("- 3 hours", $item["beginDate"])),
@@ -98,7 +175,10 @@ class ScheduleClubomponent extends CBitrixComponent implements Controllerable{
                 "UID"=>uniqid(),
                 "ACTIVE"=>$ACTIVE,
                 "COACH_ID"=>$item["coach"]["id"],
+                "MEDIA"=>$MEDIA,
+                "MEDIA_TYPE"=>$type,
                 "FILTER"=>$FILTER,
+                "VIRTUAL"=>$item["lessonType"]["online"]
             );
             $result[$date]["DATE"]=FormatDate("d.m", strtotime("- 3 hours", $item["beginDate"]));
             if (date("d.m")==$result[$date]["DATE"]){
@@ -109,15 +189,15 @@ class ScheduleClubomponent extends CBitrixComponent implements Controllerable{
             }
             $result[$date]["UID"]=uniqid();
 
-            if (!key_exists($item["coach"]["id"], $this->arResult["COACHES"]) && !empty($item["coach"]["firstname"])){
-                $this->arResult["COACHES"][$item["coach"]["id"]]=$item["coach"];
-            }
-            if (!key_exists($item["direction"]["id"], $this->arResult["DIRECTIONS"]) && !empty($item["direction"]["id"])){
-                $this->arResult["DIRECTIONS"][$item["direction"]["id"]]=$item["direction"];
-            }
-            if (!key_exists($item["lessonType"]["name"], $this->arResult["EXERCISES"]) && !empty($item["lessonType"]["name"])){
-                $this->arResult["EXERCISES"][$item["lessonType"]["name"]]=$item["lessonType"];
-            }
+//            if (!key_exists($item["coach"]["id"], $this->arResult["COACHES"]) && !empty($item["coach"]["firstname"])){
+//                $this->arResult["COACHES"][$item["coach"]["id"]]=$item["coach"];
+//            }
+//            if (!key_exists($item["direction"]["id"], $this->arResult["DIRECTIONS"]) && !empty($item["direction"]["id"])){
+//                $this->arResult["DIRECTIONS"][$item["direction"]["id"]]=$item["direction"];
+//            }
+//            if (!key_exists($item["lessonType"]["name"], $this->arResult["EXERCISES"]) && !empty($item["lessonType"]["name"])){
+//                $this->arResult["EXERCISES"][$item["lessonType"]["name"]]=$item["lessonType"];
+//            }
             $this->arResult["TIME_FILTER"]=[
                 [
                     "VALUE"=>"MORNING",
@@ -134,7 +214,6 @@ class ScheduleClubomponent extends CBitrixComponent implements Controllerable{
             ];
 
         }
-
         return $result;
     }
 
