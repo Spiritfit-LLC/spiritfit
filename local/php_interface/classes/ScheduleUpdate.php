@@ -90,7 +90,7 @@ class ScheduleUpdate {
             CURLOPT_TIMEOUT => 10,
             CURLOPT_HTTPHEADER => array("Range: ".
                 (strtotime('monday this week') + 3600*3) . "-" .
-                (strtotime('sunday this week') + 3600*3 + 86400)
+                (strtotime('sunday this week') + 3600*3 + 86400 - 1)
             )
         );
 
