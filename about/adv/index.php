@@ -37,10 +37,11 @@ $propertyFilter=[
         "ADV_BUTTON",
         "ADV_IMAGES",
         "ADV_PAGE_DESC",
-        "ADV_FORM_TYPE",
+        "ADV_FORM_EMAIL",
         "ADV_FORM_SID",
         "ADV_FORM_TITLE",
-        "ADV_ADVANTAGES"
+        "ADV_ADVANTAGES",
+        "ADV_FORM_EMAIL_HEADER"
     ]
 ];
 
@@ -93,7 +94,7 @@ $APPLICATION->IncludeFile("/local/include/service/header.php", $includeParams);
     </div>
 </div>
 </section>
-<?if (!empty($objects[$ELEMENT_ID]["PROPERTIES"]["ADV_FORM_TYPE"]["VALUE"])):?>
+<?if (!empty($objects[$ELEMENT_ID]["PROPERTIES"]["ADV_FORM_EMAIL"]["VALUE"])):?>
     <section id="form-request">
         <?
         $APPLICATION->IncludeComponent(
@@ -111,8 +112,10 @@ $APPLICATION->IncludeFile("/local/include/service/header.php", $includeParams);
                     5 => "rules",
                     6 => "privacy",
                 ),
-                "FORM_TYPE" =>$objects[$ELEMENT_ID]["PROPERTIES"]["ADV_FORM_TYPE"]["VALUE"],
-                "TEXT_FORM" => $objects[$ELEMENT_ID]["PROPERTIES"]["ADV_FORM_TITLE"]["VALUE"]
+                "TEXT_FORM"=>$objects[$ELEMENT_ID]["PROPERTIES"]["ADV_FORM_TITLE"]["VALUE"],
+                "REQUEST_TYPE"=>"EMAIL",
+                "EMAIL"=>$objects[$ELEMENT_ID]["PROPERTIES"]["ADV_FORM_EMAIL"]["VALUE"],
+                "REQUEST_HEADER"=>$objects[$ELEMENT_ID]["PROPERTIES"]["ADV_FORM_EMAIL_HEADER"]["VALUE"]
             ),
             false);
         ?>
