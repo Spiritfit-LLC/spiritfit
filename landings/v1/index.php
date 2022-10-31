@@ -70,6 +70,9 @@
 			20 => "BLOCK5_ACTIVE",
 			21 => "BLOCK5_DATE",
 			22 => "BLOCK5_SORT",
+			23 => "BLOCK5_DESCRIPTION",
+			24 => "BLOCK5_VIDEO_TITLE",
+			25 => "BLOCK5_VIDEO_LINK"
 		),
         "IBLOCK_URL" => "/home/bitrix/www/landings/v1/",
         "DETAIL_URL" => "",

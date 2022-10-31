@@ -20,10 +20,14 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         }
 
         /* Для конкурса */
-        $arParams["HAS_NICKNAME_HIDE_FIELDS"] = ['club', 'gender', 'birthday', 'surname', 'name'];
+        $arParams["HAS_NICKNAME_HIDE_FIELDS"] = ['club', 'gender', 'birthday', 'surname'];
         if( Loader::includeModule('outcode.quiz') ) {
             $arParams["HAS_NICKNAME"] = !empty(Context::getCurrent()->getRequest()->get('nickname'));
             $arParams["BONUS_ID"] = Context::getCurrent()->getRequest()->get('bonusid');
+
+            $quiz = new \Outcode\Quiz('');
+            $uid = $quiz->getUserUid();
+            $arParams['BONUS_LINK'] = !empty($uid) ? '/?nickname=y&bonusid=' . $uid : '';
         }
 
         return $arParams;
@@ -591,11 +595,6 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                 $errStr .= strlen($FORM_FIELDS['FIELDS']['surname']['VALUE']) < 20 ? '' : $FORM_FIELDS['FIELDS'][$fieldsCode]['NAME'] . ': ' . $this->errorMessages[101] . '<br>';
                 if( !empty($errStr) ) {
                     throw new Exception($errStr, 2);
-                }
-            }
-            if( isset($FORM_FIELDS['FIELDS']['nickname']['NAME']) ) {
-                if( \Bitrix\Main\UserTable::getCount(['PERSONAL_PROFESSION' => $FORM_FIELDS['FIELDS']['nickname']['VALUE']]) != 0 ) {
-                    throw new Exception($this->errorMessages[102], 2);
                 }
             }
             /* Для регистрации с ником */

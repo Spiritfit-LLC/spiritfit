@@ -79,6 +79,7 @@ class outcode_quiz extends CModule
         /* Создание инфоблока */
         $iBlockType = 'outcode_quiz';
         $iBlockProperties = [
+            'QUESTION_STRING' => ['TYPE' => 'S', 'NAME' => Loc::getMessage('QUIZ_PROPERTY_QUESTION_STRING'), 'MULTIPLE' => 'N', 'PROPERTY_WITH_DESCRIPTION' => 'N', 'IS_REQUIRED' => 'Y'],
             'DATE_START' => ['TYPE' => 'S:DateTime', 'NAME' => Loc::getMessage('QUIZ_PROPERTY_DATE_START'), 'VALUES' => [], 'MULTIPLE' => 'N', 'PROPERTY_WITH_DESCRIPTION' => 'N', 'IS_REQUIRED' => 'Y'],
             'DATE_END' => ['TYPE' => 'S:DateTime', 'NAME' => Loc::getMessage('QUIZ_PROPERTY_DATE_END'), 'VALUES' => [], 'MULTIPLE' => 'N', 'PROPERTY_WITH_DESCRIPTION' => 'N', 'IS_REQUIRED' => 'Y'],
             'TYPE' => ['TYPE' => 'L', 'NAME' => Loc::getMessage('QUIZ_PROPERTY_TYPE'), 'VALUES' => [

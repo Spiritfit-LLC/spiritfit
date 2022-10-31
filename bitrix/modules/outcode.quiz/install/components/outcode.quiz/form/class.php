@@ -95,6 +95,13 @@
                 }
 
                 $resultArr['result'] = $quiz->addResult($questionId, $answerString, true);
+
+                /*Скрываем от пользователя реальный резльтат*/
+                if( isset($resultArr['result']['RESULT']) ) {
+                    $resultArr['result']['RESULT'] =  $resultArr['result']['RESULT'] > 0 ? 1 : 0;
+                }
+                /*Скрываем от пользователя реальный резльтат*/
+
                 if( empty($resultArr['result']) ) throw new Exception(Loc::getMessage('CANT_QUIZ_ANSWER_COMPONENT'), 7);
 
             } else {
@@ -112,17 +119,17 @@
 
             global $USER;
 
-            $showStartTime = strtotime(date('d-m-Y '.$this->arParams["SHOW_RESULT_ON_TIME"]));
+            $showStartTime = strtotime(date('d-m-Y ' . $this->arParams["SHOW_RESULT_ON_TIME"]));
 
             $startDateAll = 315532800;
-            $startDateWeek = strtotime( date('d-m-Y', strtotime('-1 week')) ); //315532800; FOR ALL RESULTS
+            $endDateAll = strtotime(date('d-m-Y 23:59:59'));
 
-            $endDate = strtotime(date('d-m-Y'));
+            $startDateWeek = strtotime( date('d-m-Y', strtotime('-1 week')) ); //315532800; FOR ALL RESULTS
 
             $currentTime = time();
 
             $cacheTime = !empty($this->arParams['CACHE_TIME']) && !empty($this->arParams['CACHE_TYPE']) && $this->arParams['CACHE_TYPE'] == 'A' ? $this->arParams['CACHE_TIME'] : 0;
-            $cacheHash = 'QuizComponent' . SITE_ID . date('l');
+            $cacheHash = 'QuizComponent' . SITE_ID . date('h');
             $cacheDir = '/outcode/quiz';
 
             $quiz = new \Outcode\Quiz($this->arParams["API_PATH"]);
@@ -138,7 +145,7 @@
 
                 $isShowAlways = !empty($this->arParams['SHOW_RESULTS_ON_LAST_ALWAYS']) && $this->arParams['SHOW_RESULTS_ON_LAST_ALWAYS'] == 'Y';
                 if( $isShowAlways || ( $showStartTime < $currentTime) ) {
-                    $this->arResult['RESULT_TABLE'] = $isShowAlways ? $quiz->getAllResults($startDateAll, $endDate) : $quiz->getAllResults($startDateWeek, $endDate);
+                    $this->arResult['RESULT_TABLE'] = $isShowAlways ? $quiz->getAllResults($startDateAll, $endDateAll) : $quiz->getAllResults($startDateWeek, ($currentTime - intval($this->arParams['SHOW_RESULT_AFTER'])));
                 }
 
                 $obCache->EndDataCache($this->arResult['RESULT_TABLE']);

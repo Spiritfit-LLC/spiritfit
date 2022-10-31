@@ -36,6 +36,8 @@ class Quiz {
             $arFields = $resArr->GetFields();
             $arFields['PROPERTIES'] = $resArr->GetProperties();
 
+            if(!empty($arFields['PROPERTIES']['QUESTION_STRING']['VALUE'])) $arFields['NAME'] = $arFields['PROPERTIES']['QUESTION_STRING']['VALUE'];
+
             return $arFields;
         }
 
@@ -58,6 +60,8 @@ class Quiz {
         if($resArr = $res->GetNextElement()) {
             $arFields = $resArr->GetFields();
             $arFields['PROPERTIES'] = $resArr->GetProperties();
+
+            if(!empty($arFields['PROPERTIES']['QUESTION_STRING']['VALUE'])) $arFields['NAME'] = $arFields['PROPERTIES']['QUESTION_STRING']['VALUE'];
 
             return $arFields;
         }
@@ -129,13 +133,14 @@ class Quiz {
 
         /* Проверяем правильность ответа на вопрос */
         $isCorrectByUser = false;
-        $outStingResult = '';
+        $outStingResult = strip_tags($value);
         switch($currentQuestion['PROPERTIES']['TYPE']['VALUE']) {
+            case 'Images':
             case 'Text':
                 foreach( $currentQuestion['PROPERTIES']['ANSWERS_STRING']['VALUE'] as $string) {
+                    $string = str_replace('#', '', $string);
                     if( mb_strripos($value, $string) !== false ) {
                         $isCorrectByUser = true;
-                        $outStingResult = $value;
                         break;
                     }
                 }
@@ -146,20 +151,6 @@ class Quiz {
                     $string = str_replace('#', '', $string);
                     if( $isCorrectAnswer && $string == $value ) {
                         $isCorrectByUser = true;
-                        $outStingResult = $string;
-                        break;
-                    }
-                }
-                break;
-            case 'Images':
-                $fileId = intval($value);
-                foreach( $currentQuestion['PROPERTIES']['ANSWERS_IMAGE']['VALUE'] as $key => $imageId) {
-                    $string = !empty($currentQuestion['PROPERTIES']['ANSWERS_IMAGE']['DESCRIPTION'][$key]) ? trim($currentQuestion['PROPERTIES']['ANSWERS_IMAGE']['DESCRIPTION'][$key]) : '';
-                    $isCorrectAnswer = ( preg_match("/#/", $string) != 0 );
-                    $string = str_replace('#', '', $string);
-                    if( $isCorrectAnswer && $imageId == $fileId ) {
-                        $isCorrectByUser = true;
-                        $outStingResult = !empty($string) ? $string : $fileId;
                         break;
                     }
                 }
@@ -214,6 +205,7 @@ class Quiz {
             "order" => ['UF_RESULT_DATE' => 'ASC'],
             "filter" => ['>UF_RESULT_DATE' => $timeStartSystem->toString(), '<UF_RESULT_DATE' => $timeEndSystem->toString(), '>UF_RESULT' => 0]
         ];
+
         if( !empty($limit) ) $requestArr['limit'] = $limit;
 
         $rsObj = $this->hlEntityDataClass::getList($requestArr);

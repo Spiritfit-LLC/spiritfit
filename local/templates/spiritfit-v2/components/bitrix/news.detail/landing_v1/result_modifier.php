@@ -34,8 +34,11 @@ $pageBlocks = [
     ],
     "block5" => [
         "BLOCK5_TITLE",
+        "BLOCK5_DESCRIPTION",
         "BLOCK5_ACTIVE",
         "BLOCK5_DATE",
+        "BLOCK5_VIDEO_TITLE",
+        "BLOCK5_VIDEO_LINK",
         "BLOCK5_SORT"
     ],
 ];

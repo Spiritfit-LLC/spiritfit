@@ -1304,4 +1304,45 @@ main.b-page__main {
 	}
 }
 
+.profile-quiz-btn {
+    background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);
+    border-radius: 8px;
+    border-color: transparent;
+    padding: 20px 60px;
+    transition: all .3s;
+    margin-right: 20px;
+    text-align: center;
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    align-items: center;
+    justify-content: center;
+}
+.profile-quiz-btn:hover {
+    background: linear-gradient(90deg, #E43932 46.26%, #7827F6 98.07%);
+}
+.open-share-block {
+    display: block;
+    position: relative;
+    text-align: center;
+    text-decoration: underline;
+    line-height: 28px;
+    padding-right: 20px;
+}
+.share-wrap .share {
+    display: block;
+    position: absolute;
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 20px;
+    list-style: none;
+}
+.share-wrap .share li {
+    display: block;
+    position: relative;
+    padding: 10px 0px;
+}
+
 /* ==================== */
