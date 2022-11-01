@@ -14,6 +14,7 @@
     /** @var CBitrixComponent $component */
 
     $this->setFrameMode(true);
+    $isLastGrey = true;
 ?>
     <script type="text/javascript">
         var quizComponentName = "<?=$arResult['COMPONENT_NAME']?>";
@@ -37,9 +38,8 @@
     <div class="question-wrapper blockitem" <?=empty($arResult['QUESTION']) ? 'style="margin-bottom: 0;"' : ''?>>
         <div class="content-center">
             <?
-            if( empty($arResult['QUESTION']) ) {
-                ?><!--<div class="question-wrapper-empty"><?=GetMessage('QUIZ_QUESTION_EMPTY')?></div>--><?
-            } else if( !empty($arResult['QUESTION']['IS_ANSWERED']) ) {
+            if( !empty($arResult['QUESTION']['IS_ANSWERED']) ) {
+                $isLastGrey = false;
                 ?>
                 <div class="question-form">
                     <div class="question-form__info"><?=str_replace(['#CURRENT#', '#TOTAL#'], [$arResult['QUESTION']['POSITION']['CURRENT'], $arResult['QUESTION']['POSITION']['TOTAL']], GetMessage('QUIZ_QUESTION_POSITION'))?></div>
@@ -47,7 +47,8 @@
                     <div class="success"><?=GetMessage('QUIZ_QUESTION_EXISTS')?></div>
                 </div>
                 <?
-            } else {
+            } else if( !empty($arResult['QUESTION']['PROPERTIES']['TYPE']['VALUE']) ) {
+                $isLastGrey = false;
                 switch($arResult['QUESTION']['PROPERTIES']['TYPE']['VALUE']) {
                     case 'Text':
                         ?>
@@ -124,6 +125,7 @@
     </div>
     <?
         if( !empty($arResult['RESULT_TABLE_USER']['QUESTIONS']) || !empty($arResult['RESULT_TABLE']['TOTAL_RESULT']) ) {
+            $isLastGrey = false;
             ?>
             <div class="quiz-answers blockitem">
                 <div class="content-center">
@@ -192,7 +194,7 @@
     ?>
     <?if(!empty($arParams['BLOCK_VIDEO_LINK'])) {
         ?>
-        <div class="quiz-video-wrapper b-quiz-gradient blockitem">
+        <div class="quiz-video-wrapper blockitem <?=$isLastGrey ? 'grey' : 'b-quiz-gradient'?>">
             <div class="content-center">
                 <div class="question-form__info"><?=$arParams['BLOCK_VIDEO_TITLE']?></div>
                 <div class="quiz-video">

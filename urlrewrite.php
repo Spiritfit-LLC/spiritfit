@@ -127,4 +127,12 @@ $arUrlRewrite=array (
     'PATH' => '/landings/v2/index.php',
     'SORT' => 100,
   ),
+  16 => 
+  array (
+    'CONDITION' => '#^/quiz/#',
+    'RULE' => '',
+    'ID' => 'bitrix:news',
+    'PATH' => '/quiz/index.php',
+    'SORT' => 100,
+  ),
 );

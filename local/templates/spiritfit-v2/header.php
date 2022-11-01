@@ -135,7 +135,7 @@ foreach( $clubs as $club ) {
     if( isset($_COOKIE["theme_type"]) && intval($_COOKIE["theme_type"]) === 2 && strpos($page, "/blog/") !== false ) {
 	    if( isset($classPage) ) $classPage += " white"; else $classPage = "white";
     }
-    else if( strpos($page, "/landings/") !== false ) {
+    else if( strpos($page, "/landings/") !== false || strpos($page, "/quiz/") !== false ) {
 		if( isset($classPage) ) $classPage += " white is-landing"; else $classPage = "white is-landing";
 	}
 

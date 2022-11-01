@@ -193,22 +193,21 @@ class Quiz {
         return [];
     }
 
-    public function getAllResults(int $timeStart, int $timeEnd, int $limit = 0) : array {
+    public function getAllResults(int $timeStart, int $timeEnd) : array {
         $arResult = ['TOTAL_RESULT' => [], 'BY_QUESTIONS' => []];
+
+        if( !isset($this->hlEntityDataClass) ) return $arResult;
+
         $filterArr = [];
 
         $timeStartSystem = \Bitrix\Main\Type\DateTime::createFromTimestamp($timeStart);
         $timeEndSystem = \Bitrix\Main\Type\DateTime::createFromTimestamp($timeEnd);
 
-        $requestArr = [
+        $rsObj = $this->hlEntityDataClass::getList([
             "select" => ["*"],
             "order" => ['UF_RESULT_DATE' => 'ASC'],
             "filter" => ['>UF_RESULT_DATE' => $timeStartSystem->toString(), '<UF_RESULT_DATE' => $timeEndSystem->toString(), '>UF_RESULT' => 0]
-        ];
-
-        if( !empty($limit) ) $requestArr['limit'] = $limit;
-
-        $rsObj = $this->hlEntityDataClass::getList($requestArr);
+        ]);
         while( $rsData = $rsObj->Fetch() ) {
             if(!in_array($rsData['UF_USER_ID'], $filterArr)) $filterArr[] = $rsData['UF_USER_ID'];
 
@@ -242,6 +241,36 @@ class Quiz {
         });
 
         return $arResult;
+    }
+
+    public function getLimitedResults(int $timeStart, int $timeEnd, int $limit) : array {
+        if( empty($this->userId) || !isset($this->hlEntityDataClass) ) return [];
+        if( !$this->isUserInQuiz($this->userId) ) return [];
+
+        $timeStartSystem = \Bitrix\Main\Type\DateTime::createFromTimestamp($timeStart);
+        $timeEndSystem = \Bitrix\Main\Type\DateTime::createFromTimestamp($timeEnd);
+
+        $resultArr = [];
+        $usersCount = 0;
+
+        $rsObj = $this->hlEntityDataClass::getList([
+            "select" => ["*"],
+            "order" => ['UF_RESULT_DATE' => 'ASC'],
+            "filter" => ['>UF_RESULT_DATE' => $timeStartSystem->toString(), '<UF_RESULT_DATE' => $timeEndSystem->toString(), '>UF_RESULT' => 0]
+        ]);
+        while( $rsData = $rsObj->Fetch() ) {
+
+            if( !isset($resultArr[$rsData['UF_USER_ID']]) ) {
+                $resultArr[$rsData['UF_USER_ID']] = 0;
+                $usersCount += 1;
+            }
+
+            $resultArr[$rsData['UF_USER_ID']] += intval($rsData['UF_RESULT']);
+
+            if( $usersCount >= $limit ) break;
+        }
+
+        return $resultArr;
     }
 
     public function getUserResults(int $timeStart, int $timeEnd, $limit = 0) : array {
@@ -278,6 +307,14 @@ class Quiz {
         $encoded = $cipher->encrypt($this->userId, Tools::getKey());
 
         return urlencode( base64_encode($encoded) );
+    }
+
+    public function isUserInQuiz( int $userId = 0 ) : bool {
+        if( !isset($this->hlEntityDataClass) ) return false;
+        if( empty($userId) && empty($this->userId) ) return false;
+
+        if( empty($userId) ) $userId = $this->userId;
+        return $this->hlEntityDataClass::getCount(['UF_USER_ID' => $userId]) > 0 ? true : false;
     }
 
     public static function addBonus(string $uid, int $bonusVal) : array {
