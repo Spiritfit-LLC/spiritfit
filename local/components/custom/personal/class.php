@@ -20,15 +20,16 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         }
 
         /* Для конкурса */
-        $arParams["HAS_NICKNAME_HIDE_FIELDS"] = ['club', 'gender', 'birthday', 'surname'];
+        $arParams["SHORT_FORM_FIELDS"] = ['club', 'gender', 'birthday', 'surname'];
         if( Loader::includeModule('outcode.quiz') ) {
-            $arParams["HAS_NICKNAME"] = !empty(Context::getCurrent()->getRequest()->get('nickname'));
-            $arParams["BONUS_ID"] = Context::getCurrent()->getRequest()->get('bonusid');
+            $arParams['USE_SHORT_FORM'] = !empty(Context::getCurrent()->getRequest()->get('nickname'));
+            $arParams['BONUS_ID'] = Context::getCurrent()->getRequest()->get('bonusid');
 
             $quiz = new \Outcode\Quiz('');
             $uid = $quiz->getUserUid();
-            $arParams['BONUS_LINK'] = !empty($uid) ? '/?nickname=y&bonusid=' . $uid : '';
+            $arParams['LINK_GET_BONUS'] = !empty($uid) ? '/?nickname=y&bonusid=' . $uid : '';
         }
+        /* Для конкурса */
 
         return $arParams;
     }
@@ -584,14 +585,13 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
             $FORM_FIELDS=PersonalUtils::GetFormFileds($DATA['WEB_FORM_ID'], false, true);
 
             /* Для регистрации с ником */
-            if(!$this->arParams['HAS_NICKNAME']) {
+            if(!$this->arParams['USE_SHORT_FORM']) {
                 $errStr = '';
-                foreach( $this->arParams['HAS_NICKNAME_HIDE_FIELDS'] as $fieldsCode ){
+                foreach( $this->arParams['SHORT_FORM_FIELDS'] as $fieldsCode ){
                     if( empty($FORM_FIELDS['FIELDS'][$fieldsCode]['VALUE']) ) {
                         $errStr .= $FORM_FIELDS['FIELDS'][$fieldsCode]['NAME'] . ': ' . $this->errorMessages[101] . '<br>';
                     }
                 }
-                $errStr .= strlen($FORM_FIELDS['FIELDS']['name']['VALUE']) < 100 ? '' : $FORM_FIELDS['FIELDS'][$fieldsCode]['NAME'] . ': ' . $this->errorMessages[101] . '<br>';
                 $errStr .= strlen($FORM_FIELDS['FIELDS']['surname']['VALUE']) < 20 ? '' : $FORM_FIELDS['FIELDS'][$fieldsCode]['NAME'] . ': ' . $this->errorMessages[101] . '<br>';
                 if( !empty($errStr) ) {
                     throw new Exception($errStr, 2);
@@ -645,7 +645,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                         "address"=>$FORM_FIELDS["FIELDS"]["address"]["VALUE"],
                         "geo_lat"=>$DATA["geo_lat"],
                         "geo_lon"=>$DATA["geo_lon"],
-                        'is_play'=>!empty($this->arParams["HAS_NICKNAME"]) ? $this->arParams["HAS_NICKNAME"] : false
+                        'is_play'=>!empty($this->arParams["USE_SHORT_FORM"]) ? true : false
                     ];
                     $api=new Api(array(
                         'action'=>'lkreg',
@@ -705,7 +705,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                             "address"=>$FORM_FIELDS["FIELDS"]["address"]["VALUE"],
                             "geo_lat"=>$DATA["geo_lat"],
                             "geo_lon"=>$DATA["geo_lon"],
-                            'is_play'=>!empty($this->arParams["HAS_NICKNAME"]) ? $this->arParams["HAS_NICKNAME"] : false
+                            'is_play'=>!empty($this->arParams["USE_SHORT_FORM"]) ? true: false
                         ];
 
                         $api=new Api(array(

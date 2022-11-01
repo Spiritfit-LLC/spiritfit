@@ -1,6 +1,6 @@
 <? if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die(); ?>
-<? if(!empty($BLOCKS["BLOCK5_ACTIVE"])) { ?>
-    <?
+<? if( !empty($BLOCKS["BLOCK5_ACTIVE"]) && defined('IS_QUIZ_ACTIVE') && IS_QUIZ_ACTIVE ) { ?>
+	<?
     $APPLICATION->IncludeComponent(
         "outcode.quiz:form",
         "",
@@ -20,4 +20,12 @@
         )
     );
     ?>
+<? } else { ?>
+    <div class="b-form">
+        <div class="content-center">
+		    <div class="landing-title" style="margin-bottom: 0;">
+			    Квиз окончен
+		    </div>
+	    </div>
+    </div>
 <? } ?>
