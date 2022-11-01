@@ -11,7 +11,7 @@ define("ABONEMENTS_PRICE_SIGN_ID", 36);// id поля базовая цена
 define("ABONEMENTS_GOD_FITNESA_ID", 37);// id абонемента "Год фитнеса"
 define("IBLOCK_COLORS_ID", 14);// ID инфоблока "Цвета"
 define("IBLOCK_CLUBS_ID", 6);// ID инфоблока "Клубы"
-define("IS_QUIZ_ACTIVE", false);// Активность конкурса для ЛК
+define("IS_QUIZ_ACTIVE", true);// Активность конкурса для ЛК
 define("QUIZ_LINK", "/landings/v1/play/");
 define("QUIZ_LINK_TITLE", "Квиз");
 
