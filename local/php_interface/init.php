@@ -67,6 +67,9 @@ if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/TurboP
 if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/api/WebAnalytics.php')) {
     require_once($_SERVER["DOCUMENT_ROOT"] . '/local/api/WebAnalytics.php');
 }
+if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/api/ProfileApi.php')) {
+    require_once($_SERVER["DOCUMENT_ROOT"] . '/local/api/ProfileApi.php');
+}
 if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/local/php_interface/classes/SpiritNetUtils.php")){
     require_once($_SERVER["DOCUMENT_ROOT"] . "/local/php_interface/classes/SpiritNetUtils.php");
 }
