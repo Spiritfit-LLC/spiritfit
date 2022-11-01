@@ -3,6 +3,9 @@
  * @var CMain $APPLICATION
  */
 ?>
+<?php
+global $USER;
+if ($USER->IsAdmin()):?>
 <?$APPLICATION->IncludeComponent(
     "bitrix:rest.hook",
     ".default",
@@ -31,4 +34,5 @@
         cursor: pointer;
     }
 </style>
+<?endif;?>
 <? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/epilog_admin.php");
