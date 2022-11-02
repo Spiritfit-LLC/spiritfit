@@ -6,7 +6,7 @@ define('H1_HIDE', true);
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 
 $APPLICATION->IncludeComponent("bitrix:news","quiz",Array(
-        "SHORT_VERSION" => "Y",//defined('IS_QUIZ_ACTIVE') && IS_QUIZ_ACTIVE ? "N" : "Y",
+        "SHORT_VERSION" => defined('IS_QUIZ_ACTIVE') && IS_QUIZ_ACTIVE ? "N" : "Y",
         "DISPLAY_DATE" => "N",
         "DISPLAY_PICTURE" => "Y",
         "DISPLAY_PREVIEW_TEXT" => "Y",

@@ -361,7 +361,7 @@
 }
 .block1 .back2 {
     bottom: -40px;
-    left: 130px;
+    left: 90px;
 }
 .block1 .back3 {
     top: 0;
@@ -539,7 +539,7 @@
 }
 .block5 .back1 {
     top: -60px;
-    left: 140px;
+    left: 100px;
 }
 .block5 .back2 {
     right: 140px;
@@ -777,6 +777,16 @@
     .block7 .time-table > .table-cell:nth-child(1) {
         padding-right: 46px;
     }
+	.block6 .text-block-wrapper {
+        padding: 80px 0px;
+        background-size: 300px;
+        background-position: right bottom;
+    }
+	.block6 .back1 {
+        bottom: 300px;
+        right: 210px;
+        width: 80px;
+    }
 }
 @media screen and (max-width: 1024px) {
     .b-form .landing-title {
@@ -823,16 +833,6 @@
         padding: 80px 0px;
         background-size: 200px;
         background-position: right bottom;
-    }
-    .block6 .text-block-wrapper {
-        padding: 80px 0px;
-        background-size: 300px;
-        background-position: right bottom;
-    }
-    .block6 .back1 {
-        bottom: 300px;
-        right: 210px;
-        width: 80px;
     }
     .block2 .back3,
     .block2 .back2 {
