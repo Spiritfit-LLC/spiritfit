@@ -294,6 +294,18 @@
 	max-width: 585px;
 	margin: 0 auto;
 }
+.results-table .notice {
+	display: inline-block;
+	position: relative;
+	color: #e7e7e7;
+}
+.results-table-notice {
+	display: block;
+	position: relative;
+	font-size: 12pt;
+	line-height: 12px;
+	margin: 10px 0px;
+}
 
 @media screen and (max-width: 768px) {
 	.results-table-content.three .results-table__cell {

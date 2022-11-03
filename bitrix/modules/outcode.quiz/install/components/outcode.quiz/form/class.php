@@ -154,7 +154,7 @@
             }
 
             /* Получаем вопрос */
-            $this->arResult['QUESTION'] = $quiz->getQuestionByTime(time());
+            $this->arResult['QUESTION'] = !empty($USER->GetEmail()) ? $quiz->getQuestionByTime(time()) : [];
             if( !empty($this->arResult['QUESTION']['PROPERTIES']['ANSWERS_STRING']['VALUE']) ) {
                 foreach($this->arResult['QUESTION']['PROPERTIES']['ANSWERS_STRING']['VALUE'] as &$strValue) {
                     $strValue = str_replace('#', '', $strValue);
@@ -171,7 +171,8 @@
             /* Получаем вопрос */
 
             $uid = $quiz->getUserUid();
-            $this->arResult['LINK_LOGIN'] = $USER->IsAuthorized() ? '' : $this->arParams['PERSONAL_PATH'];
+            $this->arResult['LINK_LOGIN'] = $USER->IsAuthorized() && !empty($USER->GetEmail()) ? '' : $this->arParams['PERSONAL_PATH'];
+            $this->arResult['EMAIL_WARNING'] = empty($USER->GetEmail());
             //$this->arResult['LINK_GET_BONUS'] = !empty($uid) ? $this->arParams['PERSONAL_PATH'] . '?bonusid=' . $uid : '';
             $this->arResult['USER_ID'] = $USER->IsAuthorized() ? $USER->GetID() : 0;
 

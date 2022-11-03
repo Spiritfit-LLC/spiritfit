@@ -354,9 +354,9 @@ class outcode_quiz extends CModule
         $APPLICATION->throwException(\Bitrix\Main\Config\Option::set($this->MODULE_ID, "CIPHER_KEY", $cipherKey));
 
         /* Добавляем события */
-        EventManager::getInstance()->registerEventHandler('main', 'OnBeforeUserRegister', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName');
+        /*EventManager::getInstance()->registerEventHandler('main', 'OnBeforeUserRegister', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName');
         EventManager::getInstance()->registerEventHandler('main', 'OnBeforeUserUpdate', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName'); 
-        EventManager::getInstance()->registerEventHandler('main', 'OnBeforeUserAdd', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName');
+        EventManager::getInstance()->registerEventHandler('main', 'OnBeforeUserAdd', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName');*/
 
         $APPLICATION->IncludeAdminFile(\Bitrix\Main\Localization\Loc::getMessage("QUIZ_MODULE_INSTALL"), $DOCUMENT_ROOT."/bitrix/modules/".$this->MODULE_ID."/install/step.php");
         return true;
@@ -406,9 +406,9 @@ class outcode_quiz extends CModule
         \Bitrix\Main\Config\Option::delete($this->MODULE_ID, ["name" => "CIPHER_KEY"]);
 
         /* Удаляем события */
-        EventManager::getInstance()->unRegisterEventHandler('main', 'OnBeforeUserRegister', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName');
+        /*EventManager::getInstance()->unRegisterEventHandler('main', 'OnBeforeUserRegister', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName');
         EventManager::getInstance()->unRegisterEventHandler('main', 'OnBeforeUserUpdate', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName'); 
-        EventManager::getInstance()->unRegisterEventHandler('main', 'OnBeforeUserAdd', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName');
+        EventManager::getInstance()->unRegisterEventHandler('main', 'OnBeforeUserAdd', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName');*/
 
         /* Отменяем регистрацию модуля */
         UnRegisterModule($this->MODULE_ID);

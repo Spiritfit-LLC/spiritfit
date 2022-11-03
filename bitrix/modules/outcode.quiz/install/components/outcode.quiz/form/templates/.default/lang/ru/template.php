@@ -15,3 +15,5 @@ $MESS['QUIZ_TABLE_USER'] = 'Пользователь';
 $MESS['QUIZ_TABLE_QUESTION_COUNT'] = 'Правильных ответов';
 $MESS['QUIZ_TABLE_BYQ'] = 'Результаты по отдельным вопросам';
 $MESS['QUIZ_QUESTION_POSITION'] = 'Вопрос #CURRENT# из #TOTAL#';
+$MESS['QUIZ_NO_EMAIL'] = 'Для участия в КВИЗе нужно указать ваш email адрес в личном кабинете!';
+$MESS['QUIZ_NOTICE'] = '* - количество бонусных баллов по программе лояльности';

@@ -230,7 +230,7 @@ class Quiz {
                 $arResult['TOTAL_RESULT'][$userArr['ID']] = [
                     'VALUE' => $arResult['TOTAL_RESULT'][$userArr['ID']],
                     'EMAIL' => $userArr['EMAIL'],
-                    'LOGIN' => empty($userArr['PERSONAL_PROFESSION']) ? Tools::getLoginFromEmail($userArr['EMAIL']) : $userArr['PERSONAL_PROFESSION'],
+                    'LOGIN' => !empty($userArr['EMAIL']) ? Tools::getLoginFromEmail($userArr['EMAIL']) : $userArr['ID'],
                     'USER_ID' => $userArr['ID']
                 ];
             }

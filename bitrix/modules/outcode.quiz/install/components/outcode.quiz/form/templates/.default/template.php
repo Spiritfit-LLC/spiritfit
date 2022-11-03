@@ -37,6 +37,13 @@
     </div>
     <div class="question-wrapper blockitem" <?=empty($arResult['QUESTION']) ? 'style="margin-bottom: 0;"' : ''?>>
         <div class="content-center">
+            <? if( $arResult['EMAIL_WARNING'] ) {
+                ?>
+                <div class="question-form">
+                    <div class="success"><?=GetMessage('QUIZ_NO_EMAIL')?></div>
+                </div>
+                <?
+            } ?>
             <?
             if( !empty($arResult['QUESTION']['IS_ANSWERED']) ) {
                 $isLastGrey = false;
@@ -140,7 +147,7 @@
                             <div class="results-table-content two">
                                 <div class="results-table__row">
                                     <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_QUESTION')?></div>
-                                    <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_VALUE')?></div>
+                                    <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_VALUE')?><span class="notice">*</span></div>
                                 </div>
                                 <? $count = 0; ?>
                                 <? foreach($arResult['RESULT_TABLE_USER']['QUESTIONS'] as $question => $result) { ?>
@@ -158,6 +165,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="results-table-notice"><?=GetMessage('QUIZ_NOTICE')?></div>
                         <?
                     }
                     if( !empty($arResult['RESULT_TABLE']['TOTAL_RESULT']) ) {
@@ -171,7 +179,7 @@
                                 <div class="results-table__row">
                                     <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_USER')?></div>
                                     <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_QUESTION_COUNT')?></div>
-                                    <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_VALUE')?></div>
+                                    <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_VALUE')?><span class="notice">*</span></div>
                                 </div>
                                 <? $count = 0; ?>
                                 <? foreach($arResult['RESULT_TABLE']['TOTAL_RESULT'] as $result) { ?>
@@ -184,6 +192,7 @@
                                 <? } ?>
                             </div>
                         </div>
+                        <div class="results-table-notice"><?=GetMessage('QUIZ_NOTICE')?></div>
                         <?
                     }
                     ?>
