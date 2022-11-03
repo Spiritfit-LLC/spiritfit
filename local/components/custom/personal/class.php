@@ -20,14 +20,12 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         }
 
         /* Для конкурса */
-        $arParams["SHORT_FORM_FIELDS"] = ['club', 'gender', 'birthday', 'surname'];
         if( Loader::includeModule('outcode.quiz') ) {
-            $arParams['USE_SHORT_FORM'] = !empty(Context::getCurrent()->getRequest()->get('nickname'));
             $arParams['BONUS_ID'] = Context::getCurrent()->getRequest()->get('bonusid');
 
             $quiz = new \Outcode\Quiz('');
             $uid = $quiz->getUserUid();
-            $arParams['LINK_GET_BONUS'] = !empty($uid) ? '/?nickname=y&bonusid=' . $uid : '';
+            $arParams['LINK_GET_BONUS'] = !empty($uid) ? '/?bonusid=' . $uid : '';
         }
         /* Для конкурса */
 
@@ -363,8 +361,6 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         27=>'Время подтверждения Email истекло. Попробуйте еще раз',
         28=>'Некорректный E-mail адрес',
         100=>'Непредвиденная ошибка',
-        101=>'Заполните поле',
-        102=>'Пользователь с таким ником уже зарегистрирован',
     ];
 
     //ВЫХОД
@@ -584,25 +580,11 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         if (!empty($DATA['WEB_FORM_ID'])){
             $FORM_FIELDS=PersonalUtils::GetFormFileds($DATA['WEB_FORM_ID'], false, true);
 
-            /* Для регистрации с ником */
-            if(!$this->arParams['USE_SHORT_FORM']) {
-                $errStr = '';
-                foreach( $this->arParams['SHORT_FORM_FIELDS'] as $fieldsCode ){
-                    if( empty($FORM_FIELDS['FIELDS'][$fieldsCode]['VALUE']) ) {
-                        $errStr .= $FORM_FIELDS['FIELDS'][$fieldsCode]['NAME'] . ': ' . $this->errorMessages[101] . '<br>';
-                    }
-                }
-                $errStr .= strlen($FORM_FIELDS['FIELDS']['surname']['VALUE']) < 20 ? '' : $FORM_FIELDS['FIELDS'][$fieldsCode]['NAME'] . ': ' . $this->errorMessages[101] . '<br>';
-                if( !empty($errStr) ) {
-                    throw new Exception($errStr, 2);
-                }
-            }
-            /* Для регистрации с ником */
-
             //Не заполнены обязательные поля или несоответствие валидатору
             if (isset($FORM_FIELDS['result']) && $FORM_FIELDS['result']==false){
                 throw new Exception($FORM_FIELDS['errorText'], 2);
             }
+
             if (!$FORM_FIELDS['ISSET']){
 //                throw new Exception($this->errorMessages[2], 2);
                 return ['result'=>false, 'errors'=>$FORM_FIELDS['ERRORS']];
@@ -644,8 +626,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                         'event'=>$FORM_FIELDS['FIELDS']['EVENT_1C']['VALUE'],
                         "address"=>$FORM_FIELDS["FIELDS"]["address"]["VALUE"],
                         "geo_lat"=>$DATA["geo_lat"],
-                        "geo_lon"=>$DATA["geo_lon"],
-                        'is_play'=>!empty($this->arParams["USE_SHORT_FORM"]) ? true : false
+                        "geo_lon"=>$DATA["geo_lon"]
                     ];
                     $api=new Api(array(
                         'action'=>'lkreg',
@@ -704,8 +685,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                             "email"=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
                             "address"=>$FORM_FIELDS["FIELDS"]["address"]["VALUE"],
                             "geo_lat"=>$DATA["geo_lat"],
-                            "geo_lon"=>$DATA["geo_lon"],
-                            'is_play'=>!empty($this->arParams["USE_SHORT_FORM"]) ? true: false
+                            "geo_lon"=>$DATA["geo_lon"]
                         ];
 
                         $api=new Api(array(
@@ -739,8 +719,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                                 'PERSONAL_BIRTHDAY'=>$FORM_FIELDS['FIELDS']['birthday']['VALUE'],
                                 'PERSONAL_PHONE'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
                                 'PERSONAL_GENDER'=>$FORM_FIELDS['FIELDS']['gender']['VALUE'],
-                                'UF_ADDRESS'=>$FORM_FIELDS['FIELDS']['address']['VALUE'],
-                                'PERSONAL_PROFESSION'=>$FORM_FIELDS['FIELDS']['nickname']['VALUE'],
+                                'UF_ADDRESS'=>$FORM_FIELDS['FIELDS']['address']['VALUE']
                             );
                             unset($_SESSION['ID_1C']);
 
@@ -748,9 +727,11 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                             if (intval($ID) > 0){
                                 $user->Login($FORM_FIELDS['FIELDS']['phone']['VALUE'], $FORM_FIELDS['FIELDS']['passwd']['VALUE'],"Y","Y");
 
+                                /* Начисление баллов */
                                 if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')) {
                                     \Outcode\Quiz::addBonus($this->arParams['BONUS_ID'], 10);
                                 }
+                                /* Начисление баллов */
 
                                 $api=new Api(array(
                                     'action'=>'lkedit',

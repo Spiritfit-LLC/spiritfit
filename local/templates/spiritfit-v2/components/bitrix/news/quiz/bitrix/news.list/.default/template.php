@@ -29,7 +29,7 @@ $this->setFrameMode(true);
                 </p>
                 <b>5.000.000 &#8381;</b>
             </div>
-            <div class="quiz-banner-login"><a class="button white" href="/personal/?nickname=y"><span>С днем рождения</span></a></div>
+            <div class="quiz-banner-login"><a class="button white" href="/personal/"><span>С днем рождения</span></a></div>
         </div>
     </div>
 </div>
@@ -159,7 +159,7 @@ $this->setFrameMode(true);
                 </div>
             </div>
             <div class="block-link">
-                <a class="button gradient" href="/personal/?nickname=y"><span>Играть!</span></a>
+                <a class="button gradient" href="/personal/"><span>Играть!</span></a>
             </div>
             <? if(!empty($arResult["ITEMS"])) {
                 ?>
@@ -188,7 +188,7 @@ $this->setFrameMode(true);
                     } ?>
                 </div>
                 <div class="block-link">
-                    <a class="button gradient" href="/personal/?nickname=y"><span>Играть!</span></a>
+                    <a class="button gradient" href="/personal/"><span>Играть!</span></a>
                 </div>
                 <?
             }?>
@@ -207,7 +207,7 @@ $this->setFrameMode(true);
                         в баллы программы лояльности Spirit.Fitness
                     </p>
                 </div>
-                <div class="quiz-banner-login"><a class="button white" href="/personal/?nickname=y"><span>Играть!</span></a></div>
+                <div class="quiz-banner-login"><a class="button white" href="/personal/"><span>Играть!</span></a></div>
             </div>
         </div>
     </div>

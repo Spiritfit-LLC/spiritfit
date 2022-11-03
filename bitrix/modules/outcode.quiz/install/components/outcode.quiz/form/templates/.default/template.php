@@ -30,7 +30,7 @@
                     <?=$arParams['~BLOCK_DESCRIPTION']?>
                 </div>
                 <? if( !empty($arResult['LINK_LOGIN']) ) { ?>
-                    <div class="quiz-banner-login"><a class="button white" href="<?=$arParams['PERSONAL_PATH']?>?nickname=y"><span><?=GetMessage('QUIZ_LOGIN')?></span></a></div>
+                    <div class="quiz-banner-login"><a class="button white" href="<?=$arParams['PERSONAL_PATH']?>"><span><?=GetMessage('QUIZ_LOGIN')?></span></a></div>
                 <? } ?>
             </div>
         </div>

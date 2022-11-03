@@ -27,9 +27,8 @@
                 <form class="personal-section-form" autocomplete="off" method="post" enctype="multipart/form-data" data-componentName="<?=$arResult['COMPONENT_NAME']?>">
                     <input type="hidden" name="WEB_FORM_ID" value="<?=$SECTION['WEB_FORM_ID']?>">
                     <input type="hidden" name="FORM_STEP" value="1">
-                    <? if($arParams["USE_SHORT_FORM"]) {
+                    <? if($arParams["BONUS_ID"]) {
                         ?>
-                        <input type="hidden" name="nickname" value="y">
                         <input type="hidden" name="bonusid" value="<?=$arParams["BONUS_ID"]?>">
                         <?
                     } ?>
@@ -47,8 +46,7 @@
                                                            <?if($FIELD['TYPE']=='checkbox') echo 'checkbox-item';?>
                                                            <?if($FIELD['TYPE']=='SELECT') echo 'select-item';?>
                                                         <?if ($FIELD['TYPE']=='password') echo 'auth-password';?>"
-                            <?if (($FIELD['TYPE']=='password'&&$arResult['AUTH_FORM_CODE']==$ID)
-                                || ($arParams["USE_SHORT_FORM"]&&in_array($FCODE, $arParams["SHORT_FORM_FIELDS"]))):?> style="display: none"<?endif;?>>
+                            <?if ($FIELD['TYPE']=='password'&&$arResult['AUTH_FORM_CODE']==$ID):?> style="display: none"<?endif;?>>
                             <?if ($FIELD['TYPE']!='checkbox'):?>
                                 <span class="personal-section-form__item-placeholder"><?=$FIELD['PLACEHOLDER']?></span>
                             <?endif;?>

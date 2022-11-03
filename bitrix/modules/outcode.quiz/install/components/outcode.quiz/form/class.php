@@ -171,8 +171,8 @@
             /* Получаем вопрос */
 
             $uid = $quiz->getUserUid();
-            $this->arResult['LINK_LOGIN'] = $USER->IsAuthorized() ? '' : $this->arParams['PERSONAL_PATH'] . '?nickname=y';
-            $this->arResult['LINK_GET_BONUS'] = !empty($uid) ? $this->arParams['PERSONAL_PATH'] . '?nickname=y&bonusid=' . $uid : '';
+            $this->arResult['LINK_LOGIN'] = $USER->IsAuthorized() ? '' : $this->arParams['PERSONAL_PATH'];
+            //$this->arResult['LINK_GET_BONUS'] = !empty($uid) ? $this->arParams['PERSONAL_PATH'] . '?bonusid=' . $uid : '';
             $this->arResult['USER_ID'] = $USER->IsAuthorized() ? $USER->GetID() : 0;
 
 			

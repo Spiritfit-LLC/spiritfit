@@ -11,7 +11,7 @@
             "SHOW_RESULT_AFTER" => "1800",
             "SHOW_RESULTS_ON_LAST_ALWAYS" => (!empty($BLOCKS["BLOCK5_DATE"]) && strtotime($BLOCKS["BLOCK5_DATE"]) < time()) ? "Y" : "N",
             "CACHE_GROUPS" => "N",
-            "CACHE_TIME" => "3600",
+            "CACHE_TIME" => "600",
             "CACHE_TYPE" => "A",
             "BLOCK_TITLE" => $BLOCKS["BLOCK5_TITLE"],
             "BLOCK_DESCRIPTION" => $BLOCKS["BLOCK5_DESCRIPTION"],
