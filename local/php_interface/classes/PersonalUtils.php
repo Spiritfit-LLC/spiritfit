@@ -584,31 +584,19 @@ class PersonalUtils{
                         'декабрь'
                     ];
 
-                    $USER_VISITS_LIST=unserialize($arUser["UF_MONTH_VISITS"]);
-                    $now=strtotime(date('d-m-Y'));
-                    $currentDate=strtotime(str_replace('.', '-', end($USER_VISITS_LIST)["month"]));
-                    $VISITS=[];
-
-
-                    while($now>$currentDate){
-                        $month = date('n', $currentDate)-1;
-                        $VISITS[date('Y m', $currentDate)]=[
-                            "VALUE"=>0,
-                            "MONTH"=>$monthArr[$month],
-                        ];
-                        $currentDate=strtotime(date('d-m-Y', $currentDate).' +1 months');
-                    }
-
-                    foreach($USER_VISITS_LIST as $MONTHVISIT){
-                        $date = str_replace('.', '-', $MONTHVISIT["month"]);
-                        $month = date('n', strtotime($date))-1;
-                        $VISITS[date('Y m', strtotime($date))]=[
-                            "VALUE"=>$MONTHVISIT["days"],
-                            "MONTH"=>$monthArr[$month],
-                        ];
-                    }
-                    ksort($VISITS);
-                    $ar_SectionList[$ar_Section['ID']]['USER_VISITS_LIST']=array_slice($VISITS, -12);
+//                    $USER_VISITS_LIST=unserialize($arUser["UF_MONTH_VISITS"]);
+//                    if (!empty($USER_VISITS_LIST)){
+//                        foreach ($USER_VISITS_LIST as $MONTHVISIT){
+//                            $date = str_replace('.', '-', $MONTHVISIT["month"]);
+//                            $month = date('n', strtotime($date))-1;
+//                            $VISITS[date('Y m', strtotime($date))]=[
+//                                "VALUE"=>$MONTHVISIT["days"],
+//                                "MONTH"=>$monthArr[$month],
+//                            ];
+//                        }
+//                        ksort($VISITS);
+//                        $ar_SectionList[$ar_Section['ID']]['USER_VISITS_LIST']=$VISITS;
+//                    }
                 }
 
                 if (key_exists($ar_Section['ID'], $NOTIFICATIONS)){
@@ -717,29 +705,16 @@ class PersonalUtils{
 
         $LK_FIELDS['SECTIONS']=$ar_SectionList;
 
-
-        global $settings;
-        $image=CFile::GetPath(!empty($arUser['PERSONAL_PHOTO']) ? $arUser['PERSONAL_PHOTO'] : $settings["PROPERTIES"]['PROFILE_DEFAULT_PHOTO']['VALUE']);
-        list($width, $height) = getimagesize($_SERVER['DOCUMENT_ROOT'] . $image);
-        if ($height > $photo_size || $width>$photo_size) {
-            $ratio = $height < $width?$photo_size / $height:$photo_size/$width;
-            $filename=explode('.', basename($image));
-            $filename[0].=(string)$photo_size;
-            $filename=implode('.', $filename);
-
-            if (!file_exists($_SERVER['DOCUMENT_ROOT'] . '/upload/user_avatars/' . $filename)) {
-                $img = Utils::resize_image($_SERVER['DOCUMENT_ROOT'] . $image, $ratio);
-                if (!file_exists($_SERVER['DOCUMENT_ROOT'] . '/upload/user_avatars/')) {
-                    mkdir($_SERVER['DOCUMENT_ROOT'] . '/upload/user_avatars/', 0777, true);
-                }
-                imagejpeg($img, $_SERVER['DOCUMENT_ROOT'] . '/upload/user_avatars/' . $filename);
-            }
-            $img_src = '/upload/user_avatars/' . $filename;
-        } else {
-            $img_src = $image;
+        if (!empty($arUser["PERSONAL_PHOTO"])){
+            $avatar = CFile::ResizeImageGet($arUser["PERSONAL_PHOTO"], array('width'=>$photo_size, 'height'=>$photo_size), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+        }
+        else{
+            global $settings;
+            $img = $settings["PROPERTIES"]['PROFILE_DEFAULT_PHOTO']['VALUE'];
+            $avatar = CFile::ResizeImageGet($img, array('width'=>$photo_size, 'height'=>$photo_size), BX_RESIZE_IMAGE_PROPORTIONAL, true);
         }
         if (!$request_info){
-            $LK_FIELDS['HEAD']['PERSONAL_PHOTO'] = $img_src;
+            $LK_FIELDS['HEAD']['PERSONAL_PHOTO'] = $avatar["src"];
             $LK_FIELDS['OLD_PHOTO_ID']=$arUser['PERSONAL_PHOTO'];
         }
         else{
@@ -747,10 +722,8 @@ class PersonalUtils{
                     "%s://%s",
                     isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
                     $_SERVER['SERVER_NAME'])
-                .$img_src;
+                .$avatar["src"];
         }
-
-//        var_dump(json_encode($LK_FIELDS, JSON_UNESCAPED_UNICODE));
 
         return $LK_FIELDS;
     }
