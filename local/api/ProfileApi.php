@@ -14,6 +14,12 @@ class ProfileApi extends \IRestService{
                     'options' => [],
                 ],
             ],
+            'custom.'.static::SCOPE => [
+                'profile.editphoto' => [
+                    'callback' => [__CLASS__, "editPhoto"],
+                    'options' => [],
+                ],
+            ],
         ];
     }
 
@@ -132,6 +138,70 @@ class ProfileApi extends \IRestService{
         else{
             return ['message'=>'Ошибок нет', 'errorCode'=>0];
         }
+    }
+
+    public static function editPhoto($query, $n, \CRestServer $server){
+        self::checkQuery($query, ["phone", "photo"]);
+
+        function check_base64_image($base64){
+            $bin = base64_decode($base64);
+            $size = getImageSizeFromString($bin);
+
+            if (empty($size['mime']) || strpos($size['mime'], 'image/') !== 0) {
+                throw new \Bitrix\Rest\RestException(
+                    'Base64 value is not a valid image',
+                    'WRONG_REQUEST',
+                    \CRestServer::STATUS_WRONG_REQUEST
+                );
+            }
+
+            $ext = substr($size['mime'], 6);
+
+            if (!in_array($ext, ['png', 'gif', 'jpeg'])) {
+                throw new \Bitrix\Rest\RestException(
+                    'Unsupported image type',
+                    'WRONG_REQUEST',
+                    \CRestServer::STATUS_WRONG_REQUEST
+                );
+            }
+
+            $img_file = "/home/bitrix/tmp/".uniqid().".".$ext;
+            file_put_contents($img_file, $bin);
+            return $img_file;
+        }
+
+        function check_user_by_login($phone){
+            $rsUser=CUser::GetByLogin($phone);
+            $arUser=$rsUser->Fetch();
+            if (!$arUser){
+                throw new \Bitrix\Rest\RestException(
+                    'Не удалось определить пользователя сайта.',
+                    'WRONG_REQUEST',
+                    \CRestServer::STATUS_WRONG_REQUEST
+                );
+            }
+
+            return $arUser;
+        }
+
+        $tmpFile=check_base64_image($query["photo"]);
+        $user=check_user_by_login($query["phone"]);
+        $arFile = CFile::MakeFileArray($tmpFile);
+        $arFile['del'] = "Y";
+        $arFile['old_file'] = $user["PERSONAL_PHOTO"];
+        $newFileId=CFile::SaveFile($arFile, 'avatar');
+        $arFields['PERSONAL_PHOTO'] = $arFile;
+        global $USER;
+        $result = $USER->Update($user["ID"], $arFields,false);
+        if(!$result){
+            throw new \Bitrix\Rest\RestException(
+                'Не удалось обновить фотографию пользователя',
+                'INTERNAL_SERVER_ERROR',
+                \CRestServer::STATUS_INTERNAL
+            );
+        }
+        unlink($tmpFile);
+        return true;
     }
 }
 
