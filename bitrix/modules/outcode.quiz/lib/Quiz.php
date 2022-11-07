@@ -178,14 +178,14 @@ class Quiz {
         $result = $this->hlEntityDataClass::add($dataArr);
         if( $result->isSuccess() ) {
             /* Отправка в 1C*/
-            $userIsPushed = $this->hlEntityDataClass::getCount(['UF_USER_ID' => $this->userId, 'UF_PUSHED' => 1]);
+            /*$userIsPushed = $this->hlEntityDataClass::getCount(['UF_USER_ID' => $this->userId, 'UF_PUSHED' => 1]);
             if( empty($userIsPushed) && !empty($this->pushPath) ) {
                 $resultPush = new ResultPush($this->pushPath . "startplay");
                 $cRes = $resultPush->send(['email' => $userInfo['EMAIL']]);
                 if( !$cRes['error'] ) {
                     $this->hlEntityDataClass::update($result->getId(), ['UF_PUSHED' => 1]);
                 }
-            }
+            }*/
 
             return ['ID' => $result->getId(), 'RESULT' => $outResult];
         }
