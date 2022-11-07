@@ -223,7 +223,7 @@ class outcode_quiz extends CModule
             }
         }
 
-        /*Создание hightload блока*/
+        /*Создание hightload блока результатов*/
         $arLangs = Array(
             'ru' => Loc::getMessage('QUIZ_HIGHTLOAD_BLOCK_NAME'),
         );
@@ -340,6 +340,57 @@ class outcode_quiz extends CModule
             }
         }
 
+        /*Создание hightload блока выбора призов*/
+        $arLangs = Array(
+            'ru' => Loc::getMessage('QUIZ_HIGHTLOAD_PRIZE_NAME'),
+        );
+
+        $blockTablePrize = HL\HighloadBlockTable::add([
+            'NAME' => 'OutcodeQuizPrize',
+            'TABLE_NAME' => 'outcode_quiz_prize'
+        ]);
+
+        if($blockTablePrize->isSuccess()) {
+            $id = $blockTablePrize->getId();
+            foreach($arLangs as $langKey => $langVal){
+                HL\HighloadBlockLangTable::add([
+                    'ID' => $id,
+                    'LID' => $langKey,
+                    'NAME' => $langVal
+                ]);
+            }
+
+            $HLObject = 'HLBLOCK_'.$id;
+            $hlBlockProperties = [
+                'UF_PRIZE_ID' => [
+                    'ENTITY_ID' => $HLObject,
+                    'FIELD_NAME' => 'UF_ELEMENT_ID',
+                    'USER_TYPE_ID' => 'integer',
+                    'MANDATORY' => 'Y',
+                    'EDIT_FORM_LABEL' => ['ru' => Loc::getMessage('QUIZ_HIGHTLOAD_PROPERTY_10'), 'en' => ''],
+                    'LIST_COLUMN_LABEL' => ['ru' => Loc::getMessage('QUIZ_HIGHTLOAD_PROPERTY_10'), 'en' => ''],
+                    'LIST_FILTER_LABEL' => ['ru' => Loc::getMessage('QUIZ_HIGHTLOAD_PROPERTY_10'), 'en' => ''],
+                    'ERROR_MESSAGE' => ['ru' => '', 'en' => ''],
+                    'HELP_MESSAGE' => ['ru' => '', 'en' => '']
+                ],
+                'UF_USER_ID' => [
+                    'ENTITY_ID' => $HLObject,
+                    'FIELD_NAME' => 'UF_USER_ID',
+                    'USER_TYPE_ID' => 'integer',
+                    'MANDATORY' => 'Y',
+                    'EDIT_FORM_LABEL' => ['ru' => Loc::getMessage('QUIZ_HIGHTLOAD_PROPERTY_3'), 'en' => ''],
+                    'LIST_COLUMN_LABEL' => ['ru' => Loc::getMessage('QUIZ_HIGHTLOAD_PROPERTY_3'), 'en' => ''],
+                    'LIST_FILTER_LABEL' => ['ru' => Loc::getMessage('QUIZ_HIGHTLOAD_PROPERTY_3'), 'en' => ''],
+                    'ERROR_MESSAGE' => ['ru' => '', 'en' => ''],
+                    'HELP_MESSAGE' => ['ru' => '', 'en' => '']
+                ],
+            ];
+            foreach($hlBlockProperties as $hlBlockProperty){
+                $obUserField  = new CUserTypeEntity;
+                $obUserField->Add($hlBlockProperty);
+            }
+        }
+
         /* Установка компонента */
         $moduleComponentsPath = $DOCUMENT_ROOT . '/bitrix/modules/' . $this->MODULE_ID . '/install/components/';
         $adminComponentsPath = $DOCUMENT_ROOT . '/bitrix/components/';
@@ -352,6 +403,46 @@ class outcode_quiz extends CModule
         /* Добавляем свойства */
         $cipherKey = Bitrix\Main\Security\Random::GetString(32);
         $APPLICATION->throwException(\Bitrix\Main\Config\Option::set($this->MODULE_ID, "CIPHER_KEY", $cipherKey));
+
+        /* Добавляем почтовые события */
+        $arrCeventRes = [];
+        $arrCeventTypes = [];
+        $arrCeventTemplates = [];
+        $arEventFilter = ['TYPE_ID' => 'QUIZ_PRIZE_SELECT'];
+        $rsMailEventObj = CEventType::GetList($arEventFilter);
+        if( $arMailEvent = $rsMailEventObj->Fetch() ) {
+        } else {
+            $arrCeventTypes[] = [
+                'LID' => SITE_ID,
+                'EVENT_NAME' => 'QUIZ_PRIZE_SELECT',
+                'NAME' => Loc::getMessage('QUIZ_EMAIL_EVENT_NAME'),
+                'DESCRIPTION' => Loc::getMessage('QUIZ_EMAIL_EVENT_DESCRIPTION'),
+            ];
+            $arrCeventTemplates['QUIZ_PRIZE_SELECT'] = [
+                'ACTIVE'=> 'Y',
+                'EVENT_NAME' => 'QUIZ_PRIZE_SELECT',
+                'LID' => $arSites,
+                'EMAIL_FROM' => '#DEFAULT_EMAIL_FROM#',
+                'EMAIL_TO' => '#EMAIL_TO#',
+                'SUBJECT' => Loc::getMessage('QUIZ_EMAIL_EVENT_MSG'),
+                'BODY_TYPE' => 'html',
+                'MESSAGE' => '#EMAIL_BODY#'
+            ];
+            $et = new CEventType;
+            foreach($arrCeventTypes as $arrCeventType) {
+                $res = $et->Add($arrCeventType); 
+                if($res) {
+                    $arrCeventRes[$res] = $arrCeventType['EVENT_NAME'];
+                }
+            }
+
+            $em = new CEventMessage;
+            foreach( $arrCeventRes as $cEventTypeName ) {
+                $em->Add($arrCeventTemplates[$cEventTypeName]);     
+            }
+
+
+        }
 
         /* Добавляем события */
         /*EventManager::getInstance()->registerEventHandler('main', 'OnBeforeUserRegister', $this->MODULE_ID, '\\Outcode\\Events', 'checkUserNickName');
@@ -370,7 +461,7 @@ class outcode_quiz extends CModule
         global $APPLICATION, $DOCUMENT_ROOT;
 
         $iBlockType = 'outcode_quiz';
-        $hlBlockName = 'OutcodeQuizResult';
+        $hlBlockName = ['OutcodeQuizResult', 'OutcodeQuizPrize'];
         $filesToRemove = [
             0 => $DOCUMENT_ROOT . '/bitrix/components/' . $this->MODULE_ID . '/'
         ];
@@ -397,9 +488,11 @@ class outcode_quiz extends CModule
 
         /* Удаляем hightload блоки */
         $arFilter = ['select' => ['ID'], 'filter' => ['=NAME' => $hlBlockName]];
-        $hlBlock = HL\HighloadBlockTable::getList($arFilter)->fetch();
-        if(is_array($hlBlock) && !empty($hlBlock))  {
-            HL\HighloadBlockTable::delete($hlBlock['ID']);
+        $hlBlocks = HL\HighloadBlockTable::getList($arFilter)->fetchAll();
+        foreach($hlBlocks as $hlBlock) {
+            if(is_array($hlBlock) && !empty($hlBlock)) {
+                HL\HighloadBlockTable::delete($hlBlock['ID']);
+            }
         }
 
         /* Удаляем свойства */

@@ -67,103 +67,32 @@ $this->setFrameMode(true);
 		'STRICT_SECTION_CHECK' => (isset($arParams['STRICT_SECTION_CHECK']) ? $arParams['STRICT_SECTION_CHECK'] : ''),
 	),
 	$component
-);?>
-<p><a href="<?=$arResult["FOLDER"].$arResult["URL_TEMPLATES"]["news"]?>"><?=GetMessage("T_NEWS_DETAIL_BACK")?></a></p>
-<?if($arParams["USE_RATING"]=="Y" && $ElementID):?>
-<?$APPLICATION->IncludeComponent(
-	"bitrix:iblock.vote",
-	"",
-	Array(
-		"IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
-		"IBLOCK_ID" => $arParams["IBLOCK_ID"],
-		"ELEMENT_ID" => $ElementID,
-		"MAX_VOTE" => $arParams["MAX_VOTE"],
-		"VOTE_NAMES" => $arParams["VOTE_NAMES"],
-		"CACHE_TYPE" => $arParams["CACHE_TYPE"],
-		"CACHE_TIME" => $arParams["CACHE_TIME"],
-	),
-	$component
-);?>
-<?endif?>
-<?if($arParams["USE_CATEGORIES"]=="Y" && $ElementID):
-	global $arCategoryFilter;
-	$obCache = new CPHPCache;
-	$strCacheID = $componentPath.LANG.$arParams["IBLOCK_ID"].$ElementID.$arParams["CATEGORY_CODE"];
-	if(($tzOffset = CTimeZone::GetOffset()) <> 0)
-		$strCacheID .= "_".$tzOffset;
-	if($arParams["CACHE_TYPE"] == "N" || $arParams["CACHE_TYPE"] == "A" && COption::GetOptionString("main", "component_cache_on", "Y") == "N")
-		$CACHE_TIME = 0;
-	else
-		$CACHE_TIME = $arParams["CACHE_TIME"];
-	if($obCache->StartDataCache($CACHE_TIME, $strCacheID, $componentPath))
-	{
-		$rsProperties = CIBlockElement::GetProperty($arParams["IBLOCK_ID"], $ElementID, "sort", "asc", array("ACTIVE"=>"Y","CODE"=>$arParams["CATEGORY_CODE"]));
-		$arCategoryFilter = array();
-		while($arProperty = $rsProperties->Fetch())
-		{
-			if(is_array($arProperty["VALUE"]) && count($arProperty["VALUE"])>0)
-			{
-				foreach($arProperty["VALUE"] as $value)
-					$arCategoryFilter[$value]=true;
-			}
-			elseif(!is_array($arProperty["VALUE"]) && strlen($arProperty["VALUE"])>0)
-				$arCategoryFilter[$arProperty["VALUE"]]=true;
+);
+
+if( defined("IS_QUIZ_ACTIVE") && IS_QUIZ_ACTIVE && !empty($ElementID) ) {
+	$landingIblock = Utils::GetIBlockIDBySID('landing_v1');
+	$isFull = false;
+	if( !empty($landingIblock) ) {
+		$res = CIBlockElement::GetList([], ["IBLOCK_ID" => $landingIblock], false, false, ["ID", "NAME", "PROPERTY_BLOCK5_DATE"]);
+		while($arRes = $res->GetNext()){
+			$isFull = (!empty($arRes["PROPERTY_BLOCK5_DATE_VALUE"]) && strtotime($arRes["PROPERTY_BLOCK5_DATE_VALUE"]) < time()) ? false : true;
 		}
-		$obCache->EndDataCache($arCategoryFilter);
 	}
-	else
-	{
-		$arCategoryFilter = $obCache->GetVars();
-	}
-	if(count($arCategoryFilter)>0):
-		$arCategoryFilter = array(
-			"PROPERTY_".$arParams["CATEGORY_CODE"] => array_keys($arCategoryFilter),
-			"!"."ID" => $ElementID,
-		);
-		?>
-		<hr /><h3><?=GetMessage("CATEGORIES")?></h3>
-		<?foreach($arParams["CATEGORY_IBLOCK"] as $iblock_id):?>
-			<?$APPLICATION->IncludeComponent(
-				"bitrix:news.list",
-				$arParams["CATEGORY_THEME_".$iblock_id],
-				Array(
-					"IBLOCK_ID" => $iblock_id,
-					"NEWS_COUNT" => $arParams["CATEGORY_ITEMS_COUNT"],
-					"SET_TITLE" => "N",
-					"INCLUDE_IBLOCK_INTO_CHAIN" => "N",
-					"CACHE_TYPE" => $arParams["CACHE_TYPE"],
-					"CACHE_TIME" => $arParams["CACHE_TIME"],
-					"CACHE_GROUPS" => $arParams["CACHE_GROUPS"],
-					"FILTER_NAME" => "arCategoryFilter",
-					"CACHE_FILTER" => "Y",
-					"DISPLAY_TOP_PAGER" => "N",
-					"DISPLAY_BOTTOM_PAGER" => "N",
-				),
-				$component
-			);?>
-		<?endforeach?>
-	<?endif?>
-<?endif?>
-<?if($arParams["USE_REVIEW"]=="Y" && IsModuleInstalled("forum") && $ElementID):?>
-<hr />
-<?$APPLICATION->IncludeComponent(
-	"bitrix:forum.topic.reviews",
-	"",
-	Array(
-		"CACHE_TYPE" => $arParams["CACHE_TYPE"],
-		"CACHE_TIME" => $arParams["CACHE_TIME"],
-		"MESSAGES_PER_PAGE" => $arParams["MESSAGES_PER_PAGE"],
-		"USE_CAPTCHA" => $arParams["USE_CAPTCHA"],
-		"PATH_TO_SMILE" => $arParams["PATH_TO_SMILE"],
-		"FORUM_ID" => $arParams["FORUM_ID"],
-		"URL_TEMPLATES_READ" => $arParams["URL_TEMPLATES_READ"],
-		"SHOW_LINK_TO_FORUM" => $arParams["SHOW_LINK_TO_FORUM"],
-		"DATE_TIME_FORMAT" => $arParams["DETAIL_ACTIVE_DATE_FORMAT"],
-		"ELEMENT_ID" => $ElementID,
-		"AJAX_POST" => $arParams["REVIEW_AJAX_POST"],
-		"IBLOCK_ID" => $arParams["IBLOCK_ID"],
-		"URL_TEMPLATES_DETAIL" => $arResult["FOLDER"].$arResult["URL_TEMPLATES"]["detail"],
-	),
-	$component
-);?>
-<?endif?>
+	
+    $APPLICATION->IncludeComponent(
+        "outcode.quiz:prize",
+        "",
+        Array(
+            "IBLOCK_TYPE" => "landings",
+            "IBLOCK_ID" => Utils::GetIBlockIDBySID('quiz'),
+            "QUIZ_IBLOCK_PROPERTY_NUM" => "PRIZE_COUNT",
+            "QUIZ_IBLOCK_PROPERTY_MSG" => "MAIL_MSG",
+            "SHOW_RESULT_ON_DAYS" => ["Friday", "Saturday", "Sunday"],
+            "SHOW_RESULT_ON_FIRST" => "22:00:00",
+            "CALCULATE_FULL_RESULT" => $isFull ? "Y" : "N",
+            "ELEMENT_ID" => $ElementID,
+            "CACHE_TIME" => "600",
+            "CACHE_TYPE" => "A"
+        )
+    );
+}

@@ -14,8 +14,10 @@
             return [
                 'I_BLOCK_CODE' => 'outcode_quiz',
                 'HL_BLOCK_NAME' => 'OutcodeQuizResult',
+                'HL_BLOCK_PRIZE_NAME' => 'OutcodeQuizPrize',
                 'I_BLOCK_ID' => self::iBlockGetIdByCode('outcode_quiz'),
-                'HL_BLOCK_ID' => self::hlBlockGetIdByName('OutcodeQuizResult')
+                'HL_BLOCK_ID' => self::hlBlockGetIdByName('OutcodeQuizResult'),
+                'HL_BLOCK_PRIZE_ID' => self::hlBlockGetIdByName('OutcodeQuizPrize')
             ];
         }
 	    public static function iBlockGetIdByCode(string $code) : int {

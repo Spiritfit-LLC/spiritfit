@@ -34,14 +34,3 @@ $this->setFrameMode(true);
         </div>
     </div>
 </div>
-<? if($arResult['SHOW_GET_BUTTON']) {
-    ?>
-    <div class="blockitem">
-        <div class="content-center">
-            <div class="block-link">
-                <a class="button gradient" href="#something"><span><?=$arResult['PROPERTIES']['PRISE_NAME']['VALUE']?></span></a>
-            </div>
-        </div>
-    </div>
-    <?
-} ?>

@@ -21,3 +21,9 @@ $MESS['QUIZ_HIGHTLOAD_PROPERTY_6'] = 'Ответ';
 $MESS['QUIZ_HIGHTLOAD_PROPERTY_7'] = 'Начислено баллов';
 $MESS['QUIZ_HIGHTLOAD_PROPERTY_8'] = 'Дата начисления';
 $MESS['QUIZ_HIGHTLOAD_PROPERTY_9'] = 'Отправлено в 1С';
+$MESS['QUIZ_HIGHTLOAD_PROPERTY_10'] = 'ID элемента приза';
+$MESS['QUIZ_HIGHTLOAD_PRIZE_NAME'] = 'Выбранные призы';
+$MESS['QUIZ_EMAIL_EVENT_DESCRIPTION'] = '#EMAIL_TO# - E-mail получателя
+#EMAIL_BODY# - Сообщение пользователю';
+$MESS['QUIZ_EMAIL_EVENT_NAME'] = 'Отправка утешительного приза';
+$MESS['QUIZ_EMAIL_EVENT_MSG'] = '#SERVER_NAME# Вами был выбран приз';

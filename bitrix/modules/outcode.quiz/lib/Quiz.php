@@ -193,6 +193,30 @@ class Quiz {
         return [];
     }
 
+    public function isUserInTop( int $timeStart, int $timeEnd, $limit = 50, int $userId ) : bool {
+        if( !$this->isUserInQuiz($userId) ) return false;
+        
+        $userInfo = \Bitrix\Main\UserTable::getList([
+            'select' => ['ID'],
+            'filter' => ['ID' => $userId]
+        ])->fetch();
+        if( !empty($userInfo['ID']) ) {
+            $allResults = $this->getAllResults($timeStart, $timeEnd);
+
+            $counter = 0;
+            foreach( $allResults['TOTAL_RESULT'] as $result ) {
+                if( $userId == $result['USER_ID'] ) {
+                    return true;
+                }
+
+                $counter += 1;
+                if( $counter >= $limit ) break;
+            }
+        }
+        
+        return false;
+    }
+
     public function getAllResults(int $timeStart, int $timeEnd) : array {
         $arResult = ['TOTAL_RESULT' => [], 'BY_QUESTIONS' => []];
 
