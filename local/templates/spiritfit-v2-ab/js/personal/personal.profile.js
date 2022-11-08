@@ -2,7 +2,7 @@ $(document).ready(function(){
     $('a[href="#delete-my-personal"]').click(function(e){
         e.preventDefault();
 
-        var answer=confirm("Вы подтверждаете свой запрос на удаление персональной информации?");
+        var answer=confirm("Вы подтверждаете свой запрос на удаление аккаунта и персональной информации?");
         if (answer){
             BX.ajax.runComponentAction(componentName, 'deletePersonal', {
                 mode:'class',
@@ -17,9 +17,7 @@ $(document).ready(function(){
                             window.location = window.location.pathname;
                         }
                     }, 500);
-
                 }
-
             }, function(response){
 
             });

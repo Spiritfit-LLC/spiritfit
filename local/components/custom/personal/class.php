@@ -1603,47 +1603,39 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         $rsUser = CUser::GetByID($USER->GetID());
         $arUser = $rsUser->Fetch();
 
-        if (!empty($arUser["UF_DELETE_PERSONAL_UNIXTIME"])){
-            return [
-                "result" => false,
-                "message" => "Заявка на удаление персональной информации уже подана. Крайний срок выполнения: ".date('d.m.Y H:i', $arUser["UF_DELETE_PERSONAL_UNIXTIME"]),
-            ];
+        $arParams=[
+            "id1c"=>$arUser["UF_1CID"],
+            "login"=>$arUser["LOGIN"]
+        ];
+        $api=new Api([
+            "action"=>"lkinfoclear",
+            "params"=>$arParams
+        ]);
+
+        $response=$api->result();
+        if (!$response['success']){
+            if (empty($response['data']['result']['userMessage'])){
+                throw new Exception($this->errorMessages[100], 100);
+            }
+            else{
+                throw new Exception($response['data']['result']['userMessage'], 100);
+            }
         }
 
-        $date=strtotime("+1 days");
-
-        if ($USER->Update($USER->GetID(), ["UF_DELETE_PERSONAL_UNIXTIME"=>$date])){
-
-            //Просто пока что делаем так
-            $subject="Удаление персональных данных";
-            $text=sprintf("Пользователь %s запросил удаление персональных данных.", $USER->GetLogin());
-            $emails=["i.harisov@spiritfit.ru", "t.buenkov@spiritfit.ru", "support@spiritfit.ru"];
-
-            $api=new Api([
-                "action"=>"sendEmailFromSMTP",
-                "params"=>[
-                    "subject"=>$subject,
-                    "message"=>$text,
-                    "address"=>$emails
-                ]
-            ]);
-
-
-
-            return [
-                "result"=>true,
-                "message"=>"Заявка на удаление персональной информации успешно подана. Крайний срок выполнения: ".date('d.m.Y H:i', $date),
-                "reload"=>true,
-                "section"=>Utils::GetIBlockSectionIDBySID("lk_profile")
-            ];
+        $USER->Logout();
+        if (CModule::IncludeModule("blog")){
+            $blog=CBlog::GetByOwnerID($arUser["ID"]);
+            if ($blog){
+                $blog_id=$blog["ID"];
+                if (!CBlog::Delete($blog_id)){
+                    throw new Exception("Не удалось блог пользователя", 102);
+                }
+            }
         }
-        else{
-            return [
-                "result"=>false,
-                "message"=>$USER->LAST_ERROR,
-            ];
+        if(!CUser::Delete($arUser["ID"])){
+            throw new Exception("Не удалось удалить пользователя", 103);
         }
-
+        return ['result'=>true, 'reload'=>true, 'message'=>'Персональные данные очищены'];
     }
 
     public function selectLeaderAction($leader_id){
