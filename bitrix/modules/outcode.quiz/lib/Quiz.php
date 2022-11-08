@@ -193,28 +193,63 @@ class Quiz {
         return [];
     }
 
-    public function isUserInTop( int $timeStart, int $timeEnd, $limit = 50, int $userId ) : bool {
-        if( !$this->isUserInQuiz($userId) ) return false;
-        
+    public function isUserInTop( int $timeStart, int $timeEnd, int $userId, $limit = 50 ) : array {
+        $arRes = ['IN_TOP' => false, 'TOTAL_VALUE' => 0, 'USER' => []];
+        $arUserTable = [];
+
+        if( !$this->isUserInQuiz($userId) || !isset($this->hlEntityDataClass) ) return $arRes;
+
         $userInfo = \Bitrix\Main\UserTable::getList([
-            'select' => ['ID'],
+            'select' => ['ID', 'EMAIL'],
             'filter' => ['ID' => $userId]
         ])->fetch();
         if( !empty($userInfo['ID']) ) {
-            $allResults = $this->getAllResults($timeStart, $timeEnd);
+            $arRes['USER'] = $userInfo;
+
+            $timeStartSystem = \Bitrix\Main\Type\DateTime::createFromTimestamp($timeStart);
+            $timeEndSystem = \Bitrix\Main\Type\DateTime::createFromTimestamp($timeEnd);
+
+            $rsObj = $this->hlEntityDataClass::getList([
+                "select" => ["*"],
+                "order" => ['UF_RESULT_DATE' => 'ASC'],
+                "filter" => ['>UF_RESULT_DATE' => $timeStartSystem->toString(), '<UF_RESULT_DATE' => $timeEndSystem->toString(), '>UF_RESULT' => 0]
+            ]);
+            while( $rsData = $rsObj->Fetch() ) {
+                if( !isset($arUserTable[$rsData['UF_USER_ID']]) )  $arUserTable[$rsData['UF_USER_ID']] = ['VALUE' => 0, 'ID' => $rsData['UF_USER_ID']];
+                $arUserTable[$rsData['UF_USER_ID']]['VALUE'] += intval($rsData['UF_RESULT']);
+            }
+
+            usort($arUserTable, function ($item1, $item2) {
+                return $item2['VALUE'] <=> $item1['VALUE'];
+            });
+
+            if( $limit == 0 ) {
+                foreach( $arUserTable as $item ) {
+                    if( $userId == $item['ID'] ) {
+                        $arRes['IN_TOP'] = false;
+                        $arRes['TOTAL_VALUE'] = $item['VALUE'];
+                        break;
+                    }
+                }
+                return $arRes;
+            }
 
             $counter = 0;
-            foreach( $allResults['TOTAL_RESULT'] as $result ) {
-                if( $userId == $result['USER_ID'] ) {
-                    return true;
+            foreach( $arUserTable as $item ) {
+                if( $userId == $item['ID'] ) {
+                    $arRes['IN_TOP'] = true;
+                    $arRes['TOTAL_VALUE'] = $item['VALUE'];
+                    break;
                 }
 
                 $counter += 1;
                 if( $counter >= $limit ) break;
             }
+            unset($counter);
+            unset($arUserTable);
         }
-        
-        return false;
+
+        return $arRes;
     }
 
     public function getAllResults(int $timeStart, int $timeEnd) : array {

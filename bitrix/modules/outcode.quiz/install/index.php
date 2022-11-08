@@ -384,6 +384,17 @@ class outcode_quiz extends CModule
                     'ERROR_MESSAGE' => ['ru' => '', 'en' => ''],
                     'HELP_MESSAGE' => ['ru' => '', 'en' => '']
                 ],
+                'UF_RESULT_DATE' => [
+                    'ENTITY_ID' => $HLObject,
+                    'FIELD_NAME' => 'UF_RESULT_DATE',
+                    'USER_TYPE_ID' => 'datetime',
+                    'MANDATORY' => 'Y',
+                    'EDIT_FORM_LABEL' => ['ru' => Loc::getMessage('QUIZ_HIGHTLOAD_PROPERTY_8'), 'en' => ''],
+                    'LIST_COLUMN_LABEL' => ['ru' => Loc::getMessage('QUIZ_HIGHTLOAD_PROPERTY_8'), 'en' => ''],
+                    'LIST_FILTER_LABEL' => ['ru' => Loc::getMessage('QUIZ_HIGHTLOAD_PROPERTY_8'), 'en' => ''],
+                    'ERROR_MESSAGE' => ['ru' => '', 'en' => ''],
+                    'HELP_MESSAGE' => ['ru' => '', 'en' => '']
+                ],
             ];
             foreach($hlBlockProperties as $hlBlockProperty){
                 $obUserField  = new CUserTypeEntity;

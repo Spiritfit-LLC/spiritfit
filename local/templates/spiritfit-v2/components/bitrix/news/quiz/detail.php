@@ -75,7 +75,7 @@ if( defined("IS_QUIZ_ACTIVE") && IS_QUIZ_ACTIVE && !empty($ElementID) ) {
 	if( !empty($landingIblock) ) {
 		$res = CIBlockElement::GetList([], ["IBLOCK_ID" => $landingIblock], false, false, ["ID", "NAME", "PROPERTY_BLOCK5_DATE"]);
 		while($arRes = $res->GetNext()){
-			$isFull = (!empty($arRes["PROPERTY_BLOCK5_DATE_VALUE"]) && strtotime($arRes["PROPERTY_BLOCK5_DATE_VALUE"]) < time()) ? false : true;
+			$isFull = (!empty($arRes["PROPERTY_BLOCK5_DATE_VALUE"]) && strtotime($arRes["PROPERTY_BLOCK5_DATE_VALUE"]) > time()) ? false : true;
 		}
 	}
 	
@@ -85,12 +85,14 @@ if( defined("IS_QUIZ_ACTIVE") && IS_QUIZ_ACTIVE && !empty($ElementID) ) {
         Array(
             "IBLOCK_TYPE" => "landings",
             "IBLOCK_ID" => Utils::GetIBlockIDBySID('quiz'),
-            "QUIZ_IBLOCK_PROPERTY_NUM" => "PRIZE_COUNT",
-            "QUIZ_IBLOCK_PROPERTY_MSG" => "MAIL_MSG",
+            "PROPERTY_NUM" => "PRIZE_COUNT",
+            "PROPERTY_MSG" => "MAIL_MSG",
+            "PROPERTY_MINVALUE" => "PRIZE_MINVALUE",
             "SHOW_RESULT_ON_DAYS" => ["Friday", "Saturday", "Sunday"],
             "SHOW_RESULT_ON_FIRST" => "22:00:00",
             "CALCULATE_FULL_RESULT" => $isFull ? "Y" : "N",
             "ELEMENT_ID" => $ElementID,
+            "LIMIT" => 10,
             "CACHE_TIME" => "600",
             "CACHE_TYPE" => "A"
         )
