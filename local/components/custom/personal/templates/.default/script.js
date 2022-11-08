@@ -580,7 +580,7 @@ var set_leader=function(el){
 
 var select_leader=function(){
     var postData={
-        "leader_id":$("input[name=\"transformation-leader\"]").val()
+        "leader_id":$("input[name=\"transformation-leader\"]:checked").val()
     }
 
     BX.ajax.runComponentAction(componentName, "selectLeader", {
