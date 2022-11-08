@@ -209,6 +209,16 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                     new ActionFilter\Csrf(),
                 ],
                 'postfilters' => []
+            ],
+            "selectLeader"=>[
+                'prefilters' => [
+                    new ActionFilter\Authentication,
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
             ]
         ];
     }
@@ -232,6 +242,11 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
 
             Loader::IncludeModule("form");
             Loader::IncludeModule("iblock");
+
+//            if (Loader::IncludeModule("socialnetwork")){
+//                $this->arResult["SPIRITNET"]=true;
+//                $this->arResult["SPIRITNET_FIELDS"]["PHOTOGALLERY"]=SpiritNetUtils::GetPhotoGallery();
+//            }
 
 
             $auth_form_id=PersonalUtils::GetIDBySID($this->arParams['AUTH_FORM_CODE']);
@@ -397,7 +412,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                         return ['result' => true, 'next_step' => 2, 'reg-code'=>true, 'field_messages'=>[[
                             'field_name'=>$FORM_FIELDS['FIELDS']['phone']['NAME'],
                             'message'=>'На Ваш номер телефона отправлен код подтверждения',
-                        ]]/*, '1cdata'=>$result['data']*/];
+                        ]] /*,'1cdata'=>$result['data']*/];
                     }
                     else{
                         if (boolval($user['UF_IS_CORRECT'])){
@@ -423,7 +438,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                                 return ['result'=>true, 'next_action'=>'forgot', 'next_step'=>2, 'reg-code'=>true, 'field_messages'=>[[
                                     'field_name'=>$FORM_FIELDS['FIELDS']['phone']['NAME'],
                                     'message'=>'На Ваш номер телефона отправлен код подтверждения',
-                                ]]/*, '1cdata'=>$result['data']*/];
+                                ]] /*,'1cdata'=>$result['data']*/];
                             }
                             else{
                                 switch ($result["data"]['result']['errorCode']){
@@ -974,8 +989,8 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
     //Обновление фото
     public function updatePhotoAction(){
         if (!empty($_FILES['new-photo-file'])){
-            if (0 < $_FILES['file']['error']){
-                throw new Exception($this->errorMessages[19].': '.$_FILES['file']['error'], 19);
+            if (0 < $_FILES['new-photo-file']['error']){
+                throw new Exception($this->errorMessages[19].': '.$_FILES['new-photo-file']['error'], 19);
             }
             else{
                 $fileId = CFile::SaveFile($_FILES["new-photo-file"], 'avatar');
@@ -1629,5 +1644,36 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
             ];
         }
 
+    }
+
+    public function selectLeaderAction($leader_id){
+        global $USER;
+        $rsUser = CUser::GetByID($USER->GetID());
+        $arUser = $rsUser->Fetch();
+
+        $arParams=[
+            "id1c"=>$arUser["UF_1CID"],
+            "login"=>$arUser["LOGIN"],
+            "coachid"=>$leader_id,
+            "specialid"=>"19"
+        ];
+
+        $api=new Api([
+            "action"=>"special",
+            "params"=>$arParams
+        ]);
+
+        $response=$api->result();
+        if (!$response['success']){
+            if (empty($response['data']['result']['userMessage'])){
+                throw new Exception($this->errorMessages[100], 100);
+            }
+            else{
+                throw new Exception($response['data']['result']['userMessage'], 100);
+            }
+        }
+        else{
+            return $this->update1cAction();
+        }
     }
 }

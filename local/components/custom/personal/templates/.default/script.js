@@ -75,7 +75,7 @@ $(document).ready(function(){
         }
         removeNotification();
         $('.personal-profile__tab-item.active').find('.tab-item__notification').fadeOut(300);
-        $('.personal-profile__tab-item').removeClass('active');
+        $('.personal-profile__tab-item').not('.spiritnet-btn').removeClass('active');
         $(this).addClass('active');
 
         $('.personal-section.active').find('.personal-section-form__item__notification').fadeOut(300);
@@ -87,7 +87,7 @@ $(document).ready(function(){
             $('.personal-profile__tab-item:not(.active):not(.child)').hide(300);
         }
     }
-    $('.personal-profile__tab-item:not(.child)').click(showSection);
+    $('.personal-profile__tab-item:not(.child)').not('.spiritnet-btn').click(showSection);
     $('.personal-profile__tab-item.child').click(function(){
         var data_id=$(this).data('id');
         if (document.querySelector(`.personal-section[data-id="${data_id}"`).className.includes('active')){
@@ -409,9 +409,6 @@ $(document).ready(function(){
             data: postData,
             method:'POST'
         }).then(function(responce){
-            // console.log(responce)
-
-
             form.find('.escapingBallG-animation').removeClass('active');
             form.find('input[type="submit"]').css({
                 'opacity':1,
@@ -499,7 +496,6 @@ $(document).ready(function(){
             }
 
         }, function(responce){
-            // console.log(responce)
 
             form.find('.escapingBallG-animation').removeClass('active');
             form.find('input[type="submit"]').css({
@@ -556,4 +552,53 @@ $(document).ready(function(){
         $('.personal-profile__user-refresh-photo-file-input').trigger('click');
 
     })
+
+
+    //SpiritТрансформация
+    if ($(window).width()<=768){
+        $(".personal-spirit-transformation").insertAfter(".personal-profile__user");
+    }
 });
+
+var show_transformation_leaders=function(btn){
+    if ($(btn).hasClass("active")){
+        $(".choose-leader__leaders-container").slideUp();
+        $(btn).removeClass("active");
+    }
+    else{
+        $(".choose-leader__leaders-container").slideDown();
+        $(btn).addClass("active");
+    }
+}
+
+var set_leader=function(el){
+    $(".choose-leader__leader-item.select").removeClass("select");
+    $(el).closest(".choose-leader__leader-item").addClass("select");
+
+    $(".small-btn.submit").removeAttr("disabled");
+}
+
+var select_leader=function(){
+    var postData={
+        "leader_id":$("input[name=\"transformation-leader\"]").val()
+    }
+
+    BX.ajax.runComponentAction(componentName, "selectLeader", {
+        mode: 'class',
+        data: postData,
+        method:'POST'
+    }).then(function(response){
+        var res_data=response['data'];
+        if (res_data['reload']===true){
+            setTimeout(function(){
+                if (res_data.section!==undefined){
+                    window.location.search='?SECTION='+res_data.section;
+                }
+                else{
+                    window.location = window.location.pathname;
+                }
+            }, 500);
+
+        }
+    });
+}
