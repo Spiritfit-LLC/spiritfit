@@ -584,19 +584,19 @@ class PersonalUtils{
                         'декабрь'
                     ];
 
-//                    $USER_VISITS_LIST=unserialize($arUser["UF_MONTH_VISITS"]);
-//                    if (!empty($USER_VISITS_LIST)){
-//                        foreach ($USER_VISITS_LIST as $MONTHVISIT){
-//                            $date = str_replace('.', '-', $MONTHVISIT["month"]);
-//                            $month = date('n', strtotime($date))-1;
-//                            $VISITS[date('Y m', strtotime($date))]=[
-//                                "VALUE"=>$MONTHVISIT["days"],
-//                                "MONTH"=>$monthArr[$month],
-//                            ];
-//                        }
-//                        ksort($VISITS);
-//                        $ar_SectionList[$ar_Section['ID']]['USER_VISITS_LIST']=$VISITS;
-//                    }
+                    $USER_VISITS_LIST=unserialize($arUser["UF_MONTH_VISITS"]);
+                    if (!empty($USER_VISITS_LIST)){
+                        foreach ($USER_VISITS_LIST as $MONTHVISIT){
+                            $date = str_replace('.', '-', $MONTHVISIT["month"]);
+                            $month = date('n', strtotime($date))-1;
+                            $VISITS[date('Y m', strtotime($date))]=[
+                                "VALUE"=>$MONTHVISIT["days"],
+                                "MONTH"=>$monthArr[$month],
+                            ];
+                        }
+                        ksort($VISITS);
+                        $ar_SectionList[$ar_Section['ID']]['USER_VISITS_LIST']=$VISITS;
+                    }
                 }
 
                 if (key_exists($ar_Section['ID'], $NOTIFICATIONS)){
