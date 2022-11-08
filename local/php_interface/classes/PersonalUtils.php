@@ -9,6 +9,7 @@ class PersonalUtils{
     }
 
     public static function GetFormFileds($WEB_FORM_ID, $ACTION='', $request_info=false, $btn_text=false, $active=false){
+        CModule::IncludeModule("iblock");
         if ($request_info){
             $error = CForm::Check($WEB_FORM_ID, $_REQUEST);
             if (strlen($error)>0){
@@ -144,6 +145,7 @@ class PersonalUtils{
     }
 
     public static function GetPersonalPageFormFields($user_id, $request_info=false, $code=[], $section_id=false, $active_form=false, $photo_size=300){
+        CModule::IncludeModule("iblock");
         function GetSectionFields(&$ar_SectionList, $request_info, $code, $is_correct, $arUser, &$HEAD, $NOTIFICATIONS){
             foreach ($ar_SectionList as $key=>$section){
                 $SECTION_ID[]=$section['ID'];
@@ -729,6 +731,7 @@ class PersonalUtils{
     }
 
     public static function GetUpdatebleFrom1CPersonalInfo(){
+        CModule::IncludeModule("iblock");
         $objects=[];
         $filter = [
             'IBLOCK_CODE' => 'LK_FIELDS',
