@@ -191,32 +191,34 @@ if(!function_exists('GetPersonalSection')) {
     <?endif?>
 
     <?if ($arParams['SECTION_CODE']=="lk_loyalty_program"):?>
-<!--    <div class="personal-section__visits_count-container">-->
-<!--        <span class="personal-section-form__item-placeholder" style="margin-left: -20px;margin-bottom: 10px;">Мои посещения</span>-->
-<!--        <div class="personal-section__visits_count">-->
-<!---->
-<!--            --><?//$visit_container_index=0?>
-<!--            --><?//foreach($arParams["SECTION"]['USER_VISITS_LIST'] as $key=>$value):?>
-<!--                <div class="visits-count-container" data-index="--><?//=$visit_container_index?><!--">-->
-<!--                    <div class="visits-count__block">-->
-<!--                        <div class="visits-count__occupancy" data-count="--><?//=$value["VALUE"]?><!--">-->
-<!--                            --><?//=$value["VALUE"]?>
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="visits-count__month">-->
-<!--                        --><?//=$value["MONTH"]?>
-<!--                    </div>-->
-<!--                </div>-->
-<!--                --><?//$visit_container_index++;?>
-<!--            --><?//endforeach;?>
-<!--        </div>-->
-<!--        --><?//if ($visit_container_index>5):?>
-<!--        <div class="personal-section__visits_count-controllers">-->
-<!--            <div class="visits-count__controller left"></div>-->
-<!--            <div class="visits-count__controller right"></div>-->
-<!--        </div>-->
-<!--        --><?//endif;?>
-<!--    </div>-->
+        <?if (!empty($arParams["SECTION"]['USER_VISITS_LIST'])):?>
+            <div class="personal-section__visits_count-container">
+                <span class="personal-section-form__item-placeholder" style="margin-left: -20px;margin-bottom: 10px;">Мои посещения</span>
+                <div class="personal-section__visits_count">
+                    <?$visit_container_index=0?>
+                    <?foreach($arParams["SECTION"]['USER_VISITS_LIST'] as $key=>$value):?>
+                        <div class="visits-count-container" data-index="<?=$visit_container_index?>">
+                            <div class="visits-count__block">
+                                <div class="visits-count__occupancy" data-count="<?=$value["VALUE"]?>">
+                                    <?=$value["VALUE"]?>
+                                </div>
+                            </div>
+                            <div class="visits-count__month">
+                                <?=$value["MONTH"]?>
+                            </div>
+                        </div>
+                        <?$visit_container_index++;?>
+                    <?endforeach;?>
+                </div>
+                <?if ($visit_container_index>5):?>
+                <div class="personal-section__visits_count-controllers">
+                    <div class="visits-count__controller left"></div>
+                    <div class="visits-count__controller right"></div>
+                </div>
+                <?endif;?>
+            </div>
+        <?endif;?>
+
     <a class="personal-section-form__item-placeholder" href="#getHistory" style="margin-bottom: 10px;font-size: 16px;font-weight: 500;">Детали накопления бонусов</a>
     <div class="loyaltyhistory is-hide">
         <div class="loyaltyhistory-controls">
@@ -310,3 +312,5 @@ if(!function_exists('GetPersonalSection')) {
         }
     } ?>
 </div>
+
+
