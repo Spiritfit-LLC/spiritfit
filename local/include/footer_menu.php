@@ -2,7 +2,7 @@
 	<div class="footer-menu-cell">
 		<div class="footer-menu-title"><a href="/about/" class="dont-touch">О компании</a></div>
 		<ul>
-			<li><a href="https://career.spiritfit.ru/" class="dont-touch">Карьера</a></li>
+			<li><a href="https://career.spiritfit.ru/">Карьера</a></li>
 			<li><a href="/about/adv/">Рекламные возможности</a></li>
 			<li><a href="/about/platform/">Площадки под новые клубы</a></li>
             <li><a href="/upload/form/Политика.pdf">Политика обработки персональных данных</a></li>
