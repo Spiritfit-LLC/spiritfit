@@ -15,8 +15,8 @@
 	overflow: hidden;
 }
 .is-landing .b-screen.b-screen_short {
-	min-height: 65px;
-	margin-bottom: 10px;
+	min-height: initial;
+	margin-bottom: initial;
 	padding: 0;
 }
 

@@ -85,7 +85,7 @@ Asset::getInstance()->addString('<meta name="robots" content="noindex, follow" /
     }
 
     .personal-page-content {
-        z-index: 2;
+        z-index: 40;
         position: relative;
         min-height: 802px;
     }
@@ -97,6 +97,7 @@ Asset::getInstance()->addString('<meta name="robots" content="noindex, follow" /
         position: absolute;
         bottom: 0;
         left: 10%;
+        z-index: -1;
     }
     .personal-page-content .b-page__title{
         font-family: 'Gotham Pro';

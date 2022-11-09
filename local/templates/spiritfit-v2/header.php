@@ -90,6 +90,10 @@ foreach( $clubs as $club ) {
     Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/jquery.suggestions.css');
     CJSCore::Init();
 
+    if (defined("PURPLE_GREY")){
+        Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . '/css/purple-grey.css');
+    }
+
 
     ?>
     
@@ -135,9 +139,12 @@ foreach( $clubs as $club ) {
     if( isset($_COOKIE["theme_type"]) && intval($_COOKIE["theme_type"]) === 2 && strpos($page, "/blog/") !== false ) {
 	    if( isset($classPage) ) $classPage += " white"; else $classPage = "white";
     }
-    else if( strpos($page, "/landings/") !== false ) {
+    else if( strpos($page, "/landings/") !== false || strpos($page, "/quiz/") !== false ) {
 		if( isset($classPage) ) $classPage += " white is-landing"; else $classPage = "white is-landing";
 	}
+    else if (defined("PURPLE_GREY")){
+        if (isset($classPage)) $classPage.=" purple-grey"; else $classPage = "white purple-grey";
+    }
 
 
 ?>
@@ -384,6 +391,7 @@ foreach( $clubs as $club ) {
                 <div class="b-page__heading <?=(defined('BREADCRUMB_H1_ABSOLUTE') ? 'b-page__heading_absolute' : '')?>  <?=(!$showSlider) ? "b-page__heading-simple" : "" ?>">
             <?endif;?>
                 <div class="content-center">
+                    <?if (!defined("HIDE_BREADCRUMB")):?>
                     <div class="b-page__heading-inner">
                         <? $APPLICATION->IncludeComponent(
                             "bitrix:breadcrumb",
@@ -427,6 +435,7 @@ foreach( $clubs as $club ) {
                             <?endif;?>
                         <? } ?>
                     </div>
+                    <?endif;?>
                 </div>
             </div>
         <? } ?>

@@ -65,7 +65,14 @@
 			15 => "BLOCK4_SORT",
 			16 => "BLOCK2_ACTIVE",
 			17 => "BLOCK3_ACTIVE",
-			18 => "BLOCK4_ACTIVE"
+			18 => "BLOCK4_ACTIVE",
+			19 => "BLOCK5_TITLE",
+			20 => "BLOCK5_ACTIVE",
+			21 => "BLOCK5_DATE",
+			22 => "BLOCK5_SORT",
+			23 => "BLOCK5_DESCRIPTION",
+			24 => "BLOCK5_VIDEO_TITLE",
+			25 => "BLOCK5_VIDEO_LINK"
 		),
         "IBLOCK_URL" => "/home/bitrix/www/landings/v1/",
         "DETAIL_URL" => "",

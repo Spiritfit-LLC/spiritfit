@@ -18,6 +18,17 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         if( empty($arParams["PASSFORGOT_FORM_CODE"]) ){
             $this->arResult["ERROR"] = "Не выбранна веб форма восстановления пароля";
         }
+
+        /* Для конкурса */
+        if( Loader::includeModule('outcode.quiz') ) {
+            $arParams['BONUS_ID'] = Context::getCurrent()->getRequest()->get('bonusid');
+
+            $quiz = new \Outcode\Quiz('');
+            $uid = $quiz->getUserUid();
+            $arParams['LINK_GET_BONUS'] = !empty($uid) ? '/?bonusid=' . $uid : '';
+        }
+        /* Для конкурса */
+
         return $arParams;
     }
 
@@ -728,6 +739,13 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                             $ID = $user->Add($arFields);
                             if (intval($ID) > 0){
                                 $user->Login($FORM_FIELDS['FIELDS']['phone']['VALUE'], $FORM_FIELDS['FIELDS']['passwd']['VALUE'],"Y","Y");
+
+                                /* Начисление баллов */
+                                if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')) {
+                                    \Outcode\Quiz::addBonus($this->arParams['BONUS_ID'], 10);
+                                }
+                                /* Начисление баллов */
+
                                 $api=new Api(array(
                                     'action'=>'lkedit',
                                     'params'=>[
