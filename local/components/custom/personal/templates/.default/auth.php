@@ -27,6 +27,11 @@
                 <form class="personal-section-form" autocomplete="off" method="post" enctype="multipart/form-data" data-componentName="<?=$arResult['COMPONENT_NAME']?>">
                     <input type="hidden" name="WEB_FORM_ID" value="<?=$SECTION['WEB_FORM_ID']?>">
                     <input type="hidden" name="FORM_STEP" value="1">
+                    <? if($arParams["BONUS_ID"]) {
+                        ?>
+                        <input type="hidden" name="bonusid" value="<?=$arParams["BONUS_ID"]?>">
+                        <?
+                    } ?>
                     <?if (!empty($SECTION['ACTION'])):?>
                         <input type="hidden" name="ACTION" value="<?=$SECTION['ACTION']?>">
                     <?endif;?>
