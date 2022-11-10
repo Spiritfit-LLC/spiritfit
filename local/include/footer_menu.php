@@ -24,7 +24,7 @@
 			<li><a href="/club-members/#abonements" class="dont-touch">Абонементы</a></li>
 			<li><a href="https://corp.spiritfit.ru/" class="dont-touch">Корпоративная программа</a></li>
 			<li><a href="/loyalty-program/">Программа лояльности</a></li>
-			<li><a href="/club-members/partners">Партнёры и привилегии</a></li>
+			<li><a href="/club-members/partners/">Партнёры и привилегии</a></li>
 			<li><a href="/#faq">FAQ</a></li>
 		</ul>
 	</div>
