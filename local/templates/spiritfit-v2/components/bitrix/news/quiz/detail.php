@@ -88,7 +88,7 @@ if( defined("IS_QUIZ_ACTIVE") && IS_QUIZ_ACTIVE && !empty($ElementID) ) {
             "PROPERTY_NUM" => "PRIZE_COUNT",
             "PROPERTY_MSG" => "MAIL_MSG",
             "PROPERTY_MINVALUE" => "PRIZE_MINVALUE",
-            "SHOW_RESULT_ON_DAYS" => ["Friday", "Saturday", "Sunday"],
+            "SHOW_RESULT_ON_DAYS" => ["Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
             "SHOW_RESULT_ON_FIRST" => "22:00:00",
             "CALCULATE_FULL_RESULT" => $isFull ? "Y" : "N",
             "ELEMENT_ID" => $ElementID,
