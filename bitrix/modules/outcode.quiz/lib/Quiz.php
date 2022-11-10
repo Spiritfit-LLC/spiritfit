@@ -219,6 +219,8 @@ class Quiz {
                 $arUserTable[$rsData['UF_USER_ID']]['VALUE'] += intval($rsData['UF_RESULT']);
             }
 
+            $arRes['IN_QUIZ'] = isset($arUserTable[$userId]);
+
             usort($arUserTable, function ($item1, $item2) {
                 return $item2['VALUE'] <=> $item1['VALUE'];
             });
@@ -227,7 +229,6 @@ class Quiz {
                 foreach( $arUserTable as $item ) {
                     if( $userId == $item['ID'] ) {
                         $arRes['IN_TOP'] = false;
-                        $arRes['IN_QUIZ'] = true;
                         $arRes['TOTAL_VALUE'] = $item['VALUE'];
                         break;
                     }
@@ -240,7 +241,6 @@ class Quiz {
             foreach( $arUserTable as $item ) {
                 if( $userId == $item['ID'] ) {
                     $arRes['IN_TOP'] = $inTop;
-                    $arRes['IN_QUIZ'] = true;
                     $arRes['TOTAL_VALUE'] = $item['VALUE'];
                     break;
                 }
