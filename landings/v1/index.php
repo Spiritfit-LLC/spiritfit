@@ -6,7 +6,7 @@
     //РАЗБИРАЕМ URL
     $url = strtok($_SERVER['REQUEST_URI'], '?');
     $urlArr = explode('/', $url);
-    if( empty($urlArr['3']) ) {
+    if( empty($urlArr['3']) && $urlArr['1']!="play") {
         header("HTTP/1.1 301 Moved Permanently");
         header("Location: /");
         exit();
@@ -17,7 +17,7 @@
     $landingIblockCode = 'landing_v1';
     $landingIblockId = Utils::GetIBlockIDBySID($landingIblockCode);
     $elementCode = !empty($_REQUEST['ELEMENT_CODE']) ? $_REQUEST['ELEMENT_CODE'] : '';
-	
+
     if( empty($landingIblockId) || empty($elementCode) ) {
         global $APPLICATION;
         $APPLICATION->RestartBuffer();
