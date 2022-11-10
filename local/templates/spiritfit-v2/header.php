@@ -149,6 +149,17 @@ foreach( $clubs as $club ) {
 
 ?>
 <body class="b-page <?=$classPage?>">
+<?php
+$APPLICATION->IncludeComponent(
+    "custom:promocode.banner",
+    "black-friday",
+    Array(
+        "BANNER_DISCOUNT" => "-60%",
+        "BANNER_TIME" => 3000,
+        "PROMOCODE" => "0",
+    )
+);
+?>
 <!--    --><?//$APPLICATION->IncludeComponent('custom:banner', 'last.change', array("URL"=>"ALL", "BACKGROUND"=>"/upload/medialibrary/8f2/9frwkezz1ehaxj5m5tb0u10nfubij2mi.jpg"), false)?>
     <!-- VK counter -->
     <script defer type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?160",t.onload=function(){VK.Retargeting.Init("VK-RTRG-333642-hybZ4"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-333642-hybZ4" style="position:fixed; left:-999px;" alt=""/></noscript>    

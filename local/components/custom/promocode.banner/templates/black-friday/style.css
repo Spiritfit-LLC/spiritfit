@@ -1,0 +1,96 @@
+.promocode-banner__container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    /*display: flex;*/
+    align-items: center;
+    background-color: #000000d4;
+    justify-content: center;
+    z-index: 10000;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display:none;
+}
+.promocode-banner {
+    width: 400px;
+    height: 600px;
+    background-repeat: repeat;
+    background-size: cover;
+    background-color: white;
+    background-position: 50% 50%;
+    border-radius: 8px;
+    position: relative;
+    color: black;
+}
+.promocode-banner__closer {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    transition: 0.5s;
+    cursor: pointer;
+    z-index: 1000;
+}
+.promocode-banner__closer svg{
+    width: 100%;
+    height: 100%;
+}
+.promocode-banner__closer:hover{
+    transform: rotate(180deg);
+}
+img.cube-logo-spiritfit {
+    width: 85px;
+    position: absolute;
+    top: 20px;
+    left: 31px;
+}
+.promocode-content__discount {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 105px;
+    padding: 0 34px;
+    font-weight: 600;
+}
+.promocode-to-text {
+    font-size: 24px;
+}
+.promocode-discount-text {
+    position: absolute;
+    top: -5px;
+    left: 30px;
+    font-size: 80px;
+    font-weight: 900;
+}
+.promocode-content__date {
+    position: absolute;
+    top: 357px;
+    left: 31px;
+    padding: 5px 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(90deg, #E23834 3.26%, #7A27F1 98.07%);
+    border-radius: 5px;
+}
+@media screen and (max-width: 400px) {
+    .promocode-banner {
+        width: 370px;
+    }
+    img.cube-logo-spiritfit {
+        width: 70px;
+        left: 17px;
+    }
+    .promocode-content__date {
+        left: 17px;
+    }
+    .promocode-discount-text{
+        left: 16px;
+    }
+    .promocode-content__discount {
+        padding: 0 19px;
+    }
+}
