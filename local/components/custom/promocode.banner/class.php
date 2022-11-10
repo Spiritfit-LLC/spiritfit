@@ -4,7 +4,7 @@ use \Bitrix\Main\Loader;
 
 class PersonalTrialWorkout extends CBitrixComponent{
     function onPrepareComponentParams($arParams){
-        if(empty($arParams['PROMOCODE'])){
+        if(empty($arParams['PROMOCODE']) && $arParams["PROMOCODE"]!="0"){
             $this->arResult["ERROR"]="Отсутствует промокод";
         }
         elseif (empty($arParams["BANNER_TIME"])){
