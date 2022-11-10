@@ -298,7 +298,7 @@ foreach ($arResult["ABONEMENTS"] as $key => $arItem) {
 	}
 
     if ($club || $arResult["PROPERTIES"]["SOON"]["VALUE"]){
-        $arResult["ABONEMENTS"][$key]['DETAIL_PAGE_URL'] .= $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
+        $arResult["ABONEMENTS"][$key]['DETAIL_PAGE_URL'] .= $arResult["PROPERTIES"]["NUMBER"]["VALUE"].'/';
     }
 //    if (!$club&&!$arResult["PROPERTIES"]["SOON"]["VALUE"]) {
 ////        unset($arResult["ABONEMENTS"][$key]);
