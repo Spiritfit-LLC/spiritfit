@@ -111,7 +111,14 @@ $arUrlRewrite=array (
         'PATH' => '/quiz/index.php',
         'SORT' => 100,
     ),
-//    15 =>
+    15=>array(
+        'CONDITION' => '#^/play/#',
+        'RULE' => 'ELEMENT_CODE=play',
+        'ID' => '',
+        'PATH' => '/landings/v1/index.php',
+        'SORT' => 100,
+    )
+//    16 =>
 //    array (
 //        'CONDITION' => '#^/spiritnet/#',
 //        'RULE' => '',
