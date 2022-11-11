@@ -62,7 +62,8 @@ $APPLICATION->IncludeComponent(
 		"FILTER_NAME" => $arParams["FILTER_NAME"],
 		"HIDE_LINK_WHEN_NO_DETAIL" => $arParams["HIDE_LINK_WHEN_NO_DETAIL"],
 		"CHECK_DATES" => $arParams["CHECK_DATES"],
-		"SHORT_VERSION" => $arParams["SHORT_VERSION"]
+		"SHORT_VERSION" => $arParams["SHORT_VERSION"],
+		"IBLOCK_PRIZE_ID" => !empty($arParams["IBLOCK_PRIZE_ID"]) ? $arParams["IBLOCK_PRIZE_ID"] : ""
 	),
 	$component
 );
