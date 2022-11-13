@@ -619,6 +619,17 @@ $(document).ready(function(){
     }
 });
 
+var show_transformation_tests=function(btn){
+    if ($(btn).hasClass("active")){
+        $(".transformation__all-tests__items").slideUp();
+        $(btn).removeClass("active");
+    }
+    else{
+        $(".transformation__all-tests__items").slideDown();
+        $(btn).addClass("active");
+    }
+}
+
 var show_transformation_leaders=function(btn){
     if ($(btn).hasClass("active")){
         $(".choose-leader__leaders-container").slideUp();
@@ -795,3 +806,4 @@ MyQuiz.Share = {
         document.body.removeChild(dummy);
     }
 };
+

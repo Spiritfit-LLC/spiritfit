@@ -265,6 +265,7 @@
                 height: 100%;
                 fill: #7e7e7e;
             }
+            .transformation__all-tests__trigger.active .choose-leader__arrow-down,
             .choose-trainer__trigger.active .choose-leader__arrow-down{
                 transform: rotate(180deg);
             }
@@ -361,12 +362,145 @@
                 flex-direction: column;
                 justify-content: space-between;
             }
+            .personal-transformation__container.has-leader {
+                background: none;
+                padding: 0;
+            }
+            .personal-transformation__info {
+                background-color: #000000d4;
+                border-radius: 10px;
+                padding: 20px;
+            }
             @media screen and (max-width: 1220px) {
                 .has-leader .personal-transformation__name {
                     font-size: 26px;
                 }
                 .small-btn{
                     padding: 10px 10px;
+                }
+            }
+
+            .personal-transformation__test-container {
+                margin-top: 35px;
+            }
+            .test-grade__0 {
+                display: flex;
+                flex-direction: row-reverse;
+                align-items: center;
+            }
+            .test-grade__0-ID {
+                width: 35%;
+                flex: 0 0 35%;
+                text-align: center;
+                font-weight: 700;
+            }
+            span.client_id {
+                font-weight: 900;
+                font-size: 25px;
+                background: linear-gradient(90deg, #E03838 3.26%, #7B27EF 98.07%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .test-grade__0-info {
+                font-size: 15px;
+                font-weight: 500;
+            }
+            .transformation__all-tests {
+                margin-top: 20px;
+                border-top: 2px solid #7e7e7e;
+                /* padding: 10px 0; */
+            }
+            .transformation__all-tests__trigger {
+                padding-top: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-weight: 800;
+                color: #7e7e7e;
+                cursor: pointer;
+            }
+            .transformation__all-tests__items {
+                padding-top: 20px;
+            }
+            .all-tests__items {
+                width: 100%;
+                border: none;
+                border-collapse: separate;
+                border: 1px solid #7e7e7e;
+                border-radius: 10px 10px 0;
+                border-bottom: 0;
+            }
+            .all-tests__items thead th {
+                font-weight: bold;
+                text-align: left;
+                border: none;
+                padding: 10px 15px;
+                font-size: 16px;
+                border-top: 1px solid #7e7e7e;
+            }
+            .all-tests__items thead{
+                background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);
+            }
+
+            .all-tests__items thead tr th:first-child {
+                border-radius: 10px 0 0 0;
+            }
+            .all-tests__items thead tr th:last-child {
+                border-radius: 0 10px 0 0;
+            }
+            .transformation__all-tests__items table {
+                width:100%;
+                table-layout: fixed;
+                border: none;
+            }
+            .all-tests__items-body td{
+                padding: 10px 15px;
+                font-weight: 600;
+            }
+            .all-tests__items-body td:last-child {
+                text-align: end;
+            }
+            .all-tests__items-body {
+                max-height: 150px;
+                overflow-x: hidden;
+                overflow-y: auto;
+                border: 1px solid #7e7e7e;
+                border-radius: 0 0 10px 10px;
+                border-top: none;
+            }
+
+            .all-tests__items-body tbody tr:nth-child(even) {
+                background: #2a2a2a;
+            }
+
+            .all-tests__items-body::-webkit-scrollbar {
+                width: 6px;
+            }
+            .all-tests__items-body::-webkit-scrollbar-track {
+                box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            }
+            .all-tests__items-body::-webkit-scrollbar-thumb {
+                box-shadow: unset;
+                background: #7e7e7e;
+            }
+            .result-grade td {
+                background: linear-gradient(90deg, #E03838 3.26%, #7B27EF 98.07%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            @media screen and (max-width: 448px){
+                span.client_id {
+                    font-size: 22px;
+                }
+                .test-grade__0-info {
+                    font-size: 13px;
+                    padding-right: 10px;
+                }
+                .all-tests__items thead th {
+                    font-size: 12px;
+                }
+                .all-tests__items-body td {
+                    font-size: 13px;
                 }
             }
         </style>
@@ -445,33 +579,106 @@
                         $leader=$db_leader->Fetch();
                         ?>
                         <?if (!empty($leader)):?>
-                            <div class="personal-transformation__container has-leader">
-                                <div class="my-leader__container is-hide-mobile">
-                                    <div class="leader-block">
-                                        <div class="leader-avatar">
-                                            <? if( !empty($leader["PROPERTY_VIDEO_VALUE"]) ) {
-                                                $path=CFile::GetPath($leader["PROPERTY_VIDEO_VALUE"]);?>
-                                                <video autoplay muted loop playsinline><source src="<?=$path?>" type="video/<?=pathinfo($path, PATHINFO_EXTENSION)?>"></video>
-                                            <? } else { ?>
-                                                <img src="<?=CFile::GetPath($leader["PREVIEW_PICTURE"])?>" alt="<?=$leader["NAME"]?>" title="<?=$leader["NAME"]?>">
-                                            <? } ?>
+                            <div class="personal-transformation__info">
+                                <div class="personal-transformation__container has-leader">
+                                    <div class="my-leader__container is-hide-mobile">
+                                        <div class="leader-block">
+                                            <div class="leader-avatar">
+                                                <? if( !empty($leader["PROPERTY_VIDEO_VALUE"]) ) {
+                                                    $path=CFile::GetPath($leader["PROPERTY_VIDEO_VALUE"]);?>
+                                                    <video autoplay muted loop playsinline><source src="<?=$path?>" type="video/<?=pathinfo($path, PATHINFO_EXTENSION)?>"></video>
+                                                <? } else { ?>
+                                                    <img src="<?=CFile::GetPath($leader["PREVIEW_PICTURE"])?>" alt="<?=$leader["NAME"]?>" title="<?=$leader["NAME"]?>">
+                                                <? } ?>
+                                            </div>
+                                            <div class="leader-name">
+                                                <?=$leader["NAME"]?>
+                                            </div>
                                         </div>
-                                        <div class="leader-name">
-                                            <?=$leader["NAME"]?>
+                                    </div>
+                                    <div class="personal-transformation__content">
+                                        <div class="personal-transformation__title">
+                                            <div style="font-size: 15px;">Ваш тариф включает спецпроект</div>
+                                            <a class="personal-transformation__name" href="/landings/v2/transformation/">Spirit.<br>Трансформация</a>
                                         </div>
+                                        <?if (!empty($leader["PROPERTY_CHAT_LINK_VALUE"])):?>
+                                            <div class="personal-transformation__btns" style="padding: 10px 0;">
+                                                <a href="<?=$leader["PROPERTY_CHAT_LINK_VALUE"]?>" class="small-btn">Перейти в чат с тренером</a>
+                                            </div>
+                                        <?endif;?>
                                     </div>
                                 </div>
-                                <div class="personal-transformation__content">
-                                    <div class="personal-transformation__title">
-                                        <div style="font-size: 15px;">Ваш тариф включает спецпроект</div>
-                                        <a class="personal-transformation__name" href="/landings/v2/transformation/">Spirit.<br>Трансформация</a>
+                                <?if (!empty($special["tests"]) && count($special["tests"])>0):?>
+                                <div class="personal-transformation__test-container">
+                                    <?
+                                    $tests=$special["tests"];
+                                    usort($tests, function ($item1, $item2) {
+                                        return $item2['date'] > $item1['date'];
+                                    });
+                                    $grade_0=false;
+                                    $test_text="Показать все тесты";
+                                    foreach ($tests as $test){
+                                        if ($test["result"] && $test["grade"]==0){
+                                            $grade_0=$test;
+                                            $test_text="Все тесты";
+                                            break;
+                                        }
+                                    }
+                                    ?>
+                                    <?if (!empty($grade_0)):?>
+                                    <div class="test-grade__0">
+                                        <div class="test-grade__0-ID">
+                                            <span class="client_id"><?=$grade_0["id"]?></span><br>
+                                            Ваш ID
+                                        </div>
+                                        <div class="test-grade__0-info">
+                                            Используйте его для теста InBody. Тест нужно пройти с дежурным тренером. Использовать ID-код можно всего 1 раз.
+                                        </div>
                                     </div>
-                                    <?if (!empty($leader["PROPERTY_CHAT_LINK_VALUE"])):?>
-                                    <div class="personal-transformation__btns" style="padding: 10px 0;">
-                                        <a href="<?=$leader["PROPERTY_CHAT_LINK_VALUE"]?>" class="small-btn">Перейти в чат с тренером</a>
+                                    <?endif;?>
+                                    <?if ((count($tests)>1 && !empty($grade_0)) || empty($grade_0)):?>
+                                    <div class="transformation__all-tests">
+                                        <div class="transformation__all-tests-container">
+                                            <div class="transformation__all-tests__trigger" onclick="show_transformation_tests(this)">
+                                                <?=$test_text?>
+                                                <div class="choose-leader__arrow-down">
+                                                    <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/arrow-down.svg');?>
+                                                </div>
+                                            </div>
+                                            <div class="transformation__all-tests__items is-hide">
+                                                <table class="all-tests__items">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Дата</th>
+                                                            <th>Результат</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                                <div class="all-tests__items-body">
+                                                    <table>
+                                                        <tbody>
+                                                            <?
+                                                            foreach ($tests as $test):?>
+                                                            <tr <?if ($test["result"]) echo "class=\"result-grade\""?>>
+                                                                <td><?=$test["id"]?></td>
+                                                                <?
+                                                                $date=!empty($test["grade"])?$test["date"]:"Не пройден";
+                                                                $grade=!empty($test["grade"])?$test["grade"]:"";
+                                                                ?>
+                                                                <td><?=$date?></td>
+                                                                <td><?=$grade?></td>
+                                                            </tr>
+                                                            <?endforeach;?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <?endif;?>
                                 </div>
+                                <?endif;?>
                             </div>
                         <?endif;?>
                     <?endif;?>
