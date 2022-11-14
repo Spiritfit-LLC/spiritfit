@@ -35,7 +35,14 @@ $this->setFrameMode(true);
                     <?endif;?>
                 </h1>
                 <? if( !empty($arResult['PROPERTIES']['LINK']['VALUE']) ) {
-                    ?><div class="block-description"><?=$arResult['PROPERTIES']['LINK']['VALUE']?></div><?
+                    $link=$arResult['PROPERTIES']['LINK']['VALUE'];
+                    if (stripos($link, "www.")){
+                        $link=str_replace("www.", '', $link);
+                    }
+                    if (stripos($link, "https://")==false){
+                        $link="https://".$link;
+                    }
+                    ?><a class="block-description" href="<?=$link?>"><?=$arResult['PROPERTIES']['LINK']['VALUE']?></a><?
                 } ?>
                 <?=$arResult['DETAIL_TEXT']?>
             </div>
