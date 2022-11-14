@@ -111,53 +111,29 @@ $this->setFrameMode(true);
     </div>
     <div class="slider blockitem block3">
         <div class="content-center">
-            <div class="block-title uppercase">Каждую неделю 10 главных призов</div>
-            <div class="block-description">
-                Которые получают первые 10 участников в турнирной таблице.<br>
-                Призы распределяются рандомно.
-            </div>
-            <div class="prise-slider">
-                <div class="prise-slider-item">
-                    <span class="prise-slider-wrapper">
-                        <div class="image">
-                            <img src="<?=$templateFolder?>/images/block3_img1.png" alt="Пожизненый  абонемент Spirit.Fitness" title="Пожизненый  абонемент Spirit.Fitness">
-                        </div>
-                        <div class="description">
-                            Пожизненый  абонемент Spirit.Fitness
-                        </div>
-                    </span>
+            <? if(!empty($arResult['PRIZES'])) {
+                ?>
+                <div class="block-title uppercase">Каждую неделю 10 главных призов</div>
+                <div class="block-description">
+                    Которые получают первые 10 участников в турнирной таблице.<br>
+                    Призы распределяются рандомно.
                 </div>
-                <div class="prise-slider-item">
-                    <span class="prise-slider-wrapper">
-                        <div class="image">
-                            <img src="<?=$templateFolder?>/images/block3_img2.png" alt="Iphone 14" title="Iphone 14">
+                <div class="prise-slider">
+                    <? foreach($arResult["PRIZES"] as $item) { ?>
+                        <div class="prise-slider-item">
+                            <span class="prise-slider-wrapper">
+                                <div class="image">
+                                    <img src="<?=$item['PICTURE']?>" alt="<?=$item['NAME']?>" title="<?=$item['NAME']?>">
+                                </div>
+                                <div class="description">
+                                    <?=$item['NAME']?>
+                                </div>
+                            </span>
                         </div>
-                        <div class="description">
-                            Iphone 14
-                        </div>
-                    </span>
+                    <? } ?>
                 </div>
-                <div class="prise-slider-item">
-                    <span class="prise-slider-wrapper">
-                        <div class="image">
-                            <img src="<?=$templateFolder?>/images/block3_img3.png" alt="Apple Watch S7" title="Apple Watch S7">
-                        </div>
-                        <div class="description">
-                            Apple Watch S7
-                        </div>
-                    </span>
-                </div>
-                <div class="prise-slider-item">
-                    <span class="prise-slider-wrapper">
-                        <div class="image">
-                            <img src="<?=$templateFolder?>/images/block3_img4.png" alt="Пожизненый  абонемент Spirit.Fitness" title="Пожизненый  абонемент Spirit.Fitness">
-                        </div>
-                        <div class="description">
-                            7 сертификатов на покупку товаров и услуг на сумму от 20.000 р
-                        </div>
-                    </span>
-                </div>
-            </div>
+                <?
+            } ?>
             <div class="block-link">
                 <a class="button gradient" href="/personal/"><span>Играть!</span></a>
             </div>

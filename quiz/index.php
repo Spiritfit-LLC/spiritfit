@@ -14,6 +14,7 @@ $APPLICATION->IncludeComponent("bitrix:news","quiz",Array(
         "AJAX_MODE" => "N",
         "IBLOCK_TYPE" => "landings",
         "IBLOCK_ID" => Utils::GetIBlockIDBySID("quiz"),
+		"IBLOCK_PRIZE_ID" => Utils::GetIBlockIDBySID("quizprize"),
         "NEWS_COUNT" => "1000",
         "USE_SEARCH" => "N",
         "USE_RSS" => "N",

@@ -99,8 +99,8 @@ class Prize {
 
         $quiz = new Quiz();
         $quizResult = $quiz->isUserInTop($timeStart, $timeEnd, $this->userId, $limit);
-
-        if( !$quizResult['IN_TOP'] && $quizResult['TOTAL_VALUE'] > $minValue ) {
+        
+        if( !$quizResult['IN_TOP'] && $quizResult['IN_QUIZ'] && $quizResult['TOTAL_VALUE'] > $minValue ) {
             return true;
         }
 

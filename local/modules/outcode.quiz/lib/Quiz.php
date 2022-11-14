@@ -194,7 +194,7 @@ class Quiz {
     }
 
     public function isUserInTop( int $timeStart, int $timeEnd, int $userId, $limit = 50 ) : array {
-        $arRes = ['IN_TOP' => false, 'TOTAL_VALUE' => 0, 'USER' => []];
+        $arRes = ['IN_TOP' => false, 'TOTAL_VALUE' => 0, 'USER' => [], 'IN_QUIZ' => false];
         $arUserTable = [];
 
         if( !$this->isUserInQuiz($userId) || !isset($this->hlEntityDataClass) ) return $arRes;
@@ -219,6 +219,8 @@ class Quiz {
                 $arUserTable[$rsData['UF_USER_ID']]['VALUE'] += intval($rsData['UF_RESULT']);
             }
 
+            $arRes['IN_QUIZ'] = isset($arUserTable[$userId]);
+
             usort($arUserTable, function ($item1, $item2) {
                 return $item2['VALUE'] <=> $item1['VALUE'];
             });
@@ -235,15 +237,16 @@ class Quiz {
             }
 
             $counter = 0;
+            $inTop = true;
             foreach( $arUserTable as $item ) {
                 if( $userId == $item['ID'] ) {
-                    $arRes['IN_TOP'] = true;
+                    $arRes['IN_TOP'] = $inTop;
                     $arRes['TOTAL_VALUE'] = $item['VALUE'];
                     break;
                 }
 
                 $counter += 1;
-                if( $counter >= $limit ) break;
+                if( $counter >= $limit && $inTop ) $inTop = false;
             }
             unset($counter);
             unset($arUserTable);
