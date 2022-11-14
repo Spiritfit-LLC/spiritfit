@@ -30,7 +30,7 @@ $APPLICATION->IncludeComponent("bitrix:news","quiz",Array(
         "PREVIEW_TRUNCATE_LEN" => "",
         "LIST_ACTIVE_DATE_FORMAT" => "d.m.Y",
         "LIST_FIELD_CODE" => Array(),
-        "LIST_PROPERTY_CODE" => Array(),
+        "LIST_PROPERTY_CODE" => Array("LINK"),
         "HIDE_LINK_WHEN_NO_DETAIL" => "N",
         "DISPLAY_NAME" => "Y",
         "META_KEYWORDS" => "-",
@@ -42,7 +42,7 @@ $APPLICATION->IncludeComponent("bitrix:news","quiz",Array(
         "DETAIL_PROPERTY_CODE" => Array(
             0 => "LINK",
             1 => "PRISE_NAME",
-            2 => ""
+            2 => "LINK_CLICKABLE"
         ),
         "DETAIL_DISPLAY_TOP_PAGER" => "N",
         "DETAIL_DISPLAY_BOTTOM_PAGER" => "N",

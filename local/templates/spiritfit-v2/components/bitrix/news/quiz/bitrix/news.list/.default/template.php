@@ -121,6 +121,9 @@ $this->setFrameMode(true);
                 <div class="prise-slider">
                     <? foreach($arResult["PRIZES"] as $item) { ?>
                         <div class="prise-slider-item">
+                            <?if (!empty($item["LINK"])):?>
+                                <a class="prise-slider-link" href="<?=$item["LINK"]?>" target="_blank">
+                            <?endif;?>
                             <span class="prise-slider-wrapper">
                                 <div class="image">
                                     <img src="<?=$item['PICTURE']?>" alt="<?=$item['NAME']?>" title="<?=$item['NAME']?>">
@@ -129,6 +132,10 @@ $this->setFrameMode(true);
                                     <?=$item['NAME']?>
                                 </div>
                             </span>
+                            <?if (!empty($item["LINK"])):?>
+                                </a>
+                            <?endif;?>
+
                         </div>
                     <? } ?>
                 </div>
