@@ -40,7 +40,7 @@
             <? if( $arResult['EMAIL_WARNING'] ) {
                 ?>
                 <div class="question-form">
-                    <div class="success"><?=GetMessage('QUIZ_NO_EMAIL')?></div>
+                    <div class="success no-email"><?=GetMessage('QUIZ_NO_EMAIL')?></div>
                 </div>
                 <?
             } ?>
