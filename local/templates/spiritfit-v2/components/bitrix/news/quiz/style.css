@@ -1088,3 +1088,7 @@
         padding: 40px 0px 40px;
     }
 }
+
+a.block-description {
+    color: black;
+}
