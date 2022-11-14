@@ -25,7 +25,15 @@ $this->setFrameMode(true);
                 <?
             } ?>
             <div class="table-cell">
-                <h1 class="block-title"><?=$arResult['NAME']?></h1>
+                <h1 class="block-title">
+                    <?if (!empty($arResult["PROPERTIES"]["LINK_CLICKABLE"]["VALUE"])):?>
+                        <a href="<?=$arResult["PROPERTIES"]["LINK_CLICKABLE"]["VALUE"]?>" target="_blank">
+                    <?endif;?>
+                    <?=$arResult['NAME']?>
+                    <?if (!empty($arResult["PROPERTIES"]["LINK_CLICKABLE"]["VALUE"])):?>
+                        </a>
+                    <?endif;?>
+                </h1>
                 <? if( !empty($arResult['PROPERTIES']['LINK']['VALUE']) ) {
                     ?><div class="block-description"><?=$arResult['PROPERTIES']['LINK']['VALUE']?></div><?
                 } ?>
