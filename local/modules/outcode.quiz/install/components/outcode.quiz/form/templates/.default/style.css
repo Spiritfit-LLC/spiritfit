@@ -306,6 +306,9 @@
 	line-height: 12px;
 	margin: 10px 0px;
 }
+.success.no-email {
+	margin-bottom: 85px;
+}
 
 @media screen and (max-width: 768px) {
 	.results-table-content.three .results-table__cell {

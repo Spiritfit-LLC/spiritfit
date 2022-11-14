@@ -3,7 +3,7 @@
 namespace Sprint\Migration;
 
 
-class QuizQuestions20221110001004 extends Version
+class Quiz_Main_Prize20221114125346 extends Version
 {
     protected $description = "";
 
@@ -17,39 +17,42 @@ class QuizQuestions20221110001004 extends Version
     {
         $helper = $this->getHelperManager();
         $helper->Iblock()->saveIblockType(array (
-  'ID' => 'outcode_quiz',
-  'SECTIONS' => 'N',
-  'EDIT_FILE_BEFORE' => NULL,
-  'EDIT_FILE_AFTER' => NULL,
+  'ID' => 'landings',
+  'SECTIONS' => 'Y',
+  'EDIT_FILE_BEFORE' => '',
+  'EDIT_FILE_AFTER' => '',
   'IN_RSS' => 'N',
   'SORT' => '500',
   'LANG' => 
   array (
     'ru' => 
     array (
-      'NAME' => 'Вопросы викторины',
+      'NAME' => 'Лэндинги',
+      'SECTION_NAME' => '',
+      'ELEMENT_NAME' => '',
+    ),
+    'en' => 
+    array (
+      'NAME' => 'Landings',
       'SECTION_NAME' => '',
       'ELEMENT_NAME' => '',
     ),
   ),
 ));
         $iblockId = $helper->Iblock()->saveIblock(array (
-  'IBLOCK_TYPE_ID' => 'outcode_quiz',
+  'IBLOCK_TYPE_ID' => 'landings',
   'LID' => 
   array (
     0 => 's1',
-    1 => 's2',
-    2 => 's3',
-    3 => 'yz',
   ),
-  'CODE' => 'outcode_quiz',
+  'CODE' => 'quizprize',
   'API_CODE' => NULL,
-  'NAME' => 'Вопросы викторины',
+  'NAME' => 'Главные призы',
   'ACTIVE' => 'Y',
-  'SORT' => '1',
+  'SORT' => '1500',
   'LIST_PAGE_URL' => '',
   'DETAIL_PAGE_URL' => '',
-  'SECTION_PAGE_URL' => NULL,
+  'SECTION_PAGE_URL' => '',
   'CANONICAL_PAGE_URL' => '',
   'PICTURE' => NULL,
   'DESCRIPTION' => '',
@@ -61,15 +64,15 @@ class QuizQuestions20221110001004 extends Version
   'RSS_FILE_DAYS' => NULL,
   'RSS_YANDEX_ACTIVE' => 'N',
   'XML_ID' => NULL,
-  'INDEX_ELEMENT' => 'Y',
+  'INDEX_ELEMENT' => 'N',
   'INDEX_SECTION' => 'N',
   'WORKFLOW' => 'N',
   'BIZPROC' => 'N',
   'SECTION_CHOOSER' => 'L',
-  'LIST_MODE' => '',
+  'LIST_MODE' => 'C',
   'RIGHTS_MODE' => 'S',
-  'SECTION_PROPERTY' => NULL,
-  'PROPERTY_INDEX' => NULL,
+  'SECTION_PROPERTY' => 'N',
+  'PROPERTY_INDEX' => 'N',
   'VERSION' => '1',
   'LAST_CONV_ELEMENT' => '0',
   'SOCNET_GROUP_ID' => NULL,
@@ -81,8 +84,8 @@ class QuizQuestions20221110001004 extends Version
   'ELEMENT_NAME' => 'Элемент',
   'REST_ON' => 'N',
   'EXTERNAL_ID' => NULL,
-  'LANG_DIR' => '/site_yz/',
-  'SERVER_NAME' => 'spiritfit.ru',
+  'LANG_DIR' => '/',
+  'SERVER_NAME' => '',
   'IPROPERTY_TEMPLATES' => 
   array (
   ),
@@ -136,7 +139,7 @@ class QuizQuestions20221110001004 extends Version
   'PREVIEW_PICTURE' => 
   array (
     'NAME' => 'Картинка для анонса',
-    'IS_REQUIRED' => 'N',
+    'IS_REQUIRED' => 'Y',
     'DEFAULT_VALUE' => 
     array (
       'FROM_DETAIL' => 'N',
@@ -219,7 +222,7 @@ class QuizQuestions20221110001004 extends Version
   'CODE' => 
   array (
     'NAME' => 'Символьный код',
-    'IS_REQUIRED' => 'Y',
+    'IS_REQUIRED' => 'N',
     'DEFAULT_VALUE' => 
     array (
       'UNIQUE' => 'N',
@@ -334,188 +337,17 @@ class QuizQuestions20221110001004 extends Version
 ));
     $helper->Iblock()->saveGroupPermissions($iblockId, array (
   'administrators' => 'X',
+  'everyone' => 'R',
 ));
-        $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Вопрос',
-  'ACTIVE' => 'Y',
-  'SORT' => '100',
-  'CODE' => 'QUESTION_STRING',
-  'DEFAULT_VALUE' => '',
-  'PROPERTY_TYPE' => 'S',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'N',
-  'XML_ID' => NULL,
-  'FILE_TYPE' => '',
-  'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'N',
-  'SEARCHABLE' => 'N',
-  'FILTRABLE' => 'N',
-  'IS_REQUIRED' => 'Y',
-  'VERSION' => '1',
-  'USER_TYPE' => NULL,
-  'USER_TYPE_SETTINGS' => NULL,
-  'HINT' => '',
-));
-            $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Дата начала активности',
-  'ACTIVE' => 'Y',
-  'SORT' => '200',
-  'CODE' => 'DATE_START',
-  'DEFAULT_VALUE' => NULL,
-  'PROPERTY_TYPE' => 'S',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'N',
-  'XML_ID' => NULL,
-  'FILE_TYPE' => '',
-  'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'N',
-  'SEARCHABLE' => 'N',
-  'FILTRABLE' => 'N',
-  'IS_REQUIRED' => 'Y',
-  'VERSION' => '1',
-  'USER_TYPE' => 'DateTime',
-  'USER_TYPE_SETTINGS' => NULL,
-  'HINT' => '',
-));
-            $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Дата окончания активности',
-  'ACTIVE' => 'Y',
-  'SORT' => '300',
-  'CODE' => 'DATE_END',
-  'DEFAULT_VALUE' => NULL,
-  'PROPERTY_TYPE' => 'S',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'N',
-  'XML_ID' => NULL,
-  'FILE_TYPE' => '',
-  'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'N',
-  'SEARCHABLE' => 'N',
-  'FILTRABLE' => 'N',
-  'IS_REQUIRED' => 'Y',
-  'VERSION' => '1',
-  'USER_TYPE' => 'DateTime',
-  'USER_TYPE_SETTINGS' => NULL,
-  'HINT' => '',
-));
-            $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Тип вопроса',
-  'ACTIVE' => 'Y',
-  'SORT' => '400',
-  'CODE' => 'TYPE',
-  'DEFAULT_VALUE' => '',
-  'PROPERTY_TYPE' => 'L',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'N',
-  'XML_ID' => NULL,
-  'FILE_TYPE' => '',
-  'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'N',
-  'SEARCHABLE' => 'N',
-  'FILTRABLE' => 'N',
-  'IS_REQUIRED' => 'Y',
-  'VERSION' => '1',
-  'USER_TYPE' => NULL,
-  'USER_TYPE_SETTINGS' => NULL,
-  'HINT' => '',
-  'VALUES' => 
-  array (
-    0 => 
-    array (
-      'VALUE' => 'Text',
-      'DEF' => 'Y',
-      'SORT' => '100',
-      'XML_ID' => '64bd5281000bd9949368d3400218dae3',
-    ),
-    1 => 
-    array (
-      'VALUE' => 'Strings',
-      'DEF' => 'N',
-      'SORT' => '200',
-      'XML_ID' => 'ff10e44c52e7090336bb892a2f311ea2',
-    ),
-    2 => 
-    array (
-      'VALUE' => 'Images',
-      'DEF' => 'N',
-      'SORT' => '300',
-      'XML_ID' => '48bf89b941130541900ea281d15e361e',
-    ),
-  ),
-));
-            $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Ответы (строка)',
-  'ACTIVE' => 'Y',
-  'SORT' => '500',
-  'CODE' => 'ANSWERS_STRING',
-  'DEFAULT_VALUE' => '',
-  'PROPERTY_TYPE' => 'S',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'Y',
-  'XML_ID' => NULL,
-  'FILE_TYPE' => '',
-  'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'N',
-  'SEARCHABLE' => 'N',
-  'FILTRABLE' => 'N',
-  'IS_REQUIRED' => 'N',
-  'VERSION' => '1',
-  'USER_TYPE' => NULL,
-  'USER_TYPE_SETTINGS' => NULL,
-  'HINT' => '',
-));
-            $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Изображение для ответа',
-  'ACTIVE' => 'Y',
-  'SORT' => '600',
-  'CODE' => 'ANSWERS_IMAGE',
-  'DEFAULT_VALUE' => '',
-  'PROPERTY_TYPE' => 'F',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'Y',
-  'XML_ID' => NULL,
-  'FILE_TYPE' => 'png, jpg, gif, webp',
-  'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'Y',
-  'SEARCHABLE' => 'N',
-  'FILTRABLE' => 'N',
-  'IS_REQUIRED' => 'N',
-  'VERSION' => '1',
-  'USER_TYPE' => NULL,
-  'USER_TYPE_SETTINGS' => NULL,
-  'HINT' => '',
-));
-            $helper->UserOptions()->saveElementForm($iblockId, array (
+        $helper->UserOptions()->saveElementForm($iblockId, array (
   'Элемент|edit1' => 
   array (
     'ID' => 'ID',
     'ACTIVE' => 'Активность',
     'NAME' => 'Название',
+    'PREVIEW_PICTURE' => 'Картинка',
     'CODE' => 'Символьный код',
-    'PROPERTY_QUESTION_STRING' => 'Вопрос',
-    'PROPERTY_DATE_START' => 'Дата начала активности',
-    'PROPERTY_DATE_END' => 'Дата окончания активности',
-    'PROPERTY_TYPE' => 'Тип вопроса',
-    'PROPERTY_ANSWERS_STRING' => 'Ответы (строка)',
-    'PROPERTY_ANSWERS_IMAGE' => 'Изображение для ответа',
+    'SORT' => 'Сортировка',
   ),
 ));
     $helper->UserOptions()->saveElementGrid($iblockId, array (

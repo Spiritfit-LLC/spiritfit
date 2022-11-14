@@ -5,7 +5,7 @@
     use Bitrix\Main\Result;
     use Bitrix\Main\Engine\Contract\Controllerable;
     use Bitrix\Main\Engine\ActionFilter;
-     
+    
     class QuizComponent extends CBitrixComponent implements Controllerable {
 
         /**
