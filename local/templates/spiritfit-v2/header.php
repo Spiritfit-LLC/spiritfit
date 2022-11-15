@@ -149,17 +149,101 @@ foreach( $clubs as $club ) {
 
 ?>
 <body class="b-page <?=$classPage?>">
-<?php
-$APPLICATION->IncludeComponent(
-    "custom:promocode.banner",
-    "black-friday",
-    Array(
-        "BANNER_DISCOUNT" => "-60%",
-        "BANNER_TIME" => 3000,
-        "PROMOCODE" => "0",
-    )
-);
-?>
+    <?if ($USER->IsAuthorized()):?>
+        <div class="quiz-info__container">
+            <div class="quiz-info__modal">
+                <div class="quiz-info__closer" onclick="$('.quiz-info__container').fadeOut()">
+                    <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/img/icons/cross_footer_icon.svg')?>
+                </div>
+                <div class="quiz-info__title purple-text">Отлично!</div>
+                <div class="quiz-info__text">
+                    Вы зарегистрированы для большой игры в <span class="purple-text">Spirit.Квиз на 5.000.000₽</span>. Игра начнется 21 ноября в 12:00. Подпишитесь, чтобы не пропустить старт.
+                </div>
+                <div class="quiz-info__btn">
+                    <a href="https://t.me/spiritfitness_official" class="button purple">Подписаться</a>
+                </div>
+            </div>
+        </div>
+        <style>
+            .quiz-info__container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                z-index: 100;
+                background: #0000008f;
+            }
+            .quiz-info__modal {
+                width: 770px;
+                background: white;
+                color: black;
+                padding: 30px;
+                border-radius: 5px;
+                font-weight: 500;
+                line-height: 28px;
+                position: relative;
+            }
+            .quiz-info__title {
+                text-align: center;
+                font-size: 24px;
+                margin-bottom: 20px;
+                text-transform: uppercase;
+            }
+            .purple-text{
+                background: linear-gradient(90deg, #E23834 3.26%, #7A27F1 98.07%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-weight: 800;
+            }
+            .button.purple {
+                color: #FFF;
+                background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);
+                border-radius: 8px;
+                border-color: transparent;
+                padding: 20px 60px;
+                transition: all .3s;
+                border: 0;
+            }
+            .quiz-info__btn {
+                margin-top: 20px;
+                text-align: center;
+            }
+            .quiz-info__closer {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                cursor: pointer;
+                width: 20px;
+                height: 20px;
+                transition: transform 0.5s;
+                transform: rotate(0deg);
+            }
+            .quiz-info__closer:hover{
+                transform: rotate(180deg);
+            }
+            .quiz-info__closer svg{
+                width: 100%;
+                height: 100%;
+            }
+            @media screen and (max-width: 788px) {
+                .quiz-info__modal {
+                    width: 100%;
+                }
+            }
+        </style>
+        <script>
+            $(document).ready(function(){
+                $('a[href="#quiz"]').click(function(e){
+                    e.preventDefault();
+                    $('.quiz-info__container').fadeIn().css('display', 'flex');
+                });
+            })
+        </script>
+    <?endif;?>
 <!--    --><?//$APPLICATION->IncludeComponent('custom:banner', 'last.change', array("URL"=>"ALL", "BACKGROUND"=>"/upload/medialibrary/8f2/9frwkezz1ehaxj5m5tb0u10nfubij2mi.jpg"), false)?>
     <!-- VK counter -->
     <script defer type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?160",t.onload=function(){VK.Retargeting.Init("VK-RTRG-333642-hybZ4"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-333642-hybZ4" style="position:fixed; left:-999px;" alt=""/></noscript>    
@@ -293,7 +377,7 @@ $APPLICATION->IncludeComponent(
         <?
         //ДЕЛАЕМ НА ВРЕМЯ ТРАНСФОРМАЦИИ
         if (strpos($page, "/landings/") === false):?>
-            <div class="is-hide-desktop" style="text-align: center;padding: 5px;background: #fe6000;font-weight: 500;font-size: 13px; background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);">Марафон похудения <a style="color: #e1e1e1;text-decoration: underline;" href="/landings/v2/transformation/">Spirit.Трансформация</a></div>
+            <div class="is-hide-desktop" style="text-align: center;padding: 5px;background: #fe6000;font-weight: 500;font-size: 13px; background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);"><a style="color: #e1e1e1;text-decoration: underline;" href="/quiz/">Spirit.Квиз</a> на 5.000.000₽</div>
         <?endif;?>
     </header>
     <main class="b-page__main <?=(defined('HOLDER_CLASS') ? HOLDER_CLASS : '')?>" role="main">

@@ -165,8 +165,10 @@ $(document).ready(function(){
     //КОНКУРС
     $('.profile-quiz-btn').unbind();
     $('.profile-quiz-btn').click(function(){
-        window.location = $(this).data('link');
+        //window.location = $(this).data('link');
+        $('.quiz-info__container').fadeIn().css('display', 'flex');
     });
+
     $('.profile-quiz-bonus').unbind();
     $('.open-share-block').unbind();
     $('.open-share-block').click(function(e) {
@@ -672,6 +674,8 @@ var select_leader=function(){
         }
     });
 }
+
+
 
 
 var MyQuiz = MyQuiz || {};
