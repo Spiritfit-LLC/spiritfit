@@ -29,7 +29,11 @@ $this->setFrameMode(true);
                 </p>
                 <b>5.000.000 &#8381;</b>
             </div>
-            <div class="quiz-banner-login"><a class="button white" href="/personal/"><span>С днем рождения</span></a></div>
+            <div class="quiz-banner-login"><a class="button white" href="/personal/"
+              data-layer="true"
+              data-layercategory="HappyBirthday5years"
+              data-layeraction="clickGoToLKButton"
+              data-layerlabel="С днем рождения"><span>С днем рождения</span></a></div>
         </div>
     </div>
 </div>
@@ -142,7 +146,11 @@ $this->setFrameMode(true);
                 <?
             } ?>
             <div class="block-link">
-                <a class="button gradient" href="/personal/"><span>Играть!</span></a>
+                <a class="button gradient" href="/personal/"
+                   data-layer="true"
+                   data-layercategory="HappyBirthday5years"
+                   data-layeraction="clickGoToLKButton"
+                   data-layerlabel="Играть!"><span>Играть!</span></a>
             </div>
             <? if(!empty($arResult["ITEMS"])) {
                 ?>
@@ -171,7 +179,11 @@ $this->setFrameMode(true);
                     } ?>
                 </div>
                 <div class="block-link">
-                    <a class="button gradient" href="/personal/"><span>Играть!</span></a>
+                    <a class="button gradient" href="/personal/"
+                       data-layer="true"
+                       data-layercategory="HappyBirthday5years"
+                       data-layeraction="clickGoToLKButton"
+                       data-layerlabel="Играть!"><span>Играть!</span></a>
                 </div>
                 <?
             }?>
@@ -190,7 +202,11 @@ $this->setFrameMode(true);
                         в баллы программы лояльности Spirit.Fitness
                     </p>
                 </div>
-                <div class="quiz-banner-login"><a class="button white" href="/personal/"><span>Играть!</span></a></div>
+                <div class="quiz-banner-login"><a class="button white" href="/personal/"
+                  data-layer="true"
+                  data-layercategory="HappyBirthday5years"
+                  data-layeraction="clickGoToLKButton"
+                  data-layerlabel="Играть!"><span>Играть!</span></a></div>
             </div>
         </div>
     </div>
