@@ -13,7 +13,7 @@ define("IBLOCK_COLORS_ID", 14);// ID инфоблока "Цвета"
 define("IBLOCK_CLUBS_ID", 6);// ID инфоблока "Клубы"
 define("IS_QUIZ_ACTIVE", true);// Активность конкурса для ЛК
 define("QUIZ_LINK", "/landings/v1/play/");
-define("QUIZ_LINK_TITLE", "Квиз");
+define("QUIZ_LINK_TITLE", "Spirit.Квиз на 5.000.000₽");
 
 define("POST_FORM_CORP_ACTION_URI", "/local/templates/spiritfit-corp/ajax/modal-trial.php");
 define("POST_FORM_CAREER_ACTION_URI", "/local/templates/spiritfit-career/ajax/modal-trial.php");
@@ -88,7 +88,6 @@ if (CModule::IncludeModule('conversion')){
     $day_context = Bitrix\Conversion\DayContext::getInstance(); // контекст текущего дня и текущего пользователя
     $day_context->addDayCounter('conversion_visit_day', 1);
 }
-
 
 AddEventHandler("main", "OnAfterUserAuthorize", Array("PersonalUtils", "UpdateFieldsAfterLogin"));
 
