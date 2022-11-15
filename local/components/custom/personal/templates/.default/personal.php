@@ -64,7 +64,7 @@
                         Выйти
                     </div>
                 </div>
-                <? if( defined('IS_QUIZ_ACTIVE') && IS_QUIZ_ACTIVE && !empty($arParams['LINK_GET_BONUS']) && false) {
+                <? if( defined('IS_QUIZ_ACTIVE') && IS_QUIZ_ACTIVE && !empty($arParams['LINK_GET_BONUS'])) {
                     ?>
                     <div class="personal-profile__tab-item profile-quiz-btn"  data-link="<?=QUIZ_LINK?>">
                         <?=QUIZ_LINK_TITLE?>

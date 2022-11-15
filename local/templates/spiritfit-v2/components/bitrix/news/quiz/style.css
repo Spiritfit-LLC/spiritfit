@@ -1014,14 +1014,16 @@
         font-size: 16px;
         line-height: 21px;
         text-align: center;
-        padding: 0;
+        /*padding: 0;*/
         margin-top: 24px;
+        padding:0 20px;
     }
     .is-landing .slider {
         margin: 40px 0px;
     }
     .is-landing .slider .block-title {
         margin-top: 40px;
+        font-size: 25px;
     }
     .prise-detail .table,
     .prise-detail .table-cell,
