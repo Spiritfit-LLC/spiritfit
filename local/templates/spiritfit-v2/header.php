@@ -376,7 +376,7 @@ foreach( $clubs as $club ) {
         </div>
         <?
         //ДЕЛАЕМ НА ВРЕМЯ ТРАНСФОРМАЦИИ
-        if (strpos($page, "/landings/") === false):?>
+        if (strpos($page, "/quiz/") === false):?>
             <div class="is-hide-desktop" style="text-align: center;padding: 5px;background: #fe6000;font-weight: 500;font-size: 13px; background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);"><a style="color: #e1e1e1;text-decoration: underline;" href="/quiz/">Spirit.Квиз</a> на 5.000.000₽</div>
         <?endif;?>
     </header>
