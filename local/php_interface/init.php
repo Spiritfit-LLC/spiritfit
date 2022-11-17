@@ -67,14 +67,11 @@ if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/FeedCr
 if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/TurboPagesYandex.php')) {
     require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/TurboPagesYandex.php');
 }
-if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/api/WebAnalytics.php')) {
-    require_once($_SERVER["DOCUMENT_ROOT"] . '/local/api/WebAnalytics.php');
-}
-if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/api/ProfileApi.php')) {
-    require_once($_SERVER["DOCUMENT_ROOT"] . '/local/api/ProfileApi.php');
-}
-if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/local/php_interface/classes/SpiritNetUtils.php")){
-    require_once($_SERVER["DOCUMENT_ROOT"] . "/local/php_interface/classes/SpiritNetUtils.php");
+
+$files = scandir($_SERVER["DOCUMENT_ROOT"].'/local/api');
+foreach($files as $file) {
+    if (($file !== '.') and ($file !== '..'))
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/local/api/' . $file;
 }
 
 
