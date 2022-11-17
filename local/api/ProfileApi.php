@@ -9,14 +9,12 @@ class ProfileApi extends \IRestService{
     public static function OnRestServiceBuildDescription(){
         return [
             'custom.'.static::SCOPE => [
-                'profile.edit' => [
-                    'callback' => [__CLASS__, "editProfile"],
-                    'options' => [],
-                ],
-            ],
-            'custom.'.static::SCOPE => [
                 'profile.editphoto' => [
                     'callback' => [__CLASS__, "editPhoto"],
+                    'options' => [],
+                ],
+                'profile.edit' => [
+                    'callback' => [__CLASS__, "editProfile"],
                     'options' => [],
                 ],
             ],
@@ -106,6 +104,22 @@ class ProfileApi extends \IRestService{
                                 $usUpdateArr[$value['VALUE']]=$arImage;
                                 continue;
                             }
+                            elseif ($key="login"){
+                                if (empty($CURRENT_VAL)){
+                                    $DELETE_USER[$user_id]=$user["login"];
+                                    continue;
+                                }
+
+                                $buff_login=uniqid("lk-login");
+                                $UPDATE_LOGINS[$user_id]=[
+                                    "old"=>$user['login'],
+                                    "new"=>$CURRENT_VAL
+                                ];
+                                if ($USER->Update($user_id, ["LOGIN"=>$buff_login])!=true){
+                                    $errors[$user['login']]=$USER->LAST_ERROR;
+                                }
+                                continue;
+                            }
 
                             if (!empty($value['VALUE_HANDLER'])){
                                 $value['VALUE_HANDLER']=str_replace('#VALUE#', '$CURRENT_VAL', $value['VALUE_HANDLER']);
@@ -130,6 +144,30 @@ class ProfileApi extends \IRestService{
             }
             else{
                 array_push($nonLogins, $user['login']);
+            }
+        }
+        if (!empty($UPDATE_LOGINS)){
+            foreach ($UPDATE_LOGINS as $user_id=>$login){
+                if ($USER->Update($user_id, ["LOGIN"=>$login["new"], "PERSONAL_PHONE"=>$login["new"]])==false){
+                    $errors[$login["old"]]="Не удалось обновить логин::".$USER->LAST_ERROR;
+                    $USER->Update($user_id, ["LOGIN"=>$login["old"], "PERSONAL_PHONE"=>$login["old"]]);
+                }
+            }
+        }
+        if (!empty($DELETE_USER)){
+            foreach ($DELETE_USER as $user_id=>$login){
+                if (CModule::IncludeModule("blog")){
+                    $blog=CBlog::GetByOwnerID($user_id);
+                    if ($blog){
+                        $blog_id=$blog["ID"];
+                        if (!CBlog::Delete($blog_id)){
+                            $errors[$login]="Не удалось блог пользователя";
+                        }
+                    }
+                }
+                if(!CUser::Delete($user_id)){
+                    $errors[$login]="Не удалось удалить пользователя";
+                }
             }
         }
         if (count($nonLogins)>0 || count($errors)>0){
