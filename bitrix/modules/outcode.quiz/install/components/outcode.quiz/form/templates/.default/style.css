@@ -310,6 +310,15 @@
 	margin-bottom: 85px;
 }
 
+.results-table__cell-description {
+	display: block;
+	position: relative;
+	font-size: 12pt;
+}
+.results-table__cell-description b {
+	font-weight: bold;;
+}
+
 @media screen and (max-width: 768px) {
 	.results-table-content.three .results-table__cell {
 		width: 50%;
@@ -372,5 +381,8 @@
 	}
 	.quiz-video-wrapper .question-form__info {
 		margin-bottom: 40px;
+	}
+	.results-table__cell-description {
+		font-size: 10pt;
 	}
 }

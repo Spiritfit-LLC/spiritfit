@@ -351,10 +351,25 @@ class Quiz {
         $arResult = ['QUESTIONS' => [], 'TOTAL_RESULT' => 0];
         $rsObj = $this->hlEntityDataClass::getList($requestArr);
         while( $rsData = $rsObj->Fetch() ) {
+            $answerString = '';
+            $arQuestion = $this->getQuestion($rsData['UF_QUESTION_ID']);
+            if( !empty($arQuestion) ) {
+                if( $arQuestion['PROPERTIES']['TYPE']['VALUE'] == 'Text' ) {
+                    $answerString = !empty($arQuestion['PROPERTIES']['ANSWERS_STRING']['VALUE'][0]) ? $arQuestion['PROPERTIES']['ANSWERS_STRING']['VALUE'][0] : '';
+                } else {
+                    foreach( $arQuestion['PROPERTIES']['ANSWERS_STRING']['VALUE'] as $string ) {
+                        if( preg_match("/#/", $string) != 0 ) {
+                            $answerString = str_replace('#', '', $string);
+                            break;
+                        }
+                    }
+                }
+            }
             $arResult['TOTAL_RESULT'] += intval($rsData['UF_RESULT']);
             $arResult['QUESTIONS'][$rsData['UF_QUESTION_VALUE']] = [
                 'ANSWER' => $rsData['UF_ANSWER'],
-                'RESULT' => $rsData['UF_RESULT']
+                'RESULT' => $rsData['UF_RESULT'],
+                'CORRECT_ANSWER' => $answerString
             ];
         }
 
