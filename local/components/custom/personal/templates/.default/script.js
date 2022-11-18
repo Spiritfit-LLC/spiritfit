@@ -167,6 +167,7 @@ $(document).ready(function(){
     $('.profile-quiz-btn').click(function(){
         //window.location = $(this).data('link');
         $('.quiz-info__container').fadeIn().css('display', 'flex');
+        setConversion('QuizConversion');
     });
 
     $('.profile-quiz-bonus').unbind();
