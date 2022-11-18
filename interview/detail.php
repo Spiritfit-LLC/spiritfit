@@ -8,18 +8,6 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 $APPLICATION->SetPageProperty("description", "");
 $APPLICATION->SetPageProperty("title", "");
 ?>
-
-<?php
-if (!CModule::IncludeModule("vote")){
-    global $APPLICATION;
-    $APPLICATION->RestartBuffer();
-    require $_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/header.php';
-    require $_SERVER['DOCUMENT_ROOT'].'/404.php';
-    require $_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/footer.php';
-    exit;
-}
-?>
-
 <?php
 if (empty($_SESSION['INTERVIEW_ID'])){
 	$url =$_SERVER['REQUEST_URI'];
