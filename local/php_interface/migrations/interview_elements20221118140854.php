@@ -3,7 +3,7 @@
 namespace Sprint\Migration;
 
 
-class Quiz_Main_Prize_el20221114125413 extends Version
+class interview_elements20221118140854 extends Version
 {
     protected $description = "";
 
