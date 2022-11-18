@@ -6,8 +6,7 @@ define("PURPLE_GREY", true);
 $GLOBALS["NO_INDEX"] = true;
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
-$APPLICATION->SetPageProperty("description", "");
-$APPLICATION->SetPageProperty("title", "");
+
 ?>
 <?if (empty($_SESSION['INTERVIEW_ID'])):?>
 <?php
