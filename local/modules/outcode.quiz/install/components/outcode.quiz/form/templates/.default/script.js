@@ -33,6 +33,14 @@ jQuery(function($) {
                     } else {
                         $(formObj).html('<div class="success">'+quizComponentSuccessMsg+'</div>');
                     }
+
+                    BX.ajax.runComponentAction("custom:personal", 'quiz', {
+                        mode: 'class',
+                        data: {
+                            'type':22
+                        },
+                        method:'POST'
+                    });
                 }
             }, function (response) {
                 $(formObj).find('.question-form__error').text(response.errors[0].message);

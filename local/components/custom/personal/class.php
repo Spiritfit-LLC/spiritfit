@@ -230,6 +230,16 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                     new ActionFilter\Csrf(),
                 ],
                 'postfilters' => []
+            ],
+            "quiz"=>[
+                'prefilters' => [
+                    new ActionFilter\Authentication,
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
             ]
         ];
     }
@@ -319,6 +329,21 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                     LocalRedirect($ref_url);
                 }
 
+                //КВИЗ
+                if( Loader::includeModule('outcode.quiz') ) {
+                    $prize = new \Outcode\Prize();
+                    $user_prize = $prize->getUserPrize();
+                    $this->arResult["QUIZ_PRIZE"]=$user_prize;
+                    if (!empty($user_prize)){
+                        $element_id=$user_prize["UF_ELEMENT_ID"];
+                        $res = CIBlockElement::GetByID($element_id);
+                        if ($ar_res = $res->GetNextElement()){
+                            $props=$ar_res->GetProperties();
+                            $this->arResult["QUIZ_PRIZE_TEMPLATE"]=CFile::GetPath($props["KUPON_TEMPLATE"]["VALUE"]);
+                        }
+                    }
+                }
+                //КВИЗ
 
                 $user_id=$USER->GetID();
                 $this->arResult['LK_FIELDS']=PersonalUtils::GetPersonalPageFormFields($user_id, false, [], false, $this->arResult["ACTIVE_SECTION"]??$this->arParams['ACTIVE_FORM']);
@@ -1686,4 +1711,52 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
             return $this->update1cAction();
         }
     }
+
+
+    //КВИЗ
+    public function quizAction($type){
+        global $USER;
+
+        $dbUser=CUser::GetByID($USER->GetID());
+        $arUser=$dbUser->Fetch();
+
+        $arParams=[
+            "login"=>$arUser["LOGIN"],
+            "id1c"=>$arUser["UF_1CID"],
+            "type"=>21
+        ];
+
+        if ($type==21 && !empty($arUser["UF_QUIZ_REG"])){
+            return;
+        }
+        if ($type==22 && !empty($arUser["UF_QUIZ_FIRST_ANSWER"])){
+            return;
+        }
+
+        $api=new Api([
+            "action"=>"lkevent",
+            "params"=>$arParams
+        ]);
+
+        $response=$api->result();
+        if ($response["success"]){
+            if ($type==21){
+                $UPPDATE_ARR=[
+                    "UF_QUIZ_REG"=>true
+                ];
+            }
+            if ($type==22){
+                $UPPDATE_ARR=[
+                    "UF_QUIZ_FIRST_ANSWER"=>true
+                ];
+            }
+
+            $USER->Update($USER->GetID(), $UPPDATE_ARR, false);
+        }
+
+        return $response;
+
+    }
+
+
 }

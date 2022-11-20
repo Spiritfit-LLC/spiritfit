@@ -309,7 +309,14 @@
 .success.no-email {
 	margin-bottom: 85px;
 }
-
+.results-table__cell-description {
+	display: block;
+	position: relative;
+	font-size: 12pt;
+}
+.results-table__cell-description b {
+	font-weight: bold;;
+}
 @media screen and (max-width: 768px) {
 	.results-table-content.three .results-table__cell {
 		width: 50%;
@@ -367,10 +374,17 @@
 	.question-form__item input.input--text {
 		font-size: 16px;
 	}
+	.results-table__cell-description {
+		font-size: 10pt;
+	}
 	.quiz-video-wrapper {
 		padding: 40px 0px;
 	}
 	.quiz-video-wrapper .question-form__info {
 		margin-bottom: 40px;
 	}
+}
+
+.question-form__row.image img{
+	max-height: 700px;
 }
