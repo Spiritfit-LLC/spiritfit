@@ -14,7 +14,7 @@ jQuery(function($) {
             }).then(function (response) {
                 if( response.data ) {
                     $('.select-prize-wrapper').addClass('success');
-                    $('.select-prize-wrapper').text(quizPrizeComponentSuccessMsg);
+                    $('.select-prize-wrapper').html(`<a href="/personal/?SECTION=quiz">${quizPrizeComponentSuccessMsg}</a>`);
                 } else {
                     $('.select-prize-wrapper').text(quizPrizeComponentExistMsg);
                 }

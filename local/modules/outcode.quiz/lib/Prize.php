@@ -102,7 +102,7 @@ class Prize {
             file_put_contents($_SERVER["DOCUMENT_ROOT"].'/logs/quiz.txt', print_r($response, true)."\n", FILE_APPEND);
 
             if (!$response["success"]){
-                return false;
+                throw new \Exception($response["userMessage"]);
             }
 
             $promocode=$response["result"]["promocode"];
