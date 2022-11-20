@@ -38,7 +38,7 @@
             <div class="personal-profile__tabs">
                 <?
                 foreach ($arResult['LK_FIELDS']['SECTIONS'] as $SECTION):?>
-                    <div class="personal-profile__tab-item <?if ($SECTION['ACTIVE']) echo 'active'; elseif($arResult["ACTIVE_SECTION"]==$SECTION['ID']) echo 'active';?>" data-id="<?=$SECTION['ID']?>">
+                    <div class="personal-profile__tab-item <?if ($SECTION['ACTIVE'] && empty($arResult["ACTIVE_SECTION"])) echo 'active'; elseif($arResult["ACTIVE_SECTION"]==$SECTION['ID']) echo 'active';?>" data-id="<?=$SECTION['ID']?>">
                         <div class="tab-item__icon">
                             <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].$SECTION['ICON']);?>
                         </div>
@@ -58,12 +58,12 @@
                 ?>
                 <?if ($arResult["QUIZ_PRIZE"] && $arResult["QUIZ_PRIZE_TEMPLATE"]):?>
                 <!--QUIZ-->
-                <div class="personal-profile__tab-item" data-id="quiz">
+                <div class="personal-profile__tab-item <?if($arResult["ACTIVE_SECTION"]=="quiz") echo 'active';?>" data-id="quiz">
                     <div class="tab-item__icon">
                         <?=file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/quiz-lk-icon.svg')?>
                     </div>
                     <div class="tab-item__name">
-                        Spirit.Квиз
+                        Призы Spirit.Квиз
                     </div>
                 </div>
                 <!--QUIZ-->
@@ -721,7 +721,6 @@
         <?if ($arResult["QUIZ_PRIZE"] && $arResult["QUIZ_PRIZE_TEMPLATE"]):?>
         <div class="personal-section" style="display: none" data-id="quiz">
             <div class="quiz-prize__info">
-                Ваш персональный приз за участие в Spirit.Квиз!
             </div>
             <div class="quiz-prize__container">
                 <div class="quiz-prize__background" style="background-image: url('<?=$arResult["QUIZ_PRIZE_TEMPLATE"]?>')">

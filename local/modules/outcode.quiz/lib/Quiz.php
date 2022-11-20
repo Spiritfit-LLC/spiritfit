@@ -408,7 +408,7 @@ class Quiz {
     public static function addBonus(string $uid, int $bonusVal) : array {
         $cipher = new \Bitrix\Main\Security\Cipher();
 
-        $decoded = base64_decode( urldecode($uid) );
+        $decoded = base64_decode($uid);
         $userId = $cipher->decrypt($decoded, Tools::getKey());
 
         $userInfo = \Bitrix\Main\UserTable::getList([
