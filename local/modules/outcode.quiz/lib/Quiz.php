@@ -365,7 +365,7 @@ class Quiz {
             $answerString = '';
             $arQuestion = $this->getQuestion($rsData['UF_QUESTION_ID']);
             if( !empty($arQuestion) ) {
-                if( $arQuestion['PROPERTIES']['TYPE']['VALUE'] == 'Text' ) {
+                if( $arQuestion['PROPERTIES']['TYPE']['VALUE'] == 'Text' || $arQuestion['PROPERTIES']['TYPE']['VALUE'] == 'Images') {
                     $answerString = !empty($arQuestion['PROPERTIES']['ANSWERS_STRING']['VALUE'][0]) ? $arQuestion['PROPERTIES']['ANSWERS_STRING']['VALUE'][0] : '';
                 } else {
                     foreach( $arQuestion['PROPERTIES']['ANSWERS_STRING']['VALUE'] as $string ) {
