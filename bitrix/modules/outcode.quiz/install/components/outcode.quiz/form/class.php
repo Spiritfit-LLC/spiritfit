@@ -124,7 +124,7 @@
             $startDateAll = 315532800;
             $endDateAll = strtotime(date('d-m-Y 23:59:59'));
 
-            $startDateWeek = strtotime( date('d-m-Y', strtotime('monday this week')) ); //315532800; FOR ALL RESULTS
+            $startDateWeek = strtotime('monday this week'); //strtotime( date('d-m-Y', strtotime('monday this week')) );
 
             $currentTime = time();
 
