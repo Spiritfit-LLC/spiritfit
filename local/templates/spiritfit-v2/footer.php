@@ -8,9 +8,6 @@ $settings = Utils::getInfo();
             $APPLICATION->IncludeFile(SITE_DIR."local/include/footer_menu.php", Array("settings" => $settings), Array("MODE" => "html", "NAME" => "", "TEMPLATE" => ""));
             ?>
             <div class="b-footer__content">
-                <div class="b-footer__social">
-                    <div class="footer-phone-wrapper"><a class="footer-phone phone-btn" data-position="footer" href="tel:84951059797">8 495 105 97 97</a></div>
-                </div>
                 <div class="b-footer__app-buttons">
                     <div class="b-app-list"><a rel="nofollow" class="b-app-list__button"
                                                href="<?=$settings["PROPERTIES"]["LINK_APPSTORE"]["VALUE"]?>" target="_blank"><img
@@ -20,9 +17,10 @@ $settings = Utils::getInfo();
                                     title="" /></a>
                     </div>
                 </div>
-                <a class="b-footer__btn button-outline custom-button" href="#feedback-choice"
-                         data-fancybox="feedback-choice"
-                         data-options="{'autoFocus' : false, 'backFocus': false}">Обратная связь</a>
+                <div class="b-footer__social">
+                    <div class="footer-phone-wrapper"><a class="footer-phone phone-btn" data-position="footer" href="tel:84951059797">8 495 105 97 97</a></div>
+                </div>
+
             </div>
         </div>
         <div class="b-footer__feedback-choice text-center is-hide" id="feedback-choice">
@@ -131,7 +129,6 @@ $settings = Utils::getInfo();
                     return false;
                 }
             });
-
         });
 
         window.addEventListener('b24:form:field:change:selected', (event)=>{
@@ -151,12 +148,18 @@ $settings = Utils::getInfo();
             });
         });
 
+        window.addEventListener('b24:form:send:success', (event)=>{
+            let form = event.detail.object;
+            if (form.identification.id==10){
+                setConversion("CallbackConversion");
+            }
+        });
+
         (function(w,d,u){
             var s=d.createElement('script');s.async=true;s.src=u+'?'+(Date.now()/60000|0);
             var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);
-        })(window,document,'https://portal.spiritfit.ru/upload/crm/site_button/loader_1_v48yzw.js');
+        })(window,document,'https://portal.spiritfit.ru/upload/crm/site_button/loader_2_shz3j6.js');
     </script>
-
 <?
 $APPLICATION->IncludeComponent("bitrix:b24connector.openline.info","", Array(
         "COMPOSITE_FRAME_MODE" => "A",
