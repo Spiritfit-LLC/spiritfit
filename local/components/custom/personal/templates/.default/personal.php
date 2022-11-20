@@ -56,6 +56,18 @@
                 <?
                 endforeach;
                 ?>
+                <?if ($arResult["QUIZ_PRIZE"] && $arResult["QUIZ_PRIZE_TEMPLATE"]):?>
+                <!--QUIZ-->
+                <div class="personal-profile__tab-item" data-id="quiz">
+                    <div class="tab-item__icon">
+                        <?=file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/quiz-lk-icon.svg')?>
+                    </div>
+                    <div class="tab-item__name">
+                        Spirit.Квиз
+                    </div>
+                </div>
+                <!--QUIZ-->
+                <?endif;?>
                 <div class="personal-profile__tab-item profile-exit-btn"  data-componentName="<?=$arResult['COMPONENT_NAME']?>">
                     <div class="tab-item__icon">
                         <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/exit-btn.svg');?>
@@ -706,5 +718,48 @@
                 )
             );
         }?>
+        <?if ($arResult["QUIZ_PRIZE"] && $arResult["QUIZ_PRIZE_TEMPLATE"]):?>
+        <div class="personal-section" style="display: none" data-id="quiz">
+            <div class="quiz-prize__info">
+                Ваш персональный приз за участие в Spirit.Квиз!
+            </div>
+            <div class="quiz-prize__container">
+                <div class="quiz-prize__background" style="background-image: url('<?=$arResult["QUIZ_PRIZE_TEMPLATE"]?>')">
+                    <div class="quiz-prize__promocode">
+                        <?=$arResult["QUIZ_PRIZE"]["UF_PROMOCODE"]?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <style>
+            .quiz-prize__background {
+                height: 277px;
+                background-position: 0 0;
+                background-size: contain;
+                position: relative;
+            }
+            .quiz-prize__promocode {
+                position: absolute;
+                top: 175px;
+                left: 24px;
+                color: black;
+                font-weight: 600;
+                font-size: 18px;
+                width: 193px;
+                height: 50px;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 5px;
+                overflow-wrap: anywhere;
+            }
+            .quiz-prize__info {
+                font-size: 22px;
+                font-weight: 700;
+                padding: 5px;
+            }
+        </style>
+        <?endif;?>
     </div>
 </div>

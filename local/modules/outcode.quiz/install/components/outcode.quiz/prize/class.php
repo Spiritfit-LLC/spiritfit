@@ -127,31 +127,55 @@
 
             $prizeObj = new \Outcode\Prize();
 
-            if( !in_array($currentDay, $this->arParams["SHOW_RESULT_ON_DAYS"]) ) {
-                $this->arResult['SHOW_BUTTON'] = false;
-            } else if( $currentDay == $firstValue && time() < $showStartTime ) {
-                $this->arResult['SHOW_BUTTON'] = false;
-            }
+//            if( !in_array($currentDay, $this->arParams["SHOW_RESULT_ON_DAYS"]) ) {
+//                $this->arResult['SHOW_BUTTON'] = false;
+//            } else if( $currentDay == $firstValue && time() < $showStartTime ) {
+//                $this->arResult['SHOW_BUTTON'] = false;
+//            }
 
-            $minValue = 0;
-            $currentCount = 0;
-            $this->arResult['BUTTON_NAME'] = Loc::getMessage('QUIZ_PRIZE_SELECT');
-            if( $this->arResult['SHOW_BUTTON'] && !empty($this->arParams['PROPERTY_NUM']) ) {
+
+//            $minValue = 0;
+//            $currentCount = 0;
+//            $this->arResult['BUTTON_NAME'] = Loc::getMessage('QUIZ_PRIZE_SELECT');
+//            if( $this->arResult['SHOW_BUTTON'] && !empty($this->arParams['PROPERTY_NUM']) ) {
+//                $res = CIBlockElement::GetByID($this->arParams['ELEMENT_ID']);
+//                if($resObj = $res->GetNextElement()) {
+//                    $arProps = $resObj->GetProperties();
+//                    foreach( $arProps as $code => $item ) {
+//                        if( $code == 'PRISE_NAME' ) {
+//                            $this->arResult['BUTTON_NAME'] = $item['VALUE'];
+//                        } else if( $code == $this->arParams['PROPERTY_NUM'] ) {
+//                            $currentCount = intval($item['VALUE']);
+//                        } else if( $code == $this->arParams['PROPERTY_MINVALUE'] ) {
+//                            $minValue = intval($item['VALUE']);
+//                        }
+//                    }
+//                }
+//
+////                if( $currentCount <= 0 ) $this->arResult['SHOW_BUTTON'] = false;
+//
+////                if( $this->arResult['SHOW_BUTTON'] ) $this->arResult['SHOW_BUTTON'] = $prizeObj->isButtonEnabled($startDateWeek, time(), $this->arParams['LIMIT'], $minValue, $this->arParams['CALCULATE_FULL_RESULT']);
+//
+//            }
+
+            $minValue=0;
+            if (!empty($this->arParams['PROPERTY_NUM'])){
                 $res = CIBlockElement::GetByID($this->arParams['ELEMENT_ID']);
                 if($resObj = $res->GetNextElement()) {
                     $arProps = $resObj->GetProperties();
+                    $this->arResult["BUTTON_NAME"]=$arProps["PRISE_NAME"]["VALUE"];
                     foreach( $arProps as $code => $item ) {
-                        if( $code == 'PRISE_NAME' ) {
-                            $this->arResult['BUTTON_NAME'] = $item['VALUE'];
-                        } else if( $code == $this->arParams['PROPERTY_NUM'] ) {
-                            $currentCount = intval($item['VALUE']);
-                        } else if( $code == $this->arParams['PROPERTY_MINVALUE'] ) {
+                        if( $code == $this->arParams['PROPERTY_MINVALUE'] ) {
                             $minValue = intval($item['VALUE']);
                         }
                     }
                 }
-                if( $currentCount <= 0 ) $this->arResult['SHOW_BUTTON'] = false;
-                if( $this->arResult['SHOW_BUTTON'] ) $this->arResult['SHOW_BUTTON'] = $prizeObj->isButtonEnabled($startDateWeek, time(), $this->arParams['LIMIT'], $minValue, $this->arParams['CALCULATE_FULL_RESULT']);
+                $quiz = new \Outcode\Quiz();
+                $prize = new \Outcode\Prize();
+                $total_result=$quiz->getUserResults();
+                if ($total_result["TOTAL_RESULT"]<$minValue || $prize->isSelected()){
+                    $this->arResult['SHOW_BUTTON']=false;
+                }
             }
 
             $_SESSION[$this->arResult['COMPONENT_ID']]['IS_ENABLED'] = $this->arResult['SHOW_BUTTON'];

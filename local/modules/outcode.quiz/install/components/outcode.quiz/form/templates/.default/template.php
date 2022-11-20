@@ -62,7 +62,7 @@
                         <form class="question-form" autocomplete="off" method="post" enctype="multipart/form-data" data-componentName="<?=$arResult['COMPONENT_NAME']?>">
                             <input type="hidden" name="COMPONENT_ID" value="<?=$arResult['COMPONENT_ID']?>">
                             <input type="hidden" name="QUESTION_ID" value="<?=$arResult['QUESTION']['ID']?>">
-                            <input type="hidden" name="USER_ID" value="<?=arResult['USER_ID']?>">
+                            <input type="hidden" name="USER_ID" value="<?=$arResult['USER_ID']?>">
                             <div class="question-form__info"><?=str_replace(['#CURRENT#', '#TOTAL#'], [$arResult['QUESTION']['POSITION']['CURRENT'], $arResult['QUESTION']['POSITION']['TOTAL']], GetMessage('QUIZ_QUESTION_POSITION'))?></div>
                             <div class="question-form__title"><?=$arResult['QUESTION']['NAME']?></div>
                             <div class="question-form__error"></div>
@@ -82,7 +82,7 @@
                         <form class="question-form" autocomplete="off" method="post" enctype="multipart/form-data" data-componentName="<?=$arResult['COMPONENT_NAME']?>">
                             <input type="hidden" name="COMPONENT_ID" value="<?=$arResult['COMPONENT_ID']?>">
                             <input type="hidden" name="QUESTION_ID" value="<?=$arResult['QUESTION']['ID']?>">
-                            <input type="hidden" name="USER_ID" value="<?=arResult['USER_ID']?>">
+                            <input type="hidden" name="USER_ID" value="<?=$arResult['USER_ID']?>">
                             <div class="question-form__info"><?=str_replace(['#CURRENT#', '#TOTAL#'], [$arResult['QUESTION']['POSITION']['CURRENT'], $arResult['QUESTION']['POSITION']['TOTAL']], GetMessage('QUIZ_QUESTION_POSITION'))?></div>
                             <div class="question-form__title"><?=$arResult['QUESTION']['NAME']?></div>
                             <div class="question-form__error"></div>
@@ -107,12 +107,12 @@
                         <form class="question-form" autocomplete="off" method="post" enctype="multipart/form-data" data-componentName="<?=$arResult['COMPONENT_NAME']?>">
                             <input type="hidden" name="COMPONENT_ID" value="<?=$arResult['COMPONENT_ID']?>">
                             <input type="hidden" name="QUESTION_ID" value="<?=$arResult['QUESTION']['ID']?>">
-                            <input type="hidden" name="USER_ID" value="<?=arResult['USER_ID']?>">
+                            <input type="hidden" name="USER_ID" value="<?=$arResult['USER_ID']?>">
                             <div class="question-form__info"><?=str_replace(['#CURRENT#', '#TOTAL#'], [$arResult['QUESTION']['POSITION']['CURRENT'], $arResult['QUESTION']['POSITION']['TOTAL']], GetMessage('QUIZ_QUESTION_POSITION'))?></div>
                             <div class="question-form__title"><?=$arResult['QUESTION']['NAME']?></div>
                             <div class="question-form__item">
                                 <div class="question-form__row image">
-                                    <img src="<?=$arResult['QUESTION']['PROPERTIES']['ANSWERS_IMAGE']['VALUE']?>">
+                                    <img src="<?=CFile::GetPath($arResult['QUESTION']['PROPERTIES']['ANSWERS_IMAGE']['~VALUE'])?>">
                                 </div>
                                 <div class="question-form__error"></div>
                                 <div class="question-form__row">
@@ -147,12 +147,15 @@
                             <div class="results-table-content two">
                                 <div class="results-table__row">
                                     <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_QUESTION')?></div>
-                                    <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_VALUE')?><span class="notice">*</span></div>
+                                    <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_USER_VALUE')?><span class="notice">*</span></div>
                                 </div>
                                 <? $count = 0; ?>
                                 <? foreach($arResult['RESULT_TABLE_USER']['QUESTIONS'] as $question => $result) { ?>
                                     <div class="results-table__row <?=$count>3 ? 'hidden' : ''?>">
-                                        <div class="results-table__cell"><?=TruncateText($question, 100)?></div>
+                                        <div class="results-table__cell">
+                                            <?=TruncateText($question, 100)?>
+                                            <div class="results-table__cell-description"><b><?=GetMessage('QUIZ_TABLE_QUESTION_CORRECT_ANSWER')?></b> <?=$result['CORRECT_ANSWER']?></div>
+                                        </div>
                                         <div class="results-table__cell"><?=$result['RESULT']?></div>
                                     </div>
                                     <? $count += 1; ?>

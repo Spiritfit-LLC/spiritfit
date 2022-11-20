@@ -168,6 +168,13 @@ $(document).ready(function(){
         //window.location = $(this).data('link');
         $('.quiz-info__container').fadeIn().css('display', 'flex');
         setConversion('QuizConversion');
+        BX.ajax.runComponentAction(componentName, 'quiz', {
+            mode: 'class',
+            data: {
+                'type':21
+            },
+            method:'POST'
+        });
     });
 
     $('.profile-quiz-bonus').unbind();
