@@ -119,7 +119,7 @@
 
             $this->arResult['SHOW_BUTTON'] = true;
 
-            $startDateWeek = $this->arParams["CALCULATE_FULL_RESULT"] ? 315532800 : strtotime( date('d-m-Y', strtotime('-1 week')) );
+            $startDateWeek = $this->arParams["CALCULATE_FULL_RESULT"] ? 315532800 : strtotime('monday this week');
             $showStartTime = strtotime( date('d-m-Y ' . $this->arParams["SHOW_RESULT_ON_FIRST"]) );
             $currentDay = date('l');
 
