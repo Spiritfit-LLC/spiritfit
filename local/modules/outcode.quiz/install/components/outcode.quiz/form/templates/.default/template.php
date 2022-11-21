@@ -150,10 +150,10 @@ if( !empty($arResult['RESULT_TABLE_USER']['QUESTIONS']) || !empty($arResult['RES
                             <div class="results-table__cell"><?=GetMessage('QUIZ_TABLE_USER_VALUE')?><span class="notice">*</span></div>
                         </div>
                         <? $count = 0; ?>
-                        <? foreach($arResult['RESULT_TABLE_USER']['QUESTIONS'] as $question => $result) {?>
+                        <? foreach($arResult['RESULT_TABLE_USER']['QUESTIONS'] as $result) {?>
                             <div class="results-table__row <?=$count>3 ? 'hidden' : ''?>">
                                 <div class="results-table__cell">
-                                    <?=TruncateText($question, 100)?>
+                                    <?=TruncateText($result['QUESTION'], 100)?>
                                     <div class="results-table__cell-description">
                                         <?if ($result["ANSWER"]!="QUIZ_BONUS"):?>
                                             <b><?=GetMessage('QUIZ_TABLE_QUESTION_CORRECT_ANSWER')?></b> <?=$result['CORRECT_ANSWER']?>
