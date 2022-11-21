@@ -118,6 +118,7 @@ $this->setFrameMode(true);
                             </svg>
                             Гарантированный приз каждому участнику
                         </li>
+                        <a href="/upload/form/polozhenie_quiz.pdf" style="color: #484848;text-decoration: underline;font-size: 18px;">Положение о проведении мероприятия</a>
                     </ul>
                 </div>
             </div>
