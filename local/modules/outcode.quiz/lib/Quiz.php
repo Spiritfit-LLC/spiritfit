@@ -377,14 +377,16 @@ class Quiz {
                 }
             }
             $arResult['TOTAL_RESULT'] += intval($rsData['UF_RESULT']);
-            $arResult['QUESTIONS'][$rsData['UF_QUESTION_VALUE']] = [
+            $arResult['QUESTIONS'][] = [
+                'QUESTION' => $rsData['UF_QUESTION_VALUE'],
                 'ANSWER' => $rsData['UF_ANSWER'],
                 'RESULT' => $rsData['UF_RESULT'],
                 'CORRECT_ANSWER' => $answerString
             ];
         }
 
-        ksort($arResult['QUESTIONS']);
+        sort($arResult["QUESTIONS"], SORT_DESC);
+//        ksort($arResult['QUESTIONS'], 'ASC');
         return $arResult;
     }
 
@@ -410,6 +412,11 @@ class Quiz {
 
         $decoded = base64_decode($uid);
         $userId = $cipher->decrypt($decoded, Tools::getKey());
+
+        global $USER;
+        if (intval($userId)==$USER->GetID()){
+            return [];
+        }
 
         $userInfo = \Bitrix\Main\UserTable::getList([
             'select' => ['*'],

@@ -165,8 +165,8 @@ $(document).ready(function(){
     //КОНКУРС
     $('.profile-quiz-btn').unbind();
     $('.profile-quiz-btn').click(function(){
-        //window.location = $(this).data('link');
-        $('.quiz-info__container').fadeIn().css('display', 'flex');
+        window.location = $(this).data('link');
+        // $('.quiz-info__container').fadeIn().css('display', 'flex');
         setConversion('QuizConversion');
         BX.ajax.runComponentAction(componentName, 'quiz', {
             mode: 'class',

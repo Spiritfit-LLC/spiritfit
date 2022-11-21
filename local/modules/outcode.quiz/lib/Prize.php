@@ -60,7 +60,7 @@ class Prize {
 
     public function selectPrize( int $elementId, string $numPropCode, string $mailPropCode ) : bool {
         if( empty($this->userId) || !isset($this->hlEntityDataClass) ) return false;
-        
+
         $available = 0;
         $iblockId = 0;
         $mailMsg = '';
