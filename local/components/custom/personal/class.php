@@ -568,13 +568,16 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                         if (intval($ID) > 0){
                             $user->Authorize($ID);
                             /* Начисление баллов */
-                            $dbUser=CUser::GetByID($ID);
-                            $arUser=$dbUser->Fetch();
-                            if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')&&empty($arUser["UF_QUIZ_REG"])&&empty($arUser["UF_QUIZ_FIRST_ANSWER"])&&empty($arUser["UF_QUIZ_BONUS"])) {
-                                \Outcode\Quiz::addBonus($this->arParams['BONUS_ID'], 10);
+//                            $dbUser=CUser::GetByID($ID);
+//                            $arUser=$dbUser->Fetch();
+//                            if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')&&empty($arUser["UF_QUIZ_REG"])&&empty($arUser["UF_QUIZ_FIRST_ANSWER"])&&empty($arUser["UF_QUIZ_BONUS"])) {
+//                                \Outcode\Quiz::addBonus($this->arParams['BONUS_ID'], 10);
+//                            }
+                            if (!empty($this->arParams['BONUS_ID'])){
+                                global $USER;
+                                $USER->Update($USER->GetID(), ["UF_QUIZ_BONUS"=>true, "UF_BONUS_ID"=>$this->arParams["BONUS_ID"]], false);
                             }
-                            global $USER;
-                            $USER->Update($USER->GetID(), ["UF_QUIZ_BONUS"=>true], false);
+
                             /* Начисление баллов */
                             $api=new Api(array(
                                 'action'=>'lkedit',
@@ -599,13 +602,15 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                     $arAuthResult = $USER->Login($FORM_FIELDS['FIELDS']['phone']['VALUE'], $FORM_FIELDS['FIELDS']['passwd']['VALUE'],"Y","Y");
 
                     /* Начисление баллов */
-                    $dbUser=CUser::GetByID($USER->GetID());
-                    $arUser=$dbUser->Fetch();
-                    if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')&&empty($arUser["UF_QUIZ_REG"])&&empty($arUser["UF_QUIZ_FIRST_ANSWER"])&&empty($arUser["UF_QUIZ_BONUS"])) {
-                        \Outcode\Quiz::addBonus($this->arParams['BONUS_ID'], 10);
+//                    $dbUser=CUser::GetByID($USER->GetID());
+//                    $arUser=$dbUser->Fetch();
+//                    if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')&&empty($arUser["UF_QUIZ_REG"])&&empty($arUser["UF_QUIZ_FIRST_ANSWER"])&&empty($arUser["UF_QUIZ_BONUS"])) {
+//                        \Outcode\Quiz::addBonus($this->arParams['BONUS_ID'], 10);
+//                    }
+                    if (!empty($this->arParams['BONUS_ID'])){
+                        global $USER;
+                        $USER->Update($USER->GetID(), ["UF_QUIZ_BONUS"=>true, "UF_BONUS_ID"=>$this->arParams["BONUS_ID"]], false);
                     }
-                    global $USER;
-                    $USER->Update($USER->GetID(), ["UF_QUIZ_BONUS"=>true], false);
                     /* Начисление баллов */
                     if ($arAuthResult===true){
                         $rsUser = CUser::GetByLogin($FORM_FIELDS['FIELDS']['phone']['VALUE']);
@@ -787,11 +792,13 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                                 $user->Login($FORM_FIELDS['FIELDS']['phone']['VALUE'], $FORM_FIELDS['FIELDS']['passwd']['VALUE'],"Y","Y");
 
                                 /* Начисление баллов */
-                                if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')) {
-                                    \Outcode\Quiz::addBonus($this->arParams['BONUS_ID'], 10);
+//                                if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')) {
+//                                    \Outcode\Quiz::addBonus($this->arParams['BONUS_ID'], 10);
+//                                }
+                                if (!empty($this->arParams['BONUS_ID'])){
+                                    global $USER;
+                                    $USER->Update($USER->GetID(), ["UF_QUIZ_BONUS"=>true, "UF_BONUS_ID"=>$this->arParams["BONUS_ID"]], false);
                                 }
-                                global $USER;
-                                $USER->Update($USER->GetID(), ["UF_QUIZ_BONUS"=>true], false);
                                 /* Начисление баллов */
 
                                 $api=new Api(array(
@@ -931,13 +938,15 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                             global $USER;
                             if ($USER->Authorize($arUser['ID'])) {
                                 /* Начисление баллов */
-                                $dbUser=CUser::GetByID($USER->GetID());
-                                $arUser=$dbUser->Fetch();
-                                if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')&&empty($arUser["UF_QUIZ_REG"])&&empty($arUser["UF_QUIZ_FIRST_ANSWER"])&&empty($arUser["UF_QUIZ_BONUS"])) {
-                                    \Outcode\Quiz::addBonus($this->arParams['BONUS_ID'], 10);
+//                                $dbUser=CUser::GetByID($USER->GetID());
+//                                $arUser=$dbUser->Fetch();
+//                                if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')&&empty($arUser["UF_QUIZ_REG"])&&empty($arUser["UF_QUIZ_FIRST_ANSWER"])&&empty($arUser["UF_QUIZ_BONUS"])) {
+//                                    \Outcode\Quiz::addBonus($this->arParams['BONUS_ID'], 10);
+//                                }
+                                if (!empty($this->arParams['BONUS_ID'])){
+                                    global $USER;
+                                    $USER->Update($USER->GetID(), ["UF_QUIZ_BONUS"=>true, "UF_BONUS_ID"=>$this->arParams["BONUS_ID"]], false);
                                 }
-                                global $USER;
-                                $USER->Update($USER->GetID(), ["UF_QUIZ_BONUS"=>true], false);
                                 /* Начисление баллов */
                                 $api=new Api(array(
                                     'action'=>'lkedit',
@@ -1781,6 +1790,9 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                 $UPPDATE_ARR=[
                     "UF_QUIZ_FIRST_ANSWER"=>true
                 ];
+                if (!empty($arUser['UF_BONUS_ID'])&&Loader::includeModule('outcode.quiz')) {
+                    \Outcode\Quiz::addBonus($arUser['UF_BONUS_ID'], 10);
+                }
             }
 
             $USER->Update($USER->GetID(), $UPPDATE_ARR, false);
