@@ -102,7 +102,7 @@ class Quiz {
         );
 
         $counter = 0;
-        if($resArr = $res->GetNext()) {
+        while($resArr = $res->GetNext()) {
             $counter += 1;
             if( $questionId == $resArr['ID'] ) {
                 $resultArr['CURRENT'] = $counter;
