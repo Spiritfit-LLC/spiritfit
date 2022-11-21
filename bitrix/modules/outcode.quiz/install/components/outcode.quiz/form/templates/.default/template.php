@@ -154,7 +154,9 @@
                                     <div class="results-table__row <?=$count>3 ? 'hidden' : ''?>">
                                         <div class="results-table__cell">
                                             <?=TruncateText($question, 100)?>
-                                            <div class="results-table__cell-description"><b><?=GetMessage('QUIZ_TABLE_QUESTION_CORRECT_ANSWER')?></b> <?=$result['CORRECT_ANSWER']?></div>
+                                            <? if( !empty($result['CORRECT_ANSWER']) ) { ?>
+                                                <div class="results-table__cell-description"><b><?=GetMessage('QUIZ_TABLE_QUESTION_CORRECT_ANSWER')?></b> <?=$result['CORRECT_ANSWER']?></div>
+                                            <? } ?>
                                         </div>
                                         <div class="results-table__cell"><?=$result['RESULT']?></div>
                                     </div>
@@ -186,9 +188,12 @@
                                 </div>
                                 <? $count = 0; ?>
                                 <? foreach($arResult['RESULT_TABLE']['TOTAL_RESULT'] as $result) { ?>
-                                    <div class="results-table__row <?=$count>2 ? 'hidden' : ''?>">
-                                        <div class="results-table__cell"><?=$result['LOGIN']?></div>
-                                        <div class="results-table__cell"><?=!empty($arResult['RESULT_TABLE']['BY_QUESTIONS'][$result['USER_ID']]) ? count($arResult['RESULT_TABLE']['BY_QUESTIONS'][$result['USER_ID']]) : 0?></div>
+                                    <? $counter = 0; foreach( $arResult['RESULT_TABLE']['BY_QUESTIONS'][$result['USER_ID']] as $question ) { if( $question == "Бонус за регистрацию" ) continue; $counter += 1; } ?>
+									<div class="results-table__row <?=$count>2 ? 'hidden' : ''?>">
+                                        <div class="results-table__cell"><?=$result['LOGIN']?>
+										<? print_r(); ?>
+											</div>
+                                        <div class="results-table__cell"><?=!empty($arResult['RESULT_TABLE']['BY_QUESTIONS'][$result['USER_ID']]) ? $counter : 0?></div>
                                         <div class="results-table__cell"><?=$result['VALUE']?></div>
                                     </div>
                                     <? $count += 1; if($count > 50) break; ?>

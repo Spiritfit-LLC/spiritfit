@@ -5,6 +5,7 @@ jQuery(function($) {
             e.preventDefault();
             let wrapper = $(this).parents('.results-table');
             $(wrapper).find('.results-table__row').removeClass('hidden');
+            $(this).hide();
         });
         $('.show-more').each(function() {
             let wrapper = $(this).parents('.results-table');
