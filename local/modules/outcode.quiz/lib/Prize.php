@@ -108,11 +108,20 @@ class Prize {
             $promocode=$response["result"]["promocode"];
             $last=$response["result"]["last"];
 
+            if ($promocode=="URL"){
+                $URL=true;
+                $promocode=$response["result"]["url"];
+            }
+            else{
+                $URL=false;
+            }
+
             $dataArr = [
                 'UF_USER_ID' => $this->userId,
                 'UF_ELEMENT_ID' => $elementId,
                 'UF_RESULT_DATE' => $currentDate->toString(),
-                'UF_PROMOCODE' => $promocode
+                'UF_PROMOCODE' => $promocode,
+                'UF_SERT' => $URL
             ];
 
             $result = $this->hlEntityDataClass::add($dataArr);

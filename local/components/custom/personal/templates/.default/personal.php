@@ -725,40 +725,62 @@
             <div class="quiz-prize__container">
                 <div class="quiz-prize__background" style="background-image: url('<?=$arResult["QUIZ_PRIZE_TEMPLATE"]?>')">
                     <div class="quiz-prize__promocode">
+                        <?if ($arResult["QUIZ_PRIZE"]["UF_SERT"]):?>
+                        <a class="quiz-prize-link" href="<?=$arResult["QUIZ_PRIZE"]["UF_PROMOCODE"]?>">click me!</a>
+                        <?else:?>
                         <?=$arResult["QUIZ_PRIZE"]["UF_PROMOCODE"]?>
+                        <?endif;?>
                     </div>
                 </div>
             </div>
         </div>
         <style>
             .quiz-prize__background {
-                height: 277px;
+                /*height: 277px;*/
                 background-position: 0 0;
                 background-size: contain;
                 position: relative;
+                background-repeat: no-repeat;
             }
             .quiz-prize__promocode {
                 position: absolute;
-                top: 175px;
-                left: 24px;
+                top: 63%;
+                left: 5%;
                 color: black;
                 font-weight: 600;
                 font-size: 18px;
-                width: 193px;
-                height: 50px;
+                width: 38%;
+                height: 19%;
                 text-align: center;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 padding: 5px;
                 overflow-wrap: anywhere;
+                /* border: 1px solid; */
             }
             .quiz-prize__info {
                 font-size: 22px;
                 font-weight: 700;
                 padding: 5px;
             }
+            a.quiz-prize-link {
+                text-transform: uppercase;
+                background: linear-gradient(90deg, #E23834 3.26%, #7A27F1 98.07%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
         </style>
+        <script>
+            $(document).ready(function(){
+                var width=$(".personal-profile__center-block").width();
+                console.log(width);
+                var height=width/1.805;
+                console.log(height)
+
+                $(".quiz-prize__background").height(height);
+            });
+        </script>
         <?endif;?>
     </div>
 </div>
