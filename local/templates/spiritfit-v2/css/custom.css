@@ -1336,10 +1336,11 @@ main.b-page__main {
     background-color: #fff;
     padding: 20px;
     box-sizing: border-box;
-    width: 100%;
+    /*width: 100%;*/
     border-radius: 20px;
     list-style: none;
     z-index: 100;
+    width: 300px;
 }
 .share-wrap .share li {
     display: block;

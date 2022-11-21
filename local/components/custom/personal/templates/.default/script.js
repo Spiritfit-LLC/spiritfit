@@ -625,7 +625,7 @@ $(document).ready(function(){
 
     //SpiritТрансформация
     if ($(window).width()<=768){
-        $(".personal-spirit-transformation").insertAfter(".personal-profile__user");
+        $(".quiz-btn").insertAfter(".personal-profile__user");
     }
 });
 
