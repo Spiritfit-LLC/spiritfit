@@ -12,7 +12,7 @@ define("ABONEMENTS_GOD_FITNESA_ID", 37);// id абонемента "Год фи�
 define("IBLOCK_COLORS_ID", 14);// ID инфоблока "Цвета"
 define("IBLOCK_CLUBS_ID", 6);// ID инфоблока "Клубы"
 define("IS_QUIZ_ACTIVE", true);// Активность конкурса для ЛК
-define("QUIZ_LINK", "/landings/v1/play/");
+define("QUIZ_LINK", "/play/");
 define("QUIZ_LINK_TITLE", "Spirit.Квиз на 5.000.000₽");
 
 define("POST_FORM_CORP_ACTION_URI", "/local/templates/spiritfit-corp/ajax/modal-trial.php");

@@ -570,7 +570,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                             /* Начисление баллов */
                             $dbUser=CUser::GetByID($ID);
                             $arUser=$dbUser->Fetch();
-                            if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')&&empty($arUser["UF_QUIZ_REG"])&&empty($arUser["UF_QUIZ_FIRST_ANSWER"])) {
+                            if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')&&empty($arUser["UF_QUIZ_REG"])&&empty($arUser["UF_QUIZ_FIRST_ANSWER"])&&empty($arUser["UF_QUIZ_BONUS"])) {
                                 \Outcode\Quiz::addBonus($this->arParams['BONUS_ID'], 10);
                             }
                             global $USER;
@@ -601,7 +601,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                     /* Начисление баллов */
                     $dbUser=CUser::GetByID($USER->GetID());
                     $arUser=$dbUser->Fetch();
-                    if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')&&empty($arUser["UF_QUIZ_REG"])&&empty($arUser["UF_QUIZ_FIRST_ANSWER"])) {
+                    if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')&&empty($arUser["UF_QUIZ_REG"])&&empty($arUser["UF_QUIZ_FIRST_ANSWER"])&&empty($arUser["UF_QUIZ_BONUS"])) {
                         \Outcode\Quiz::addBonus($this->arParams['BONUS_ID'], 10);
                     }
                     global $USER;
@@ -933,7 +933,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                                 /* Начисление баллов */
                                 $dbUser=CUser::GetByID($USER->GetID());
                                 $arUser=$dbUser->Fetch();
-                                if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')&&empty($arUser["UF_QUIZ_REG"])&&empty($arUser["UF_QUIZ_FIRST_ANSWER"])) {
+                                if (!empty($this->arParams['BONUS_ID'])&&Loader::includeModule('outcode.quiz')&&empty($arUser["UF_QUIZ_REG"])&&empty($arUser["UF_QUIZ_FIRST_ANSWER"])&&empty($arUser["UF_QUIZ_BONUS"])) {
                                     \Outcode\Quiz::addBonus($this->arParams['BONUS_ID'], 10);
                                 }
                                 global $USER;
