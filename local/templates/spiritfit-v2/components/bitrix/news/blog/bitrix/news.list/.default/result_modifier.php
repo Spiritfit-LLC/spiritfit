@@ -9,7 +9,7 @@
                 "ID" => $arItem["ID"],
                 "NAME" => !empty($arItem["PROPERTIES"]["TITLE"]["~VALUE"]) ? $arItem["PROPERTIES"]["TITLE"]["~VALUE"] : $arItem["NAME"],
                 "LINK" => $arItem["DETAIL_PAGE_URL"],
-                "RATING"=>$arItem["PROPERTIES"]["RATING"]["VALUE"],
+                "RATING"=>round($arItem["PROPERTIES"]["RATING"]["VALUE"], 2),
                 "SHOWING_COUNT"=>$arItem["PROPERTIES"]["SHOWING_COUNT"]["VALUE"]
             ];
     		

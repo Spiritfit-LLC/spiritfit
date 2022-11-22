@@ -141,3 +141,16 @@ $arResult['PROPERTIES']['RATING_PROCENT']=$arResult['PROPERTIES']['RATING']['VAL
 
 $date = str_replace('.', '-', $arResult["DATE"]);
 $arResult["datePublished"]=date('Y-m-d', strtotime($date));
+
+$arFilter = array(
+    "IBLOCK_ID" => Utils::GetIBlockIDBySID('clubs'),
+    "PROPERTY_SOON" => false,
+    "ACTIVE" => "Y",
+    "PROPERTY_HIDE_LINK_VALUE"=>false,
+    "!PROPERTY_NUMBER"=>"00"
+);
+$dbElements = CIBlockElement::GetList(array("SORT" => "ASC"), $arFilter, false, false, array("ID", "NAME", "PROPERTY_NUMBER"));
+
+while ($res = $dbElements->fetch()) {
+    $arResult["CLUBS"][$res["PROPERTY_NUMBER_VALUE"]] = $res["NAME"];
+}

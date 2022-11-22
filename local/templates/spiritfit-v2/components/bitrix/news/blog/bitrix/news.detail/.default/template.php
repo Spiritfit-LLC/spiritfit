@@ -72,12 +72,77 @@
 
                         <div class="show-sections-titles">СОДЕРЖАНИЕ</div>
                         <div itemprop="articleBody">
-                            <?foreach ($arResult['TXT'] as $TXT):?>
+                            <?
+                            $i=0;
+                            foreach ($arResult['TXT'] as $TXT):?>
                                 <div class="text-section" data-id="<?=$TXT['ID']?>">
                                     <div class="text-section__title"><?=$TXT['TITLE']?></div>
                                     <div class="text-section__text"><?=$TXT['TEXT']?></div>
                                 </div>
-                            <?endforeach;?>
+                                <?if ($i==1):?>
+                                <div class="slider">
+                                    <?$APPLICATION->IncludeComponent(
+                                        "bitrix:news.list",
+                                        "blog.slider",
+                                        Array(
+                                            "ACTIVE_DATE_FORMAT" => "d.m.Y",
+                                            "ADD_SECTIONS_CHAIN" => "N",
+                                            "AJAX_MODE" => "N",
+                                            "AJAX_OPTION_ADDITIONAL" => "",
+                                            "AJAX_OPTION_HISTORY" => "N",
+                                            "AJAX_OPTION_JUMP" => "N",
+                                            "AJAX_OPTION_STYLE" => "Y",
+                                            "CACHE_FILTER" => "N",
+                                            "CACHE_GROUPS" => "Y",
+                                            "CACHE_TIME" => "36000000",
+                                            "CACHE_TYPE" => "A",
+                                            "CHECK_DATES" => "Y",
+                                            "DETAIL_URL" => "",
+                                            "DISPLAY_BOTTOM_PAGER" => "N",
+                                            "DISPLAY_DATE" => "N",
+                                            "DISPLAY_NAME" => "N",
+                                            "DISPLAY_PICTURE" => "N",
+                                            "DISPLAY_PREVIEW_TEXT" => "N",
+                                            "DISPLAY_TOP_PAGER" => "N",
+                                            "FIELD_CODE" => array("", ""),
+                                            "FILTER_NAME" => "arFilterSlider",
+                                            "HIDE_LINK_WHEN_NO_DETAIL" => "N",
+                                            "IBLOCK_ID" => "2",
+                                            "IBLOCK_TYPE" => "content",
+                                            "INCLUDE_IBLOCK_INTO_CHAIN" => "N",
+                                            "INCLUDE_SUBSECTIONS" => "Y",
+                                            "MESSAGE_404" => "",
+                                            "NEWS_COUNT" => "10",
+                                            "PAGER_BASE_LINK_ENABLE" => "N",
+                                            "PAGER_DESC_NUMBERING" => "N",
+                                            "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+                                            "PAGER_SHOW_ALL" => "N",
+                                            "PAGER_SHOW_ALWAYS" => "N",
+                                            "PAGER_TEMPLATE" => ".default",
+                                            "PAGER_TITLE" => "Новости",
+                                            "PARENT_SECTION" => "",
+                                            "PARENT_SECTION_CODE" => "",
+                                            "PREVIEW_TRUNCATE_LEN" => "",
+                                            "PROPERTY_CODE" => array("BANNER_BTN_TEXT", "BANNER_BTN_LINK", "BANNER_TITLE"),
+                                            "SET_BROWSER_TITLE" => "N",
+                                            "SET_LAST_MODIFIED" => "N",
+                                            "SET_META_DESCRIPTION" => "N",
+                                            "SET_META_KEYWORDS" => "N",
+                                            "SET_STATUS_404" => "N",
+                                            "SET_TITLE" => "N",
+                                            "SHOW_404" => "N",
+                                            "SORT_BY1" => "SORT",
+                                            "SORT_BY2" => "ID",
+                                            "SORT_ORDER1" => "DESC",
+                                            "SORT_ORDER2" => "DESC",
+                                            "STRICT_SECTION_CHECK" => "N"
+                                        )
+                                    )?>
+                                </div>
+                                <?endif;?>
+                            <?
+                            $i++;
+                            endforeach;?>
                         </div>
                     </div>
                     <div class="blog-text__footer">
@@ -116,6 +181,22 @@
                             <script src="https://yastatic.net/share2/share.js"></script>
                             <div class="ya-share2" data-curtain data-size="s" data-shape="round" data-color-scheme="blackwhite" data-limit="3" data-services="vkontakte,odnoklassniki,telegram,whatsapp"></div>
                         </div>
+
+                    </div>
+                    <div class="get-pb">
+                        <h2>Запишись на пробную тренировку в Spirit.Fitness!</h2>
+                        <div>
+                            <div class="select-pb">
+                                <select class="input input--light input--long input--select get-club__pb">
+                                    <option value="off" disabled selected>Выберите клуб</option>
+                                    <? foreach ($arResult["CLUBS"] as $number=>$club):?>
+                                        <option value="<?=$number?>"><?=$club?></option>
+                                    <? endforeach; ?>
+                                </select>
+                            </div>
+                            <a class="button select-pb-btn" href="/abonement/probnaya-trenirovka-/">Записаться</a>
+                        </div>
+
                     </div>
 
 				</div>
