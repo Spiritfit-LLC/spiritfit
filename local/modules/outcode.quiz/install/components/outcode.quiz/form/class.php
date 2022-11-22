@@ -168,7 +168,10 @@
                 if( $this->arResult['QUESTION']['IS_ANSWERED'] ) {
                     $this->arResult['QUESTION']['IS_ANSWERED_SCORE'] = $quiz->getQuestionScore($this->arResult['QUESTION']['ID']);
                 }
-                $this->arResult['QUESTION']['POSITION'] = $quiz->getQuestionPosition($startDateWeek, $currentTime, $this->arResult['QUESTION']['ID']);
+
+                $tomorrow=strtotime('tomorrow');
+                $today=strtotime('today');
+                $this->arResult['QUESTION']['POSITION'] = $quiz->getQuestionPosition($today, $tomorrow, $this->arResult['QUESTION']['ID']);
             }
             /* Получаем вопрос */
 
