@@ -6,6 +6,15 @@ $settings = Utils::getInfo();
         <div class="content-center">
             <div class="b-footer__content">
                 <div class="b-footer__social">
+                    <a class="b-social-link" href="https://t.me/spiritfitness_official" target="_blank">
+                        <span class="b-social-link__img-holder"><img class="b-social-link__img" src="<?=SITE_TEMPLATE_PATH?>/img/telegram-brands.svg"></span><span class="b-social-link__text"></span>
+                    </a>
+                    <a class="b-social-link" href="https://vk.com/spiritmoscow" target="_blank">
+                        <span class="b-social-link__img-holder"><img class="b-social-link__img" src="<?=SITE_TEMPLATE_PATH?>/img/vk-brands.svg"></span><span class="b-social-link__text"></span>
+                    </a>
+                    <a class="b-social-link" href="http://www.tiktok.com/@spiritfitness" target="_blank">
+                        <span class="b-social-link__img-holder"><img class="b-social-link__img" src="<?=SITE_TEMPLATE_PATH?>/img/tiktok-brands.svg"></span><span class="b-social-link__text"></span>
+                    </a>
                     <a class="b-social-link" href="https://zen.yandex.ru/id/6017f57288bc0d2cb7405dc6" target="_blank">
                         <span class="b-social-link__img-holder"><img class="b-social-link__img" src="<?=SITE_TEMPLATE_PATH?>/img/zen-brands.png"></span><span class="b-social-link__text"></span>
                     </a>
