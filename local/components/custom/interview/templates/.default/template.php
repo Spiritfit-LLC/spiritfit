@@ -23,7 +23,7 @@ $APPLICATION->SetPageProperty("title", $arResult["TITLE"]);
                         <? } ?>
                     </div>
                 </div>
-                <div class="b-main__banner-button is-hide-desktop" style="margin-top: auto;text-align: center;width: 100%;">
+                <div class="b-main__banner-button is-hide-desktop" style="margin-top: 40px;text-align: center;width: 100%;">
                     <? if(!empty($arResult["HEADER_BUTTON"]) ) { ?>
                         <a class="button" onclick="go_next_question()"><?=$arResult["HEADER_BUTTON"]?></a>
                     <? } ?>
@@ -38,7 +38,7 @@ $APPLICATION->SetPageProperty("title", $arResult["TITLE"]);
         <form class="b-interview-form" data-componentname="<?=$arResult["COMPONENT_NAME"]?>">
             <?for ($i=0; $i<count($arResult["QUESTIONS"]); $i++):?>
             <?$arQuestion=$arResult["QUESTIONS"][$i]?>
-                <div class="b-interview__question <?if ($arQuestion["REQUIRED"] && empty($arQuestion["REQUIRED_FROM_ID"])) echo "required"?>  is-hide"
+                <div class="b-interview__question <?if ($arQuestion["REQUIRED"] && empty($arQuestion["REQUIRED_FROM_ID"])) echo "required"?>  <?if ($i>0) echo 'is-hide';?>"
                      <?if (!empty($arQuestion["REQUIRED_FROM_ID"])):?>data-required-from-id="<?=$arQuestion["REQUIRED_FROM_ID"]?>"<?endif;?>
                      <?if (!empty($arQuestion["REQUIRED_FROM_VAL"])):?>data-required-from-val="<?=$arQuestion["REQUIRED_FROM_VAL"]?>"<?endif;?>>
                     <div class="b-interview__question-content">
