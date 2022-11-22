@@ -88,6 +88,15 @@ span.starrequired {
 }
 .stars-item {
     overflow: hidden;
+    position: relative;
+}
+span.star-item__text {
+    position: absolute;
+    width: 83px;
+    top: 39px;
+    text-align: center;
+    font-weight: 500;
+    cursor: pointer;
 }
 
 .stars-item:not(:checked) > input {
@@ -243,6 +252,11 @@ input.text-item {
     .stars-item:not(:checked) > label{
         width: 65px;
         font-size: 65px;
+    }
+    span.star-item__text {
+        width: 54px;
+        font-size: 18px;
+        top: 37px;
     }
 }
 @media screen and (max-width: 492px){

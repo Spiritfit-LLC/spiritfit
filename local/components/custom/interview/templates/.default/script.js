@@ -14,7 +14,9 @@ $(document).ready(function(){
         $(this).prevAll().addClass("selected");
     });
 
-
+    $(".star-item__text").click(function(){
+        $(this).closest(".b-question__answer-item").find("input").click();
+    });
     $("input[type=\"radio\"]").click(function(){
         var $question=$(this).closest(".b-interview__question");
         $question.find(".b-question__go-next").find(".button").removeClass("disabled");
