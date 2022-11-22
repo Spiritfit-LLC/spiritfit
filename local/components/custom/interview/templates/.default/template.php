@@ -42,7 +42,7 @@ $APPLICATION->SetPageProperty("title", $arResult["TITLE"]);
                      <?if (!empty($arQuestion["REQUIRED_FROM_ID"])):?>data-required-from-id="<?=$arQuestion["REQUIRED_FROM_ID"]?>"<?endif;?>
                      <?if (!empty($arQuestion["REQUIRED_FROM_VAL"])):?>data-required-from-val="<?=$arQuestion["REQUIRED_FROM_VAL"]?>"<?endif;?>>
                     <div class="b-interview__question-content">
-                        <h3 class="b-question__title"><?=$arQuestion["TITLE"]?><?if($arQuestion["REQUIRED"]){echo "<span class='starrequired'>*</span>";}?></h3>
+                        <h3 class="b-question__title"><?if($arQuestion["REQUIRED"]){echo "<span class='starrequired'>*</span>";}?><?=$arQuestion["TITLE"]?></h3>
                         <?switch ($arQuestion["TYPE"]){
                             case "radio"://radio?>
                                 <div class="b-question__answers radio-item_question">
