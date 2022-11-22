@@ -1764,7 +1764,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         $arParams=[
             "login"=>$arUser["LOGIN"],
             "id1c"=>$arUser["UF_1CID"],
-            "type"=>$type
+            "type"=>(int)$type
         ];
 
         if ($type==21 && !empty($arUser["UF_QUIZ_REG"])){
