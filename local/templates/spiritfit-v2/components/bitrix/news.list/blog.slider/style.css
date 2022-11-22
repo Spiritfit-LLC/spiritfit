@@ -1,0 +1,25 @@
+.white .b-info-slider__title {
+    color: black!important;
+}
+.white .b-info-slider__text {
+    color: black!important;
+}
+.b-info-slider__text {
+    min-height: unset!important;
+}
+.b-screen__slider {
+    width: 100%!important;
+    margin: 0!important;
+}
+.b-screen__content{
+    min-height: unset!important;
+}
+.white .slick-dots li>button{
+    border-color: black!important;
+}
+.white .b-info-slider__arrow::before, .white .b-info-slider__arrow::after{
+    background-color: black!important;
+}
+.white .b-info-slider__arrow{
+    border-color: black!important;
+}

@@ -112,4 +112,11 @@ $(document).ready(function(){
             }
         })
     });
+
+    $(".get-club__pb").on("select2:select", function(){
+        var club_num=$(this).val();
+        var abonement_pb_link="/abonement/probnaya-trenirovka-/"+club_num+"/";
+
+        $(".select-pb-btn").attr("href", abonement_pb_link);
+    })
 });
