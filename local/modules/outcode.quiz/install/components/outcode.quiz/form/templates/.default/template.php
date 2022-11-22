@@ -190,9 +190,10 @@ if( !empty($arResult['RESULT_TABLE_USER']['QUESTIONS']) || !empty($arResult['RES
                         </div>
                         <? $count = 0; ?>
                         <? foreach($arResult['RESULT_TABLE']['TOTAL_RESULT'] as $result) { ?>
+                            <? $counter = 0; foreach( $arResult['RESULT_TABLE']['BY_QUESTIONS'][$result['USER_ID']] as $question ) { if( $question == "Бонус за регистрацию" ) continue; $counter += 1; } ?>
                             <div class="results-table__row <?=$count>2 ? 'hidden' : ''?>">
                                 <div class="results-table__cell"><?=$result['LOGIN']?></div>
-                                <div class="results-table__cell"><?=!empty($arResult['RESULT_TABLE']['BY_QUESTIONS'][$result['USER_ID']]) ? count($arResult['RESULT_TABLE']['BY_QUESTIONS'][$result['USER_ID']]) : 0?></div>
+                                <div class="results-table__cell"><?=!empty($arResult['RESULT_TABLE']['BY_QUESTIONS'][$result['USER_ID']]) ? $counter : 0?></div>
                                 <div class="results-table__cell"><?=$result['VALUE']?></div>
                             </div>
                             <? $count += 1; if($count > 50) break; ?>
