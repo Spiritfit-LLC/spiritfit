@@ -359,6 +359,11 @@
                 overflow-wrap: anywhere;
                 /* border: 1px solid; */
             }
+            @media screen and (max-width: 768px) {
+                .quiz-prize__promocode {
+                    font-size: 16px;
+                }
+            }
             .quiz-prize__info {
                 font-size: 22px;
                 font-weight: 700;
