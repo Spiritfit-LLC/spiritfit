@@ -1,0 +1,9 @@
+.select-prize-wrapper.success {
+    font-size: 24pt;
+    line-height: 28px;
+    background: linear-gradient(90deg, #E23834 3.26%, #8428DD 98.07%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	text-fill-color: transparent;
+}
