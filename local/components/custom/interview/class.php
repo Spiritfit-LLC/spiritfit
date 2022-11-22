@@ -122,6 +122,7 @@ class Interview extends CBitrixComponent implements Controllerable {
     }
 
     public function interviewAction(){
+        Loader::IncludeModule("iblock");
         $this->GetQuestions(true);
         $interviewData=array_combine(array_column($this->arResult["QUESTIONS"], "1C_NAME"), array_column($this->arResult["QUESTIONS"], "VALUE"));
         $arParams=[
@@ -142,7 +143,6 @@ class Interview extends CBitrixComponent implements Controllerable {
             }
         }
         $this->arResult["PROMOCODE"]=$responce["data"]["result"]["result"]["promocode"];
-//        $this->arResult["PROMOCODE"]="ПРОМОКОД";
 
         ob_start();
         $this->IncludeComponentTemplate("result");

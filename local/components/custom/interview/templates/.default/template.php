@@ -17,11 +17,16 @@ $APPLICATION->SetPageProperty("title", $arResult["TITLE"]);
                         <?=$arResult["TITLE"]?>
                     </div>
                     <?=htmlspecialcharsback($arResult["HEADER_DESCRIPTION"])?>
-                    <div class="b-main__banner-button">
+                    <div class="b-main__banner-button is-hide-mobile">
                         <? if(!empty($arResult["HEADER_BUTTON"]) ) { ?>
-                            <a class="button" onclick="go_next_question()"><?=$arResult["HEADER_BUTTON"]?></a>
+                            <a class="button " onclick="go_next_question()"><?=$arResult["HEADER_BUTTON"]?></a>
                         <? } ?>
                     </div>
+                </div>
+                <div class="b-main__banner-button is-hide-desktop" style="margin-top: auto;text-align: center;width: 100%;">
+                    <? if(!empty($arResult["HEADER_BUTTON"]) ) { ?>
+                        <a class="button" onclick="go_next_question()"><?=$arResult["HEADER_BUTTON"]?></a>
+                    <? } ?>
                 </div>
             </div>
         </div>
