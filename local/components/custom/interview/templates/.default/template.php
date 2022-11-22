@@ -85,8 +85,20 @@ $APPLICATION->SetPageProperty("title", $arResult["TITLE"]);
                             <?foreach ($arQuestion["ANSWERS"]["VALUE"] as $index=>$arAnswer):?>
                                 <?$value=$arQuestion["ANSWERS"]["DESCRIPTION"][$index];?>
                                 <?switch ($arQuestion["TYPE"]){
-                                    case "stars":
-                                    case "radio":?>
+                                    case "stars":?>
+                                        <div class="b-question__answer-item <?=$className?>">
+                                            <span class="star-item__text"><?=$arAnswer?></span>
+
+                                            <input type="radio" name="<?=$arQuestion["NAME"]?>"
+                                                   class="<?=$className?>"
+                                                   id="b-question_radio_<?=$arQuestion["ID"]?>_<?=$arQuestion["ANSWERS"]["ID"]?>_<?=$index?>"
+                                                   value="<?=$value?>"
+                                                   data-required="<?=$arQuestion["ID"]?>"/>
+                                            <label for="b-question_radio_<?=$arQuestion["ID"]?>_<?=$arQuestion["ANSWERS"]["ID"]?>_<?=$index?>">
+                                            </label>
+                                        </div>
+                                        <?break;?>
+                                    <?case "radio":?>
                                         <div class="b-question__answer-item <?=$className?>">
                                             <input type="radio" name="<?=$arQuestion["NAME"]?>"
                                                    class="<?=$className?>"
