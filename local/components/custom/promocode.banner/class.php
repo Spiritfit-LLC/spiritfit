@@ -2,7 +2,7 @@
 
 use \Bitrix\Main\Loader;
 
-class PersonalTrialWorkout extends CBitrixComponent{
+class PromocodeBanner extends CBitrixComponent{
     function onPrepareComponentParams($arParams){
         if(empty($arParams['PROMOCODE']) && $arParams["PROMOCODE"]!="0"){
             $this->arResult["ERROR"]="Отсутствует промокод";
