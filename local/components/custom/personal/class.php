@@ -337,12 +337,15 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                     $user_prize = $prize->getUserPrize();
                     $this->arResult["QUIZ_PRIZE"]=$user_prize;
                     if (!empty($user_prize)){
-                        $element_id=$user_prize["UF_ELEMENT_ID"];
-                        $res = CIBlockElement::GetByID($element_id);
-                        if ($ar_res = $res->GetNextElement()){
-                            $props=$ar_res->GetProperties();
-                            $this->arResult["QUIZ_PRIZE_TEMPLATE"]=CFile::GetPath($props["KUPON_TEMPLATE"]["VALUE"]);
+                        foreach ($this->arResult["QUIZ_PRIZE"] as &$prize){
+                            $element_id=$prize["UF_ELEMENT_ID"];
+                            $res = CIBlockElement::GetByID($element_id);
+                            if ($ar_res = $res->GetNextElement()){
+                                $props=$ar_res->GetProperties();
+                                $prize["QUIZ_PRIZE_TEMPLATE"]=CFile::GetPath($props["KUPON_TEMPLATE"]["VALUE"]);
+                            }
                         }
+
                     }
                 }
                 //КВИЗ

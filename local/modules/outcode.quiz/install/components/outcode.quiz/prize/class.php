@@ -1,131 +1,131 @@
 <?
-    use Bitrix\Main\Context;
-    use Bitrix\Main\Loader;
-    use Bitrix\Main\Localization\Loc;
-    use Bitrix\Main\Result;
-    use Bitrix\Main\Engine\Contract\Controllerable;
-    use Bitrix\Main\Engine\ActionFilter;
-    
-    class QuizComponent extends CBitrixComponent implements Controllerable {
+use Bitrix\Main\Context;
+use Bitrix\Main\Loader;
+use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\Result;
+use Bitrix\Main\Engine\Contract\Controllerable;
+use Bitrix\Main\Engine\ActionFilter;
 
-        /**
-    	* @var ErrorCollection
-    	*/
-    	public $errorCollection;
-		
-		/**
-         * CustomOrder constructor.
-         * @param CBitrixComponent|null $component
-         * @throws Bitrix\Main\LoaderException
-        */
-        public function __construct(CBitrixComponent $component = null) {
-            parent::__construct($component);
-            
-            if( !Loader::includeModule('outcode.quiz') ) {
-                throw new RuntimeException(Loc::getMessage('CANT_FIND_QUIZ_MODULE'));
-            }
-			
-			$this->errorCollection = [];
+class QuizComponent extends CBitrixComponent implements Controllerable {
+
+    /**
+     * @var ErrorCollection
+     */
+    public $errorCollection;
+
+    /**
+     * CustomOrder constructor.
+     * @param CBitrixComponent|null $component
+     * @throws Bitrix\Main\LoaderException
+     */
+    public function __construct(CBitrixComponent $component = null) {
+        parent::__construct($component);
+
+        if( !Loader::includeModule('outcode.quiz') ) {
+            throw new RuntimeException(Loc::getMessage('CANT_FIND_QUIZ_MODULE'));
         }
 
-        public function onIncludeComponentLang() {
-            Loc::loadLanguageFile(__FILE__);
+        $this->errorCollection = [];
+    }
+
+    public function onIncludeComponentLang() {
+        Loc::loadLanguageFile(__FILE__);
+    }
+
+    public function onPrepareComponentParams($arParams = []): array {
+        global $USER;
+
+        if( $USER->IsAuthorized() ) {
+            $arParams['USER_ID'] = $USER->GetID();
         }
 
-        public function onPrepareComponentParams($arParams = []): array {
-            global $USER;
-			
-			if( $USER->IsAuthorized() ) {
-				$arParams['USER_ID'] = $USER->GetID();
-			}
-
-			if( empty($arParams['SHOW_RESULT_ON_DAYS']) ) {
-                $arParams['SHOW_RESULT_ON_DAYS'] = ['Friday', 'Saturday', 'Sunday'];
-            }
-
-            if( empty($arParams['SHOW_RESULT_ON_FIRST']) ) {
-                $arParams['SHOW_RESULT_ON_FIRST'] = '22:00:00';
-            }
-
-            if( empty($arParams['CALCULATE_FULL_RESULT']) || $arParams['CALCULATE_FULL_RESULT'] == 'N' ) {
-                $arParams['CALCULATE_FULL_RESULT'] = false;
-            } else {
-                $arParams['CALCULATE_FULL_RESULT'] = true;
-            }
-
-            if( !isset($arParams['LIMIT']) ) {
-                $arParams['LIMIT'] = 10;
-            } else {
-                $arParams['LIMIT'] = intval($arParams['LIMIT']);
-            }
-			
-			return $arParams;
+        if( empty($arParams['SHOW_RESULT_ON_DAYS']) ) {
+            $arParams['SHOW_RESULT_ON_DAYS'] = ['Friday', 'Saturday', 'Sunday'];
         }
 
-        public function ConfigureActions() {
-            return [
-                'selectPrize'=>[
-                    'prefilters' => [
-                        new ActionFilter\HttpMethod(
-                            array(ActionFilter\HttpMethod::METHOD_POST)
-                        ),
-                        new ActionFilter\Csrf(),
-                    ],
-                    'postfilters' => []
+        if( empty($arParams['SHOW_RESULT_ON_FIRST']) ) {
+            $arParams['SHOW_RESULT_ON_FIRST'] = '22:00:00';
+        }
+
+        if( empty($arParams['CALCULATE_FULL_RESULT']) || $arParams['CALCULATE_FULL_RESULT'] == 'N' ) {
+            $arParams['CALCULATE_FULL_RESULT'] = false;
+        } else {
+            $arParams['CALCULATE_FULL_RESULT'] = true;
+        }
+
+        if( !isset($arParams['LIMIT']) ) {
+            $arParams['LIMIT'] = 10;
+        } else {
+            $arParams['LIMIT'] = intval($arParams['LIMIT']);
+        }
+
+        return $arParams;
+    }
+
+    public function ConfigureActions() {
+        return [
+            'selectPrize'=>[
+                'prefilters' => [
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
                 ],
-            ];
+                'postfilters' => []
+            ],
+        ];
+    }
+
+    public function selectPrizeAction() {
+
+        if( empty($this->arParams["USER_ID"]) ) {
+            throw new Exception(Loc::getMessage('CANT_QUIZ_PRIZE_COMPONENT'), 1);
         }
 
-        public function selectPrizeAction() {
-
-            if( empty($this->arParams["USER_ID"]) ) {
-                throw new Exception(Loc::getMessage('CANT_QUIZ_PRIZE_COMPONENT'), 1);
-            }
-
-            $componentId = Context::getCurrent()->getRequest()->getPost('componentId');
-            if( empty($componentId) ) {
-                throw new Exception(Loc::getMessage('CANT_QUIZ_PRIZE_COMPONENT'), 2);
-            }
-
-            $arParams = !empty($_SESSION[$componentId]) ? $_SESSION[$componentId] : [];
-            if( empty($arParams) || empty($arParams['PROPERTY_NUM']) || empty($arParams['PROPERTY_MSG']) || empty($arParams['IS_ENABLED']) ) {
-                throw new Exception(Loc::getMessage('CANT_QUIZ_PRIZE_COMPONENT'), 3);
-            }
-
-            $elementId = Context::getCurrent()->getRequest()->getPost('elementId');
-            if( empty($elementId) ) {
-                throw new Exception(Loc::getMessage('CANT_QUIZ_PRIZE_COMPONENT'), 4);
-            }
-
-            $prizeObj = new \Outcode\Prize();
-
-            if( $arParams['IS_ENABLED'] ) {
-                return $prizeObj->selectPrize($elementId, $arParams['PROPERTY_NUM'], $arParams['PROPERTY_MSG']);
-            } else {
-                throw new Exception(Loc::getMessage('CANT_QUIZ_PRIZE_COMPONENT'), 5);
-            }
-
-            return false;
+        $componentId = Context::getCurrent()->getRequest()->getPost('componentId');
+        if( empty($componentId) ) {
+            throw new Exception(Loc::getMessage('CANT_QUIZ_PRIZE_COMPONENT'), 2);
         }
 
-        public function executeComponent() {
-            
-            $this->arResult['COMPONENT_ID'] = CAjax::GetComponentID($this->GetName(), $this->GetTemplate(), '');
-            $this->arResult['COMPONENT_NAME'] = $this->GetName();
+        $arParams = !empty($_SESSION[$componentId]) ? $_SESSION[$componentId] : [];
+        if( empty($arParams) || empty($arParams['PROPERTY_NUM']) || empty($arParams['PROPERTY_MSG']) || empty($arParams['IS_ENABLED']) ) {
+            throw new Exception(Loc::getMessage('CANT_QUIZ_PRIZE_COMPONENT'), 3);
+        }
 
-            $_SESSION[$this->arResult['COMPONENT_ID']] = $this->arParams;
+        $elementId = Context::getCurrent()->getRequest()->getPost('elementId');
+        if( empty($elementId) ) {
+            throw new Exception(Loc::getMessage('CANT_QUIZ_PRIZE_COMPONENT'), 4);
+        }
 
-            global $USER;
+        $prizeObj = new \Outcode\Prize();
 
-            $this->arResult['SHOW_BUTTON'] = true;
+        if( $arParams['IS_ENABLED'] ) {
+            return $prizeObj->selectPrize($elementId, $arParams['PROPERTY_NUM'], $arParams['PROPERTY_MSG']);
+        } else {
+            throw new Exception(Loc::getMessage('CANT_QUIZ_PRIZE_COMPONENT'), 5);
+        }
 
-            $startDateWeek = $this->arParams["CALCULATE_FULL_RESULT"] ? 315532800 : strtotime( date('d-m-Y', strtotime('-1 week')) );
-            $showStartTime = strtotime( date('d-m-Y ' . $this->arParams["SHOW_RESULT_ON_FIRST"]) );
-            $currentDay = date('l');
+        return false;
+    }
 
-            $firstValue = reset($this->arParams["SHOW_RESULT_ON_DAYS"]);
+    public function executeComponent() {
 
-            $prizeObj = new \Outcode\Prize();
+        $this->arResult['COMPONENT_ID'] = CAjax::GetComponentID($this->GetName(), $this->GetTemplate(), '');
+        $this->arResult['COMPONENT_NAME'] = $this->GetName();
+
+        $_SESSION[$this->arResult['COMPONENT_ID']] = $this->arParams;
+
+        global $USER;
+
+        $this->arResult['SHOW_BUTTON'] = true;
+
+        $startDateWeek = $this->arParams["CALCULATE_FULL_RESULT"] ? 315532800 : strtotime( date('d-m-Y', strtotime('-1 week')) );
+        $showStartTime = strtotime( date('d-m-Y ' . $this->arParams["SHOW_RESULT_ON_FIRST"]) );
+        $currentDay = date('l');
+
+        $firstValue = reset($this->arParams["SHOW_RESULT_ON_DAYS"]);
+
+        $prizeObj = new \Outcode\Prize();
 
 //            if( !in_array($currentDay, $this->arParams["SHOW_RESULT_ON_DAYS"]) ) {
 //                $this->arResult['SHOW_BUTTON'] = false;
@@ -158,28 +158,33 @@
 //
 //            }
 
-            $minValue=0;
-            if (!empty($this->arParams['PROPERTY_NUM'])){
-                $res = CIBlockElement::GetByID($this->arParams['ELEMENT_ID']);
-                if($resObj = $res->GetNextElement()) {
-                    $arProps = $resObj->GetProperties();
-                    $this->arResult["BUTTON_NAME"]=$arProps["PRISE_NAME"]["VALUE"];
-                    foreach( $arProps as $code => $item ) {
-                        if( $code == $this->arParams['PROPERTY_MINVALUE'] ) {
-                            $minValue = intval($item['VALUE']);
-                        }
+        $minValue=0;
+        if (!empty($this->arParams['PROPERTY_NUM'])){
+            $res = CIBlockElement::GetByID($this->arParams['ELEMENT_ID']);
+            if($resObj = $res->GetNextElement()) {
+                $arProps = $resObj->GetProperties();
+                $this->arResult["BUTTON_NAME"]=$arProps["PRISE_NAME"]["VALUE"];
+                foreach( $arProps as $code => $item ) {
+                    if( $code == $this->arParams['PROPERTY_MINVALUE'] ) {
+                        $minValue = intval($item['VALUE']);
                     }
                 }
-                $quiz = new \Outcode\Quiz();
-                $prize = new \Outcode\Prize();
-                $total_result=$quiz->getUserResults();
-                if ($total_result["TOTAL_RESULT"]<$minValue || $prize->isSelected()){
-                    $this->arResult['SHOW_BUTTON']=false;
-                }
             }
+            $day = date('w');
+            $timeStart = strtotime(date('Y-m-d', strtotime('-'.($day-1).' days')));
+            $timeEnd = strtotime(date('Y-m-d', strtotime('+'.(7-$day).' days')));
 
-            $_SESSION[$this->arResult['COMPONENT_ID']]['IS_ENABLED'] = $this->arResult['SHOW_BUTTON'];
+            $quiz = new \Outcode\Quiz();
+            $prize = new \Outcode\Prize();
+            $total_result=$quiz->getUserResults($timeStart, $timeEnd);
 
-            $this->includeComponentTemplate();
+            if ($total_result["TOTAL_RESULT"]<$minValue || $prize->isSelected($timeStart, $timeEnd)){
+                $this->arResult['SHOW_BUTTON']=false;
+            }
         }
+
+        $_SESSION[$this->arResult['COMPONENT_ID']]['IS_ENABLED'] = $this->arResult['SHOW_BUTTON'];
+
+        $this->includeComponentTemplate();
     }
+}

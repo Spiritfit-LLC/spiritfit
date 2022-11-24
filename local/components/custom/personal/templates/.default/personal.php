@@ -56,7 +56,7 @@
                 <?
                 endforeach;
                 ?>
-                <?if ($arResult["QUIZ_PRIZE"] && $arResult["QUIZ_PRIZE_TEMPLATE"]):?>
+                <?if ($arResult["QUIZ_PRIZE"]):?>
                 <!--QUIZ-->
                 <div class="personal-profile__tab-item <?if($arResult["ACTIVE_SECTION"]=="quiz") echo 'active';?>" data-id="quiz">
                     <div class="tab-item__icon">
@@ -318,29 +318,32 @@
                 )
             );
         }?>
-        <?if ($arResult["QUIZ_PRIZE"] && $arResult["QUIZ_PRIZE_TEMPLATE"]):?>
+        <?if ($arResult["QUIZ_PRIZE"]):?>
         <div class="personal-section" style="display: none" data-id="quiz">
             <div class="quiz-prize__info">
             </div>
             <div class="quiz-prize__container">
-                <div class="quiz-prize__background" style="background-image: url('<?=$arResult["QUIZ_PRIZE_TEMPLATE"]?>')">
-                    <div class="quiz-prize__promocode">
-                        <?if ($arResult["QUIZ_PRIZE"]["UF_SERT"]):?>
-                        <a class="quiz-prize-link" href="<?=$arResult["QUIZ_PRIZE"]["UF_PROMOCODE"]?>">click me!</a>
-                        <?else:?>
-                        <?=$arResult["QUIZ_PRIZE"]["UF_PROMOCODE"]?>
-                        <?endif;?>
+                <?foreach ($arResult["QUIZ_PRIZE"] as $item):?>
+                    <div class="quiz-prize__background" style="background-image: url('<?=$item["QUIZ_PRIZE_TEMPLATE"]?>')">
+                        <div class="quiz-prize__promocode">
+                            <?if ($item["UF_SERT"]):?>
+                                <a class="quiz-prize-link" href="<?=$item["UF_PROMOCODE"]?>">click me!</a>
+                            <?else:?>
+                                <?=$item["UF_PROMOCODE"]?>
+                            <?endif;?>
+                        </div>
                     </div>
-                </div>
+                <?endforeach;?>
             </div>
         </div>
         <style>
             .quiz-prize__background {
-                /*height: 277px;*/
+                /* height: 277px; */
                 background-position: 0 0;
                 background-size: contain;
                 position: relative;
                 background-repeat: no-repeat;
+                margin: 20px 0;
             }
             .quiz-prize__promocode {
                 position: absolute;
@@ -358,6 +361,10 @@
                 padding: 5px;
                 overflow-wrap: anywhere;
                 /* border: 1px solid; */
+            }
+            .quiz-prize__container {
+                max-height: 700px;
+                overflow: auto;
             }
             @media screen and (max-width: 768px) {
                 .quiz-prize__promocode {
