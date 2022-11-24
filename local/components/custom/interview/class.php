@@ -17,6 +17,15 @@ class Interview extends CBitrixComponent implements Controllerable {
                 ],
                 'postfilters' => []
             ],
+            'auth' => [
+                'prefilters' => [
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
+            ]
         ];
     }
 
@@ -32,9 +41,9 @@ class Interview extends CBitrixComponent implements Controllerable {
         if(empty($arParams["INTERVIEW_ID"])){
             $this->arResult["ERROR"] = "Не задан опрос";
         }
-        if(empty($arParams["CLIENT_ID"])){
-            $this->arResult["ERROR"] = "Пользователь не задан";
-        }
+//        if(empty($arParams["CLIENT_ID"])){
+//            $this->arResult["ERROR"] = "Пользователь не задан";
+//        }
         return $arParams;
     }
 
@@ -116,9 +125,12 @@ class Interview extends CBitrixComponent implements Controllerable {
         }
         $this->arResult["COMPONENT_NAME"]=$this->GetName();
 
-
-//        var_dump($this->arResult);
-        $this->IncludeComponentTemplate();
+        if (empty($this->arParams["CLIENT_ID"])){
+            $this->IncludeComponentTemplate("client-id");
+        }
+        else{
+            $this->IncludeComponentTemplate();
+        }
     }
 
     public function interviewAction(){
@@ -148,5 +160,51 @@ class Interview extends CBitrixComponent implements Controllerable {
         $this->IncludeComponentTemplate("result");
         $result=ob_get_clean();
         return $result;
+    }
+
+    public function authAction($step, $phone, $code){
+        $phone=substr(preg_replace('![^0-9]+!', '', $phone), 1);
+        if ($phone[0]!='9' || strlen($phone)!=10){
+            throw new Exception('Формат телефона неверный', 1);
+        }
+        if ($step==1){
+            $api=new Api([
+                "action"=>"smscode",
+                "params"=>[
+                    "phone"=>$phone
+                ]
+            ]);
+        }
+        else{
+            $code=preg_replace('![^0-9]+!', '', $code);
+            if (strlen($code)!=5){
+                throw new Exception('Формат телефона неверный', 1);
+            }
+            $api=new Api([
+                "action"=>"smscodecheck",
+                "params"=>[
+                    "phone"=>$phone,
+                    "code"=>$code
+                ]
+            ]);
+        }
+
+        $response=$api->result();
+        if (!$response["success"]) {
+            if ($response["data"]["http_code"]==400){
+                throw new Exception($response["data"]["result"]["userMessage"], 2);
+            }
+            if (!empty($response["data"]["result"]["userMessage"])) {
+                throw new Exception($response["data"]["result"]["userMessage"], 1);
+            } else {
+                throw new Exception("Непредвиденная ошибка", 1);
+            }
+        }
+
+        if ($step==2){
+            $_SESSION["CLIENT_ID"]=$phone;
+            $_SESSION["INTERVIEW_ID"]=$this->arParams["INTERVIEW_ID"];
+        }
+        return true;
     }
 }
