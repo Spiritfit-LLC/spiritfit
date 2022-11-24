@@ -166,10 +166,11 @@ class Prize {
             "select" => ["*"],
             "filter" => ['UF_USER_ID' => $this->userId]
         ]);
-        if ($arPrize=$dbPrize->fetch()){
-            return $arPrize;
+        $prizes=[];
+        while ($arPrize=$dbPrize->fetch()){
+            $prizes[]=$arPrize;
         }
 
-        return false;
+        return $prizes;
     }
 }

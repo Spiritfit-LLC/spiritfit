@@ -54,9 +54,7 @@ Asset::getInstance()->addString('<meta name="robots" content="noindex, follow" /
         z-index: 1;
     }
     .personal-page-img {
-        background: url(/local/templates/spiritfit-v2/img/lk-background.jfif);
-        background-position: right top;
-        background-repeat: no-repeat;
+        background: url(/local/templates/spiritfit-v2/img/lk-background.jfif) no-repeat right top;
         width: 100%;
         height: 100%;
     }
