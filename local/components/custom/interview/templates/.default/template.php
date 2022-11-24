@@ -7,26 +7,26 @@ $APPLICATION->SetPageProperty("title", $arResult["TITLE"]);
 <script>
     var params=<?=\Bitrix\Main\Web\Json::encode(['signedParameters'=>$this->getComponent()->getSignedParameters()])?>;
 </script>
+<style>
+    :root{
+        --interview-background: url(<?=$arResult["HEADER_IMAGE"]?>);
+    }
+</style>
 
 <? if( !empty($arResult["HEADER_IMAGE"]) ):?>
     <div class="b-main blockitem">
         <div class="content-center">
-            <div class="b-main__banner" style="background-image: url(<?=$arResult["HEADER_IMAGE"]?>);">
+            <div class="b-main__banner">
                 <div class="b-main__banner-content">
                     <div class="b-main__banner-title">
                         <?=$arResult["TITLE"]?>
                     </div>
                     <?=htmlspecialcharsback($arResult["HEADER_DESCRIPTION"])?>
-                    <div class="b-main__banner-button is-hide-mobile">
+                    <div class="b-main__banner-button">
                         <? if(!empty($arResult["HEADER_BUTTON"]) ) { ?>
                             <a class="button " onclick="go_next_question()"><?=$arResult["HEADER_BUTTON"]?></a>
                         <? } ?>
                     </div>
-                </div>
-                <div class="b-main__banner-button is-hide-desktop" style="margin-top: 40px;text-align: center;width: 100%;">
-                    <? if(!empty($arResult["HEADER_BUTTON"]) ) { ?>
-                        <a class="button" onclick="go_next_question()"><?=$arResult["HEADER_BUTTON"]?></a>
-                    <? } ?>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@ $APPLICATION->SetPageProperty("title", $arResult["TITLE"]);
         <form class="b-interview-form" data-componentname="<?=$arResult["COMPONENT_NAME"]?>">
             <?for ($i=0; $i<count($arResult["QUESTIONS"]); $i++):?>
             <?$arQuestion=$arResult["QUESTIONS"][$i]?>
-                <div class="b-interview__question <?if ($arQuestion["REQUIRED"] && empty($arQuestion["REQUIRED_FROM_ID"])) echo "required"?>  <?if ($i>0) echo 'is-hide';?>"
+                <div class="b-interview__question <?if ($arQuestion["REQUIRED"] && empty($arQuestion["REQUIRED_FROM_ID"])) echo "required"?>  is-hide"
                      <?if (!empty($arQuestion["REQUIRED_FROM_ID"])):?>data-required-from-id="<?=$arQuestion["REQUIRED_FROM_ID"]?>"<?endif;?>
                      <?if (!empty($arQuestion["REQUIRED_FROM_VAL"])):?>data-required-from-val="<?=$arQuestion["REQUIRED_FROM_VAL"]?>"<?endif;?>>
                     <div class="b-interview__question-content">

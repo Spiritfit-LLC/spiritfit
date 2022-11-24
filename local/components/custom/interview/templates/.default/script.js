@@ -111,9 +111,12 @@ var go_next_question=function(btn=null){
     }
     catch (e){ }
 
-    if (btn!==null && $(btn).hasClass("disabled")){
+    if (btn!==null){
         $(btn).fadeOut(300);
     }
+
+    $(".b-main.blockitem").fadeOut(300);
+
 }
 
 var submit_form=function(btn){
