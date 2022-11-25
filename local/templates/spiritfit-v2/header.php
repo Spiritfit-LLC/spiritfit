@@ -150,7 +150,7 @@ foreach( $clubs as $club ) {
 ?>
 <body class="b-page <?=$classPage?>">
 <!--    --><?//$APPLICATION->IncludeComponent('custom:banner', 'last.change', array("URL"=>"ALL", "BACKGROUND"=>"/upload/medialibrary/8f2/9frwkezz1ehaxj5m5tb0u10nfubij2mi.jpg"), false)?>
-    <?$APPLICATION->IncludeComponent("custom:promocode.banner", "quiz.iphone", array("BANNER_DISCOUNT" => "YOYOY","BANNER_TIME" => 3000,"PROMOCODE" => 0))?>
+    <?$APPLICATION->IncludeComponent("custom:promocode.banner", "quiz.iphone", array("BANNER_DISCOUNT" => "", "BANNER_TIME" => 3000,"PROMOCODE" => 0))?>
     <!-- VK counter -->
     <script defer type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?160",t.onload=function(){VK.Retargeting.Init("VK-RTRG-333642-hybZ4"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-333642-hybZ4" style="position:fixed; left:-999px;" alt=""/></noscript>    
 
@@ -283,7 +283,10 @@ foreach( $clubs as $club ) {
         <?
         //ДЕЛАЕМ НА ВРЕМЯ ТРАНСФОРМАЦИИ
         if (strpos($page, "/quiz/") === false):?>
-            <div class="is-hide-desktop" style="text-align: center;padding: 5px;background: #fe6000;font-weight: 500;font-size: 13px; background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);"><a style="color: #e1e1e1;text-decoration: underline;" href="#quiz">Spirit.Квиз</a> на 5.000.000₽</div>
+            <div class="is-hide-desktop" style="text-align: center;padding: 5px;font-weight: 500;font-size: 13px; height: 25px;background: url('<?=SITE_TEMPLATE_PATH.'/img/black-friday-line.png'?>');background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: 50%;
+                    background-color: #fab265; position: relative"><a href="/abonement/" style="position: absolute;top: 0;left: 0; height: 100%;width: 100%;"></a></div>
         <?endif;?>
     </header>
     <main class="b-page__main <?=(defined('HOLDER_CLASS') ? HOLDER_CLASS : '')?>" role="main">
