@@ -47,3 +47,37 @@ img.cube-logo-spiritfit {
     top: 20px;
     left: 31px;
 }
+.shot-on-iphone14 {
+
+    font-size: 26px;
+    padding: 10px;
+    font-weight: 600;
+    background: linear-gradient(90deg, #E23834 3.26%, #7A27F1 98.07%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+.shot-on-iphone14__background {
+    background: white;
+    margin: auto;
+    display: block;
+    width: max-content;
+}
+.promocode-content__discount {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 20px;
+}
+.spirit-quiz-info {
+    text-align: center;
+    font-size: 20px;
+    padding: 10px 30px;
+    color: white;
+    font-weight: 500;
+}
+a.banner_link {
+    color: white;
+    text-decoration: revert;
+}
