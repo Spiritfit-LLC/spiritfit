@@ -978,10 +978,11 @@ class Api
 			);
 		}
 		else {
+            $json = str_replace("\r\n", '\r\n', $result);
 			$this->_data = array(
 				"error" => false,
 				"message" => "",
-				"result" => json_decode($result, true),
+				"result" => json_decode($json, true),
                 "http_code"=>curl_getinfo($ch, CURLINFO_HTTP_CODE),
 			);
 		}
@@ -1346,7 +1347,6 @@ class Api
 
     private function orderpromocode($params){
         $this->_send($this->apiUrl."orderpromocode", $params);
-
 
         if ($this->_data['result']['errorCode'] === 0)
             $this->_result = true;
