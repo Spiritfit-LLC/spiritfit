@@ -12,3 +12,7 @@ if(!empty($arParams['IBLOCK_PRIZE_ID'])) {
         ];
     }
 }
+
+
+$APPLICATION->SetPageProperty('title',"День рождения Spirit.Fitness – Онлайн игра Spirit.Квиз");
+$APPLICATION->SetPageProperty('description',"Участвуйте в онлайн игре Spirit.Квиз, выигрывайте по-настоящему ценные призы и просто веселитесь вместе с нами. С днем рождения, сеть фитнес-клубов Spirit.Fitness!");
