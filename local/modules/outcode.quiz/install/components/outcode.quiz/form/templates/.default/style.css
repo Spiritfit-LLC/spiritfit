@@ -1,4 +1,7 @@
 /* Общее */
+.escapingBallG{
+	background-color:white!important;
+}
 .is-landing .b-page__heading.b-page__heading-simple {
 	display: none;
 }
@@ -275,10 +278,10 @@
 	margin-bottom: 0;
 }
 .quiz-video-wrapper.grey {
-    background-color: #f5f5f5;
+	background-color: #f5f5f5;
 }
 .quiz-video-wrapper.b-quiz-gradient .question-form__info {
-    background: initial;
+	background: initial;
 	-webkit-background-clip: initial;
 	-webkit-text-fill-color: initial;
 	background-clip: initial;
@@ -387,4 +390,123 @@
 
 .question-form__row.image img{
 	max-height: 700px;
+}
+
+.lk-auth-lite__type-item {
+	text-align: center;
+	width: 50%;
+	flex: 0 0 50%;
+	font-size: 20px;
+	font-weight: 700;
+	cursor: pointer;
+	border:1px solid white;
+}
+.lk-auth-lite__type {
+	border-top-right-radius: 10px;
+	display: flex;
+	border-top-left-radius: 10px;
+	flex-direction: row;
+}
+.lk-auth-lite__container {
+	width: 500px;
+	margin: auto;
+	/*border: 1px solid;*/
+	/*border-radius: 10px;*/
+	margin-top: 50px;
+}
+
+.lk-auth-lite__type-item.active span {
+	background: linear-gradient(90deg, #E23834 3.26%, #8428DD 98.07%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	text-fill-color: transparent;
+
+}
+.lk-auth-lite__type-item.active {
+	background: white;
+}
+.lk-auth-lite__type-item:first-child{
+	border-top-left-radius: 10px;
+}
+.lk-auth-lite__type-item:last-child{
+	border-top-right-radius: 10px;
+}
+.lk-auth-lite__form {
+	display: none;
+	border: 1px solid;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	padding: 20px;
+}
+.lk-auth-lite__form.active{
+	display:block;
+}
+span.lk-auth-lite__form-item-placeholder {
+	font-size: 14px;
+	line-height: 14px;
+	margin-bottom: 5px;
+	font-weight: 500;
+}
+.lk-auth-lite__form-item {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	/* padding: 10px; */
+	/* border: 1px solid; */
+	/* border-radius: 5px; */
+	margin: 10px 0;
+}
+.lk-auth-lite__form-item-value {
+	padding: 5px!important;
+	border: 1px solid white!important;
+	border-radius: 5px;
+	color: white!important;
+	font-size: 16px!important;
+}
+.lk-auth-lite__form__submit {
+	width: 100%;
+}
+.form-submit-result-text {
+	font-size: 14px;
+	line-height: 14px;
+	padding: 10px;
+}
+.form-submit-result-text a {
+	color: white;
+	text-decoration: underline;
+}
+span.field-message {
+	font-size: 12px;
+	line-height: 12px;
+	padding: 5px 0;
+}
+.resend-icon {
+	height: 24px;
+	width: 24px;
+	display: inline-block;
+	cursor: pointer;
+	margin-left: 5px;
+	transition: transform 0.5s;
+	transform: rotate(0deg);
+	position: absolute;
+	top: 25px;
+	right: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.resend-icon:hover{
+	transform:rotate(180deg);
+}
+.resend-icon svg{
+	width: 24px;
+	height: 24px;
+	fill: white;
+}
+
+@media screen and (max-width: 584px) {
+	.lk-auth-lite__container {
+		width: 100%;
+	}
 }
