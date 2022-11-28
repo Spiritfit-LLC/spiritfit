@@ -22,11 +22,9 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         /* Для конкурса */
         if( Loader::includeModule('outcode.quiz') ) {
             $arParams['BONUS_ID'] = Context::getCurrent()->getRequest()->get('bonusid');
-//            var_dump($arParams['BONUS_ID']);
 
             $quiz = new \Outcode\Quiz('');
             $uid = $quiz->getUserUid();
-//            var_dump(urlencode($uid));
             $arParams['LINK_GET_BONUS'] = !empty($uid) ? '/?bonusid=' . $uid : '';
         }
         /* Для конкурса */
@@ -56,6 +54,15 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                 'postfilters' => []
             ],
             'reg'=>[
+                'prefilters' => [
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
+            ],
+            'easyregistration'=>[
                 'prefilters' => [
                     new ActionFilter\HttpMethod(
                         array(ActionFilter\HttpMethod::METHOD_POST)
@@ -386,7 +393,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         5=>'Пользователь уже существует',
         6=>'Не верный код из СМС',
         7=>'Не удалось подтвердить код из СМС, попробуйте еще раз',
-        8=>'Ошибка авторизации',
+        8=>'Ошибка авторизации. <a href="/personal/?forgot" class="form-message">Вход по СМС</a>',
         9=>'Выберите клуб',
         10=>'Пароли не совпадают',
         11=>'Слишком много попыток. Попробуйте позже',
@@ -833,6 +840,168 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
                             }
                         }
                     }
+                default:
+                    throw new Exception($this->errorMessages[2], 2);
+            }
+        }
+        else{
+            throw new Exception($this->errorMessages[1], 1);
+        }
+    }
+    public function easyregistrationAction(){
+        $DATA=Context::getCurrent()->getRequest()->toArray();
+        if (!empty($DATA['WEB_FORM_ID'])){
+            $FORM_FIELDS=PersonalUtils::GetFormFileds($DATA['WEB_FORM_ID'], false, true);
+            //Не заполнены обязательные поля или несоответствие валидатору
+            if (isset($FORM_FIELDS['result']) && $FORM_FIELDS['result']==false){
+                throw new Exception($FORM_FIELDS['errorText'], 2);
+            }
+            if (!$FORM_FIELDS['ISSET']){
+//                throw new Exception($this->errorMessages[2], 2);
+                return ['result'=>false, 'errors'=>$FORM_FIELDS['ERRORS']];
+            }
+
+            switch ($DATA['FORM_STEP']){
+                case 1:
+                    $rsUser = CUser::GetByLogin($FORM_FIELDS['FIELDS']['phone']['VALUE']);
+                    if($arUser = $rsUser->Fetch())
+                    {
+                        throw new Exception($this->errorMessages[5], 5);
+                    }
+
+                    $arParams=[
+                        'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                        'name'=>$FORM_FIELDS['FIELDS']['name']['VALUE'],
+                        'email'=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
+                        'event'=>$FORM_FIELDS['FIELDS']['EVENT_1C']['VALUE'],
+                    ];
+                    $api=new Api(array(
+                        'action'=>'lkregistration',
+                        'params'=>$arParams
+                    ));
+                    $result=$api->result();
+                    if ($result['error']==true){
+                        throw new Exception($this->errorMessages[4], 4);
+                    }
+
+                    if ($result['success']==true){
+                        unset($_SESSION['ID_1C']);
+                        $_SESSION['ID_1C']=$result['data']['result']['result']['id1c'];
+                        return ['result'=>true, 'reload'=>false, 'reg-code'=>true, 'next_step'=>2, 'field_messages'=>[[
+                            'field_name'=>$FORM_FIELDS['FIELDS']['phone']['NAME'],
+                            'message'=>'На Ваш номер телефона отправлен код подтверждения',
+                        ]]/*,'1cdata'=>$result['data']*/];
+                    }
+                    else{
+                        switch ($result['data']['result']['errorCode']){
+                            case 3:
+                                throw new Exception($this->errorMessages[11], 11);
+                            case 2:
+                                throw new Exception($this->errorMessages[5], 5);
+                            default:
+                                throw new Exception($this->errorMessages[100], 100);
+                        }
+                    }
+                    break;
+                case 2:
+                    if (empty($_SESSION['ID_1C'])){
+                        throw new Exception($this->errorMessages[13], 13);
+                    }
+                    elseif (empty($_POST['reg_code'])){
+                        throw new Exception($this->errorMessages[14], 14);
+                    }
+                    else{
+                        $code=preg_replace('![^0-9]+!', '', $_POST['reg_code']);
+                        if (strlen($code)!=5){
+                            throw new Exception($this->errorMessages[15], 15);
+                        }
+                        $arParams=[
+                            'id1c'=>$_SESSION['ID_1C'],
+                            'code'=>$code,
+                            'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                            'event'=>$FORM_FIELDS['FIELDS']['EVENT_1C']['VALUE'],
+                            'name'=>$FORM_FIELDS['FIELDS']['name']['VALUE'],
+                            "email"=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
+                        ];
+
+                        $api=new Api(array(
+                            'action'=>'lkcode',
+                            'params'=>$arParams
+                        ));
+                        $result=$api->result();
+
+                        if ($result['error']==true){
+                            throw new Exception($this->errorMessages[4], 4);
+                        }
+                        if ($result['success']==true){
+                            $settings = Utils::getInfo();
+                            $arImage=CFile::MakeFileArray($settings["PROPERTIES"]['PROFILE_DEFAULT_PHOTO']['VALUE']);
+                            $arImage["MODULE_ID"] = "main";
+
+                            function generateRandomString($length = 10) {
+                                $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                                $charactersLength = strlen($characters);
+                                $randomString = '';
+                                for ($i = 0; $i < $length; $i++) {
+                                    $randomString .= $characters[rand(0, $charactersLength - 1)];
+                                }
+                                return $randomString;
+                            }
+
+                            $passwd=generateRandomString();
+
+
+                            $user = new CUser;
+                            $arFields=array(
+                                'UF_IS_CORRECT'=>false,
+                                'NAME'=>$FORM_FIELDS['FIELDS']['name']['VALUE'],
+                                'LAST_NAME'=>"",
+                                'EMAIL'=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
+                                'LOGIN'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                                "ACTIVE"=>"Y",
+                                "GROUP_ID"=>array(Utils::GetUGroupIDBySID('POTENTIAL_CLIENTS')),
+                                "PASSWORD"=>$passwd,
+                                "CONFIRM_PASSWORD"=>$passwd,
+                                "PERSONAL_PHOTO"=> $arImage,
+                                'UF_1CID'=>$_SESSION['ID_1C'],
+                                'PERSONAL_PHONE'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                            );
+                            unset($_SESSION['ID_1C']);
+
+                            $ID = $user->Add($arFields);
+                            if (intval($ID) > 0){
+                                $user->Login($FORM_FIELDS['FIELDS']['phone']['VALUE'], $passwd,"Y","Y");
+
+                                $api=new Api(array(
+                                    'action'=>'lkedit',
+                                    'params'=>[
+                                        'id1c'=>$arFields['UF_1CID'],
+                                        'login'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                                        'action'=>'update'
+                                    ],
+                                ));
+                                return ['result'=>true, 'reload'=>true, 'dataLayer'=>['eLabel'=>'', 'eAction'=>'sendRegistrationForm'], 'upmetric'=>[
+                                    'setTypeClient'=>'login',
+                                    'phone'=>'7'.$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                                    'email'=>$FORM_FIELDS['FIELDS']['email']['VALUE']
+                                ]];
+                            }
+                            else{
+                                throw new Exception($user->LAST_ERROR, 17);
+                            }
+                        }
+                        else{
+                            switch ($result['data']['result']['errorCode']){
+                                case 0:
+                                    throw new Exception($this->errorMessages[6], 6);
+                                case 3:
+                                    throw new Exception($this->errorMessages[7], 7);
+                                default:
+                                    throw new Exception($this->errorMessages[100], 100);
+                            }
+                        }
+                    }
+                    break;
                 default:
                     throw new Exception($this->errorMessages[2], 2);
             }
@@ -1764,18 +1933,18 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         $dbUser=CUser::GetByID($USER->GetID());
         $arUser=$dbUser->Fetch();
 
-        $arParams=[
-            "login"=>$arUser["LOGIN"],
-            "id1c"=>$arUser["UF_1CID"],
-            "type"=>(int)$type
-        ];
-
         if ($type==21 && !empty($arUser["UF_QUIZ_REG"])){
             return;
         }
         if ($type==22 && !empty($arUser["UF_QUIZ_FIRST_ANSWER"])){
             return;
         }
+
+        $arParams=[
+            "login"=>$arUser["LOGIN"],
+            "id1c"=>$arUser["UF_1CID"],
+            "type"=>(int)$type
+        ];
 
         $api=new Api([
             "action"=>"lkevent",

@@ -30,7 +30,165 @@ $isLastGrey = true;
                 <?=$arParams['~BLOCK_DESCRIPTION']?>
             </div>
             <? if( !empty($arResult['LINK_LOGIN']) ) { ?>
-                <div class="quiz-banner-login"><a class="button white" href="<?=$arParams['PERSONAL_PATH']?>"><span><?=GetMessage('QUIZ_LOGIN')?></span></a></div>
+                <!--                    <div class="quiz-banner-login"><a class="button white" href="--><?//=$arParams['PERSONAL_PATH']?><!--"><span>--><?//=GetMessage('QUIZ_LOGIN')?><!--</span></a></div>-->
+                <div class="lk-auth-lite__container">
+                    <div class="lk-auth-lite__type">
+                        <div class="lk-auth-lite__type-item auth active">
+                            <span>Вход</span>
+                        </div>
+                        <div class="lk-auth-lite__type-item reg">
+                            <span>Регистрация</span>
+                        </div>
+                    </div>
+                    <div class="lk-auth-lite__form auth active">
+                        <form id="auth-lite-form">
+                            <input type="hidden" name="WEB_FORM_ID" value="<?=$arResult["FORM_FIELDS"]["AUTH"]['WEB_FORM_ID']?>">
+                            <input type="hidden" name="FORM_STEP" value="1">
+                            <?if (!empty($arResult["FORM_FIELDS"]["AUTH"]['ACTION'])):?>
+                                <input type="hidden" name="ACTION" value="<?=$arResult["FORM_FIELDS"]["AUTH"]['ACTION']?>">
+                            <?endif;?>
+                            <?foreach ($arResult["FORM_FIELDS"]["AUTH"]['FIELDS'] as $FIELD):?>
+                                <?if ($FIELD['TYPE']=='hidden'):?>
+                                    <input type="hidden" value="<?=$FIELD['VALUE']?>" name="<?=$FIELD['NAME']?>">
+                                    <?
+                                    continue;
+                                endif;
+                                ?>
+                                <div class="lk-auth-lite__form-item <?if($FIELD['TYPE']=='radio') echo 'radio-item';?>
+                                                           <?if($FIELD['TYPE']=='checkbox') echo 'checkbox-item';?>
+                                                           <?if($FIELD['TYPE']=='SELECT') echo 'select-item';?>
+                                                        <?if ($FIELD['TYPE']=='password') echo 'auth-password';?>"
+                                    <?if ($FIELD['TYPE']=='password'):?> style="display: none"<?endif;?>>
+                                    <?if ($FIELD['TYPE']!='checkbox'):?>
+                                        <span class="lk-auth-lite__form-item-placeholder"><?=$FIELD['PLACEHOLDER']?></span>
+                                    <?endif;?>
+                                    <?if ($FIELD['TYPE']=='radio'):?>
+                                        <div style="margin-top: 5px;">
+                                            <?for ($i=0; $i<count($FIELD['VALUE']); $i++):?>
+                                                <div class="input-radio-item-block">
+                                                    <input
+                                                            class="lk-auth-lite__form-item-value input-radio-btn"
+                                                            type="<?=$FIELD['TYPE']?>"
+                                                            name="<?=$FIELD['NAME']?>"
+                                                            value="<?=$FIELD['VALUE'][$i]?>"
+                                                            id="<?=$FIELD['NAME'].'_'.$i?>"
+                                                        <?if ($FIELD['REQUIRED']) echo 'required';?>
+                                                        <?=$FIELD['PARAMS']?>>
+                                                    <label for="<?=$FIELD['NAME'].'_'.$i?>"><?=$FIELD['VALUE_DESC'][$i]?></label>
+                                                </div>
+                                            <?endfor;?>
+                                        </div>
+                                    <?elseif ($FIELD['TYPE']=='SELECT'):?>
+                                        <select class="input input--light input--select" name="<?=$FIELD['NAME']?>" autocomplete="off" <? if ($FIELD["REQUIRED"]) { ?>required="required"<? } ?> >
+                                            <? foreach ($FIELD['ITEMS'] as $CLUB):?>
+                                                <option value="<?=$CLUB["VALUE"]?>"><?=$CLUB["STRING"]?></option>
+                                            <? endforeach; ?>
+                                        </select>
+                                    <?else:?>
+                                        <input
+                                                class="lk-auth-lite__form-item-value <?if ($FIELD['TYPE']=='checkbox') echo 'checkbox-input';?>
+                                                                        <?if ($FIELD['TYPE']=='password') echo 'passwd-input'?>"
+                                                type="<?if ($FIELD['TYPE']=='date') echo 'text'; else echo $FIELD['TYPE'];?>"
+                                                name="<?=$FIELD['NAME']?>"
+                                                value="<?=$FIELD['VALUE']?>"
+                                                id="<?=$FIELD['NAME']?>"
+                                            <?if ($FIELD['REQUIRED']) echo 'required';?>
+                                            <?if ($FIELD['TYPE']=='date'):?> data-toggle="datepicker" <?endif;?>
+                                            <?if ($FIELD['TYPE']=='checkbox' && (int)$FIELD['VALUE']==1) echo 'checked'?>
+                                            <?if (!empty($FIELD['VALIDATOR'])){ echo $FIELD['VALIDATOR'];}?>
+                                            <?=$FIELD['PARAMS']?>
+                                        >
+                                        <?if ($FIELD['TYPE']=='checkbox'):?>
+                                            <label for="<?=$FIELD['NAME']?>"><?=$FIELD['PLACEHOLDER']?></label>
+                                        <?endif;?>
+                                    <?endif;?>
+                                </div>
+                            <?endforeach;?>
+                            <?if (!empty($arResult["FORM_FIELDS"]["AUTH"]['BTN_TEXT'])):?>
+                                <input type="submit" class="lk-auth-lite__form__submit button-outline" value="<?=$arResult["FORM_FIELDS"]["AUTH"]['BTN_TEXT']?>">
+                                <div class="escapingBallG-animation">
+                                    <div id="escapingBall_1" class="escapingBallG"></div>
+                                </div>
+                            <?endif;?>
+
+                            <div class="form-submit-result-text"></div>
+                        </form>
+                    </div>
+                    <div class="lk-auth-lite__form reg">
+                        <form id="reg-lite-form">
+                            <input type="hidden" name="WEB_FORM_ID" value="<?=$arResult["FORM_FIELDS"]["REG"]['WEB_FORM_ID']?>">
+                            <input type="hidden" name="FORM_STEP" value="1">
+                            <?if (!empty($arResult["FORM_FIELDS"]["REG"]['ACTION'])):?>
+                                <input type="hidden" name="ACTION" value="<?=$arResult["FORM_FIELDS"]["REG"]['ACTION']?>">
+                            <?endif;?>
+                            <?foreach ($arResult["FORM_FIELDS"]["REG"]['FIELDS'] as $FIELD):?>
+                                <?if ($FIELD['TYPE']=='hidden'):?>
+                                    <input type="hidden" value="<?=$FIELD['VALUE']?>" name="<?=$FIELD['NAME']?>">
+                                    <?
+                                    continue;
+                                endif;
+                                ?>
+                                <div class="lk-auth-lite__form-item <?if($FIELD['TYPE']=='radio') echo 'radio-item';?>
+                                                           <?if($FIELD['TYPE']=='checkbox') echo 'checkbox-item';?>
+                                                           <?if($FIELD['TYPE']=='SELECT') echo 'select-item';?>
+                                                        <?if ($FIELD['TYPE']=='password') echo 'auth-password';?>"
+                                    <?if ($FIELD['TYPE']=='password'):?> style="display: none"<?endif;?>>
+                                    <?if ($FIELD['TYPE']!='checkbox'):?>
+                                        <span class="lk-auth-lite__form-item-placeholder"><?=$FIELD['PLACEHOLDER']?></span>
+                                    <?endif;?>
+                                    <?if ($FIELD['TYPE']=='radio'):?>
+                                        <div style="margin-top: 5px;">
+                                            <?for ($i=0; $i<count($FIELD['VALUE']); $i++):?>
+                                                <div class="input-radio-item-block">
+                                                    <input
+                                                            class="lk-auth-lite__form-item-value input-radio-btn"
+                                                            type="<?=$FIELD['TYPE']?>"
+                                                            name="<?=$FIELD['NAME']?>"
+                                                            value="<?=$FIELD['VALUE'][$i]?>"
+                                                            id="<?=$FIELD['NAME'].'_'.$i?>"
+                                                        <?if ($FIELD['REQUIRED']) echo 'required';?>
+                                                        <?=$FIELD['PARAMS']?>>
+                                                    <label for="<?=$FIELD['NAME'].'_'.$i?>"><?=$FIELD['VALUE_DESC'][$i]?></label>
+                                                </div>
+                                            <?endfor;?>
+                                        </div>
+                                    <?elseif ($FIELD['TYPE']=='SELECT'):?>
+                                        <select class="input input--light input--select" name="<?=$FIELD['NAME']?>" autocomplete="off" <? if ($FIELD["REQUIRED"]) { ?>required="required"<? } ?> >
+                                            <? foreach ($FIELD['ITEMS'] as $CLUB):?>
+                                                <option value="<?=$CLUB["VALUE"]?>"><?=$CLUB["STRING"]?></option>
+                                            <? endforeach; ?>
+                                        </select>
+                                    <?else:?>
+                                        <input
+                                                class="lk-auth-lite__form-item-value <?if ($FIELD['TYPE']=='checkbox') echo 'checkbox-input';?>
+                                                                        <?if ($FIELD['TYPE']=='password') echo 'passwd-input'?>"
+                                                type="<?if ($FIELD['TYPE']=='date') echo 'text'; else echo $FIELD['TYPE'];?>"
+                                                name="<?=$FIELD['NAME']?>"
+                                                value="<?=$FIELD['VALUE']?>"
+                                                id="<?=$FIELD['NAME']?>"
+                                            <?if ($FIELD['REQUIRED']) echo 'required';?>
+                                            <?if ($FIELD['TYPE']=='date'):?> data-toggle="datepicker" <?endif;?>
+                                            <?if ($FIELD['TYPE']=='checkbox' && (int)$FIELD['VALUE']==1) echo 'checked'?>
+                                            <?if (!empty($FIELD['VALIDATOR'])){ echo $FIELD['VALIDATOR'];}?>
+                                            <?=$FIELD['PARAMS']?>
+                                        >
+                                        <?if ($FIELD['TYPE']=='checkbox'):?>
+                                            <label for="<?=$FIELD['NAME']?>"><?=$FIELD['PLACEHOLDER']?></label>
+                                        <?endif;?>
+                                    <?endif;?>
+                                </div>
+                            <?endforeach;?>
+                            <?if (!empty($arResult["FORM_FIELDS"]["REG"]['BTN_TEXT'])):?>
+                                <input type="submit" class="lk-auth-lite__form__submit button-outline" value="<?=$arResult["FORM_FIELDS"]["REG"]['BTN_TEXT']?>">
+                                <div class="escapingBallG-animation">
+                                    <div id="escapingBall_1" class="escapingBallG"></div>
+                                </div>
+                            <?endif;?>
+
+                            <div class="form-submit-result-text"></div>
+                        </form>
+                    </div>
+                </div>
             <? } ?>
         </div>
     </div>
