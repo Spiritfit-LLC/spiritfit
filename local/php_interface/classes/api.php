@@ -978,7 +978,18 @@ class Api
 			);
 		}
 		else {
-            $json = str_replace("\r\n", '\r\n', $result);
+            $json = $result;
+            for ($i = 0; $i <= 31; ++$i) {
+                $json = str_replace(chr($i), "", $json);
+            }
+            $json = str_replace(chr(127), "", $json);
+
+            // This is the most common part
+            // Some file begins with 'efbbbf' to mark the beginning of the file. (binary level)
+            // here we detect it and we remove it, basically it the first 3 characters
+            if (0 === strpos(bin2hex($json), 'efbbbf')) {
+                $json = substr($json, 3);
+            }
 			$this->_data = array(
 				"error" => false,
 				"message" => "",

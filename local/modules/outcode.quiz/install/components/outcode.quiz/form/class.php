@@ -135,7 +135,7 @@ class QuizComponent extends CBitrixComponent implements Controllerable {
         $quiz = new \Outcode\Quiz($this->arParams["API_PATH"]);
 
         $this->arResult['RESULT_TABLE'] = [];
-        $this->arResult['RESULT_TABLE_USER'] = $quiz->getUserResults($startDateWeek, ($currentTime - intval($this->arParams['SHOW_RESULT_AFTER'])));
+        $this->arResult['RESULT_TABLE_USER'] = $quiz->getUserResults(315532800, ($currentTime - intval($this->arParams['SHOW_RESULT_AFTER'])));
 
         $this->arResult['EMAIL_WARNING'] = false;
         if( $USER->IsAuthorized() ) {
@@ -147,7 +147,7 @@ class QuizComponent extends CBitrixComponent implements Controllerable {
 
                 $isShowAlways = !empty($this->arParams['SHOW_RESULTS_ON_LAST_ALWAYS']) && $this->arParams['SHOW_RESULTS_ON_LAST_ALWAYS'] == 'Y';
                 if( $isShowAlways || ( $showStartTime < $currentTime) ) {
-                    $this->arResult['RESULT_TABLE'] = $isShowAlways ? $quiz->getAllResults($startDateAll, $endDateAll) : $quiz->getAllResults($startDateWeek, ($currentTime - intval($this->arParams['SHOW_RESULT_AFTER'])));
+                    $this->arResult['RESULT_TABLE'] = $isShowAlways ? $quiz->getAllResults($startDateAll, $endDateAll) : $quiz->getAllResults(315532800, ($currentTime - intval($this->arParams['SHOW_RESULT_AFTER'])));
                 }
 
                 $obCache->EndDataCache($this->arResult['RESULT_TABLE']);
