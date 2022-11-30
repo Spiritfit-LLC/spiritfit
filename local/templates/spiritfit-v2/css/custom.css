@@ -1587,7 +1587,8 @@ main.b-page__main {
     color: #fff;
     line-height: 18px;
 }
-.abonements-group-slider__item-promo a svg {
+.abonements-group-slider__item-promo svg,
+.abonements-group-slider__item-promo img {
     display: inline-block;
     vertical-align: bottom;
     margin-right: 6px;
