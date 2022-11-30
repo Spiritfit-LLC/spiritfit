@@ -1836,6 +1836,7 @@ main.b-page__main {
     }
     .abonements-group-tabs a {
         text-align: center;
+        border-left: 1px solid #FC6120;
     }
     .abonements-group-tabs a:last-child {
         border-right: 1px solid #FC6120;
