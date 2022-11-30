@@ -1375,7 +1375,7 @@ main.b-page__main {
     z-index: 9;
 }
 .slick-slider-nav.left {
-    left: -48px;
+    left: -16px;
 }
 .slick-slider-nav.right {
     right: -16px;
@@ -1389,7 +1389,8 @@ main.b-page__main {
 .promo-blocks-item {
     display: block;
     position: relative;
-    margin-right: 32px;
+    margin-left: 16px;
+    margin-right: 16px;
     padding-bottom: 80px;
 }
 .promo-blocks-item:after {
