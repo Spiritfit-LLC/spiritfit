@@ -1346,3 +1346,601 @@ main.b-page__main {
 }
 
 /* ==================== */
+
+/* Отзывы, Абонементы, Промо блоки */
+.slick-slider-nav-prev,
+.slick-slider-nav-next {
+    display: block;
+    position: absolute;
+    top: calc(50% - 18px);
+    width: 19px;
+    height: 37px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    cursor: pointer;
+}
+.slick-slider-nav-prev {
+    background-image: url(../img/slider-prev.svg);
+}
+.slick-slider-nav-next {
+    background-image: url(../img/slider-next.svg);
+}
+.slick-slider-nav {
+    display: block;
+    position: absolute;
+    width: 19px;
+    height: 100%;
+    top: 0;
+    z-index: 9;
+}
+.slick-slider-nav.left {
+    left: -48px;
+}
+.slick-slider-nav.right {
+    right: -16px;
+}
+
+.promo-blocks {
+    display: block;
+    position: relative;
+    margin: 50px 0px 60px;
+}
+.promo-blocks-item {
+    display: block;
+    position: relative;
+    margin-right: 32px;
+    padding-bottom: 80px;
+}
+.promo-blocks-item:after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: -16px;
+    bottom: 0;
+    width: 1px;
+    height: 100px;
+    background-color: #ff6000;
+}
+.promo-blocks-item.last:after {
+    display: none;
+}
+.promo-blocks-item img {
+    display: block;
+    position: relative;
+    max-width: 100%;
+    margin: 0px auto 32px;
+}
+.promo-blocks-item__name,
+.promo-blocks-item__link {
+    display: block;
+    position: relative;
+    text-align: center;
+}
+.promo-blocks-item__name {
+    min-height: 45px;
+}
+.promo-blocks-item__link {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+}
+.promo-blocks-item__link > a,
+.abonements-group-slider__item-promo-buy a {
+    color: #fff;
+    border-radius: 0;
+    min-width: 250px;
+    padding: 15px 40px;
+}
+.promo-blocks .slick-slider-nav-prev,
+.promo-blocks .slick-slider-nav-next {
+    top: calc(30% - 18px);
+}
+
+.abonements-group {
+    display: block;
+    position: relative;
+    margin: 50px 0px 60px;
+}
+.abonements-group-tabs {
+    display: inline-flex;
+    position: relative;
+    flex-direction: row;
+    margin-bottom: 50px;
+}
+.abonements-group-tabs a {
+    padding: 14px 74px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 20px;
+    text-transform: uppercase;
+    border-top: 1px solid #FC6120;
+    border-right: 1px solid #FC6120;
+    transition: all .3s;
+}
+.abonements-group-tabs a:last-child {
+    border-right: 0;
+}
+.abonements-group-tabs a:hover,
+.abonements-group-tabs a.active {
+    background-color: #FC6120;
+}
+.abonements-group-items {
+    display: block;
+    position: relative;
+}
+.abonements-group-item {
+    display: none;
+    position: relative;
+}
+.abonements-group-item.active {
+    display: block;
+}
+.abonements-group-slider__item {
+    display: block;
+    position: relative;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+.abonements-group-slider__item:after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: -16px;
+    bottom: 0;
+    width: 1px;
+    height: 70%;
+    background-color: #ff6000;
+}
+.abonements-group-slider__item.last:after {
+    display: none;
+}
+.abonements-group-slider__item-img {
+    display: block;
+    position: relative;
+    margin-bottom: 16px;
+}
+.abonements-group-slider__item-img img {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    max-width: 100%;
+}
+.abonements-group-slider__item-name {
+    display: block;
+    position: relative;
+    font-size: 32px;
+    line-height: 28px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+.abonements-group-slider__item-name > span {
+    display: block;
+    position: relative;
+    font-size: 20px;
+    line-height: 28px;
+}
+.abonements-group-slider__item-month,
+.abonements-group-slider__item-try {
+    display: table;
+    position: relative;
+    width: 100%;
+    margin-bottom: 8px;
+    font-size: 20px;
+    line-height: 20px;
+}
+.abonements-group-slider__item-try {
+    margin-bottom: 24px;
+}
+.abonements-group-slider__item-month .description {
+    width: 70%;
+}
+.abonements-group-slider__item-try .description {
+    width: 50%;
+}
+.abonements-group-slider__item-month .price,
+.abonements-group-slider__item-month .description,
+.abonements-group-slider__item-try .description,
+.abonements-group-slider__item-try .price,
+.abonements-group-slider__item-try .price-old {
+    display: table-cell;
+    vertical-align: bottom;
+    padding-right: 6px;
+}
+.abonements-group-slider__item-month .price,
+.abonements-group-slider__item-try .price {
+    padding-right: 0;
+    font-size: 32px;
+    line-height: 32px;
+    font-weight: 600;
+}
+.abonements-group-slider__item-month .price {
+    color: #FC6120;
+    text-align: right;
+}
+.abonements-group-slider__item-try .price-old {
+    color: #868686;
+    text-align: center;
+    text-decoration: line-through;
+}
+.abonements-group-slider__item-try .price {
+    text-align: right;
+}
+.abonements-group-slider__item-wrapper {
+    display: block;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0px 16px 80px;
+}
+.abonements-group-slider__item-promo {
+    display: block;
+    position: relative;
+    background: #131313;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+.abonements-group-slider__item-promo a {
+    display: block;
+    position: relative;
+    padding: 12px;
+    color: #fff;
+    line-height: 18px;
+}
+.abonements-group-slider__item-promo a svg {
+    display: inline-block;
+    vertical-align: bottom;
+    margin-right: 6px;
+}
+.abonements-group-slider__item-promo-date {
+    display: block;
+    position: relative;
+    font-size: 14px;
+    line-height: 18px;
+    color: #868686;
+    margin-bottom: 24px;
+}
+.abonements-group-slider__item-list {
+    display: block;
+    position: relative;
+    font-size: 14px;
+    line-height: 18px;
+    margin-top: 24px;
+}
+.abonements-group-slider__item-list-item {
+    display: block;
+    position: relative;
+    margin-bottom: 6px;
+    background-image: url(../img/abonement-list-check.svg);
+    background-repeat: no-repeat;
+    background-position: 0px 5px;
+    box-sizing: border-box;
+    padding-left: 20px;
+}
+.abonements-group-slider__item-promo-buy {
+    display: block;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 0;
+    left: 0;
+}
+
+.reviews-slider {
+    display: block;
+    position: relative;
+    margin: 50px 0px 60px;
+}
+.reviews-slider-item {
+    display: block;
+    position: relative;
+    margin-left: 16px;
+    margin-right: 16px;
+    background: #0F0F0F;
+    padding: 64px 50px;
+    box-sizing: border-box;
+}
+.reviews-slider-item__letter {
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    line-height: 64px;
+    font-size: 32px;
+    color: #fff;
+    background: #FF7628;
+    border-radius: 50%;
+    text-align: center;
+    top: -31px;
+}
+.reviews-slider-item__name {
+    display: block;
+    position: relative;
+    font-size: 24px;
+    line-height: 32px;
+    margin-bottom: 24px;
+}
+.reviews-slider-item__text {
+    display: block;
+    position: relative;
+    font-size: 16px;
+    line-height: 24px;
+}
+.reviews-slider-item__link {
+    display: block;
+    position: relative;
+    margin: 56px 0px 0px;
+}
+.reviews-slider-item__link a,
+.reviews-slider-item__link a .icon {
+    display: block;
+    position: relative;
+    color: #fff;
+}
+.reviews-slider-item__link a .text {
+    text-decoration: underline;
+}
+.reviews-slider-item__link a .icon {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 6px;
+    text-decoration: none;
+}
+.reviews-slider-item__link a svg {
+    display: inline-block;
+    position: relative;
+    vertical-align: text-bottom;
+    margin-right: 8px;
+}
+.reviews-slider-item__rating {
+    display: block;
+    position: relative;
+    color: #FD7636;
+    margin-top: 16px;
+}
+.reviews-slider .slick-track {
+    padding-top: 32px;
+}
+
+.abonements-group .slick-dots,
+.reviews-slider .slick-dots,
+.promo-blocks .slick-dots {
+    margin: 32px 0px;
+    justify-content: center;
+}
+
+.promo-page .b-screen:after {
+    display: none;
+}
+.promo-page .b-breadcrumbs {
+    padding-top: 0;
+}
+.promo-page .b-screen {
+    padding-top: 100px;
+}
+.promo-page h1,
+.promo-page .h1,
+.promo-page h2,
+.promo-page .h2,
+.promo-top,
+.promo-banner,
+.promo-banner img,
+.promo-text,
+.promo-text p,
+.promo-text-link {
+    display: block;
+    position: relative;
+}
+.promo-page h1,
+.promo-page .h1,
+.promo-page h2,
+.promo-page .h2 {
+    margin-top: 64px;
+    margin-bottom: 32px;
+    font-weight: 900;
+    font-size: 40px;
+    line-height: 40px;
+}
+.promo-page h1,
+.promo-page .h1 {
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+.promo-page h2,
+.promo-page .h2 {
+    text-transform: initial;
+}
+.promo-banner img {
+    margin: 0 auto;
+    max-width: 100%;
+}
+.promo-banner {
+    margin-bottom: 64px;
+}
+.promo-text {
+    margin-bottom: 96px;
+}
+.promo-text p {
+    margin-bottom: 32px;
+}
+.promo-text-link {
+    margin: 32px 0px;
+}
+.promo-text-link a {
+    display: inline-flex;
+    position: relative;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    color: #FC6120;
+    align-items: center;
+}
+.promo-text-link a span {
+    text-decoration: underline;
+}
+.promo-text-link a svg {
+    margin-left: 14px;
+}
+
+@media screen and (max-width: 1440px) {
+    .slick-slider-nav.right {
+        right: -16px;
+    }
+    .slick-slider-nav.left {
+        left: -16px;
+    }
+    .promo-blocks {
+        padding-left: 32px;
+        box-sizing: border-box;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .promo-page .b-screen {
+        padding-top: 90px;
+    }
+}
+@media screen and (max-width: 968px) {
+    .reviews-slider-item {
+        margin-right: 2px;
+        margin-left: 2px;
+        padding: 54px 20px 20px;
+    }
+    .reviews-slider .slick-slider-nav {
+        height: 37px;
+        top: initial;
+        bottom: -9px;
+    }
+    .reviews-slider .slick-slider-nav.left {
+        left: 0;
+    }
+    .reviews-slider .slick-slider-nav.right {
+        right: 0;
+    }
+}
+@media screen and (max-width: 768px) {
+    .promo-blocks-item:after {
+        display: none;
+    }
+    .promo-blocks-item {
+        padding-bottom: 50px;
+    }
+    .promo-blocks-item__link > a,
+    .abonements-group-slider__item-promo-buy a {
+        min-width: initial;
+    }
+    .abonements-group-tabs {
+        display: flex;
+        flex-direction: column;
+    }
+    .abonements-group-tabs a {
+        text-align: center;
+    }
+    .abonements-group-tabs a:last-child {
+        border-right: 1px solid #FC6120;
+        border-bottom: 1px solid #FC6120;
+    }
+    .promo-blocks-item__link > a,
+    .abonements-group-slider__item-promo-buy a {
+        font-size: 14px;
+        padding: 12px 40px;
+    }
+    .promo-blocks .slick-slider-nav {
+        height: 37px;
+        top: initial;
+        bottom: -9px;
+    }
+    .promo-blocks .slick-slider-nav.left {
+        left: 0;
+    }
+    .promo-blocks .slick-slider-nav.right {
+        right: 0;
+    }
+    .promo-blocks-item {
+        margin-right: 2px;
+        margin-left: 2px;
+    }
+    .promo-blocks {
+        padding-left: 0;
+    }
+    .promo-page h1,
+    .promo-page .h1,
+    .promo-page h2,
+    .promo-page .h2 {
+        text-align: center;
+        font-size: 36px;
+        line-height: 36px;
+    }
+    .promo-text p {
+        line-height: 21px;
+    }
+    .promo-page h1, .promo-page .h1 {
+        margin-bottom: 30px;
+    }
+    .promo-page h2, .promo-page .h2 {
+        margin-top: 34px;
+        margin-bottom: 24px;
+    }
+    .promo-text p {
+        margin-bottom: 24px;
+    }
+    .promo-banner {
+        margin-bottom: 32px;
+    }
+    .promo-text-link a {
+        font-size: 16px;
+    }
+}
+@media screen and (max-width: 680px) {
+    .abonements-group-slider__item:after {
+        display: none;
+    }
+}
+@media screen and (max-width: 640px) {
+    .abonements-group-slider__item-wrapper {
+        padding: 0px 0px 60px;
+    }
+    .abonements-group-slider__item {
+        margin-right: 2px;
+        margin-left: 2px;
+    }
+    .abonements-group .slick-slider-nav {
+        height: 37px;
+        top: initial;
+        bottom: -9px;
+    }
+    .abonements-group .slick-slider-nav.left {
+        left: 0;
+    }
+    .abonements-group .slick-slider-nav.right {
+        right: 0;
+    }
+}
+@media screen and (max-width: 560px) {
+    .abonements-group-slider__item-month .price,
+    .abonements-group-slider__item-month .description,
+    .abonements-group-slider__item-try .description,
+    .abonements-group-slider__item-try .price,
+    .abonements-group-slider__item-try .price-old {
+        display: block;
+        text-align: center;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    .abonements-group-slider__item-month, .abonements-group-slider__item-try {
+        display: block;
+        margin-bottom: 16px;
+    }
+}
+@media screen and (max-width: 400px) {
+    .promo-page h1,
+    .promo-page .h1,
+    .promo-page h2,
+    .promo-page .h2 {
+        font-size: 9vw;
+        line-height: 10vw;
+    }
+}
+
+/* Отзывы, Абонементы, Промо блоки */

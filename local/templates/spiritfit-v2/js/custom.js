@@ -1476,3 +1476,168 @@ function setConversion(module, callback=null){
         method:'POST'
     });
 }
+
+/* Отзывы, Абонементы, Промо блоки */
+jQuery(function($) {
+    $(document).ready(function () {
+        $(".promo-blocks").each(function() {
+            var wrapper = $(this);
+            $(wrapper).on("beforeChange", function(event, slick, currentSlide){
+                $(wrapper).find(".slick-active").removeClass("last");
+            });
+            $(wrapper).on("afterChange", function(event, slick, currentSlide){
+                $(wrapper).find(".slick-active").eq(slick.options.slidesToShow-1).addClass("last");
+            });
+            $(wrapper).on("init", function(event, slick){
+                $(wrapper).find(".slick-active").removeClass("last");
+                $(wrapper).find(".slick-active").eq(slick.options.slidesToShow-1).addClass("last");
+            });
+        });
+        $(".promo-blocks").slick({
+            dots: false,
+            arrows: true,
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            infinite: true,
+            adaptiveHeight: false,
+            touchThreshold: 50,
+            prevArrow: '<div class="slick-slider-nav left"><div class="slick-slider-nav-prev"></div></div>',
+            nextArrow: '<div class="slick-slider-nav right"><div class="slick-slider-nav-next"></div></div>',
+            responsive: [{
+                breakpoint: 1280,
+                settings: {
+                    slidesToShow: 3
+                }
+            }, {
+                breakpoint: 1036,
+                settings: {
+                    slidesToShow: 2,
+                }
+            }, {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    arrows: true,
+                    slidesToScroll: 1,
+                    dots: true,
+                }
+            }]
+        });
+
+        $(".abonements-group-item .abonements-group-slider").each(function() {
+            var wrapper = $(this);
+            $(wrapper).on("beforeChange", function(event, slick, currentSlide){
+                $(wrapper).find(".slick-active").removeClass("last");
+            });
+            $(wrapper).on("afterChange", function(event, slick, currentSlide){
+                $(wrapper).find(".slick-active").eq(slick.options.slidesToShow-1).addClass("last");
+            });
+            $(wrapper).on("init", function(event, slick){
+                $(wrapper).find(".slick-active").removeClass("last");
+                $(wrapper).find(".slick-active").eq(slick.options.slidesToShow-1).addClass("last");
+            });
+        });
+        $(".abonements-group-item.active .abonements-group-slider").slick({
+            dots: false,
+            arrows: true,
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            infinite: false,
+            adaptiveHeight: false,
+            touchThreshold: 50,
+            prevArrow: '<div class="slick-slider-nav left"><div class="slick-slider-nav-prev"></div></div>',
+            nextArrow: '<div class="slick-slider-nav right"><div class="slick-slider-nav-next"></div></div>',
+            responsive: [{
+                breakpoint: 1440,
+                settings: {
+                    slidesToShow: 3
+                }
+            }, {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                }
+            }, {
+                breakpoint: 680,
+                settings: {
+                    slidesToShow: 1,
+                    arrows: true,
+                    slidesToScroll: 1,
+                    dots: true,
+                }
+            }]
+        });
+        $(".abonements-group-tabs > a").unbind();
+        $(".abonements-group-tabs > a").click(function(e) {
+            e.preventDefault();
+
+            let wrapper = $(this).parents(".abonements-group").find(".abonements-group-items").eq(0);
+            let index = $(this).index();
+
+            $(".abonements-group-tabs > a").removeClass("active");
+            $(wrapper).find(".abonements-group-item").removeClass("active");
+
+            $(wrapper).find(".abonements-group-item").eq(index).addClass("active");
+            $(this).addClass("active");
+
+            if( !$(".abonements-group-item.active .abonements-group-slider").hasClass("slick-initialized") ) {
+                $(".abonements-group-item.active .abonements-group-slider").slick({
+                    dots: false,
+                    arrows: true,
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    infinite: false,
+                    adaptiveHeight: false,
+                    touchThreshold: 50,
+                    prevArrow: '<div class="slick-slider-nav left"><div class="slick-slider-nav-prev"></div></div>',
+                    nextArrow: '<div class="slick-slider-nav right"><div class="slick-slider-nav-next"></div></div>',
+                    responsive: [{
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 3
+                        }
+                    }, {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 2,
+                        }
+                    }, {
+                        breakpoint: 640,
+                        settings: {
+                            slidesToShow: 1,
+                            arrows: true,
+                            slidesToScroll: 1,
+                            dots: true,
+                        }
+                    }]
+                });
+            }
+        });
+        $(".reviews-slider").slick({
+            dots: false,
+            arrows: true,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            infinite: true,
+            adaptiveHeight: false,
+            touchThreshold: 50,
+            prevArrow: '<div class="slick-slider-nav left"><div class="slick-slider-nav-prev"></div></div>',
+            nextArrow: '<div class="slick-slider-nav right"><div class="slick-slider-nav-next"></div></div>',
+            responsive: [{
+                breakpoint: 1280,
+                settings: {
+                    slidesToShow: 2,
+                }
+            }, {
+                breakpoint: 968,
+                settings: {
+                    slidesToShow: 1,
+                    arrows: true,
+                    slidesToScroll: 1,
+                    dots: true,
+                }
+            }]
+        });
+    });
+});
+/* Отзывы, Абонементы, Промо блоки */
