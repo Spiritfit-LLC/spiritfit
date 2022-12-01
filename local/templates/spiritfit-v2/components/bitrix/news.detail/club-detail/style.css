@@ -400,6 +400,10 @@ div.news-detail img.detail_picture
 	background: black;
 	/* margin-top: 50px; */
 	padding: 50px 20px;
+	transition: 0.3s;
+}
+.b-twoside-card.is-open .b-twoside-card__footer {
+	transform: translateY(15px);
 }
 .b-twoside-card__prices-button{
 	padding:20px 60px!important;

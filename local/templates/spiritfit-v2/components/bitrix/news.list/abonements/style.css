@@ -80,6 +80,10 @@
 	/* transform: scale(-1, 1); */
 	padding-bottom: 20px;
 	background: black;
+	transition: 0.3s;
+}
+.b-twoside-card.is-open .b-twoside-card__footer {
+	transform: translateY(15px);
 }
 .abonement-min-price__face {
 	width: 100%;
@@ -109,7 +113,7 @@
 	margin-bottom: 10px;
 }
 .b-twoside-card.is-open .b-twoside-card__inner {
-	transform: scale(1.05) rotateY(180deg)!important;
+	transform: scale(1.1) rotateY(180deg)!important;
 	transform-style: preserve-3d!important;
 }
 .choose-abonement-btn{
