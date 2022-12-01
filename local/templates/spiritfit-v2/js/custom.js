@@ -1229,7 +1229,12 @@ $(document).ready(function() {
         }
 
         if ($(this).data("layerlabel")!==undefined){
-            var elabel=$(this).data("layerlabel");
+            if ($(this).data("layerlabel")==="current_url"){
+                var elabel = window.location.href;
+            }
+            else{
+                elabel=$(this).data("layerlabel");
+            }
         }
         else{
             elabel="";

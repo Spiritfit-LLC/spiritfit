@@ -194,7 +194,11 @@
                                     <? endforeach; ?>
                                 </select>
                             </div>
-                            <a class="button select-pb-btn" href="/abonement/probnaya-trenirovka-/">Записаться</a>
+                            <a class="button select-pb-btn" href="/abonement/probnaya-trenirovka-/"
+                               data-layer="true"
+                               data-layercategory="UX"
+                               data-layeraction="clickTrialWorkoutButton"
+                               data-layerlabel="current_url">Записаться</a>
                         </div>
 
                     </div>
