@@ -139,6 +139,10 @@ class Quiz {
             case 'Text':
                 foreach( $currentQuestion['PROPERTIES']['ANSWERS_STRING']['VALUE'] as $string) {
                     $string = str_replace('#', '', $string);
+//                    file_put_contents(__DIR__.'/debug.txt', print_r($string, true)."\n", FILE_APPEND);
+//                    file_put_contents(__DIR__.'/debug.txt', print_r($value, true)."\n", FILE_APPEND);
+//                    file_put_contents(__DIR__.'/debug.txt', print_r(mb_strripos($value, $string), true)."\n", FILE_APPEND);
+
                     if( mb_strripos($value, $string) !== false ) {
                         $isCorrectByUser = true;
                         break;
@@ -284,7 +288,7 @@ class Quiz {
 
         /* Добавляем пользователей к результатам */
         $usersObj = \Bitrix\Main\UserTable::getList([
-            'select' => ['ID', 'LOGIN', 'EMAIL', 'PERSONAL_PROFESSION'],
+            'select' => ['ID', 'LOGIN', 'EMAIL', 'PERSONAL_PROFESSION', 'UF_QUIZ_WINNER'],
             'filter' => ['ID' => $filterArr]
         ]);
         while( $userArr = $usersObj->Fetch() ) {
@@ -293,7 +297,8 @@ class Quiz {
                     'VALUE' => $arResult['TOTAL_RESULT'][$userArr['ID']],
                     'EMAIL' => $userArr['EMAIL'],
                     'LOGIN' => !empty($userArr['EMAIL']) ? Tools::getLoginFromEmail($userArr['EMAIL']) : $userArr['ID'],
-                    'USER_ID' => $userArr['ID']
+                    'USER_ID' => $userArr['ID'],
+                    'WINNER' => $userArr['UF_QUIZ_WINNER']
                 ];
             }
         }
