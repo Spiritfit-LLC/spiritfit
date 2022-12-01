@@ -278,10 +278,10 @@
 	margin-bottom: 0;
 }
 .quiz-video-wrapper.grey {
-	background-color: #f5f5f5;
+    background-color: #f5f5f5;
 }
 .quiz-video-wrapper.b-quiz-gradient .question-form__info {
-	background: initial;
+    background: initial;
 	-webkit-background-clip: initial;
 	-webkit-text-fill-color: initial;
 	background-clip: initial;
@@ -509,4 +509,11 @@ span.field-message {
 	.lk-auth-lite__container {
 		width: 100%;
 	}
+}
+span.quiz-winner {
+	font-size: 18px;
+	font-weight: 700;
+	background: linear-gradient(90deg, #E23834 3.26%, #8428DD 98.07%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
