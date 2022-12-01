@@ -40,9 +40,7 @@ global $settings;
     <?endfor;?>
 </div>
 <?endif;?>
-<!--//ДЕЛАЕМ НА ВРЕМЯ ТРАНСФОРМАЦИИ-->
-<div class="b-page__heading b-page__heading_absolute" style="top: 100px;">
-<!--<div class="b-page__heading b-page__heading_absolute  ">-->
+<div class="b-page__heading b-page__heading_absolute  ">
     <div class="content-center">
 		<div class="b-page__heading-inner">
 			<div class="b-breadcrumbs"></div>

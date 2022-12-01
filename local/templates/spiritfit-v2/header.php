@@ -280,14 +280,6 @@ foreach( $clubs as $club ) {
 
             </div>
         </div>
-        <?
-        //ДЕЛАЕМ НА ВРЕМЯ ТРАНСФОРМАЦИИ
-        if (strpos($page, "/quiz/") === false):?>
-            <div class="is-hide-desktop" style="text-align: center;padding: 5px;font-weight: 500;font-size: 13px; height: 25px;background: url('<?=SITE_TEMPLATE_PATH.'/img/black-friday-line.png'?>');background-size: contain;
-                    background-repeat: no-repeat;
-                    background-position: 50%;
-                    background-color: #fab265; position: relative"><a href="/abonement/" style="position: absolute;top: 0;left: 0; height: 100%;width: 100%;"></a></div>
-        <?endif;?>
     </header>
     <main class="b-page__main <?=(defined('HOLDER_CLASS') ? HOLDER_CLASS : '')?>" role="main">
         <?if (!defined('HIDE_SLIDER')){?>
@@ -387,13 +379,8 @@ foreach( $clubs as $club ) {
 					<div class="b-screen__bg-holder"></div>
 				</section>
 			<? } ?>
-			<?
-            //ДЕЛАЕМ НА ВРЕМЯ ТРАНСФОРМАЦИИ
-            if (!strpos($page, "/landings/")):?>
-                <div class="b-page__heading <?=(defined('BREADCRUMB_H1_ABSOLUTE') ? 'b-page__heading_absolute' : '')?>  <?=(!$showSlider) ? "b-page__heading-simple" : "" ?>" style="top: 100px;">
-            <?else:?>
-                <div class="b-page__heading <?=(defined('BREADCRUMB_H1_ABSOLUTE') ? 'b-page__heading_absolute' : '')?>  <?=(!$showSlider) ? "b-page__heading-simple" : "" ?>">
-            <?endif;?>
+            <div class="b-page__heading <?=(defined('BREADCRUMB_H1_ABSOLUTE') ? 'b-page__heading_absolute' : '')?>  <?=(!$showSlider) ? "b-page__heading-simple" : "" ?>">
+
                 <div class="content-center">
                     <?if (!defined("HIDE_BREADCRUMB")):?>
                     <div class="b-page__heading-inner">
