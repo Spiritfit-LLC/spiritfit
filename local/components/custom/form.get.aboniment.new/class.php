@@ -168,25 +168,6 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             }
         }
 
-
-//ХАРДКОДИМ НА ВРЕМЯ СПИРИТ ТРАНСФОРМАЦИИ, ТК АРХИТЕКТУРА ЕЩЕ НЕ ПРИДУМАНА
-//        $_SESSION["HAS_LEADERS"]=boolval($_GET["has_leaders"]);
-//        if ($_SESSION["HAS_LEADERS"]){
-//            $this->arResult["LEADERS"]=[
-//                "NAME"=>"leader_id",
-//                "REQUIRED"=>true,
-//            ];
-//            $filter=["IBLOCK_ID"=>Utils::GetIBlockIDBySID("leaders"), "ACTIVE"=>"Y"];
-//            $dbRes=CIBlockElement::GetList(Array("SORT"=>"ASC"), $filter, false, false, array('ID', 'NAME'));
-//            while($leader=$dbRes->Fetch()){
-//                $this->arResult["LEADERS"]["ITEMS"][]=[
-//                    "VALUE"=>$leader["ID"],
-//                    "STRING"=>$leader["NAME"],
-//                    "SELECTED"=>$_GET["leader_id"]==$leader["ID"]?true:false,
-//                ];
-//            }
-//        }
-
         $this->IncludeComponentTemplate();
     }
 
