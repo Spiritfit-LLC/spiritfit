@@ -372,6 +372,9 @@ div.news-detail img.detail_picture
 	.club-utp__desc{
 		font-size: 13px;
 	}
+	.form-standart__plate {
+		margin-top: 60px;
+	}
 }
 @media screen and (max-width: 480px){
 	.club-utp__item{
