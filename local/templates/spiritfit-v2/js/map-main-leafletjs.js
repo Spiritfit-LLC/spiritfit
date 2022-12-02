@@ -1,12 +1,11 @@
 let mapL;
-
-console.log('mapL')
+let markers = [];
 
 document.addEventListener("DOMContentLoaded", function(){
 // function mapInit() {
   let cord1 = 55.753484; 
   let cord2 = 37.622615;
-  let markers = [];
+  markers = [];
 
   if(window.cord !== undefined){
       cord1 = window.cord[0];
@@ -52,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   // функция для установки активного маркера
   function setActiveIcon(marker) {
-    let iconActive = L.icon({iconUrl: spiritFitnessIconActive, iconAnchor:   IconAnchor});
+    let iconActive = L.icon({iconUrl: spiritFitnessIconActive, iconAnchor:   IconAnchor, });
     let iconNotActive = L.icon({iconUrl: spiritFitnessIcon, iconAnchor:   IconAnchor});
     let iconNetwork =  L.divIcon({
       html: '',
@@ -105,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function(){
       refactoredPhone = '+' + refactoredPhone;
     }
     let shedule = '';
-    let min_price=0;
+    let min_price='';
 
     if(marker.options.club_soon_open == 'Y' || marker.options.page === ''){
       $titlePlace.html("<span>" + marker.options.title + "</span>");
@@ -312,7 +311,7 @@ document.addEventListener("DOMContentLoaded", function(){
 			var iconPathToMap = locations.length > 1 ? spiritFitnessIcon : spiritFitnessIconActive;
 
       let markerIcon = L.icon({
-				iconUrl: iconPathToMap, iconAnchor:   IconAnchor
+				iconUrl: iconPathToMap, iconAnchor:   IconAnchor,
 			});
 			
 			if(locations[i].id == networkAbonementID){
@@ -351,7 +350,6 @@ document.addEventListener("DOMContentLoaded", function(){
 			marker.on('click', function(e){
 				setActiveIcon(e.target);
 				setInfoContent(e.target);
-			
 			});
 
 			marker.addTo(mapL);
