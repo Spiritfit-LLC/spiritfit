@@ -146,7 +146,7 @@ class PersonalUtils{
 
     public static function GetPersonalPageFormFields($user_id, $request_info=false, $code=[], $section_id=false, $active_form=false, $photo_size=300){
         CModule::IncludeModule("iblock");
-        function GetSectionFields(&$ar_SectionList, $request_info, $code, $is_correct, $arUser, &$HEAD, $NOTIFICATIONS){
+        function GetSectionFields(&$ar_SectionList, $request_info, $code, $is_correct, $arUser, &$HEAD, $NOTIFICATIONS, &$ERRORS){
             foreach ($ar_SectionList as $key=>$section){
                 $SECTION_ID[]=$section['ID'];
             }
@@ -171,13 +171,28 @@ class PersonalUtils{
             $issetFLAG=true;
             $GROUPS=[];
 
-
+            global $USER;
             $i=0;
             foreach ($objects as $id=>$element){
                 if ($element['PROPERTIES']['HIDE_IF_EMPTY']['VALUE_XML_ID']=='Y'
                     && (!empty($element['PROPERTIES']['USER_FIELD_CODE']['VALUE']) &&
                         empty($arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']]))){
                     continue;
+                }
+
+                if ($element["CODE"]=="lk_parental_consent"){
+                    if (!empty($arUser["PERSONAL_BIRTHDAY"])){
+                        $bithday= new DateTime($arUser["PERSONAL_BIRTHDAY"]);
+                        $now=new DateTime();
+                        $interval=$bithday->diff($now);
+
+                        if ($interval->y>=18){
+                            continue;
+                        }
+                    }
+                    else{
+                        continue;
+                    }
                 }
 
                 if (!empty($element['PROPERTIES']['USER_FIELD_DEPENDENT']['VALUE'])){
@@ -197,6 +212,21 @@ class PersonalUtils{
                             $operator=explode(";", $DEPENDENT)[1];
                             $parameter=explode("#", $DEPENDENT)[1];
                             $usField=explode("#", $DEPENDENT)[2];
+
+//                            //Значит работает с датой
+//                            if ($parameter[0]=="D"){
+//                                list($param, $format, $value)=explode("_", $parameter);
+//
+//                                $date= new DateTime($arUser[$usField]);
+//                                $now=new DateTime();
+//                                $interval=$date->diff($now);
+//
+//
+//                                if ($format=="Y"){
+//                                    $parameter=
+//                                }
+//
+//                            }
 
                             switch($operator){
                                 case 0:
@@ -263,13 +293,75 @@ class PersonalUtils{
                         continue;
                     }
                     $FIELD['VALUE']=empty($_REQUEST["form_".$element['CODE']."_".$id]) || strlen($_REQUEST["form_".$element['CODE']."_".$id])==0?false:$_REQUEST["form_".$element['CODE']."_".$id];
-                    if ($FIELD["REQUIRED"] && empty($FIELD['VALUE'])){
+                    if ($FIELD["REQUIRED"] && empty($FIELD['VALUE']) && $FIELD['TYPE']!="file"){
                         $issetFLAG=false;
                     }
                     $FIELD['CODE']=$element['CODE'];
                     switch ($FIELD['TYPE']){
                         case 'checkbox':
                             $FIELD['VALUE']=boolval($FIELD['VALUE']);
+                            break;
+                        case 'file':
+                            $file_exist=boolval(\Bitrix\Main\Context::getCurrent()->getRequest()->getPost($FIELD["NAME"]."_file_exist"));
+                            $file=\Bitrix\Main\Context::getCurrent()->getRequest()->getFile($FIELD["NAME"]);
+
+                            if ($file_exist && !empty($arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']]) && empty($file)){
+                                continue;
+                            }
+                            elseif ($file_exist && !empty($file)){
+                                $fileId = CFile::SaveFile($file, 'user/'+$USER->GetID()+'/parental_consent');
+                                $arFile = CFile::MakeFileArray($fileId);
+                                $FIELD["VALUE"]=$arFile;
+
+                                if ($FIELD["REQUIRED"] && empty($FIELD["VALUE"])){
+                                    $issetFLAG=false;
+                                }
+                                elseif (!empty($element['PROPERTIES']["FILE_SEND_URL"]["VALUE"])){
+                                    $action=str_replace(["API"], [""], $element['PROPERTIES']["FILE_SEND_URL"]["VALUE"]);
+                                    $api=new Api([
+                                        "action"=>$action,
+                                        "params"=>[
+                                            "login"=>$arUser["LOGIN"],
+                                            "id1c"=>$arUser["UF_1CID"],
+                                            "url"=>sprintf(
+                                                    "%s://%s",
+                                                    isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
+                                                    $_SERVER['SERVER_NAME']).CFile::GetPath($fileId),
+                                        ]
+                                    ]);
+
+                                    $response=$api->result();
+                                    if (!$response['success']){
+                                        if(!empty($response["data"]["result"]["userMessage"]) ) {
+                                            $ERRORS[]=[
+                                                'form_name'=>$FIELD['NAME'],
+                                                'message'=>$response["data"]["result"]["userMessage"]
+                                            ];
+                                        } else {
+                                            $ERRORS[]=[
+                                                'form_name'=>$FIELD['NAME'],
+                                                'message'=>"При отправке файла произошла ошибка"
+                                            ];
+                                        }
+                                        $issetFLAG=false;
+                                    }
+//                                    $FIELD["TEST"]=[
+//                                        "action"=>$action,
+//                                        "params"=>[
+//                                            "login"=>$arUser["LOGIN"],
+//                                            "id1c"=>$arUser["UF_1CID"],
+//                                            "url"=>sprintf(
+//                                                    "%s://%s",
+//                                                    isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
+//                                                    $_SERVER['SERVER_NAME']).CFile::GetPath($fileId),
+//                                        ]
+//                                    ];
+                                }
+                            }
+                            else{
+                                $FIELD["VALUE"]=false;
+                                $issetFLAG=false;
+                            }
                             break;
                     }
                 }
@@ -343,11 +435,22 @@ class PersonalUtils{
                         case "component":
                             $FIELD['COMPONENT_NAME']=$element['PROPERTIES']['COMPONENT_NAME']['VALUE'];
                             $FIELD["COMPONENT_STYLE"]=!empty($element['PROPERTIES']['COMPONENT_STYLE']['VALUE'])?$element['PROPERTIES']['COMPONENT_STYLE']['VALUE']:'';
+                        case "file":
+                            if (!empty($arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']])){
+                                $FIELD["VALUE"]=CFile::GetPath($arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']]);
+                            }
+                            else{
+                                $FIELD["VALUE"]=false;
+                            }
+                            $FIELD["FILE_ID"]=$arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']];
+                            break;
 
                         default:
                             $FIELD['VALUE']=$arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']];
                             break;
                     }
+
+
 
                     if (!empty($element["PROPERTIES"]["STATIC_VALUE"]["VALUE"])){
                         $FIELD['VALUE']=$element["PROPERTIES"]["STATIC_VALUE"]["VALUE"]["TEXT"];
@@ -456,6 +559,13 @@ class PersonalUtils{
                     }
                 }
                 $i++;
+
+                if ($FIELD["REQUIRED"] && empty($FIELD['VALUE'])){
+                    $ERRORS[]=[
+                        'form_name'=>$FIELD['NAME'],
+                        'message'=>'Проверьте корректность заполнения поля'
+                    ];
+                }
             }
             if (is_array($UNSET_ELEMENTS)){
                 foreach (array_unique($UNSET_ELEMENTS) as $ID){
@@ -475,6 +585,8 @@ class PersonalUtils{
         $LK_FIELDS['IS_CORRECT']=boolval($arUser['UF_IS_CORRECT']);
         $LK_FIELDS['USER_1CID']=$arUser['UF_1CID'];
         $LK_FIELDS['USER_LOGIN']=$arUser['LOGIN'];
+
+        $NOTIFICATIONS=unserialize($arUser["UF_NOTIFICATION"]);
 
         if (empty($section_id) || is_array($section_id)){
             $arGroups = CUser::GetUserGroup($arUser['ID']);
@@ -498,7 +610,7 @@ class PersonalUtils{
             $ar_DepthLavel = array();
             $active_flag=false;
 
-            $NOTIFICATIONS=unserialize($arUser["UF_NOTIFICATION"]);
+
 
             while($ar_Section = $rs_Section->GetNext(true, false))
             {
@@ -601,6 +713,8 @@ class PersonalUtils{
                     }
                 }
 
+
+
                 if (key_exists($ar_Section['ID'], $NOTIFICATIONS)){
                     $ar_SectionList[$ar_Section['ID']]["NOTIFICATIONS"]=count($NOTIFICATIONS[$ar_Section['ID']]);
                 }
@@ -650,7 +764,7 @@ class PersonalUtils{
                 }
             }
 
-            $LK_FIELDS['ISSET']=GetSectionFields($ar_SectionList, $request_info, $code, $LK_FIELDS['IS_CORRECT'], $arUser, $LK_FIELDS['HEAD'], $NOTIFICATIONS);
+            $LK_FIELDS['ISSET']=GetSectionFields($ar_SectionList, $request_info, $code, $LK_FIELDS['IS_CORRECT'], $arUser, $LK_FIELDS['HEAD'], $NOTIFICATIONS, $LK_FIELDS["ERRORS"]);
 
             if (!$request_info){
                 $ar_DepthLavelResult = array_unique($ar_DepthLavel);
@@ -673,7 +787,7 @@ class PersonalUtils{
         }
         elseif (is_numeric($section_id)){
             $ar_SectionList[$section_id]=[];
-            $LK_FIELDS['ISSET']=GetSectionFields($ar_SectionList, $request_info, $code, $LK_FIELDS['IS_CORRECT'], $arUser, $LK_FIELDS['HEAD'], $NOTIFICATIONS);
+            $LK_FIELDS['ISSET']=GetSectionFields($ar_SectionList, $request_info, $code, $LK_FIELDS['IS_CORRECT'], $arUser, $LK_FIELDS['HEAD'], $NOTIFICATIONS, $LK_FIELDS["ERRORS"]);
         }
 
 
@@ -909,6 +1023,17 @@ class PersonalUtils{
                 }
                 else{
                     self::UpdatePersonalInfoFrom1C(false, $arUser2);
+                }
+
+                if (!empty($arUser2["PERSONAL_BIRTHDAY"]) && empty($arUser2["UF_PARENTAL_CONSENT"])){
+                    $bithday= new DateTime($arUser["PERSONAL_BIRTHDAY"]);
+                    $now=new DateTime();
+                    $interval=$bithday->diff($now);
+
+                    if ($interval->y<18){
+                        global $USER;
+                        $USER->Update($arUser2["ID"], ["UF_IS_CORRECT"=>false], false);
+                    }
                 }
             }
         }

@@ -19,7 +19,8 @@ if(!function_exists('GetPersonalSection')) {
                                                                <?if (!$FIELD['CHANGEBLE']) echo 'readonly-item';?>
                                                                <?if ($FIELD['TYPE']=='link') echo 'link-item';?>
                                                                <?if ($FIELD['TYPE']=='list') echo 'list-item';?>
-                                                               <?if($FIELD['TYPE']=='SELECT') echo 'select-item';?>">
+                                                               <?if($FIELD['TYPE']=='SELECT') echo 'select-item';?>
+                                                               <?if ($FIELD["TYPE"]=="file") echo "file-item";?>">
 
             <?if ($FIELD['TYPE']!='checkbox' && $FIELD['TYPE']!='link'):?>
                 <span class="personal-section-form__item-placeholder"><?=$FIELD['PLACEHOLDER']?>
@@ -102,15 +103,24 @@ if(!function_exists('GetPersonalSection')) {
                 <?if (!empty($FIELD['OLD_SUM'])):?>
                     <div class="old-sum"><s><?=$FIELD['OLD_SUM']?></s>
                 <?endif;?>
+
+                <?if ($FIELD["TYPE"]=="file"):?>
+                    <div class="file-input__dropzone <?if (!empty($FIELD["VALUE"])) echo 'is-hide'?>" id="<?=$FIELD['HTML_ID']?>_dropzone">
+                        <div class="file-input__btn">
+                            <div class="btn-trigger" onclick="$('#<?=$FIELD['HTML_ID']?>').click()">
+                                <?=file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/add-photo-icon.svg')?>
+                            </div>
+                            Добавить файл<br>(.jpg, .jpeg, .png)
+                        </div>
+                    </div>
+                <?endif;?>
                 <input
                     class="personal-section-form__item-value <?if ($FIELD['TYPE']=='checkbox') echo 'checkbox-input';?>
-                                                                            <?if ($FIELD['TYPE']=='password') echo 'passwd-input'?>"
+                                                                            <?if ($FIELD['TYPE']=='password') echo 'passwd-input'?> <?if ($FIELD['TYPE']=='file') echo 'file-input'?>"
                     type="<?if ($FIELD['TYPE']=='date' || $FIELD['TYPE']=='table' || $FIELD["TYPE"]=="address") echo 'text'; else echo $FIELD['TYPE'];?>"
                     name="<?=$FIELD['NAME']?>"
-                    value="<?=$FIELD['VALUE']?>"
                     id="<?=$FIELD['HTML_ID']?>"
                     data-required_id="<?=$FIELD['REQUIRED_ID']?>"
-                    <?if ($FIELD['REQUIRED']) echo 'required';?>
                     <?if ($FIELD['REQUIRED_FROM']){?> data-required_from="<?=$FIELD['REQUIRED_FROM']?>"<?}?>
                     <?if (!$FIELD['CHANGEBLE']){?> disabled="disabled" <?}?>
                     <?if ($FIELD['TYPE']=='date'):?> data-toggle="datepicker" <?endif;?>
@@ -121,7 +131,26 @@ if(!function_exists('GetPersonalSection')) {
                     <?if ($FIELD["TYPE"]=="address"):?>
                     data-dadata="true" data-dadata-type="ADDRESS"
                     <?endif;?>
+                    <?if ($FIELD["TYPE"]=="file"):?>
+                    accept=".jpg, .jpeg, .png"
+                    onchange="personal_file_input(this.files, '<?=$FIELD['HTML_ID']?>')"
+                    <?else:?>
+                    value="<?=$FIELD['VALUE']?>"
+                    <?if ($FIELD['REQUIRED']) echo 'required';?>
+                    <?endif;?>
                 >
+                <?if ($FIELD["TYPE"]=="file"):?>
+                    <div class="file-input__preview" id="<?=$FIELD['HTML_ID']?>_media-preview">
+                        <?if (!empty($FIELD["VALUE"])):?>
+                            <div class="personal-media_preview__item image exist" style="background-image: url('<?=$FIELD["VALUE"]?>')" id="<?=$FIELD['HTML_ID']?>_preview_item">
+                                <div class="closer-small"  onclick="reset_file_input('<?=$FIELD["HTML_ID"]?>')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="96px" height="96px"><path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"/></svg></div>
+                            </div>
+                            <input type="hidden" id="<?=$FIELD['HTML_ID']?>_file_exist" value="1" name="<?=$FIELD['NAME']?>_file_exist">
+                        <?else:?>
+                            <input type="hidden" id="<?=$FIELD['HTML_ID']?>_file_exist" value="0" name="<?=$FIELD['NAME']?>_file_exist">
+                        <?endif;?>
+                    </div>
+                <?endif;?>
                 <?if ($FIELD['TYPE']=='password'):?>
                     <div class="show-password-icon">
                         <div class="pass-view active">
