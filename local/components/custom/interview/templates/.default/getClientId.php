@@ -116,7 +116,6 @@ $APPLICATION->SetPageProperty("title", $arResult["TITLE"]);
                 method:'POST',
                 data:postData,
             }).then(function (response){
-                console.log(response);
 
                 if (response.data.reload!==undefined && response.data.reload===true){
                     window.location.href=window.location.pathname;
@@ -142,8 +141,6 @@ $APPLICATION->SetPageProperty("title", $arResult["TITLE"]);
 
 
             }, function(response){
-                console.log(response);
-
                 var error_id=0;
                 response.errors.forEach(function(err, index){
                     if (err.code!==0){
