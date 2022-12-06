@@ -165,7 +165,7 @@ class Interview extends CBitrixComponent implements Controllerable {
             $user=CUser::GetByLogin($phone)->Fetch();
             if (empty($user)) {
                 $_SESSION["USER_EXIST"]=false;
-                $arParams = ['login' => $phone];
+                $arParams = ['login' => $phone, 'nosms'=>true];
                 $api = new Api(array(
                     'action' => 'lkcheck',
                     'params' => $arParams
@@ -174,29 +174,31 @@ class Interview extends CBitrixComponent implements Controllerable {
 
                 //Пользователь не найден, переход на регистрацию
                 if ($result['success'] == false) {
-                    throw new Exception("Вы не зарегистрированы. Для прохождения опроса <a href=\"/personal/?reg\">зарегистрируйтесь</a>", 2);
+                    throw new Exception("Вы не зарегистрированы. Для прохождения опроса зарегистрируйтесь.", 2);
                 }
 
                 //Пользователь найден в 1с
                 //Возвращаем на фронт инфу
-                return ['result' => true, 'next_step' => 2, 'code'=>true, 'message'=>'На Ваш номер телефона отправлен код подтверждения', /*'1cdata'=>$result['data']*/];
+//                return ['result' => true, 'next_step' => 2, 'code'=>true, 'message'=>'На Ваш номер телефона отправлен код подтверждения', /*'1cdata'=>$result['data']*/];
             }
-            else{
-                $_SESSION["USER_EXIST"]=true;
-                $api=new Api([
-                    "action"=>"smscode",
-                    "params"=>[
-                        "phone"=>$phone
-                    ]
-                ]);
-
-                $result = $api->result();
-                if ($result['success'] == false) {
-                    throw new Exception("Произошла ошибка", 1);
-                }
-
-                return ['result' => true, 'next_step' => 2, 'code'=>true, 'message'=>'На Ваш номер телефона отправлен код подтверждения', /*'1cdata'=>$result['data']*/];
-            }
+//            else{
+//                $_SESSION["USER_EXIST"]=true;
+//                $api=new Api([
+//                    "action"=>"smscode",
+//                    "params"=>[
+//                        "phone"=>$phone
+//                    ]
+//                ]);
+//
+//                $result = $api->result();
+//                if ($result['success'] == false) {
+//                    throw new Exception("Произошла ошибка", 1);
+//                }
+//
+////                return ['result' => true, 'next_step' => 2, 'code'=>true, 'message'=>'На Ваш номер телефона отправлен код подтверждения', /*'1cdata'=>$result['data']*/];
+//            }
+            $_SESSION["CLIENT_ID"]=$phone;
+            return ['result' => true, 'reload'=>true];
         }
         elseif ($step==2){
             $code=Context::getCurrent()->getRequest()->getPost("code");
@@ -247,8 +249,8 @@ class Interview extends CBitrixComponent implements Controllerable {
                 }
             }
 
-            $_SESSION["CLIENT_ID"]=$phone;
-            return ['result' => true, 'reload'=>true];
+//            $_SESSION["CLIENT_ID"]=$phone;
+//            return ['result' => true, 'reload'=>true];
         }
     }
 
