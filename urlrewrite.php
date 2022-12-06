@@ -117,13 +117,13 @@ $arUrlRewrite=array (
         'ID' => '',
         'PATH' => '/landings/v1/index.php',
         'SORT' => 100,
-    )
-//    16 =>
-//    array (
-//        'CONDITION' => '#^/spiritnet/#',
-//        'RULE' => '',
-//        'ID' => "custom.socialnetwork:socialnetwork.custom",
-//        'PATH' => '/spiritnet/index.php',
-//        'SORT' => 100,
-//    ),
+    ),
+    16 =>
+      array (
+          'CONDITION' => '#^/interview/([\\.\\-0-9a-zA-Z]+)/.*$#',
+          'RULE' => 'SECTION_ID=$1',
+          'ID' => '',
+          'PATH' => '/interview/detail.php',
+          'SORT' => 100,
+      ),
 );
