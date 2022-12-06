@@ -52,11 +52,10 @@ $(document).ready(function(){
     $form.unbind();
     $form.submit(function(e){
         e.preventDefault();
-        var componentName=$(this).data("componentname");
         var postData=new FormData(this);
         var action="interview";
 
-        BX.ajax.runComponentAction(componentName, action, {
+        BX.ajax.runComponentAction(params.componentName, action, {
             mode: 'class',
             method:'POST',
             data:postData,
@@ -77,7 +76,62 @@ $(document).ready(function(){
             console.log(res)
         });
     });
+
+
+
+
 });
+
+var initSlick=function(){
+    $('.question-media.multiple').slick({
+        dots: false,
+        arrows: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        infinite: false,
+        variableWidth: true,
+        touchThreshold: 50,
+        // prevArrow:false,
+        // nextArrow:false,
+        prevArrow: '<div class="b-cards-slider__arrow-wrapper b-cards-slider__arrow-wrapper--left"><div class="b-cards-slider__arrow b-cards-slider__arrow--left"></div></div>',
+        nextArrow: '<div class="b-cards-slider__arrow-wrapper b-cards-slider__arrow-wrapper--right"><div class="b-cards-slider__arrow b-cards-slider__arrow--right"></div></div>',
+        // adaptiveHeight: true
+        centerMode: true,
+        centerPadding: '40px',
+        responsive: [
+            {
+                breakpoint: 960,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '20px',
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 729,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '0px',
+                    slidesToShow: 1
+                }
+            }
+        ]
+
+    });
+
+
+
+}
+
+var refreshSlick=function(){
+    $('.question-media.multiple').slick("refresh");
+}
+
+$(window).on('load', function(){
+    initSlick();
+})
 
 var copyPromocode=function(promocode){
     var date = new Date;

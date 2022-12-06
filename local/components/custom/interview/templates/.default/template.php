@@ -5,7 +5,7 @@ $APPLICATION->SetPageProperty("description", "");
 $APPLICATION->SetPageProperty("title", $arResult["TITLE"]);
 ?>
 <script>
-    var params=<?=\Bitrix\Main\Web\Json::encode(['signedParameters'=>$this->getComponent()->getSignedParameters()])?>;
+    var params=<?=\Bitrix\Main\Web\Json::encode(['signedParameters'=>$this->getComponent()->getSignedParameters(), 'componentName'=>$this->getComponent()->GetName()])?>;
 </script>
 <style>
     :root{
@@ -13,29 +13,27 @@ $APPLICATION->SetPageProperty("title", $arResult["TITLE"]);
     }
 </style>
 
-<? if( !empty($arResult["HEADER_IMAGE"]) ):?>
-    <div class="b-main blockitem">
-        <div class="content-center">
-            <div class="b-main__banner">
-                <div class="b-main__banner-content">
-                    <div class="b-main__banner-title">
-                        <?=$arResult["TITLE"]?>
-                    </div>
-                    <?=htmlspecialcharsback($arResult["HEADER_DESCRIPTION"])?>
-                    <div class="b-main__banner-button">
-                        <? if(!empty($arResult["HEADER_BUTTON"]) ) { ?>
-                            <a class="button " onclick="go_next_question()"><?=$arResult["HEADER_BUTTON"]?></a>
-                        <? } ?>
-                    </div>
+
+<div class="b-main blockitem">
+    <div class="content-center">
+        <div class="b-main__banner">
+            <div class="b-main__banner-content">
+                <div class="b-main__banner-title">
+                    <?=$arResult["TITLE"]?>
+                </div>
+                <?=htmlspecialcharsback($arResult["HEADER_DESCRIPTION"])?>
+                <div class="b-main__banner-button">
+                    <a class="button " onclick="go_next_question()">Начать опрос</a>
                 </div>
             </div>
         </div>
     </div>
-<?endif;?>
+</div>
+
 
 <div class="content-center">
     <div class="interview-form-box">
-        <form class="b-interview-form" data-componentname="<?=$arResult["COMPONENT_NAME"]?>">
+        <form class="b-interview-form">
             <?for ($i=0; $i<count($arResult["QUESTIONS"]); $i++):?>
             <?$arQuestion=$arResult["QUESTIONS"][$i]?>
                 <div class="b-interview__question <?if ($arQuestion["REQUIRED"] && empty($arQuestion["REQUIRED_FROM_ID"])) echo "required"?>  is-hide"
@@ -43,6 +41,47 @@ $APPLICATION->SetPageProperty("title", $arResult["TITLE"]);
                      <?if (!empty($arQuestion["REQUIRED_FROM_VAL"])):?>data-required-from-val="<?=$arQuestion["REQUIRED_FROM_VAL"]?>"<?endif;?>>
                     <div class="b-interview__question-content">
                         <h3 class="b-question__title"><?if($arQuestion["REQUIRED"]){echo "<span class='starrequired'>*</span>";}?><?=$arQuestion["TITLE"]?></h3>
+                        <?if (!empty($arQuestion["MEDIA"])):?>
+                            <?if (count($arQuestion["MEDIA"])==1):?>
+                                <div class="question-media single">
+                                    <?if ($arQuestion["MEDIA"][0]["TYPE"]=="image"):?>
+                                        <div class="question-media__item image">
+                                            <img src="<?=$arQuestion["MEDIA"][0]["SRC"]?>">
+                                        </div>
+                                    <?else:?>
+                                        <video controls="controls" class="question-media__item video" playsinline>
+                                            <source src="<?=$arQuestion["MEDIA"][0]["SRC"]?>" type="video/<?=$arQuestion["MEDIA"][0]["EXTENSION"]?>">
+                                            Тег video не поддерживается вашим браузером.
+                                            <a href="<?=$arQuestion["MEDIA"][0]["SRC"]?>">Скачайте видео</a>.
+                                        </video>
+                                    <?endif?>
+                                    <?if (!empty($arQuestion["MEDIA"][0]["NAME"])):?>
+                                        <div class="media-content__title"><?=$arQuestion["MEDIA"][0]["NAME"]?></div>
+                                    <?endif;?>
+                                </div>
+                            <?else:?>
+                                <div class="question-media multiple">
+                                    <?foreach ($arQuestion["MEDIA"] as $MEDIA):?>
+                                        <div class="question-media-multiple__slide">
+                                            <?if ($MEDIA["TYPE"]=="image"):?>
+                                                <div class="question-media__item image">
+                                                    <img src="<?=$MEDIA["SRC"]?>">
+                                                </div>
+                                            <?else:?>
+                                                <video controls="controls" class="question-media__item video" playsinline>
+                                                    <source src="<?=$MEDIA["SRC"]?>" type="video/<?=$MEDIA["EXTENSION"]?>">
+                                                    Тег video не поддерживается вашим браузером.
+                                                    <a href="<?=$MEDIA["SRC"]?>">Скачайте видео</a>.
+                                                </video>
+                                            <?endif?>
+                                            <?if (!empty($MEDIA["NAME"])):?>
+                                                <div class="media-content__title"><?=$MEDIA["NAME"]?></div>
+                                            <?endif;?>
+                                        </div>
+                                    <?endforeach;?>
+                                </div>
+                            <?endif;?>
+                        <?endif;?>
                         <?switch ($arQuestion["TYPE"]){
                             case "radio"://radio?>
                                 <div class="b-question__answers radio-item_question">
@@ -82,6 +121,7 @@ $APPLICATION->SetPageProperty("title", $arResult["TITLE"]);
                                 $className="stars-item";
                                 break?>
                         <?}?>
+
                             <?foreach ($arQuestion["ANSWERS"]["VALUE"] as $index=>$arAnswer):?>
                                 <?$value=$arQuestion["ANSWERS"]["DESCRIPTION"][$index];?>
                                 <?switch ($arQuestion["TYPE"]){
