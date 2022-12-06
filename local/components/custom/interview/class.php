@@ -179,7 +179,7 @@ class Interview extends CBitrixComponent implements Controllerable {
 
                 //Пользователь найден в 1с
                 //Возвращаем на фронт инфу
-                return ['result' => true, 'next_step' => 2, 'code'=>true, 'message'=>'На Ваш номер телефона отправлен код подтверждения', '1cdata'=>$result['data']];
+                return ['result' => true, 'next_step' => 2, 'code'=>true, 'message'=>'На Ваш номер телефона отправлен код подтверждения', /*'1cdata'=>$result['data']*/];
             }
             else{
                 $_SESSION["USER_EXIST"]=true;
@@ -195,7 +195,7 @@ class Interview extends CBitrixComponent implements Controllerable {
                     throw new Exception("Произошла ошибка", 1);
                 }
 
-                return ['result' => true, 'next_step' => 2, 'code'=>true, 'message'=>'На Ваш номер телефона отправлен код подтверждения', '1cdata'=>$result['data']];
+                return ['result' => true, 'next_step' => 2, 'code'=>true, 'message'=>'На Ваш номер телефона отправлен код подтверждения', /*'1cdata'=>$result['data']*/];
             }
         }
         elseif ($step==2){
