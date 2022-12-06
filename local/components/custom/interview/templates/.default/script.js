@@ -102,7 +102,6 @@ var initSlick=function(){
             {
                 breakpoint: 960,
                 settings: {
-                    arrows: false,
                     centerMode: true,
                     centerPadding: '20px',
                     slidesToShow: 2
@@ -111,7 +110,6 @@ var initSlick=function(){
             {
                 breakpoint: 729,
                 settings: {
-                    arrows: false,
                     centerMode: true,
                     centerPadding: '0px',
                     slidesToShow: 1
