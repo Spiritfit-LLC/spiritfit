@@ -246,8 +246,9 @@ input.text-item {
 .question-media-multiple__slide {
     margin: 0 10px;
     max-width: 900px;
-    height: 600px!important;
+    height: 630px!important;
     display: flex!important;
+    flex-direction: column;
 }
 .b-cards-slider__arrow::before, .b-cards-slider__arrow::after{
     background: linear-gradient(45deg, #E43932 3.26%, #7827F6 98.07%)!important;
