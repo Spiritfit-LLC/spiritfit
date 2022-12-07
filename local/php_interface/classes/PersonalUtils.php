@@ -305,10 +305,10 @@ class PersonalUtils{
                             $file_exist=boolval(\Bitrix\Main\Context::getCurrent()->getRequest()->getPost($FIELD["NAME"]."_file_exist"));
                             $file=\Bitrix\Main\Context::getCurrent()->getRequest()->getFile($FIELD["NAME"]);
 
-                            if ($file_exist && !empty($arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']]) && empty($file)){
+                            if ($file_exist && !empty($arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']]) && !empty($file["error"])){
                                 continue;
                             }
-                            elseif ($file_exist && !empty($file)){
+                            elseif (($file_exist && empty($file["error"])) || (!$file_exist && empty($file["error"]))){
                                 $fileId = CFile::SaveFile($file, 'user/'+$USER->GetID()+'/parental_consent');
                                 $arFile = CFile::MakeFileArray($fileId);
                                 $FIELD["VALUE"]=$arFile;
@@ -345,17 +345,6 @@ class PersonalUtils{
                                         }
                                         $issetFLAG=false;
                                     }
-//                                    $FIELD["TEST"]=[
-//                                        "action"=>$action,
-//                                        "params"=>[
-//                                            "login"=>$arUser["LOGIN"],
-//                                            "id1c"=>$arUser["UF_1CID"],
-//                                            "url"=>sprintf(
-//                                                    "%s://%s",
-//                                                    isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
-//                                                    $_SERVER['SERVER_NAME']).CFile::GetPath($fileId),
-//                                        ]
-//                                    ];
                                 }
                             }
                             else{

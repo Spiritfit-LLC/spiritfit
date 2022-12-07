@@ -1,10 +1,15 @@
 $(document).ready(function (){
+
+
+
     $(".utp-main__items").slick({
+        infinite: true,
+        autoplay: true,
+        autoplaySpeed: 2000,
         dots: false,
         arrows: true,
         slidesToShow: 4,
         slidesToScroll: 1,
-        infinite: false,
         variableWidth: false,
         touchThreshold: 50,
         // prevArrow:false,
@@ -34,5 +39,13 @@ $(document).ready(function (){
                 }
             }
         ]
+    });
+
+    $('.utp-item__image').each(function(){
+        var $this=$(this);
+        var width=$this.width();
+
+        var height=width/1.625;
+        $this.height(height);
     })
 });

@@ -190,6 +190,9 @@ global $settings;
 	),
 	false
 );?>
+
+
+
 <?
 if (!isset($_SERVER['HTTP_X_PJAX'])) {
     require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");

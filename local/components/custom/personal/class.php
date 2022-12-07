@@ -1164,6 +1164,8 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
         $DATA=Context::getCurrent()->getRequest()->toArray();
         $FORM_FIELDS=PersonalUtils::GetPersonalPageFormFields($USER->GetID(), true, [], $DATA['SECTION_ID']);
 
+//        return $FORM_FIELDS;
+
         //Не заполнены обязательные поля или несоответствие валидатору
         if (!$FORM_FIELDS['ISSET']){
             return ['result'=>false, 'errors'=>$FORM_FIELDS['ERRORS']];
