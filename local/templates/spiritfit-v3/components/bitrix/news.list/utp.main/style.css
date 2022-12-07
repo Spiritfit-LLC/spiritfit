@@ -9,7 +9,7 @@
 .utp-item__text {
     text-align: center;
     padding: 20px 30px;
-    background: whitesmoke;
+    background: #F5F5F4;
     height: 200px;
     display: flex;
     flex-direction: column;
