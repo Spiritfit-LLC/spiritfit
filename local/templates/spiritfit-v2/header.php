@@ -159,7 +159,7 @@ foreach( $clubs as $club ) {
             <div class="b-header__content">
                 <a class="b-header__logo-holder is-hide-mobile" href="/"><img class="b-header__logo-img"
                         src="<?= $settings["PROPERTIES"]["SVG_WHITE"]["src"] ?>" alt="Spirit Fitness" title="" /></a>
-<!--            INDEV-->
+                <!--INDEV-->
                 <a class="b-header__logo-holder is-hide-desktop" href="/"><img class="b-header__logo-img"
                         src="<?= CFile::GetPath($settings["PROPERTIES"]["SVG_WHITE_MINI"]['VALUE'] );?>" alt="Spirit Fitness" title="" /></a>
                 <a class="phone-btn is-hide-desktop" data-position="mobile-header" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a>
@@ -422,7 +422,11 @@ foreach( $clubs as $club ) {
                             }
                             ?>
                             <?else:?>
-                            <h1 class="b-page__title <?=(strpos($page, "/blog/") !== false) ? "has-selector" : ""?>"><?=$APPLICATION->ShowTitle(false)?><?=(strpos($page, "/blog/") !== false) ? getThemeSelector() : ""?></h1>
+                                <?if (strpos($page, "/blog/") !== false):?>
+                                <div class="b-page__title <?=(strpos($page, "/blog/") !== false) ? "has-selector" : ""?>"><?=$APPLICATION->ShowTitle(false)?><?=(strpos($page, "/blog/") !== false) ? getThemeSelector() : ""?></div>
+                                <?else:?>
+                                <h1 class="b-page__title <?=(strpos($page, "/blog/") !== false) ? "has-selector" : ""?>"><?=$APPLICATION->ShowTitle(false)?><?=(strpos($page, "/blog/") !== false) ? getThemeSelector() : ""?></h1>
+                                <?endif?>
                             <?endif;?>
                         <? } ?>
                     </div>
