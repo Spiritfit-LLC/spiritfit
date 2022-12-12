@@ -24,7 +24,7 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
         <div class="sliders-section__controls">
             <?$i=0;?>
             <?foreach ($arResult["SECTIONS"] as $SECTION):?>
-                <button class="slider-section__item <?if ($i==0) echo 'active'?>" onclick="select_section(this, '<?=$SECTION["ID"]?>')">
+                <button class="slider-section__item <?if ($i==0) echo 'active'?>" onclick="select_section(this, '<?=$SECTION["ID"]?>')" data-section-id="<?=$SECTION["ID"]?>">
                     <?=$SECTION["NAME"]?>
                 </button>
             <?$i++?>
@@ -54,8 +54,7 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
 
                                 </div>
                             </div>
-                            <?if (!empty($ITEM["PROPERTIES"]["PRESENTS"]["VALUE"])):?>
-                            <div class="slider-abonement__item-sale">
+                            <div class="slider-abonement__item-sale" style="height: <?=$arResult["PRESENT_HEIGHT"]?>px">
                                 <?foreach ($ITEM["PROPERTIES"]["PRESENTS"]["VALUE"] as $PRESENT):?>
                                 <div class="abonement-sale-container" style="background-image: url('<?=SITE_TEMPLATE_PATH.'/img/icons/abonement-sale.svg'?>')">
                                     <div><?=$PRESENT?></div>
@@ -65,7 +64,6 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
                                     <span class="abonement-sale-date"><?=$ITEM["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"]?></span>
                                 <?endif;?>
                             </div>
-                            <?endif;?>
                             <?if (!empty($ITEM["PROPERTIES"]["INCLUDE"]["VALUE"])):?>
                             <div class="slider-abonement__item-include-list">
                                 <!--noindex-->

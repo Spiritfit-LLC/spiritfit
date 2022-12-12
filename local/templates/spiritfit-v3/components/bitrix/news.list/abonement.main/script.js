@@ -34,6 +34,21 @@ $(document).ready(function(){
             }
         ]
     });
+
+    var section_id=$(".slider-section__item.active").data("section-id");
+    if (section_id!==undefined){
+        $(".b-cards-slider__item.abonement").each(function (){
+            var sections=$(this).data("sections");
+
+            if (sections.includes(section_id.toString())){
+                $(this).addClass("filter");
+            }
+        });
+
+        $(".b-cards-slider__slider").slick('slickFilter', '.filter');
+    }
+
+
 });
 
 var select_section=function(el, section_id){

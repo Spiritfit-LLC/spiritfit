@@ -62,9 +62,13 @@ span.abonement-sale-date {
     font-size: 14px;
     font-weight: 300;
     color: #868686;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 .slider-abonement__item-sale {
     margin-bottom: 16px;
+    position: relative;
 }
 .slider-abonement__item-include-list {
     margin-top: 16px;
