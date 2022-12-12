@@ -28,26 +28,10 @@ $this->setFrameMode(true);
                 <?=htmlspecialcharsback($arResult["PROPERTIES"]["UTP_DESC"]["VALUE"][$i]["TEXT"])?>
             </div>
         </div>
-        <?if ($i==1) break;?>
         <?endfor;?>
-
-        <?if (count($arResult["PROPERTIES"]["UTP_DESC"]["VALUE"])>2):?>
+        <?if (!empty($arResult["PROPERTIES"]["UTP_LINK"]["VALUE"])):?>
         <div class="utp-detail__description-more">
-            <button class="utp-detail__description-show-more" onclick="show_more()">Узнать больше <?=file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/icon-arrow.svg')?></button>
-        </div>
-        <div class="utp-detail__description-more-content">
-            <?for($i=2; $i<count($arResult["PROPERTIES"]["UTP_DESC"]["VALUE"]); $i++):?>
-                <div class="utp-detail__description-item">
-                    <?if (!empty($arResult["PROPERTIES"]["UTP_DESC"]["DESCRIPTION"][$i])):?>
-                        <div class="utp-detail__description-title">
-                            <h2 class="text-transform-none"><?=$arResult["PROPERTIES"]["UTP_DESC"]["DESCRIPTION"][$i]?></h2>
-                        </div>
-                    <?endif;?>
-                    <div class="utp-detail__description-content">
-                        <?=htmlspecialcharsback($arResult["PROPERTIES"]["UTP_DESC"]["VALUE"][$i]["TEXT"])?>
-                    </div>
-                </div>
-            <?endfor;?>
+            <a class="utp-detail__description-show-more" href="<?=$arResult["PROPERTIES"]["UTP_LINK"]["VALUE"]?>">Узнать больше <?=file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/icon-arrow.svg')?></a>
         </div>
         <?endif;?>
     </div>
