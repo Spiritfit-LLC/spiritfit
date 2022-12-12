@@ -16,6 +16,7 @@ $items=[];
 
 $SECTIONS=[];
 
+$arResult["PRESENT_HEIGHT"]=0;
 //Собираем  массив из Разделов и элементов
 foreach ($arResult["ITEMS"] as $key=>&$arItem){
     $f=false;
@@ -70,7 +71,14 @@ foreach ($arResult["ITEMS"] as $key=>&$arItem){
         $arItem["SECTIONS"][]=$ar_group["ID"];
     }
 
+    $present_height=count($arItem["PROPERTIES"]["PRESENTS"]["VALUE"])*54.6;
+    if ($present_height>0 && !empty($arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"])){
+        $present_height+=16;
+    }
 
+    if ($present_height>$arResult["PRESENT_HEIGHT"]){
+        $arResult["PRESENT_HEIGHT"]=$present_height;
+    }
 
 }
 usort($SECTIONS, function ($item1, $item2) {
