@@ -29,3 +29,20 @@ a.button.utp {
 section.utp-main {
     margin-top: 50px;
 }
+
+@media screen and (max-width: 1440px) {
+    .utp-main__items .b-cards-slider__arrow-wrapper--left {
+        left: 50px;
+    }
+
+    .utp-main__items .b-cards-slider__arrow-wrapper--right {
+        right: 50px;
+    }
+    .utp-main__items:hover .b-cards-slider__arrow-wrapper{
+        opacity: 1;
+    }
+    .utp-main__items .b-cards-slider__arrow-wrapper{
+        opacity: 0;
+        transition:0.3s;
+    }
+}

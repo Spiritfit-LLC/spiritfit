@@ -1,0 +1,168 @@
+.leaflet-control-attribution.leaflet-control {
+    display: none;
+}
+.b-map_page.b-map_page-main .b-map__map {
+    height: 700px;
+}
+.leaflet-layer {
+    filter: contrast(1) grayscale(1) invert(0) brightness(1.1);
+}
+.b-map__map-wrap {
+    position: relative;
+}
+.b-map__content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    height: 100%;
+    pointer-events: none;
+    width: 100%;
+}
+.b-map__info-plate {
+    width: calc((((100% - 24px*12)/12)*5) + (24px*(5 - 1)) + (24px/2)*3);
+    background: #000000c7;
+    color: white;
+    padding: 65px 0;
+    height: 700px;
+    pointer-events: auto;
+    position: relative;
+}
+.b-map__switch-holder {
+    padding: 0;
+    margin-bottom: 55px;
+}
+.b-map_page.b-map_page-main .b-map__info-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+.b-map_page.b-map_page-main .b-map__contacts {
+    margin-bottom: 30px;
+}
+.b-map__contact-item-descr {
+    max-height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+@media screen and (max-width: 1024px) {
+    .b-map__contact-item-descr{
+        max-height: unset;
+    }
+}
+a.b-map__contact-item-descr-more {
+    display: block;
+    transform: translate(0px, -19px);
+    font-size: 12px;
+    text-transform: capitalize;
+    background: linear-gradient(90deg, #E23834 3.26%, #7A27F1 98.07%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.b-map__contact-item {
+    margin-bottom: 30px;
+    font-weight: 500;
+    line-height: 1.6;
+    margin: 15px 0 30px;
+}
+a.b-map__button {
+    width: 100%;
+    margin:10px 0;
+}
+.b-map__contact-item a {
+    color: currentColor;
+    text-decoration: underline;
+    text-transform: none;
+}
+a.invisible-link[href] {
+    color: currentColor;
+    text-decoration: none;
+}
+.b-map__info, .b-map__buttons, .b-map__switch-holder {
+    margin-left: calc((((100% - 24px*5)/5)*1) + (24px*(1 - 1)) + (24px/2)*3);
+    margin-right: calc((((100% - 24px*5)/5)*1) + (24px*(1 - 1)) + (24px/2)*3);
+}
+
+@media screen and (max-width: 1199px) {
+    .b-map_page.b-map_page-main .b-map__info-title {
+        font-size: 26px;
+    }
+    .b-map__contact-item {
+        font-size: 16px;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .b-map__content {
+        top: 0;
+        height: 50%;
+    }
+    .b-map__info-plate {
+        width: 100%;
+        height: 700px;
+        padding: 50px 50px;
+    }
+    .b-map__info, .b-map__buttons, .b-map__switch-holder{
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .b-map__info {
+        overflow: auto;
+        max-height: 400px;
+        margin-bottom: 40px;
+    }
+    .b-map__info-plate {
+        background: #000000f0;
+        margin: 0 -15px;
+        width: calc(100% + 30px);
+    }
+}
+.b-map__info-plate-closer {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+.b-map {
+    position: relative;
+}
+.b-map__contact-full-descr-wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: #000000bd;
+}
+.b-map__contact-full-descr {
+    width: 600px;
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+}
+.b-map__contact-full-close {
+    background-image: url(/local/templates/spiritfit-v3/img/icons/closer-default.svg);
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-size: contain;
+    top: 15px;
+    right: 15px;
+    background-repeat: no-repeat;
+    transition: 0.3s;
+    transform: rotate(0deg);
+}
+.b-map__contact-full-close:hover{
+    transform: rotate(180deg);
+}
+
+.b-map__map.map-clubs-detail{
+    height: 700px;
+}
+a.b-map__button{
+
+}
