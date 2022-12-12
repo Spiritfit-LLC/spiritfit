@@ -30,7 +30,7 @@
 }
 .b-map__switch-holder {
     padding: 0;
-    margin-bottom: 55px;
+    margin-bottom: 25px;
 }
 .b-map_page.b-map_page-main .b-map__info-title {
     font-size: 32px;
@@ -62,10 +62,9 @@ a.b-map__contact-item-descr-more {
     -webkit-text-fill-color: transparent;
 }
 .b-map__contact-item {
-    margin-bottom: 30px;
     font-weight: 500;
     line-height: 1.6;
-    margin: 15px 0 30px;
+    margin: 15px 0 15px;
 }
 a.b-map__button {
     width: 100%;
@@ -165,4 +164,9 @@ a.invisible-link[href] {
 }
 a.b-map__button{
 
+}
+.b-map__min-price span{
+    background: linear-gradient(90deg, #E23834 3.26%, #7A27F1 98.07%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
