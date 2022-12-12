@@ -126,4 +126,12 @@ $arUrlRewrite=array (
           'PATH' => '/interview/detail.php',
           'SORT' => 100,
       ),
+    17 =>
+        array (
+            'CONDITION' => '#^/utp/([\\.\\-0-9a-zA-Z]+)/.*$#',
+            'RULE' => 'ELEMENT_CODE=$1',
+            'ID' => '',
+            'PATH' => '/utp/detail.php',
+            'SORT' => 100,
+        ),
 );
