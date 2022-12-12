@@ -240,6 +240,15 @@ class FormResumeNew extends CBitrixComponent implements Controllerable {
             ]
         ]);
 
+        $api=new Api([
+            "action"=>"sendEmailFromSMTP",
+            "params"=>[
+                "subject"=>$subject,
+                "message"=>"Привет! Мы получили твой отклик и  зарегистрировали его для участия в конкурсе на представленную вакансию. В случае положительного решения – жди приглашение на телефонное интервью.  Рекомендуем посмотреть все наши актуальные вакансии на сайте hh.ru.  Приходи на бесплатную персональную тренировку в любой клуб нашей сети и убедись, что Spirit. #естьвкаждом.",
+                "address"=>[$FORM_FIELDS["FIELDS"]["email"]["VALUE"]]
+            ]
+        ]);
+
         $response=$api->result();
         if ($response["success"]){
             return ["result"=>true, "message"=>"Ваша заявка успешно отправлена"];
