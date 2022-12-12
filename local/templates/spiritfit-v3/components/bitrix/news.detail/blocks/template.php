@@ -79,7 +79,7 @@ switch ($view) {
 ?>
 <? if( !empty($arParams['BLOCK_TITLE']) ) { ?>
     <div class="content-center">
-        <div class="b-section__title">
+        <div class="b-section__title" <?=(!empty($arParams["BLOCK_ID"])) ? 'id="'.$arParams["BLOCK_ID"].'"' : '' ?>>
             <h2><?=$arParams['BLOCK_TITLE']?></h2>
         </div>
     </div>

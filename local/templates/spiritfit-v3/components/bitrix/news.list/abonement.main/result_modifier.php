@@ -3,7 +3,7 @@
 <?php
 // получаем разделы
 $dbResSect = CIBlockSection::GetList(
-    Array("SORT"=>"ASC"),
+    Array("SORT"=>"DESC"),
     Array("IBLOCK_ID"=>$arParams['IBLOCK_ID'])
 );
 //Получаем разделы и собираем в массив
@@ -14,12 +14,21 @@ while($sectRes = $dbResSect->GetNext())
 
 $items=[];
 
+$SECTIONS=[];
+
 //Собираем  массив из Разделов и элементов
 foreach ($arResult["ITEMS"] as $key=>&$arItem){
     $f=false;
     foreach($arSections as $arSection){
         if($arItem['IBLOCK_SECTION_ID'] == $arSection['ID']){
             $f=true;
+            if (!key_exists($arSection['ID'], $SECTIONS)){
+                $SECTIONS[$arSection['ID']]=[
+                    "ID"=>$arSection["ID"],
+                    "NAME"=>$arSection["NAME"],
+                    "SORT"=>$arSection["SORT"]
+                ];
+            }
             break;
         }
     }
@@ -28,7 +37,13 @@ foreach ($arResult["ITEMS"] as $key=>&$arItem){
         continue;
     }
 
-    $arItem["MIN_PRICE"] = min(array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE"));
+
+
+    $arItem["MIN_PRICE"]=min(array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE"));
+
+
+
+
     $minPrice=(int)array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE")[0];
     $minPriceClub=array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "LIST")[0];
     foreach($arItem["PROPERTIES"]["PRICE"]["VALUE"] as $arPrice){
@@ -54,6 +69,13 @@ foreach ($arResult["ITEMS"] as $key=>&$arItem){
     while($ar_group = $db_groups->Fetch()) {
         $arItem["SECTIONS"][]=$ar_group["ID"];
     }
+
+
+
 }
+usort($SECTIONS, function ($item1, $item2) {
+    return $item1['SORT'] <=> $item2['SORT'];
+});
+$arResult["SECTIONS"]=$SECTIONS;
 
 ?>

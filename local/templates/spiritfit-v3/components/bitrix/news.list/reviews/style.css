@@ -1,0 +1,200 @@
+.review__item {
+    width: 540px;
+    background: #000;
+    color: white;
+    padding: 72px 64px 40px;
+    position: relative;
+    margin: 40px 20px 0;
+    height: 450px!important;
+}
+.review__user-name {
+    font-size: 28px;
+    line-height: 32px;
+    font-weight: 400;
+    margin-bottom: 24px;
+}
+.review__content {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 300;
+    height: 130px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    position: relative;
+}
+.review__content:after{
+    content: '';
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    box-shadow: 0px 1px 18px 18px black;
+}
+.review__content-detail {
+    font-weight: 300;
+    font-size: 14px;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #E23834 3.26%, #7A27F1 98.07%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+}
+.review__src-source {
+    background-repeat: no-repeat;
+    background-size: auto 90%;
+}
+.review__user-img {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-size: cover;
+    border-radius: 50%;
+    top: -40px;
+    left: 64px;
+}
+.review__src-link {
+    font-size: 16px;
+    font-weight: 300;
+    max-width: 80%;
+    text-decoration: underline;
+    line-height: 24px;
+    margin-top: 5px;
+}
+.review-rating__container {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: baseline;
+    /* font-size: 16px; */
+    /* font-weight: 300; */
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #E23834 3.26%, #7A27F1 98.07%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: max-content;
+    margin-top: 20px;
+}
+.rating-value {
+    font-size: 32px;
+    font-weight: 400;
+    margin-left: 10px;
+}
+.review__user-img.gradient {
+    background: linear-gradient(90deg, #E23834 3.26%, #7A27F1 98.07%);
+    text-align: center;
+    padding: 19px;
+    font-size: 32px;
+}
+a.review-link {
+    text-transform: none;
+}
+@media screen and (max-width: 592px) {
+    .review__item{
+        margin: 20px 10px 0;
+        padding:40px;
+    }
+    .review__user-img {
+        position: static;
+        width: 50px;
+        height: 50px;
+    }
+    .review__user-img.gradient {
+        font-size: 20px;
+        padding: 14px;
+    }
+    .review__user {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        margin-bottom: 20px;
+    }
+    .review__user-name {
+        margin: 0;
+        margin-left: 15px;
+    }
+    .reviews-slider__container {
+        margin: 0 -12px;
+    }
+}
+
+.review-detail__popup-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff94;
+    z-index: 999;
+    display: none;
+}
+.review-detail__popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.review-detail__popup .review__item{
+    height: unset!important;
+    max-height: 830px;
+}
+.review-detail__popup .review__content-detail{
+    display: none;
+}
+.review-detail__popup .review__content{
+    height: unset;
+    max-height: 500px;
+    overflow:auto;
+    padding-bottom: 15px;
+}
+.review-detail__popup .review__content:after{
+    content: none;
+}
+
+.review__content::-webkit-scrollbar {
+    width: 5px;
+}
+.review__content::-webkit-scrollbar-track {
+    background: rgba(137, 137, 137, 0.58);
+}
+.review__content::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(135deg, #E23834 3.26%, #8428DD 98.07%);    /* цвет бегунка */
+    border-radius: 3px;       /* округлось бегунка */
+}
+.review-detail__popup-closer {
+    position: absolute;
+    top: 60px;
+    right: 40px;
+    z-index: 10;
+    cursor: pointer;
+    transition: 0.3s;
+    transform: rotate(0deg);
+}
+.review-detail__popup-closer:hover{
+    transform: rotate(180deg);
+}
+
+@media screen and (max-width: 1024px) {
+    .review-detail__popup .review__item{
+        max-height: 75vh;
+    }
+    .review-detail__popup .review__content {
+        max-height: 36vh;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .review-detail__popup .review__item {
+        max-height: 90vh;
+        margin: 0;
+        width: 90vw;
+    }
+    .review-detail__popup .review__content {
+        height: 43vh;
+    }
+    .review-detail__popup-container{
+        z-index: 1001;
+    }
+    .review-detail__popup-closer{
+        top: 25px;
+        right: 25px;
+    }
+}
