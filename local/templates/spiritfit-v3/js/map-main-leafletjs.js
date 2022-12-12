@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function(){
               <a href="${marker.options.page}#timetable">Расписание</a>
 	  </div>`;
       if (marker.options.minPrice!==undefined && marker.options.minPrice>0){
-          min_price = `<div class="b-map__min-price" style="font-weight: 500">Ежемесячный платеж <span style="color: #ff7628">от ${marker.options.minPrice} <span class="rub">₽</span></span></div>`
+          min_price = `<div class="b-map__min-price" style="font-weight: 500">Ежемесячный платеж <span>от ${marker.options.minPrice} <span class="rub">₽</span></span></div>`
       }
     }
     

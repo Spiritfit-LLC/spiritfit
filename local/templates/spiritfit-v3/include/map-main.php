@@ -12,7 +12,7 @@ Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/map-main.css');
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
-<script src="<?=SITE_TEMPLATE_PATH?>/js/map-main-leafletjs.js?version=5"></script>
+<script src="<?=SITE_TEMPLATE_PATH?>/js/map-main-leafletjs.js?version=6"></script>
 <script src="<?=SITE_TEMPLATE_PATH . "/vendor/nicescroll/jquery.nicescroll.js"?>"></script>
 
 <div class="b-map b-map_page b-map_page-main">
