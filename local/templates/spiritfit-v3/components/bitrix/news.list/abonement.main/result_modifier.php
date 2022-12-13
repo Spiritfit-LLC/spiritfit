@@ -40,10 +40,20 @@ foreach ($arResult["ITEMS"] as $key=>&$arItem){
 
 
 
-    $arItem["MIN_PRICE"]=min(array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE"));
+    $minPrice=min(array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE"));
+    $minPriceKey=array_search($minPrice, array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE"));
+    $minPriceNumber=$arItem["PROPERTIES"]["PRICE"]["VALUE"][$minPriceKey]["NUMBER"];
 
+    foreach ($arItem["PROPERTIES"]["PRICE"]["VALUE"] as $key2=>$price){
+        if ($price["NUMBER"]==$minPriceNumber){
+            unset($arItem["PROPERTIES"]["PRICE"]["VALUE"][$key2]);
+        }
+    }
 
+    $minPrice2=min(array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE"));
+    $arItem["MIN_PRICE2"]=$minPrice2;
 
+    $arItem["MIN_PRICE"]=$minPrice;
 
     $minPrice=(int)array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE")[0];
     $minPriceClub=array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "LIST")[0];
