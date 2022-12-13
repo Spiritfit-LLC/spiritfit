@@ -956,6 +956,9 @@ class PersonalUtils{
                                         CUser::SetUserGroup($USER_ID, $resArr);
                                     }
                                     break;
+                                case "ТРЕНЕР":
+                                    CUser::SetUserGroup($USER_ID, [Utils::GetUGroupIDBySID('employes'), Utils::GetUGroupIDBySID('trainers')]);
+                                    break;
                             }
 
                         }

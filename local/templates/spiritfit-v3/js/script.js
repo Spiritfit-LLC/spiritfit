@@ -28,9 +28,60 @@ function dataLayerSend (eCategory, eAction, eLabel, eNI = false) {
     });
 }
 
+//Кнопка звонка
+function phone_btn_position(){
+    if (window.innerWidth<=1024){
+        $('.main-phone-btn').data('position', 'mobileRoundButton');
+    }
+    else{
+        $('.main-phone-btn').data('position', 'header');
+    }
+}
+
+function getCookies(name) {
+    var matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ))
+    return matches ? decodeURIComponent(matches[1]) : undefined
+}
+
+function setCookies(name, value, props) {
+    props = props || {}
+    var exp = props.expires
+
+    if (typeof exp == "number" && exp) {
+        var d = new Date()
+        d.setTime(d.getTime() + exp*1000)
+        exp = props.expires = d
+    }
+
+    if(exp && exp.toUTCString) { props.expires = exp.toUTCString() }
+    value = encodeURIComponent(value)
+    var updatedCookie = name + "=" + value
+    for(var propName in props){
+        updatedCookie += "; " + propName
+        var propValue = props[propName]
+        if(propValue !== true){ updatedCookie += "=" + propValue }
+    }
+    document.cookie = updatedCookie
+}
 
 $(document).ready(function(){
     $("body").addClass("is-body-loaded")
+
+    phone_btn_position();
+    $(window).resize(phone_btn_position);
+
+    $('.phone-btn').click(function(){
+        if ($(this).data('position')==='page'){
+            position=document.location.protocol+'//'+document.location.host+document.location.pathname
+        }
+        else{
+            position=$(this).data('position');
+        }
+        dataLayerSend('UX','clickCallButton', position);
+    });
+
     //Хедер
     $('.b-header').each(function () {
         var $context = $(this);
@@ -145,6 +196,48 @@ $(document).ready(function(){
 
         dataLayerSend(ecategory, eaction, elabel);
     });
+
+
+    $("select#club-search").on("select2:select", function(){
+        window.location.href=$(this).val();
+    });
+
+
+    if(getCookies('firstVisit') != 'Y'){
+        setTimeout(function(){
+            var clientID = getCookies('_ga');
+            console.log('Первый визит, ваш ID - '+clientID);
+
+            var current = window.sbjs.get.current;
+            $.ajax({
+                method: "POST",
+                url: "/local/ajax/send-ga.php",
+                data: {
+                    'type':    'visit',
+                    'clientid': clientID,
+                    'src': current.src,
+                    'mdm': current.mdm,
+                    'cmp': current.cmp,
+                    'cnt': current.cnt,
+                    'trm': current.trm,
+                },
+                success: function(data){
+
+                }
+            })
+            setCookies('firstVisit', 'Y');
+        }, 1000);
+    }
+
+    $('a').on('click', function(){
+        var link=$(this).attr("href")
+        if (link !== undefined && link.indexOf('http') !== -1){
+            var url = new URL($(this).attr("href"));
+            if (url.hostname!==location.hostname){
+                dataLayerSend('UX', 'clickExternalLink', url.href);
+            }
+        }
+    })
 
 });
 
