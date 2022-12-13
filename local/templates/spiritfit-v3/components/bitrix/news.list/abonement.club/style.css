@@ -89,6 +89,7 @@ a.abonement-item__btn {
     bottom: 26px;
     left: 50%;
     transform: translateX(-50%);
+    width: 70%;
 }
 .slider-abonement__item-include-list::-webkit-scrollbar {
     width: 5px;
