@@ -2,7 +2,7 @@
     width: 410px;
     background: #000000;
     color: white;
-    height: 720px;
+    height: 810px;
     position: relative;
     margin: 0 15px;
 }
@@ -62,9 +62,13 @@ span.abonement-sale-date {
     font-size: 14px;
     font-weight: 300;
     color: #868686;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 .slider-abonement__item-sale {
     margin-bottom: 16px;
+    position: relative;
 }
 .slider-abonement__item-include-list {
     margin-top: 16px;
@@ -163,6 +167,11 @@ button.slider-section__item.active {
     flex-direction: row;
     justify-content: space-between;
     align-items: baseline;
+}
+@media screen and (max-width: 425px){
+    .slider-abonement__item-price-item{
+        font-size: 14px;
+    }
 }
 .abonement-price-base {
     color: #a1a1a1;

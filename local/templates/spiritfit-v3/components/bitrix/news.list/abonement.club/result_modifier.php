@@ -15,7 +15,8 @@ while($sectRes = $dbResSect->GetNext())
 $items=[];
 
 $SECTIONS=[];
-
+$arResult["PRESENT_HEIGHT"]=0;
+$arResult["PRICE_HEIGHT"]=0;
 //Собираем  массив из Разделов и элементов
 foreach ($arResult["ITEMS"] as $key=>&$arItem){
     $f=false;
@@ -46,6 +47,9 @@ foreach ($arResult["ITEMS"] as $key=>&$arItem){
 
     $PRICES=[];
     foreach ($price_keys as $price_key){
+        if ($arItem["PROPERTIES"]["PRICE"]["VALUE"][$price_key]["NUMBER"] == 99){
+            continue;
+        }
         $PRICE_ITEM=[
             "PRICE"=>$arItem["PROPERTIES"]["PRICE"]["VALUE"][$price_key]["PRICE"],
             "NUMBER"=>$arItem["PROPERTIES"]["PRICE"]["VALUE"][$price_key]["NUMBER"]
@@ -82,37 +86,25 @@ foreach ($arResult["ITEMS"] as $key=>&$arItem){
     });
 
     $arItem["PRICES"]=$PRICES;
-//    echo "<pre>";
-//    print_r($PRICES);
-//    echo "</pre>";
-
-    $arItem["MIN_PRICE"] = min(array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE"));
-    $minPrice=(int)array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE")[0];
-    $minPriceClub=array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "LIST")[0];
-    foreach($arItem["PROPERTIES"]["PRICE"]["VALUE"] as $arPrice){
-        if (empty($arPrice["PRICE"]) || empty($arPrice["LIST"])){
-            continue;
-        }
-
-        if (((int)$arPrice["PRICE"]<=$minPrice) || (empty($minPriceClub) || empty($minPrice))){
-            $minPrice=(int)$arPrice["PRICE"];
-            $minPriceClub=$arPrice["LIST"];
-        }
-    }
-
-    $index=array_search($minPriceClub, array_column($arItem["PROPERTIES"]["BASE_PRICE"]["VALUE"], "LIST"));
-    $monthCount=$arItem["PROPERTIES"]["BASE_PRICE"]["VALUE"][$index]["NUMBER"];
-    $arItem["MIN_RPICE_PER_MONTH"]=false;
-    if ($monthCount>1){
-        $arItem["MIN_PRICE"]=ceil($arItem["MIN_PRICE"]/$monthCount);
-        $arItem["MIN_PRICE_PER_MONTH"]=true;
-    }
 
     $db_groups = CIBlockElement::GetElementGroups($arItem["ID"], false);
     while($ar_group = $db_groups->Fetch()) {
         $arItem["SECTIONS"][]=$ar_group["ID"];
     }
 
+    $present_height=count($arItem["PROPERTIES"]["PRESENTS"]["VALUE"])*54.6;
+    if ($present_height>0 && !empty($arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"])){
+        $present_height+=16;
+    }
+
+    if ($present_height>$arResult["PRESENT_HEIGHT"]){
+        $arResult["PRESENT_HEIGHT"]=$present_height;
+    }
+
+    $price_height=count($PRICES)*38.4;
+    if ($price_height>$arResult["PRICE_HEIGHT"]){
+        $arResult["PRICE_HEIGHT"]=$price_height;
+    }
 
 
 }
