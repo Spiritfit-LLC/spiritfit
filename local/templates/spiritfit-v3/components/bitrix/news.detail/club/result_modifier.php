@@ -85,10 +85,10 @@ while($item=$itemRes->Fetch()){
 
 
 if (!empty($arResult["PROPERTIES"]["NOT_OPEN_YET"]["VALUE"])){
-    $arResult['PROPERTIES']['ABONEMENTS']['VALUE']=array('ID' => $arResult['PROPERTIES']['ABONEMENTS']['VALUE']);
+    $GLOBALS['arAbonementFilter']=array('ID' => $arResult['PROPERTIES']['ABONEMENTS']['VALUE']);
 }
 else{
-    $arResult['PROPERTIES']['ABONEMENTS']['VALUE']=array(
+    $GLOBALS['arAbonementFilter']=array(
         'LOGIC' => 'OR',
         array('ID' => $arResult['PROPERTIES']['ABONEMENTS']['VALUE']),
         array('!PROPERTY_HIDDEN' => 40),
