@@ -27,7 +27,7 @@ global $settings;
             <div class="footer-menu-cell">
                 <div class="footer-menu-title"><a href="/club-members/" class="dont-touch">Членам клуба</a></div>
                 <ul>
-                    <li><a href="/club-members/#abonements" class="dont-touch">Абонементы</a></li>
+                    <li><a href="/abonement/">Абонементы</a></li>
                     <li><a href="https://corp.spiritfit.ru/" class="dont-touch">Корпоративная программа</a></li>
                     <li><a href="/loyalty-program/">Программа лояльности</a></li>
                     <li><a href="/club-members/partners/">Партнёры и привилегии</a></li>
@@ -164,7 +164,7 @@ $APPLICATION->IncludeComponent("bitrix:b24connector.openline.info","", Array(
         /*background-color: black;*/
     }
     .bx-livechat-head{
-        background-image: linear-gradient(90deg, #7f4790, #ff4f38);
+        background-image: linear-gradient(135deg, #E23834 3.26%, #8428DD 98.07%);;
     }
     .bx-livechat-bright-header .bx-livechat-title {
         color: white!important;
@@ -173,29 +173,29 @@ $APPLICATION->IncludeComponent("bitrix:b24connector.openline.info","", Array(
         font-family: 'Gotham Pro';
     }
     .bx-livechat-textarea-resize-handle{
-        background-image: linear-gradient(90deg, #7f4790, #ff4f38);
+        background-image: linear-gradient(135deg, #E23834 3.26%, #8428DD 98.07%);;
     }
     .bx-im-textarea{
         padding:20px 0 0 0;
     }
     .b24-widget-button-inner-item{
-        background-image: linear-gradient(90deg, #7f4790, #ff4f38);
+        background-image: linear-gradient(135deg, #E23834 3.26%, #8428DD 98.07%);;
         background-color: transparent;
     }
     .b24-widget-button-position-bottom-right{
         bottom:37px!important;
     }
     .b24-widget-button-pulse{
-        border-color: #7f4790!important;
+        border-color: #8428DD!important;
     }
     .b24-widget-button-inner-mask{
-        background: #7f4790!important;
+        background: #8428DD!important;
     }
     button.b24-form-btn{
-        background-image: linear-gradient(90deg, #7f4790, #ff4f38);
+        background-image: linear-gradient(135deg, #E23834 3.26%, #8428DD 98.07%);;
     }
     .bx-imopenlines-form-result-container.bx-imopenlines-form-success {
-        background-image: linear-gradient(90deg, #7f4790, #ff4f38)!important;
+        background-image: linear-gradient(135deg, #E23834 3.26%, #8428DD 98.07%);!important;
         border:none!important;
     }
     .b24-form-control-container input:-webkit-autofill {
@@ -210,13 +210,13 @@ $APPLICATION->IncludeComponent("bitrix:b24connector.openline.info","", Array(
         background-color: transparent;
     }
     .b24-widget-button-inner-block {
-        background-image: linear-gradient(90deg, #7f4790, #ff4f38);
+        background-image: linear-gradient(135deg, #E23834 3.26%, #8428DD 98.07%);;
     }
     a.b24-widget-button-social-item.b24-widget-button-openline_livechat {
-        background-color: #9f497a!important;
+        background-color: #8428DD!important;
     }
     a.b24-widget-button-social-item.b24-widget-button-callback {
-        background-color: #9f497a!important;
+        background-color: #8428DD!important;
     }
     .b24-window-mounts {
         position: absolute;
