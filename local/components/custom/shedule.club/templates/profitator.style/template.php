@@ -5,14 +5,14 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 
 <?if($arResult["SCHEDULE"]):?>
-<section class="b-timetable" id="timetable">
+<section class="b-timetable section-margin-top" id="timetable">
     <div class="content-center">
         <div class="b-timetable__heading">
             <h2 class="b-timetable__title">Расписание групповых занятий</h2>
             <!--noindex-->
             <div class="timetable-controls">
-                <div class="b-timetable__switch-holder">
-                    <select class="b-timetable__switch">
+                <div class="b-timetable__switch-holder select2-black">
+                    <select class="b-timetable__switch select2">
                         <? foreach ($arResult["CLUBS"] as $itemClub) { ?>
                             <option value="<?=$itemClub['PROPERTY_NUMBER_VALUE']?>" <?if($itemClub["SELECTED"]) echo "selected";?>><?=$itemClub['NAME']?></option>
                         <? } ?>
@@ -20,15 +20,15 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
                 </div>
                 <button class="show-filters">Показать фильтр <span class="btn-arrow"></span></button>
             </div>
-            <div class="b-timetable__filter is-hide">
-                <div class="b-timetable__filter-block">
+            <div class="b-timetable__filter is-hide select2-black">
+                <div class="b-timetable__filter-block ">
 <!--                    <select class="filter-direction__switch">-->
 <!--                        <option value="all">Все направления</option>-->
 <!--                        --><?// foreach ($arResult["DIRECTIONS"] as $iteDirection) { ?>
 <!--                            <option value="--><?//=$iteDirection['id']?><!--">--><?//=$iteDirection['name']?><!--</option>-->
 <!--                        --><?// } ?>
 <!--                    </select>-->
-                    <select class="filter-loadlevel__switch filter-switch" multiple="multiple" data-placeholder="Уровень нагрузки" data-close="false">
+                    <select class="filter-loadlevel__switch filter-switch select2" multiple="multiple" data-placeholder="Уровень нагрузки" data-close="false">
                         <option value="all" class="all-select">Выбрать все</option>
                         <? foreach ($arResult["FILTERS"]["LOAD_LEVEL"] as $ID=>$LOAD_LEVEL) { ?>
                             <option value="<?=$ID?>"><?=$LOAD_LEVEL?></option>
@@ -42,7 +42,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
                     </div>
                 </div>
                 <div class="b-timetable__filter-block">
-                    <select class="filter-iwant__switch filter-switch" multiple="multiple" data-placeholder="Что я хочу" data-close="false">
+                    <select class="filter-iwant__switch filter-switch select2" multiple="multiple" data-placeholder="Что я хочу" data-close="false">
                         <option value="all">Выбрать все</option>
                         <? foreach ($arResult["FILTERS"]["I_WANT"] as $ID=>$I_WANT) { ?>
                             <option value="<?=$ID?>"><?=$I_WANT?></option>
@@ -58,7 +58,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
                     </div>
                 </div>
                 <div class="b-timetable__filter-block">
-                    <select class="filter-musculegroups__switch filter-switch" multiple="multiple" data-placeholder="Какие группы мышц" data-close="false">
+                    <select class="filter-musculegroups__switch filter-switch select2" multiple="multiple" data-placeholder="Какие группы мышц" data-close="false">
                         <option value="all">Выбрать все</option>
                         <? foreach ($arResult["FILTERS"]["MUSCULE_GROUPS"] as $ID=>$MUSCULE_GROUP) { ?>
                             <option value="<?=$ID?>"><?=$MUSCULE_GROUP?></option>
@@ -119,13 +119,13 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
                                             </div>
                                             <?if($arResult["SHOW_TRIALWORKOUT_BTN"]):?>
                                                 <?if (!$arResult["LK_TRIALWORKOUT"]):?>
-                                                    <a href="/abonement/probnaya-trenirovka-/" class="get-trialworkout is-hide-mobile" data-form-id="<?=$arResult["AJAX_WEB_FORM_ID"]?>"
+                                                    <a href="/abonement/probnaya-trenirovka-/" class="get-trialworkout is-hide-mobile visible-desktop" data-form-id="<?=$arResult["AJAX_WEB_FORM_ID"]?>"
                                                        data-layer="true"
                                                        data-layercategory="UX"
                                                        data-layeraction="clickTrialWorkoutButton-Schedule"
                                                        data-layerlabel="<?=$APPLICATION->GetCurPage()?>">Пробная тренировка</a>
                                                 <?else:?>
-                                                    <a href="/personal/?SECTION=<?=$arResult["LK_TRIALWORKOUT_SECTION"]?>" class="get-trialworkout is-hide-mobile"
+                                                    <a href="/personal/?SECTION=<?=$arResult["LK_TRIALWORKOUT_SECTION"]?>" class="get-trialworkout is-hide-mobile visible-desktop"
                                                        data-layer="true"
                                                        data-layercategory="UX"
                                                        data-layeraction="clickTrialWorkoutButton-Schedule"
@@ -153,13 +153,13 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
                     <span>Попробуйте изменить фильтры или рассмотреть варианты тренировок на другой день</span>
                 </div>
                 <?if (!$arResult["LK_TRIALWORKOUT"]):?>
-                    <a href="/abonement/probnaya-trenirovka-/" class="get-trialworkout is-hide-desktop" data-form-id="<?=$arResult["AJAX_WEB_FORM_ID"]?>"
+                    <a href="/abonement/probnaya-trenirovka-/" class="get-trialworkout is-hide-desktop hidden-desktop" data-form-id="<?=$arResult["AJAX_WEB_FORM_ID"]?>"
                        data-layer="true"
                        data-layercategory="UX"
                        data-layeraction="clickTrialWorkoutButton-Schedule"
                        data-layerlabel="<?=$APPLICATION->GetCurPage()?>">Пробная тренировка</a>
                 <?else:?>
-                    <a href="/personal/?SECTION=<?=$arResult["LK_TRIALWORKOUT_SECTION"]?>" class="get-trialworkout is-hide-desktop"
+                    <a href="/personal/?SECTION=<?=$arResult["LK_TRIALWORKOUT_SECTION"]?>" class="get-trialworkout is-hide-desktop hidden-desktop"
                        data-layer="true"
                        data-layercategory="UX"
                        data-layeraction="clickTrialWorkoutButton-Schedule"
