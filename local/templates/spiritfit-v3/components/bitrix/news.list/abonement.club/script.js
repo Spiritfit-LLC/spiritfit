@@ -35,6 +35,26 @@ $(document).ready(function(){
         ]
     });
 
+    var include_height=0;
+    $(".slider-abonement__item-include-list").each(function (){
+        if ($(this).height()>include_height){
+            include_height=$(this).height();
+        }
+    }).height(include_height);
+
+    var price_height=0;
+    $(".slider-abonement__item-prices").each(function(){
+        if ($(this).height()>price_height){
+            price_height=$(this).height();
+        }
+    }).height(price_height);
+
+    var sale_height=0;
+    $(".slider-abonement__item-sale").each(function(){
+        if ($(this).height()>sale_height){
+            sale_height=$(this).height();
+        }
+    }).height(sale_height + 18);
 
     var section_id=$(".slider-section__item.active").data("section-id");
     if (section_id!==undefined){

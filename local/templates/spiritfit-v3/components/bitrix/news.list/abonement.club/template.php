@@ -41,7 +41,7 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
                             <div class="slider-abonement__item-title">
                                 <?=htmlspecialcharsback($ITEM["PROPERTIES"]["TITLE"]["VALUE"]["TEXT"])?>
                             </div>
-                            <div class="slider-abonement__item-prices" style="height: <?=$arResult["PRICE_HEIGHT"]?>px">
+                            <div class="slider-abonement__item-prices">
                                 <?$i=0;?>
                                 <?foreach ($ITEM["PRICES"] as $PRICE):?>
                                 <div class="slider-abonement__item-price-item" <?if ($PRICE["PRICE"]==0):?> style="justify-content: center" <?endif?>>
@@ -65,7 +65,7 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
                                 <?$i++?>
                                 <?endforeach;?>
                             </div>
-                            <div class="slider-abonement__item-sale" style="height: <?=$arResult["PRESENT_HEIGHT"]?>px">
+                            <div class="slider-abonement__item-sale">
                                 <?foreach ($ITEM["PROPERTIES"]["PRESENTS"]["VALUE"] as $PRESENT):?>
                                     <div class="abonement-sale-container" style="background-image: url('<?=SITE_TEMPLATE_PATH.'/img/icons/abonement-sale.svg'?>')">
                                         <div><?=$PRESENT?></div>

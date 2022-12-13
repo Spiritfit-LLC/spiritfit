@@ -2,7 +2,6 @@
     width: 410px;
     background: #000000;
     color: white;
-    height: 810px;
     position: relative;
     margin: 0 15px;
 }
@@ -76,9 +75,9 @@ span.abonement-sale-date {
     font-size: 14px;
     font-weight: 300;
     line-height: 18px;
-    max-height: 290px;
     overflow-y: auto;
     overflow-x: hidden;
+    margin-bottom: 80px;
 }
 .abonement__item-include-item{
     background-image: url(./img/abonement-check-mark.svg);
@@ -146,7 +145,7 @@ button.slider-section__item.active {
 }
 @media screen and (max-width: 400px){
     .abonement-sale-container{
-        font-size: 15px;
+        font-size: 14px;
     }
     span.abonement-sale-date {
         font-size: 12px;

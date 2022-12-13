@@ -59,7 +59,7 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
                             </div>
 
                             <?if (false):?>
-                            <div class="slider-abonement__item-price" style="margin-top: -16px; height: 39px">
+                            <div class="slider-abonement__item-price">
                                 <?if (!empty($ITEM["MIN_PRICE2"])):?>
                                     <?if (!empty($ITEM["PROPERTIES"]["PRICE_MAIN_SIGN"]["VALUE"][1])):?>
                                         <div><?=$ITEM["PROPERTIES"]["PRICE_MAIN_SIGN"]["VALUE"][1]?></div>
@@ -75,15 +75,16 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
 
 
 
-                            <div class="slider-abonement__item-sale" style="height: <?=$arResult["PRESENT_HEIGHT"]?>px">
+                            <div class="slider-abonement__item-sale">
+                                <?if (!empty($ITEM["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"])):?>
+                                    <span class="abonement-sale-date"><?=$ITEM["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"]?></span>
+                                <?endif;?>
                                 <?foreach ($ITEM["PROPERTIES"]["PRESENTS"]["VALUE"] as $PRESENT):?>
                                 <div class="abonement-sale-container" style="background-image: url('<?=SITE_TEMPLATE_PATH.'/img/icons/abonement-sale.svg'?>')">
                                     <div><?=$PRESENT?></div>
                                 </div>
                                 <?endforeach;?>
-                                <?if (!empty($ITEM["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"])):?>
-                                    <span class="abonement-sale-date"><?=$ITEM["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"]?></span>
-                                <?endif;?>
+
                             </div>
                             <?if (!empty($ITEM["PROPERTIES"]["INCLUDE"]["VALUE"])):?>
                             <div class="slider-abonement__item-include-list">

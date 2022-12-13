@@ -15,8 +15,6 @@ while($sectRes = $dbResSect->GetNext())
 $items=[];
 
 $SECTIONS=[];
-$arResult["PRESENT_HEIGHT"]=0;
-$arResult["PRICE_HEIGHT"]=0;
 //Собираем  массив из Разделов и элементов
 foreach ($arResult["ITEMS"] as $key=>&$arItem){
     $f=false;
@@ -90,20 +88,6 @@ foreach ($arResult["ITEMS"] as $key=>&$arItem){
     $db_groups = CIBlockElement::GetElementGroups($arItem["ID"], false);
     while($ar_group = $db_groups->Fetch()) {
         $arItem["SECTIONS"][]=$ar_group["ID"];
-    }
-
-    $present_height=count($arItem["PROPERTIES"]["PRESENTS"]["VALUE"])*54.6;
-    if ($present_height>0 && !empty($arItem["PROPERTIES"]["DESCRIPTION_SALE"]["VALUE"])){
-        $present_height+=16;
-    }
-
-    if ($present_height>$arResult["PRESENT_HEIGHT"]){
-        $arResult["PRESENT_HEIGHT"]=$present_height;
-    }
-
-    $price_height=count($PRICES)*38.4;
-    if ($price_height>$arResult["PRICE_HEIGHT"]){
-        $arResult["PRICE_HEIGHT"]=$price_height;
     }
 
 
