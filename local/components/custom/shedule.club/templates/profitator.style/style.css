@@ -1,3 +1,8 @@
+.b-timetable{margin-bottom:85px;position:relative}
+.b-timetable__switch-holder{position:relative;width:280px; display:inline-block;}
+@media screen and (max-width:768px){.b-timetable__switch-holder{width:100%;padding:0;margin:0}.b-timetable__switch-holder:after{display:none}}
+.b-timetable__heading{display:flex;margin-bottom:50px;flex-direction: column;}
+.b-timetable__head{padding:5px 15px 20px;margin-bottom:45px;font-weight:700;font-size:18px;letter-spacing:.02em;text-transform:uppercase;border-bottom:1px solid}
 .timetable__filter .timetable__filter-dept{
     width: 280px;
 }
@@ -36,6 +41,7 @@ span.b-timetable__head-day {
     display: flex;
     margin-bottom: 45px;
 }
+
 
 .b-timetable__day-times {
     display: inline-block;
@@ -199,7 +205,7 @@ span.b-timetable__head-day {
 button.show-filters {
     margin-left: 100px;
     background: none;
-    color: white;
+    color: currentColor;
     padding: 5px;
     border:none;
     border-bottom: 2px dashed;
@@ -293,7 +299,7 @@ button.b-timetable__filter-clear {
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: white;
+    color: currentColor;
     margin-top: 30px;
     float: right;
 }
@@ -432,7 +438,7 @@ input.select2-search__field::placeholder{
     background: none!important;
     border: none!important;
     font-weight: 500;
-    color:white;
+    color:currentColor;
     overflow: hidden;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
@@ -450,4 +456,7 @@ span.plus-selection {
     font-size: 20px;
     font-weight: 500;
     color: #ff7628;
+}
+.select2-container--default .select2-search--inline .select2-search__field::placeholder{
+    color:currentColor;
 }
