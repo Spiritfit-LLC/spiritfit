@@ -63,6 +63,11 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
                                     </div>
                                 </div>
                                 <?$i++?>
+                                <?//НЕ ВЫВОДИМ ВТОРУЮ ЦЕНУ
+                                if ($i>0){
+                                    break;
+                                }
+                                ?>
                                 <?endforeach;?>
                             </div>
                             <div class="slider-abonement__item-sale">
