@@ -257,16 +257,20 @@ $GLOBALS['arAbonementFilter'] =
                                data-src="<?=CFile::GetPath($arResult['PROPERTIES']['AJAX_MOBILE_VIDEO']['VALUE'])?>"
                                data-title="<?=$arResult['PROPERTIES']['AJAX_MOBILE_VIDEO_TITLE']['VALUE']?>"
                                data-poster="<?=CFile::GetPath($arResult['PROPERTIES']['AJAX_MOBILE_VIDEO_POSTER']['VALUE'])?>">посмотреть клуб</a>
-                            <div class="escapingBallG-animation">
-                                <div id="escapingBall_1" class="escapingBallG"></div>
-                            </div>
-                            <div class="club-video-container hidden-desktop"></div>
                         <?endif;?>
                     </div>
                 </div>
 
             </div>
         </div>
+        <?if ($arResult['PROPERTIES']['AJAX_MOBILE_VIDEO']['VALUE']):?>
+        <div class="club-video-container hidden-desktop">
+            <div class="club-video-closer closer white" onclick="close_club_video()">
+                <?=file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/closer-default.svg')?>
+            </div>
+            <div class="club-video"></div>
+        </div>
+        <?endif;?>
     </section>
 <? } ?>
 <?if (!empty($arResult["PROPERTIES"]["TEAM"]["ITEMS"])):?>
