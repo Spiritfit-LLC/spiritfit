@@ -155,4 +155,45 @@ $(document).ready(function(){
         $('.b-map__route-tabitem-desc.active').removeClass("active");
         $(`.b-map__route-tabitem-desc[data-routetypeid="${id}"]`).addClass('active');
     });
+
+
+
+        $('a[href="#show-club-btn"]').click(function(e){
+            e.preventDefault();
+            if ($('.club-video-container').hasClass('loaded')){
+                $('.club-video-container')
+                    .css('display', 'flex')
+                    .fadeIn(300);
+            }
+            else{
+                $(this).css('opacity', 0);
+                $.ajax({
+                    url: '/local/ajax/videoplayer.php',
+                    type: 'GET',
+                    data: ({
+                        VIDEOFILE:$(this).data('src'),
+                        POSTER:$(this).data('poster')
+                    }),
+                    success: function(data) {
+                        $('a[href="#show-club-btn"]').css('opacity', 1);
+                        $('.club-video').html(data);
+
+                        $('.club-video-container')
+                            .addClass('loaded')
+                            .css('display', 'flex')
+                            .fadeIn(300);
+                    },
+                    error: function(data) {
+                        $('a[href="#show-club-btn"]').css('opacity', 1);
+                        alert('Возникла ошибка')
+                    },
+                });
+            }
+
+        });
 })
+
+var close_club_video=function(){
+    $('.club-video-container').find('video').trigger('pause');
+    $('.club-video-container').fadeOut(300);
+}
