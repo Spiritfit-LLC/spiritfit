@@ -46,7 +46,7 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
                                     <?if (!empty($ITEM["PROPERTIES"]["PRICE_MAIN_SIGN"]["VALUE"][0])):?>
                                         <div><?=$ITEM["PROPERTIES"]["PRICE_MAIN_SIGN"]["VALUE"][0]?></div>
                                     <?else:?>
-                                        <div>Ежемесячный платеж от</div>
+                                        <div>Ежемесячный платеж</div>
                                     <?endif?>
                                 <?endif?>
                                 <div class="abonement-price">
@@ -58,6 +58,7 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
                                 </div>
                             </div>
 
+                            <?if (false):?>
                             <div class="slider-abonement__item-price" style="margin-top: -16px; height: 39px">
                                 <?if (!empty($ITEM["MIN_PRICE2"])):?>
                                     <?if (!empty($ITEM["PROPERTIES"]["PRICE_MAIN_SIGN"]["VALUE"][1])):?>
@@ -70,6 +71,7 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
                                     </div>
                                 <?endif;?>
                             </div>
+                            <?endif;?>
 
 
 
