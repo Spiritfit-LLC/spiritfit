@@ -51,7 +51,7 @@ if( !empty($siteProperties["PROPERTIES"]["CLUB_FORM_SUCCESS"]["VALUE"])) {
         "PAGER_SHOW_ALL" => "N",
         "PAGER_TEMPLATE" => ".default",
         "PAGER_TITLE" => "Страница",
-        "PROPERTY_CODE" => array(0=>"EMAIL",1=>"ADRESS",2=>"CORD_YANDEX",3=>"NUMBER",4=>"SOON",5=>"LINK_VIDEO",6=>"PHONE",7=>"TEXT_FORM",8=>"WORK",9=>"INDEX",10=>"HIDE_LINK",11=>"REVIEWS",12=>"CLUB_UTP",),
+        "PROPERTY_CODE" => array(0=>"EMAIL",1=>"ADRESS",2=>"CORD_YANDEX",3=>"NUMBER",4=>"SOON",5=>"LINK_VIDEO",6=>"PHONE",7=>"TEXT_FORM",8=>"WORK",9=>"INDEX",10=>"HIDE_LINK",11=>"REVIEWS",12=>"CLUB_UTP", 13=>"NOT_OPEN_YET"),
         "SET_BROWSER_TITLE" => "Y",
         "SET_CANONICAL_URL" => "N",
         "SET_LAST_MODIFIED" => "N",
