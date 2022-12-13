@@ -43,17 +43,36 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
                             </div>
                             <div class="slider-abonement__item-price" <?if ($ITEM["MIN_PRICE"]==0):?> style="justify-content: center" <?endif?>>
                                 <?if ($ITEM["MIN_PRICE"]!=0):?>
-                                    <div>Ежемесячный платеж от</div>
+                                    <?if (!empty($ITEM["PROPERTIES"]["PRICE_MAIN_SIGN"]["VALUE"][0])):?>
+                                        <div><?=$ITEM["PROPERTIES"]["PRICE_MAIN_SIGN"]["VALUE"][0]?></div>
+                                    <?else:?>
+                                        <div>Ежемесячный платеж от</div>
+                                    <?endif?>
                                 <?endif?>
-                                <div class="abonement-price <?if ($i>0) echo "white-text"?>">
+                                <div class="abonement-price">
                                     <?if ($ITEM["MIN_PRICE"]==0):?>
                                         Бесплатно
                                     <?else:?>
                                         <?=$ITEM["MIN_PRICE"]?><span class="rub">₽</span>
                                     <?endif?>
-
                                 </div>
                             </div>
+
+                            <div class="slider-abonement__item-price" style="margin-top: -16px; height: 39px">
+                                <?if (!empty($ITEM["MIN_PRICE2"])):?>
+                                    <?if (!empty($ITEM["PROPERTIES"]["PRICE_MAIN_SIGN"]["VALUE"][1])):?>
+                                        <div><?=$ITEM["PROPERTIES"]["PRICE_MAIN_SIGN"]["VALUE"][1]?></div>
+                                    <?else:?>
+                                        <div>Первый месяц от</div>
+                                    <?endif?>
+                                    <div class="abonement-price white-text">
+                                        <?=$ITEM["MIN_PRICE2"]?><span class="rub">₽</span>
+                                    </div>
+                                <?endif;?>
+                            </div>
+
+
+
                             <div class="slider-abonement__item-sale" style="height: <?=$arResult["PRESENT_HEIGHT"]?>px">
                                 <?foreach ($ITEM["PROPERTIES"]["PRESENTS"]["VALUE"] as $PRESENT):?>
                                 <div class="abonement-sale-container" style="background-image: url('<?=SITE_TEMPLATE_PATH.'/img/icons/abonement-sale.svg'?>')">

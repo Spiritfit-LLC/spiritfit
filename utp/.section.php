@@ -1,5 +1,5 @@
 <?
-$sSectionName = "Уникальное торговое предложение";
+$sSectionName = "Нас выбирают потому что";
 $arDirProperties = Array(
     "description" => ""
 );

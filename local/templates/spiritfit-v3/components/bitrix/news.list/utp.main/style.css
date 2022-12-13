@@ -36,13 +36,17 @@ section.utp-main {
     }
 
     .utp-main__items .b-cards-slider__arrow-wrapper--right {
-        right: 50px;
+        right: 55px;
     }
     .utp-main__items:hover .b-cards-slider__arrow-wrapper{
         opacity: 1;
     }
-    .utp-main__items .b-cards-slider__arrow-wrapper{
-        opacity: 0;
-        transition:0.3s;
+    /*.utp-main__items .b-cards-slider__arrow-wrapper{*/
+    /*    opacity: 0;*/
+    /*    transition:0.3s;*/
+    /*}*/
+
+    .utp-main__items .b-cards-slider__arrow.b-cards-slider__arrow--left {
+        right: -5px;
     }
 }
