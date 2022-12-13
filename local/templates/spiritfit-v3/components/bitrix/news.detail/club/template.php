@@ -88,13 +88,6 @@ $GLOBALS['arUtpFilter'] =
     </div>
 </div>
 
-<?php
-$GLOBALS['arAbonementFilter'] =
-    [
-        "ID"=>$arResult["PROPERTIES"]["ABONEMENTS"]["VALUE"],
-        "ACTIVE"=>"Y"
-    ];
-?>
 <?$APPLICATION->IncludeComponent(
     "bitrix:news.list",
     "abonement.club",
