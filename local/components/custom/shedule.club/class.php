@@ -164,7 +164,9 @@ class ScheduleClubomponent extends CBitrixComponent implements Controllerable{
             }
             elseif (!empty($LESSONS[$item["lessonType"]["id"]]["IMAGE"]["VALUE"])){
                 $type="IMG";
-                $MEDIA=CFile::GetPath($LESSONS[$item["lessonType"]["id"]]["IMAGE"]["VALUE"]);
+                $image=CFile::ResizeImageGet($LESSONS[$item["lessonType"]["id"]]["IMAGE"]["VALUE"], array('width' => 450, 'height' => 600), BX_RESIZE_IMAGE_PROPORTIONAL);
+                $MEDIA=$image["src"];
+
             }
 
             $result[$date]["TRAININGS"][] = array(
