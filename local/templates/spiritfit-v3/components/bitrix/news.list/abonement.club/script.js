@@ -25,13 +25,29 @@ $(document).ready(function(){
                 }
             },
             {
-                breakpoint: 484,
+                breakpoint: 768,
                 settings: {
-                    slidesToShow: 1,
-                    // arrows:false,
-                    variableWidth: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 1
+                }
+            },
+            {
+                breakpoint: 552,
+                settings: {
+                    centerMode: true,
+                    centerPadding: '15px',
+                    slidesToShow: 1
                 }
             }
+            // {
+            //     breakpoint: 484,
+            //     settings: {
+            //         slidesToShow: 1,
+            //         // arrows:false,
+            //         variableWidth: false,
+            //     }
+            // }
         ]
     });
 

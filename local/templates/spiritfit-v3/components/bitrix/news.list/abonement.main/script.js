@@ -25,13 +25,29 @@ $(document).ready(function(){
                 }
             },
             {
-                breakpoint: 484,
+                breakpoint: 768,
                 settings: {
-                    slidesToShow: 1,
-                    // arrows:false,
-                    variableWidth: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 1
+                }
+            },
+            {
+                breakpoint: 552,
+                settings: {
+                    centerMode: true,
+                    centerPadding: '15px',
+                    slidesToShow: 1
                 }
             }
+            // {
+            //     breakpoint: 484,
+            //     settings: {
+            //         slidesToShow: 1,
+            //         // arrows:false,
+            //         variableWidth: false,
+            //     }
+            // }
         ]
     });
 
@@ -55,7 +71,7 @@ $(document).ready(function(){
         if ($(this).height()>sale_height){
             sale_height=$(this).height();
         }
-    }).height(sale_height + 18);
+    }).height(sale_height + $(".abonement-sale-date").height());
 
     var section_id=$(".slider-section__item.active").data("section-id");
     if (section_id!==undefined){
