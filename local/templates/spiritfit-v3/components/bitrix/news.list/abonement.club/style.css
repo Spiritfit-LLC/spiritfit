@@ -4,6 +4,7 @@
     color: white;
     position: relative;
     margin: 0 15px;
+    transition: transform 0.3s;
 }
 /*.b-cards-slider__item.abonement:first-child{*/
 /*    margin-left: 0;*/
@@ -107,7 +108,33 @@ a.abonement-item__btn {
 
 @media screen and (max-width: 484px) {
     .b-cards-slider__item.abonement {
-        margin: 0 3px;
+        margin: 0 3px!important;
+    }
+    .slider-abonement__item-title {
+        font-size: 18px;
+        line-height: 25px;
+        margin-bottom: 10px;
+    }
+    .slider-abonement__item-title b {
+        font-size: 24px;
+        font-weight: 400;
+    }
+    .abonement-sale-container{
+        margin-bottom: 5px;
+        padding: 10px 0;
+        padding-left: 40px;
+    }
+    .slider-abonement__item-include-list{
+        font-size: 13px;
+    }
+    .slider-abonement__item-price{
+        font-size: 14px;
+    }
+    .abonement-price {
+        font-size: 22px;
+    }
+    span.abonement-sale-date {
+        font-size: 12.5px;
     }
 }
 
@@ -148,7 +175,7 @@ button.slider-section__item.active {
         font-size: 14px;
     }
     span.abonement-sale-date {
-        font-size: 12px;
+        font-size: 11px;
     }
 
 }
@@ -189,4 +216,24 @@ button.slider-section__item.active {
 
 .abonement-sale-container{
     margin-bottom: 7px;
+}
+
+@media screen and (max-width: 768px) {
+    .b-cards-slider__item.abonement{
+        margin:50px 15px;
+    }
+    .b-cards-slider__item.abonement.slick-center {
+        transform: scale(1.1);
+    }
+}
+@media screen and (max-width: 552px) {
+    .b-cards-slider__item.abonement{
+        margin:0 15px;
+        transform: scale(0.95);
+        width: 80vw;
+    }
+    .b-cards-slider__item.abonement.slick-center {
+        transform: scale(1.0);
+    }
+
 }
