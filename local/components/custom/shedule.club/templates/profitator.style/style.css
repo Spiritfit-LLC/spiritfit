@@ -112,6 +112,7 @@ span.b-timetable__head-day {
 }
 .training-item__photo{
     width: 40%;
+    margin-left: 20px;
 }
 .training-item__photo img{
     width: 100%;

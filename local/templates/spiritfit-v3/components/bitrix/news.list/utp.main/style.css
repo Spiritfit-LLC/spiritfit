@@ -50,3 +50,13 @@ section.utp-main {
         right: -5px;
     }
 }
+
+.utp-main__item{
+    opacity: 0;
+    display: none;
+    transition:opacity .3s ease-out;
+}
+.slick-initialized .utp-main__item{
+    display: block;
+    opacity:1;
+}
