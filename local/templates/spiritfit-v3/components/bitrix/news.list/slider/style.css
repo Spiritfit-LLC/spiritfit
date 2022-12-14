@@ -207,3 +207,12 @@ span.b-breadcrumbs__link.is-current {
     }
 }
 
+.b-info-slider__item{
+    opacity: 0;
+    display: none;
+    transition:opacity .3s ease-out;
+}
+.slick-initialized .b-info-slider__item{
+    display: block;
+    opacity:1;
+}
