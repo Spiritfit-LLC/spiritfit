@@ -1,6 +1,7 @@
 <?
 define('HIDE_SLIDER', true);
 define('BREADCRUMB_H1_ABSOLUTE', true);
+define('SITE_TEMPLATE_PATH', '/local/templates/spiritfit-v2/');
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 $APPLICATION->SetTitle("Клубы");
