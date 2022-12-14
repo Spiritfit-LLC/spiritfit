@@ -102,21 +102,21 @@ if(!empty($files['VALUE'])){
 <section class="b-screen b-screen_with-page-heading">
     <div class="b-screen__bg-holder" >
         <? if($video){ ?>
-            <video class="b-screen__bg-video <?if (!empty($currentMobileFileID)) echo 'is-hide-mobile';?>" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline src="<?=$src?>" type="video/mp4">
+            <video class="b-screen__bg-video <?if (!empty($currentMobileFileID)) echo 'is-hide-mobile visible-desktop';?>" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline src="<?=$src?>" type="video/mp4">
             </video>
         <? }elseif($image){ ?>
             <img src="<?=$imageType1["src"]?>" srcset="<?=$imageType3["src"]?> 450w, <?=$imageType2["src"]?> 800w, <?=$imageType1["src"]?> 1280w" alt="" class="<?if (!empty($currentMobileFileID)) echo 'is-hide-mobile';?>">
         <? }else{ ?>
-            <video class="b-screen__bg-video <?if (!empty($currentMobileFileID)) echo 'is-hide-mobile';?>" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline src="<?=SITE_TEMPLATE_PATH?>/video/spirit-screen.mp4" type="video/mp4">
+            <video class="b-screen__bg-video <?if (!empty($currentMobileFileID)) echo 'is-hide-mobile visible-desktop';?>" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline src="<?=SITE_TEMPLATE_PATH?>/video/spirit-screen.mp4" type="video/mp4">
             </video>
         <? } ?>
 
         <?if (!empty($currentMobileFileID)):?>
             <? if($videoMobile){ ?>
-                <video class="b-screen__bg-video is-hide-desktop" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline src="<?=$srcMobile?>" type="video/mp4">
+                <video class="b-screen__bg-video is-hide-desktop hidden-desktop" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline src="<?=$srcMobile?>" type="video/mp4">
                 </video>
             <? }elseif($imageMobile){ ?>
-                <img src="<?=$srcMobile?>" alt="" class="is-hide-desktop">
+                <img src="<?=$srcMobile?>" alt="" class="is-hide-desktop hidden-desktop">
             <? } ?>
         <?endif?>
 
