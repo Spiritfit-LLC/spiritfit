@@ -170,3 +170,13 @@ a.b-map__button{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+.leaflet-gesture-handling-scroll-warning:after{
+    font-weight: 700!important;
+    text-transform: uppercase!important;
+    padding-left: 50%!important;
+}
+.leaflet-gesture-handling-touch-warning:after{
+    font-weight: 700!important;
+    text-transform: uppercase!important;
+}

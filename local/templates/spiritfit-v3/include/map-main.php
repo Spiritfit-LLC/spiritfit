@@ -15,6 +15,9 @@ Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/map-main.css');
 <script src="<?=SITE_TEMPLATE_PATH?>/js/map-main-leafletjs.js?version=6"></script>
 <script src="<?=SITE_TEMPLATE_PATH . "/vendor/nicescroll/jquery.nicescroll.js"?>"></script>
 
+<link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" type="text/css">
+<script src="//unpkg.com/leaflet-gesture-handling"></script>
+
 <div class="b-map b-map_page b-map_page-main">
     <div class="b-map__map-wrap">
         <div class="b-map__map" id="mapid"></div>
