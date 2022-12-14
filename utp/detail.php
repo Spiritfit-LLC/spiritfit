@@ -32,7 +32,7 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");?>
         "ELEMENT_CODE" => $_REQUEST["ELEMENT_CODE"],
         "ELEMENT_ID" => "",
         "FIELD_CODE" => array("NAME", "PREVIEW_TEXT", "PREVIEW_PICTURE", "DETAIL_TEXT", "DETAIL_PICTURE", ""),
-        "IBLOCK_ID" => Utils::GetIBlockIDBySID("MAIN_UTP"),
+        "IBLOCK_ID" => "",
         "IBLOCK_TYPE" => "UTP",
         "IBLOCK_URL" => "",
         "INCLUDE_IBLOCK_INTO_CHAIN" => "N",
