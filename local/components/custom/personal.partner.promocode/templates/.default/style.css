@@ -1,0 +1,104 @@
+.partner-promocode__container {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x:hidden;
+    padding-right: 15px;
+}
+.partner-promocode__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 12px 0;
+    flex-wrap: wrap;
+    background: #2a2a2a;
+    border-radius: 5px;
+    padding: 8px 20px;
+}
+.partner-promocode__item:first-child{
+    margin-top:20px;
+}
+.partner-promocode__item:last-child{
+    margin-bottom: 0;
+}
+.partner-promocode__qr {
+    width: 150px;
+    height: 150px;
+    position: relative;
+}
+a.partner-promocode__link {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+}
+.partner-promocode__qr img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+.partner-promocode__title {
+    font-weight: 900;
+    font-size: 20px;
+    max-width: calc(50% - 5px);
+}
+.partner-promocode__code {
+    font-size: 22px;
+    font-weight: 900;
+    color: #fc6120;
+    cursor: pointer;
+    text-decoration: underline;
+    width: calc(50% - 5px);
+    text-align: end;
+}
+.cursor-pointer__icon {
+    position: absolute;
+    bottom: -25px;
+    right: -15px;
+    z-index: 20;
+    width: 40px;
+}
+.partner-promocode {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: end;
+    width: 60%;
+}
+@media screen and (max-width:1024px) {
+    .partner-promocode{
+        text-align: start;
+    }
+}
+
+.partner-promocode__code img {
+    width: 50%;
+    min-width: 100px;
+}
+.partner-promocode__item.qr {
+    align-items: flex-start;
+}
+a.promocode-qr-link {
+    font-size: 18px;
+    font-weight: 400;
+    text-decoration: none;
+}
+.qr .partner-promocode__code {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.partner-promocode__qr-code {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: min-content;
+}
+.partner-promocode__secription {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    margin-top: 20px;
+}

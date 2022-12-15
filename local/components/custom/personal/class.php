@@ -359,6 +359,19 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
 
                 $user_id=$USER->GetID();
                 $this->arResult['LK_FIELDS']=PersonalUtils::GetPersonalPageFormFields($user_id, false, [], false, $this->arResult["ACTIVE_SECTION"]??$this->arParams['ACTIVE_FORM']);
+
+
+                $rsUser=CUser::GetByID($user_id);
+                if ($arUser=$rsUser->Fetch()){
+                    $PROMOCODE_LIST = unserialize($arUser["UF_PARTNERS_PROMOCODE"]);
+                    foreach ($PROMOCODE_LIST as $PROMOCODE){
+                        if ($PROMOCODE["type"]=="FRIEND"){
+                            $this->arResult["PROMOCODE_FRIEND"]=$PROMOCODE;
+                            break;
+                        }
+                    }
+                }
+
                 $this->IncludeComponentTemplate('personal');
             }
 

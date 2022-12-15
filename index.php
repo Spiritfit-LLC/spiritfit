@@ -72,7 +72,7 @@ $APPLICATION->SetPageProperty("title", "Spirit Fitness – сеть фитнес
 </div>
 <? $APPLICATION->IncludeFile(SITE_TEMPLATE_PATH.'/include/map-main.php'); ?>
 
-<div class="content-center">
+<div class="content-center" id="abonements">
     <div class="b-section__title">
         <h2>Абонементы</h2>
     </div>

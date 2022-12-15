@@ -301,6 +301,56 @@
             <?
         } ?>
         <!--На время квиза-->
+        <?if (!empty($arResult["PROMOCODE_FRIEND"])):?>
+            <div class="personal-friend__container">
+                <div class="personal-friend__title">Дружить выгодно!</div>
+                <div class="personal-freind__promocode-container">
+                    Ваш промокод
+                    <div class="personal-freind__promocode-item"><?=$arResult["PROMOCODE_FRIEND"]["code"]?></div>
+                    <button class="promocode-copy" onclick="copy_freind_promocode()">скопировать промокод</button>
+                </div>
+            </div>
+        <style>
+            .personal-friend__container {
+                text-align: center;
+                background: #000000c7;
+                padding: 15px;
+                border-radius: 10px;
+            }
+            .personal-friend__title {
+                font-size: 22px;
+                font-weight: 700;
+                text-transform: uppercase;
+                line-height: 32px;
+            }
+            .personal-freind__promocode-item {
+                color: white;
+                font-size: 24px;
+                font-weight: 600;
+                padding: 10px;
+                width: max-content;
+                background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);
+                margin: 20px auto 0;
+            }
+            button.promocode-copy {
+                background: none;
+                color: white;
+                font-size: 12px;
+                text-decoration: underline;
+                border: none;
+            }
+        </style>
+        <script>
+            var copy_freind_promocode=function(){
+                var $tmp = $("<textarea>");
+                $("body").append($tmp);
+                $tmp.val('<?=$arResult["PROMOCODE_FRIEND"]["code"]?>').select();
+                document.execCommand("copy");
+                $tmp.remove();
+                alert("Промокод скопирован!");
+            }
+        </script>
+        <?endif?>
         <?
         global $APPLICATION;
         foreach ($arResult['LK_FIELDS']['SECTIONS'] as $SECTION){

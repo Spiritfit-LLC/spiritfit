@@ -82,7 +82,7 @@ $GLOBALS['arUtpFilter'] =
     )
 );?>
 
-<div class="content-center">
+<div class="content-center" id="abonements">
     <div class="b-section__title">
         <h2>Абонементы</h2>
     </div>
