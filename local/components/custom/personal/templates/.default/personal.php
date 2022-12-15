@@ -303,22 +303,21 @@
         <!--На время квиза-->
         <?if (!empty($arResult["PROMOCODE_FRIEND"])):?>
             <div class="personal-friend__container">
-                <div class="personal-friend__title">Дружить выгодно!</div>
+                <div class="personal-friend__title">Дружить выгодно!<br>Другу - скидка, вам - кешбэк.</div>
+                <div class="personal-freind__description">Делитесь промокодом, получайте +500 бонусов</div>
                 <div class="personal-freind__promocode-container">
-                    Ваш промокод
-                    <div class="personal-freind__promocode-item"><?=$arResult["PROMOCODE_FRIEND"]["code"]?></div>
-                    <button class="promocode-copy" onclick="copy_freind_promocode()">скопировать промокод</button>
+                    <div class="personal-freind__promocode-item" onclick="copy_freind_promocode()"><?=$arResult["PROMOCODE_FRIEND"]["code"]?></div>
                 </div>
             </div>
         <style>
             .personal-friend__container {
-                text-align: center;
                 background: #000000c7;
                 padding: 15px;
                 border-radius: 10px;
+                margin: 20px 0;
             }
             .personal-friend__title {
-                font-size: 22px;
+                font-size: 20px;
                 font-weight: 700;
                 text-transform: uppercase;
                 line-height: 32px;
@@ -330,14 +329,13 @@
                 padding: 10px;
                 width: max-content;
                 background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);
-                margin: 20px auto 0;
+                margin: 20px 0 0;
+                cursor: pointer;
+                border-radius: 5px;
             }
-            button.promocode-copy {
-                background: none;
-                color: white;
-                font-size: 12px;
-                text-decoration: underline;
-                border: none;
+            .personal-freind__description {
+                margin-top: 20px;
+                font-size: 17px;
             }
         </style>
         <script>
