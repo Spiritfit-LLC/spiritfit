@@ -2,6 +2,7 @@
 global $settings;
 ?>
 </main>
+<?if (!defined("HIDE_FOOTER")):?>
 <footer class="b-footer">
     <div class="content-center">
         <div class="footer-menu">
@@ -237,6 +238,7 @@ $APPLICATION->IncludeComponent("bitrix:b24connector.openline.info","", Array(
         display: none;
     }
 </style>
+<?endif;?>
 </body>
 <?
 $inHead = $APPLICATION->GetViewContent('inhead');

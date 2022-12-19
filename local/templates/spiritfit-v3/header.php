@@ -78,6 +78,7 @@ $clubs = Clubs::getList();
     <?$APPLICATION->ShowPanel()?>
 </div>
 <?endif;?>
+<?if (!defined("HIDE_HEADER")):?>
 <header class="b-header">
     <div class="content-center">
         <div class="b-header__content">
@@ -90,7 +91,10 @@ $clubs = Clubs::getList();
             <a class="phone-btn hidden-desktop" data-position="mobile-header" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>" style="background-image: url('<?=SITE_TEMPLATE_PATH.'/img/icons/icon-phone.svg'?>')"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a>
             <div class="b-header__nav">
                 <nav class="b-top-menu">
-                    <button class="b-top-menu__toggle hidden-desktop">Меню</button>
+                    <button class="b-top-menu__toggle hidden-desktop"
+                            data-layer="true"
+                            data-layercategory="UX"
+                            data-layeraction="clickHamburgerButton">Меню</button>
                     <div class="b-top-menu__holder select2-black">
                         <div class="b-club-search active hidden-desktop">
                             <label class="b-club-search__label" for="#club-search">Найти клуб</label>
@@ -121,7 +125,11 @@ $clubs = Clubs::getList();
                         );?>
 
                         <?if (!PersonalUtils::IsClient()):?>
-                            <a class="b-top-menu__btn button-outline hidden-desktop trial-training-btn" href="/abonement/probnaya-trenirovka-/#js-pjax-container" data-position="burgerMenu" style="margin-bottom: 20px;">Пробная тренировка</a>
+                            <a class="b-top-menu__btn button-outline hidden-desktop trial-training-btn" href="/abonement/probnaya-trenirovka-/#js-pjax-container"
+                               data-layer="true"
+                               data-layercategory="UX"
+                               data-layeraction="clickTrialWorkoutButton"
+                               data-layerlabel="burgerMenu" style="margin-bottom: 20px;">Пробная тренировка</a>
                             <a class="b-top-menu__btn button hidden-desktop" href="/abonement/"
                                data-layer="true"
                                data-layercategory="UX"
@@ -150,7 +158,7 @@ $clubs = Clubs::getList();
                    data-layer="true"
                    data-layercategory="UX"
                    data-layeraction="clickBuyAbonementButton"
-                   data-layerlabel="burgerMenu">Купить абонемент</a>
+                   data-layerlabel="header">Купить абонемент</a>
             <?endif;?>
             <div class="b-top-menu__right hidden-tablet hidden-phone">
                 <a class="b-header-phone phone-btn main-phone-btn" data-position="header" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"
@@ -178,7 +186,8 @@ $clubs = Clubs::getList();
         </div>
     </div>
 </header>
-<main class="b-page__main <?=(defined('HOLDER_CLASS') ? HOLDER_CLASS : '')?>" role="main">
+<?endif;?>
+<main class="b-page__main <?=(defined('HOLDER_CLASS') ? HOLDER_CLASS : '')?> <?if (defined('HIDE_HEADER')) echo "without-header";?>" role="main">
     <?if (!defined("HIDE_BREADCRUMB")):?>
         <div class="b-page__heading">
             <div class="content-center <?if (defined('H1_TEXT_CONTENT')) echo "text-content"?>">
