@@ -152,7 +152,13 @@ if(!empty($files['VALUE'])){
                                         </span>
                                     </div>
                                     <div class="b-info-slider__text"><?=$arItem["~PREVIEW_TEXT"]?></div>
-                                    <a class="b-info-slider__btn button" href="<?=(!empty($btnLink) ? $btnLink : '#')?>" onclick="setConversion('SliderBtnConversion');"><?=(!empty($btnText) ? $btnText : 'Заказать')?></a>
+                                    <a class="b-info-slider__btn button" href="<?=(!empty($btnLink) ? $btnLink : '#')?>" onclick="setConversion('SliderBtnConversion');"
+                                       data-layer="true"
+                                       data-layercategory="UX"
+                                       data-layeraction="clickLinkSliderPromo"
+                                       data-layerlabel="<?=$arItem["NAME"]?>"
+
+                                    ><?=(!empty($btnText) ? $btnText : 'Заказать')?></a>
                                 </div>
                             <?endforeach;?>
                         </div>

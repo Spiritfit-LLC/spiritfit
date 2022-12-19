@@ -24,7 +24,11 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
         <div class="sliders-section__controls">
             <?$i=0;?>
             <?foreach ($arResult["SECTIONS"] as $SECTION):?>
-                <button class="slider-section__item <?if ($i==0) echo 'active'?>" onclick="select_section(this, '<?=$SECTION["ID"]?>')" data-section-id="<?=$SECTION["ID"]?>">
+                <button class="slider-section__item <?if ($i==0) echo 'active'?>" onclick="select_section(this, '<?=$SECTION["ID"]?>')" data-section-id="<?=$SECTION["ID"]?>"
+                        data-layer="true"
+                        data-layercategory="UX"
+                        data-layeraction="clickAbonementGroupButton"
+                        data-layerlabel="<?=$SECTION["NAME"]?>">
                     <?=$SECTION["NAME"]?>
                 </button>
             <?$i++?>
@@ -89,7 +93,14 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
                                 <!--/noindex-->
                             </div>
                             <?endif?>
-                            <a href="<?=$ITEM["DETAIL_PAGE_URL"]?>" class="button abonement-item__btn">Купить</a>
+                            <a href="<?=$ITEM["DETAIL_PAGE_URL"]?>" class="button abonement-item__btn"
+                                <?if ($ITEM["CODE"]=="probnaya-trenirovka-"):?>
+                                    data-layer="true"
+                                    data-layercategory="UX"
+                                    data-layeraction="clickTrialWorkoutButton"
+                                    data-layerlabel="current_url"
+                                <?endif;?>
+                            >Купить</a>
                         </div>
                     </div>
                 <?endforeach;?>

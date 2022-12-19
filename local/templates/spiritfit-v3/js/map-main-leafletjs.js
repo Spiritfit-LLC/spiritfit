@@ -192,6 +192,10 @@ document.addEventListener("DOMContentLoaded", function(){
 
       setInfoContent(activeMarker);
     });
+
+      $('.b-map__switch').on("select2:opening", function(){
+          dataLayerSend("UX", "useClubSearchForm", "mainPage");
+      });
   }
 
   // функия для блока "поиск клуба" под картой
@@ -382,6 +386,8 @@ document.addEventListener("DOMContentLoaded", function(){
             $(this).removeAttr("style");
         })
     });
+
+
 });
 // }
 // ================================================================================
