@@ -279,8 +279,14 @@ $GLOBALS['arUtpFilter'] =
                 <div class="b-twoside-card b-treners__item">
                     <div class="b-twoside-card__inner">
                         <div class="b-twoside-card__content">
-                            <div class="b-twoside-card__image" style="background-image: url(<?=$ITEM["PICTURE"]?>)">
-                            </div>
+                            <?if (!empty($ITEM["PROPERTIES"]["VIDEO"]["VALUE"])):?>
+                                <video autoplay muted loop playsinline class="b-twoside-card__image">
+                                    <?$path=CFile::GetPath($ITEM["PROPERTIES"]["VIDEO"]["VALUE"])?>
+                                    <source src="<?=$path?>" type="video/<?=pathinfo($path, PATHINFO_EXTENSION)?>">
+                                </video>
+                            <?else:?>
+                            <div class="b-twoside-card__image" style="background-image: url(<?=$ITEM["PICTURE"]?>)"></div>
+                            <?endif;?>
                             <div class="b-twoside-card__name">
                                 <?=str_replace(" ", "<br/>", $ITEM["NAME"])?>
                             </div>
