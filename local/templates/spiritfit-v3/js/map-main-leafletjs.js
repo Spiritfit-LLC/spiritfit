@@ -24,6 +24,11 @@ document.addEventListener("DOMContentLoaded", function(){
       gestureHandling: true,
   }
 
+    L.tileLayer(this.settings.tiles + '/{z}/{x}/{y}.jpg', {...})
+        .on('tileloadstart', function(event) {
+            event.tile.setAttribute('loading', 'lazy');
+        });
+
   // инициализация карты
   mapL = new L.map('mapid', mapOptions);
   // подключаем слой карты

@@ -216,7 +216,7 @@ $GLOBALS['arUtpFilter'] =
                 <div class="b-image-plate-block__img-holder b-image-plate-block__img-holder_slider">
                     <? foreach ($arResult["PROPERTIES"]["PHOTO_GALLERY"]["ITEMS"] as $photo): ?>
                         <div class="b-image-plate-block__slide">
-                            <img class="b-image-plate-block__slide-img" data-lazy="<?=$photo["SRC_1280"]?>" srcset="<?=$photo["SRC_450"]?> 450w, <?=$photo["SRC_800"]?> 800w, <?=$photo["SRC_1280"]?> 1280w" alt="" role="presentation" />
+                            <img class="b-image-plate-block__slide-img" data-lazy="<?=$photo["SRC_1280"]?>" alt="" role="presentation" />
                         </div>
                     <? endforeach; ?>
                 </div>
@@ -366,7 +366,7 @@ $GLOBALS['arUtpFilter'] =
 
     <?$APPLICATION->AddHeadString('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>',true)?>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-    <script src="<?=SITE_TEMPLATE_PATH?>/js/map-leafletjs.js?version=5?>"></script>
+    <script src="<?=SITE_TEMPLATE_PATH?>/js/map-leafletjs.js?version=10?>"></script>
     <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" type="text/css">
     <script src="//unpkg.com/leaflet-gesture-handling"></script>
 
