@@ -1,7 +1,7 @@
 $(document).ready(function(){
     if (!window.sessionStorage.getItem("bn_promocode")){
         setTimeout(function(){
-            $(".promocode-gp-banner__container")
+            $(".promocode-banner__container")
                 .fadeIn(300)
                 .css("display", "flex");
 
@@ -11,8 +11,8 @@ $(document).ready(function(){
         },bannerTime);
 
 
-        $('.promocode-gp-banner__container').on(clickHandler, function(e){
-            $(".promocode-gp-banner__container").fadeOut(300);
+        $('.promocode-banner__container').on(clickHandler, function(e){
+            $(".promocode-banner__container").fadeOut(300);
             $('body').css('overflow', 'auto');
             dataLayerSend('bannerCatchDiscount', 'clickCloseButton', bannerPromocodePage);
         });
