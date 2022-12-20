@@ -9,14 +9,14 @@ Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/map-main.css');
 ?>
 <?$APPLICATION->AddHeadString('<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>',true)?>
 <script>window.clubs = <?=$clubsJson?></script>
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+<script defer src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
-<script src="<?=SITE_TEMPLATE_PATH?>/js/map-main-leafletjs.js?version=10"></script>
-<script src="<?=SITE_TEMPLATE_PATH . "/vendor/nicescroll/jquery.nicescroll.js"?>"></script>
+<script defer src="<?=SITE_TEMPLATE_PATH?>/js/map-main-leafletjs.min.js?version=11"></script>
+<script defer src="<?=SITE_TEMPLATE_PATH . "/vendor/nicescroll/jquery.nicescroll.js"?>"></script>
 
 <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" type="text/css">
-<script src="//unpkg.com/leaflet-gesture-handling"></script>
+<script defer src="//unpkg.com/leaflet-gesture-handling"></script>
 
 <div class="b-map b-map_page b-map_page-main">
     <div class="b-map__map-wrap">

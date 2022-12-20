@@ -102,20 +102,20 @@ if(!empty($files['VALUE'])){
 <section class="b-screen b-screen_with-page-heading">
     <div class="b-screen__bg-holder" >
         <? if($video){ ?>
-            <video class="b-screen__bg-video lazy <?if (!empty($currentMobileFileID)) echo 'is-hide-mobile visible-desktop';?>" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline>
+            <video class="b-screen__bg-video lazy <?if (!empty($currentMobileFileID)) echo 'is-hide-mobile visible-desktop';?>" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.webp" loop autoplay playsinline>
                 <source data-src="<?=$src?>" type="video/<?=pathinfo($src, PATHINFO_EXTENSION)?>">
             </video>
         <? }elseif($image){ ?>
             <img src="<?=$imageType1["src"]?>" srcset="<?=$imageType3["src"]?> 450w, <?=$imageType2["src"]?> 800w, <?=$imageType1["src"]?> 1280w" alt="" class="<?if (!empty($currentMobileFileID)) echo 'is-hide-mobile';?>">
         <? }else{ ?>
-            <video class="b-screen__bg-video lazy <?if (!empty($currentMobileFileID)) echo 'is-hide-mobile visible-desktop';?>" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline>
+            <video class="b-screen__bg-video lazy <?if (!empty($currentMobileFileID)) echo 'is-hide-mobile visible-desktop';?>" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.webp" loop autoplay playsinline>
                 <source data-src="<?=SITE_TEMPLATE_PATH?>/video/spirit-screen.mp4" type="video/<?=pathinfo(SITE_TEMPLATE_PATH.'/video/spirit-screen.mp4', PATHINFO_EXTENSION)?>">
             </video>
         <? } ?>
 
         <?if (!empty($currentMobileFileID)):?>
             <? if($videoMobile){ ?>
-                <video class="b-screen__bg-video lazy is-hide-desktop hidden-desktop" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.jpg" loop autoplay playsinline>
+                <video class="b-screen__bg-video lazy is-hide-desktop hidden-desktop" preload="none" muted="true" poster="<?=SITE_TEMPLATE_PATH?>/img/screen-video-placeholder.webp" loop autoplay playsinline>
                     <source data-src="<?=$srcMobile?>" type="video/<?=pathinfo($srcMobile, PATHINFO_EXTENSION)?>">
                 </video>
             <? }elseif($imageMobile){ ?>

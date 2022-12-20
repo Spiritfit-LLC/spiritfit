@@ -45,7 +45,7 @@ $(document).ready(function(){
         let $sliderFirstImg = elem.querySelector('.b-image-plate-block__slide:first-child img.b-image-plate-block__slide-img');
         function sliderInit(){
             $imgHolder.slick({
-                lazyLoad: 'ondemand',
+                lazyLoad: 'progressive',
                 arrows: false,
                 dots: true,
                 prevArrow: '<div class="b-image-plate-block__arrow b-image-plate-block__arrow--on-img b-image-plate-block__arrow--left"></div>',
@@ -91,13 +91,7 @@ $(document).ready(function(){
             addWheelHorizontalScrollToSlider($imgHolder);
             addSliderProgressBar($textSlider, 'slider-progressbar--bp768');
         }
-        if ($slides.length > 0) {
-            if ($($sliderFirstImg).height() == 0) {
-                $sliderFirstImg.onload = sliderInit;
-            } else {
-                sliderInit();
-            }
-        }
+        sliderInit();
     });
 
 

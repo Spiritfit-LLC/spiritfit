@@ -64,7 +64,7 @@ global $settings;
         </div>
     </div>
 </footer>
-<script async>
+<script>
     window.addEventListener('onBitrixLiveChat', function(event){
         var widget = event.detail.widget;
         widget.setOption('checkSameDomain', false);
