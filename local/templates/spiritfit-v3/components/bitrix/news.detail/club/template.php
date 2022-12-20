@@ -216,7 +216,7 @@ $GLOBALS['arUtpFilter'] =
                 <div class="b-image-plate-block__img-holder b-image-plate-block__img-holder_slider">
                     <? foreach ($arResult["PROPERTIES"]["PHOTO_GALLERY"]["ITEMS"] as $photo): ?>
                         <div class="b-image-plate-block__slide">
-                            <img class="b-image-plate-block__slide-img" src="<?=$photo["SRC_1280"]?>" srcset="<?=$photo["SRC_450"]?> 450w, <?=$photo["SRC_800"]?> 800w, <?=$photo["SRC_1280"]?> 1280w" alt="" role="presentation" />
+                            <img class="b-image-plate-block__slide-img" data-lazy="<?=$photo["SRC_1280"]?>" srcset="<?=$photo["SRC_450"]?> 450w, <?=$photo["SRC_800"]?> 800w, <?=$photo["SRC_1280"]?> 1280w" alt="" role="presentation" />
                         </div>
                     <? endforeach; ?>
                 </div>
@@ -280,12 +280,12 @@ $GLOBALS['arUtpFilter'] =
                     <div class="b-twoside-card__inner">
                         <div class="b-twoside-card__content">
                             <?if (!empty($ITEM["PROPERTIES"]["VIDEO"]["VALUE"])):?>
-                                <video autoplay muted loop playsinline class="b-twoside-card__image">
+                                <video autoplay muted loop playsinline class="b-twoside-card__image lazy" poster="<?=SITE_TEMPLATE_PATH.'/img/video-default-preloader.gif'?>">
                                     <?$path=CFile::GetPath($ITEM["PROPERTIES"]["VIDEO"]["VALUE"])?>
-                                    <source src="<?=$path?>" type="video/<?=pathinfo($path, PATHINFO_EXTENSION)?>">
+                                    <source data-src="<?=$path?>" type="video/<?=pathinfo($path, PATHINFO_EXTENSION)?>">
                                 </video>
                             <?else:?>
-                            <div class="b-twoside-card__image" style="background-image: url(<?=$ITEM["PICTURE"]?>)"></div>
+                            <div class="b-twoside-card__image lazy-bg" data-src="<?=$ITEM["PICTURE"]?>"></div>
                             <?endif;?>
                             <div class="b-twoside-card__name">
                                 <?=str_replace(" ", "<br/>", $ITEM["NAME"])?>

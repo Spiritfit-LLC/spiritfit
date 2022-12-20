@@ -137,8 +137,8 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
                                             <?if (!empty($TRAINING["MEDIA"]) && $TRAINING["MEDIA_TYPE"]=="IMG"):?>
                                                 <img src="<?=$TRAINING["MEDIA"]?>" loading="lazy">
                                             <?elseif (!empty($TRAINING["MEDIA"]) && $TRAINING["MEDIA_TYPE"]=="VIDEO"):?>
-                                                <video autoplay loop muted playsinline>
-                                                    <source src="<?=$TRAINING["MEDIA"]?>" type="video/<?=pathinfo($TRAINING["MEDIA"], PATHINFO_EXTENSION)?>">
+                                                <video autoplay loop muted playsinline class="lazy" poster="<?=SITE_TEMPLATE_PATH.'/img/video-default-preloader.gif'?>">
+                                                    <source data-src="<?=$TRAINING["MEDIA"]?>" type="video/<?=pathinfo($TRAINING["MEDIA"], PATHINFO_EXTENSION)?>">
                                                 </video>
                                             <?endif;?>
                                         </div>

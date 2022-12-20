@@ -26,7 +26,7 @@ $enableNoIndexPages = [
 	"/trenirovki/personal-training/", "/trenirovki/onlayn-trenirovki/", "/club-members/", "/trenirovki/partnery-i-privilegii/",
 	"/about/", "/about/adv/", "/about/platform/"
 ];
-if( in_array($currentUrl, $enableNoIndexPages) ) {
+if( in_array($currentUrl, $enableNoIndexPages)) {
 	$GLOBALS["NO_INDEX"] = true;
 }
 

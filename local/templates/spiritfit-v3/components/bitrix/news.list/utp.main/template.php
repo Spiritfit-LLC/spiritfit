@@ -23,7 +23,7 @@ $this->addExternalJs(SITE_TEMPLATE_PATH . "/vendor/slick/slick.min.js");
         <div class="utp-main__items">
             <?foreach($arResult["ITEMS"] as $arItem):?>
                 <div class="utp-main__item">
-                    <div class="utp-item__image" style="background-image: url('<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>')"></div>
+                    <div class="utp-item__image" data-src="<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>"></div>
                     <div class="utp-item__text">
                         <div class="utp-item__title"><?=$arItem["NAME"]?></div>
                         <a href="/utp/<?=$arItem["CODE"]?>/" class="button utp">Подробнее</a>
