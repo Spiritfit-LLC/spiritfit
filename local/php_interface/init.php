@@ -67,6 +67,10 @@ if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/FeedCr
 if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/TurboPagesYandex.php')) {
     require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/TurboPagesYandex.php');
 }
+if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/JsCssCompressor.php')) {
+    require_once($_SERVER["DOCUMENT_ROOT"] . '/local/php_interface/classes/JsCssCompressor.php');
+}
+
 
 $files = scandir($_SERVER["DOCUMENT_ROOT"].'/local/api');
 foreach($files as $file) {
