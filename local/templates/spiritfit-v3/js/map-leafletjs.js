@@ -21,15 +21,14 @@ document.addEventListener("DOMContentLoaded", function () {
 		gestureHandling: true,
 	}
 
-	L.tileLayer(this.settings.tiles + '/{z}/{x}/{y}.jpg', {...})
-		.on('tileloadstart', function(event) {
-			event.tile.setAttribute('loading', 'lazy');
-		});
-
 	// инициализация карты
 	mapL = new L.map('mapid', mapOptions);
 	// подключаем слой карты
-	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(mapL);
+	var tileLayer=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {});
+	tileLayer.on('tileloadstart', function(event) {
+		event.tile.setAttribute('loading', 'lazy');
+	});
+	tileLayer.addTo(mapL);
 
 	// настраиваем иконки. пути и размеры от ширины экрана
 	const iconPath = "/local/templates/spiritfit-v3/img/icons/";
