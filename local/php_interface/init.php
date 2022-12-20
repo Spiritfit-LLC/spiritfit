@@ -19,6 +19,7 @@ define("POST_FORM_CORP_ACTION_URI", "/local/templates/spiritfit-corp/ajax/modal-
 define("POST_FORM_CAREER_ACTION_URI", "/local/templates/spiritfit-career/ajax/modal-trial.php");
 define("MAIN_SITE_URL", "https://spiritfit.ru");
 define("API_SPIRITFIT_TOKEN", "65a0e413b0224cb198096c7e4a297aa0");
+define("DEFAULT_PATH", "/local/templates/.default/");
 
 $currentUrl = strtok($_SERVER["REQUEST_URI"], "?");
 $enableNoIndexPages = [
