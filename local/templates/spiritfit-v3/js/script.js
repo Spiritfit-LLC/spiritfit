@@ -1,4 +1,9 @@
 var clickHandler = ("ontouchstart" in window ? "touchend" : "click");
+
+window.addEventListener('DOMContentLoaded', (e) => {
+    yallJs.yall();
+});
+
 function startPreventBodyScroll(){
     $("body").addClass("is-fixed");
     if($(window).width()<1025)

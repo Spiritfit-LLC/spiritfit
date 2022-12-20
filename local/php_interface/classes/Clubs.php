@@ -37,6 +37,7 @@ class Clubs
 
     public static function clubsJson($clubs, $linkAnchor = "")
     {
+        \Bitrix\Main\Loader::includeModule("iblock");
         $arResult = [];
         $arFilter = array("IBLOCK_CODE" => "subscription", "ACTIVE" => "Y", "PROPERTY_CODE_ABONEMENT"=>"base");
         $dbElements = CIBlockElement::GetList(array("SORT"=>"ASC"), $arFilter);

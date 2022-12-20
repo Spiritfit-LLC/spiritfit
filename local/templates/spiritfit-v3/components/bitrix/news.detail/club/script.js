@@ -45,6 +45,7 @@ $(document).ready(function(){
         let $sliderFirstImg = elem.querySelector('.b-image-plate-block__slide:first-child img.b-image-plate-block__slide-img');
         function sliderInit(){
             $imgHolder.slick({
+                lazyLoad: 'ondemand',
                 arrows: false,
                 dots: true,
                 prevArrow: '<div class="b-image-plate-block__arrow b-image-plate-block__arrow--on-img b-image-plate-block__arrow--left"></div>',
@@ -158,39 +159,57 @@ $(document).ready(function(){
 
 
 
-        $('a[href="#show-club-btn"]').click(function(e){
-            e.preventDefault();
-            if ($('.club-video-container').hasClass('loaded')){
-                $('.club-video-container')
-                    .css('display', 'flex')
-                    .fadeIn(300);
-            }
-            else{
-                $(this).css('opacity', 0);
-                $.ajax({
-                    url: '/local/ajax/videoplayer.php',
-                    type: 'GET',
-                    data: ({
-                        VIDEOFILE:$(this).data('src'),
-                        POSTER:$(this).data('poster')
-                    }),
-                    success: function(data) {
-                        $('a[href="#show-club-btn"]').css('opacity', 1);
-                        $('.club-video').html(data);
+    $('a[href="#show-club-btn"]').click(function(e){
+        e.preventDefault();
+        if ($('.club-video-container').hasClass('loaded')){
+            $('.club-video-container')
+                .css('display', 'flex')
+                .fadeIn(300);
+        }
+        else{
+            $(this).css('opacity', 0);
+            $.ajax({
+                url: '/local/ajax/videoplayer.php',
+                type: 'GET',
+                data: ({
+                    VIDEOFILE:$(this).data('src'),
+                    POSTER:$(this).data('poster')
+                }),
+                success: function(data) {
+                    $('a[href="#show-club-btn"]').css('opacity', 1);
+                    $('.club-video').html(data);
 
-                        $('.club-video-container')
-                            .addClass('loaded')
-                            .css('display', 'flex')
-                            .fadeIn(300);
-                    },
-                    error: function(data) {
-                        $('a[href="#show-club-btn"]').css('opacity', 1);
-                        alert('Возникла ошибка')
-                    },
-                });
-            }
+                    $('.club-video-container')
+                        .addClass('loaded')
+                        .css('display', 'flex')
+                        .fadeIn(300);
+                },
+                error: function(data) {
+                    $('a[href="#show-club-btn"]').css('opacity', 1);
+                    alert('Возникла ошибка')
+                },
+            });
+        }
 
+    });
+
+    var lazyBackgrounds = [].slice.call(document.querySelectorAll(".b-twoside-card__image.lazy-bg"));
+
+    if ("IntersectionObserver" in window) {
+        let lazyBackgroundObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    var $target=$(entry.target);
+                    $target.css("background-image", 'url('+$target.data("src")+')');
+                    lazyBackgroundObserver.unobserve(entry.target);
+                }
+            });
         });
+
+        lazyBackgrounds.forEach(function(lazyBackground) {
+            lazyBackgroundObserver.observe(lazyBackground);
+        });
+    }
 })
 
 var close_club_video=function(){

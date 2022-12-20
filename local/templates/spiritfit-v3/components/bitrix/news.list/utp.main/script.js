@@ -1,7 +1,5 @@
 $(document).ready(function (){
 
-
-
     $(".utp-main__items").slick({
         infinite: true,
         autoplay: true,
@@ -47,5 +45,24 @@ $(document).ready(function (){
 
         var height=width/1.625;
         $this.height(height);
-    })
+    });
+
+
+    var lazyBackgrounds = [].slice.call(document.querySelectorAll(".utp-item__image"));
+
+    if ("IntersectionObserver" in window) {
+        let lazyBackgroundObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    var $target=$(entry.target);
+                    $target.css("background-image", 'url('+$target.data("src")+')');
+                    lazyBackgroundObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        lazyBackgrounds.forEach(function(lazyBackground) {
+            lazyBackgroundObserver.observe(lazyBackground);
+        });
+    }
 });

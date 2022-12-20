@@ -33,8 +33,10 @@ $clubs = Clubs::getList();
 
         //LIBS
         Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/jquery-3.6.1.min.js");
+        Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/yall/yall.js");
         Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . "/vendor/select2/select2.css");
         Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/vendor/select2/select2.min.js");
+
 
         Asset::getInstance()->addJS(SITE_TEMPLATE_PATH . "/js/script.js");
 
@@ -43,7 +45,7 @@ $clubs = Clubs::getList();
     <?$APPLICATION->ShowHead();?>
 
     <!-- Google Tag Manager -->
-    <script data-skip-moving="true">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    <script data-skip-moving="true" async>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
