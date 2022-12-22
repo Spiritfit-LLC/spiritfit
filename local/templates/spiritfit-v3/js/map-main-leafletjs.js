@@ -156,11 +156,12 @@ document.addEventListener("DOMContentLoaded", function(){
     <div data-coord-x="${cord1}" data-coord-y="${cord2}" class="b-map__contact-item">
         ${marker.options.address}
     </div>
+    <div class="b-map__contact-item">${workHoursBlock}</div>
     <div class="b-map__contact-item">
         <div><a href="tel:${refactoredPhone}" class="invisible-link" onclick="dataLayerSend('UX','clickCallButton', document.location.protocol+'//'+document.location.host+document.location.pathname);">${marker.options.phone}</a></div>
         <div><a href="mailto:${marker.options.email}" class="invisible-link">${marker.options.email}</a></div>
     </div>
-    <div class="b-map__contact-item">${workHoursBlock}</div>${shedule}${min_price}`;
+    ${shedule}${min_price}`;
 
 
     $contactsPlace.html(contactLayout);
