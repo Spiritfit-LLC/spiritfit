@@ -455,7 +455,6 @@ class PersonalUtils{
                                 eval($func);
                             }
                         }
-
                     }
 
                     if ($FIELD['USER_FIELD_CODE']=='UF_PAYMENT_SUM' && !empty($arUser['UF_PAYMENT_BONUSES'])){
@@ -970,7 +969,7 @@ class PersonalUtils{
 
                         if (!empty($value['VALUE_HANDLER'])){
                             $value['VALUE_HANDLER']=str_replace('#VALUE#', '$CURRENT_VAL', $value['VALUE_HANDLER']);
-                            $CURRENT_VAL=eval(html_entity_decode($value['VALUE_HANDLER']));
+                            $CURRENT_VAL=eval(html_entity_decode($value['VALUE_HANDLER']));;
                         }
 
                         if (boolval($value['SERIALIZE'])){
@@ -1018,11 +1017,11 @@ class PersonalUtils{
                 }
 
                 if (!empty($arUser2["PERSONAL_BIRTHDAY"]) && empty($arUser2["UF_PARENTAL_CONSENT"])){
-                    $bithday= new DateTime($arUser["PERSONAL_BIRTHDAY"]);
-                    $now=new DateTime();
-                    $interval=$bithday->diff($now);
+                    $bithday = new DateTime($arUser2["PERSONAL_BIRTHDAY"]);
+                    $now =new DateTime();
+                    $interval = $bithday->diff($now);
 
-                    if ($interval->y<18){
+                    if (!empty($interval) && !empty($interval->y) && $interval->y<18){
                         global $USER;
                         $USER->Update($arUser2["ID"], ["UF_IS_CORRECT"=>false], false);
                     }
