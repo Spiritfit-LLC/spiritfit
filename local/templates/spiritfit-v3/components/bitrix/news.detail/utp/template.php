@@ -31,7 +31,15 @@ $this->setFrameMode(true);
         <?endfor;?>
         <?if (!empty($arResult["PROPERTIES"]["UTP_LINK"]["VALUE"])):?>
         <div class="utp-detail__description-more">
-            <a class="utp-detail__description-show-more" href="<?=$arResult["PROPERTIES"]["UTP_LINK"]["VALUE"]?>">Узнать больше <?=file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/icon-arrow.svg')?></a>
+            <?
+            if (empty($arResult["PROPERTIES"]["UTP_LINK"]["DESCRIPTION"])){
+                $btn_name="Узнать больше";
+            }
+            else{
+                $btn_name=$arResult["PROPERTIES"]["UTP_LINK"]["DESCRIPTION"];
+            }
+            ?>
+            <a class="utp-detail__description-show-more" href="<?=$arResult["PROPERTIES"]["UTP_LINK"]["VALUE"]?>"><?=$btn_name?> <?=file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/icon-arrow.svg')?></a>
         </div>
         <?endif;?>
     </div>

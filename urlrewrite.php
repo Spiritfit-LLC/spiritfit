@@ -42,7 +42,7 @@ $arUrlRewrite=array (
   ),
   3 => 
   array (
-    'CONDITION' => '#^/clubs/([\\.\\-_0-9a-zA-Z]+)/.*$#',
+    'CONDITION' => '#^/clubs/([\\.\\-_0-9a-zA-Z]+)/(\\?(.*))?#',
     'RULE' => 'ELEMENT_CODE=$1',
     'ID' => '',
     'PATH' => '/clubs/detail.php',
@@ -132,6 +132,14 @@ $arUrlRewrite=array (
             'RULE' => 'ELEMENT_CODE=$1',
             'ID' => '',
             'PATH' => '/utp/detail.php',
+            'SORT' => 100,
+        ),
+    18 =>
+        array (
+            'CONDITION' => '#^/auth/#',
+            'RULE' => '',
+            'ID' => NULL,
+            'PATH' => '/auth.php',
             'SORT' => 100,
         ),
 );
