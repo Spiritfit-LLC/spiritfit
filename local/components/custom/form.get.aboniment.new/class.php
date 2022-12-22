@@ -928,10 +928,10 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         ]);
 
         $responce=$api->result();
-        $logFile = "/logs/test.txt";
-        file_put_contents($_SERVER["DOCUMENT_ROOT"] .$logFile, "/ordercreate\n", FILE_APPEND);
-        file_put_contents($_SERVER["DOCUMENT_ROOT"] .$logFile, json_encode($arParams, JSON_UNESCAPED_UNICODE)."\n", FILE_APPEND);
-        file_put_contents($_SERVER["DOCUMENT_ROOT"] .$logFile, json_encode($responce, JSON_UNESCAPED_UNICODE)."\n", FILE_APPEND);
+//        $logFile = "/logs/test.txt";
+//        file_put_contents($_SERVER["DOCUMENT_ROOT"] .$logFile, "/ordercreate\n", FILE_APPEND);
+//        file_put_contents($_SERVER["DOCUMENT_ROOT"] .$logFile, json_encode($arParams, JSON_UNESCAPED_UNICODE)."\n", FILE_APPEND);
+//        file_put_contents($_SERVER["DOCUMENT_ROOT"] .$logFile, json_encode($responce, JSON_UNESCAPED_UNICODE)."\n", FILE_APPEND);
 
 
         if(empty($responce["success"]) ) {
