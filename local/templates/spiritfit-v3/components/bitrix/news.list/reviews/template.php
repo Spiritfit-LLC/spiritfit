@@ -35,7 +35,7 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
             <?foreach($arResult["ITEMS"] as $ITEM):?>
                 <div class="review__item" data-id="<?=$ITEM["ID"]?>">
                     <div class="review__user">
-                        <div class="review__user-img <?if (empty($ITEM["PREVIEW_PICTURE"])) echo "gradient"?>" <?if (!empty($ITEM["PREVIEW_PICTURE"])):?> style="background-image: url('<?=$ITEM["PREVIEW_PICTURE"]["SRC"]?>')" <?endif;?>>
+                        <div class="review__user-img <?if (empty($ITEM["PREVIEW_PICTURE"])) echo "gradient"?> <?if (!empty($ITEM["PREVIEW_PICTURE"])) echo "lazyload"?>" <?if (!empty($ITEM["PREVIEW_PICTURE"])):?> data-src="<?=$ITEM["PREVIEW_PICTURE"]["SRC"]?>" <?endif;?>>
                             <?if (empty($ITEM["PREVIEW_PICTURE"])):?>
                                 <?=mb_substr($ITEM["PROPERTIES"]["NAME"]["VALUE"], 0, 1)?>
                             <?endif;?>

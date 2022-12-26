@@ -90,6 +90,9 @@ foreach ($arResult["ITEMS"] as $key=>&$arItem){
         $arItem["SECTIONS"][]=$ar_group["ID"];
     }
 
+    if (!empty($arItem["PROPERTIES"]["CARD_BASE_PRICE"]["VALUE"])){
+        $arItem["CARD_BASE_PRICE"]=$arItem["PROPERTIES"]["CARD_BASE_PRICE"]["VALUE"];
+    }
 
 }
 usort($SECTIONS, function ($item1, $item2) {
