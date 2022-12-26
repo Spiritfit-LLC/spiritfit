@@ -149,11 +149,12 @@ foreach( $clubs as $club ) {
 
 ?>
 <body class="b-page <?=$classPage?>">
-<!--    --><?//$APPLICATION->IncludeComponent('custom:banner', 'last.change', array("URL"=>"ALL", "BACKGROUND"=>"/upload/medialibrary/8f2/9frwkezz1ehaxj5m5tb0u10nfubij2mi.jpg"), false)?>
-    <?$APPLICATION->IncludeComponent("custom:promocode.banner", "quiz.iphone", array("BANNER_DISCOUNT" => "", "BANNER_TIME" => 3000,"PROMOCODE" => 0))?>
+<?
+$APPLICATION->IncludeComponent("custom:promocode.banner", "new-year", array("BANNER_DISCOUNT" => "", "BANNER_TIME" => 3000,"PROMOCODE" => 0), false);
+?>
     <!-- VK counter -->
-    <script defer type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?160",t.onload=function(){VK.Retargeting.Init("VK-RTRG-333642-hybZ4"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-333642-hybZ4" style="position:fixed; left:-999px;" alt=""/></noscript>    
-
+    <script defer type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?160",t.onload=function(){VK.Retargeting.Init("VK-RTRG-333642-hybZ4"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-333642-hybZ4" style="position:fixed; left:-999px;" alt=""/></noscript>
+<?if (!defined("HIDE_HEADER")):?>
     <header class="b-header">
         <div class="content-center">
             <div class="b-header__content">
@@ -281,7 +282,8 @@ foreach( $clubs as $club ) {
             </div>
         </div>
     </header>
-    <main class="b-page__main <?=(defined('HOLDER_CLASS') ? HOLDER_CLASS : '')?>" role="main">
+    <?endif;?>
+    <main class="b-page__main <?=(defined('HOLDER_CLASS') ? HOLDER_CLASS : '')?> <?if (defined('HIDE_HEADER')) echo "without-header";?>" role="main">
         <?if (!defined('HIDE_SLIDER')){?>
             <? if(strpos($page, '/clubs/') !== false) {
                 $GLOBALS['arFilterSlider'] = [
@@ -374,7 +376,7 @@ foreach( $clubs as $club ) {
         <? } ?>
         <? if($page != '/'){ 
         ?>
-            <? if(!$showSlider) { ?>
+            <? if(!$showSlider && !defined("HIDE_HEADER")) { ?>
 				<section class="b-screen b-screen_short">
 					<div class="b-screen__bg-holder"></div>
 				</section>

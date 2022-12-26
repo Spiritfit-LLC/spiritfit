@@ -12,8 +12,8 @@ Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/map-main.css');
 <script defer src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
-<script defer src="<?=SITE_TEMPLATE_PATH?>/js/map-main-leafletjs.min.js?version=14"></script>
-<script defer src="<?=SITE_TEMPLATE_PATH . "/vendor/nicescroll/jquery.nicescroll.js"?>"></script>
+<script defer src="<?=SITE_TEMPLATE_PATH?>/js/map-main-leafletjs.min.js?version=15"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
 
 <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" type="text/css">
 <script defer src="//unpkg.com/leaflet-gesture-handling"></script>
