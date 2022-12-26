@@ -3,8 +3,7 @@ let markers = [];
 
 
 
-document.addEventListener("DOMContentLoaded", function(){
-// function mapInit() {
+function makeMap(){
   let cord1 = 55.753484; 
   let cord2 = 37.622615;
   markers = [];
@@ -394,13 +393,24 @@ document.addEventListener("DOMContentLoaded", function(){
             $(this).removeAttr("style");
         })
     });
+}
 
+$(document).ready(function(){
+    var lazyMaps = [].slice.call(document.querySelectorAll(".b-map__map-wrap"));
 
-});
-// }
-// ================================================================================
-// ================================================================================
-// ================================================================================
-// ================================================================================
-// ================================================================================
-// mapInit();
+    if ("IntersectionObserver" in window) {
+        console.log(123);
+        let lazyMapObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    makeMap();
+                    lazyMapObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        lazyMaps.forEach(function(lazyMap) {
+            lazyMapObserver.observe(lazyMap);
+        });
+    }
+})

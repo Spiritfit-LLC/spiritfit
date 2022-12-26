@@ -45,7 +45,7 @@ $clubs = Clubs::getList();
     <?$APPLICATION->ShowHead();?>
 
     <!-- Google Tag Manager -->
-    <script data-skip-moving="true" defer>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    <script data-skip-moving="true" async>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
@@ -72,10 +72,10 @@ $clubs = Clubs::getList();
 </head>
 <body class="b-page">
 <!-- VK counter -->
-<script defer type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?160",t.onload=function(){VK.Retargeting.Init("VK-RTRG-333642-hybZ4"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-333642-hybZ4" style="position:fixed; left:-999px;" alt=""/></noscript>
-<?
-$APPLICATION->IncludeComponent("custom:promocode.banner", "new-year", array("BANNER_DISCOUNT" => "", "BANNER_TIME" => 3000,"PROMOCODE" => 0), false);
-?>
+<script async type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?160",t.onload=function(){VK.Retargeting.Init("VK-RTRG-333642-hybZ4"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-333642-hybZ4" style="position:fixed; left:-999px;" alt=""/></noscript>
+<?//
+//$APPLICATION->IncludeComponent("custom:promocode.banner", "new-year", array("BANNER_DISCOUNT" => "", "BANNER_TIME" => 3000,"PROMOCODE" => 0), false);
+//?>
 
 <?if ($USER->IsAdmin()):?>
 <div class="admin-panel">
