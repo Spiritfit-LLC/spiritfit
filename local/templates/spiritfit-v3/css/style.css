@@ -49,7 +49,7 @@
     src: url(../fonts/GothamPro/GothamPro-Black.woff) format("woff");
     src: url(../fonts/GothamPro/GothamPro-Black.ttf) format("truetype");
     font-weight: 900;
-    font-display: auto;
+    font-display: swap;
 }
 
 
@@ -830,4 +830,40 @@ input[type=checkbox], input[type=radio] {
 
 main.b-page__main.without-header {
     padding-top: 0!important;
+}
+.b-page__title.page-404{
+    margin: 50px 0;
+    text-overflow: unset;
+    white-space: unset;
+}
+a.gradient {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 120%;
+    background: linear-gradient(90deg,#e23834 3.26%,#7a27f1 98.07%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+    position: relative;
+}
+a.gradient:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    left: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg,#e23834 3.26%,#7a27f1 98.07%);
+    bottom: 0;
+}
+.gradient-text{
+    background: linear-gradient(90deg,#e23834 3.26%,#7a27f1 98.07%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.bold{
+    font-weight: 900;
+}
+.white{
+    color:white;
 }

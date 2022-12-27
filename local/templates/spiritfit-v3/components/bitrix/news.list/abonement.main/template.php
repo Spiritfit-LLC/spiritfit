@@ -57,7 +57,14 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
                                     <?if ($ITEM["MIN_PRICE"]==0):?>
                                         Бесплатно
                                     <?else:?>
-                                        <?=$ITEM["MIN_PRICE"]?><span class="rub">₽</span>
+                                        <?if (!empty($ITEM["BASE_PRICE"])):?>
+                                            <div class="with-base">
+                                                <span class="base-price"><?=$ITEM["BASE_PRICE"]?><span class="rub">₽</span></span>
+                                                <span><?=$ITEM["MIN_PRICE"]?><span class="rub">₽</span></span>
+                                            </div>
+                                        <?else:?>
+                                            <?=$ITEM["MIN_PRICE"]?><span class="rub">₽</span>
+                                        <?endif;?>
                                     <?endif?>
                                 </div>
                             </div>

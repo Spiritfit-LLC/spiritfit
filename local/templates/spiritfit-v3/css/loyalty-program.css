@@ -1,0 +1,175 @@
+.loyalty-levels__header,
+.loyalty-actions__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+.loyalty-levels__desc,
+.loyalty-actions__desc{
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 32px;
+    max-width: 50%;
+}
+.loyalty-levels__body {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+
+}
+.loyalty-level__item {
+    width: calc(33% - 10px);
+    flex: 0 0 calc(33% - 10px);
+    text-align: center;
+}
+.level-item__image {
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.level-item__title {
+    font-size: 32px;
+    line-height: 40px;
+    padding: 40px 0;
+}
+.level-item__desc {
+    padding: 0 30px 30px;
+}
+.loyalty-level-item__body{
+    background: #f5f5f4;
+}
+.level-item__text {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+    margin-bottom: 20px;
+}
+
+.level-item__text:last-child{
+    margin-bottom: 0;
+}
+.loyalty-сondition__title {
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 32px;
+    margin-bottom: 24px;
+}
+.loyalty-сonditions__body {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.loyalty-сondition__item {
+    width: calc(33% - 10px);
+    flex: 0 0 calc(33% - 10px);
+    background: black;
+    padding: 56px 48px;
+}
+.loyalty-сondition__list-item{
+    background-size: 15px;
+    background-repeat: no-repeat;
+    background-position: 0 6px;
+    padding-left: 20px;
+    margin-bottom: 6px;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 200;
+}
+.loyalty-сondition__item .gradient-text {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 120%;
+    margin-top: 40px;
+}
+.loyalty-сondition__item .button {
+    margin-top: 30px;
+}
+
+.b-accordion__heading {
+    padding: 26px 0;
+    border-bottom: 1px solid #d9d9d9;
+    font-size: 20px;
+    line-height: 28px;
+    cursor: pointer;
+    position: relative;
+}
+.b-accordion__content {
+    display: none;
+    padding: 26px 48px;
+    background: #f5f5f4;
+    font-weight: 300;
+    font-size: 16px;
+}
+.b-accordion__item.active .b-accordion__heading>span {
+    border-bottom: 0;
+    background: linear-gradient(90deg,#e23834 3.26%,#7a27f1 98.07%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.b-accordion__heading:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+    background-image: url(/local/templates/spiritfit-v3/components/bitrix/news.list/faq/./img/icon-arrow.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px 20px;
+    opacity: .5;
+    transition: transform ease .35s;
+    transform: translateY(-50%);
+}
+.b-accordion__item.active .b-accordion__heading:after {
+    transform: translateY(-50%) rotate(90deg);
+}
+@media screen and (max-width: 1200px){
+    .loyalty-levels__body {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .loyalty-level__item {
+        min-width: 500px;
+        margin: 20px;
+    }
+    .loyalty-сonditions__body {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .loyalty-сondition__item{
+        min-width: 500px;
+        margin: 20px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .loyalty-levels__header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .loyalty-levels__desc, .loyalty-actions__desc{
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+    .loyalty-levels__body, .loyalty-сonditions__body {
+        flex-direction: column;
+    }
+    .loyalty-level__item,.loyalty-сondition__item {
+        margin: 20px 0;
+        width: 100%;
+        min-width: unset;
+
+    }
+    .loyalty-сondition__item{
+        padding: 38px;
+    }
+    .loyalty-actions__header{
+        margin-bottom: 0;
+    }
+
+}

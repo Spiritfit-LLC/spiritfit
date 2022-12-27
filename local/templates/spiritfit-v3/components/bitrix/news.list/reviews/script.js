@@ -41,6 +41,25 @@ $(document).ready(function(){
             }
         ]
     });
+
+
+    var lazyBackgrounds = [].slice.call(document.querySelectorAll(".review__user-img.lazyload"));
+
+    if ("IntersectionObserver" in window) {
+        let lazyBackgroundObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    var $target=$(entry.target);
+                    $target.css("background-image", 'url('+$target.data("src")+')');
+                    lazyBackgroundObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        lazyBackgrounds.forEach(function(lazyBackground) {
+            lazyBackgroundObserver.observe(lazyBackground);
+        });
+    }
 })
 
 

@@ -127,7 +127,7 @@ $GLOBALS['arAbonementFilter'] =
         "PARENT_SECTION" => "",
         "PARENT_SECTION_CODE" => "",
         "PREVIEW_TRUNCATE_LEN" => "",
-        "PROPERTY_CODE" => array("BASE_PRICE", "INCLUDE", "ADDITIONAL_CLASS",  "HIDDEN", "FOR_PRESENT", "PRICE", "TITLE", "PRESENTS", "PRICE_MAIN_SIGN"),
+        "PROPERTY_CODE" => array("BASE_PRICE", "INCLUDE", "ADDITIONAL_CLASS",  "HIDDEN", "FOR_PRESENT", "PRICE", "TITLE", "PRESENTS", "PRICE_MAIN_SIGN", "CARD_BASE_PRICE"),
         "SET_BROWSER_TITLE" => "N",
         "SET_LAST_MODIFIED" => "N",
         "SET_META_DESCRIPTION" => "N",
@@ -337,7 +337,8 @@ $GLOBALS['arAbonementFilter'] =
         "SORT_ORDER2" => "ASC",
         "STRICT_SECTION_CHECK" => "N",
         "COMPONENT_TEMPLATE" => "faq",
-        "FILE_404" => ""
+        "FILE_404" => "",
+        "TITLE"=>"FAQ"
     ),
     false
 );?>

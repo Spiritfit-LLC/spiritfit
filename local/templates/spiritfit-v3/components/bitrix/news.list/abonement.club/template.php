@@ -55,6 +55,10 @@ $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
                                             <div class="abonement-price-base">
                                                 <?=$PRICE["BASE_PRICE"]?><span class="rub">₽</span>
                                             </div>
+                                        <?elseif (!empty($ITEM["CARD_BASE_PRICE"])):?>
+                                            <div class="abonement-price-base">
+                                                <?=$ITEM["CARD_BASE_PRICE"]?><span class="rub">₽</span>
+                                            </div>
                                         <?endif?>
                                     <?endif?>
                                     <div class="abonement-price <?if ($i>0) echo "white-text"?>">
