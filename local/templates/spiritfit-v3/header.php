@@ -73,9 +73,9 @@ $clubs = Clubs::getList();
 <body class="b-page">
 <!-- VK counter -->
 <script async type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?160",t.onload=function(){VK.Retargeting.Init("VK-RTRG-333642-hybZ4"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-333642-hybZ4" style="position:fixed; left:-999px;" alt=""/></noscript>
-<?//
-//$APPLICATION->IncludeComponent("custom:promocode.banner", "new-year", array("BANNER_DISCOUNT" => "", "BANNER_TIME" => 3000,"PROMOCODE" => 0), false);
-//?>
+<?
+$APPLICATION->IncludeComponent("custom:promocode.banner", "new-year", array("BANNER_DISCOUNT" => "", "BANNER_TIME" => 3000,"PROMOCODE" => 0), false);
+?>
 
 <?if ($USER->IsAdmin()):?>
 <div class="admin-panel">
