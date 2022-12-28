@@ -1,7 +1,7 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();?>
 <div class="promocode-banner__container">
     <div class="promocode-banner">
-        <img src="<?=DEFAULT_PATH.'/img/banner-background-new-year.png?v=2'?>" loading="lazy" style="max-height: 100%;">
+        <img src="<?=DEFAULT_PATH.'/img/banner-background-new-year.png?v=3'?>" loading="lazy" style="max-height: 100%;">
         <div class="promocode-banner__closer">
             <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'].DEFAULT_PATH.'/img/icons/cross_footer_icon.svg')?>
         </div>
