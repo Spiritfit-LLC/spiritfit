@@ -219,6 +219,31 @@ $APPLICATION->IncludeComponent("custom:promocode.banner", "new-year", array("BAN
         </div>
     <?endif?>
     <?if (!defined('HIDE_SLIDER')):?>
+        <? if (strpos($page, '/clubs/') !== false) {
+            $GLOBALS['arFilterSlider'] = [
+                [
+                    'LOGIC' => 'AND',
+                    ['PROPERTY_BANNER_PAGES' => $page],
+                    ['PROPERTY_SITE' => 42],
+                    ['!PROPERTY_BANNER_PAGES_HIDE' => $page]
+                ]
+            ];
+        } else {
+            $GLOBALS['arFilterSlider'] = [
+                [
+                    'LOGIC' => 'AND',
+                    [
+                        'LOGIC' => 'OR',
+                        ['PROPERTY_BANNER_PAGES' => false],
+                        ['PROPERTY_BANNER_PAGES' => $page],
+                    ],
+                    ['!PROPERTY_BANNER_PAGES_HIDE' => $page],
+                    [
+                        ['PROPERTY_SITE' => 42]
+                    ]
+                ]
+            ];
+        } ?>
         <?
         $APPLICATION->IncludeComponent(
             "bitrix:news.list",
