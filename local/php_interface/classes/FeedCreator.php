@@ -70,9 +70,6 @@ class FeedCreator{
         $filter=[
             'IBLOCK_ID'=>Utils::GetIBlockIDBySID('clubs'),
             'ACTIVE'=>'Y',
-            '!PROPERTY_NOT_OPEN_YET_VALUE'=>'Да',
-            "!PROPERTY_HIDE_LINK_VALUE" => "Да",
-            "!PROPERTY_SOON_VALUE" => "Y"
         ];
         $rows = CIBlockElement::GetList($order, $filter);
         while ($row = $rows->fetch()) {
