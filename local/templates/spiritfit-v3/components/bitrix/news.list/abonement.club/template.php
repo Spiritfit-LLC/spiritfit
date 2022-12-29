@@ -19,12 +19,19 @@ $this->addExternalJs(SITE_TEMPLATE_PATH . "/vendor/slick/slick.min.js");
 $this->addExternalCss(SITE_TEMPLATE_PATH . "/css/slick.css");
 ?>
 
+<?php
+$active_section=$_REQUEST["abonement"];
+if (!in_array($active_section, array_column($arResult["SECTIONS"], "ID"))){
+    $active_section=0;
+}
+?>
+
 <section class="b-cards-slider">
     <div class="content-center">
         <div class="sliders-section__controls">
             <?$i=0;?>
             <?foreach ($arResult["SECTIONS"] as $SECTION):?>
-                <button class="slider-section__item <?if ($i==0) echo 'active'?>" onclick="select_section(this, '<?=$SECTION["ID"]?>')" data-section-id="<?=$SECTION["ID"]?>"
+                <button class="slider-section__item <?if (empty($active_section) && $i==0) echo 'active'; elseif ($SECTION["ID"]==$active_section) echo "active";?>" onclick="select_section(this, '<?=$SECTION["ID"]?>')" data-section-id="<?=$SECTION["ID"]?>"
                         data-layer="true"
                         data-layercategory="UX"
                         data-layeraction="clickAbonementGroupButton"
