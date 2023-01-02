@@ -82,13 +82,14 @@ $GLOBALS['arUtpFilter'] =
     )
 );?>
 
-<div class="content-center" id="abonements">
-    <div class="b-section__title">
-        <h2>Абонементы</h2>
-    </div>
-</div>
 
-<?$APPLICATION->IncludeComponent(
+
+<?php
+echo $APPLICATION->AddBufferContent("showAbonementTitle");
+?>
+
+<?
+$ABONEMENT_RESULT=$APPLICATION->IncludeComponent(
     "bitrix:news.list",
     "abonement.club",
     Array(
@@ -144,8 +145,30 @@ $GLOBALS['arUtpFilter'] =
         "SORT_ORDER1" => "ASC",
         "SORT_ORDER2" => "",
         "STRICT_SECTION_CHECK" => "N"
-    )
+    ), false, false, true
 );?>
+<?php
+if (count($ABONEMENT_RESULT["ELEMENTS"])>0){
+    $APPLICATION->SetPageProperty("SHOW_ABONEMENT_TITLE", true);
+}
+else{
+    $APPLICATION->SetPageProperty("SHOW_ABONEMENT_TITLE", false);
+}
+
+function showAbonementTitle(){
+    global $APPLICATION;
+    if ($APPLICATION->GetPageProperty("SHOW_ABONEMENT_TITLE")){
+        ob_start();?>
+        <div class="content-center" id="abonements">
+            <div class="b-section__title">
+                <h2>Абонементы</h2>
+            </div>
+        </div>
+        <?php
+        return ob_get_clean();
+    }
+}
+?>
 
 <div class="section-margin-top">
     <? if( (empty($arResult['PROPERTIES']['HIDE_LINK']['VALUE']) && !empty($arResult['PROPERTIES']['SHOW_FORM']['VALUE']))

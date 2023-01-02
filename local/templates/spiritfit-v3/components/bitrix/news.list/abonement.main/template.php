@@ -67,7 +67,7 @@ if (!in_array($active_section, array_column($arResult["SECTIONS"], "ID"))){
                                         <?if (!empty($ITEM["BASE_PRICE"])):?>
                                             <div class="with-base">
                                                 <span class="base-price"><?=$ITEM["BASE_PRICE"]?><span class="rub">₽</span></span>
-                                                <span><?=$ITEM["MIN_PRICE"]?><span class="rub">₽</span></span>
+                                                <span class="gradient-text"><?=$ITEM["MIN_PRICE"]?><span class="rub">₽</span></span>
                                             </div>
                                         <?else:?>
                                             <?=$ITEM["MIN_PRICE"]?><span class="rub">₽</span>
