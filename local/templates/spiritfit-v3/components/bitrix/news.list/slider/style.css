@@ -18,7 +18,7 @@ section.b-screen.b-screen_with-page-heading {
     z-index: 10;
     background:black;
 }
-video.b-screen__bg-video {
+.b-screen__bg-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
