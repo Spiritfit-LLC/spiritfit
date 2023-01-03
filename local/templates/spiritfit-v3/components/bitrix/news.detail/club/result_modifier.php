@@ -84,7 +84,7 @@ while($item=$itemRes->Fetch()){
 }
 
 
-if (!empty($arResult["PROPERTIES"]["NOT_OPEN_YET"]["VALUE"])) {
+if (!empty($arResult["PROPERTIES"]["NOT_OPEN_YET"]["VALUE"]) || $arResult["PROPERTIES"]["HIDE_ABONEMENT"]["VALUE_XML_ID"]=="Y") {
     $GLOBALS['arAbonementFilter'] = array('ID' => $arResult['PROPERTIES']['ABONEMENTS']['VALUE']);
 } else {
     $GLOBALS['arAbonementFilter'] = array(array(
