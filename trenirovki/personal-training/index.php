@@ -5,8 +5,8 @@
 	
 	require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 	
-	$APPLICATION->SetPageProperty("title", "Персональный тренинг");
-	$APPLICATION->SetPageProperty("description", "");
+	$APPLICATION->SetPageProperty("title", "Персональные тренировки в Москве: занятия в тренажерном зале, тренинг");
+	$APPLICATION->SetPageProperty("description", "Персональные занятия в тренажерном зале в фитнес-клубах Spirit Fitness &#128165; Тарифы от 1490 ₽ &#128181; с ежемесячной оплатой, бесплатная пробная тренировка &#128293; Запишитесь прямо сейчас!");
 	
 	$settings = Utils::getInfo();
 	$APPLICATION->SetTitle($settings["PROPERTIES"]["PTRAINING_TITLE1"]["VALUE"]);

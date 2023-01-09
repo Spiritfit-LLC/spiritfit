@@ -5,8 +5,8 @@
 	
 	require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 	
-	$APPLICATION->SetPageProperty("title", "Тренировки онлайн");
-	$APPLICATION->SetPageProperty("description", "");
+	$APPLICATION->SetPageProperty("title", "Онлайн-тренировки с Spirit Fitness: онлайн занятия фитнесом в домашних условиях");
+	$APPLICATION->SetPageProperty("description", "Онлайн-тренировки дома от фитнес-клуба Spirit Fitness &#128165; Тарифы от 1490 ₽ &#128181; с ежемесячной оплатой, бесплатная пробная тренировка &#128293; Запишитесь прямо сейчас!");
 	
 	$settings = Utils::getInfo();
 	$APPLICATION->SetTitle($settings["PROPERTIES"]["OTRAINING_TITLE1"]["VALUE"]);

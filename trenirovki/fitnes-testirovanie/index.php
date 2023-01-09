@@ -15,8 +15,8 @@ Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/service.page.css');
 
 $APPLICATION->SetTitle("Фитнес тестирование");
 
-$APPLICATION->SetPageProperty("description", "");
-$APPLICATION->SetPageProperty("title", "Фитнес тестирование | SpiritFit.ru");
+$APPLICATION->SetPageProperty("description", "Фитнес-тестирование в клубах Spirit Fitness &#128165; Тарифы от 1490 ₽ &#128181; с ежемесячной оплатой, бесплатная пробная тренировка &#128293; Запишитесь прямо сейчас!");
+$APPLICATION->SetPageProperty("title", "Фитнес-тестирование в фитнес-клубах Spirit Fitness");
 ?>
 <?php
 $ELEMENT_ID=Utils::GetIBlockElementIDBySID("service-page-settings");

@@ -4,8 +4,8 @@
     use \Bitrix\Main\Page\Asset;
 
     $APPLICATION->SetTitle("SPIRIT.TV");
-	$APPLICATION->SetPageProperty("title", "");
-	$APPLICATION->SetPageProperty("description", "");
+	$APPLICATION->SetPageProperty("title", "SPIRIT.TV - Бесплатные онлайн-тренировки от сети фитнес-клубов Spirit Fitness");
+	$APPLICATION->SetPageProperty("description", "Бесплатные онлайн-тренировки SPIRIT.TV в фитнес-клубах Spirit Fitness &#128165; Тарифы от 1490 ₽ &#128181; с ежемесячной оплатой, бесплатная пробная тренировка &#128293; Запишитесь прямо сейчас!");
     Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/spirittv.css');
 	
 	$siteProperties = Utils::getInfo();
