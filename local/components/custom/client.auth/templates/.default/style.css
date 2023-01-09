@@ -1,0 +1,11 @@
+.client-auth__container {
+    height: calc(100vh - 143px - 133px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+div#user-message {
+    margin-top: 10px;
+}
