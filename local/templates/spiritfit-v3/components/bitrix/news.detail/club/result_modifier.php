@@ -84,6 +84,7 @@ while($item=$itemRes->Fetch()){
 }
 
 
+
 if (!empty($arResult["PROPERTIES"]["NOT_OPEN_YET"]["VALUE"]) || $arResult["PROPERTIES"]["HIDE_ABONEMENT"]["VALUE_XML_ID"]=="Y") {
     $GLOBALS['arAbonementFilter'] = array('ID' => $arResult['PROPERTIES']['ABONEMENTS']['VALUE']);
 } else {
@@ -92,4 +93,9 @@ if (!empty($arResult["PROPERTIES"]["NOT_OPEN_YET"]["VALUE"]) || $arResult["PROPE
         array('ID' => $arResult['PROPERTIES']['ABONEMENTS']['VALUE']),
         array('!PROPERTY_HIDDEN' => 40),
     ));
+}
+
+
+if (!empty($arResult["PROPERTIES"]["NOT_OPEN_YET"]["VALUE"]) || !empty($arResult["PROPERTIES"]["SOON"]["VALUE"])){
+    Bitrix\Main\Page\Asset::getInstance()->addString('<meta name="robots" content="noindex"/>');
 }
