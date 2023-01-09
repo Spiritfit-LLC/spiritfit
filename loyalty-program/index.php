@@ -6,8 +6,8 @@ define('SITE_TEMPLATE_ID', 'spiritfit-v3');
 
 <?
 $APPLICATION->SetTitle("Программа лояльности");
-$APPLICATION->SetPageProperty("title", "Программа лояльности - фитнес-клуб Spirit. Fitness");
-$APPLICATION->SetPageProperty("description", "");
+$APPLICATION->SetPageProperty("title", "Программа лояльности для членов фитнес-клуба Spirit Fitness");
+$APPLICATION->SetPageProperty("description", "Программа лояльности для членов фитнес-клуба Spirit. Fitness &#128165; Тарифы от 1490 ₽ &#128181; с ежемесячной оплатой, бесплатная пробная тренировка &#128293; Запишитесь прямо сейчас!");
 
 use Bitrix\Main\Page\Asset;
 Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'css/loyalty-program.css');

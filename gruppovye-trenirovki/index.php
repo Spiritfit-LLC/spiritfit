@@ -5,8 +5,8 @@
 	
 	require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 	
-	$APPLICATION->SetPageProperty("title", "Групповые тренировки - фитнес-клуб Spirit. Fitness");
-	$APPLICATION->SetPageProperty("description", "Сеть фитнес-клубов Spirit. Fitness представляет разнообразные групповые тренировки на любой вкус. Наши тренировки включают в себя авторские форматы Spirit.Team и известные во всем мире программы Les Mills.");
+	$APPLICATION->SetPageProperty("title", "Групповые занятия по фитнесу в Москве: тренировки в сети клубов Spirit Fitness");
+	$APPLICATION->SetPageProperty("description", "Групповые занятия по фитнесу в фитнес-клубах Spirit Fitness &#128165; Тарифы от 1490 ₽ &#128181; с ежемесячной оплатой, бесплатная пробная тренировка &#128293; Запишитесь прямо сейчас!");
 	
 	$settings = Utils::getInfo();
 	$APPLICATION->SetTitle($settings["PROPERTIES"]["GT_TITLE2"]["VALUE"]);
