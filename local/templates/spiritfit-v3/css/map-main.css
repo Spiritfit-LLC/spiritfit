@@ -40,7 +40,6 @@
     margin-bottom: 30px;
 }
 .b-map__contact-item-descr {
-    max-height: 30px;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 12px;

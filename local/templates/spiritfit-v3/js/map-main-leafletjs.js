@@ -134,11 +134,17 @@ function makeMap(){
     let shortDescrBlock = '';
     // если поле в админке не пустое, то добавляем блок с описанием.
     if(marker.options.description.length > 0) {
+        if (marker.options.description.length > 100){
+            var description = marker.options.description.substr(0, 100)+'...';
+        }
+        else{
+            description = marker.options.description;
+        }
       shortDescrBlock = `
       <div class="b-map__contact-item-descr-wrapper">
-          <div class="b-map__contact-item-descr">${marker.options.description}</div>`;
+          <div class="b-map__contact-item-descr">${description}</div>`;
 
-      if ($(window).width()>1024){
+      if ($(window).width()>1024 && marker.options.description.length>100){
           shortDescrBlock+='<a class="b-map__contact-item-descr-more" href="#">Подробнее</a>'
       }
       shortDescrBlock+='</div>'
