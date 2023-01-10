@@ -2,6 +2,7 @@
 define('HIDE_BREADCRUMB', true);
 define('HIDE_SLIDER', true);
 define('H1_HIDE', true);
+define('HIDE_BANNER', true);
 
 
 define('SITE_TEMPLATE_PATH', '/local/templates/spiritfit-v3/');
