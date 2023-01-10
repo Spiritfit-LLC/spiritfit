@@ -96,6 +96,6 @@ if (!empty($arResult["PROPERTIES"]["NOT_OPEN_YET"]["VALUE"]) || $arResult["PROPE
 }
 
 
-if (!empty($arResult["PROPERTIES"]["NOT_OPEN_YET"]["VALUE"]) || !empty($arResult["PROPERTIES"]["SOON"]["VALUE"])){
+if (!empty($arResult["PROPERTIES"]["HIDE_LINK"]["VALUE"]) || !empty($arResult["PROPERTIES"]["HIDE_CLUB"]["VALUE"])){
     Bitrix\Main\Page\Asset::getInstance()->addString('<meta name="robots" content="noindex"/>');
 }
