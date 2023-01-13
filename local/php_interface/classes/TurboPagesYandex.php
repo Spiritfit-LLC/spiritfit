@@ -149,7 +149,7 @@ class TurboPagesYandex{
             $item->addChild('extendedHtml', 'true', $NS->turbo);
             $item->addChild('link', MAIN_SITE_URL.'/blog/'.Utils::GetIBlockSectionIDBySID($blog_item['IBLOCK_SECTION_ID'], "CODE").'/'.$blog_item['CODE'].'/');
 
-            $item->addChild("pubDate", date(DATE_RFC822, strtotime($blog_item["DATE_CREATE_UNIX"])));
+            $item->addChild("pubDate", date(DATE_RFC822, $blog_item["DATE_CREATE_UNIX"]));
             $yandex=$item->addChild("yandex");
             $yandex->addAttribute("schema_identifier", $blog_item["ID"]);
             $breadcrumblist=$yandex->addChild("breadcrumblist");
