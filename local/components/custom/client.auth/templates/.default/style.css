@@ -9,3 +9,8 @@
 div#user-message {
     margin-top: 10px;
 }
+.client-auth-phone {
+    margin: 20px auto;
+    max-width: 230px;
+    text-align: center;
+}

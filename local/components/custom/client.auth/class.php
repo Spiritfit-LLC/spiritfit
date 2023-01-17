@@ -63,7 +63,7 @@ class ClientAuthComponent extends CBitrixComponent implements Controllerable{
 //            ]
 //        ];
 
-        if (!$response["data"]["result"]["result"]){
+        if (!$response["data"]["result"]["result"]["access"]){
             if (!empty($response["data"]["result"]["userMessage"])){
                 $this->arResult["ERROR"]=$response["data"]["result"]["userMessage"];
             }
@@ -73,6 +73,8 @@ class ClientAuthComponent extends CBitrixComponent implements Controllerable{
             $this->IncludeComponentTemplate("error");
             return;
         }
+
+        $this->arResult["PHONE"]=Utils::phone_format($response["data"]["result"]["result"]["phone"]);
 
         $this->IncludeComponentTemplate();
     }
@@ -109,7 +111,7 @@ class ClientAuthComponent extends CBitrixComponent implements Controllerable{
 //            ]
 //        ];
 
-        if (!$response["data"]["result"]["result"]){
+        if (!$response["data"]["result"]["result"]["access"]){
             if (!empty($response["data"]["result"]["userMessage"])){
                 $MESSAGE=$response["data"]["result"]["userMessage"];
             }
