@@ -535,13 +535,6 @@ function showAbonementTitle(){
 <?endif?>
 
 
-
-
-
-
-
-
-
 <div itemscope itemtype="http://schema.org/ExerciseGym" style="display: none;">
     <span itemprop="name">Spirit.Fitness</span>
     <meta itemprop="legalName" content="ООО Рекорд Фитнес">
@@ -566,3 +559,26 @@ function showAbonementTitle(){
     <? } ?>
     <meta itemprop="openingHours" content="Mo-Su 07:00-24:00">
 </div>
+
+<?if (!empty($arResult["RATING"])):?>
+<div itemscope itemtype="http://schema.org/LocalBusiness" style="display: none;">
+    <span itemprop="name"><?=$arResult["~NAME"]?></span>
+    <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+        <meta itemprop="addressCountry" content="Россия">
+        <span itemprop="streetAddress"><?=$arResult['ADDRESS_SHORT']?></span>
+        <? if( !empty($arResult['PROPERTIES']['INDEX']['VALUE']) ) { ?>
+            <span itemprop="postalCode"><?=$arResult['PROPERTIES']['INDEX']['VALUE']?></span>
+        <? } ?>
+        <span itemprop="addressLocality">Москва</span>
+    </div>
+    <span itemprop="telephone"><?=$phone?></span>
+    <span itemprop="email"><?=$email?></span>
+    <time itemprop="openingHours"><?=$workHours?></time>
+    <div itemprop="aggregateRating" itemscope="" itemtype="https://schema.org/AggregateRating">
+        <meta itemprop="bestRating" content="5">
+        <meta itemprop="ratingValue" content="<?=$arResult["RATING"]?>">
+        <span itemprop="ratingCount"><?=$arResult["RATING_COUNT"]?></span>
+    </div>
+</div>
+<?endif;?>
+

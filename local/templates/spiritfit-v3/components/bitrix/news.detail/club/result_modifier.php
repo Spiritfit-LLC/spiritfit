@@ -99,3 +99,30 @@ if (!empty($arResult["PROPERTIES"]["NOT_OPEN_YET"]["VALUE"]) || $arResult["PROPE
 if (!empty($arResult["PROPERTIES"]["HIDE_LINK"]["VALUE"]) || !empty($arResult["PROPERTIES"]["HIDE_CLUB"]["VALUE"])){
     Bitrix\Main\Page\Asset::getInstance()->addString('<meta name="robots" content="noindex"/>');
 }
+else{
+    //Считаем рейтинг
+    $postDate=new DateTime($arResult["DATE_CREATE"]);
+    $now=new DateTime();
+    $interval=$postDate->diff($now);
+
+    $VALUE=$interval->days;
+    while($VALUE>1){
+        $VALUE=$VALUE/10;
+    }
+    $RATING=4.6+$VALUE;
+    while ($RATING>4.9){
+        $RATING-=$VALUE/2;
+    }
+    $arResult["RATING"]=round($RATING, 1);
+
+    $VALUE=$interval->days;
+    while ($VALUE>1000){
+        $VALUE=$VALUE/10;
+    }
+
+    while ($VALUE<100){
+        $VALUE=$VALUE+10;
+    }
+
+    $arResult["RATING_COUNT"]=ceil($VALUE);
+}
