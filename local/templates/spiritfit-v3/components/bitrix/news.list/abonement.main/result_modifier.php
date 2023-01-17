@@ -40,9 +40,26 @@ foreach ($arResult["ITEMS"] as $key=>&$arItem){
 
 
 
-    $minPrice=min(array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE"));
-    $minPriceKey=array_search($minPrice, array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE"));
-    $minPriceNumber=$arItem["PROPERTIES"]["PRICE"]["VALUE"][$minPriceKey]["NUMBER"];
+    while (true){
+        $minPrice=min(array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE"));
+        $minPriceKey=array_search($minPrice, array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "PRICE"));
+        $minPriceNumber=$arItem["PROPERTIES"]["PRICE"]["VALUE"][$minPriceKey]["NUMBER"];
+        $minPriceClub=$arItem["PROPERTIES"]["PRICE"]["VALUE"][$minPriceKey]["LIST"];
+
+        
+        $clubFilter=["PROPERTY_HIDE_CLUB"=>false, "PROPERTY_HIDE_LINK"=>false, "PROPERTY_HIDE_ABONEMENT"=>false];
+        $club=Utils::getClub($minPriceClub, false, $clubFilter);
+        if (empty($club)){
+            unset($arItem["PROPERTIES"]["PRICE"]["VALUE"][$minPriceKey]);
+            if (count($arItem["PROPERTIES"]["PRICE"]["VALUE"])==0){
+                break;
+            }
+        }
+        else{
+            break;
+        }
+    }
+
 
     foreach ($arItem["PROPERTIES"]["PRICE"]["VALUE"] as $key2=>$price){
         if ($price["NUMBER"]==$minPriceNumber){

@@ -57,7 +57,7 @@ class Utils
 		}
 	}
 
-	public static function getClub($club = null, $soon=false) {
+	public static function getClub($club = null, $soon=false, $filter=null) {
 		Loader::includeModule('iblock');
 
         $arFilter = array("IBLOCK_CODE" => "clubs", "ACTIVE" => "Y");
@@ -65,6 +65,9 @@ class Utils
         if ($soon!==null){
             $arFilter["PROPERTY_SOON"]=$soon;
 		}
+        if (!empty($filter)){
+            $arFilter=array_merge($filter, $arFilter);
+        }
 
         if ($club !== null) {
             $arFilter["PROPERTY_NUMBER"] = $club;
@@ -74,6 +77,7 @@ class Utils
         if ($res = $dbElements->fetch()) {
             return $res;
         }
+        return false;
 	}
 
 	public static function getClubById($club = '08') {
