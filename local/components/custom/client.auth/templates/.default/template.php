@@ -3,6 +3,7 @@
     var params=<?=\Bitrix\Main\Web\Json::encode(['signedParameters'=>$this->getComponent()->getSignedParameters(), 'componentName'=>$this->getComponent()->getName()])?>;
 </script>
 <div class="client-auth__container content-center">
-    <a id="client-auth__btn" class="button" onclick="authAction()">АВТОРИЗАЦИЯ</a>
+    <div class="client-auth-phone">Подтверждение номера <?=$arResult["PHONE"]?></div>
+    <a id="client-auth__btn" class="button" onclick="authAction()">ПОДТВЕРДИТЬ</a>
     <div id="user-message"></div>
 </div>
