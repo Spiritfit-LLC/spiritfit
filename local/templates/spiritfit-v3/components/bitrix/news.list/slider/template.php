@@ -154,7 +154,7 @@ if(!empty($files['VALUE'])){
                                             <span class="b-info-slider__title__text"><?=$arItem["NAME"]?></span>
                                         </span>
                                     </div>
-                                    <div class="b-info-slider__text"><?=$arItem["~PREVIEW_TEXT"]?></div>
+                                    <div class="b-info-slider__text"><!--noindex--><?=$arItem["~PREVIEW_TEXT"]?><!--/noindex--></div>
                                     <?if (!empty($btnText)):?>
                                         <a class="b-info-slider__btn button" href="<?=(!empty($btnLink) ? $btnLink : '#')?>" onclick="setConversion('SliderBtnConversion');"
                                            data-layer="true"
