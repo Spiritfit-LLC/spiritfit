@@ -50,6 +50,11 @@ foreach ($arResult["ITEMS"] as $key=>&$arItem){
         if ($f2 && $price["NUMBER"]!=2){
             continue;
         }
+        //Рассказовка
+        if ($price["LIST"]==1184 || $price["LIST"]==1597){
+            unset($arItem["PROPERTIES"]["PRICE"]["VALUE"][$key2]);
+            continue;
+        }
         if ($arItem["PROPERTIES"]["PRICE"]["VALUE"][$minPriceKey]["PRICE"]>=$price["PRICE"]){
             $minPriceKey=$key2;
         }
@@ -57,7 +62,7 @@ foreach ($arResult["ITEMS"] as $key=>&$arItem){
 
     $minPrice=$arItem["PROPERTIES"]["PRICE"]["VALUE"][$minPriceKey]["PRICE"];
     $minPriceNumber=$arItem["PROPERTIES"]["PRICE"]["VALUE"][$minPriceKey]["NUMBER"];
-    
+
 
     foreach ($arItem["PROPERTIES"]["PRICE"]["VALUE"] as $key2=>$price){
         if ($price["NUMBER"]==$minPriceNumber){
