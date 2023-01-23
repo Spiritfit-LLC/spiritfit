@@ -13,6 +13,7 @@ global $settings;
                     <li><a href="/about/adv/">Рекламные возможности</a></li>
                     <li><a href="/about/platform/">Площадки под новые клубы</a></li>
                     <li><a href="/upload/form/Политика.pdf">Политика обработки персональных данных</a></li>
+                    <li><a href="https://corp.spiritfit.ru">Корпоративное членство</a></li>
                 </ul>
             </div>
             <div class="footer-menu-cell">
