@@ -604,7 +604,7 @@ $_SESSION['CLUB_NUMBER'] = $arResult["PROPERTIES"]["NUMBER"]["VALUE"];
             <? $this->SetViewTarget('inhead'); ?>https://<?=$_SERVER['SERVER_NAME']?><?=$arResult['PREVIEW_PICTURE']['SRC']?><? $this->EndViewTarget(); ?>
         <? } ?>
         <span itemprop="priceRange"><?=$arResult['ABONEMENTS_MIN_PRICE']?>-<?=$arResult['ABONEMENTS_MAX_PRICE']?></span>
-        <img itemprop="logo" src=" http://spiritfit.ru/images/logo.svg ">
+        <img itemprop="logo" src="https://spiritfit.ru/images/logo.svg">
         <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
             <meta itemprop="addressCountry" content="Россия">
             <span itemprop="streetAddress"><?=$arResult['ADDRESS_SHORT']?></span>
