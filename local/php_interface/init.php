@@ -350,3 +350,17 @@ function getGaFormInputs($request){
 
     return $arClient;
 }
+
+
+AddEventHandler('main', 'OnEpilog', 'orPagenMeta');
+function orPagenMeta() {
+    if ($page = preg_grep("/PAGEN_(.*)/i", array_keys($_REQUEST))) {
+        $page = intval($_REQUEST[reset($page)]);
+        //title
+        $title = $GLOBALS['APPLICATION']->GetProperty('title');
+        $GLOBALS['APPLICATION']->SetPageProperty('title', $title . ' | Страница ' . $page);
+        //description
+        $description = $GLOBALS['APPLICATION']->GetProperty('description');
+        $GLOBALS['APPLICATION']->SetPageProperty('description', $description . ' | Страница ' . $page);
+    }
+}
