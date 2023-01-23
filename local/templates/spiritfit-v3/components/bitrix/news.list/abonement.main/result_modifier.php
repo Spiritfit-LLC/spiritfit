@@ -55,6 +55,10 @@ foreach ($arResult["ITEMS"] as $key=>&$arItem){
             unset($arItem["PROPERTIES"]["PRICE"]["VALUE"][$key2]);
             continue;
         }
+        if (empty($price["LIST"])){
+            unset($arItem["PROPERTIES"]["PRICE"]["VALUE"][$key2]);
+            continue;
+        }
         if ($arItem["PROPERTIES"]["PRICE"]["VALUE"][$minPriceKey]["PRICE"]>=$price["PRICE"]){
             $minPriceKey=$key2;
         }
