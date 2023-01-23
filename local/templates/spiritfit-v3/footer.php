@@ -32,7 +32,7 @@ global $settings;
                     <li><a href="https://corp.spiritfit.ru/" class="dont-touch">Корпоративная программа</a></li>
                     <li><a href="/loyalty-program/">Программа лояльности</a></li>
                     <li><a href="/club-members/partners/">Партнёры и привилегии</a></li>
-                    <li><a href="/#faq">FAQ</a></li>
+                    <li><a href="/faq/">FAQ</a></li>
                 </ul>
             </div>
             <div class="footer-menu-cell">
@@ -149,6 +149,7 @@ global $settings;
         var s=d.createElement('script');s.async=true;s.src=u+'?'+(Date.now()/60000|0);
         var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);
     })(window,document,'https://portal.spiritfit.ru/upload/crm/site_button/loader_2_shz3j6.js');
+
 </script>
 <?
 $APPLICATION->IncludeComponent("bitrix:b24connector.openline.info","", Array(
