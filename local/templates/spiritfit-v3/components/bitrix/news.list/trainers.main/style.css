@@ -1,0 +1,155 @@
+.trainer-block__club {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+button.trainer-block__club-control {
+    background: #f5f5f4;
+    border: 0;
+    margin: 0;
+    display: block;
+    color: black;
+    padding: 15px;
+    /* width: 360px; */
+    text-align: center;
+    cursor: pointer;
+    flex: 0 0 260px;
+}
+button.trainer-block__club-control.active {
+    background: linear-gradient(90deg,#e23834 3.26%,#7a27f1 98.07%);
+    color: white;
+}
+
+.b-treners__item .b-twoside-card__inner {
+    display: block;
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    margin: 0;
+    background: #F5F5F4;
+    color: #000;
+    cursor: pointer;
+    transition: transform .4s ease 0s;
+}
+
+.b-treners__item .b-twoside-card__content {
+    display: flex;
+    flex-direction: column;
+    padding: 35px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: top;
+    transition: filter ease .35s;
+    height: 510px;
+}
+.b-twoside-card__video {
+    display: block;
+    position: relative;
+    margin-bottom: 40px;
+}
+.b-twoside-card__image {
+    width: 240px;
+    height: 240px;
+    background-position: 50% 0%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    margin: 0 auto 40px;
+}
+.b-treners .b-twoside-card__content .b-twoside-card__name {
+    display: block;
+    position: relative;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 36px;
+    text-align: center;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #E33932 0%, #7827F4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.b-twoside-card__open {
+    display: block;
+    position: absolute;
+    bottom: 32px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    line-height: 18px;
+    text-transform: uppercase;
+    transition: all .3s;
+}
+.b-treners .b-twoside-card__hidden-content {
+    background: #000;
+    color: #FFF;
+}
+.b-twoside-card__hidden-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 56px 28px;
+    opacity: 0;
+    transition: opacity ease .35s,transform .4s ease 0s;
+}
+.b-treners .b-twoside-card__name {
+    display: block;
+    position: relative;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 18px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+.b-treners .b-twoside-card__description {
+    display: block;
+    position: relative;
+    font-size: 14px;
+    line-height: 19px;
+    overflow: auto;
+    height: 90%;
+    padding-right: 5px;
+}
+.b-twoside-card.is-open .b-twoside-card__inner {
+    color: #fff;
+    z-index: 10;
+    transform: rotateY(180deg);
+    transform-style: preserve-3d;
+}
+.b-treners .b-twoside-card.is-open .b-twoside-card__content {
+    opacity: 0;
+}
+.b-twoside-card.is-open .b-twoside-card__content {
+    filter: brightness(0);
+}
+.b-treners .b-twoside-card.is-open .b-twoside-card__hidden-content {
+    padding: 33px 24px 95px;
+}
+.b-twoside-card.is-open .b-twoside-card__hidden-content {
+    opacity: 1;
+    display: flex;
+    transform: rotateY(180deg);
+}
+.b-twoside-card.b-treners__item{
+    margin:0 20px;
+    width: 390px;
+}
+.b-twoside-card__description::-webkit-scrollbar{
+    width: 5px;
+}
+.b-twoside-card__description::-webkit-scrollbar {
+    background: rgba(137, 137, 137, 0.58);
+}
+.b-twoside-card__description::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(135deg, #E23834 3.26%, #8428DD 98.07%);    /* цвет бегунка */
+    border-radius: 3px;       /* округлось бегунка */
+}

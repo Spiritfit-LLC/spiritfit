@@ -32,11 +32,10 @@ $this->addExternalJs(SITE_TEMPLATE_PATH . "/vendor/inputmask/jquery.inputmask.mi
                                 $CHECKBOXESFIELD[]=$FIELD;
                                 continue;
                         }?>
-                        <div class="form-request-new__field <?if (!empty($FIELD["VALUE"])) echo "is-not-empty"?>">
+                        <div class="form-request-new__field select2-black <?if (!empty($FIELD["VALUE"])) echo "is-not-empty"?>">
                             <?if ($FIELD["TYPE"]=="SELECT"):?>
                                 <label class="form-request-new__label select-item"><?=$FIELD["PLACEHOLDER"]?></label>
-                                <select name="<?=$FIELD["NAME"]?>" <? if ($FIELD["REQUIRED"]) echo "required";?>>
-                                    <option disabled><?=$FIELD["PLACEHOLDER"]?></option>
+                                <select name="<?=$FIELD["NAME"]?>" class="select2" <? if ($FIELD["REQUIRED"]) echo "required";?>>
                                     <? foreach ($FIELD['ITEMS'] as $ITEM):?>
                                         <option value="<?=$ITEM["VALUE"]?>"
                                             <?if ($ITEM['SELECTED']) echo 'selected';?>><?=$ITEM["STRING"]?></option>

@@ -1,0 +1,99 @@
+
+.utp-item__image {
+    width: 100%;
+    height: 200px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+}
+.utp-item__text {
+    text-align: center;
+    padding: 20px 30px;
+    background: #F5F5F4;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+a.button.utp {
+    padding: 15px 35px;
+    margin: 20px;
+}
+.utp-main__item {
+    margin: 20px;
+}
+.utp-main__items {
+    margin: 0 -20px;
+}
+section.utp-main {
+    margin-top: 50px;
+}
+
+@media screen and (max-width: 1440px) {
+    .utp-main__items .b-cards-slider__arrow-wrapper--left {
+        left: 50px;
+    }
+
+    .utp-main__items .b-cards-slider__arrow-wrapper--right {
+        right: 55px;
+    }
+    .utp-main__items:hover .b-cards-slider__arrow-wrapper{
+        opacity: 1;
+    }
+    /*.utp-main__items .b-cards-slider__arrow-wrapper{*/
+    /*    opacity: 0;*/
+    /*    transition:0.3s;*/
+    /*}*/
+
+    .utp-main__items .b-cards-slider__arrow.b-cards-slider__arrow--left {
+        right: -5px;
+    }
+}
+
+.utp-main__item{
+    opacity: 0;
+    display: none;
+    transition:opacity .3s ease-out;
+}
+.slick-initialized .utp-main__item{
+    display: block;
+    opacity:1;
+}
+.utp-main__item .b-twoside-card__inner {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    color: #000;
+    cursor: pointer;
+    transition: transform .4s ease 0s;
+}
+.utp-main__item .b-twoside-card__content {
+    display: flex;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: top;
+    transition: filter ease .35s;
+}
+.utp-main__item .b-twoside-card__hidden-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 25px 25px;
+    opacity: 0;
+    transition: opacity ease .35s,transform .4s ease 0s;
+    background: #f5f5f4;
+}
+.utp-item__text-detail {
+    height: 300px;
+    text-align: center;
+    color:black;
+}

@@ -87,9 +87,7 @@ switch ($view) {
 <section class="<?=$class?> <?=($slider ? $class.'_simple-mobile' : '')?> <?if(empty($arParams['BLOCK_TITLE'])) echo "section-margin-top"?>">
     <div class="content-center">
         <div class="<?=$class?>__content <?=($reverse == 'Y' ? $class.'__content_reverse' : '')?>">
-            <? if($slider){ ?>
-                <div class="<?=$class?>__slider-nav"></div>
-            <? } ?>
+
 
             <? if($hideWrapperImg){
                 if(!empty($video)){
@@ -147,7 +145,7 @@ switch ($view) {
                         } else {
                             $itemPhotoData = CFile::GetFileArray($photos[0]);
                             if( (!empty($arResult['BROWSER']['NAME']) && $arResult['BROWSER']['NAME'] !== "Safari") || empty($arResult['BROWSER']['NAME']) ) {
-                                $imageType1 = \ImageConverter\Picture::getResizeWebp($pitemPhotoData, 1280, 800, true);
+                                $imageType1 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 1280, 800, true);
                                 $imageType2 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 800, 500, true);
                                 $imageType3 = \ImageConverter\Picture::getResizeWebp($itemPhotoData, 450, 281, true);
                             } else {
@@ -188,6 +186,9 @@ switch ($view) {
                         <a class="<?=$class?>__btn <?=$classBtn?>" href="<?=$link?>"><?=$btnText?></a>
                     <? } ?>
                 </div>
+                <? if($slider){ ?>
+                    <div class="<?=$class?>__slider-nav"></div>
+                <? } ?>
             </div>
         </div>
     </div>

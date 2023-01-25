@@ -21,8 +21,8 @@ global $settings;
                 <ul>
                     <li><a href="/trenirovki/trenazhernyy-zal/" class="dont-touch">Тренажерный зал</a></li>
                     <li><a href="/gruppovye-trenirovki/" class="dont-touch">Групповые тренировки</a></li>
-                    <li><a href="/trenirovki/personal-training/" class="dont-touch">Персональный тренинг</a></li>
-                    <li><a href="/trenirovki/onlayn-trenirovki/" class="dont-touch">Тренировки онлайн</a></li>
+                    <li><a href="/trenirovki/personal-training/">Персональный тренинг</a></li>
+                    <li><a href="/trenirovki/onlayn-trenirovki/">Тренировки онлайн</a></li>
                     <li><a href="/trenirovki/fitnes-testirovanie/">Фитнес-тестирование</a></li>
                 </ul>
             </div>
