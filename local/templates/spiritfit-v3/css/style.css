@@ -379,7 +379,7 @@ a.b-top-menu__abonement-btn {
 }
 a.personal-btn.header-personal-btn {
     display: flex;
-     color: white;
+    color: white;
     font-weight: 600;
     text-transform: uppercase;
     margin: 10px 20px 0;
@@ -633,6 +633,7 @@ span.select2-selection.select2-selection--single {
     transition: background-image.15s ease 0s,color .15s ease 0s,border-color .15s ease 0s;
     cursor: pointer;
     overflow: hidden;
+    border:none;
 }
 
 .button-outline {
@@ -866,4 +867,7 @@ a.gradient:before {
 }
 .white{
     color:white;
+}
+.smooth-radius {
+    border-radius: 10px;
 }
