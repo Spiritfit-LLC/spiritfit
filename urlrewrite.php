@@ -142,4 +142,11 @@ $arUrlRewrite=array (
             'PATH' => '/auth.php',
             'SORT' => 100,
         ),
+    19 => array(
+        "CONDITION" => "#^/training/([\\.\\-_0-9a-zA-Z]+)/(\\?(.*))?&?#",
+        'RULE' => 'ELEMENT_CODE=$1',
+        'ID' => '',
+        'PATH' => '/trenirovki/detail.php',
+        'SORT' => 500,
+    )
 );
