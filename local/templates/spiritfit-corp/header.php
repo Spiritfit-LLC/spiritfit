@@ -135,7 +135,17 @@ $page = $APPLICATION->GetCurPage();
         </div>
     </header>
     <main class="b-page__main" role="main">
-			<?
+        <?if (!defined('HIDE_SLIDER')){?>
+            <? if(strpos($page, '/clubs/') !== false) {
+                $GLOBALS['arFilterSlider'] = [
+					[
+						'LOGIC' => 'AND',
+						['PROPERTY_BANNER_PAGES' => $page],
+						['PROPERTY_SITE' => 42],
+						['!PROPERTY_BANNER_PAGES_HIDE' => $page]
+					]
+				];
+            }else{
 				$GLOBALS['arFilterSlider'] = [
 					[
 						'LOGIC' => 'AND',
@@ -144,72 +154,83 @@ $page = $APPLICATION->GetCurPage();
 							['PROPERTY_BANNER_PAGES' => false],
 							['PROPERTY_BANNER_PAGES' => $page],
 						],
+						['!PROPERTY_BANNER_PAGES_HIDE' => $page],
 						[
-							['PROPERTY_SITE' => 43]
+							['PROPERTY_SITE' => 42]
 						]
 					]
 				];
-				
-				$APPLICATION->IncludeComponent(
-                	"bitrix:news.list",
-                	"slider",
-                	[
-                    	"ACTIVE_DATE_FORMAT" => "d.m.Y",
-                    	"ADD_SECTIONS_CHAIN" => "N",
-                    	"AJAX_MODE" => "N",
-                    	"AJAX_OPTION_ADDITIONAL" => "",
-                    	"AJAX_OPTION_HISTORY" => "N",
-                    	"AJAX_OPTION_JUMP" => "N",
-                    	"AJAX_OPTION_STYLE" => "Y",
-                    	"CACHE_FILTER" => "N",
-                    	"CACHE_GROUPS" => "Y",
-                    	"CACHE_TIME" => "36000000",
-                    	"CACHE_TYPE" => "A",
-                    	"CHECK_DATES" => "Y",
-                    	"DETAIL_URL" => "",
-                    	"DISPLAY_BOTTOM_PAGER" => "N",
-                    	"DISPLAY_DATE" => "N",
-                    	"DISPLAY_NAME" => "N",
-                    	"DISPLAY_PICTURE" => "N",
-                    	"DISPLAY_PREVIEW_TEXT" => "N",
-                    	"DISPLAY_TOP_PAGER" => "N",
-                    	"FIELD_CODE" => ["", ""],
-                    	"FILTER_NAME" => "arFilterSlider",
-                    	"HIDE_LINK_WHEN_NO_DETAIL" => "N",
-                    	"IBLOCK_ID" => "2",
-                    	"IBLOCK_TYPE" => "content",
-                    	"INCLUDE_IBLOCK_INTO_CHAIN" => "N",
-                    	"INCLUDE_SUBSECTIONS" => "Y",
-                    	"MESSAGE_404" => "",
-                    	"NEWS_COUNT" => "10",
-                    	"PAGER_BASE_LINK_ENABLE" => "N",
-                    	"PAGER_DESC_NUMBERING" => "N",
-                    	"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
-                    	"PAGER_SHOW_ALL" => "N",
-                    	"PAGER_SHOW_ALWAYS" => "N",
-                    	"PAGER_TEMPLATE" => ".default",
-                    	"PAGER_TITLE" => "Новости",
-                    	"PARENT_SECTION" => "",
-                    	"PARENT_SECTION_CODE" => "",
-                    	"PREVIEW_TRUNCATE_LEN" => "",
-                    	"PROPERTY_CODE" => ["BANNER_BTN_TEXT", "BANNER_BTN_LINK"],
-                    	"SET_BROWSER_TITLE" => "N",
-                    	"SET_LAST_MODIFIED" => "N",
-                    	"SET_META_DESCRIPTION" => "N",
-                    	"SET_META_KEYWORDS" => "N",
-                    	"SET_STATUS_404" => "N",
-                    	"SET_TITLE" => "N",
-                    	"SHOW_404" => "N",
-                   		"SORT_BY1" => "SORT",
-                    	"SORT_BY2" => "ID",
-                    	"SORT_ORDER1" => "DESC",
-                    	"SORT_ORDER2" => "DESC",
-                    	"STRICT_SECTION_CHECK" => "N"
-                	]
-            	);
-			?>
-        <? if($page != '/') {
-        ?>
+            }?>
+
+            <?
+                $showSlider = ( defined(HIDE_SLIDER) && HIDE_SLIDER ) ? false : true;
+				if( $page != '/kachestvo-obsluzhivaniya/' && $page != '/spirittv/' && $showSlider ) {
+                    $APPLICATION->IncludeComponent(
+                        "bitrix:news.list",
+                        "slider",
+                        Array(
+                            "ACTIVE_DATE_FORMAT" => "d.m.Y",
+                            "ADD_SECTIONS_CHAIN" => "N",
+                            "AJAX_MODE" => "N",
+                            "AJAX_OPTION_ADDITIONAL" => "",
+                            "AJAX_OPTION_HISTORY" => "N",
+                            "AJAX_OPTION_JUMP" => "N",
+                            "AJAX_OPTION_STYLE" => "Y",
+                            "CACHE_FILTER" => "N",
+                            "CACHE_GROUPS" => "Y",
+                            "CACHE_TIME" => "36000000",
+                            "CACHE_TYPE" => "A",
+                            "CHECK_DATES" => "Y",
+                            "DETAIL_URL" => "",
+                            "DISPLAY_BOTTOM_PAGER" => "N",
+                            "DISPLAY_DATE" => "N",
+                            "DISPLAY_NAME" => "N",
+                            "DISPLAY_PICTURE" => "N",
+                            "DISPLAY_PREVIEW_TEXT" => "N",
+                            "DISPLAY_TOP_PAGER" => "N",
+                            "FIELD_CODE" => array("", ""),
+                            "FILTER_NAME" => "arFilterSlider",
+                            "HIDE_LINK_WHEN_NO_DETAIL" => "N",
+                            "IBLOCK_ID" => "2",
+                            "IBLOCK_TYPE" => "content",
+                            "INCLUDE_IBLOCK_INTO_CHAIN" => "N",
+                            "INCLUDE_SUBSECTIONS" => "Y",
+                            "MESSAGE_404" => "",
+                            "NEWS_COUNT" => "10",
+                            "PAGER_BASE_LINK_ENABLE" => "N",
+                            "PAGER_DESC_NUMBERING" => "N",
+                            "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+                            "PAGER_SHOW_ALL" => "N",
+                            "PAGER_SHOW_ALWAYS" => "N",
+                            "PAGER_TEMPLATE" => ".default",
+                            "PAGER_TITLE" => "Новости",
+                            "PARENT_SECTION" => "",
+                            "PARENT_SECTION_CODE" => "",
+                            "PREVIEW_TRUNCATE_LEN" => "",
+                            "PROPERTY_CODE" => array("BANNER_BTN_TEXT", "BANNER_BTN_LINK", "BANNER_TITLE"),
+                            "SET_BROWSER_TITLE" => "N",
+                            "SET_LAST_MODIFIED" => "N",
+                            "SET_META_DESCRIPTION" => "N",
+                            "SET_META_KEYWORDS" => "N",
+                            "SET_STATUS_404" => "N",
+                            "SET_TITLE" => "N",
+                            "SHOW_404" => "N",
+                            "SORT_BY1" => "SORT",
+                            "SORT_BY2" => "ID",
+                            "SORT_ORDER1" => "DESC",
+                            "SORT_ORDER2" => "DESC",
+                            "STRICT_SECTION_CHECK" => "N"
+                        )
+                    );
+                }
+            ?>
+        <? } ?>
+        <? if(!$showSlider) { ?>
+				<section class="b-screen b-screen_short">
+					<div class="b-screen__bg-holder"></div>
+				</section>
+			<? } ?>
+
             <div class="b-page__heading <?=(defined('BREADCRUMB_H1_ABSOLUTE') ? 'b-page__heading_absolute' : '')?>">
                 <div class="content-center">
                     <div class="b-page__heading-inner">
@@ -219,13 +240,12 @@ $page = $APPLICATION->GetCurPage();
                             array(
                                 "START_FROM" => "0",
                                 "PATH" => "",
-                                "SITE_ID" => "s1"
+                                "SITE_ID" => "s2"
                             )
                         ); ?>
                         <? if(!defined('H1_HIDE')){ ?>
-                            <h1 class="b-page__title"><?=$APPLICATION->ShowTitle(false)?></h1>
+                            <h1 class="b-page__title"><?=$APPLICATION->ShowTitle()?></h1>
                         <? } ?>
                     </div>
                 </div>
             </div>
-        <? } ?>
