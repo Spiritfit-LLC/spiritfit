@@ -137,3 +137,12 @@ a.button {
         line-height: 28px;
     }
 }
+.banner-detail__description-item h2 {
+    line-height: 1.2;
+}
+.banner-detail__description-item a{
+    font-weight: 800;
+    background: linear-gradient(90deg,#e23834 3.26%,#8428dd 98.07%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

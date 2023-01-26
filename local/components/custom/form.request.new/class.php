@@ -342,7 +342,7 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
                 }
                 $txt=$this->arParams["REQUEST_HEADER"]."\n\n";
                 foreach ($FORM_FIELDS["FIELDS"] as $key=>$FIELD){
-                    if (strpos($FIELD["PARAMS"], "data-to-email")!==false){
+                    if (strpos($FIELD["PARAMS"], "data-skip-to-email")===false){
                         $txt.=str_replace("*", "", $FIELD["PLACEHOLDER"]).": ".$FIELD["VALUE"]."\n";
                     }
                 }
@@ -587,7 +587,7 @@ class FormRequestNew extends CBitrixComponent implements Controllerable {
             }
             $txt=$this->arParams["REQUEST_HEADER"]."\n\n";
             foreach ($FORM_FIELDS["FIELDS"] as $key=>$FIELD){
-                if (strpos($FIELD["PARAMS"], "data-to-email")!==false){
+                if (strpos($FIELD["PARAMS"], "data-skip-to-email")===false){
                     $txt.=str_replace("*", "", $FIELD["PLACEHOLDER"]).": ".$FIELD["VALUE"]."\n";
                 }
             }
