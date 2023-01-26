@@ -48,7 +48,7 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");?>
         "PAGER_SHOW_ALL" => "N",
         "PAGER_TEMPLATE" => ".default",
         "PAGER_TITLE" => "Страница",
-        "PROPERTY_CODE" => array("TEXT", "FORM_TITLE", "SHOW_TRAINERS", "UTP_TITLE", "TRAINERS_TITLE", "FORM_TYPE", ""),
+        "PROPERTY_CODE" => array("TEXT", "FORM_TITLE", "SHOW_TRAINERS", "UTP_TITLE", "TRAINERS_TITLE", "FORM_TYPE", "SLIDER_TITLE", "SHOW_SCHEDULE", ""),
         "SET_BROWSER_TITLE" => "Y",
         "SET_CANONICAL_URL" => "Y",
         "SET_LAST_MODIFIED" => "N",
