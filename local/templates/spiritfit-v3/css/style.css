@@ -871,3 +871,26 @@ a.gradient:before {
 .smooth-radius {
     border-radius: 10px;
 }
+
+
+.b-timetable__filter-clear-closer {
+    filter: invert(1);
+    border: dotted 1px white!important;
+}
+.b-timetable__column.active .b-timetable__head-day,
+.b-timetable__training-item.active{
+    border: 3px solid!important;
+    border-image:
+            linear-gradient(90deg, #E23834 3.26%, #7A27F1 98.07%) 1!important;
+}
+.training-item__desc-body,.training-item__body, .b-timetable__head {
+    font-weight: 300!important;
+}
+a.get-trialworkout{
+    border: 2px solid!important;
+    border-image:
+            linear-gradient(90deg, #E23834 3.26%, #7A27F1 98.07%) 1!important;
+}
+.b-timetable{
+    margin-bottom: 0!important;
+}

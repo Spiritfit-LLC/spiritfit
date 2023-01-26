@@ -155,6 +155,13 @@
     );?>
 <?endif;?>
 <?php if (!empty($arResult["PROPERTIES"]["SLIDER"]["VALUE"])):?>
+    <?php if (!empty($arResult["PROPERTIES"]["SLIDER_TITLE"]["VALUE"])):?>
+        <div class="content-center">
+            <div class="b-section__title">
+                <h2><?=$arResult["PROPERTIES"]["SLIDER_TITLE"]["VALUE"]?></h2>
+            </div>
+        </div>
+    <?endif;?>
     <? $APPLICATION->IncludeComponent(
         "bitrix:news.detail",
         "blocks",
@@ -223,6 +230,20 @@
     );?>
 <?php endif;?>
 
+<?php if (!empty($arResult["PROPERTIES"]["SHOW_SCHEDULE"]["VALUE"])):?>
+    <?php
+    $APPLICATION->IncludeComponent(
+        "custom:shedule.club",
+        "profitator.style",
+        array(
+            "IBLOCK_TYPE" => "content",
+            "IBLOCK_CODE" => "clubs",
+            "CLUB_NUMBER" => "11",
+        ),
+        false
+    );
+    ?>
+<?php endif;?>
 
 <section id="form" style="margin-top: 80px;">
     <?
