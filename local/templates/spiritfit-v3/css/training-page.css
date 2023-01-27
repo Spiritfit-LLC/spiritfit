@@ -145,4 +145,5 @@ a.button {
     background: linear-gradient(90deg,#e23834 3.26%,#8428dd 98.07%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    white-space: nowrap;
 }

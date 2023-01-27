@@ -7,7 +7,7 @@ global $settings;
     <div class="content-center">
         <div class="footer-menu">
             <div class="footer-menu-cell">
-                <div class="footer-menu-title"><a href="/about/" class="dont-touch">О компании</a></div>
+                <div class="footer-menu-title"><a href="/about/">О компании</a></div>
                 <ul>
                     <li><a href="https://career.spiritfit.ru/">Карьера</a></li>
                     <li><a href="/about/adv/">Рекламные возможности</a></li>
@@ -19,10 +19,10 @@ global $settings;
             <div class="footer-menu-cell">
                 <div class="footer-menu-title"><a href="/trenirovki/trenirovki.php" class="dont-touch">Тренировки</a></div>
                 <ul>
-                    <li><a href="/trenirovki/trenazhernyy-zal/" class="dont-touch">Тренажерный зал</a></li>
-                    <li><a href="/gruppovye-trenirovki/" class="dont-touch">Групповые тренировки</a></li>
-                    <li><a href="/trenirovki/personal-training/">Персональный тренинг</a></li>
-                    <li><a href="/trenirovki/onlayn-trenirovki/">Тренировки онлайн</a></li>
+                    <li><a href="/training/gym/">Тренажерный зал</a></li>
+                    <li><a href="/training/group-trainings/">Групповые тренировки</a></li>
+                    <li><a href="/training/personal-training/">Персональный тренинг</a></li>
+                    <li><a href="/training/online-trainings/">Тренировки онлайн</a></li>
                     <li><a href="/trenirovki/fitnes-testirovanie/">Фитнес-тестирование</a></li>
                 </ul>
             </div>

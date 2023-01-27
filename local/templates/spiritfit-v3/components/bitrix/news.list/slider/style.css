@@ -216,3 +216,7 @@ span.b-breadcrumbs__link.is-current {
     display: block;
     opacity:1;
 }
+
+.b-info-slider__item:not(:first-child){
+    display: none;
+}

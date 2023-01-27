@@ -1,22 +1,21 @@
 <?php
 define('HIDE_SLIDER', true);
-define('BREADCRUMB_H1_ABSOLUTE', true);
-//define('H1_BIG_COLORFUL', true);
+define('ANCHOR_PERSONAL', true);
+define('HOLDER_CLASS', 'trainings');
+define('H1_BIG', true);
 
 
-require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
-use Bitrix\Main\Page\Asset;
+define('SITE_TEMPLATE_PATH', '/local/templates/spiritfit-v3/');
+define('SITE_TEMPLATE_ID', 'spiritfit-v3');
 
-Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/libs/owl.carousel/owl.carousel.min.js');
-Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/libs/owl.carousel/owl.carousel.min.css');
-Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/service.page.js');
-Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/service.page.css');
+require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 
-
-$APPLICATION->SetTitle("Рекламные возможности");
-
+global $APPLICATION;
 $APPLICATION->SetPageProperty("description", "Сеть Spirit. Fitness приглашает рекламодателей к сотрудничеству. Предлагаем размещение рекламы в наших клубах, группах в соцсетях и на Spirit. TV.");
 $APPLICATION->SetPageProperty("title", "Рекламные возможности | SpiritFit.ru");
+
+use Bitrix\Main\Page\Asset;
+Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'css/training-page.css');
 ?>
 <?php
 $ELEMENT_ID=Utils::GetIBlockElementIDBySID("service-page-settings");
@@ -33,76 +32,102 @@ while ($row = $rows->fetch()) {
 
 $propertyFilter=[
     "CODE"=>[
-        "ADV_SHORT_DESC",
-        "ADV_BUTTON",
-        "ADV_IMAGES",
-        "ADV_PAGE_DESC",
-        "ADV_FORM_EMAIL",
-        "ADV_FORM_SID",
-        "ADV_FORM_TITLE",
-        "ADV_ADVANTAGES",
-        "ADV_FORM_EMAIL_HEADER"
+        "ADV_*",
     ]
 ];
 
-CIBlockElement::GetPropertyValuesArray($objects, $filter['IBLOCK_ID'], $filter, $propertyFilter);
+CIBlockElement::GetPropertyValuesArray($objects, $filter['IBLOCK_ID'], $filter);
 unset($rows, $filter, $order);
-$includeParams=[
-    "HEAD_DESC"=>$objects[$ELEMENT_ID]["PROPERTIES"]["ADV_SHORT_DESC"]["VALUE"]["TEXT"],
-    "BUTTON"=>$objects[$ELEMENT_ID]["PROPERTIES"]["ADV_BUTTON"]["VALUE"],
-    "BUTTON_LINK"=>$objects[$ELEMENT_ID]["PROPERTIES"]["ADV_BUTTON"]["DESCRIPTION"],
-    "HEAD_IMAGES"=>$objects[$ELEMENT_ID]["PROPERTIES"]["ADV_IMAGES"]["VALUE"],
-];
-$APPLICATION->IncludeFile("/local/include/service/header.php", $includeParams);
+
+$PROPS=$objects[$ELEMENT_ID]["PROPERTIES"];
+$APPLICATION->SetTitle($PROPS["ADV_PAGE_TITLE"]["VALUE"]);
+$APPLICATION->AddViewContent('inhead', CFile::GetPath($PROPS["ADV_BANNER"]["VALUE"]));
 ?>
-<section class="page-black-description">
-<div class="content-center">
-    <div class="desc__block">
-        <div class="desc__block__text">
-            <div class="adv-advantages__list">
-            <?for ($i=0; $i<count($objects[$ELEMENT_ID]["PROPERTIES"]["ADV_ADVANTAGES"]["VALUE"]); $i++):?>
-                <?
-                $DESC=$objects[$ELEMENT_ID]["PROPERTIES"]["ADV_ADVANTAGES"]["DESCRIPTION"][$i];
-                $VALUE=$objects[$ELEMENT_ID]["PROPERTIES"]["ADV_ADVANTAGES"]["VALUE"][$i];
-                if (empty($DESC) || empty($VALUE)){
-                    continue;
-                }
-                ?>
-                <div class="adv-advantages__item">
-                    <div class="adv-advantages__val">
-                        <?=$VALUE?>
-                    </div>
-                    <div class="adv-advantages__desc">
-                        <?=$DESC?>
-                    </div>
-                </div>
-            <?endfor;?>
-            </div>
-            <?for ($i=0; $i<count($objects[$ELEMENT_ID]["PROPERTIES"]["ADV_PAGE_DESC"]["VALUE"]); $i++):?>
-                <?if (!empty($objects[$ELEMENT_ID]["PROPERTIES"]["ADV_PAGE_DESC"]["DESCRIPTION"][$i])):?>
-                    <div class="b-cards-slider__heading">
-                        <div class="b-cards-slider__title">
-                            <h2><?=$objects[$ELEMENT_ID]["PROPERTIES"]["ADV_PAGE_DESC"]["DESCRIPTION"][$i]?></h2>
+<style>
+    .adv-traffic {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-end;
+        background: linear-gradient(90deg,#e23834 3.26%,#8428dd 98.07%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .adv-traffic__item {
+        width: 33.3%;
+        flex: 0 0 33.3%;
+        padding: 0 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        flex-wrap: nowrap;
+        text-align: center;
+        justify-content: center;
+
+    }
+    .adv-traffic__val {
+        font-size: 28px;
+        font-weight: 600;
+        margin-right: 10px;
+    }
+    .adv-traffic__desc {
+        font-size: 14px;
+    }
+    .adv-traffic__item:first-child{
+        justify-content: flex-start;
+    }
+    .adv-traffic__item:last-child{
+        justify-content: flex-end;
+    }
+    @media screen and (max-width: 1024px) {
+        .adv-traffic__item{
+            width: max-content;
+            flex: 0 0 max-content;
+            margin: 20px 0 0;
+        }
+    }
+</style>
+<?if (!empty($PROPS["ADV_BANNER"]["VALUE"])):?>
+    <div class="banner-detail__img" style="background-image: url(<?=CFile::GetPath($PROPS["ADV_BANNER"]["VALUE"])?>)"></div>
+    <div class="content-center">
+        <?for($i=0; $i<count($PROPS["ADV_BANNER_TEXT"]["VALUE"]); $i++):?>
+            <?if ($i==count($PROPS["ADV_BANNER_TEXT"]["VALUE"])-1 && count($PROPS["ADV_TRAFFIC"]["VALUE"])>0):?>
+                <div class="adv-traffic">
+                    <?for ($j=0; $j<count($PROPS["ADV_TRAFFIC"]["VALUE"]); $j++): ?>
+                        <div class="adv-traffic__item">
+                            <div class="adv-traffic__val">
+                                <?=$PROPS["ADV_TRAFFIC"]["VALUE"][$j]?>
+                            </div>
+                            <div class="adv-traffic__desc">
+                                <?=$PROPS["ADV_TRAFFIC"]["DESCRIPTION"][$j]?>
+                            </div>
                         </div>
+                    <?endfor?>
+                </div>
+            <?endif;?>
+            <div class="banner-detail__description-item">
+                <?if (!empty($PROPS["ADV_BANNER_TEXT"]["DESCRIPTION"][$i])):?>
+                    <div class="banner-detail__description-title">
+                        <h2 class="text-transform-none"><?=$PROPS["ADV_BANNER_TEXT"]["DESCRIPTION"][$i]?></h2>
                     </div>
                 <?endif;?>
-                <div class="desc__block__text">
-                    <?=htmlspecialcharsback($objects[$ELEMENT_ID]["PROPERTIES"]["ADV_PAGE_DESC"]["VALUE"][$i]["TEXT"])?>
+                <div class="banner-detail__description-content">
+                    <?=htmlspecialcharsback($PROPS["ADV_BANNER_TEXT"]["VALUE"][$i]["TEXT"])?>
                 </div>
-            <?endfor;?>
-        </div>
+            </div>
+        <?endfor;?>
     </div>
-</div>
-</section>
-<?if (!empty($objects[$ELEMENT_ID]["PROPERTIES"]["ADV_FORM_EMAIL"]["VALUE"])):?>
-    <section id="form-request">
+<?php endif;?>
+<?if (!empty($PROPS["ADV_FORM_EMAIL"]["VALUE"]) && !empty($PROPS["ADV_FORM_SID"]["VALUE"])):?>
+    <section id="form">
         <?
         $APPLICATION->IncludeComponent(
             "custom:form.request.new",
             "on.page.block",
             array(
                 "COMPONENT_TEMPLATE" => "on.page.block",
-                "WEB_FORM_ID" => Utils::GetFormIDBySID($objects[$ELEMENT_ID]["PROPERTIES"]["ADV_FORM_SID"]["VALUE"]),
+                "WEB_FORM_ID" => Utils::GetFormIDBySID($PROPS["ADV_FORM_SID"]["VALUE"]),
                 "WEB_FORM_FIELDS" => array(
                     0 => "name",
                     1 => "phone",
@@ -112,13 +137,15 @@ $APPLICATION->IncludeFile("/local/include/service/header.php", $includeParams);
                     5 => "rules",
                     6 => "privacy",
                 ),
-                "TEXT_FORM"=>$objects[$ELEMENT_ID]["PROPERTIES"]["ADV_FORM_TITLE"]["VALUE"],
+                "TEXT_FORM"=>$PROPS["ADV_FORM_TITLE"]["VALUE"],
                 "REQUEST_TYPE"=>"EMAIL",
-                "EMAIL"=>$objects[$ELEMENT_ID]["PROPERTIES"]["ADV_FORM_EMAIL"]["VALUE"],
-                "REQUEST_HEADER"=>$objects[$ELEMENT_ID]["PROPERTIES"]["ADV_FORM_EMAIL_HEADER"]["VALUE"]
+                "EMAIL"=>$PROPS["ADV_FORM_EMAIL"]["VALUE"],
+                "REQUEST_HEADER"=>$PROPS["ADV_EMAIL_SUBJECT"]["VALUE"]
             ),
             false);
         ?>
     </section>
 <?endif;?>
+
+
 <?require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
