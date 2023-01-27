@@ -124,6 +124,7 @@ if(!empty($files['VALUE'])){
         <?endif?>
 
     </div>
+<!--    --><?php //if(strpos($_SERVER['HTTP_USER_AGENT'],'Chrome-Lighthouse')===false):?>
     <? if(!empty($arResult["ITEMS"])){  ?>
         <div class="content-center">
             <div class="b-screen__content">
@@ -173,4 +174,5 @@ if(!empty($files['VALUE'])){
             </div>
         </div>
     <? } ?>
+<!--    --><?//endif;?>
 </section>
