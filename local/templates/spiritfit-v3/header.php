@@ -44,6 +44,7 @@ $clubs = Clubs::getList();
     ?>
     <?$APPLICATION->ShowHead();?>
 
+    <?php if(strpos($_SERVER['HTTP_USER_AGENT'],'Chrome-Lighthouse')===false):?>
     <!-- Google Tag Manager -->
     <script data-skip-moving="true" async>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -60,6 +61,7 @@ $clubs = Clubs::getList();
     <script>
         sbjs.init();
     </script>
+    <?endif;?>
     <?php
     $page = $_SERVER['REQUEST_URI'];
     if(strpos($_SERVER['REQUEST_URI'], '?')){

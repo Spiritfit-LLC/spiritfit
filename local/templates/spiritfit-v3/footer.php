@@ -66,6 +66,7 @@ global $settings;
     </div>
 </footer>
 <script>
+<?php if(strpos($_SERVER['HTTP_USER_AGENT'],'Chrome-Lighthouse')===false):?>
     window.addEventListener('onBitrixLiveChat', function(event){
         var widget = event.detail.widget;
         widget.setOption('checkSameDomain', false);
@@ -241,6 +242,7 @@ $APPLICATION->IncludeComponent("bitrix:b24connector.openline.info","", Array(
     }
 </style>
 <?endif;?>
+<?php endif?>
 </body>
 <?
 $inHead = $APPLICATION->GetViewContent('inhead');
