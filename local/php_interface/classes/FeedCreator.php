@@ -176,7 +176,7 @@ class FeedCreator{
                 $ABONEMENT_OFFER->addchild('name', $typePrefix.' '.$VENDOR.' '.strip_tags($CLUB_NAME));
                 $ABONEMENT_OFFER->addChild('pickup', 'true');
                 $ABONEMENT_OFFER->addChild('delivery', 'true');
-                $ABONEMENT_OFFER->addChild('param', 'Черный')->addAttribute('name', "Цвет");
+//                $ABONEMENT_OFFER->addChild('param', 'Черный')->addAttribute('name', "Цвет");
                 $ABONEMENT_OFFER->addChild('description', $ABONEMENT_DESC);
                 foreach ($element['PROPERTIES']['FEED_PICTURE']['VALUE'] as $picture){
                     $ABONEMENT_OFFER->addChild('picture', $SITE_NAME.CFile::GetPath($picture));
