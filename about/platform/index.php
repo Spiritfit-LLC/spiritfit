@@ -43,7 +43,7 @@ $APPLICATION->SetTitle($PROPS["PLATFORM_PAGE_TITLE"]["VALUE"]);
 $APPLICATION->AddViewContent('inhead', CFile::GetPath($PROPS["PLATFORM_BANNER"]["VALUE"]));
 ?>
 <?if (!empty($PROPS["PLATFORM_BANNER"]["VALUE"])):?>
-    <div class="banner-detail__img" style="background-image: url(<?=CFile::GetPath($PROPS["ADV_BANNER"]["VALUE"])?>)"></div>
+    <div class="banner-detail__img" style="background-image: url(<?=CFile::GetPath($PROPS["PLATFORM_BANNER"]["VALUE"])?>)"></div>
     <div class="content-center">
         <?for($i=0; $i<count($PROPS["PLATFORM_BANNER_TEXT"]["VALUE"]); $i++):?>
             <div class="banner-detail__description-item">
