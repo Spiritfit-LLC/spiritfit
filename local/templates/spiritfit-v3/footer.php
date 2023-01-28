@@ -42,19 +42,19 @@ global $settings;
                     <li><a href="/spirittv/">Spirit. TV</a></li>
                     <li><a href="/blog/">Блог</a></li>
                 </ul>
-                <a rel="nofollow" class="b-social-link" href="https://t.me/spiritfitness_official" target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img" src="<?=SITE_TEMPLATE_PATH?>/img/telegram-brands.svg" alt="@spiritmoscow" title=""></span><span class="b-social-link__text"></span></a>
-                <a rel="nofollow" class="b-social-link" href="https://vk.com/spiritmoscow" target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img" src="<?=SITE_TEMPLATE_PATH?>/img/vk-brands.svg" alt="@spiritmoscow" title=""></span><span class="b-social-link__text"></span></a>
-                <a rel="nofollow" class="b-social-link" href="http://www.tiktok.com/@spiritfitness" target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img" src="<?=SITE_TEMPLATE_PATH?>/img/tiktok-brands.svg" alt="@spiritmoscow" title=""></span><span class="b-social-link__text"></span></a>
-                <a rel="nofollow" class="b-social-link" href="https://zen.yandex.ru/id/6017f57288bc0d2cb7405dc6" target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img" src="<?=SITE_TEMPLATE_PATH?>/img/zen-brands.png"></span><span class="b-social-link__text"></span></a>
+                <a rel="nofollow" class="b-social-link" href="https://t.me/spiritfitness_official" target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img lazy" data-src="<?=SITE_TEMPLATE_PATH?>/img/telegram-brands.svg" alt="@spiritmoscow" title=""></span><span class="b-social-link__text"></span></a>
+                <a rel="nofollow" class="b-social-link" href="https://vk.com/spiritmoscow" target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img lazy" data-src="<?=SITE_TEMPLATE_PATH?>/img/vk-brands.svg" alt="@spiritmoscow" title=""></span><span class="b-social-link__text"></span></a>
+                <a rel="nofollow" class="b-social-link" href="http://www.tiktok.com/@spiritfitness" target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img lazy" data-src="<?=SITE_TEMPLATE_PATH?>/img/tiktok-brands.svg" alt="@spiritmoscow" title=""></span><span class="b-social-link__text"></span></a>
+                <a rel="nofollow" class="b-social-link" href="https://zen.yandex.ru/id/6017f57288bc0d2cb7405dc6" target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img lazy" data-src="<?=SITE_TEMPLATE_PATH?>/img/zen-brands.png"></span><span class="b-social-link__text"></span></a>
             </div>
         </div>
         <div class="b-footer__content">
             <div class="b-footer__app-buttons">
                 <div class="b-app-list"><a rel="nofollow" class="b-app-list__button"
                                            href="<?=$settings["PROPERTIES"]["LINK_APPSTORE"]["VALUE"]?>" target="_blank"><img
-                                class="b-app-list__img" src="<?=SITE_TEMPLATE_PATH?>/img/btn-app-store.svg" alt="Загрузите в App Store"
+                                class="b-app-list__img lazy" data-src="<?=SITE_TEMPLATE_PATH?>/img/btn-app-store.svg" alt="Загрузите в App Store"
                                 title="" /></a><a rel="nofollow" class="b-app-list__button" href="<?=$settings["PROPERTIES"]["LINK_GOOGLEPLAY"]["VALUE"]?>" target="_blank"><img
-                                class="b-app-list__img" src="<?=SITE_TEMPLATE_PATH?>/img/btn-google-play.svg" alt="Доступно в Google Play"
+                                class="b-app-list__img lazy" data-src="<?=SITE_TEMPLATE_PATH?>/img/btn-google-play.svg" alt="Доступно в Google Play"
                                 title="" /></a>
                 </div>
             </div>
