@@ -263,6 +263,24 @@ $(document).ready(function(){
         });
     }
 
+    var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+
+    if ("IntersectionObserver" in window) {
+        let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    var $target=$(entry.target);
+                    $target.attr("src", $target.data("src"));
+                    lazyImageObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        lazyImages.forEach(function(lazyImage) {
+            lazyImageObserver.observe(lazyImage);
+        });
+    }
+
 });
 
 

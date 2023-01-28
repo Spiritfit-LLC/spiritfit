@@ -5,7 +5,8 @@ class CJsMinify
     const DIRS_FOR_JS_MINIFY = [
         '/local/components/',
         '/local/templates/spiritfit-v3/js/',
-        '/local/templates/spiritfit-v3/components/'
+        '/local/templates/spiritfit-v3/components/',
+        '/local/templates/spiritfit-v3/vendor/'
     ];
 
     /**
@@ -118,7 +119,8 @@ class CCssMinify
     const DIRS_FOR_CSS_MINIFY = [
         '/local/components/',
         '/local/templates/spiritfit-v3/css/',
-        '/local/templates/spiritfit-v3/components/'
+        '/local/templates/spiritfit-v3/components/',
+        '/local/templates/spiritfit-v3/vendor/'
     ];
 
     const FILES_FOR_CSS_MINIFY = [];
