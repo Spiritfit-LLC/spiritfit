@@ -40,6 +40,7 @@ foreach ($arResult["ITEMS"] as $key=>&$arItem){
     $price_sign_keys = array_keys(array_intersect(array_column($arItem["PROPERTIES"]["PRICE_SIGN_DETAIL"]["VALUE"], "LIST"), [$arParams["CLUB_ID"]]));
 
     $price_keys = array_keys(array_intersect(array_column($arItem["PROPERTIES"]["PRICE"]["VALUE"], "LIST"), [$arParams["CLUB_ID"]]));
+    
 
     $base_price_keys = array_keys(array_intersect(array_column($arItem["PROPERTIES"]["BASE_PRICE"]["VALUE"], "LIST"), [$arParams["CLUB_ID"]]));
 
