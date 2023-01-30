@@ -36,7 +36,7 @@ $(document).ready(function(){
                 breakpoint: 552,
                 settings: {
                     centerMode: true,
-                    centerPadding: '15px',
+                    centerPadding: '10px',
                     slidesToShow: 1
                 }
             }
@@ -60,10 +60,13 @@ $(document).ready(function(){
         }).height(height + add_height);
     }
 
-    setHeight(".slider-abonement__item-include-list");
-    setHeight(".slider-abonement__item-price");
-    setHeight(".slider-abonement__item-sale", $(".abonement-sale-date").height());
-    setHeight(".slider-abonement__item-title");
+
+    if ($(window).width()>768){
+        setHeight(".slider-abonement__item-include-list");
+        setHeight(".slider-abonement__item-title");
+        setHeight(".slider-abonement__item-price");
+        setHeight(".slider-abonement__item-sale", $(".abonement-sale-date").height());
+    }
 
     var section_id=$(".slider-section__item.active").data("section-id");
     if (section_id!==undefined){
