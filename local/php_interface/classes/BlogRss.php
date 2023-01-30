@@ -20,10 +20,11 @@ class BlogRss{
     private static function _checkFeedDoc(){
         $date = new DateTime();
 
-        self::$XMLDoc=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><rss></rss>');
-        self::$XMLDoc->addAttribute('xmlns:yandex',"http://news.yandex.ru");
-        self::$XMLDoc->addAttribute('xmlns:media',"http://search.yahoo.com/mrss/");
-        self::$XMLDoc->addAttribute('version',"2.0");
+        self::$XMLDoc=new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>'.
+            '<rss xmlns:yandex="http://news.yandex.ru" '.
+            'xmlns:media="http://search.yahoo.com/mrss/" '.
+            'version="2.0"'.
+            '></rss>');
         self::_createXMLStruct();
     }
 
@@ -61,9 +62,9 @@ class BlogRss{
 
             }
             $TEXT=HTMLToTxt(html_entity_decode($TEXT, ENT_NOQUOTES, 'UTF-8'), "", array("'<img[^>]*?>'si", "'<a[^>]*?>'si"), false);
-            $item->addChild("yandex:full-text", $TEXT);
+            $item->addChild("yandex:full-text", $TEXT, "http://news.yandex.ru");
 
-            $item->addChild("yandex:genre", "article");
+            $item->addChild("yandex:genre", "article", "http://news.yandex.ru");
 
             $section=CIBlockSection::GetByID($element["IBLOCK_SECTION_ID"])->Fetch();
             $item->addChild("category", $section["NAME"]);
