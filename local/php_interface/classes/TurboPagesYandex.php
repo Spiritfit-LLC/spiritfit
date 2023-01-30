@@ -209,11 +209,16 @@ class TurboPagesYandex{
                 $section_content=preg_replace("/\xEF\xBB\xBF/", "", htmlspecialchars_decode($blog_item['PROPERTIES']['BLOG_TEXT']['VALUE'][$i]['TEXT']));
                 $section_content=preg_replace('{(<br[\\s]*(>|\/>)\s*){2,}}i','$1',$section_content);
 
+                $SECTION_TITLE=$blog_item['PROPERTIES']['BLOG_TEXT']['DESCRIPTION'][$i];
+                if (empty($SECTION_TITLE)){
+                    $SECTION_TITLE=mb_substr(preg_replace("/\xEF\xBB\xBF/", "", $section_content), 0, 50)."...";
+                }
+
                 if ($i==0){
-                    $ALLCONTENT.='<div data-block="item" data-title="'.$blog_item['PROPERTIES']['BLOG_TEXT']['DESCRIPTION'][$i].'" data-expanded="true">';
+                    $ALLCONTENT.='<div data-block="item" data-title="'.$SECTION_TITLE.'" data-expanded="true">';
                 }
                 else{
-                    $ALLCONTENT.='<div data-block="item" data-title="'.$blog_item['PROPERTIES']['BLOG_TEXT']['DESCRIPTION'][$i].'">';
+                    $ALLCONTENT.='<div data-block="item" data-title="'.$SECTION_TITLE.'">';
                 }
                 $ALLCONTENT.='<div class="text-section__text">'.preg_replace("/\xEF\xBB\xBF/", "", $section_content).'</div></div>';
 
