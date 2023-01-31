@@ -224,7 +224,8 @@
             "SET_STATUS_404" => "N",
             "SHOW_404" => "N",
             "MESSAGE_404" => "",
-            "FILE_404" => ""
+            "FILE_404" => "",
+            "TITLE_ON_TOP"=>true
         ),
         false
     );?>

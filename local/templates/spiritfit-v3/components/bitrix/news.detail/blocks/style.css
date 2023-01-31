@@ -43,6 +43,7 @@
 .b-image-block__content_reverse .b-image-block__text-content {
     margin-left: auto;
     margin-right: calc((((100% - 24px*12)/12)*1) + (24px*(1 - 1)) + (24px/2)*3);
+    padding: 52px 0;
 }
 .b-image-block__text-content {
     width: calc((((100% - 24px*12)/12)*4) + (24px*(4 - 1)));
@@ -297,6 +298,7 @@
     .b-image-block__content_reverse .b-image-block__text-content {
         width: calc(100% + 8px);
         margin: 0 -4px;
+        padding: 0;
     }
     .b-image-block__content{
         background: transparent;

@@ -84,7 +84,15 @@ switch ($view) {
         </div>
     </div>
 <? } ?>
+
 <section class="<?=$class?> <?=($slider ? $class.'_simple-mobile' : '')?> <?if(empty($arParams['BLOCK_TITLE'])) echo "section-margin-top"?>">
+    <?php if ($arParams["TITLE_ON_TOP"]):?>
+        <div class="content-center">
+            <div class="b-section__title" style="margin: 0">
+                <h2 class="<?=$arParams["TITLE_ON_TOP"]?"visible-phone":""?>"><a href="<?=(!empty($linkTitle) ? $linkTitle : $link)?>"><?=$arResult['NAME']?></a>
+            </div>
+        </div>
+    <?php endif;?>
     <div class="content-center">
         <div class="<?=$class?>__content <?=($reverse == 'Y' ? $class.'__content_reverse' : '')?>">
 
@@ -162,7 +170,7 @@ switch ($view) {
             <? } ?>
             <div class="<?=$class?>__text-content text-center">
                 <div class="<?=$class?>__text-content-inner">
-                    <h2><a href="<?=(!empty($linkTitle) ? $linkTitle : $link)?>"><?=$arResult['NAME']?></a></h2>
+                    <h2 class="<?=$arParams["TITLE_ON_TOP"]?"visible-desktop":""?>"><a href="<?=(!empty($linkTitle) ? $linkTitle : $link)?>"><?=$arResult['NAME']?></a></h2>
                     <div class="<?=$class?>__text">
                         <? if(!empty($text)){ ?>
                             <? foreach ($text as $itemText) { ?>
