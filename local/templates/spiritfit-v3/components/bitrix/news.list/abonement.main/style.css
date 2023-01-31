@@ -298,6 +298,7 @@ span.base-price:before {
     }
     .slick-current .abonement-item__btn{
         opacity: 1;
+        z-index: 100;
     }
 
     .b-cards-slider__item .slider-abonement__item-include-list {
