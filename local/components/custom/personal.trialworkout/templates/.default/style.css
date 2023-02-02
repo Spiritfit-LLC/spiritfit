@@ -243,3 +243,8 @@ span.tw-day-item__day {
         right: -3px;
     }
 }
+
+.trialworkout-message b {
+    font-weight: 700;
+    color: #fc6120;
+}
