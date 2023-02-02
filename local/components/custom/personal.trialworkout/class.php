@@ -89,7 +89,7 @@ class PersonalTrialWorkout extends CBitrixComponent implements Controllerable{
             "СБ"
         ];
         $date = date('m/d/Y');
-        for($i=0; $i<32; $i++){
+        for($i=0; $i<7; $i++){
             list($day, $week, $month)=explode(';',date('d;w;n', strtotime($date)));
 
             $this->arResult["DAYS"][]=
@@ -106,74 +106,93 @@ class PersonalTrialWorkout extends CBitrixComponent implements Controllerable{
         $this->arResult["CLUBS_ARR"]=$this->GetClubArr();
         $this->arResult['COMPONENT_NAME']=$this->GetName();
 
+
+        global $USER;
+        $user=CUser::GetByID($USER->GetID())->Fetch();
+
+        $TW=unserialize($user["UF_TRIALWORKOUT"]);
+        $this->arResult["NO_COACH"]=$TW["nocoach"];
+//        if ($TW["nocoach"]){
+//            $result='<option value="free">Без тренера</option>';
+//        }
+
         $this->IncludeComponentTemplate();
     }
 
 
-    public function getDayTimetable($date, $club_num, $action="new"){
+    public function getDayTimetable($date, $club_num, $action="new", $tw_type="free"){
         $date=date('d.m.Y', strtotime($date));
 
-        global $USER;
-        $rsUser = CUser::GetByID($USER->GetID());
-        $arUser = $rsUser->Fetch();
-        $id1c=$arUser['UF_1CID'];
+        if ($tw_type=="coach"){
+            global $USER;
+            $rsUser = CUser::GetByID($USER->GetID());
+            $arUser = $rsUser->Fetch();
+            $id1c=$arUser['UF_1CID'];
 
-        $api=new Api([
-            "action"=>"trialworkout",
-            "params"=>[
-                "id1c"=>$id1c,
-                "login"=>$USER->GetLogin(),
-                "action"=>$action,
-                "date"=>$date,
-                "clubid"=>$club_num
-            ]
-        ]);
+            $api=new Api([
+                "action"=>"trialworkout",
+                "params"=>[
+                    "id1c"=>$id1c,
+                    "login"=>$USER->GetLogin(),
+                    "action"=>$action,
+                    "date"=>$date,
+                    "clubid"=>$club_num
+                ]
+            ]);
 
-        $response=$api->result();
-        if (empty($response["data"]["result"]["result"]) && count($response["data"]["result"]["result"])==0){
-            return false;
-        }
-        $result=[];
+            $response=$api->result();
 
-        $buffer_timetable=[];
-        foreach($response["data"]["result"]["result"] as $TIME){
-            if (!is_array($buffer_timetable[$TIME["time"]])){
-                $buffer_timetable[$TIME["time"]]=[];
-            }
-            array_push($buffer_timetable[$TIME["time"]], ["ID"=>$TIME["id"], "NAME"=>$TIME["name"]]);
-        }
+//            return [$response, [
+//                "id1c"=>$id1c,
+//                "login"=>$USER->GetLogin(),
+//                "action"=>$action,
+//                "date"=>$date,
+//                "clubid"=>$club_num
+//            ]];
 
-        $CURR_TIME="10:00";
-
-        while ($CURR_TIME<="21:00"){
-            if ($date==date("d.m.Y") && date("H:i")>$CURR_TIME){
-                $CURR_TIME=date('H:i',  strtotime("+15 minutes", strtotime($CURR_TIME)));
-                continue;
-            }
-            if ($CURR_TIME<"12:00"){
-                $key="0MORNING";
-            }
-            elseif ($CURR_TIME<"18:00"){
-                $key="1DAYTIME";
-            }
-            else{
-                $key="2EVENING";
+            if (empty($response["data"]["result"]["result"]) && count($response["data"]["result"]["result"])==0){
+                return false;
             }
 
-            if (key_exists($CURR_TIME, $buffer_timetable)){
-                if (!is_array($result[$key][$CURR_TIME])){
-                    $result[$key][$CURR_TIME]=[
-                        "TYPE"=>"FREE",
-                        "ITEMS"=>$buffer_timetable[$CURR_TIME]
-                    ];
+            $timetable=$response["data"]["result"]["result"];
+            sort($timetable);
+
+            foreach ($timetable as $time){
+                if ($time<"12:00"){
+                    $key="0MORNING";
                 }
-            }
-            else{
-                $result[$key][$CURR_TIME]=["TYPE"=>"NOTFREE"];
-            }
-            $CURR_TIME=date('H:i',  strtotime("+15 minutes", strtotime($CURR_TIME)));
-        }
+                elseif ($time<"18:00"){
+                    $key="1DAYTIME";
+                }
+                else{
+                    $key="2EVENING";
+                }
 
+                $result[$key][]=$time;
+            }
+        }
+        else{
+            $result=[];
+            $CURR_TIME="10:00";
+            while ($CURR_TIME<="21:00"){
+                if ($date==date("d.m.Y") && date("H:i")>$CURR_TIME){
+                    $CURR_TIME=date('H:i',  strtotime("+1 hours", strtotime($CURR_TIME)));
+                    continue;
+                }
+                if ($CURR_TIME<"12:00"){
+                    $key="0MORNING";
+                }
+                elseif ($CURR_TIME<"18:00"){
+                    $key="1DAYTIME";
+                }
+                else{
+                    $key="2EVENING";
+                }
+
+                $result[$key][]=$CURR_TIME;
+                $CURR_TIME=date('H:i',  strtotime("+1 hours", strtotime($CURR_TIME)));
+            }
+        }
         ksort($result);
         $_SESSION["TW_TIMETABLE"]=$result;
         return $result;
@@ -184,6 +203,7 @@ class PersonalTrialWorkout extends CBitrixComponent implements Controllerable{
 //    AJAX
     public function getTimetableAction(){
         $date=Context::getCurrent()->getRequest()->getPost('date');
+        $tw_type=Context::getCurrent()->getRequest()->getPost('tw_type');
         if (empty($date)){
             $date=date('d.m.Y');
         }
@@ -193,7 +213,10 @@ class PersonalTrialWorkout extends CBitrixComponent implements Controllerable{
             $action="new";
         }
 
-        $this->arResult["TIMETABLE"]=$this->getDayTimetable($date, $club_num, $action);
+        $this->arResult["TIMETABLE"]=$this->getDayTimetable($date, $club_num, $action, $tw_type);
+
+//        return $this->arResult["TIMETABLE"];
+
         ob_start();
         $this->IncludeComponentTemplate('timetable');
         $result=ob_get_clean();
@@ -204,18 +227,23 @@ class PersonalTrialWorkout extends CBitrixComponent implements Controllerable{
     public function getTrainersAction(){
         $time=trim(Context::getCurrent()->getRequest()->getPost('time'));
 
-        $result='';
+
+
         foreach ($_SESSION["TW_TIMETABLE"] as $key=>$value){
             if (key_exists($time,$value)){
                 if ($value[$time]["TYPE"]=="FREE"){
                     $type="FREE";
                     foreach($value[$time]["ITEMS"] as $coach){
+                        if ($coach["NAME"]=="Пустой контрагент"){
+                            $coach["NAME"]="Дежурный тренер";
+                        }
                         $result.='<option value="'.$coach["ID"].'">'.$coach["NAME"].'</option>';
                     }
                     break;
                 }
                 else{
                     $type="NOTFREE";
+                    $result.='<option value="">Поиск тренера</option>';
                 }
             }
         }
@@ -228,7 +256,7 @@ class PersonalTrialWorkout extends CBitrixComponent implements Controllerable{
     {
         global $USER;
 
-        $id = Context::getCurrent()->getRequest()->getPost("coach");
+        $id = Context::getCurrent()->getRequest()->getPost("tw_type");
         $time = trim(Context::getCurrent()->getRequest()->getPost("time"));
         $clubid = Context::getCurrent()->getRequest()->getPost("club");
         $date=date('d.m.Y', strtotime(Context::getCurrent()->getRequest()->getPost("date")));

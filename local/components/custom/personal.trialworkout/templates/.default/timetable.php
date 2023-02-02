@@ -3,16 +3,19 @@
     <div class="tw-timetable__show">
         Показать слоты
     </div>
+    <?if (false):?>
     <div class="personal-section-form__item select-item">
         <span class="personal-section-form__item-placeholder">Тренер</span>
         <select class="input input--light input--select" name="coach" autocomplete="off" required="required"></select>
     </div>
+    <?endif;?>
     <input type="submit" class="personal-section-form__submit button-outline trialworkout" value="Записаться">
     <div class="escapingBallG-animation">
         <div id="escapingBall_1" class="escapingBallG"></div>
     </div>
 </div>
 <div class="tw-timetable">
+    <?if (false):?>
     <div class="personal-section-form__item radio-item">
         <div style="margin-top: 5px;">
             <div class="input-radio-item-block">
@@ -38,6 +41,7 @@
             </div>
         </div>
     </div>
+    <?endif;?>
     <?foreach ($arResult["TIMETABLE"] as $key=>$TIMES):?>
         <div class="tw-timetable__section">
             <div class="tw-timetable__section-type">
@@ -52,14 +56,9 @@
                 }?>
             </div>
             <div class="tw-timetable__section-times-container">
-                <?foreach ($TIMES as $timekey=>$TIME):?>
-                    <div class="tw-timetable__section-timeitem <?if($TIME["TYPE"]=="NOTFREE") echo 'not-free'?>" data-time="<?=$timekey?>">
-                        <?if ($TIME["TYPE"]=="NOTFREE"):?>
-                            <div class="timeitem-warning">
-                                <?php echo file_get_contents($_SERVER["DOCUMENT_ROOT"].SITE_TEMPLATE_PATH.'/img/icons/info-icon.svg');?>
-                            </div>
-                        <?endif;?>
-                        <?=$timekey?>
+                <?foreach ($TIMES as $TIME):?>
+                    <div class="tw-timetable__section-timeitem" data-time="<?=$TIME?>">
+                        <?=$TIME?>
                     </div>
                 <?endforeach;?>
             </div>
