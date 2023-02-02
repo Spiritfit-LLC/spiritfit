@@ -43,7 +43,8 @@ $(document).ready(function (){
         $('.LK_TRIALWORKOUT').find('.loading-overlay').addClass('active');
         var postData={
             'club':$('select[name="club_num"]').val(),
-            'date':$('.tw-dates__days-container').find('.day-item.active').data('date')
+            'date':$('.tw-dates__days-container').find('.day-item.active').data('date'),
+            'tw_type':$('select[name="tw_type"]').val(),
         }
         if ($('input[name="tw_action"]').length>0){
             postData['action']=$('input[name="tw_action"]').val()
@@ -60,27 +61,34 @@ $(document).ready(function (){
                 $('.tw-timetable__section-timeitem').click(function(){
                     var $this=$(this);
 
-                    BX.ajax.runComponentAction(tw_timetable_component, 'getTrainers', {
-                        mode: 'class',
-                        data: {
-                            'time':$this.text()
-                        },
-                        method:'POST',
-                    }).then(function(response){
-                        // console.log(response)
-                        if (response.data.type==="FREE"){
-                            $('select[name="coach"]').closest('.personal-section-form__item').show();
-                            $('select[name="coach"]').html(response.data.result).select2({
-                                minimumResultsForSearch: Infinity,
-                                width:'100%',
-                                dropdownParent: $('.tw-timetable__controllers')
-                            });
-                        }
-                        else if (response.data.type==="NOTFREE"){
-                            $('select[name="coach"]').html('').closest('.personal-section-form__item').hide();
-                        }
-
-                    })
+                    // BX.ajax.runComponentAction(tw_timetable_component, 'getTrainers', {
+                    //     mode: 'class',
+                    //     data: {
+                    //         'time':$this.text()
+                    //     },
+                    //     method:'POST',
+                    // }).then(function(response){
+                    //     // console.log(response)
+                    //     if (response.data.type==="FREE"){
+                    //         $('select[name="coach"]').closest('.personal-section-form__item').show();
+                    //         $('select[name="coach"]').html(response.data.result).select2({
+                    //             minimumResultsForSearch: Infinity,
+                    //             width:'100%',
+                    //             dropdownParent: $('.tw-timetable__controllers')
+                    //         });
+                    //     }
+                    //     else if (response.data.type==="NOTFREE"){
+                    //         // $('select[name="coach"]').html('').closest('.personal-section-form__item').hide();
+                    //         $('select[name="coach"]').closest('.personal-section-form__item').show();
+                    //
+                    //         $('select[name="coach"]').html(response.data.result).select2({
+                    //             minimumResultsForSearch: Infinity,
+                    //             width:'100%',
+                    //             dropdownParent: $('.tw-timetable__controllers')
+                    //         });
+                    //     }
+                    //
+                    // })
 
                     $(".tw-timetable").slideUp( "slow", function() {
                         $('.tw-timetable__choosen').text('Время: '+$this.text()).data('time', $this.text());
@@ -93,45 +101,46 @@ $(document).ready(function (){
                     });
                 })
 
-                $('input[name="slots"]').click(function(){
-                    var radio_val=$(this).val();
-                    if (radio_val==="FREE"){
-                        $('.tw-timetable__section-timeitem.not-free').hide();
-                        $('.tw-timetable__section-times-container').each(function(index, el){
-                            if ($(el).find(":visible").length===0){
-                                $(el).closest('.tw-timetable__section').hide();
-                            }
-                        });
-                    }
-                    else if (radio_val==="ALL"){
-                        $('.tw-timetable__section-timeitem.not-free').show();
-                        $('.tw-timetable__section').show();
-                    }
-                });
+                // $('input[name="slots"]').click(function(){
+                //     var radio_val=$(this).val();
+                //     if (radio_val==="FREE"){
+                //         $('.tw-timetable__section-timeitem.not-free').hide();
+                //         $('.tw-timetable__section-times-container').each(function(index, el){
+                //             if ($(el).find(":visible").length===0){
+                //                 $(el).closest('.tw-timetable__section').hide();
+                //             }
+                //         });
+                //     }
+                //     else if (radio_val==="ALL"){
+                //         $('.tw-timetable__section-timeitem.not-free').show();
+                //         $('.tw-timetable__section').show();
+                //     }
+                // });
 
                 //Подсказки
-                tippy.createSingleton(tippy('.tw-timetable__section-timeitem.not-free', {
-                    content: 'К сожалению, сейчас в это время нет свободного тренера, однако мы постараемся вам его найти!',
-                    theme: 'light',
-                }), {
-                    allowHTML: true,
-                    delay: 500, // ms
-                    placement: 'top',
-                    arrow: false,
-                    animation: 'fade',
-                    theme: 'material',
-                    interactive: true,
-                });
+                // tippy.createSingleton(tippy('.tw-timetable__section-timeitem.not-free', {
+                //     content: 'К сожалению, сейчас в это время нет свободного тренера, однако мы постараемся вам его найти!',
+                //     theme: 'light',
+                // }), {
+                //     allowHTML: true,
+                //     delay: 500, // ms
+                //     placement: 'top',
+                //     arrow: false,
+                //     animation: 'fade',
+                //     theme: 'material',
+                //     interactive: true,
+                // });
 
                 $('input.trialworkout[type="submit"]').click(function(){
                     var postData={
                         'club':$('select[name="club_num"]').val(),
                         'date':$('.tw-dates__days-container').find('.day-item.active').data('date'),
                         'time':$('.tw-timetable__choosen').data('time'),
+                        'tw_type':$('select[name="tw_type"]').val(),
                     }
-                    if ($('select[name="coach"]').is(":visible")){
-                        postData['coach']=$('select[name="coach"]').val();
-                    }
+                    // if ($('select[name="coach"]').is(":visible")){
+                    //     postData['coach']=$('select[name="coach"]').val();
+                    // }
                     if ($('input[name="tw_action"]').length>0){
                         postData['action']=$('input[name="tw_action"]').val();
                     }
@@ -171,6 +180,7 @@ $(document).ready(function (){
     getTimetable();
 
     $('select[name="club_num"]').change(getTimetable);
+    $('select[name="tw_type"]').change(getTimetable);
 
     $('.tw-dates__days-container').find('.day-item').click(function(){
         $('.tw-dates__days-container').find('.day-item.active').removeClass('active');

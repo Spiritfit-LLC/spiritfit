@@ -12,15 +12,16 @@ if(!function_exists('GetPersonalSection')) {
                 $APPLICATION->IncludeComponent($FIELD["COMPONENT_NAME"], $FIELD["COMPONENT_STYLE"]);
                 return;
             ?>
+            <?elseif ($FIELD["TYPE"]=="switch" && !empty($FIELD["ITEMS"])):?>
+                <?foreach ($FIELD["ITEMS"] as $ITEM){
+                    GetPersonalSection($ITEM);
+                }
+                return;
+                ?>
             <?endif;?>
-        <div class="personal-section-form__item <?if($FIELD['TYPE']=='radio') echo 'radio-item';?>
-                                                               <?if($FIELD['TYPE']=='table') echo 'table-item';?>
-                                                               <?if($FIELD['TYPE']=='checkbox') echo 'checkbox-item';?>
-                                                               <?if (!$FIELD['CHANGEBLE']) echo 'readonly-item';?>
-                                                               <?if ($FIELD['TYPE']=='link') echo 'link-item';?>
-                                                               <?if ($FIELD['TYPE']=='list') echo 'list-item';?>
-                                                               <?if($FIELD['TYPE']=='SELECT') echo 'select-item';?>
-                                                               <?if ($FIELD["TYPE"]=="file") echo "file-item";?>">
+        <div class="personal-section-form__item
+        <?if (!$FIELD['CHANGEBLE']):?>readonly-item<?endif?>
+        <?if ($FIELD['TYPE']=='SELECT'):?>select-item<?else:?><?=$FIELD['TYPE']?>-item<?endif?>">
 
             <?if ($FIELD['TYPE']!='checkbox' && $FIELD['TYPE']!='link'):?>
                 <span class="personal-section-form__item-placeholder"><?=$FIELD['PLACEHOLDER']?>
@@ -99,6 +100,21 @@ if(!function_exists('GetPersonalSection')) {
                         <span class="clue-text" style="display: none"><?echo $FIELD['CLUE']['TEXT']?></span>
                     </div>
                 <?endif;?>
+            <?elseif ($FIELD["TYPE"]=="switch"):?>
+                <label class="personal-section-form__item-switch">
+                    <input type="checkbox"
+                           class="personal-section-form__item-value switch-item"
+                           name="<?=$FIELD['NAME']?>"
+                           id="<?=$FIELD['HTML_ID']?>"
+                           <?=$FIELD["SWITCH"]["ON"]?>
+                           <?=$FIELD["SWITCH"]["CHECKED"]?>
+                           data-code="<?=$FIELD['USER_FIELD_CODE']?>"
+                           data-required_id="<?=$FIELD['REQUIRED_ID']?>"
+                           data-event="<?=$FIELD["event"]?>"
+                           data-id="<?=$FIELD["id"]?>"
+                    >
+                    <span class="switch-item__slider"></span>
+                </label>
             <?else:?>
                 <?if (!empty($FIELD['OLD_SUM'])):?>
                     <div class="old-sum"><s><?=$FIELD['OLD_SUM']?></s>
@@ -262,8 +278,30 @@ if(!function_exists('GetPersonalSection')) {
         <div class="loyaltyhistory-list is-hide loyaltyhistories-block list"></div>
         <span class="personal-section-form__item-placeholder" style="padding: 10px 0;float: right;">Так менялась сумма ваших бонусов за все время</span>
     </div>
-
-
+    <?elseif ($arParams['SECTION_CODE']=="trialworkout_zapis"):?>
+        <div class="trialworkout-message">
+            Пробная тренировка - отличная возможность познакомиться с клубом.
+            <br>
+            <br>
+            <b>С тренером 55 мин:</b>
+            <br>
+            Тренер проведет исследование состава тела InBody, ознакомит вас с техникой безопасности, научит пользоваться оборудованием и поможет разобраться во всем многообразии тренажеров.
+            <br>
+            Во время тренировки вы научитесь правильно подбирать вес и обучитесь технике базовых упражнений.
+            <br>
+            <br>
+            <b>Самостоятельно:</b>
+            <br>
+            Вы получите неограниченный доступ ко всем услугам клуба: тренажерный зал, кардио- функциональное и силовое оборудование, групповые тренировки по расписанию клуба, исследование InBody, финские сауны и хаммам.
+            <br>
+            <br>
+            Выберите подходящий вам формат тренировки и время посещения.
+            <br>
+            Возьмите с собой любой документ для регистрации (можно в электронном виде), полотенце и бутылку воды. Если ваши планы изменятся, не забудьте изменить запись.
+            <br>
+            <br>
+            Увидимся на тренировке!
+        </div>
     <?endif;?>
 
     <?if (!$arParams['IS_CORRECT'] && $SECTION['CODE']=="lk_profile"):?>

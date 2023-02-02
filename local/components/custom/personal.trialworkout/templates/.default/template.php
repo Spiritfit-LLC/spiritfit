@@ -1,5 +1,15 @@
 <div class="LK_TRIALWORKOUT" data-componentname="<?=$arResult["COMPONENT_NAME"]?>">
-    <div class="personal-section-form__item select-item">
+    <div class="personal-section-form__item select-item" id="tw_type_select">
+        <span class="personal-section-form__item-placeholder">Выберите тип тренировки</span>
+        <select class="input input--light input--select" name="tw_type" autocomplete="off" required="required">
+            <?if ($arResult["NO_COACH"]):?>
+                <option value="free" selected>Самостоятельно</option>
+            <?endif;?>
+            <option value="coach">С тренером</option>
+        </select>
+    </div>
+
+    <div class="personal-section-form__item select-item" id="club_select">
         <span class="personal-section-form__item-placeholder">Клуб</span>
         <select class="input input--light input--select" name="club_num" autocomplete="off" required="required">
             <?foreach ($arResult['CLUBS_ARR'] as $CLUB):?>
