@@ -179,8 +179,8 @@ $(document).ready(function (){
     }
     getTimetable();
 
-    $('select[name="club_num"]').change(getTimetable);
-    $('select[name="tw_type"]').change(getTimetable);
+    $('select[name="club_num"]').on('select2:select', getTimetable);
+    $('select[name="tw_type"]').on('select2:select', getTimetable);
 
     $('.tw-dates__days-container').find('.day-item').click(function(){
         $('.tw-dates__days-container').find('.day-item.active').removeClass('active');
