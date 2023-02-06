@@ -26,7 +26,7 @@
         <span class="personal-section-form__item-placeholder">Выберите тип тренировки</span>
         <select class="input input--light input--select" name="tw_type" autocomplete="off" required="required">
             <?if ($arResult["NO_COACH"]):?>
-                <option value="free" selected>Самостоятельно</option>
+                <option value="free">Самостоятельно</option>
             <?endif;?>
             <option value="coach">С тренером</option>
         </select>
