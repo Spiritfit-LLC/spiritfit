@@ -1204,3 +1204,22 @@ button.owl-prev {
 .svg_sprite {
     display: none;
 }
+.b-top-menu__btn,
+.b-top-menu__abonement-btn {
+    color: #fff!important;
+    background-image: linear-gradient(90deg,#e23834 3.26%,#7a27f1 98.07%)!important;
+    text-decoration: none;
+}
+.personal-btn.header-personal-btn {
+    color: white;
+}
+.b-header__content .phone-btn{
+    background-image: url(/local/templates/spiritfit-v3/img/icons/icon-phone.svg);
+}
+a.b-top-menu__btn.button-outline.trial-training-btn{
+    background-image: none!important;
+    background: transparent!important;
+    border: 1px solid;
+    border-image:
+            linear-gradient(90deg, #E23834 3.26%, #7A27F1 98.07%) 1;
+}
