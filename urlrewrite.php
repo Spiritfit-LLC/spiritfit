@@ -143,10 +143,38 @@ $arUrlRewrite=array (
             'SORT' => 100,
         ),
     19 => array(
-        "CONDITION" => "#^/training/([\\.\\-_0-9a-zA-Z]+)/(\\?(.*))?&?#",
+        "CONDITION" => "#^/training/([\\.\\-_0-9a-zA-Z]+)/#",
         'RULE' => 'ELEMENT_CODE=$1',
         'ID' => '',
         'PATH' => '/trenirovki/detail.php',
         'SORT' => 500,
-    )
+    ),
+    20 => array (
+        'CONDITION' => '#^/personal2/#',
+        'RULE' => '',
+        'ID' => 'custom:personal',
+        'PATH' => '/personal2/index.php',
+        'SORT' => 100,
+    ),
+    21 => array (
+        "CONDITION" => "#^/schedule/([\\.\\-_0-9a-zA-Z]+)/#",
+        'RULE' => 'ELEMENT_ID=$1',
+        'ID' => '',
+        'PATH' => '/schedule/index.php',
+        'SORT' => 100,
+    ),
+    22 => array(
+        "CONDITION" => "#^/events/([\\.\\-_0-9a-zA-Z]+)/#",
+        'RULE' => 'ELEMENT_CODE=$1',
+        'ID' => '',
+        'PATH' => '/events/detail.php',
+        'SORT' => 100,
+    ),
+    23=>array (
+        'CONDITION' => '#^/services/([\\.\\-0-9a-zA-Z]+)/#',
+        'RULE' => 'ELEMENT_CODE=$1',
+        'ID' => '',
+        'PATH' => '/services/detail.php',
+        'SORT' => 100,
+    ),
 );
