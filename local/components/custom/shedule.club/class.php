@@ -219,6 +219,16 @@ class ScheduleClubomponent extends CBitrixComponent implements Controllerable{
         return $result;
     }
 
+    private function set404() {
+        \Bitrix\Iblock\Component\Tools::process404(
+            '',
+            true,
+            true,
+            true,
+            false
+        );
+    }
+
     function executeComponent(){
         global $APPLICATION;
         Loader::includeModule('iblock');
@@ -236,11 +246,25 @@ class ScheduleClubomponent extends CBitrixComponent implements Controllerable{
         }
 
         $club = $this->getClub();
+        $club_find=false;
         foreach($club as $key => $value){
             $this->arResult["CLUBS"][$key] = $value;
-            if ($value["PROPERTY_NUMBER_VALUE"]==$this->arResult["CLUB_ACTIVE"]){
+            if (!empty($this->arParams["CLUB_ID"]) && $value["ID"]==$this->arParams["CLUB_ID"] && !$club_find){
                 $this->arResult["SCHEDULE"]=$this->prepareShedule($value["PROPERTY_SCHEDULE_JSON_VALUE"]);
+                $this->arResult["CLUB_ACTIVE"]=$value["PROPERTY_NUMBER_VALUE"];
+                $this->arResult["CLUBS"][$key]["SELECTED"]=true;
+                $club_find=true;
             }
+
+            if (empty($this->arParams["CLUB_ID"]) && !$club_find && $value["PROPERTY_NUMBER_VALUE"]==$this->arResult["CLUB_ACTIVE"]){
+                $this->arResult["SCHEDULE"]=$this->prepareShedule($value["PROPERTY_SCHEDULE_JSON_VALUE"]);
+                $club_find=true;
+            }
+        }
+
+        if (!$club_find){
+            $this->set404();
+            return;
         }
 
         $this->arResult['COMPONENT_NAME']=$this->GetName();
