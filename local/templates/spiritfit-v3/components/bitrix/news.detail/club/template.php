@@ -94,6 +94,7 @@ $ABONEMENT_RESULT=$APPLICATION->IncludeComponent(
     "abonement.club",
     Array(
         "CLUB_ID"=>$arResult["ID"],
+        "SORT_CUSTOM" => $arResult["PROPERTIES"]["ABONEMENT_SORT"]["VALUE"],
         "ACTIVE_DATE_FORMAT" => "d.m.Y",
         "ADD_SECTIONS_CHAIN" => "N",
         "AJAX_MODE" => "N",
@@ -132,7 +133,7 @@ $ABONEMENT_RESULT=$APPLICATION->IncludeComponent(
         "PARENT_SECTION" => "",
         "PARENT_SECTION_CODE" => "",
         "PREVIEW_TRUNCATE_LEN" => "",
-        "PROPERTY_CODE" => array("BASE_PRICE", "INCLUDE", "ADDITIONAL_CLASS", "PRICE_SIGN_DETAIL", "HIDDEN", "FOR_PRESENT", "PRICE", "TITLE", "CARD_BASE_PRICE"),
+        "PROPERTY_CODE" => array("BASE_PRICE", "INCLUDE", "ADDITIONAL_CLASS", "PRICE_SIGN_DETAIL", "HIDDEN", "FOR_PRESENT", "PRICE", "TITLE", "CARD_BASE_PRICE", "SORT_CUSTOM"),
         "SET_BROWSER_TITLE" => "N",
         "SET_LAST_MODIFIED" => "N",
         "SET_META_DESCRIPTION" => "N",
