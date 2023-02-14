@@ -15,6 +15,14 @@ while($sectRes = $dbResSect->GetNext())
 $items=[];
 
 $SECTIONS=[];
+
+if (!empty($arParams["SORT_CUSTOM"])){
+    $GLOBALS["ABONEMENT_CUSTOM_SORT"]=$arParams["SORT_CUSTOM"]-1;
+    usort($arResult["ITEMS"], function ($item1, $item2) {
+        return $item2["PROPERTIES"]['SORT_CUSTOM']["VALUE"][$GLOBALS["ABONEMENT_CUSTOM_SORT"]] < $item1["PROPERTIES"]['SORT_CUSTOM']["VALUE"][$GLOBALS["ABONEMENT_CUSTOM_SORT"]] ;
+    });
+}
+
 //Собираем  массив из Разделов и элементов
 foreach ($arResult["ITEMS"] as $key=>&$arItem){
     $f=false;
