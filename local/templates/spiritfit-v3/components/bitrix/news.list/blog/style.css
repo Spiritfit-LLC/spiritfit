@@ -1,0 +1,38 @@
+.blog-card__item {
+    width: 500px;
+    margin: 0 20px;
+}
+.blog-card__img {
+    height: 250px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+.blog-card__tag {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    background: linear-gradient(90deg,#e23834 3.26%,#7a27f1 98.07%);
+    color: white;
+    padding: 5px 10px;
+}
+.blog-card__content {
+    background-color: #f5f5f4;
+    padding: 25px;
+}
+
+.blog-card__item:not(:first-child){
+    opacity: 0;
+    display: none;
+    transition:opacity .3s ease-out;
+}
+.slick-initialized .blog-card__item{
+    display: block;
+    opacity:1;
+}
+@media screen and (max-width: 456px) {
+    .blog-card__item {
+        margin: 0 5px;
+    }
+}
