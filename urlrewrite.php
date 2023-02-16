@@ -171,10 +171,18 @@ $arUrlRewrite=array (
         'SORT' => 100,
     ),
     23=>array (
-        'CONDITION' => '#^/services/([\\.\\-0-9a-zA-Z]+)/#',
+        'CONDITION' => '#^/services/([\\.\\-0-9a-zA-Z]+)/.*$#',
         'RULE' => 'ELEMENT_CODE=$1',
         'ID' => '',
         'PATH' => '/services/detail.php',
         'SORT' => 100,
     ),
+    24 =>
+        array (
+            'CONDITION' => '#^/akcii/([\\.\\-0-9a-zA-Z]+)/#',
+            'RULE' => 'ELEMENT_CODE=$1',
+            'ID' => '',
+            'PATH' => '/akcii/detail.php',
+            'SORT' => 100,
+        ),
 );
