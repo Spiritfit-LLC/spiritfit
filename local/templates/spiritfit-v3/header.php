@@ -42,6 +42,7 @@ $clubs = Clubs::getList();
 
         Asset::getInstance()->addCSS(SITE_TEMPLATE_PATH . "/css/style.css");
         Asset::getInstance()->addCSS(SITE_TEMPLATE_PATH . "/css/service.css");
+    Asset::getInstance()->addCSS(SITE_TEMPLATE_PATH . "/css/suggestions.css");
     ?>
     <?$APPLICATION->ShowHead();?>
 
@@ -90,6 +91,7 @@ $clubs = Clubs::getList();
     <?$APPLICATION->ShowPanel()?>
 </div>
 <?endif;?>
+
 <?if (!defined("HIDE_HEADER")):?>
 <header class="b-header">
     <div class="content-center">
@@ -213,14 +215,16 @@ $clubs = Clubs::getList();
                             "SITE_ID" => "s1"
                         )
                     ); ?>
-                    <?if (defined('PAGE_TITLE')):?>
-                    <h1 class="b-page__title <?if (defined('HIDE_SLIDER')) echo "black"?>
-                        <?if (defined('H1_TEXT_CONTENT')) echo "text-content"?>
-                        <?if (defined('H1_BIG')) echo "title-big"?>"><?=PAGE_TITLE?></h1>
-                    <?else:?>
-                    <h1 class="b-page__title <?if (defined('HIDE_SLIDER')) echo "black"?>
-                        <?if (defined('H1_TEXT_CONTENT')) echo "text-content"?>
-                        <?if (defined('H1_BIG')) echo "title-big"?>"><?=$APPLICATION->ShowTitle(false)?></h1>
+                    <?if (!defined("HIDE_TITLE")):?>
+                        <?if (defined('PAGE_TITLE')):?>
+                        <h1 class="b-page__title <?if (defined('HIDE_SLIDER')) echo "black"?>
+                            <?if (defined('H1_TEXT_CONTENT')) echo "text-content"?>
+                            <?if (defined('H1_BIG')) echo "title-big"?>"><?=PAGE_TITLE?></h1>
+                        <?else:?>
+                        <h1 class="b-page__title <?if (defined('HIDE_SLIDER')) echo "black"?>
+                            <?if (defined('H1_TEXT_CONTENT')) echo "text-content"?>
+                            <?if (defined('H1_BIG')) echo "title-big"?>"><?=$APPLICATION->ShowTitle(false)?></h1>
+                        <?endif;?>
                     <?endif;?>
                 </div>
             </div>
