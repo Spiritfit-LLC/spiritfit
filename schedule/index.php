@@ -1,5 +1,5 @@
 <?php
-//define('HIDE_SLIDER', true);
+define('HIDE_SLIDER', true);
 define("HIDE_TITLE", true);
 
 define('SITE_TEMPLATE_PATH', '/local/templates/spiritfit-v3/');
