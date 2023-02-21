@@ -1,0 +1,159 @@
+.banner_header,
+.banner_footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+img.banner_header-image,
+img.banner_footer-image{
+    max-width: 100%;
+    max-height: 700px;
+}
+.event-schedule__title.text-center {
+    padding: 20px;
+    background: #f5f5f4;
+    border-radius: 15px;
+}
+.event-schedule__cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+}
+.event-schedule__item {
+    flex: 0 0 33.3%;
+    width: 33.3%;
+    padding: 10px;
+}
+.event-schedule__item:nth-child(3n+1){
+    padding-left: 0px;
+}
+.event-schedule__item:nth-child(3n){
+    padding-right: 0px;
+}
+.event-schedule-twoside-card__content {
+    height: 300px;
+    padding: 35px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: top;
+    transition: filter ease .35s;
+}
+.event-schedule-twoside-card__hidden-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 56px 28px;
+    opacity: 0;
+    transition: opacity ease .35s,transform .4s ease 0s;
+}
+.event-schedule-twoside-card__label {
+    position: absolute;
+    bottom: 20px;
+    padding: 15px 25px;
+    text-align: center;
+    left: 50%;
+    max-width: 90%;
+    transform: translateX(-50%);
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    background: linear-gradient(90deg,#e23834 3.26%,#7a27f1 98.07%);
+}
+.event-schedule-twoside-card__inner {
+    display: block;
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #f5f5f4;
+    color: white;
+    cursor: pointer;
+    transition: transform .4s ease 0s;
+}
+
+.event-schedule__item.is-open .event-schedule-twoside-card__inner {
+    color: #fff;
+    z-index: 10;
+    transform: rotateY(180deg);
+    transform-style: preserve-3d;
+}
+.event-schedule__item.is-open .event-schedule-twoside-card__content{
+    filter: brightness(0);
+    opacity: 0;
+}
+.event-schedule__item.is-open .event-schedule-twoside-card__hidden-content {
+    opacity: 1;
+    display: flex;
+    transform: rotateY(180deg);
+    background: #f5f5f4;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.event-schedule-twoside-card__text {
+    color: gray;
+}
+.event-schedule-twoside-card__title {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 900;
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: black;
+}
+/*.workout-group-slider__item.is-open .event-schedule-twoside-card__hidden-content {*/
+/*    padding: 33px 24px 95px;*/
+/*}*/
+
+@media screen and (max-width: 768px) {
+    .event-schedule__cards {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .event-schedule__item {
+        width: 50%;
+        flex: 0 0 50%;
+    }
+    .event-schedule__item:nth-child(3n+1){
+        padding-left: unset;
+    }
+    .event-schedule__item:nth-child(3n){
+        padding-right: unset;
+    }
+
+    .event-schedule__item:nth-child(2n){
+        padding-right: 0px;
+        padding-left: 10px;
+    }
+    .event-schedule__item:nth-child(2n+1){
+        padding-left: 0px;
+        padding-right: 10px;
+    }
+}
+@media screen and (max-width: 425px) {
+    .event-schedule__cards {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    .event-schedule__item {
+        width: 100%;
+        flex: 0 0 50%;
+        padding: 10px 0!important;
+    }
+    .banner_header, .banner_footer {
+        margin: 0 -24px;
+    }
+}

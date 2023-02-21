@@ -1,0 +1,134 @@
+.personal-training__main.content-center {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.personal-training__main-video,
+.personal-training__main-text{
+    width: calc(50% - 20px);
+    flex:0 0 calc(50% - 20px);
+}
+.personal-training__main-video video {
+    width: 100%;
+    border-radius: 10px;
+}
+.personal-training__main-text {
+    background: #f5f5f4;
+    padding: 30px;
+    font-weight: 300;
+    font-size: 18px;
+}
+h2.personal-training__main-title {
+    margin-bottom: 20px;
+    text-align: center;
+}
+a.button.card-btn {
+    position: absolute;
+    bottom: 30px;
+}
+
+
+@media screen and (max-width: 1199px) {
+    .personal-training__main-video{
+        width: calc(50% - 10px);
+        flex: 0 0 calc(50% - 10px);
+    }
+    .personal-training__main-video {
+        z-index: 20;
+    }
+    .personal-training__main-text {
+        flex: 0 0 55%;
+        transform: translateX(-50px);
+        padding: 50px 80px;
+        z-index: 10;
+    }
+    h2.personal-training__main-title {
+        font-size: 24px;
+    }
+    .b-image-block__text-content h2 {
+        font-size: 24px;
+    }
+    .b-image-block__content.b-image-block__content_reverse {
+        padding: 50px 0 80px;
+    }
+}
+@media screen and (max-width: 767px) {
+    .personal-training__main.content-center {
+        display: flex;
+        flex-direction: column;
+    }
+    .personal-training__main-video {
+        width: 100%;
+        flex: 0 0 100%;
+    }
+    .personal-training__main-text {
+        width: 100%;
+        flex: 0 0 100%;
+        transform: none;
+        padding: 50px 20px;
+    }
+}
+@media screen and (max-width: 480px) {
+    button.trainer-block__club-control {
+        font-size: 16px;
+        max-width: 80vw;
+    }
+    .personal-training__main-text {
+        text-align: center;
+    }
+}
+
+.banner-detail__img {
+    height: 650px;
+    width: 100%;
+    background-size: cover;
+    background-position: 50%;
+}
+.banner-detail__description-title{
+    margin-top:32px;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 48px;
+}
+.banner-detail__description-content {
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: 300;
+    margin-top:32px;
+}
+
+.banner-detail__description-content h3 {
+    font-weight: 800;
+    font-size: 22px;
+}
+.banner-detail__description-content {
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: 300;
+    margin-top: 32px;
+}
+.banner-detail__description-content li {
+    margin: 15px 0;
+}
+.banner-detail__description-content ul {
+    list-style: inside;
+}
+.banner-detail__description-content b {
+    font-weight: bold;
+}
+.banner-detail__description-content h3 {
+    font-weight: 800;
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+.banner-detail__description-content div{
+    margin-bottom: 30px;
+}
+@media screen and (max-width: 768px) {
+    .banner-detail__description-content{
+        font-size: 18px;
+        line-height: 28px;
+    }
+}
