@@ -73,7 +73,7 @@ switch ($view) {
         break;
 }
 ?>
-<? if( !empty($arResult['TITLE']) ) { ?>
+<? if( !empty($arResult['TITLE']) && $arParams["HIDE_TITLE"]==false) { ?>
     <div class="content-center">
         <div class="b-section__title" <?=(!empty($arParams["BLOCK_ID"])) ? 'id="'.$arParams["BLOCK_ID"].'"' : '' ?>>
             <h2><?=$arResult['TITLE']?></h2>

@@ -33,6 +33,14 @@ if( !empty($arResult['PROPERTIES']['BLOCK_PHOTO']['VALUE']) ) {
         $link = (!empty($arResult['PROPERTIES']['BLOCK_LINKS']['VALUE'][$k])) ? trim($arResult['PROPERTIES']['BLOCK_LINKS']['VALUE'][$k]) : '';
         $linkTitle = (!empty($arResult['PROPERTIES']['BLOCK_LINKS']['DESCRIPTION'][$k])) ? $arResult['PROPERTIES']['BLOCK_LINKS']['DESCRIPTION'][$k] : 'Подробнее';
 
+        if (empty($link)){
+            $link=(!empty($arResult['PROPERTIES']['BLOCK_LINK']['VALUE'])) ? trim($arResult['PROPERTIES']['BLOCK_LINK']['VALUE']) : '';
+            $linkTitle = (!empty($arResult['PROPERTIES']['BLOCK_BTN_TEXT']['VALUE'])) ? $arResult['PROPERTIES']['BLOCK_BTN_TEXT']['VALUE'] : 'Подробнее';
+        }
+        else{
+            $linkTitle = (!empty($arResult['PROPERTIES']['BLOCK_LINKS']['DESCRIPTION'][$k])) ? $arResult['PROPERTIES']['BLOCK_LINKS']['DESCRIPTION'][$k] : 'Подробнее';
+        }
+
         $isBlank = false;
         if( !empty($link) && ( strpos($link, 'http:') !== false || strpos($link, 'https:') !== false ) && strpos($link, $_SERVER['HTTP_HOST']) === false ) {
             $isBlank = true;
@@ -43,6 +51,8 @@ if( !empty($arResult['PROPERTIES']['BLOCK_PHOTO']['VALUE']) ) {
         }
 
         $arBlock = ['TEXT' => $text, 'TITLE' => $title, 'LINK' => ['URL' => $link, 'TITLE' => $linkTitle, 'IS_BLANK' => $isBlank], 'PHOTO' => []];
+
+//        var_dump($arBlock);
 
         $itemPhotoData = CFile::GetFileArray($photo);
 
