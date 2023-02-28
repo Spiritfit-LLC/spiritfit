@@ -17,7 +17,7 @@ global $settings;
                 </ul>
             </div>
             <div class="footer-menu-cell">
-                <div class="footer-menu-title"><a href="/trenirovki/trenirovki.php" class="dont-touch">Тренировки</a></div>
+                <div class="footer-menu-title"><a href="/trenirovki/">Тренировки</a></div>
                 <ul>
                     <li><a href="/training/gym/">Тренажерный зал</a></li>
                     <li><a href="/training/group-trainings/">Групповые тренировки</a></li>

@@ -11,7 +11,7 @@ $APPLICATION->SetTitle("Страница не найдена");
 <? if(defined("H1_HIDE")){ ?>
 	<div class="content-center">
         <div class="b-page__heading-inner">
-			<h1 class="b-page__title"><?=$APPLICATION->ShowTitle(false)?></h1>
+			<h1 class="b-page__title <?if (defined('HIDE_SLIDER')) echo "black"?> page-404"><?=$APPLICATION->ShowTitle(false)?></h1>
 		</div>
 	</div>
 <? } ?>
