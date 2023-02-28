@@ -33,6 +33,9 @@ if (!empty($club_number)){
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 use Bitrix\Iblock\InheritedProperty;
+use \Bitrix\Main\Page\Asset;
+
+Asset::getInstance()->addString('<script src="https://widget.cloudpayments.ru/bundles/cloudpayments.js"></script>');
 
 CModule::IncludeModule("iblock");
 
@@ -147,11 +150,12 @@ $APPLICATION->IncludeComponent(
 ?>
 
 <? if(!empty($element) && empty($_POST)) { ?>
+        <?php $request_scheme=isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';?>
     <div itemscope itemtype="http://schema.org/Product" style="display: none;">
         <div itemprop="name"><?=strip_tags($element['~NAME'])?></div>
         <link itemprop="url" href="<?=$url?>">
         <? foreach($element['IMAGES'] as $image) { ?>
-            <img itemprop="image" src="<?=$_SERVER['REQUEST_SCHEME']?>://<?=$_SERVER['SERVER_NAME']?><?=$image?>">
+            <img itemprop="image" src="<?=$$request_scheme?>://<?=$_SERVER['SERVER_NAME']?><?=$image?>">
         <? } ?>
         <? if( !empty($element['IMAGES'][0]) ) { ?>
             <?
@@ -164,7 +168,7 @@ $APPLICATION->IncludeComponent(
             <meta itemprop="price" content="<?=$element['MIN_PRICE']?>" id="offer_current">
             <meta itemprop="priceCurrency" content="RUB">
             <link itemprop="availability" href="http://schema.org/InStock">
-            <link itemprop="url" href="<?=$_SERVER['REQUEST_SCHEME']?>://<?=$_SERVER['SERVER_NAME']?><?=$url?>">
+            <link itemprop="url" href="<?=$request_scheme?>://<?=$_SERVER['SERVER_NAME']?><?=$url?>">
         </div>
         <? if(false) { ?>
             <div itemprop="offers" itemscope itemtype="https://schema.org/AggregateOffer">
@@ -178,7 +182,7 @@ $APPLICATION->IncludeComponent(
                         <meta itemprop="price" content="<?=$item['PRICE']?>">
                         <meta itemprop="priceCurrency" content="RUB">
                         <link itemprop="availability" href="http://schema.org/InStock">
-                        <link itemprop="url" href="<?=$_SERVER['REQUEST_SCHEME']?>://<?=$_SERVER['SERVER_NAME']?><?=$url?>">
+                        <link itemprop="url" href="<?=$request_scheme?>://<?=$_SERVER['SERVER_NAME']?><?=$url?>">
                     </div>
                     <?
                 }
