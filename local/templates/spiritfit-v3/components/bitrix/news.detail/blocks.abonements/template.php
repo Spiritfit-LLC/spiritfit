@@ -141,12 +141,18 @@ switch ($view) {
                     <? } ?>
                 </div>
             <? } ?>
+
             <div class="<?=$class?>__text-content text-center">
                 <div class="<?=$class?>__text-content-inner">
                     <div class="<?=$class?>__text">
                         <? foreach($arResult["SLIDER_PHOTOS"] as $block) { ?>
                             <div class="<?=$class?>__text-item">
-                                <h2 class="slide-text-title"><?=$block["TITLE"]?></h2>
+
+                                <?if (empty($arResult["PROPERTIES"]["BLOCK_TITLE_LINK"]["VALUE"])):?>
+                                    <h2 class="slide-text-title"><?=$block["TITLE"]?></h2>
+                                <?else:?>
+                                    <a href="<?=$arResult["PROPERTIES"]["BLOCK_TITLE_LINK"]["VALUE"]?>"><h2 class="slide-text-title"><?=$block["TITLE"]?></h2></a>
+                                <?endif;?>
                                 <div class="slide-text-content">
                                     <?=$block["TEXT"]?>
                                 </div>
