@@ -155,7 +155,7 @@ $APPLICATION->IncludeComponent(
         <div itemprop="name"><?=strip_tags($element['~NAME'])?></div>
         <link itemprop="url" href="<?=$url?>">
         <? foreach($element['IMAGES'] as $image) { ?>
-            <img itemprop="image" src="<?=$$request_scheme?>://<?=$_SERVER['SERVER_NAME']?><?=$image?>">
+            <img itemprop="image" src="<?=$request_scheme?>://<?=$_SERVER['SERVER_NAME']?><?=$image?>">
         <? } ?>
         <? if( !empty($element['IMAGES'][0]) ) { ?>
             <?
