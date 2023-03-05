@@ -87,21 +87,12 @@ class PersonalCoachTrainings extends CBitrixComponent implements Controllerable{
         ksort($timetable);
 
         $TIMETABLE=[];
-        $CURR_TIME="10:00";
-        while ($CURR_TIME<="21:00"){
+        $CURR_TIME="07:00";
+        while ($CURR_TIME!="00:00"){
             if ($date==date("Y.m.d") && date("H:i")>$CURR_TIME){
                 $CURR_TIME=date('H:i',  strtotime("+1 hours", strtotime($CURR_TIME)));
                 continue;
             }
-//            if ($CURR_TIME<"12:00"){
-//                $key="0MORNING";
-//            }
-//            elseif ($CURR_TIME<"18:00"){
-//                $key="1DAYTIME";
-//            }
-//            else{
-//                $key="2EVENING";
-//            }
 
             if (key_exists($CURR_TIME, $timetable)){
                 $TIMETABLE[$CURR_TIME]=[
@@ -117,6 +108,7 @@ class PersonalCoachTrainings extends CBitrixComponent implements Controllerable{
             else{
                 $TIMETABLE[$CURR_TIME]=["TYPE"=>"EMPTY"];
             }
+
             $CURR_TIME=date('H:i',  strtotime("+1 hours", strtotime($CURR_TIME)));
         }
         $this->arResult["TIMETABLE"]=$TIMETABLE;
@@ -143,12 +135,13 @@ class PersonalCoachTrainings extends CBitrixComponent implements Controllerable{
                 throw new Exception("Неверный формат даты. Дата не соответствует формату YYYY.MM.DD");
             }
         }
-//        //тут надо по апи принять расписание тренера конкретного
+
         $arParams=[
             "login"=>$this->arParams["USER_LOGIN"],
             "id1c"=>$this->arParams["USER_1CID"],
             "date"=>$date
         ];
+
 
         $api=new Api([
             "action"=>"getSlots",
@@ -165,72 +158,6 @@ class PersonalCoachTrainings extends CBitrixComponent implements Controllerable{
         }
 
         $timetable=$response["data"]["result"]["result"];
-
-        //ИМИТАЦИЯ ДАННЫХ
-//        sleep(1);
-//        $timetable=[
-//            "15:00"=>[
-//                "type"=>"busy",
-//                "workout"=>[
-//                    "id"=>"0125",
-//                    "type"=>"Персональная тренировка",
-//                    "client"=>"Павел Воля",
-//                    "changeble"=>true,
-//                ]
-//            ],
-//            "16:00"=>[
-//                "type"=>"busy",
-//                "workout"=>[
-//                    "id"=>"0125",
-//                    "type"=>"Персональная тренировка",
-//                    "client"=>"Павел Воля",
-//                    "changeble"=>true,
-//                ]
-//            ],
-//            "17:00"=>[
-//                "type"=>"busy",
-//                "workout"=>[
-//                    "id"=>"0123",
-//                    "type"=>"Персональная тренировка",
-//                    "client"=>"Гарик Харламов",
-//                    "changeble"=>true,
-//                ]
-//            ],
-//            "18:00"=>[
-//                "type"=>"busy",
-//                "workout"=>[
-//                    "id"=>"0123",
-//                    "type"=>"Персональная тренировка",
-//                    "client"=>"Гарик Харламов",
-//                    "changeble"=>true,
-//                ]
-//            ],
-//            "19:00"=>[
-//                "type"=>"busy",
-//                "workout"=>[
-//                    "id"=>"0123",
-//                    "type"=>"Персональная тренировка",
-//                    "client"=>"Гарик Харламов",
-//                    "changeble"=>true,
-//                ]
-//            ],
-//            "20:00"=>[
-//                "type"=>"busy",
-//                "workout"=>[
-//                    "id"=>"0124",
-//                    "type"=>"Пробная тренировка",
-//                    "client"=>"Тимур Батруха",
-//                    "changeble"=>false,
-//                ]
-//            ],
-//            "21:00"=>[
-//                "type"=>"free"
-//            ],
-//            "22:00"=>[
-//                "type"=>"free"
-//            ],
-//        ];
-
         return $this->prepareTimeTable($timetable, $date);
     }
 

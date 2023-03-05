@@ -19,6 +19,7 @@ let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
 var choose_date=`${ye}.${mo}.${da}`;
 
 var choose_tooltip=null;
+var choose_clue_tooltip = null;
 
 
 function scroll_days_container(index){
@@ -144,6 +145,22 @@ var choose_slots=function(el){
             .addClass("start")
             .addClass("end");
         choose_start=$(el);
+
+        if (choose_start.hasClass("free")){
+            choose_start.addClass("only-free");
+        }
+
+        choose_clue_tooltip = tippy(choose_start.get(0), {
+            content:'<div class="tooltip-clue">Вы выбрали начала диапазона. Выберите конец диапазона.</div>',
+            allowHTML: true,
+            delay: 100, // ms
+            arrow: true,
+            animation: 'fade',
+            interactive: false,
+            trigger: 'manual',
+            placement: 'top'
+        });
+        choose_clue_tooltip.show();
     }
     else{
         $(".tw-timetable__section-timeitem").not(".busy").unbind();
@@ -181,6 +198,8 @@ var choose_slots=function(el){
         choose_tooltip=tippy($(".tw-timetable__section-timeitem.choose").last().get(0), tooltip_options);
         choose_tooltip.show();
 
+        choose_clue_tooltip.hide();
+        choose_clue_tooltip.destroy();
         return;
     }
 
