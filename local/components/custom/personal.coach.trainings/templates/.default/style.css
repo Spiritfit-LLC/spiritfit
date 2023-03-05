@@ -150,10 +150,10 @@ span.tw-day-item__day {
     background: #1b9400;
 }
 .tw-timetable__section-timeitem.choose{
-    background: #fc61208a;
+    background: rgba(252, 97, 32, 0.42);
 }
 .tw-timetable__section-timeitem.choose.start, .tw-timetable__section-timeitem.choose.end{
-    background: #fc6120;
+    background: rgba(252, 97, 32, 0.79);
 }
 .tw-timetable__section-timeitem.busy[data-changeble="1"]{
     background: #423abbd9;
