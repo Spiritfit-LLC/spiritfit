@@ -151,7 +151,7 @@ var choose_slots=function(el){
         }
 
         choose_clue_tooltip = tippy(choose_start.get(0), {
-            content:'<div class="tooltip-clue">Вы выбрали начала диапазона. Выберите конец диапазона.</div>',
+            content:'<div class="tooltip-clue">Вы выбрали начало диапазона. Выберите конец диапазона.</div>',
             allowHTML: true,
             delay: 100, // ms
             arrow: true,

@@ -11,6 +11,10 @@
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
+
+$this->addExternalCss(SITE_TEMPLATE_PATH . '/css/slick.css');
+$this->addExternalCss(SITE_TEMPLATE_PATH . "/vendor/slick/slick.css");
+$this->addExternalJs(SITE_TEMPLATE_PATH . "/vendor/slick/slick.min.js");
 ?>
 
 <div class="content-center">
@@ -26,12 +30,12 @@ $this->setFrameMode(true);
                     <div class="stock__item-title">
                         <?=htmlspecialcharsback($ITEM["NAME"])?>
                     </div>
-<!--                    <div class="stock__item-text">-->
-<!--                        --><?//=htmlspecialcharsback($ITEM["PREVIEW_TEXT"])?>
-<!--                    </div>-->
-<!--                    <div class="stock__item-btn">-->
-<!--                        <a href="--><?//=$ITEM["DETAIL_PAGE_URL"]?><!--" class="button">Подробнее</a>-->
-<!--                    </div>-->
+                    <div class="stock__item-text">
+                        <?=htmlspecialcharsback($ITEM["PREVIEW_TEXT"])?>
+                    </div>
+                    <div class="stock__item-btn">
+                        <a href="<?=$ITEM["DETAIL_PAGE_URL"]?>" class="button">Подробнее</a>
+                    </div>
                 </div>
             </div>
         <?endforeach?>
