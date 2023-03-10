@@ -6,9 +6,9 @@ define('SITE_TEMPLATE_ID', 'spiritfit-v3');
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 
-$APPLICATION->SetTitle("Акции | Spirit.Fitness");
-$APPLICATION->SetPageProperty("description", "");
-$APPLICATION->SetPageProperty("title", "Акции | Spirit.Fitness");
+$APPLICATION->SetTitle("Акции и скидки в сети фитнес-залов Spirit Fitness");
+$APPLICATION->SetPageProperty("description", "Акции и скидки на абонемент в фитнес-клуб в Москве &#128165; Тарифы от 1490 ₽ &#128181; с ежемесячной оплатой, бесплатная пробная тренировка &#128293; Запишитесь прямо сейчас!");
+$APPLICATION->SetPageProperty("title", "Акции и скидки в сети фитнес-залов Spirit Fitness");
 ?>
 
 <?php

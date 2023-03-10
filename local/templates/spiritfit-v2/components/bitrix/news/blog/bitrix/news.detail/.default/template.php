@@ -247,7 +247,8 @@
 				</div>
 			<? } ?>
 		</div>
-        <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+        <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization" style="display:none;">
+            <link itemprop="url" href="https://spiritfit.ru/">
             <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
                 <img itemprop="url" src="/images/logo_white.svg"/>
             </div>

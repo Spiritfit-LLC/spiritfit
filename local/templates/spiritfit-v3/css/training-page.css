@@ -35,6 +35,12 @@ a.button {
     margin: 30px auto 0;
 }
 
+
+.banner-detail__description-content iframe{
+    margin: auto;
+    display: block;
+}
+
 @media screen and (max-width: 1199px) {
     .personal-training__main-video{
         width: calc(50% - 10px);
@@ -59,6 +65,13 @@ a.button {
         padding: 50px 0 80px;
     }
 }
+
+@media screen and (max-width: 1024px) {
+    .banner-detail__description-content iframe{
+        width: 100%;
+    }
+}
+
 @media screen and (max-width: 767px) {
     .personal-training__main.content-center {
         display: flex;
