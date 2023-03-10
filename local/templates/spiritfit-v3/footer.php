@@ -13,7 +13,7 @@ global $settings;
                     <li><a href="/about/adv/">Рекламные возможности</a></li>
                     <li><a href="/about/platform/">Площадки под новые клубы</a></li>
                     <li><a href="/upload/form/Политика.pdf">Политика обработки персональных данных</a></li>
-                    <li><a href="https://corp.spiritfit.ru">Корпоративное членство</a></li>
+                    <li><a href="https://corp.spiritfit.ru/">Корпоративное членство</a></li>
                 </ul>
             </div>
             <div class="footer-menu-cell">
@@ -37,7 +37,6 @@ global $settings;
                 <div class="footer-menu-title"><a href="/club-members/" class="dont-touch">Членам клуба</a></div>
                 <ul>
                     <li><a href="/abonement/">Абонементы</a></li>
-                    <li><a href="https://corp.spiritfit.ru/">Корпоративная программа</a></li>
                     <li><a href="/loyalty-program/">Программа лояльности</a></li>
                     <li><a href="/club-members/partners/">Партнёры и привилегии</a></li>
                     <li><a href="/faq/">FAQ</a></li>
@@ -46,9 +45,9 @@ global $settings;
             <div class="footer-menu-cell">
                 <div class="footer-menu-title">Жизнь Spirit.People</div>
                 <ul>
+                    <li><a href="/akcii/"><span class="gradient-text">Акции</span></a></li>
                     <li><a href="/spirittv/">Spirit. TV</a></li>
                     <li><a href="/blog/">Блог</a></li>
-                    <li><a href="/akcii/">Акции</a></li>
                 </ul>
                 <a rel="nofollow" class="b-social-link" href="https://t.me/spiritfitness_official" target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img lazy" data-src="<?=SITE_TEMPLATE_PATH?>/img/telegram-brands.svg" alt="@spiritmoscow" title=""></span><span class="b-social-link__text"></span></a>
                 <a rel="nofollow" class="b-social-link" href="https://vk.com/spiritmoscow" target="_blank"><span class="b-social-link__img-holder"><img class="b-social-link__img lazy" data-src="<?=SITE_TEMPLATE_PATH?>/img/vk-brands.svg" alt="@spiritmoscow" title=""></span><span class="b-social-link__text"></span></a>
