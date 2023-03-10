@@ -1010,3 +1010,7 @@ ul li p {
 	display: flex;
 	align-items: center;
 }
+
+.blog-detail-text iframe {
+	width: 100%;
+}

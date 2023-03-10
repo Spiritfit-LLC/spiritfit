@@ -42,6 +42,13 @@ $this->setFrameMode(true);
             </div>
         <?endif;?>
     </div>
+    <?if (!empty($arResult["PROPERTIES"]["BTN"]["VALUE"])):?>
+    <div class="content-center">
+        <div class="stock-detail__btn">
+            <a class="button" href="<?=$arResult["PROPERTIES"]["BTN"]["DESCRIPTION"]?>"><?=$arResult["PROPERTIES"]["BTN"]["VALUE"]?></a>
+        </div>
+    </div>
+    <?endif;?>
 </section>
 <?php if ($arResult["PROPERTIES"]["FORM_SID"]["VALUE"]):?>
 <section id="form" style="margin-top: 80px;">

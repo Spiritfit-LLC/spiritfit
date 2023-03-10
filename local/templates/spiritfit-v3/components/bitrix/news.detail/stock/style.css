@@ -39,6 +39,13 @@ a.stock-detail__description-show-more {
     display: none;
 }
 
+.stock-detail__btn {
+    margin-top: 30px;
+    max-width: 300px;
+}
+.stock-detail__btn .button {
+    width: 100%;
+}
 
 @media screen and (max-width: 425px) {
     .stock-detail__img {
@@ -47,5 +54,9 @@ a.stock-detail__description-show-more {
     .stock-detail__description-content {
         font-size: 18px;
         line-height: 30px;
+    }
+    .stock-detail__btn {
+        width: 100%;
+        max-width: unset;
     }
 }

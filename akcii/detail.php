@@ -47,7 +47,7 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");?>
         "PAGER_SHOW_ALL" => "N",
         "PAGER_TEMPLATE" => ".default",
         "PAGER_TITLE" => "Страница",
-        "PROPERTY_CODE" => array("","DESCRIPTION",""),
+        "PROPERTY_CODE" => array("","DESCRIPTION","BTN"),
         "SET_BROWSER_TITLE" => "Y",
         "SET_CANONICAL_URL" => "N",
         "SET_LAST_MODIFIED" => "N",
