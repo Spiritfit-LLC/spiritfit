@@ -26,8 +26,8 @@ $ELEMENT=$arResult['ELEMENT'];
 
         </div>
         <div class="subscription__common">
-            <h1 class="subscription__title"><?=$ELEMENT['name']?></h1>
-            <div class="subscription__desc"><?=$ELEMENT['description']?></div>
+            <h1 class="subscription__title"><?=htmlspecialcharsback($ELEMENT['name'])?></h1>
+            <div class="subscription__desc"><?=htmlspecialcharsback($ELEMENT['description'])?></div>
 
             <div class="subscription__label-prices-block">
                 <div class="subscription__label">
@@ -78,41 +78,41 @@ $ELEMENT=$arResult['ELEMENT'];
                         <div class="subscription__total">
                             <div class="subscription__total-text">ИТОГО К ОПЛАТЕ</div>
                             <div class="subscription__total-value">
-                                <?if (!empty($arResult['CURRENT_PRICE']["baseprice"])):?>
-                                <div class="subscription__total-value-old">
-                                    <span class="old-price"><?=$arResult['CURRENT_PRICE']["baseprice"]?></span> <span>&#x20bd;</span>
-                                </div>
+                                <?if (!empty($arResult['CURRENT_PRICE_BASE'])):?>
+                                    <div class="subscription__total-value-old">
+                                        <span class="old-price"><?=$arResult['CURRENT_PRICE_BASE']?></span> <span>&#x20bd;</span>
+                                    </div>
                                 <?endif;?>
-                                <span class="current_price"><?=$arResult['CURRENT_PRICE']["price"]?></span> &#x20bd;
+                                <span class="current_price"><?=$arResult['CURRENT_PRICE']?></span> &#x20bd;
                             </div>
                         </div>
                     </div>
                     <input class="get-abonement-agree subscription__total-btn subscription__total-btn--reg btn btn--white" type="submit" value="Оплатить">
                 </div>
                 <?if (!empty($arResult["BONUSES"])):?>
-                <div class="popup-bonuses__container is-hide popup-container" id="popup-bonuses__container">
-                    <div class="popup__modal">
-                        <div class="modal__closer" onclick="closeBonuses();">
-                            <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/img/icons/cross_footer_icon.svg')?>
+                    <div class="popup-bonuses__container is-hide popup-container" id="popup-bonuses__container">
+                        <div class="popup__modal">
+                            <div class="modal__closer" onclick="closeBonuses();">
+                                <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/img/icons/cross_footer_icon.svg')?>
+                            </div>
+                            <div class="bonuses-modal__title">
+                                Потратить баллы лояльности?
+                            </div>
+                            <div class="bonuses-modal__text">
+                                На эту покупку получится потратить до <span id="bonuses-count"></span> баллов.<br>😍 1 бонус = 1 рубль.
+                            </div>
+                            <div style="font-size: 16px;display: block;margin-left: auto;width: max-content;margin-bottom: 10px;">-<span class="bonuses-sale"></span>₽</div>
+                            <div class="bonuses-modal__slider">
+                                <div id="bonuses-slider"></div>
+                            </div>
+                            <div class="total-price-block">
+                                <div class="total-price__text">Итого к оплате:</div>
+                                <div><span class="current_price"></span>₽</div>
+                            </div>
+                            <input type="hidden" name="bonuses" value="0" id="bonus-field">
+                            <input type="submit" class="button-outline" value="Оплатить покупку" style="width: 100%;margin-top: 20px;">
                         </div>
-                        <div class="bonuses-modal__title">
-                            Потратить баллы лояльности?
-                        </div>
-                        <div class="bonuses-modal__text">
-                            На эту покупку получится потратить до <span id="bonuses-count"></span> баллов.<br>😍 1 бонус = 1 рубль.
-                        </div>
-                        <div style="font-size: 16px;display: block;margin-left: auto;width: max-content;margin-bottom: 10px;">-<span class="bonuses-sale"></span>₽</div>
-                        <div class="bonuses-modal__slider">
-                            <div id="bonuses-slider"></div>
-                        </div>
-                        <div class="total-price-block">
-                            <div class="total-price__text">Итого к оплате:</div>
-                            <div><span class="current_price"></span>₽</div>
-                        </div>
-                        <input type="hidden" name="bonuses" value="0" id="bonus-field">
-                        <input type="submit" class="button-outline" value="Оплатить покупку" style="width: 100%;margin-top: 20px;">
                     </div>
-                </div>
                 <?endif;?>
 
                 <div class="popup-container is-hide" id="ajax-message__container">

@@ -72,7 +72,6 @@ a.form-input-btn:hover{
     background: white;
     color: black;
     position: relative;
-    max-height: 95vh;
 }
 .bonuses-modal__title {
     font-size: 22px;
@@ -167,3 +166,32 @@ div#modal__text {
     }
 }
 
+iframe#payment-iframe {
+    width: 600px;
+    height: 800px;
+    border: none;
+}
+div#popup__payment-iframe {
+    z-index: 10000;
+}
+
+@media screen and (max-height: 970px){
+    iframe#payment-iframe {
+        max-height: 90vh;
+    }
+}
+@media screen and (max-width: 767px) {
+    #popup__payment-iframe .popup__modal {
+        height: 100%;
+        width: 100%;
+    }
+    iframe#payment-iframe {
+        height: 100%;
+        width: 100%;
+    }
+}
+@media screen and (max-width: 480px) {
+    iframe#payment-iframe .popup__modal {
+        padding: 50px 0 0;
+    }
+}

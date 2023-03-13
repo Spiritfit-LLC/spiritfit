@@ -72,7 +72,6 @@ a.form-input-btn:hover{
     background: white;
     color: black;
     position: relative;
-    max-height: 95vh;
 }
 .bonuses-modal__title {
     font-size: 22px;
@@ -166,4 +165,3 @@ div#modal__text {
         min-width: unset;
     }
 }
-

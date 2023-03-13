@@ -13,24 +13,36 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         parent::__construct($component);
     }
 
-    private function componentParams(){
-        if(empty($arParams["WEB_FORM_ID"])){
-            $this->arResult["WEB_FORM_ID"] =Context::getCurrent()->getRequest()->getPost('WEB_FORM_ID');
-        }
-        $this->arResult['ABONEMENT_IBLOCK_ID']=Utils::GetIBlockIDBySID('subscription');
-        $this->arResult['CLUBS_IBLOCK_ID']=Utils::GetIBlockIDBySID('clubs');
-        $this->arResult['COMPONENT_NAME']=$this->GetName();
-    }
     function onPrepareComponentParams($arParams){
         if( empty($arParams["WEB_FORM_ID"]) ){
             $this->arResult["ERROR"] = "Не выбранна веб форма";
         }
+        else{
+            $arParams["WEB_FORM_ID"]=Utils::GetFormIDBySID($arParams['WEB_FORM_ID']);
+        }
+
+        $CLUB_ID=Context::getCurrent()->getRequest()->getPost('club_id');
+        if (!empty($CLUB_ID)){
+            $arParams["CLUB_ID"]=$CLUB_ID;
+        }
+
         return $arParams;
+    }
+
+    protected function listKeysSignedParameters()
+    {
+        return [  //массива параметров которые надо брать из параметров компонента
+            "WEB_FORM_ID",
+            "ELEMENT_CODE",
+            "CLUB_ID",
+            "FORM_TYPE",
+            "INVOICE_ID"
+        ];
     }
 
     public function ConfigureActions(){
         return [
-            'getClub' => [
+            'getClub'=>[
                 'prefilters' => [
                     new ActionFilter\HttpMethod(
                         array(ActionFilter\HttpMethod::METHOD_POST)
@@ -39,7 +51,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                 ],
                 'postfilters' => []
             ],
-            'setPromocode' => [
+            'applyPromocode'=>[
                 'prefilters' => [
                     new ActionFilter\HttpMethod(
                         array(ActionFilter\HttpMethod::METHOD_POST)
@@ -48,7 +60,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                 ],
                 'postfilters' => []
             ],
-            'checkCode'=>[
+            'setBonus'=>[
                 'prefilters' => [
                     new ActionFilter\HttpMethod(
                         array(ActionFilter\HttpMethod::METHOD_POST)
@@ -57,7 +69,16 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                 ],
                 'postfilters' => []
             ],
-            'getAbonement'=>[
+            'checkSms'=>[
+                'prefilters' => [
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ],
+                'postfilters' => []
+            ],
+            'done'=>[
                 'prefilters' => [
                     new ActionFilter\HttpMethod(
                         array(ActionFilter\HttpMethod::METHOD_POST)
@@ -75,15 +96,6 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                 ],
                 'postfilters' => []
             ],
-            'sendSMS'=>[
-                'prefilters' => [
-                    new ActionFilter\HttpMethod(
-                        array(ActionFilter\HttpMethod::METHOD_POST)
-                    ),
-                    new ActionFilter\Csrf(),
-                ],
-                'postfilters' => []
-            ],
             'getTrial'=>[
                 'prefilters' => [
                     new ActionFilter\HttpMethod(
@@ -93,7 +105,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                 ],
                 'postfilters' => []
             ],
-            'checkCodeTrial'=>[
+            'checkSmsTrial'=>[
                 'prefilters' => [
                     new ActionFilter\HttpMethod(
                         array(ActionFilter\HttpMethod::METHOD_POST)
@@ -101,82 +113,13 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                     new ActionFilter\Csrf(),
                 ],
                 'postfilters' => []
-            ]
+            ],
         ];
     }
 
-
-
-    function executeComponent() {
-        if (!empty($this->arResult["ERROR"])){
-            echo $this->arResult["ERROR"];
-            return;
-        }
-
-
-
-        unset($_SESSION['BONUS_LIMIT']);
-        unset($_SESSION['promocode']);
-        unset($_SESSION['CURRENT_PRICE']);
-
-        $this->componentParams();
-
-        $this->arResult["WEB_FORM_ID"]=Utils::GetFormIDBySID($this->arParams['WEB_FORM_ID']);
-        $this->arResult['FORM_TYPE']=$this->arParams['FORM_TYPE'];
-        $this->arResult["ELEMENT_CODE"]=$this->arParams['ELEMENT_CODE'];
-
-        if (!$this->GetElement()){
-            $this->set404();
-        }
-        $this->GetSeo();
-        $this->arResult['ACTION']=$this->arParams['FORM_ACTION'];
-
-        if (!empty($this->arParams['CLUB_ID'])){
-            if ($this->CheckClub()){
-                $this->GetClub();
-            }
-            else{
-                $this->set404();
-            }
-        }
-
-        $this->arResult['FORM_FIELDS']=$this->GetFormFields();
-        $this->arResult["OFERTA_TEXT"] = "";
-        $siteSettings = Utils::getInfo();
-        if(!empty($siteSettings["PROPERTIES"]["TEXT_OFERTA"]["~VALUE"]['TEXT'])) {
-            $this->arResult["OFERTA_TEXT"] = $siteSettings["PROPERTIES"]["TEXT_OFERTA"]["~VALUE"]['TEXT'];
-        }
-
-        if (!empty($this->arResult["ELEMENT"]["PROPERTIES"]["HAS_LEADER"]["VALUE"])){
-            $this->arResult["LEADERS"]=[
-                "NAME"=>"leader_id",
-                "REQUIRED"=>true,
-            ];
-            $filter=["IBLOCK_ID"=>Utils::GetIBlockIDBySID("leaders"), "ACTIVE"=>"Y"];
-
-            $LEADERS_ID=$this->arResult["ELEMENT"]["PROPERTIES"]["LEADERS_ID"]["VALUE"];
-            if ($LEADERS_ID){
-                $filter["ID"]=$LEADERS_ID;
-            }
-            $dbRes=CIBlockElement::GetList(Array("SORT"=>"ASC"), $filter, false, false, array('ID', 'NAME'));
-            while($leader=$dbRes->Fetch()){
-                $this->arResult["LEADERS"]["ITEMS"][]=[
-                    "VALUE"=>$leader["ID"],
-                    "STRING"=>$leader["NAME"],
-                    "SELECTED"=>$_GET["leader_id"]==$leader["ID"]?true:false,
-                ];
-            }
-        }
-
-        $this->IncludeComponentTemplate();
-    }
-
-
-
-
     private function GetElement(){
         $elArray = [];
-        $clubRes = CIBlockElement::GetList([], ["IBLOCK_ID" => $this->arResult['ABONEMENT_IBLOCK_ID'], "CODE" => $this->arResult["ELEMENT_CODE"], "ACTIVE" => "Y"], false);
+        $clubRes = CIBlockElement::GetList([], ["IBLOCK_ID" => Utils::GetIBlockIDBySID('subscription'), "CODE" => $this->arParams["ELEMENT_CODE"], "ACTIVE" => "Y"], false);
         if( $ob = $clubRes->GetNextElement() ) {
             $elArray = $ob->GetFields();
             $elArray["PROPERTIES"] = $ob->GetProperties();
@@ -234,6 +177,9 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         foreach($ELEMENT['PROPERTIES']['PRICE']['VALUE'] as $key=>$arPrice){
             if ($arPrice['LIST']==$CLUB_ID){
                 $PRICE[]=$arPrice;
+                if (empty($NUMBER)){
+                    $NUMBER=$arPrice['NUMBER'];
+                }
             }
         }
         foreach($ELEMENT['PROPERTIES']['PRICE_SIGN_DETAIL']['VALUE'] as $key=>$arPrice){
@@ -246,7 +192,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         if (!empty($PRICE)){
             foreach ($PRICE as $price){
                 $result['PRICE'][$price['NUMBER']]['VALUE']=$price['PRICE'];
-                if ($price['NUMBER']==$NUMBER){
+                if ($price['NUMBER']==$NUMBER || $price["NUMBER"]==0){
                     $result['CURRENT_PRICE']=$price['PRICE'];
                 }
             }
@@ -316,14 +262,14 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
     private function GetFormFields($request=false, $check=true){
         $FORM_FIELDS=[];
         if ($request && $check){
-            $error = CForm::Check($this->arResult['WEB_FORM_ID'], Context::getCurrent()->getRequest()->toArray());
+            $error = CForm::Check($this->arParams['WEB_FORM_ID'], Context::getCurrent()->getRequest()->toArray());
             if (strlen($error)>0){
                 return false;
             }
             $FORM_FIELDS['ISSET']=true;
         }
 
-        $status = CForm::GetDataByID($this->arResult['WEB_FORM_ID'], $this->arResult['FORM']["arForm"], $this->arResult['FORM']["arQuestions"], $this->arResult['FORM']["arAnswers"], $this->arResult['FORM']["arDropDown"], $this->arResult['FORM']["arMultiSelect"]);
+        $status = CForm::GetDataByID($this->arParams['WEB_FORM_ID'], $this->arResult['FORM']["arForm"], $this->arResult['FORM']["arQuestions"], $this->arResult['FORM']["arAnswers"], $this->arResult['FORM']["arDropDown"], $this->arResult['FORM']["arMultiSelect"]);
         $FORM=$this->arResult['FORM'];
         if(!$status) {
             return ['result'=>false, 'error'=>'Не удалось выполнить запрос'];
@@ -337,6 +283,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                 'REQUIRED'=>$FORM["arQuestions"][$key]["REQUIRED"]=="Y" ? true:false,
                 "COMMENT"=>$FORM["arQuestions"][$key]["COMMENTS"],
                 "PARAMS"=>$value['0']["FIELD_PARAM"],
+                "ID"=>$key.'-field'
             ];
             if ($value['0']["FIELD_TYPE"]=='radio' || $value['0']["FIELD_TYPE"]=='checkbox'){
                 $FORM_FIELDS['FIELDS'][$key]['NAME']="form_".$value['0']["FIELD_TYPE"]."_".$FORM['arQuestions'][$key]['SID'];
@@ -376,9 +323,14 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                         $FORM_FIELDS['FIELDS'][$key]['TYPE']='SELECT';
                         $FORM_FIELDS['FIELDS'][$key]['ITEMS']=$CLUBS;
                     }
+                    $FORM_FIELDS['FIELDS'][$key]["CLASSNAME"]="long-row";
                 }
                 elseif ($FORM_FIELDS['FIELDS'][$key]['TYPE']=='checkbox'){
                     $FORM_FIELDS['FIELDS'][$key]['VALUE']=$value['0']["ID"];
+                    $FORM_FIELDS['FIELDS'][$key]["CLASSNAME"]="long-row margin-20";
+                }
+                elseif ($key=="promocode"){
+                    $FORM_FIELDS['FIELDS'][$key]["CLASSNAME"]="long-row";
                 }
                 else{
                     $val=null;
@@ -405,8 +357,6 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             }
             else{
                 if ($key=="phone"){
-//                    $valbuff=substr(preg_replace('![^0-9]+!', '', Context::getCurrent()->getRequest()->getPost($FORM_FIELDS['FIELDS'][$key]['NAME'])), 1);
-
                     if (!empty(Context::getCurrent()->getRequest()->getPost($FORM_FIELDS['FIELDS'][$key]['NAME']))){
                         $valbuff=substr(preg_replace('![^0-9]+!', '', Context::getCurrent()->getRequest()->getPost($FORM_FIELDS['FIELDS'][$key]['NAME'])), 1);
                         if ($valbuff[0]!='9' || strlen($valbuff)!=10){
@@ -436,7 +386,6 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                 $FORM_FIELDS['ISSET']=false;
             }
         }
-        $FORM_FIELDS["WEB_FORM_ID"]=$this->arResult['WEB_FORM_ID'];
 
         return $FORM_FIELDS;
     }
@@ -453,31 +402,47 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             'yandex'=>Context::getCurrent()->getRequest()->getCookieRaw('_ym_uid'),
         ];
 
-        foreach ($GLOBALS['arTraficAnswer'][$this->arResult['WEB_FORM_ID']] as $key=>$value){
-            $this->arResult['CLIENT'][$key]=Context::getCurrent()->getRequest()->get($value);
+        foreach (getGaFormInputs(Context::getCurrent()->getRequest()->toArray()) as $key=>$value){
+            $this->arResult['CLIENT'][$key]=$value;
         }
     }
 
-    private function GetSeo(){
+    private function setSeo(){
+        global $APPLICATION;
         /* Получаем значения SEO */
         $ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues($this->arResult['ABONEMENT_IBLOCK_ID'], $this->arResult["ELEMENT"]["ID"]);
         $seoValues = $ipropValues->getValues();
         if ($seoValues['ELEMENT_META_TITLE']) {
-            $this->arResult['SEO']['ELEMENT_META_TITLE'] = $seoValues['ELEMENT_META_TITLE'];
+            $ELEMENT_META_TITLE = $seoValues['ELEMENT_META_TITLE'];
         } else {
-            $this->arResult['SEO']['ELEMENT_META_TITLE'] = strip_tags($this->arResult["ELEMENT"]["~NAME"]).' - '.'Абонементы сети фитнес-залов Spirit.Fitness';
-
+            $ELEMENT_META_TITLE = strip_tags($this->arResult["ELEMENT"]["~NAME"]).' - '.'Абонементы сети фитнес-залов Spirit.Fitness';
         }
+
         if ($seoValues['ELEMENT_META_DESCRIPTION']) {
-            $this->arResult['SEO']['ELEMENT_META_DESCRIPTION'] = $seoValues['ELEMENT_META_DESCRIPTION'];
+            $ELEMENT_META_DESCRIPTION = $seoValues['ELEMENT_META_DESCRIPTION'];
         }
         else{
-            $this->arResult['SEO']['ELEMENT_META_DESCRIPTION']=$this->arResult["ELEMENT"]["~NAME"].'. 💸 Удобная ежемесячная оплата 💥 Полный безлимит по времени и услугам 💯';
+            $ELEMENT_META_DESCRIPTION=$this->arResult["ELEMENT"]["~NAME"].'. 💸 Удобная ежемесячная оплата 💥 Полный безлимит по времени и услугам 💯';
+        }
 
-        }
         if ($seoValues['SECTION_META_KEYWORDS']) {
-            $this->arResult['SEO']['ELEMENT_META_KEYWORDS'] = $seoValues['ELEMENT_META_KEYWORDS'];
+            $ELEMENT_META_KEYWORDS = $seoValues['ELEMENT_META_KEYWORDS'];
+            $APPLICATION->SetPageProperty('keywords', $ELEMENT_META_KEYWORDS);
         }
+
+        $APPLICATION->SetPageProperty('title', $ELEMENT_META_TITLE);
+        $APPLICATION->SetPageProperty('description', $ELEMENT_META_DESCRIPTION);
+
+
+        $arInfoProps = Utils::getInfo()['PROPERTIES'];
+        if($this->arResult["ELEMENT"]["PREVIEW_PICTURE"]) {
+            $ogImage = CFile::GetPath($this->arResult["ELEMENT"]["PREVIEW_PICTURE"]);
+        } else {
+            $ogImage = CFile::GetPath($arInfoProps['OG_IMG']['VALUE']);
+        }
+        $APPLICATION->AddViewContent('inhead', $ogImage);
+        $APPLICATION->AddChainItem(strip_tags($this->arResult["ELEMENT"]["~NAME"]));
+
     }
 
     private function set404() {
@@ -490,8 +455,59 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         );
     }
 
-    private function sendSMS($phone){
+    function executeComponent()
+    {
+        if (!empty($this->arResult["ERROR"])){
+            echo $this->arResult["ERROR"];
+            return;
+        }
 
+        if (!$this->GetElement()){
+            $this->set404();
+        }
+
+        $this->setSeo();
+
+        if (!empty($this->arParams['CLUB_ID'])){
+            if ($this->CheckClub()){
+                $this->GetClub();
+            }
+            else{
+                $this->set404();
+            }
+        }
+
+        $this->arResult['FORM_FIELDS']=$this->GetFormFields();
+        $siteSettings = Utils::getInfo();
+        if(!empty($siteSettings["PROPERTIES"]["TEXT_OFERTA"]["~VALUE"]['TEXT'])) {
+            $this->arResult["OFERTA_TEXT"] = $siteSettings["PROPERTIES"]["TEXT_OFERTA"]["~VALUE"]['TEXT'];
+        }
+
+        if (!empty($this->arResult["ELEMENT"]["PROPERTIES"]["HAS_LEADER"]["VALUE"])){
+            $this->arResult["LEADERS"]=[
+                "NAME"=>"leader_id",
+                "REQUIRED"=>true,
+            ];
+            $filter=["IBLOCK_ID"=>Utils::GetIBlockIDBySID("leaders"), "ACTIVE"=>"Y"];
+
+            $LEADERS_ID=$this->arResult["ELEMENT"]["PROPERTIES"]["LEADERS_ID"]["VALUE"];
+            if ($LEADERS_ID){
+                $filter["ID"]=$LEADERS_ID;
+            }
+            $dbRes=CIBlockElement::GetList(Array("SORT"=>"ASC"), $filter, false, false, array('ID', 'NAME'));
+            while($leader=$dbRes->Fetch()){
+                $this->arResult["LEADERS"]["ITEMS"][]=[
+                    "VALUE"=>$leader["ID"],
+                    "STRING"=>$leader["NAME"],
+                    "SELECTED"=>$_GET["leader_id"]==$leader["ID"]?true:false,
+                ];
+            }
+        }
+
+        $this->IncludeComponentTemplate();
+    }
+
+    private function sendSMS($phone){
         $api=new Api([
             'action'=>'ordercode',
             'params'=>[
@@ -509,48 +525,124 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         }
         else{
             if(!empty($responce["data"]["result"]["userMessage"]) ) {
-                throw new Exception($responce["data"]["result"]["userMessage"], 7);
+                throw new Exception($responce["data"]["result"]["userMessage"], 1);
             } else {
-                throw new Exception("Непредвиденная ошибка", 7);
+                throw new Exception("Непредвиденная ошибка", 1);
             }
         }
     }
 
-    private function checkCode($phone, $code){
+    public function orderCreate(){
+        $this->GetClient();
+        $FORM_FIELDS=$this->GetFormFields(true);
+
+
+        if (empty($FORM_FIELDS) || !$FORM_FIELDS['ISSET']){
+            throw new Exception('Незаполнены обязательные поля', 1);
+        }
+
+        $this->GetElement();
+        if (!empty($this->arResult["ELEMENT"]["PROPERTIES"]["HAS_LEADER"]["VALUE"])){
+            $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
+
+            $this->arResult["LEADERS"]=[
+                "NAME"=>"leader_id",
+                "REQUIRED"=>true,
+            ];
+            $LEADERS_ID=$this->arResult["ELEMENT"]["PROPERTIES"]["LEADERS_ID"]["VALUE"];
+            if ($LEADERS_ID && !in_array($LEADER_ID, $LEADERS_ID)){
+                throw new Exception('Тренер не может быть выбран', 1);
+            }
+
+            $dbRes=CIBlockElement::GetByID($LEADER_ID);
+            if (!$rsLeader=$dbRes->GetNextElement()){
+                throw new Exception("Не удалось выбрать тренера", 1);
+            }
+            $leader=$rsLeader->GetProperties();
+        }
+
+        $this->arParams['CLUB_ID']=$FORM_FIELDS['FIELDS']['club']['VALUE'];
+        if (!$this->CheckClub() || !$this->GetClubNumber()){
+            throw new Exception('Клуб не может быть выбран', 1);
+        }
+
+        $arParams=[
+            'type'=>$this->arParams["FORM_TYPE"],
+
+            'source'=>$this->arResult['CLIENT']['src'],
+            'channel'=>$this->arResult['CLIENT']['mdm'],
+            'campania'=>$this->arResult['CLIENT']['cnt'],
+            'message'=>$this->arResult['CLIENT']['cmp'],
+            'kword'=>$this->arResult['CLIENT']['trm'],
+            'cid'=>$this->arResult['CLIENT']['google'],
+            'yaClientID'=>$this->arResult['CLIENT']['yandex'],
+
+            "phone"=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+            'name'=>$FORM_FIELDS['FIELDS']['name']['VALUE'],
+            'surname'=>$FORM_FIELDS['FIELDS']['surname']['VALUE'],
+            'email'=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
+            'clubid'=>$this->arResult["CLUB_NUMBER"],
+            'promocode'=>$FORM_FIELDS['FIELDS']['promocode']['VALUE'],
+
+            'subscriptionId'=>$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"],
+
+            'action'=>'widget',
+            'price'=>(int)($_SESSION['CURRENT_PRICE']),
+            "leaderId"=>!empty($leader)?$leader["CODE_1C"]["VALUE"]:null
+        ];
+
+        unset($_SESSION['CURRENT_PRICE']);
+
+
         $api=new Api([
-            'action'=>'ordercodecheck',
-            'params'=>[
-                'phone'=>$phone,
-                'code'=>$code
-            ]
+            'action'=>'ordercreate',
+            'params'=>$arParams
         ]);
 
-        $response=$api->result();
-        if ($response['success'] == true) {
-            return true;
-        } else {
-            switch ($response['data']['http_code']) {
-                case 200:
-                    throw new Exception('Не верный код из СМС', 6);
-                case 400:
-                    throw new Exception('Не удалось подтвердить код. Попробуйте еще раз', 7);
-                default:
-                    throw new Exception('Непредвиденная ошибка');
+        $responce=$api->result();
+
+//        //ИМИТАЦИЯ ДАННЫХ
+//        $responce=[
+//            "success"=>true,
+//            "data"=>[
+//                "result"=>json_decode('{"result":{"amount":3490,"publicID":"pk_1e0b24ff055b1c6b0e3bb4e0e2774","JsonData":{"cloudPayments":{"CustomerReceipt":{"Items":[{"label":"Контракт № N10011587 от 22 декабря 2022 г.","price":"3490","quantity":"1","amount":"3490","vat":""}],"email":"i.harisov@spiritfit.ru","CustomerInfo":"1"}}},"description":"Оплата контракта № N10011587 от 22 декабря 2022 г. При оплате, лицо ознакомлено с условиями Оферты, принимает их.","bonusessum":349,"invoiceId":"0S20003522","fullprice":3490},"userMessage":"","errorCode":0,"success":true}', true)
+//            ]
+//        ];
+
+        if(empty($responce["success"]) ) {
+            if(!empty($responce["data"]["result"]["userMessage"]) ) {
+                throw new Exception($responce["data"]["result"]["userMessage"]);
+            } else {
+                throw new Exception("Непредвиденная ошибка");
             }
         }
 
+        $this->arParams["INVOICE_ID"]=$responce["data"]["result"]["result"]["invoiceId"];
+
+        $result=[
+            "action"=>"bonuses",
+            "ajax"=>"setBonus",
+            "bonuses"=>!empty($responce["data"]["result"]["result"]["bonusessum"])?$responce["data"]["result"]["result"]["bonusessum"]:null,
+            "model"=>[
+                "publicId"=>$responce["data"]["result"]["result"]["publicID"],
+                "description"=>$responce["data"]["result"]["result"]["description"],
+                "amount"=>(float)$responce["data"]["result"]["result"]["amount"],
+                "currency"=>'RUB',
+                "accountId"=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                "invoiceId"=>$responce["data"]["result"]["result"]["invoiceID"],
+                'email'=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
+                "requireEmail"=>true,
+                "skin"=>"mini",
+                "data"=>$responce["data"]["result"]["result"]["JsonData"],
+            ],
+            "fullprice"=>$responce["data"]["result"]["result"]["fullprice"],
+        ];
+
+        return $result;
     }
 
-
-    //AJAX ACTIONS
-    public function getClubAction(){
-        if (empty(Context::getCurrent()->getRequest()->getPost('CLUB_ID'))){
-            return ['result'=>false];
-        }
-        $this->componentParams();
-        $this->arResult["ELEMENT_CODE"]=Context::getCurrent()->getRequest()->getPost('SUB_CODE');
-        $this->arParams['CLUB_ID']=Context::getCurrent()->getRequest()->getPost('CLUB_ID');
-
+    //AJAX
+    public function getClubAction($club_id){
         $this->GetElement();
 
         if (empty($this->arResult['ELEMENT'])){
@@ -589,34 +681,32 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             return $this->arResult['CLUB'];
         }
         else{
-            throw new Exception('Ошибка::Клуб не может быть выбран');
+            throw new Exception('Клуб не может быть выбран', 1);
         }
     }
 
-    public function setPromocodeAction(){
-        $this->componentParams();
-        $this->arResult["ELEMENT_CODE"]=Context::getCurrent()->getRequest()->getPost('SUB_CODE');
+    public function applyPromocodeAction(){
         $this->GetElement();
         if (empty($this->arResult["ELEMENT"])){
-            throw new Exception('Не выбран абонемент', 7);
+            throw new Exception('Не выбран абонемент');
         }
 
         $FORM_FIELDS=$this->GetFormFields(true, false);
 
         if (empty($FORM_FIELDS['FIELDS']['club']['VALUE'])){
-            throw new Exception('Выберите клуб', 7);
+            throw new Exception('Выберите клуб', 1);
         }
         $this->arParams['CLUB_ID']=$FORM_FIELDS['FIELDS']['club']['VALUE'];
         if (!$this->CheckClub() || !$this->GetClubNumber()){
-            throw new Exception('Клуб не может быть выбран', 7);
+            throw new Exception('Клуб не может быть выбран', 1);
         }
 
         if (empty($FORM_FIELDS['FIELDS']['promocode']['VALUE'])){
-            throw new Exception('Промокод не введен', 7);
+            throw new Exception('Введите промокод', 1);
         }
 
         if (empty($FORM_FIELDS['FIELDS']['phone']['VALUE'])){
-            throw new Exception('Введите номер телефона', 7);
+            throw new Exception('Введите номер телефона', 1);
         }
 
         $api=new Api([
@@ -634,19 +724,22 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             if(!empty($responce["data"]["result"]["userMessage"]) ) {
                 throw new Exception($responce["data"]["result"]["userMessage"]);
             } else {
-                throw new Exception("Купон не применен", 7);
+                throw new Exception("Промокод не применен");
             }
         }
         else{
-            $_SESSION["promocode"] = $FORM_FIELDS['FIELDS']['promocode']['VALUE'];
             $prices=$responce["data"]["result"]["result"]['object']['prices'];
             foreach($prices as $item){
                 $result["DISCOUNTS"][]=$item;
-                if (!empty($item['baseprice'])){
+                if (!empty($item['baseprice']) && empty($result["BASEPRICE"])){
                     $result["BASEPRICE"]=$item['baseprice'];
                 }
                 if ($item['number']==1){
                     $result['CURRENT_PRICE']=$item['price'];
+
+                    if (!empty($item['baseprice'])){
+                        $result["BASEPRICE"]=$item['baseprice'];
+                    }
                 }
             }
             if(!empty($responce["data"]["result"]["result"]['object']["free"]) ) {
@@ -654,217 +747,125 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             } else {
                 $result["MESSAGE"] = "Ваш промокод применен";
             }
+            $result["promocode"] = $FORM_FIELDS['FIELDS']['promocode']['VALUE'];
+        }
 
-        }
-        if( empty($_SESSION["promocode"]) ) {
-            throw new Exception("Введен неверный промокод", 7);
-        }
-        $_SESSION['CURRENT_PRICE']=$result['CURRENT_PRICE'];
+        $_SESSION['CURRENT_PRICE']=$result;
         return $result;
     }
 
-    public function checkCodeAction(){
-        $this->componentParams();
-        $this->GetClient();
-
-        $this->arResult["ELEMENT_CODE"]=Context::getCurrent()->getRequest()->getPost('SUB_CODE');
-
+    public function getOrderAction($legalinfo){
+        global $USER;
         $FORM_FIELDS=$this->GetFormFields(true);
-        if (empty($FORM_FIELDS)){
-            throw new Exception('Незаполнены обязательные поля', 7);
-        }
-        if (!$FORM_FIELDS['ISSET']){
-            throw new Exception('Незаполнены обязательные поля', 7);
+
+        if (empty($FORM_FIELDS) || !$FORM_FIELDS['ISSET']){
+            throw new Exception('Незаполнены обязательные поля', 1);
         }
 
-        $code=Context::getCurrent()->getRequest()->getPost('sms-code');
-        $code = preg_replace('![^0-9]+!', '', $code);
-        if (strlen($code) != 5) {
+        if (!$USER->IsAuthorized() || ($USER->GetLogin()!=$FORM_FIELDS['FIELDS']['phone']['VALUE'])){
+            $this->sendSMS($FORM_FIELDS['FIELDS']['phone']['VALUE']);
+
+            return ["action"=>"sms", "ajax"=>"checkSms"];
+        }
+
+        return $this->orderCreate();
+    }
+
+    public function setBonusAction($bonussessum, $invoiceid){
+
+        $api=new Api([
+            "action"=>"orderedit",
+            "params"=>[
+                "invoiceID"=>$invoiceid,
+                "bonusessum"=>(int)$bonussessum
+            ]
+        ]);
+
+        $response=$api->result();
+
+//        ИМИТАЦИЯ ДАННЫХ1
+//        $response=[
+//            "success"=>true,
+//            "data"=>[
+//                "result"=>json_decode('{"result":{"JsonData":{"cloudPayments":{"CustomerReceipt":{"Items":[{"label":"Контракт № N10011587 от 22 декабря 2022 г.","price":"3490","quantity":"1","amount":"3490","vat":""}],"email":"i.harisov@spiritfit.ru","CustomerInfo":"1"}}},"amount":1000},"userMessage":"","errorCode":0,"success":true}', true)
+//            ]
+//        ];
+
+//        $response=[
+//            "success"=>false,
+//            "data"=>[
+//                "result"=>json_decode('{"result":false,"userMessage":"Превышен лимит бонусов","errorCode":3,"success":false}', true)
+//            ]
+//        ];
+
+        if (!$response['success']){
+            if(!empty($response["data"]["result"]["userMessage"]) ) {
+                $ERROR=$response["data"]["result"]["userMessage"];
+            } else {
+                $ERROR="Непредвиденная ошибка";
+            }
+            throw new Exception($ERROR);
+        }
+
+        return [
+            "amount"=>$response["data"]["result"]["result"]["amount"],
+            "action"=>"recalc",
+            "ajax"=>"setBonus",
+            "jsonData"=>$response["data"]["result"]["result"]["JsonData"]
+        ];
+    }
+
+    public function checkSmsAction($sms_code_field){
+        $FORM_FIELDS=$this->GetFormFields(true);
+        $sms_code_field=preg_replace('![^0-9]+!', '', $sms_code_field);
+
+        if (strlen($sms_code_field) != 5) {
             throw new Exception('Формат значения кода не верный', 10);
         }
 
-        if ($this->checkCode($FORM_FIELDS['FIELDS']['phone']['VALUE'], $code)){
-            return $this->getOrderAction();
+        $api=new Api([
+            'action'=>'ordercodecheck',
+            'params'=>[
+                'phone'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
+                'code'=>$sms_code_field
+            ]
+        ]);
+
+        $response=$api->result();
+        if ($response['success'] == true) {
+            return $this->orderCreate();
+        } else {
+            switch ($response['data']['http_code']) {
+                case 200:
+                    throw new Exception('Не верный код из СМС', 2);
+                case 400:
+                    throw new Exception('Не удалось подтвердить код. Попробуйте еще раз', 1);
+                default:
+                    throw new Exception('Непредвиденная ошибка');
+            }
         }
-
-
     }
 
-    public function getAbonementAction(){
-        $this->componentParams();
+    public function doneAction(){
+        ob_start();
+        $this->IncludeComponenttemplate('done');
+        return ob_get_clean();
+    }
+
+    public function getTrialAction(){
         $this->GetClient();
-
-        $this->arResult["ELEMENT_CODE"]=Context::getCurrent()->getRequest()->getPost('SUB_CODE');
-        $FORM_TYPE=Context::getCurrent()->getRequest()->getPost('FORM_TYPE');
-
         $FORM_FIELDS=$this->GetFormFields(true);
 
-        if (empty($FORM_FIELDS)){
-            throw new Exception('Незаполнены обязательные поля', 7);
+        if (empty($FORM_FIELDS) || !$FORM_FIELDS['ISSET']){
+            throw new Exception('Незаполнены обязательные поля', 1);
         }
-        if (empty($FORM_FIELDS['FIELDS']['legalinfo']['VALUE'])){
-            throw new Exception('Необходимо ознакомиться с условиями Оферты', 7);
-        }
-        if (!$FORM_FIELDS['ISSET']){
-            throw new Exception('Незаполнены обязательные поля', 7);
-        }
-        $this->arParams['CLUB_ID']=$FORM_FIELDS['FIELDS']['club']['VALUE'];
 
         $this->GetElement();
-
-        if (!$this->CheckClub() || !$this->GetClubNumber()){
-            throw new Exception('Клуб не может быть выбран', 7);
-        }
-
         if (!empty($this->arResult["ELEMENT"]["PROPERTIES"]["HAS_LEADER"]["VALUE"])){
             $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
             if (empty($LEADER_ID)){
                 throw new Exception('Выберите тренера', 7);
             }
-        }
-
-        $promocode=!empty($_SESSION['promocode'])?$_SESSION['promocode']:null;
-
-        $arParams=[
-            'type'=>$FORM_TYPE,
-
-            'source'=>$this->arResult['CLIENT']['src'],
-            'channel'=>$this->arResult['CLIENT']['mdm'],
-            'campania'=>$this->arResult['CLIENT']['cnt'],
-            'message'=>$this->arResult['CLIENT']['cmp'],
-            'kword'=>$this->arResult['CLIENT']['trm'],
-            'cid'=>$this->arResult['CLIENT']['google'],
-            'yaClientID'=>$this->arResult['CLIENT']['yandex'],
-
-            "phone"=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
-            'name'=>$FORM_FIELDS['FIELDS']['name']['VALUE'],
-            'surname'=>$FORM_FIELDS['FIELDS']['surname']['VALUE'],
-            'email'=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
-            'clubid'=>$this->arResult["CLUB_NUMBER"],
-            'promocode'=>$promocode,
-
-            'subscriptionId'=>$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"],
-        ];
-//        return $arParams;
-
-        $api=new Api([
-            'action'=>'orderreg',
-            'params'=>$arParams
-        ]);
-
-        $responce=$api->result();
-//        file_put_contents($_SERVER["DOCUMENT_ROOT"].'/logs/test.txt', print_r($responce, true), FILE_APPEND);
-
-        if(empty($responce["success"]) ) {
-            if(!empty($responce["data"]["result"]["userMessage"]) ) {
-                throw new Exception($responce["data"]["result"]["userMessage"]);
-            } else {
-                throw new Exception("Непредвиденная ошибка", 7);
-            }
-        }
-
-        global $USER;
-        if ($responce['data']['result']['result']['action']=='code'){
-            if ($USER->IsAuthorized() && $USER->GetLogin()==$FORM_FIELDS['FIELDS']['phone']['VALUE']){
-//                return [
-//                    'next-action'=>'getOrder',
-//                    'promocode'=>!empty($promocode),
-//                    'btn'=>'Купить'
-//                ];
-                return $this->getOrderAction();
-            }
-            else{
-                if ($this->sendSMS($FORM_FIELDS['FIELDS']['phone']['VALUE'])===true){
-                    return [
-                        'user-action'=>'code',
-                        'next-action'=>'checkCode',
-                        'promocode'=>!empty($promocode),
-//                        'code'=>$_SESSION['code'],
-                        'btn'=>'Подтвердить',
-                        'step'=>2
-                    ];
-                }
-            }
-        }
-        elseif ($responce['data']['result']['result']['action']=='authorization'){
-            if (!$USER->IsAuthorized()){
-                $user_action='authorization';
-                $logout=false;
-                $next_action='sendSMS';
-            }
-            elseif($USER->GetLogin()!=$FORM_FIELDS['FIELDS']['phone']['VALUE']){
-                $user_action='authorization';
-                $logout=true;
-                $next_action='sendSMS';
-            }
-            elseif($USER->GetLogin()==$FORM_FIELDS['FIELDS']['phone']['VALUE']){
-                $user_action='bonuses';
-                $logout=false;
-                $bonusessum=$responce['data']['result']['result']['bonusessum'];
-                $next_action='getOrder';
-
-                $_SESSION['BONUS_LIMIT']=(int)$bonusessum;
-            }
-
-            return [
-                'user-action'=>$user_action,
-                'next-action'=>$next_action,
-                'promocode'=>!empty($promocode),
-                'logout'=>$logout,
-                'club'=>$this->arResult['CLUB_NUMBER'],
-                'phone'=>Utils::phone_format($FORM_FIELDS['FIELDS']['phone']['VALUE']),
-                'bonusessum'=>$bonusessum,
-                'btn'=>'Продолжить',
-                'step'=>2
-            ];
-//            if (!$USER->IsAuthorized() || $USER->GetLogin()!=$FORM_FIELDS['FIELDS']['phone']['VALUE']){
-//                return ['user-action'=>'authorization', 'next-action'=>'auth', 'promocode'=>!empty($promocode)];
-//            }
-//            elseif ($USER->IsAuthorized() && $USER->GetLogin()!=$FORM_FIELDS['FIELDS']['phone']['VALUE']) {
-//                return ['user-action'=>'authorization', 'next-action'=>'auth', 'promocode'=>!empty($promocode), 'logout'=>true];
-//            }
-        }
-//        }
-//        elseif($STEP==2){
-//            $params=[
-//                'phone'=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
-//                'code'=>Context::getCurrent()->getRequest()->getPost('sms-code')
-//            ];
-//
-//            $api=new Api([
-//                'action'=>'ordercodecheck',
-//                'params'=>$params
-//            ]);
-//
-//            return $api->result();
-//        }
-
-
-
-    }
-
-    public function getOrderAction(){
-        $this->componentParams();
-        $this->GetClient();
-
-        $this->arResult["ELEMENT_CODE"]=Context::getCurrent()->getRequest()->getPost('SUB_CODE');
-        $FORM_TYPE=Context::getCurrent()->getRequest()->getPost('FORM_TYPE');
-
-        $FORM_FIELDS=$this->GetFormFields(true);
-
-        if (empty($FORM_FIELDS)){
-            throw new Exception('Незаполнены обязательные поля', 7);
-        }
-        if (!$FORM_FIELDS['ISSET']){
-            throw new Exception('Незаполнены обязательные поля', 7);
-        }
-
-        $this->arParams['CLUB_ID']=$FORM_FIELDS['FIELDS']['club']['VALUE'];
-
-        $this->GetElement();
-
-        if (!empty($this->arResult["ELEMENT"]["PROPERTIES"]["HAS_LEADER"]["VALUE"])){
-            $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
 
             $this->arResult["LEADERS"]=[
                 "NAME"=>"leader_id",
@@ -872,166 +873,27 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             ];
             $LEADERS_ID=$this->arResult["ELEMENT"]["PROPERTIES"]["LEADERS_ID"]["VALUE"];
             if ($LEADERS_ID && !in_array($LEADER_ID, $LEADERS_ID)){
-                throw new Exception('Тренер не может быть выбран', 7);
+                throw new Exception('Тренер не может быть выбран', 1);
             }
+
             $dbRes=CIBlockElement::GetByID($LEADER_ID);
             if (!$rsLeader=$dbRes->GetNextElement()){
-                throw new Exception("Не удалось выбрать тренера", 7);
+                throw new Exception("Не удалось выбрать тренера", 1);
             }
             $leader=$rsLeader->GetProperties();
         }
 
-        if (!$this->CheckClub() || !$this->GetClubNumber()){
-            throw new Exception('Клуб не может быть выбран', 7);
-        }
-
-        $promocode=!empty($_SESSION['promocode'])?$_SESSION['promocode']:null;
-
-        $arParams=[
-            'type'=>$FORM_TYPE,
-
-            'source'=>$this->arResult['CLIENT']['src'],
-            'channel'=>$this->arResult['CLIENT']['mdm'],
-            'campania'=>$this->arResult['CLIENT']['cnt'],
-            'message'=>$this->arResult['CLIENT']['cmp'],
-            'kword'=>$this->arResult['CLIENT']['trm'],
-            'cid'=>$this->arResult['CLIENT']['google'],
-            'yaClientID'=>$this->arResult['CLIENT']['yandex'],
-
-            "phone"=>$FORM_FIELDS['FIELDS']['phone']['VALUE'],
-            'name'=>$FORM_FIELDS['FIELDS']['name']['VALUE'],
-            'surname'=>$FORM_FIELDS['FIELDS']['surname']['VALUE'],
-            'email'=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
-            'clubid'=>$this->arResult["CLUB_NUMBER"],
-            'promocode'=>$promocode,
-
-            'subscriptionId'=>$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"],
-
-            'action'=>'cloudpayments',
-            'price'=>(int)($_SESSION['CURRENT_PRICE']),
-            "leaderId"=>!empty($leader)?$leader["CODE_1C"]["VALUE"]:null
-        ];
-
-        $bonuses=(int)Context::getCurrent()->getRequest()->getPost('bonuses');
-        if (!empty($bonuses)){
-            $arParams['bonusessum']=$bonuses;
-            if ($_SESSION['BONUS_LIMIT']<$bonuses){
-                throw new Exception('Превышен лимит бонусов');
-            }
-        }
-
-//        return $arParams;
-
-        $api=new Api([
-            'action'=>'ordercreate',
-            'params'=>$arParams
-        ]);
-
-        $responce=$api->result();
-//        $logFile = "/logs/test.txt";
-//        file_put_contents($_SERVER["DOCUMENT_ROOT"] .$logFile, "/ordercreate\n", FILE_APPEND);
-//        file_put_contents($_SERVER["DOCUMENT_ROOT"] .$logFile, json_encode($arParams, JSON_UNESCAPED_UNICODE)."\n", FILE_APPEND);
-//        file_put_contents($_SERVER["DOCUMENT_ROOT"] .$logFile, json_encode($responce, JSON_UNESCAPED_UNICODE)."\n", FILE_APPEND);
-
-
-        if(empty($responce["success"]) ) {
-            if(!empty($responce["data"]["result"]["userMessage"]) ) {
-                throw new Exception($responce["data"]["result"]["userMessage"]);
-            } else {
-                throw new Exception("Непредвиденная ошибка");
-            }
-        }
-
-        ob_start();
-
-        $this->IncludeComponenttemplate('done');
-        $content=ob_get_clean();
-
-
-        $btn='<a href="'.$responce['data']['result']['result']['formUrl'].'" target="_blank" class="subscription__total-btn subscription__total-btn--pay btn btn--white get-abonement-pay">'.
-                'Получить счет'.
-                '</a>';
-
-        $CURRENT_PRICE=$_SESSION['CURRENT_PRICE'];
-        if (!empty($bonuses)){
-            $CURRENT_PRICE-=$bonuses;
-        }
-
-        global $USER;
-        if ($USER->IsAuthorized()){
-            try{
-                PersonalUtils::UpdatePersonalInfoFrom1C($USER->GetID());
-            }
-            catch (Exception $err){
-
-            }
-        }
-
-        return [
-            'elements'=>[
-                '.subscription__main'=>$content,
-                '.get-abonement-agree.subscription__total-btn'=>$btn
-            ],
-            'url'=>$responce['data']['result']['result']['formUrl'],
-            'CURRENT_PRICE'=>$CURRENT_PRICE,
-            'step'=>2
-        ];
-    }
-
-    public function sendSMSAction(){
-        $this->componentParams();
-        $FORM_FIELDS=$this->GetFormFields(true);
-        $promocode=!empty($_SESSION['promocode'])?$_SESSION['promocode']:null;
-        if ($this->sendSMS($FORM_FIELDS['FIELDS']['phone']['VALUE'])===true){
-            return [
-                'user-action'=>'code',
-                'next-action'=>'checkCode',
-                'promocode'=>!empty($promocode),
-//                'code'=>$_SESSION['code'],
-                'btn'=>'Подтвердить'
-            ];
-        }
-    }
-
-    public function getTrialAction(){
-        $this->componentParams();
-        $this->GetClient();
-
-        $this->arResult["ELEMENT_CODE"]=Context::getCurrent()->getRequest()->getPost('SUB_CODE');
-        $FORM_TYPE=Context::getCurrent()->getRequest()->getPost('FORM_TYPE');
-
-        $FORM_FIELDS=$this->GetFormFields(true);
-
-        if (empty($FORM_FIELDS)){
-            throw new Exception('Незаполнены обязательные поля', 7);
-        }
-        if (!$FORM_FIELDS['ISSET']){
-            throw new Exception('Незаполнены обязательные поля', 7);
-        }
         $this->arParams['CLUB_ID']=$FORM_FIELDS['FIELDS']['club']['VALUE'];
-
-
-        $this->GetElement();
-
         if (!$this->CheckClub() || !$this->GetClubNumber()){
-            throw new Exception('Клуб не может быть выбран', 7);
-        }
-
-        if (!empty($this->arResult["ELEMENT"]["PROPERTIES"]["HAS_LEADER"]["VALUE"])){
-            $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
-            if (empty($LEADER_ID)){
-                throw new Exception('Выберите тренера', 7);
-            }
+            throw new Exception('Клуб не может быть выбран', 1);
         }
 
         global $USER;
         if ($USER->IsAuthorized() && $USER->GetLogin()==$FORM_FIELDS['FIELDS']['phone']['VALUE']){
-            $currUser=PersonalUtils::UpdatePersonalInfoFrom1C($USER->GetID());
-            if (!empty($currUser["UF_USAGETW"])){
-                return ['href'=>'/personal/?SECTION='.Utils::GetIBlockSectionIDBySID('trialworkout_zapis').'&CLUB='.$this->arResult["CLUB_NUMBER"]];
-            }
-            elseif (!empty($currUser["UF_TRIALWORKOUT"])){
-                return ['href'=>'/personal/?SECTION='.Utils::GetIBlockSectionIDBySID('trialworkout_zapis').'&CLUB='.$this->arResult["CLUB_NUMBER"]];
+            $currUser = PersonalUtils::get_lk_info($USER->GetID());
+            $workout = unserialize($currUser["UF_WORKOUT"]);
+            if (!empty($workout["usage"])){
+                return ["action"=>"href", 'href'=>'/personal/?v=2&pds=workout&club='.$this->arResult["CLUB_NUMBER"]];
             }
             else{
                 throw new Exception("К сожалению, вам недоступна пробная тренировка. <br>Мы свяжемся с Вами для уточнения дополнительной информации.", 20);
@@ -1041,7 +903,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         $currUser=CUser::GetByLogin($FORM_FIELDS['FIELDS']['phone']['VALUE']);
 
         $arParam= [
-            'type'=>$FORM_TYPE,
+            'type'=>$this->arParams["FORM_TYPE"],
 
             'source'=>$this->arResult['CLIENT']['src'],
             'channel'=>$this->arResult['CLIENT']['mdm'],
@@ -1057,12 +919,14 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             'email'=>$FORM_FIELDS['FIELDS']['email']['VALUE'],
             'clubid'=>$this->arResult["CLUB_NUMBER"],
 
-            'subscriptionId'=>$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"]
+            'subscriptionId'=>$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"],
+            "leaderId"=>!empty($leader)?$leader["CODE_1C"]["VALUE"]:null
         ];
 
         if ($arUser=$currUser->Fetch()){
-            $userArr=PersonalUtils::UpdatePersonalInfoFrom1C($arUser["ID"]);
-            if (empty($userArr["UF_USAGETW"]) && empty($userArr["UF_TRIALWORKOUT"])){
+            $currUser = PersonalUtils::get_lk_info($USER->GetID());
+            $workout = unserialize($currUser["UF_WORKOUT"]);
+            if (empty($workout["usage"])){
                 $api = new Api(array(
                     "action" => "contact",
                     "params" => $arParam
@@ -1088,63 +952,57 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         }
 
         return [
-            'next-action'=>'checkCodeTrial',
-            'btn'=>'Подтвердить',
-            'step'=>2,
-//            'response'=>$responce
+            "action"=>"sms",
+            "ajax"=>"checkSmsTrial",
         ];
     }
 
-    public function checkCodeTrialAction(){
-        $code=Context::getCurrent()->getRequest()->getPost('sms-code');
-        $code = preg_replace('![^0-9]+!', '', $code);
-        if (strlen($code) != 5) {
+    public function checkSmsTrialAction($sms_code_field){
+        $sms_code_field=preg_replace('![^0-9]+!', '', $sms_code_field);
+
+        if (strlen($sms_code_field) != 5) {
             throw new Exception('Формат значения кода не верный', 10);
         }
 
-        $this->componentParams();
+        $FORM_FIELDS=$this->GetFormFields(true);
         $this->GetClient();
 
-        $this->arResult["ELEMENT_CODE"]=Context::getCurrent()->getRequest()->getPost('SUB_CODE');
-        $FORM_TYPE=Context::getCurrent()->getRequest()->getPost('FORM_TYPE');
 
-        $FORM_FIELDS=$this->GetFormFields(true);
-
-        if (empty($FORM_FIELDS)){
-            throw new Exception('Незаполнены обязательные поля', 7);
+        if (empty($FORM_FIELDS) || !$FORM_FIELDS['ISSET']){
+            throw new Exception('Незаполнены обязательные поля', 1);
         }
-        if (!$FORM_FIELDS['ISSET']){
-            throw new Exception('Незаполнены обязательные поля', 7);
-        }
-        $this->arParams['CLUB_ID']=$FORM_FIELDS['FIELDS']['club']['VALUE'];
-
 
         $this->GetElement();
-
+        $this->arParams['CLUB_ID']=$FORM_FIELDS['FIELDS']['club']['VALUE'];
         if (!$this->CheckClub() || !$this->GetClubNumber()){
-            throw new Exception('Клуб не может быть выбран', 7);
+            throw new Exception('Клуб не может быть выбран', 1);
         }
 
-        if (!empty($this->arResult["ELEMENT"]["PROPERTIES"]["HAS_LEADER"]["VALUE"])){
-            $LEADER_ID=Context::getCurrent()->getRequest()->getPost("leader_id");
-
-            $this->arResult["LEADERS"]=[
-                "NAME"=>"leader_id",
-                "REQUIRED"=>true,
-            ];
-            $LEADERS_ID=$this->arResult["ELEMENT"]["PROPERTIES"]["LEADERS_ID"]["VALUE"];
-            if ($LEADERS_ID && !in_array($LEADER_ID, $LEADERS_ID)){
-                throw new Exception('Тренер не может быть выбран', 7);
+        if (!empty($this->arResult["ELEMENT"]["PROPERTIES"]["HAS_LEADER"]["VALUE"])) {
+            $LEADER_ID = Context::getCurrent()->getRequest()->getPost("leader_id");
+            if (empty($LEADER_ID)) {
+                throw new Exception('Выберите тренера', 7);
             }
-            $dbRes=CIBlockElement::GetByID($LEADER_ID);
-            if (!$rsLeader=$dbRes->GetNextElement()){
-                throw new Exception("Не удалось выбрать тренера", 7);
+
+            $this->arResult["LEADERS"] = [
+                "NAME" => "leader_id",
+                "REQUIRED" => true,
+            ];
+            $LEADERS_ID = $this->arResult["ELEMENT"]["PROPERTIES"]["LEADERS_ID"]["VALUE"];
+            if ($LEADERS_ID && !in_array($LEADER_ID, $LEADERS_ID)) {
+                throw new Exception('Тренер не может быть выбран', 1);
+            }
+
+            $dbRes = CIBlockElement::GetByID($LEADER_ID);
+            if (!$rsLeader = $dbRes->GetNextElement()) {
+                throw new Exception("Не удалось выбрать тренера", 1);
             }
             $leader=$rsLeader->GetProperties();
         }
 
+
         $arParam= [
-            'type'=>(int)$FORM_TYPE,
+            'type'=>$this->arParams["FORM_TYPE"],
 
             'source'=>$this->arResult['CLIENT']['src'],
             'channel'=>$this->arResult['CLIENT']['mdm'],
@@ -1162,24 +1020,26 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
 
             'subscriptionId'=>$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"],
 
-            "code"=>$code,
-            "event"=>"registration"
+            "code"=>$sms_code_field,
+            "event"=>"registration",
+            "leaderId"=>!empty($leader)?$leader["CODE_1C"]["VALUE"]:null
         ];
+
         $api = new Api(array(
             "action" => "request2_new",
             "params" => $arParam
         ));
 
-        $responce=$api->result();
+        $response=$api->result();
 
-        if(empty($responce["success"]) ) {
-            if ($responce['data']['http_code'] == 400) {
-                throw new Exception('Не удалось подтвердить код. Попробуйте еще раз', 7);
-            }
-            if(!empty($responce["data"]["result"]["userMessage"]) ) {
-                throw new Exception($responce["data"]["result"]["userMessage"], 7);
-            } else {
-                throw new Exception("Непредвиденная ошибка", 7);
+        if(empty($response["success"]) ) {
+            switch ($response['data']['http_code']) {
+                case 200:
+                    throw new Exception('Не верный код из СМС', 2);
+                case 400:
+                    throw new Exception('Не удалось подтвердить код. Попробуйте еще раз', 1);
+                default:
+                    throw new Exception('Непредвиденная ошибка');
             }
         }
 
@@ -1191,7 +1051,7 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         else{
             //Заранее добавялем пользователя с имеющимися полями и авторизовываем его
             $user=new CUser;
-            $user1Carr=$responce['data']['result']['result'];
+            $user1Carr=$response['data']['result']['result'];
 
             function generateRandomString($length = 10) {
                 $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -1239,33 +1099,22 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             }
         }
 
-        $userArr=PersonalUtils::UpdatePersonalInfoFrom1C($USER_ID);
+//        PersonalUtils::UpdatePersonalInfoFrom1C($USER_ID);
+        PersonalUtils::get_lk_info($USER_ID);
+        $USER->Authorize($USER_ID);
+        return ["action"=>"href", 'href'=>'/personal/?v=2&pds=workout&club='.$this->arResult["CLUB_NUMBER"]];
 
-        if (!empty($userArr["UF_USAGETW"])){
-            $USER->Authorize($USER_ID);
-            return ['href'=>'/personal/?SECTION='.Utils::GetIBlockSectionIDBySID('trialworkout_zapis').'&CLUB='.$this->arResult["CLUB_NUMBER"]];
-        }
-        elseif (!empty($userArr["UF_TRIALWORKOUT"])){
-            $USER->Authorize($USER_ID);
-            return ['href'=>'/personal/?SECTION='.Utils::GetIBlockSectionIDBySID('trialworkout_zapis').'&CLUB='.$this->arResult["CLUB_NUMBER"]];
-        }
-        else{
-            throw new Exception("К сожалению, вам недоступна пробная тренировка. <br>Мы свяжемся с Вами для уточнения дополнительной информации.", 20);
-        }
-
-//        ob_start();
-//        $this->IncludeComponentTemplate('trial-done');
-//        $content=ob_get_clean();
+//        if (!empty($userArr["UF_USAGETW"])){
 //
-//
-//        return [
-//            'elements'=>[
-//                '.subscription__main'=>$content,
-//                '.get-abonement-agree.subscription__total-btn'=>null,
-//                '.subscription__code-new'=>null
-//            ],
-//            'step'=>3
-//        ];
+//        }
+//        elseif (!empty($userArr["UF_TRIALWORKOUT"])){
+//            $USER->Authorize($USER_ID);
+//            return ["action"=>"href", 'href'=>'/personal/?SECTION='.Utils::GetIBlockSectionIDBySID('trialworkout_zapis').'&CLUB='.$this->arResult["CLUB_NUMBER"]];
+//        }
+//        else{
+//            throw new Exception("К сожалению, вам недоступна пробная тренировка. <br>Мы свяжемся с Вами для уточнения дополнительной информации.", 20);
+//        }
     }
+
 
 }

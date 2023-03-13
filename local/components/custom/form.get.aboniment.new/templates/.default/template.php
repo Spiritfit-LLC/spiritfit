@@ -1,34 +1,10 @@
 <?php
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
-$APPLICATION->SetTitle($arResult["ELEMENT"]["~NAME"]);
-$arInfoProps = Utils::getInfo()['PROPERTIES'];
-
-
-if($arResult["ELEMENT"]["PREVIEW_PICTURE"]) {
-    $ogImage = CFile::GetPath($arResult["ELEMENT"]["PREVIEW_PICTURE"]);
-} else {
-    $ogImage = CFile::GetPath($arInfoProps['OG_IMG']['VALUE']);
-}
-$APPLICATION->AddViewContent('inhead', $ogImage);
-
-
-if( !isset($arResult["ELEMENT"]["PROPERTIES"]["BASE_PRICE"]["VALUE"][0]["PRICE"]) ) {
-    $arResult["ELEMENT"]["PROPERTIES"]["BASE_PRICE"]["VALUE"][0]["PRICE"] = 0;
-}
-if( !isset($arResult["ELEMENT"]["PRICES"][0]["PRICE"]) ) {
-    $arResult["ELEMENT"]["PRICES"][0]["PRICE"] = 0;
-}
-
-
-
-
 $CLUB=$arResult['CLUB'];
 $FORM_FIELDS=$arResult['FORM_FIELDS']['FIELDS'];
 $ELEMENT=$arResult["ELEMENT"];
 
-//send name of club and abonement
-$abonementName=$arResult['ELEMENT']['PROPERTIES']['CODE_ABONEMENT']['VALUE'];
 if($FORM_FIELDS['club']["TYPE"]=="SELECT"){
     if(!empty($arResult['SELECTED_CLUB'])) {
         $clubName = strip_tags($arResult['SELECTED_CLUB']);
@@ -39,10 +15,21 @@ if($FORM_FIELDS['club']["TYPE"]=="SELECT"){
 else{
     $clubName="Онлайн";
 }
+$abonementName=$arResult['ELEMENT']['PROPERTIES']['CODE_ABONEMENT']['VALUE'];
+
+$this->addExternalJs(SITE_TEMPLATE_PATH . '/vendor/nouislider/nouislider.min.js');
+$this->addExternalCss(SITE_TEMPLATE_PATH . '/vendor/nouislider/nouislider.min.css');
 ?>
-
-
-<div class="subscription fixed" data-abonementname="<?=strip_tags($abonementName)?>">
+<script>
+    var params=<?=\Bitrix\Main\Web\Json::encode([
+        'signedParameters'=>$this->getComponent()->getSignedParameters(),
+        'componentName'=>$this->getComponent()->getName(),
+        'step'=>'LEGALINFO',
+        'action'=>'getOrder',
+        'datalayerLabel'=>$clubName."/".$abonementName
+    ])?>;
+</script>
+<div class="subscription fixed">
     <div class="subscription__main">
         <div class="subscription__stage">
             <div class="subscription__stage-item subscription__stage-item--done" data-step="1">1. Регистрация</div>
@@ -65,7 +52,6 @@ else{
                     </div>
                 <?endif;?>
             </div>
-
 
             <div class="services-block" <? if(empty($CLUB['SERVICES'])){?>style="display: none" <?}?>>
                 <? if(!empty($CLUB['SERVICES'])):?>
@@ -90,194 +76,73 @@ else{
     </div>
     <div class="subscription__aside">
         <div class="subscription__aside-stage" style="display: block;">
-            <form class="get-abonement">
-                <?=getClientParams($arResult['WEB_FORM_ID']);?>
-
-
-                <input type="hidden" name="WEB_FORM_ID" value="<?=$arResult['WEB_FORM_ID']?>">
-                <input type="hidden" name="SUB_CODE" value="<?=$arResult['ELEMENT_CODE']?>">
-                <input type="hidden" name="ACTION" value="<?=$arResult['ACTION']?>">
-                <input type="hidden" name="STEP" value="LEGALINFO">
-                <input type="hidden" name="FORM_TYPE" value="<?=$arResult['FORM_TYPE']?>">
-
-
+            <form class="get-abonement" id="get-abonement-form">
+                <?printGaFormInputs();?>
                 <?foreach ($FORM_FIELDS as $key=>$FIELD):?>
                     <?if ($FIELD['TYPE']=='hidden'):?>
                         <input type="hidden" value="<?=$FIELD['VALUE']?>" name="<?=$FIELD['NAME']?>">
-                        <?
-                        continue;
-                    endif;
-                    ?>
+                        <? continue; endif; ?>
                 <?endforeach;?>
 
-                <div class="form-inputs">
-                    <?if ($FORM_FIELDS['club']["TYPE"]=="SELECT"):?>
-                        <div class="subscription__aside-form-row">
-                            <span class="subscription__total-text">Выберите клуб</span>
-                        </div>
-                        <div class="subscription__aside-form-row">
-                            <select class="input input--light input--long input--select get-abonement-club"
-                                    name="<?=$FORM_FIELDS['club']['NAME']?>"
-                                    autocomplete="off"
-                                <?if ($FORM_FIELDS['club']['REQUIRED']) echo 'required';?>>
-                                <option value="off" disabled selected>-</option>
-                                <? foreach ($FORM_FIELDS['club']['ITEMS'] as $club):?>
-                                    <option value="<?=$club["VALUE"]?>"
-                                        <?if ($club['SELECTED']) echo 'selected';?>
-                                            data-club_num="<?=$club['NUMBER']?>"><?=$club["STRING"]?></option>
-                                <? endforeach; ?>
-                            </select>
-                        </div>
-                    <?else:?>
-                        <input type="hidden" name="<?=$FORM_FIELDS['club']['NAME']?>" value="<?=$FORM_FIELDS['club']["VALUE"]?>" class="get-abonement-club">
-                    <?endif;?>
-                    <?if (!empty($arResult["LEADERS"])):?>
-                        <div class="subscription__aside-form-row">
-                            <span class="subscription__total-text">Выберите тренера</span>
-                        </div>
-                        <div class="subscription__aside-form-row">
-                            <select class="input input--light input--long input--select get-abonement-leader"
-                                    name="<?=$arResult["LEADERS"]['NAME']?>"
-                                    autocomplete="off"
-                                <?if ($arResult["LEADERS"]['REQUIRED']) echo 'required';?>>
-                                <option value="off" disabled selected>-</option>
-                                <? foreach ($arResult["LEADERS"]['ITEMS'] as $leader):?>
-                                    <option value="<?=$leader["VALUE"]?>"
-                                        <?if ($leader['SELECTED']) echo 'selected';?>><?=$leader["STRING"]?></option>
-                                <? endforeach; ?>
-                            </select>
-                        </div>
-                    <?endif?>
-                    <div class="subscription__aside-form-row">
-                        <div>
-                            <input class="input input--light input--short input--text"
-                                   type="<?=$FORM_FIELDS['name']['TYPE']?>"
-                                   placeholder="<?=$FORM_FIELDS['name']['PLACEHOLDER']?>"
-                                   value="<?=$FORM_FIELDS['name']['VALUE']?>"
-                                   name="<?=$FORM_FIELDS['name']['NAME']?>"
-                                <?if ($FORM_FIELDS['name']['REQUIRED']) echo 'required';?>
-                                <?if (!empty($FORM_FIELDS['name']['VALIDATOR'])) echo $FORM_FIELDS['name']['VALIDATOR'];?>
-                                <?=$FORM_FIELDS['name']['PARAMS']?>>
-                        </div>
-                        <div>
-                            <input class="input input--light input--short input--text"
-                                   type="<?=$FORM_FIELDS['surname']['TYPE']?>"
-                                   placeholder="<?=$FORM_FIELDS['surname']['PLACEHOLDER']?>"
-                                   value="<?=$FORM_FIELDS['surname']['VALUE']?>"
-                                   name="<?=$FORM_FIELDS['surname']['NAME']?>"
-                                <?if ($FORM_FIELDS['surname']['REQUIRED']) echo 'required';?>
-                                <?if (!empty($FORM_FIELDS['surname']['VALIDATOR'])) echo $FORM_FIELDS['surname']['VALIDATOR'];?>
-                                <?=$FORM_FIELDS['surname']['PARAMS']?>>
-                        </div>
-                    </div>
-                    <div class="subscription__aside-form-row">
-                        <div>
-                            <input class="input input--light input--short input--text"
-                                   type="<?=$FORM_FIELDS['phone']['TYPE']?>"
-                                   placeholder="<?=$FORM_FIELDS['phone']['PLACEHOLDER']?>"
-                                   value="<?=$FORM_FIELDS['phone']['VALUE']?>"
-                                   name="<?=$FORM_FIELDS['phone']['NAME']?>"
-                                <?if ($FORM_FIELDS['phone']['REQUIRED']) echo 'required';?>
-                                <?if (!empty($FORM_FIELDS['phone']['VALIDATOR'])) echo $FORM_FIELDS['phone']['VALIDATOR'];?>
-                                <?=$FORM_FIELDS['phone']['PARAMS']?>>
-                        </div>
-                        <div>
-                            <input class="input input--light input--short input--text"
-                                   type="<?=$FORM_FIELDS['email']['TYPE']?>"
-                                   placeholder="<?=$FORM_FIELDS['email']['PLACEHOLDER']?>"
-                                   value="<?=$FORM_FIELDS['email']['VALUE']?>"
-                                   name="<?=$FORM_FIELDS['email']['NAME']?>"
-                                <?if ($FORM_FIELDS['email']['REQUIRED']) echo 'required';?>
-                                <?if (!empty($FORM_FIELDS['email']['VALIDATOR'])) echo $FORM_FIELDS['email']['VALIDATOR'];?>
-                                <?=$FORM_FIELDS['email']['PARAMS']?>>
-                        </div>
-                    </div>
-                    <div class="subscription__promo subscription__aside-form-row">
-                        <input class="input input--light input--short input--text"
-                               id="pormocode-input"
-                               type="<?=$FORM_FIELDS['promocode']['TYPE']?>"
-                               placeholder="<?=$FORM_FIELDS['promocode']['PLACEHOLDER']?>"
-                               <?
-                               if (!empty($FORM_FIELDS['promocode']['VALUE'])){
-                                   $PROMOCODE_VALUE=$FORM_FIELDS['promocode']['VALUE'];
-                               }
-                               elseif (!empty($_COOKIE["bn_promocode"]) && !boolval($ELEMENT["PROPERTIES"]["ONLINE"]["VALUE"])){
-                                   $PROMOCODE_VALUE=$_COOKIE["bn_promocode"];
-                               }
-                               else{
-                                   $PROMOCODE_VALUE=null;
-                               }
-                               ?>
-                               value="<?=$PROMOCODE_VALUE?>"
-                               name="<?=$FORM_FIELDS['promocode']['NAME']?>"
-                            <?if ($FORM_FIELDS['promocode']['REQUIRED']) echo 'required';?>
-                            <?if (!empty($FORM_FIELDS['promocode']['VALIDATOR'])) echo $FORM_FIELDS['promocode']['VALIDATOR'];?>
-                            <?=$FORM_FIELDS['promocode']['PARAMS']?>>
-                        <a class="get-abonement-promo" href="#apply">Применить</a>
-                    </div>
-                    <div class="subscription__code-new subscription__aside-form-row" style="display: none">
+                <input type="hidden" value="" name="invoiceid" id="invoice-id-input">
 
-                        <input class="input input--light input--short input--text"
-                               id="smscode-input"
-                               type="text"
-                               placeholder="Код из СМС"
-                               name="sms-code">
-                        <a class="get-abonement-code" href="#resend">Отправить еще раз</a>
-                        <div class="code-message">
-                            Для продолжения введите СМС код, который мы вам отправили.
+                <div id="form-inputs-1" class="form-inputs">
+                    <?foreach ($FORM_FIELDS as $key=>$FORM_FIELD):?>
+                        <div class="subscription__aside-form-row <?=$FORM_FIELD["CLASSNAME"]?>">
+                            <?if ($FORM_FIELD["TYPE"]=="SELECT"):?>
+                                <select class="input input--light input--select"
+                                        name="<?=$FORM_FIELD['NAME']?>"
+                                        autocomplete="off"
+                                    <?if ($FORM_FIELD['REQUIRED']) echo 'required';?>
+                                    <?if ($FORM_FIELD["ID"]):?>id="<?=$FORM_FIELD["ID"]?>"<?endif?>>
+                                    <option value="off" disabled selected><?=$FORM_FIELD["PLACEHOLDER"]?></option>
+                                    <? foreach ($FORM_FIELD['ITEMS'] as $ITEM):?>
+                                        <option value="<?=$ITEM["VALUE"]?>"
+                                            <?if ($ITEM['SELECTED']) echo 'selected';?>
+                                                data-club_num="<?=$ITEM['NUMBER']?>"><?=$ITEM["STRING"]?></option>
+                                    <? endforeach; ?>
+                                </select>
+                            <?elseif ($FORM_FIELD["TYPE"]=="checkbox"):?>
+                                <label class="input-label">
+                                    <input class="input input--checkbox"
+                                           type="<?=$FORM_FIELD['TYPE']?>"
+                                           name="<?=$FORM_FIELD['NAME']?>[]"
+                                           value="<?=$FORM_FIELD['VALUE']?>"
+                                        <?if ($FORM_FIELD['REQUIRED']) echo 'required';?>
+                                        <?=$FORM_FIELD['PARAMS']?>
+                                           <?if ($FORM_FIELD["ID"]):?>id="<?=$FORM_FIELD["ID"]?>"<?endif?>>
+                                    <div class="input-label__text"><?=$FORM_FIELD['PLACEHOLDER']?></div>
+                                </label>
+                            <?else:?>
+                                <input class="input input--light input--text"
+                                       type="<?=$FORM_FIELD['TYPE']?>"
+                                       placeholder="<?=$FORM_FIELD['PLACEHOLDER']?>"
+                                       value="<?=$FORM_FIELD['VALUE']?>"
+                                       name="<?=$FORM_FIELD['NAME']?>"
+                                    <?if ($FORM_FIELD['REQUIRED']) echo 'required';?>
+                                    <?if (!empty($FORM_FIELD['VALIDATOR'])) echo $FORM_FIELD['VALIDATOR'];?>
+                                    <?=$FORM_FIELD['PARAMS']?>
+                                       <?if ($FORM_FIELD["ID"]):?>id="<?=$FORM_FIELD["ID"]?>"<?endif?>>
+                                <?if ($key=="promocode"):?>
+                                <button class="form-field-btn is-hide" id="promocode-apply-btn" type="button">Применить</button>
+                                <?endif;?>
+                            <?endif;?>
                         </div>
-                    </div>
-                    <div class="subscription__bonuses subscription__aside-form-row" style="display: none">
-                        <div class="bonusessum-placeholder">Допустимое количество бонусов: <span class="bonusessum-value"></span></div>
-                        <input class="input input--light input--short input--text"
-                               id="bonuses-input"
-                               type="text"
-                               placeholder="Бонусы"
-                               name="bonuses"
-                               oninput="this.value = this.value.replace (/[^0-9]/, '')">
-                    </div>
+                    <?endforeach;?>
                 </div>
-
-
-                <div class="form-checkboxes">
-                    <div class="subscription__aside-form-row">
-                        <label class="input-label">
-                            <input class="input input--checkbox"
-                                   type="<?=$FORM_FIELDS['personaldata']['TYPE']?>"
-                                   name="<?=$FORM_FIELDS['personaldata']['NAME']?>[]"
-                                   value="<?=$FORM_FIELDS['personaldata']['VALUE']?>"
-                                <?if ($FORM_FIELDS['personaldata']['REQUIRED']) echo 'required';?>
-                                <?=$FORM_FIELDS['personaldata']['PARAMS']?>>
-                            <div class="input-label__text"><?=$FORM_FIELDS['personaldata']['PLACEHOLDER']?></div>
-                        </label>
+                <div id="form-inputs-2" class="form-inputs is-hide" style=" text-align: center">
+                    <div class="subscription__aside-form-row long-row" style="margin-bottom: 0!important;">
+                        <div class="form-row__placeholder">
+                            <span class="sms-code-sent__text">Код отправлен на номер</span>
+                            <span class="sms-code-sent__tel"></span>
+                        </div>
+                        <input class="input input--light input--text"
+                               type="text"
+                               name="sms_code_field"
+                               id="sms-code-field">
                     </div>
-
-                    <div class="subscription__aside-form-row">
-                        <label class="input-label">
-                            <input class="input input--checkbox"
-                                   type="<?=$FORM_FIELDS['rules']['TYPE']?>"
-                                   name="<?=$FORM_FIELDS['rules']['NAME']?>[]"
-                                   value="<?=$FORM_FIELDS['rules']['VALUE']?>"
-                                <?if ($FORM_FIELDS['rules']['REQUIRED']) echo 'required';?>
-                                <?=$FORM_FIELDS['rules']['PARAMS']?>>
-                            <div class="input-label__text"><?=$FORM_FIELDS['rules']['PLACEHOLDER']?></div>
-                        </label>
-                    </div>
-
-                    <div class="subscription__aside-form-row">
-                        <label class="input-label">
-                            <input class="input input--checkbox"
-                                   type="<?=$FORM_FIELDS['privacy']['TYPE']?>"
-                                   name="<?=$FORM_FIELDS['privacy']['NAME']?>[]"
-                                   value="<?=$FORM_FIELDS['privacy']['VALUE']?>"
-                                <?if ($FORM_FIELDS['privacy']['REQUIRED']) echo 'required';?>
-                                <?=$FORM_FIELDS['privacy']['PARAMS']?>>
-                            <div class="input-label__text"><?=$FORM_FIELDS['privacy']['PLACEHOLDER']?></div>
-                        </label>
-                    </div>
+                    <button id="resend-btn" type="button">Отправить код повторно</button>
                 </div>
-
-
                 <div class="subscribtion__bottom-block" <?if (empty($CLUB)){?> style="display: none"<?}?>>
                     <div class="subscription__bottom">
                         <div class="subscription__total">
@@ -293,18 +158,17 @@ else{
                             <?endif;?>
                         </div>
                     </div>
-                    <input class="get-abonement-agree subscription__total-btn subscription__total-btn--reg btn btn--white" type="submit" value="<?=$arResult['FORM']["arForm"]["BUTTON"]?>">
+                    <input class="get-abonement-agree subscription__total-btn subscription__total-btn--reg btn btn--white" type="submit" value="<?=$arResult['FORM']["arForm"]["BUTTON"]?>" id="get-abonement-btn">
                     <div class="escapingBallG-animation white">
                         <div id="escapingBall_1" class="escapingBallG"></div>
                     </div>
                 </div>
 
-                <div class="popup popup--legal-information">
+                <div class="popup popup--legal-information" id="legalinfo-popup">
                     <div class="popup__bg"></div>
                     <div class="popup__window">
-                        <div class="popup__close">
-                            <div></div>
-                            <div></div>
+                        <div class="modal__closer" onclick="close_legal()">
+                            <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/img/icons/cross_footer_icon.svg')?>
                         </div>
                         <div class="popup__wrapper">
                             <div class="popup__heading">Юридическая информация</div>
@@ -317,11 +181,10 @@ else{
                                 <div class="popup__privacy-policy">
                                     <label class="input-label">
                                         <input class="input input--checkbox"
-                                               type="<?=$FORM_FIELDS['legalinfo']['TYPE']?>"
-                                               name="<?=$FORM_FIELDS['legalinfo']['NAME']?>[]"
-                                               value="<?=$FORM_FIELDS['legalinfo']['VALUE']?>"
-                                            <?=$FORM_FIELDS['legalinfo']['PARAMS']?>>
-                                        <div class="input-label__text"><?=$FORM_FIELDS['legalinfo']['PLACEHOLDER']?></div>
+                                               type="checkbox"
+                                               name="legalinfo"
+                                                id="legalinfo-field">
+                                        <div class="input-label__text">C условиями Оферты ознакомлен</div>
                                     </label>
                                 </div>
                                 <input class="popup__btn btn subscription__total-btn" type="submit" value="Согласен">
@@ -332,19 +195,43 @@ else{
                         </div>
                     </div>
                 </div>
+
+                <div class="popup-bonuses__container is-hide popup-container" id="popup-bonuses__container">
+                    <div class="popup__modal">
+                        <div class="modal__closer" onclick="closeBonuses();">
+                            <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/img/icons/cross_footer_icon.svg')?>
+                        </div>
+                        <div class="bonuses-modal__title">
+                            Потратить баллы лояльности?
+                        </div>
+                        <div class="bonuses-modal__text">
+                            На эту покупку получится потратить до <span id="bonuses-count"></span> баллов.<br>😍 1 бонус = 1 рубль.
+                        </div>
+                        <div style="font-size: 16px;display: block;margin-left: auto;width: max-content;margin-bottom: 10px;">-<span class="bonuses-sale"></span>₽</div>
+                        <div class="bonuses-modal__slider">
+                            <div id="bonuses-slider"></div>
+                        </div>
+                        <div class="total-price-block">
+                            <div class="total-price__text">Итого к оплате:</div>
+                            <div><span class="current_price"></span>₽</div>
+                        </div>
+                        <input type="hidden" name="bonussessum" value="0" id="bonus-field">
+                        <input type="submit" class="button-outline" value="Оплатить покупку" style="width: 100%;margin-top: 20px;">
+                    </div>
+                </div>
+
+                <div class="popup-container is-hide" id="ajax-message__container">
+                    <div class="popup__modal">
+                        <div class="modal__closer" onclick="$('#ajax-message__container').fadeOut(300)">
+                            <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/img/icons/cross_footer_icon.svg')?>
+                        </div>
+                        <div id="modal__text">
+
+                        </div>
+                    </div>
+                </div>
+
             </form>
         </div>
     </div>
 </div>
-
-
-<div id="message-modal">
-    <div class="message-modal__content">
-    </div>
-</div>
-
-<script>
-    var componentName = <?=CUtil::PhpToJSObject($arResult['COMPONENT_NAME'])?>;
-    var clubName = '<?=$clubName?>';
-    var strAbonement = '<?=$abonementName?>';
-</script>
