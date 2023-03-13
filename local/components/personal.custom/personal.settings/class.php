@@ -131,6 +131,9 @@ class PersonalSettingsComponent extends CBitrixComponent implements Controllerab
                 continue;
 
             $CHANGE_ARR[$FIELD["USER_FIELD_CODE"]]=$FIELD["VALUE"];
+            if ($FIELD["USER_FIELD_CODE"]=="PASSWORD"){
+                $CHANGE_ARR["UF_PASSWORD_CORRECT"]=true;
+            }
         }
         //==Составляем массив для обновления данных==
 
