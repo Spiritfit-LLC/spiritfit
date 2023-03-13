@@ -87,6 +87,7 @@ class PersonalServicesComponent extends CBitrixComponent implements Controllerab
     //AJAX
     public function getDetailAction($id, $template_folder=""){
         global $USER;
+        \Bitrix\Main\Loader::includeModule("iblock");
 
         $dbRes=CIBlockElement::GetByID($id);
         if (!$rs=$dbRes->GetNextElement()){
