@@ -11,6 +11,7 @@ if (empty($_SESSION['INVOICE_ID'])):?>
     $parts = parse_url($url);
 
     if (empty($parts['query'])){
+        define("TITLE_404", "Счёт не найден");
         global $APPLICATION;
         $APPLICATION->RestartBuffer();
         require $_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/header.php';
@@ -22,6 +23,7 @@ if (empty($_SESSION['INVOICE_ID'])):?>
 
 
     if (empty($query['InvoiceID'])){
+        define("TITLE_404", "Счёт не найден");
         global $APPLICATION;
         $APPLICATION->RestartBuffer();
         require $_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/header.php';
@@ -46,7 +48,7 @@ unset($_SESSION['INVOICE_ID']);
 ?>
 
 <?php
-$APPLICATION->IncludeComponent('custom:form.abonement.emailorder',
+$APPLICATION->IncludeComponent('custom:form.abonement.order',
     '',
     Array(
         'INVOICE_ID'=>$INVOICE_ID,

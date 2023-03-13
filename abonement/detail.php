@@ -20,7 +20,6 @@ if (count($urlArr)>4){
     require $_SERVER['DOCUMENT_ROOT'].'/404.php';
     require $_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/footer.php';
     exit;
-
 }
 
 $clubNumber = false;

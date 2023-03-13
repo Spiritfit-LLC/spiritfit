@@ -1,0 +1,63 @@
+.suggestions-wrapper {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    -webkit-text-size-adjust: 100%;
+    width: 100%;
+}
+
+.suggestions-nowrap {
+    white-space: nowrap
+}
+
+.suggestions-input {
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%
+}
+
+.suggestions-input::-ms-clear {
+    display: none
+}
+.suggestions-suggestions {
+    background: #F0F0F0;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    /* cursor: pointer; */
+    cursor: default;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    z-index: 9999;
+    /* margin: 0 -20px; */
+    -webkit-text-size-adjust: 100%;
+    box-shadow: 0px 5px 20px 0px #0000009e;
+}
+.suggestions-suggestion {
+    padding: 10px 20px;
+    font-size: 18px;
+    /* color: #fff; */
+    font-weight: 500;
+    cursor: pointer;
+}
+.suggestions-suggestions strong {
+    font-weight: 600;
+    background: linear-gradient(90deg,#e23834 3.26%,#7a27f1 98.07%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.suggestions-suggestion:hover {
+    background: linear-gradient(90deg,#e23834 3.26%,#7a27f1 98.07%);
+    color:white;
+}
+.suggestions-suggestion:hover strong{
+    color: white;
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+}
