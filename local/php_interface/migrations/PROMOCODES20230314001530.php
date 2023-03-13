@@ -3,7 +3,7 @@
 namespace Sprint\Migration;
 
 
-class events20230222011913 extends Version
+class PROMOCODES20230314001530 extends Version
 {
     protected $description = "";
 
@@ -17,42 +17,42 @@ class events20230222011913 extends Version
     {
         $helper = $this->getHelperManager();
         $helper->Iblock()->saveIblockType(array (
-  'ID' => 'events',
+  'ID' => 'personal',
   'SECTIONS' => 'Y',
   'EDIT_FILE_BEFORE' => '',
   'EDIT_FILE_AFTER' => '',
   'IN_RSS' => 'N',
-  'SORT' => '500',
+  'SORT' => '100',
   'LANG' => 
   array (
     'ru' => 
     array (
-      'NAME' => 'Мероприятия',
+      'NAME' => 'Личный кабинет',
       'SECTION_NAME' => '',
       'ELEMENT_NAME' => '',
     ),
     'en' => 
     array (
-      'NAME' => 'Events',
+      'NAME' => 'Personal Cabinet',
       'SECTION_NAME' => '',
       'ELEMENT_NAME' => '',
     ),
   ),
 ));
         $iblockId = $helper->Iblock()->saveIblock(array (
-  'IBLOCK_TYPE_ID' => 'events',
+  'IBLOCK_TYPE_ID' => 'personal',
   'LID' => 
   array (
     0 => 's1',
   ),
-  'CODE' => 'event_page',
+  'CODE' => 'lk-promocode',
   'API_CODE' => NULL,
-  'NAME' => 'Страница мероприятия',
+  'NAME' => 'Промокоды',
   'ACTIVE' => 'Y',
-  'SORT' => '100',
+  'SORT' => '300',
   'LIST_PAGE_URL' => '',
-  'DETAIL_PAGE_URL' => '#SITE_DIR#/events/#SECTION_ID#/#ELEMENT_ID#/',
-  'SECTION_PAGE_URL' => '#SITE_DIR#/events/#SECTION_ID#/',
+  'DETAIL_PAGE_URL' => '',
+  'SECTION_PAGE_URL' => '',
   'CANONICAL_PAGE_URL' => '',
   'PICTURE' => NULL,
   'DESCRIPTION' => '',
@@ -139,13 +139,13 @@ class events20230222011913 extends Version
   'PREVIEW_PICTURE' => 
   array (
     'NAME' => 'Картинка для анонса',
-    'IS_REQUIRED' => 'N',
+    'IS_REQUIRED' => 'Y',
     'DEFAULT_VALUE' => 
     array (
-      'FROM_DETAIL' => 'N',
-      'SCALE' => 'N',
-      'WIDTH' => '',
-      'HEIGHT' => '',
+      'FROM_DETAIL' => 'Y',
+      'SCALE' => 'Y',
+      'WIDTH' => 1920,
+      'HEIGHT' => 1080,
       'IGNORE_ERRORS' => 'N',
       'METHOD' => 'resample',
       'COMPRESSION' => 95,
@@ -179,12 +179,12 @@ class events20230222011913 extends Version
   'DETAIL_PICTURE' => 
   array (
     'NAME' => 'Детальная картинка',
-    'IS_REQUIRED' => 'N',
+    'IS_REQUIRED' => 'Y',
     'DEFAULT_VALUE' => 
     array (
-      'SCALE' => 'N',
-      'WIDTH' => '',
-      'HEIGHT' => '',
+      'SCALE' => 'Y',
+      'WIDTH' => 1920,
+      'HEIGHT' => 1080,
       'IGNORE_ERRORS' => 'N',
       'METHOD' => 'resample',
       'COMPRESSION' => 95,
@@ -210,7 +210,7 @@ class events20230222011913 extends Version
   'DETAIL_TEXT' => 
   array (
     'NAME' => 'Детальное описание',
-    'IS_REQUIRED' => 'N',
+    'IS_REQUIRED' => 'Y',
     'DEFAULT_VALUE' => '',
   ),
   'XML_ID' => 
@@ -222,11 +222,11 @@ class events20230222011913 extends Version
   'CODE' => 
   array (
     'NAME' => 'Символьный код',
-    'IS_REQUIRED' => 'N',
+    'IS_REQUIRED' => 'Y',
     'DEFAULT_VALUE' => 
     array (
-      'UNIQUE' => 'N',
-      'TRANSLITERATION' => 'N',
+      'UNIQUE' => 'Y',
+      'TRANSLITERATION' => 'Y',
       'TRANS_LEN' => 100,
       'TRANS_CASE' => 'L',
       'TRANS_SPACE' => '-',
@@ -337,63 +337,22 @@ class events20230222011913 extends Version
 ));
     $helper->Iblock()->saveGroupPermissions($iblockId, array (
   'administrators' => 'X',
-  'everyone' => 'R',
+  'RATING_VOTE' => 'R',
+  'RATING_VOTE_AUTHORITY' => 'R',
+  5 => 'R',
+  'CLIENTS' => 'R',
+  'trainers' => 'R',
+  'employes' => 'R',
+  'POTENTIAL_CLIENTS' => 'R',
+  'MANAGEMENT' => 'R',
 ));
         $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Баннер (header)',
+  'NAME' => 'Промокод',
   'ACTIVE' => 'Y',
   'SORT' => '100',
-  'CODE' => 'BANNER_HEAD',
+  'CODE' => 'PROMOCODE',
   'DEFAULT_VALUE' => '',
-  'PROPERTY_TYPE' => 'F',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'N',
-  'XML_ID' => NULL,
-  'FILE_TYPE' => 'jpg, gif, bmp, png, jpeg, webp',
-  'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'N',
-  'SEARCHABLE' => 'N',
-  'FILTRABLE' => 'N',
-  'IS_REQUIRED' => 'N',
-  'VERSION' => '1',
-  'USER_TYPE' => NULL,
-  'USER_TYPE_SETTINGS' => NULL,
-  'HINT' => '',
-));
-            $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Баннер мобильный (header)',
-  'ACTIVE' => 'Y',
-  'SORT' => '150',
-  'CODE' => 'BANNER_MOBILE_HEAD',
-  'DEFAULT_VALUE' => '',
-  'PROPERTY_TYPE' => 'F',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'N',
-  'XML_ID' => NULL,
-  'FILE_TYPE' => 'jpg, gif, bmp, png, jpeg, webp',
-  'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'N',
-  'SEARCHABLE' => 'N',
-  'FILTRABLE' => 'N',
-  'IS_REQUIRED' => 'N',
-  'VERSION' => '1',
-  'USER_TYPE' => NULL,
-  'USER_TYPE_SETTINGS' => NULL,
-  'HINT' => '',
-));
-            $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Слайдер (вместо баннера)',
-  'ACTIVE' => 'Y',
-  'SORT' => '160',
-  'CODE' => 'SLIDER',
-  'DEFAULT_VALUE' => '',
-  'PROPERTY_TYPE' => 'E',
+  'PROPERTY_TYPE' => 'S',
   'ROW_COUNT' => '1',
   'COL_COUNT' => '30',
   'LIST_TYPE' => 'L',
@@ -401,7 +360,7 @@ class events20230222011913 extends Version
   'XML_ID' => NULL,
   'FILE_TYPE' => '',
   'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => 'service:sliders',
+  'LINK_IBLOCK_ID' => '0',
   'WITH_DESCRIPTION' => 'N',
   'SEARCHABLE' => 'N',
   'FILTRABLE' => 'N',
@@ -412,60 +371,12 @@ class events20230222011913 extends Version
   'HINT' => '',
 ));
             $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Заголовок страницы',
+  'NAME' => 'Группы пользователей',
   'ACTIVE' => 'Y',
   'SORT' => '200',
-  'CODE' => 'PAGE_TITLE',
+  'CODE' => 'USER_GROUP',
   'DEFAULT_VALUE' => '',
   'PROPERTY_TYPE' => 'S',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'N',
-  'XML_ID' => NULL,
-  'FILE_TYPE' => '',
-  'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'N',
-  'SEARCHABLE' => 'N',
-  'FILTRABLE' => 'N',
-  'IS_REQUIRED' => 'N',
-  'VERSION' => '1',
-  'USER_TYPE' => NULL,
-  'USER_TYPE_SETTINGS' => NULL,
-  'HINT' => '',
-));
-            $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Заголовок для карточек',
-  'ACTIVE' => 'Y',
-  'SORT' => '300',
-  'CODE' => 'CARDS_TITLE',
-  'DEFAULT_VALUE' => '',
-  'PROPERTY_TYPE' => 'S',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'N',
-  'XML_ID' => NULL,
-  'FILE_TYPE' => '',
-  'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'N',
-  'SEARCHABLE' => 'N',
-  'FILTRABLE' => 'N',
-  'IS_REQUIRED' => 'N',
-  'VERSION' => '1',
-  'USER_TYPE' => NULL,
-  'USER_TYPE_SETTINGS' => NULL,
-  'HINT' => '',
-));
-            $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Карточки',
-  'ACTIVE' => 'Y',
-  'SORT' => '500',
-  'CODE' => 'CARDS',
-  'DEFAULT_VALUE' => '',
-  'PROPERTY_TYPE' => 'E',
   'ROW_COUNT' => '1',
   'COL_COUNT' => '30',
   'LIST_TYPE' => 'L',
@@ -473,109 +384,17 @@ class events20230222011913 extends Version
   'XML_ID' => NULL,
   'FILE_TYPE' => '',
   'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => 'events:event_cards',
-  'WITH_DESCRIPTION' => 'N',
-  'SEARCHABLE' => 'N',
-  'FILTRABLE' => 'N',
-  'IS_REQUIRED' => 'N',
-  'VERSION' => '1',
-  'USER_TYPE' => NULL,
-  'USER_TYPE_SETTINGS' => NULL,
-  'HINT' => '',
-));
-            $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Баннер (footer)',
-  'ACTIVE' => 'Y',
-  'SORT' => '500',
-  'CODE' => 'BANNER_FOOTER',
-  'DEFAULT_VALUE' => '',
-  'PROPERTY_TYPE' => 'F',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'N',
-  'XML_ID' => NULL,
-  'FILE_TYPE' => 'jpg, gif, bmp, png, jpeg, webp',
-  'MULTIPLE_CNT' => '5',
   'LINK_IBLOCK_ID' => '0',
   'WITH_DESCRIPTION' => 'N',
   'SEARCHABLE' => 'N',
   'FILTRABLE' => 'N',
   'IS_REQUIRED' => 'N',
   'VERSION' => '1',
-  'USER_TYPE' => NULL,
+  'USER_TYPE' => 'GroupsIblockProperty',
   'USER_TYPE_SETTINGS' => NULL,
   'HINT' => '',
 ));
-            $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Баннер мобильный (footer)',
-  'ACTIVE' => 'Y',
-  'SORT' => '550',
-  'CODE' => 'BANNER_MOBILE_FOOTER',
-  'DEFAULT_VALUE' => '',
-  'PROPERTY_TYPE' => 'F',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'N',
-  'XML_ID' => NULL,
-  'FILE_TYPE' => '',
-  'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'N',
-  'SEARCHABLE' => 'N',
-  'FILTRABLE' => 'N',
-  'IS_REQUIRED' => 'N',
-  'VERSION' => '1',
-  'USER_TYPE' => NULL,
-  'USER_TYPE_SETTINGS' => NULL,
-  'HINT' => '',
-));
-            $helper->UserOptions()->saveElementForm($iblockId, array (
-  'Элемент|edit1' => 
-  array (
-    'ID' => 'ID',
-    'DATE_CREATE' => 'Создан',
-    'TIMESTAMP_X' => 'Изменен',
-    'ACTIVE' => 'Активность',
-    'ACTIVE_FROM' => 'Начало активности',
-    'ACTIVE_TO' => 'Окончание активности',
-    'NAME' => 'Название',
-    'CODE' => 'Символьный код',
-    'SORT' => 'Сортировка',
-    'IBLOCK_ELEMENT_PROP_VALUE' => 'Значения свойств',
-    'PROPERTY_BANNER_HEAD' => 'Баннер (header)',
-    'PROPERTY_BANNER_MOBILE_HEAD' => 'Баннер мобильный (header)',
-    'PROPERTY_SLIDER' => 'Слайдер (вместо баннера)',
-    'PROPERTY_PAGE_TITLE' => 'Заголовок страницы',
-    'PROPERTY_CARDS_TITLE' => 'Заголовок для карточек',
-    'PROPERTY_CARDS' => 'Карточки',
-    'PROPERTY_BANNER_FOOTER' => 'Баннер (footer)',
-    'PROPERTY_BANNER_MOBILE_FOOTER' => 'Баннер мобильный (footer)',
-  ),
-  'SEO|edit14' => 
-  array (
-    'IPROPERTY_TEMPLATES_ELEMENT_META_TITLE' => 'Шаблон META TITLE',
-    'IPROPERTY_TEMPLATES_ELEMENT_META_KEYWORDS' => 'Шаблон META KEYWORDS',
-    'IPROPERTY_TEMPLATES_ELEMENT_META_DESCRIPTION' => 'Шаблон META DESCRIPTION',
-    'IPROPERTY_TEMPLATES_ELEMENT_PAGE_TITLE' => 'Заголовок элемента',
-    'IPROPERTY_TEMPLATES_ELEMENTS_PREVIEW_PICTURE' => 'Настройки для картинок анонса элементов',
-    'IPROPERTY_TEMPLATES_ELEMENT_PREVIEW_PICTURE_FILE_ALT' => 'Шаблон ALT',
-    'IPROPERTY_TEMPLATES_ELEMENT_PREVIEW_PICTURE_FILE_TITLE' => 'Шаблон TITLE',
-    'IPROPERTY_TEMPLATES_ELEMENT_PREVIEW_PICTURE_FILE_NAME' => 'Шаблон имени файла',
-    'IPROPERTY_TEMPLATES_ELEMENTS_DETAIL_PICTURE' => 'Настройки для детальных картинок элементов',
-    'IPROPERTY_TEMPLATES_ELEMENT_DETAIL_PICTURE_FILE_ALT' => 'Шаблон ALT',
-    'IPROPERTY_TEMPLATES_ELEMENT_DETAIL_PICTURE_FILE_TITLE' => 'Шаблон TITLE',
-    'IPROPERTY_TEMPLATES_ELEMENT_DETAIL_PICTURE_FILE_NAME' => 'Шаблон имени файла',
-    'SEO_ADDITIONAL' => 'Дополнительно',
-    'TAGS' => 'Теги',
-  ),
-  'Разделы|edit2' => 
-  array (
-    'SECTIONS' => 'Разделы',
-  ),
-));
-    $helper->UserOptions()->saveElementGrid($iblockId, array (
+        $helper->UserOptions()->saveElementGrid($iblockId, array (
   'views' => 
   array (
     'default' => 
