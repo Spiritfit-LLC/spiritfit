@@ -1,0 +1,210 @@
+.pp-item_bg {
+    height: 270px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.pp-item__content {
+    padding: 24px 32px;
+    background: #F5F5F4;
+}
+.pp-item__preview-text {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    margin-bottom: 8px;
+}
+.pp-item__date {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    /* text-align: center; */
+    color: #A4A4A4;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.pp-item-date__icon {
+    width: 14px;
+    height: 14px;
+    margin-right: 8px;
+}
+.pp-item-date__icon svg{
+    width: 100%;
+    height: 100%;
+}
+.pp-item__preview-call2action {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    /* text-align: center; */
+    color: #000000;
+}
+.personal-partner__item {
+    width: calc(33.3% - 32px);
+    flex: 0 0 calc(33.3% - 32px);
+    margin-right: 32px;
+}
+.pp-item__detail-btn {
+    margin-left: auto;
+    width: max-content;
+}
+button.pp-item__btn {
+    padding: 15px 20px;
+}
+.pp-item__footer {
+    position: relative;
+}
+@media screen and (max-width: 1740px) {
+    .pp-item__date {
+        position: static;
+    }
+    .pp-item__detail-btn {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 20px;
+    }
+    button.pp-item__btn {
+        padding: 22px 60px;
+        width: 100%;
+    }
+    .pp-item__footer {
+        margin-top: 10px;
+    }
+}
+
+.ppd__header-img {
+    width: 520px;
+    height: 380px;
+    transform: translate(-40px, -50px);
+    margin-right: 18px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.ppd__header {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    position: relative;
+}
+.ppd__header-content {
+    width: 570px;
+}
+.ppd__header-title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 44px;
+    margin-bottom: 20px;
+}
+.ppd__header-call2action {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    margin-bottom: 42px;
+}
+.pp-item__date.detail {
+    position: static;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.ppd__header--btn {
+    position: absolute;
+    bottom: 50px;
+}
+.detail .pp-item-date__icon {
+    width: 16px;
+    height: 16px;
+}
+.personal-partner-detail__content {
+    width: 1024px;
+}
+.ppd__main {
+    line-height: 24px;
+    font-size: 16px;
+    font-weight: 400;
+}
+.ppd__main div {
+    margin-bottom: 20px;
+}
+.ppd__main div:last-child {
+    margin-bottom: 0;
+}
+@media screen and (max-width: 768px) {
+    .personal-partner__item{
+        margin: 0 10px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .ppd__header-title {
+        font-size: 26px;
+        line-height: 32px;
+    }
+    .ppd__header-call2action {
+        font-size: 16px;
+        line-height: 18px;
+        margin-bottom: 20px;
+    }
+    .pp-item__date.detail {
+        font-size: 12px;
+        line-height: 18px;
+    }
+    .personal-partner-detail__content {
+        width: calc(95vw - 80px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .ppd__header {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .ppd__header-img {
+        margin-right: 0;
+        width: calc(100% + 80px);
+    }
+    .ppd__header--btn {
+        position: static;
+        margin-top: 20px;
+        width: 100%;
+    }
+    .ppd__header--btn .button{
+        width: 100%;
+    }
+    .ppd__main {
+        margin-top: 30px;
+    }
+    .ppd__header-content {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 425px) {
+    .personal-partner-detail__content {
+        /* margin-right: 0; */
+        width: 100%;
+    }
+    .ppd__header-img {
+        width: calc(100% + 64px);
+        height: 220px;
+    }
+    #partner-detail-popup .modal__closer {
+        z-index: 1000;
+        background: white;
+    }
+    #partner-detail-popup .modal__closer:hover{
+        transform: none;
+    }
+
+
+}
+
+.personal-pfd {
+    margin-top: 40px;
+}

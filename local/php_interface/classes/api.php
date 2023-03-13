@@ -1198,6 +1198,12 @@ class Api
 
     private function lkedit($params){
         $this->_send($this->apiUrl."lkedit", $params);
+        if ($this->_data['result']['errorCode'] == 0){
+            $this->_result = true;
+        }
+        else{
+            $this->_result=false;
+        }
     }
 
     private function lkpresent($params){
@@ -1358,13 +1364,13 @@ class Api
 
     private function orderpromocode($params){
         $this->_send($this->apiUrl."orderpromocode", $params);
-
         if ($this->_data['result']['errorCode'] === 0)
             $this->_result = true;
     }
 
     private function getorder($params){
         $this->_send($this->apiUrl."getorder", $params);
+
 
         if ($this->_data['result']['errorCode'] === 0)
             $this->_result = true;
@@ -1482,6 +1488,9 @@ class Api
     //Общая функция (чет расплодились однотипные функции)
     private function httpRequest($action, $params){
         $this->_send($this->apiUrl.$action, $params);
+
+//        file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/logs/logError.txt", json_encode($params), FILE_APPEND);
+
 
         if ($this->_data["result"]["errorCode"]===0){
             $this->_result=true;

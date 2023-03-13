@@ -1,0 +1,8 @@
+.personal-promisepayment__content {
+    width: 600px;
+}
+@media screen and (max-width: 658px){
+    .personal-promisepayment__content {
+        width:100%;
+    }
+}

@@ -101,7 +101,12 @@ class PersonalUtils{
                 else{
                     if ($key=="phone"){
                         if (!empty($_REQUEST[$FORM_FIELDS['FIELDS'][$key]['NAME']])){
-                            $valbuff=substr(preg_replace('![^0-9]+!', '', $_REQUEST[$FORM_FIELDS['FIELDS'][$key]['NAME']]), 1);
+                            $valbuff=preg_replace('![^0-9]+!', '', $_REQUEST[$FORM_FIELDS['FIELDS'][$key]['NAME']]);
+
+                            if (substr($valbuff, 0, 1)=="7"){
+                                $valbuff=substr($valbuff, 1);
+                            }
+
                             if ($valbuff[0]!='9' || strlen($valbuff)!=10){
                                 $valbuff=false;
                             }
@@ -137,7 +142,6 @@ class PersonalUtils{
             if(!empty($btn_text)){
                 $FORM_FIELDS['BTN_TEXT']=$btn_text;
             }
-//            var_dump(json_encode($FORM_FIELDS, JSON_UNESCAPED_UNICODE));
 
             $FORM_FIELDS['ACTIVE']=$active;
             return $FORM_FIELDS;
@@ -432,6 +436,64 @@ class PersonalUtils{
                                 $FIELD["VALUE"]=false;
                             }
                             $FIELD["FILE_ID"]=$arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']];
+                            break;
+                        case "switch":
+                            function prepareSwitch($status){
+                                $field=[];
+                                switch ($status){
+                                    case 0:
+                                        $field["ON"]="disabled";
+                                        $field["CHECKED"]="";
+                                        break;
+                                    case 1:
+                                        $field["ON"]="";
+                                        $field["CHECKED"]="";
+                                        break;
+                                    case 2:
+                                        $field["ON"]="";
+                                        $field["CHECKED"]="checked";
+                                        break;
+                                    case 3:
+                                        $field["ON"]="disabled";
+                                        $field["CHECKED"]="checked";
+                                        break;
+                                }
+
+                                return $field;
+                            }
+
+                            if ($element['PROPERTIES']['SERIALIZE']['VALUE_XML_ID']=='Y'){
+                                $VALUE=unserialize($arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']]);
+
+                                if (is_array($VALUE)){
+                                    foreach ($VALUE as &$ITEM){
+                                        $ITEM["NAME"]="form_" . $element['CODE'] . "_" . $ITEM["event"];
+                                        $ITEM["HTML_ID"]="form_" . $element['CODE'] . "_" . $ITEM["event"];
+                                        $ITEM["PLACEHOLDER"]=$ITEM["name"];
+                                        $ITEM["TYPE"]="switch";
+                                        $ITEM['USER_FIELD_CODE']=$FIELD['USER_FIELD_CODE'];
+                                        $STATUS=$ITEM["status"];
+                                        $ITEM["SWITCH"]=prepareSwitch($STATUS);
+                                    }
+                                    $FIELD["ITEMS"]=$VALUE;
+                                }
+                                else{
+                                    $VALUE["NAME"]="form_" . $element['CODE'] . "_" . $VALUE["event"];
+                                    $VALUE["HTML_ID"]="form_" . $element['CODE'] . "_" . $VALUE["event"];
+                                    $VALUE["PLACEHOLDER"]=$VALUE["name"];
+                                    $VALUE["TYPE"]="switch";
+                                    $VALUE['USER_FIELD_CODE']=$FIELD['USER_FIELD_CODE'];
+                                    $VALUE["SWITCH"]=prepareSwitch($VALUE["status"]);
+                                    $FIELD["ITEMS"]=[$VALUE];
+                                }
+                            }
+                            else{
+                                $VALUE=$arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']];
+                                $FIELD["SWITCH"]=prepareSwitch($VALUE);
+                                $FIELD["event"]=$element["PROPERTIES"]["PROPERTY_SWITCH_EVENT"]["VALUE"];
+                            }
+
+                            $FIELD['VALUE']=$arUser[$element['PROPERTIES']['USER_FIELD_CODE']['VALUE']];
                             break;
 
                         default:
@@ -1010,10 +1072,12 @@ class PersonalUtils{
                     $minutes = ($interval->days * 24 * 60) + ($interval->h * 60) + $interval->i;
                     if ($minutes>30){
                         self::UpdatePersonalInfoFrom1C(false, $arUser2);
+                        self::get_lk_info(false, $arUser2);
                     }
                 }
                 else{
                     self::UpdatePersonalInfoFrom1C(false, $arUser2);
+                    self::get_lk_info(false, $arUser2);
                 }
 
                 if (!empty($arUser2["PERSONAL_BIRTHDAY"]) && empty($arUser2["UF_PARENTAL_CONSENT"])){
@@ -1048,5 +1112,211 @@ class PersonalUtils{
         }
 
         return $CLIENT;
+    }
+
+
+
+
+
+    //Новая логика
+    public static function get_updatable_fields(){
+        CModule::IncludeModule("iblock");
+        $objects=[];
+        $filter = [
+            'IBLOCK_CODE' => 'LK_PARSER',
+            'ACTIVE'=>'Y',
+            '!PROPERTY_CODE_1C'=>false];
+        $order = ['SORT' => 'ASC'];
+
+        $rows = CIBlockElement::GetList($order, $filter);
+        while ($row = $rows->fetch()) {
+            $row['PROPERTIES'] = [];
+            $objects[$row['ID']] =& $row;
+            $filter['IBLOCK_ID']=$row['IBLOCK_ID'];
+            unset($row);
+        }
+        CIBlockElement::GetPropertyValuesArray($objects, $filter['IBLOCK_ID'], $filter, ['CODE'=>['CODE_1C', 'USER_FIELD_CODE', 'SERIALIZE', 'ONLY_1C_CHANGE']]);
+        foreach ($objects as $id=>$element){
+            $RESULT[$element['PROPERTIES']['CODE_1C']['VALUE']][]=[
+                'VALUE'=>$element['PROPERTIES']['USER_FIELD_CODE']['VALUE'],
+                'SERIALIZE'=>$element['PROPERTIES']['SERIALIZE']['VALUE_XML_ID']=='Y' ? true:false,
+                'ONLY_CHANGE'=>$element['PROPERTIES']['ONLY_1C_CHANGE']['VALUE_XML_ID']=='Y'?true:false,
+            ];
+        }
+        return $RESULT;
+    }
+
+
+    public static function get_lk_info($user_id, $user=false){
+        CModule::IncludeModule("iblock");
+
+        $objects=[];
+        $filter = [
+            'IBLOCK_CODE' => 'LK_PARSER',
+            'ACTIVE'=>'Y',
+            '!PROPERTY_CODE_1C'=>false,
+            'PROPERTY_ONLY_1C_CHANGE'=>false];
+        $order = ['SORT' => 'ASC'];
+
+        $rows = CIBlockElement::GetList($order, $filter);
+        while ($row = $rows->fetch()) {
+            $row['PROPERTIES'] = [];
+            $objects[$row['ID']] =& $row;
+            $filter['IBLOCK_ID']=$row['IBLOCK_ID'];
+            unset($row);
+        }
+        CIBlockElement::GetPropertyValuesArray($objects, $filter['IBLOCK_ID'], $filter, ['CODE'=>['CODE_1C', 'USER_FIELD_CODE', 'SERIALIZE']]);
+        foreach ($objects as $id=>$element){
+            $UPDATEBLE_FIELDS[$element['PROPERTIES']['CODE_1C']['VALUE']][]=[
+                'USER_FIELD_CODE'=>$element['PROPERTIES']['USER_FIELD_CODE']['VALUE'],
+                'SERIALIZE'=>$element['PROPERTIES']['SERIALIZE']['VALUE_XML_ID']=='Y' ? true:false,
+            ];
+        }
+
+        if (!empty($user) && !empty($user['LOGIN']) && !empty($user['UF_1CID'])){
+            $login=$user['LOGIN'];
+            $ID_1C=$user['UF_1CID'];
+            $USER_ID=$user['ID'];
+        }
+        elseif (!empty($user_id)){
+            $rsUser = CUser::GetByID($user_id);
+            if ($arUser2 = $rsUser->Fetch()){
+                $login=$arUser2['LOGIN'];
+                $ID_1C=$arUser2['UF_1CID'];
+                $USER_ID=$user_id;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+
+        $api=new Api([
+            'action'=>'lkinfonew',
+            'params'=>[
+                'login'=>$login,
+                'id1c'=>$ID_1C,
+            ],
+        ]);
+
+        $result=$api->result();
+        if ($result['success']){
+            $fields=$result['data']['result']['result'];
+
+            foreach($UPDATEBLE_FIELDS as $key=>$val){
+                foreach ($val as $value){
+                    if (key_exists($key, $fields)){
+                        $CURRENT_VAL=$fields[$key];
+
+                        if (boolval($value['SERIALIZE'])){
+                            $CURRENT_VAL=serialize($CURRENT_VAL);
+                        }
+                        elseif($key=='group'){
+                            switch ($CURRENT_VAL){
+                                case "ПЧК":
+                                    CUser::SetUserGroup($USER_ID, [Utils::GetUGroupIDBySID('POTENTIAL_CLIENTS')]);
+                                    break;
+                                case "БЧК":
+                                case "ЧК":
+                                    $arGroups = CUser::GetUserGroup($USER_ID);
+                                    $potential_id=Utils::GetUGroupIDBySID('POTENTIAL_CLIENTS');
+                                    if (in_array($potential_id, $arGroups)){
+                                        $resArr = array_diff($arGroups, [$potential_id]);
+                                        $resArr[]=Utils::GetUGroupIDBySID('CLIENTS');
+                                        CUser::SetUserGroup($USER_ID, $resArr);
+                                    }
+                                    break;
+                                case "ТРЕНЕР":
+                                    CUser::SetUserGroup($USER_ID, [Utils::GetUGroupIDBySID('employes'), Utils::GetUGroupIDBySID('trainers')]);
+                                    break;
+                            }
+                            continue;
+                        }
+                    }
+                    else{
+                        $CURRENT_VAL=null;
+                    }
+                    $userUpdateArr[$value['USER_FIELD_CODE']]=$CURRENT_VAL;
+                }
+            }
+            global $USER;
+            $userUpdateArr['UF_LAST_UPDATE_TIME']=date('d.m.Y H:i:s');
+
+            if ($USER->Update($USER_ID, $userUpdateArr, false)){
+                return $userUpdateArr;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static function get_personal_fields($user_id, $flt=null, $slct=null){
+        $rsUser = CUser::GetByID($user_id);
+        if (!$arUser = $rsUser->Fetch()){
+            return false;
+        }
+
+        CModule::IncludeModule("iblock");
+        $objects=[];
+        $filter = [
+            'IBLOCK_CODE' => 'LK_PARSER',
+            'ACTIVE'=>'Y',
+            "PROPERTY_HIDE_ON_FORM"=>false,
+        ];
+
+        if (!empty($flt) && is_array($flt)){
+            $filter=array_merge($flt, $filter);
+        }
+        $order = ['SORT' => 'ASC'];
+        $rows = CIBlockElement::GetList($order, $filter);
+        while ($row = $rows->fetch()) {
+            $row['PROPERTIES'] = [];
+            $objects[$row['ID']] =& $row;
+            $filter['IBLOCK_ID']=$row['IBLOCK_ID'];
+            unset($row);
+        }
+        $SELECT=[
+            "CODE"=>[
+                "FIELD_TITLE",
+                "USER_FIELD_CODE",
+                "SERIALIZE",
+                "CLUE",
+                "STATIC_VALUE",
+                "REQUIRED"
+            ]
+        ];
+        CIBlockElement::GetPropertyValuesArray($objects, $filter['IBLOCK_ID'], $filter, $SELECT);
+        foreach ($objects as $id=>$element){
+            $FIELD=[
+                "NAME"=>$element["PROPERTIES"]["FIELD_TITLE"]["VALUE"],
+                "CLUE"=>!empty($element["PROPERTIES"]["CLUE"]["VALUE"]["TEXT"]),
+                "CLUE_VALUE"=>$element["PROPERTIES"]["CLUE"]["VALUE"]["TEXT"],
+                "FORM_NAME"=>"form_" . $element['CODE'] . "_" . $id,
+                "REQUIRED"=>$element["PROPERTIES"]["REQUIRED"]["VALUE_XML_ID"]=="Y",
+                "CODE" => $element["CODE"]
+            ];
+
+            if (!empty($element["PROPERTIES"]["STATIC_VALUE"]["VALUE"])){
+                $VALUE=$element["PROPERTIES"]["STATIC_VALUE"]["VALUE"];
+            }
+            else{
+                $VALUE=$arUser[$element["PROPERTIES"]["USER_FIELD_CODE"]["VALUE"]];
+
+                if ($element["PROPERTIES"]["SERIALIZE"]["VALUE_XML_ID"]=="Y"){
+                    $VALUE=unserialize($VALUE);
+                }
+            }
+
+            $FIELD["VALUE"]=$VALUE;
+            $FIELDS[$element["CODE"]]=$FIELD;
+        }
+
+        return $FIELDS;
     }
 }

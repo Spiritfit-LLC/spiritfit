@@ -1,4 +1,55 @@
-<?
+<?php
+$GLOBALS["NO_INDEX"] = true;
+?>
+<?if ($_GET["v"]==2):?>
+    <?php
+    define('HIDE_SLIDER', true);
+    define('ANCHOR_PERSONAL', true);
+    define('HIDE_BREADCRUMB', true);
+    define('H1_BIG', true);
+
+    define("AUTH_PAGE", true);
+
+    define('SITE_TEMPLATE_PATH', '/local/templates/spiritfit-v3/');
+    define('SITE_TEMPLATE_ID', 'spiritfit-v3');
+
+    require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+
+    $APPLICATION->SetTitle("Личный кабинет");
+    ?>
+
+
+
+    <?$APPLICATION->IncludeComponent(
+        "personal.custom:personal",
+        ".default",
+        Array(
+            "AJAX_MODE" => "N",
+            "AJAX_OPTION_ADDITIONAL" => "",
+            "AJAX_OPTION_HISTORY" => "N",
+            "AJAX_OPTION_JUMP" => "N",
+            "AJAX_OPTION_STYLE" => "Y",
+            "COMPOSITE_FRAME_MODE" => "A",
+            "COMPOSITE_FRAME_TYPE" => "AUTO",
+            "SEF_FOLDER" => "/personal/",
+            "SEF_MODE" => "Y",
+            "SEF_URL_TEMPLATES" => Array(
+                "loyalty" => "loyalty/",
+                "me" => "",
+                "services" => "services/",
+                "settings" => "settings/"
+            ),
+            "SET_TITLE" => "Y",
+            "CACHE_TYPE" => "A",
+            "CACHE_TIME" => "3600",
+            "CACHE_FILTER" => "Y",
+            "CACHE_GROUPS" => "Y",
+        ),
+        false
+    );?>
+    <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+<?else:?>
+<?php
 define('BREADCRUMB_H1_ABSOLUTE', true);
 define('HIDE_SLIDER', true);
 define('H1_HIDE', true);
@@ -7,8 +58,6 @@ define('PERSONAL_PAGE', true);
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Личный кабинет");
 
-use \Bitrix\Main\Page\Asset;
-Asset::getInstance()->addString('<meta name="robots" content="noindex, follow" />');
 ?>
 
 
@@ -131,21 +180,9 @@ Asset::getInstance()->addString('<meta name="robots" content="noindex, follow" /
     }
 
 </style>
-<!--<div class="content-center test-text" style="">*ПОЗДРАВЛЯЕМ! Вы стали участником закрытого тестирования программы лояльности.</div>-->
-<!--<style>-->
-<!--    .test-text{-->
-<!--        position: absolute;-->
-<!--        margin: 43px 0;-->
-<!--        font-size: 14px;-->
-<!--        color: #ff7628;-->
-<!--    }-->
-<!--    @media screen and (max-width: 1025px){-->
-<!--        .test-text {-->
-<!--            margin: 26px 0;-->
-<!--        }-->
-<!--    }-->
-<!--</style>-->
+
 
 
 
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+<?endif;?>

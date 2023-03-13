@@ -91,7 +91,24 @@ $clubs = Clubs::getList();
     <?$APPLICATION->ShowPanel()?>
 </div>
 <?endif;?>
+<?if (!$USER->IsAuthorized() && !defined("AUTH_PAGE")){
+    $AUTH_HREF="#personal";
 
+    $APPLICATION->IncludeComponent(
+        "personal.custom:personal.auth",
+        "popup",
+        array(
+            "AUTH_FORM_CODE" => "AUTH",
+            "REGISTER_FORM_CODE" => "REGISTRATION_LITE",
+            "PASSFORGOT_FORM_CODE"=>'PASSFORGOT',
+            "ENTER_BTN" => $AUTH_HREF,
+        )
+    );
+
+}
+else{
+    $AUTH_HREF="/personal/";
+}?>
 <?if (!defined("HIDE_HEADER")):?>
 <header class="b-header">
     <div class="content-center">
@@ -151,7 +168,7 @@ $clubs = Clubs::getList();
                                data-layerlabel="burgerMenu">Купить абонемент</a>
                         <?endif;?>
 
-                        <a href="/personal/" class="b-top-menu__link hidden-desktop auth-btn"
+                        <a href="<?=$AUTH_HREF?>" class="b-top-menu__link hidden-desktop auth-btn"
                            data-layer="true"
                            data-layercategory="UX"
                            data-layeraction="clickLKbutton">
@@ -178,7 +195,7 @@ $clubs = Clubs::getList();
                 <a class="b-header-phone phone-btn main-phone-btn" data-position="header" href="tel:<?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?>"
                 style="background-image: url('<?=SITE_TEMPLATE_PATH.'/img/icons/icon-phone.svg'?>')"><?=$settings["PROPERTIES"]["PHONE"]["VALUE"]?></a>
                 <div>
-                    <a href="/personal/" class="personal-btn is-hide-mobile header-personal-btn"
+                    <a href="<?=$AUTH_HREF?>" class="personal-btn is-hide-mobile header-personal-btn"
                        data-layer="true"
                        data-layercategory="UX"
                        data-layeraction="clickLKbutton">

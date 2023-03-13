@@ -1,3 +1,5 @@
+var subscription_params={}
+
 $(document).ready(function(){
     //    AUTOSCROLL
     // $('html, body').animate({scrollTop: 0},500);
@@ -478,6 +480,7 @@ $(document).ready(function(){
             data: postData,
             method:'POST'
         }).then(function(responce){
+            // console.log(responce)
             form.find('.escapingBallG-animation').removeClass('active');
             form.find('input[type="submit"]').css({
                 'opacity':1,
@@ -565,7 +568,7 @@ $(document).ready(function(){
             }
 
         }, function(responce){
-
+            // console.log(responce)
             form.find('.escapingBallG-animation').removeClass('active');
             form.find('input[type="submit"]').css({
                 'opacity':1,
@@ -626,8 +629,143 @@ $(document).ready(function(){
     //SpiritТрансформация
     if ($(window).width()<=768){
         $(".quiz-btn").insertAfter(".personal-profile__user");
+        $(".personal-friend__container").insertAfter(".quiz-btn");
     }
+
+
+
+    $(".personal-section-form__item-value.switch-item").on("click", function(e){
+        e.preventDefault();
+        var $this=$(this);
+
+        subscription_params={
+            value:$this.is(":checked"),
+            event:$this.data("event"),
+            id:$this.data("id"),
+            type:"GET"
+        }
+
+        if (subscription_params.value){
+            $(".subscription-off__btn").text("Приобрести подписку");
+        }
+        else{
+            $(".subscription-off__btn").text("Отменить подписку");
+        }
+
+        BX.ajax.runComponentAction(componentName, "subscription", {
+            mode: 'class',
+            data: subscription_params,
+            method:'POST'
+        }).then(function(response){
+            if (response.data.message!==undefined){
+
+                $(".subscription-off__btn").show();
+                $("#personal-modal__text").html(response.data.message);
+
+                $('#personal-modal-message')
+                    .css("display", "flex")
+                    .fadeIn(300);
+            }
+        }, function (response){
+            $(".subscription-off__btn").hide();
+            var error_id=0;
+            response.errors.forEach(function(err, index){
+                if (err.code!==0){
+                    error_id=index
+                    return false;
+                }
+            });
+            var message=response.errors[error_id].message;
+
+            $("#personal-modal__text").html(message);
+
+            $('#personal-modal-message')
+                .css("display", "flex")
+                .fadeIn(300);
+        })
+
+        // var $this=$(this);
+        //
+        // var value=$this.is(":checked");
+        // var event=$this.data("event");
+        //
+        //
+        // if (!sessionStorage.getItem(event)){
+        //     var type="GET";
+        //     e.preventDefault();
+        // }
+        // else{
+        //     type="POST";
+        // }
+        //
+        // var postData={
+        //     event:event,
+        //     value:value,
+        //     type:type
+        // }
+        //
+        // BX.ajax.runComponentAction(componentName, "subscription", {
+        //     mode: 'class',
+        //     data: postData,
+        //     method:'POST'
+        // }).then(function(response){
+        //     console.log(response);
+        //
+        //     if (response.data.message!==undefined){
+        //         $("#personal-modal__text").html(response.data.message);
+        //
+        //         $('#personal-modal-message')
+        //             .css("display", "flex")
+        //             .fadeIn(300);
+        //     }
+        //
+        //     sessionStorage.setItem(event, "1");
+        //
+        // }, function(response){
+        //     console.log(response);
+        //
+        //     if(type==="POST"){
+        //         $this.prop("checked", !value);
+        //     }
+        // });
+    });
 });
+
+var subscription_edit=function(){
+    subscription_params.type="POST";
+    BX.ajax.runComponentAction(componentName, "subscription", {
+        mode: 'class',
+        data: subscription_params,
+        method:'POST'
+    }).then(function(response){
+        $(".subscription-off__btn").show();
+        if (response.data.result!==undefined){
+            $(`.switch-item[data-id="${subscription_params.id}"]`).prop("checked", subscription_params.value);
+        }
+        else if (response.data.order!==undefined){
+            window.open(response.data.order, '_blank').focus();
+        }
+        $("#personal-modal__text").html("");
+        $('#personal-modal-message')
+            .fadeOut(300);
+    }, function (response){
+        $(".subscription-off__btn").hide();
+        var error_id=0;
+        response.errors.forEach(function(err, index){
+            if (err.code!==0){
+                error_id=index
+                return false;
+            }
+        });
+        var message=response.errors[error_id].message;
+
+        $("#personal-modal__text").html(message);
+
+        $('#personal-modal-message')
+            .css("display", "flex")
+            .fadeIn(300);
+    })
+}
 
 var show_transformation_tests=function(btn){
     if ($(btn).hasClass("active")){
@@ -683,7 +821,12 @@ var select_leader=function(){
     });
 }
 
+var switch_field_action=function(e, el){
+    var value=$(el).is(":checked");
+    var event=$(el).data("event");
 
+
+}
 
 
 var MyQuiz = MyQuiz || {};
