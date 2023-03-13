@@ -45,11 +45,15 @@ class PersonalPromisePayment extends CBitrixComponent implements Controllerable
                 case "promise":
                     $this->arResult["BTN_NAME"] = "Воспользоваться";
 
+
+
                     if (!empty($this->arResult["DATE"])){
                         $this->arResult["INFO"] = "Отложенный платеж активирован.<br>Дата и время открытия доступа: ".$this->arResult["DATE"];
                     }
                     else{
+                        $this->arResult["FORM"] = true;
                         $this->arResult["INFO"]=$payment["CLUE_VALUE"];
+                        $this->arResult["BTN_NAME"] = "Воспользоваться обещанным платежем";
                     }
 
                     if (boolval($appeal["VALUE"])){

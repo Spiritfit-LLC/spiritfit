@@ -99,5 +99,6 @@ global $USER;
         );
         ?>
 <?endforeach;?>
+<button id="update">ОБНОВИТЬ ДАННЫЕ ИЗ 1С</button>
 
 <?endif;?>
