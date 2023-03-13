@@ -150,10 +150,10 @@ $arUrlRewrite=array (
         'SORT' => 500,
     ),
     20 => array (
-        'CONDITION' => '#^/personal2/#',
+        'CONDITION' => '#^/personal/#',
         'RULE' => '',
-        'ID' => 'custom:personal',
-        'PATH' => '/personal2/index.php',
+        'ID' => 'personal.custom:personal',
+        'PATH' => '/personal/index.php',
         'SORT' => 100,
     ),
     21 => array (

@@ -1,0 +1,388 @@
+.pt__field-placeholder {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 18px;
+    text-transform: uppercase;
+    color: #A4A4A4;
+}
+.pt__field-value {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+}
+.pt__field-row {
+    display: flex;
+    margin: 20px 0;
+}
+.pt__field.half {
+    width: calc(50% - 20px);
+    flex: 0 0 50%;
+    margin-right: 20px;
+}
+.pt__field.half:last-child{
+    margin-right: 0;
+}
+button.pt-btn {
+    background: none;
+    border: none;
+}
+.pt-btn-icon {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    margin-right: 10px;
+}
+.pt-btn-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: #e23834;
+    stroke: #e23834;
+}
+
+.pt__field-row.buttons {
+    justify-content: space-between;
+    margin-top: 50px;
+}
+button.pt-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    width: max-content;
+    margin: 5px 0;
+    cursor: pointer;
+}
+.pt__field-row:last-child{
+    margin-bottom: 0;
+}
+
+.pt-back{
+    width: 20px;
+    height: 30px;
+    cursor: pointer;
+    position: relative;
+}
+.pt-back:before {
+    content: '';
+    transform: rotate(-45deg);
+    top: 0;
+    /* top: 50%; */
+    height: 2px;
+    width: 13px;
+    background-color: black;
+    position: absolute;
+    left: 0;
+}
+.pt-back:after {
+    content: '';
+    transform: rotate(45deg);
+    left: 0;
+    bottom: 20px;
+    height: 2px;
+    width: 13px;
+    background-color: black;
+    position: absolute;
+}
+.modal__back-to-pt {
+    position: absolute;
+    top: 35px;
+    left: 48px;
+}
+.pt__coach-switch {
+    margin-top: 10px;
+}
+.pt__select-club-placeholder {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.pt-select-club-placeholder {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.pt-form__placeholder{
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+}
+.pt__dates {
+    margin-top: 40px;
+}
+.pt__controllers {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+}
+.pt__date-month {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+}
+.pt-dates-controllers {
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: auto;
+}
+.pt-dates__controller {
+    width: 20px;
+    height: 30px;
+    cursor: pointer;
+    position: relative;
+}
+.pt-dates__controller.right:before {
+    content: '';
+    transform: rotate(-135deg);
+    top: 9px;
+    /* top: 50%; */
+    height: 2px;
+    width: 16px;
+    background-color: black;
+    position: absolute;
+    right: 0;
+}
+.pt-dates__controller.right:after {
+    content: '';
+    transform: rotate(135deg);
+    right: 0;
+    bottom: 9px;
+    height: 2px;
+    width: 16px;
+    background-color: black;
+    position: absolute;
+}
+.pt-dates__controller.left:before {
+    content: '';
+    transform: rotate(-45deg);
+    top: 9px;
+    /* top: 50%; */
+    height: 2px;
+    width: 16px;
+    background-color: black;
+    position: absolute;
+    left: 0;
+}
+.pt-dates__controller.left:after {
+    content: '';
+    transform: rotate(45deg);
+    left: 0;
+    bottom: 9px;
+    height: 2px;
+    width: 16px;
+    background-color: black;
+    position: absolute;
+}
+.pt-dates__controllers {
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: auto;
+}
+.pt__dates-container {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding-bottom: 10px;
+    position: relative;
+    margin-top: 10px;
+    z-index: 100;
+}
+
+label.datetime-item.day {
+    width: 10%;
+    display: inline-flex;
+    text-align: center;
+    flex: 0 0 10%;
+    flex-direction: column;
+    align-items: center;
+    height: 60px;
+    background: #F0F0F0;
+    margin: 0 4px;
+    border-radius: 10px;
+    justify-content: center;
+    cursor: pointer;
+}
+label.datetime-item.day:hover{
+    background: linear-gradient(180deg, #e43932a3 22.06%, #7827f68a 100%);
+    color: white;
+}
+
+label.datetime-item.day:first-child{
+    margin-left: 0;
+}
+
+/* стили для активной радиокнопки (при нажатии на неё) */
+.pt_datetime-radiobtn:not(:disabled):active+label.day {
+    background: linear-gradient(180deg, #E43932 22.06%, #7827F6 100%);
+    color: white;
+}
+
+/* стили для радиокнопки, находящейся в состоянии checked */
+.pt_datetime-radiobtn:checked+label.day {
+    background: linear-gradient(180deg, #E43932 22.06%, #7827F6 100%);
+    color: white;
+}
+
+span.pt-day-item__day {
+    font-weight: 600;
+}
+span.pt-day-item__week {
+    font-size: 13px;
+}
+.pt_datetime-radiobtn {
+    position: absolute;
+    height: 0;
+    width: 0;
+    top: -100vh;
+    left: -100vw;
+}
+.pt__message {
+    padding: 20px 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #A4A4A4;
+}
+.personal-training__timetable {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.pt__timetable-section {
+    width: calc(50% - 20px);
+    flex: 0 0 calc(50% - 20px);
+    margin-bottom: 20px;
+}
+.pt__timetable-section-title {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    margin: 0 5px 16px;
+}
+.pt__section-times-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+label.datetime-item.time {
+    width: calc(25% - 6px);
+    flex: 0 0 calc(25% - 6px);
+    margin-bottom: 8px;
+    margin-right: 8px;
+    background: #F0F0F0;
+    border-radius: 5.7px;
+    padding: 12px 0;
+    text-align: center;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    cursor: pointer;
+}
+label.datetime-item.time:nth-child(8n){
+    margin-right: 0;
+}
+
+label.datetime-item.time:hover{
+    background: linear-gradient(270deg, #e43932a3 22.06%, #7827f68a 100%);
+    color: white;
+}
+
+label.datetime-item.time:first-child{
+    margin-left: 0;
+}
+
+/* стили для активной радиокнопки (при нажатии на неё) */
+.pt_datetime-radiobtn:not(:disabled):active+label.time {
+    background: linear-gradient(270deg, #E43932 22.06%, #7827F6 100%);
+    color: white;
+}
+
+/* стили для радиокнопки, находящейся в состоянии checked */
+.pt_datetime-radiobtn:checked+label.time {
+    background: linear-gradient(270deg, #E43932 22.06%, #7827F6 100%);
+    color: white;
+}
+
+.pt__coach-switch .personal-input__radio-input{
+    display: inline-flex;
+    margin-right: 10px;
+}
+.pt-ajax__loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+
+@media screen and (max-width: 590px) {
+    label.datetime-item.day{
+        width: 12%;
+        flex: 0 0 12%;
+    }
+    label.datetime-item.time{
+        width: calc(33% - 6px);
+        flex: 0 0 calc(33% - 6px);
+    }
+    label.datetime-item.time:nth-child(8n){
+        margin-right: 8px;
+    }
+    label.datetime-item.time:nth-child(6n) {
+        margin-right: 0;
+    }
+}
+@media screen and (max-width: 484px) {
+    label.datetime-item.day{
+        width: 15%;
+        flex: 0 0 15%;
+    }
+    label.datetime-item.time{
+        width: calc(50% - 6px);
+        flex: 0 0 calc(50% - 6px);
+    }
+    label.datetime-item.time:nth-child(4n) {
+        margin-right: 0;
+    }
+    label.datetime-item.time:nth-child(6n){
+        margin-right: 8px;
+    }
+    .pt__field {
+        margin: 10px 0;
+    }
+    .pt__field-row {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+    }
+    .pt__field.half{
+        margin-right: 0;
+    }
+    .pt__field-row.buttons {
+        margin: 20px 0;
+    }
+}
+
+.pt-load-container {
+    margin-top: 20px;
+}
+.personal-training__content {
+    width: 700px;
+}
+
+@media screen and (max-width: 848px) {
+    .personal-training__content{
+        width: 500px;
+    }
+}
+@media screen and (max-width: 658px) {
+    .personal-training__content{
+        width: unset;
+    }
+}

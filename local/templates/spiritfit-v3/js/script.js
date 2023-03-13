@@ -281,6 +281,99 @@ $(document).ready(function(){
         });
     }
 
+
+    //Подсказки
+    var dadata_token="fa43a728a5f92101fcb6e4afa7ad6eda489da066";
+
+    $('input[data-dadata-type]').each(function(index, el){
+        if ($(el).data('dadata-type')==="NAME"){
+            var options= {
+                token: dadata_token,
+                type: "NAME",
+                count:5,
+                deferRequestBy:500,
+                hint:false,
+                params: {
+                    parts: [$(el).data('dadata-part')]
+                },
+                beforeRender:function(container){
+                    console.log(container, this)
+                }
+            }
+        }
+        else if ($(el).data('dadata-type')==="ADDRESS"){
+            options= {
+                token: dadata_token,
+                type: "ADDRESS",
+                count: 5,
+                deferRequestBy: 500,
+                hint: false,
+                minChars: 2,
+                triggerSelectOnBlur:true,
+                triggerSelectOnEnter:true,
+                triggerSelectOnSpace:true,
+                /* Вызывается, когда пользователь выбирает одну из подсказок */
+                onSelect: function (suggestion) {
+                    if (suggestion.data.city === null) {
+                        var error_message = "Город не выбран";
+                    } else if (suggestion.data.house === null) {
+                        error_message = "Дом не выбран";
+                    } else if ($(el).data('moscow')!==false && (parseFloat(suggestion.data.geo_lat)<54.288991 || parseFloat(suggestion.data.geo_lat)>56.929291)){
+                        error_message = "Адрес находится за пределами Москвы или области";
+                    }
+                    else if ($(el).data('moscow')!==false && (parseFloat(suggestion.data.geo_lon)>40.180157 || parseFloat(suggestion.data.geo_lon)<35.177239)){
+                        error_message = "Адрес находится за пределами Москвы или области";
+                    }
+                    else {
+                        if ($(this).next('.field-error').length > 0) {
+                            $(this).next('.field-error').remove()
+                        }
+                        if ($(this).closest('form').find('input[name="geo_lat"]').length===0){
+                            $(this).closest('form').append($(`<input name="geo_lat" type="hidden" value="${suggestion.data.geo_lat}">`));
+                        }
+                        else{
+                            $(this).closest('form').find('input[name="geo_lat"]').val(suggestion.data.geo_lat);
+                        }
+                        if ($(this).closest('form').find('input[name="geo_lon"]').length===0){
+                            $(this).closest('form').append($(`<input name="geo_lon" type="hidden" value="${suggestion.data.geo_lon}">`));
+                        }
+                        else{
+                            $(this).closest('form').find('input[name="geo_lon"]').val(suggestion.data.geo_lon);
+                        }
+                        $(this).closest('form').find('input[type="submit"]').removeAttr('disabled');
+                        return;
+                    }
+                    if ($(this).next('.field-error').length > 0) {
+                        $(this).next('.field-error').text(error_message)
+                    } else {
+                        $(this).after(`<span class="field-error">${error_message}</span>`);
+                    }
+                    $(this).closest('form').find('input[type="submit"]').prop('disabled', 'disabled');
+
+                },
+                onSelectNothing:function(){
+                    var error_message = "Не удалось определить адрес";
+                    if ($(this).next('.field-error').length > 0) {
+                        $(this).next('.field-error').text(error_message)
+                    } else {
+                        $(this).after(`<span class="field-error">${error_message}</span>`);
+                    }
+                    $(this).closest('form').find('input[type="submit"]').prop('disabled', 'disabled');
+                }
+            }
+        }
+        var sgt = $(el).suggestions(options);
+    });
+
+    $('input[type="email"]').each(function(index, el){
+        $(el).suggestions({
+            token: dadata_token,
+            type: "EMAIL",
+            count:5,
+            deferRequestBy:500,
+            hint:false
+        });
+    });
 });
 
 

@@ -8,7 +8,25 @@
     <link href="<?=$css?>?version=<?=uniqid()?>" type="text/css" rel="stylesheet">
 <?endforeach;?>
 
+
+<?php
+global $USER;
+if (!in_array(Utils::GetUGroupIDBySID("employes"), $USER->GetUserGroupArray())):?>
+<a href="/personal/?v=2&update=Y" class="">Попробовать новый дизайн!</a>
+<?php endif;?>
+
 <div class="personal-profile-block">
+    <div class="popup-modal__container" id="personal-modal-message">
+        <div class="popup__modal">
+            <div class="modal__closer" onclick="$('#personal-modal-message').fadeOut(300)">
+                <?php echo file_get_contents($_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/img/icons/cross_footer_icon.svg')?>
+            </div>
+            <div id="personal-modal__text">
+
+            </div>
+            <button onclick="subscription_edit()" class="button-outline subscription-off__btn">отменить подписку</button>
+        </div>
+    </div>
     <div class="personal-profile__left-block">
         <div class="personal-profile__user">
             <div>

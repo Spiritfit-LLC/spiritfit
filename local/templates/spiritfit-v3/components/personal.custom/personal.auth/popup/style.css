@@ -1,0 +1,166 @@
+.popup-modal__personal{
+    display: none;
+    padding: 48px;
+    background: white;
+    position: absolute;
+    width: 532px;
+    transition:0.2s all;
+    opacity: 0;
+    top:50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+    z-index: 10;
+}
+.popup-modal__personal.active{
+    display: block;
+    opacity: 1;
+}
+.popup-modal__personal.scale{
+    transform:translate(-50%,-50%) scale(0.5);
+    filter: blur(1px);
+}
+.popup-personal__title {
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 44px;
+    margin:24px 0;
+}
+.personal_form__input-placeholder {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #A4A4A4;
+    margin-bottom: 4px;
+}
+.personal_form__input-container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    height: 48px;
+    border: 1px solid #EDEDED;
+    position: relative;
+}
+
+.personal_form--tel-prenumber {
+    background: #F0F0F0;
+    border-radius: 4px;
+    margin: 2px;
+    padding: 12px 15px;
+    font-size: 20px;
+    line-height: 20px;
+}
+.personal_form__input-value {
+    border: none;
+    color: black!important;
+    font-size: 20px;
+    line-height: 20px;
+    padding: 0 15px;
+}
+.personal_form__input{
+    margin-bottom: 12px;
+}
+.personal_form__submit{
+    width: 100%;
+    margin: 32px 0;
+}
+.personal_form__input-value::placeholder{
+    color: #A4A4A4 !important;
+}
+.personal_form__input-value:-moz-placeholder{
+    color: #A4A4A4 !important;
+}
+.personal_form__input-value::-moz-placeholder{
+    color: #A4A4A4 !important;
+}
+.personal_form__input-value::-webkit-input-placeholder {
+    color: #A4A4A4 !important;
+}
+.popup-personal__footer-btn {
+    text-align: center;
+    margin: 12px 0;
+    font-size: 16px;
+    line-height: 20px;
+}
+.popup-personal__footer-btn:last-child{
+    margin-bottom: 0;
+}
+
+.popup-container.active{
+    display: flex;
+}
+.popup-container{
+    display: none;
+}
+span.field-error {
+    font-size: 13px;
+}
+a.resend {
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+    display: block;
+    margin: 5px 0;
+}
+input.reg_code {
+    text-align: center;
+}
+a.resend:hover{
+    text-decoration: underline;
+}
+.form-submit-result-text {
+    text-align: center;
+    font-size: 14px;
+}
+.show-password-icon {
+    position: relative;
+    width: 50px;
+}
+button.password-btn.active {
+    display: block;
+}
+button.password-btn {
+    width: 25px;
+    height: 25px;
+    display: none;
+    border: none;
+    background: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+button.password-btn svg {
+    height: 100%;
+    width: 100%;
+}
+.popup-modal__personal a{
+    color: #7927f3;
+    font-weight: 500;
+}
+.personal_form__input-container .suggestions-wrapper{
+    position:absolute;
+    top:100%;
+    left: 0;
+}
+
+@media screen and (max-width: 560px){
+    .popup-modal__personal{
+        width: 95vw;
+        padding: 36px 24px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 100vh;
+    }
+}
+
+
+    /*AUTOFILL*/
+.personal_form__input-value:-webkit-autofill,
+.personal_form__input-value:-webkit-autofill:hover,
+.personal_form__input-value:-webkit-autofill:focus,
+.personal_form__input-value:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: black !important;
+}
+/*AUTOFILL*/

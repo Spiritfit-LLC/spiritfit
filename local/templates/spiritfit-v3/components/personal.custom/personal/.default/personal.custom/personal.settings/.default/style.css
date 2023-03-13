@@ -1,0 +1,155 @@
+.personal-settings {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+.personal-settings__personal-info {
+    width: 530px;
+    margin-right: 170px;
+}
+.personal-settings-info__title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    margin-bottom: 25px;
+}
+
+
+.show-password-icon {
+    position: relative;
+    width: 50px;
+    transform: translateX(-25px);
+}
+button.password-btn {
+    width: 25px;
+    height: 25px;
+    display: none;
+    border: none;
+    background: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+button.password-btn svg {
+    height: 100%;
+    width: 100%;
+}
+button.password-btn.active {
+    display: block;
+}
+
+.file-input__dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.file-input__dropzone.hidden{
+    display: none;
+}
+.file-input__btn .btn-trigger {
+    width: 80px;
+    height: 80px;
+    margin: 10px auto;
+    color: black;
+    cursor: pointer;
+}
+.personal-media_preview__item.image {
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    padding: 15px;
+    position: relative;
+    margin: 10px 0;
+}
+.file-input__preview .closer-small {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    transition: .3s;
+}
+.file-input__preview .closer-small svg{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.file-input__preview .closer-small:hover{
+    transform: rotate(180deg);
+}
+.personal-settings__form-message {
+    margin: 10px 0;
+    font-size: 16px;
+    font-weight: 400;
+    background: linear-gradient(90deg, #E43932 3.26%, #7827F6 98.07%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.personal-settings__bankcard {
+    width: 390px;
+    height: 212px;
+    padding: 24px 32px;
+    background: #F5F5F4;
+    border-radius: 16px;
+}
+.personal-settings__bankcard-placeholder {
+    margin-bottom: 16px;
+}
+.personal-settings__bankcard-icon {
+    width: 68px;
+    height: 43px;
+    margin-right: 21px;
+}
+.personal-settings__bankcard-info {
+    display: flex;
+    align-items: center;
+}
+
+.personal-settings__bankcard.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.personal-settings__bankcard-type {
+    margin-top: 30px;
+    font-weight: 300;
+}
+@media screen and (max-width: 1140px) {
+    .personal-settings__personal-info {
+        margin-right: 50px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .personal-settings__personal-info {
+        margin-right: 0;
+        margin-bottom: 50px;
+    }
+    .personal-settings {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .personal-settings__personal-info {
+        width: 100%;
+        flex: 0 0 100%;
+    }
+}
+
+
+@media screen and (max-width: 425px) {
+    .personal-settings__card-info {
+        width: 100%;
+    }
+    .personal-settings__bankcard.empty {
+        width: 100%;
+    }
+}

@@ -1,0 +1,9 @@
+.personal-freefreezing__submit {
+    margin-top: 30px;
+}
+.pff-select-count-placeholder {
+    margin-bottom: 20px;
+}
+#personal-freefreezing__form .select2-results>.select2-results__options{
+    max-height: 120px;
+}

@@ -1,5 +1,7 @@
 <?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 ?>
+
+<a href="/personal/?v=2" class="">Попробовать новый дизайн!</a>
 <div class="personal-profile-block auth-page">
     <div class="personal-profile__left-block">
         <div style="position:relative;">
