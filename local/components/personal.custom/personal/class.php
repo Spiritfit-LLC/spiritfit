@@ -42,6 +42,7 @@ class PersonalComponent extends CBitrixComponent implements Controllerable{
 
     //AJAX
     public function getClueAction($clue_code){
+        \Bitrix\Main\Loader::includeModule("iblock");
         $dbRes=CIBlockElement::GetList(array(), array("CODE"=>$clue_code), false, false, array("PROPERTY_CLUE"));
         if ($arClue=$dbRes->Fetch()){
             return htmlspecialcharsback($arClue["PROPERTY_CLUE_VALUE"]["TEXT"]);
