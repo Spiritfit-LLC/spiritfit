@@ -31,7 +31,7 @@ $this->addExternalJs(SITE_TEMPLATE_PATH . '/js/popup.js');
         </div>
     <?endif;?>
 
-    <?if (empty($arResult["DATE"]) && ($arResult["TYPE"]=="appeal" && $arResult["FORM"])):?>
+    <?if (empty($arResult["DATE"]) && $arResult["FORM"]):?>
         <form id="personal-promisepayment__form">
         <input type="hidden" name="v" value="3">
         <input type="hidden" name="action" value="<?=$arResult["TYPE"]?>">
