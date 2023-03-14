@@ -10,8 +10,9 @@ if (!defined("TITLE_404")){
     $title = "Страница не найдена";
 }
 else{
-    $APPLICATION->SetTitle(TITLE_404);
+    $title = TITLE_404;
 }
+$APPLICATION->SetTitle($title);
 
 ?>
 <? if(defined("H1_HIDE")){ ?>

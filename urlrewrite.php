@@ -185,4 +185,12 @@ $arUrlRewrite=array (
             'PATH' => '/akcii/detail.php',
             'SORT' => 100,
         ),
+    25 =>
+        array (
+            'CONDITION' => '#^/clck/([\\.\\-0-9a-zA-Z]+)/$#',
+            'RULE' => 'SHORT_CODE=$1',
+            'ID' => '',
+            'PATH' => '/clck/index.php',
+            'SORT' => 100,
+        ),
 );
