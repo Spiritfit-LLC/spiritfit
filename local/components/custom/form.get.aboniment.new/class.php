@@ -638,6 +638,15 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             "fullprice"=>$responce["data"]["result"]["result"]["fullprice"],
         ];
 
+        global $USER;
+        if ($USER->IsAuthorized() && ($USER->GetLogin()==$FORM_FIELDS['FIELDS']['phone']['VALUE'])){
+            $result["dataLayer"]=[
+                'eCategory'=>'conversion',
+                'eAction'=>'sendContactForm',
+                'eLabel'=>$this->arResult["CLUB_NAME"].'/'.$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"],
+            ];
+        }
+
         return $result;
     }
 
@@ -765,7 +774,15 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
         if (!$USER->IsAuthorized() || ($USER->GetLogin()!=$FORM_FIELDS['FIELDS']['phone']['VALUE'])){
             $this->sendSMS($FORM_FIELDS['FIELDS']['phone']['VALUE']);
 
-            return ["action"=>"sms", "ajax"=>"checkSms"];
+            $this->arParams['CLUB_ID']=$FORM_FIELDS['FIELDS']['club']['VALUE'];
+            $this->GetClubNumber();
+            $this->GetElement();
+
+            return ["action"=>"sms", "ajax"=>"checkSms", 'dataLayer'=>[
+                'eCategory'=>'conversion',
+                'eAction'=>'sendContactForm',
+                'eLabel'=>$this->arResult["CLUB_NAME"].'/'.$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"],
+            ]];
         }
 
         return $this->orderCreate();
@@ -893,7 +910,11 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
             $currUser = PersonalUtils::get_lk_info($USER->GetID());
             $workout = unserialize($currUser["UF_WORKOUT"]);
             if (!empty($workout["usage"])){
-                return ["action"=>"href", 'href'=>'/personal/?v=2&pds=workout&club='.$this->arResult["CLUB_NUMBER"]];
+                return ["action"=>"href", 'href'=>'/personal/?v=2&pds=workout&club='.$this->arResult["CLUB_NUMBER"], 'dataLayer'=>[
+                    'eCategory'=>'conversion',
+                    'eAction'=>'sendContactForm',
+                    'eLabel'=>$this->arResult["CLUB_NAME"].'/'.$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"],
+                ]];
             }
             else{
                 throw new Exception("К сожалению, вам недоступна пробная тренировка. <br>Мы свяжемся с Вами для уточнения дополнительной информации.", 20);
@@ -950,10 +971,14 @@ class FormGetAbonimentComponentNew extends CBitrixComponent implements Controlle
                 throw new Exception("Непредвиденная ошибка", 7);
             }
         }
-
         return [
             "action"=>"sms",
             "ajax"=>"checkSmsTrial",
+            'dataLayer'=>[
+                'eCategory'=>'conversion',
+                'eAction'=>'sendContactForm',
+                'eLabel'=>$this->arResult["CLUB_NAME"].'/'.$this->arResult["ELEMENT"]["PROPERTIES"]["CODE_ABONEMENT"]["VALUE"],
+            ]
         ];
     }
 
