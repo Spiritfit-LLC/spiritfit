@@ -274,6 +274,19 @@ function submitForm(e){
             .removeClass("disabled")
             .prop("disabled", "disabled");
 
+        if (response.data.dataLayer!==undefined){
+            var category='UX';
+            if (response.data.dataLayer.eCategory!==undefined){
+                category=response.data.dataLayer.eCategory;
+            }
+            try{
+                dataLayerSend(category, response.data.dataLayer.eAction, response.data.dataLayer.eLabel)
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }
+
         if (response.data.action !==undefined){
             switch (response.data.action){
                 case "sms":
