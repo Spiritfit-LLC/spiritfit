@@ -97,7 +97,7 @@ $(document).ready(function (){
     });
 
     //ПРОМОКОД
-    $("#promocode-field").on("keyup", function(){
+    $("#promocode-field").on("input keyup paste", function(){
         if ($(this).val().length===0){
             promocode_btn.fadeOut(300)
         }
@@ -105,6 +105,8 @@ $(document).ready(function (){
             promocode_btn.fadeIn(300)
         }
     });
+
+
     promocode_btn.click(function(){
         form.find('.escapingBallG-animation').addClass('active');
         form.find('input[type="submit"]').prop("disabled", "disabled");
