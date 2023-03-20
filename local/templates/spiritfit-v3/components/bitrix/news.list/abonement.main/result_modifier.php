@@ -95,7 +95,7 @@ foreach ($arResult["ITEMS"] as $key=>&$arItem){
     $index=array_search($minPriceClub, array_column($arItem["PROPERTIES"]["BASE_PRICE"]["VALUE"], "LIST"));
     $monthCount=$arItem["PROPERTIES"]["BASE_PRICE"]["VALUE"][$index]["NUMBER"];
     $arItem["MIN_RPICE_PER_MONTH"]=false;
-    if ($monthCount>1){
+    if ($monthCount>1 && $monthCount!=7){
         $arItem["MIN_PRICE"]=ceil($arItem["MIN_PRICE"]/$monthCount);
         $arItem["MIN_PRICE_PER_MONTH"]=true;
     }
@@ -109,7 +109,6 @@ foreach ($arResult["ITEMS"] as $key=>&$arItem){
     if (!empty($arItem["PROPERTIES"]["CARD_BASE_PRICE"]["VALUE"])){
         $arItem["BASE_PRICE"]=$arItem["PROPERTIES"]["CARD_BASE_PRICE"]["VALUE"];
     }
-
 }
 usort($SECTIONS, function ($item1, $item2) {
     return $item1['SORT'] <=> $item2['SORT'];

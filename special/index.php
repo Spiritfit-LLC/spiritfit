@@ -14,7 +14,6 @@ $APPLICATION->SetPageProperty("title", "Абонементы фитнес-клу
 
 $GLOBALS['arAbonementFilter'] =
     [
-        'PROPERTY_HIDDEN_VALUE' => false,
         '!IBLOCK_SECTION_ID' => false,
     ];
 
@@ -74,7 +73,7 @@ if ($property = $dbProperty->Fetch()){
                 "PARENT_SECTION" => "",
                 "PARENT_SECTION_CODE" => "",
                 "PREVIEW_TRUNCATE_LEN" => "",
-                "PROPERTY_CODE" => array("BASE_PRICE", "INCLUDE", "ADDITIONAL_CLASS", "PRICE_SIGN", "HIDDEN", "FOR_PRESENT", "PRICE", "TITLE"),
+                "PROPERTY_CODE" => array("BASE_PRICE", "INCLUDE", "ADDITIONAL_CLASS", "PRICE_SIGN", "HIDDEN", "FOR_PRESENT", "PRICE", "TITLE", "PRICE_MAIN_SIGN"),
                 "SET_BROWSER_TITLE" => "N",
                 "SET_LAST_MODIFIED" => "N",
                 "SET_META_DESCRIPTION" => "N",
