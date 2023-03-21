@@ -19,7 +19,8 @@ a.personal-auth__btn.active {
 .personal-auth__content {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
 }
 .personal-auth__tabs {
     width: 30%;
@@ -160,4 +161,28 @@ h1.b-page__title {
 .b-page__heading {
     position: relative;
     margin-bottom: 40px;
+}
+.popup-modal__personal{
+    display: none;
+    opacity: 0;
+    width: 532px;
+
+}
+.popup-modal__personal.active{
+    display: block;
+    opacity: 1;
+}
+.popup-personal__footer-btn {
+    text-align: center;
+    margin: 12px 0;
+    font-size: 16px;
+    line-height: 20px;
+}
+.popup-personal__footer-btn:last-child{
+    margin-bottom: 0;
+}
+@media screen and (max-width: 768px) {
+    .popup-modal__personal{
+        width: 100%;
+    }
 }
