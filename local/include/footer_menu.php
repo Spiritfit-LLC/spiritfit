@@ -16,7 +16,7 @@
             <li><a href="/training/group-trainings/">Групповые тренировки</a></li>
             <li><a href="/training/personal-training/">Персональный тренинг</a></li>
             <li><a href="/training/online-trainings/">Тренировки онлайн</a></li>
-            <li><a href="/trenirovki/fitnes-testirovanie/">Фитнес-тестирование</a></li>
+            <li><a href="/training/fitnes-test/">Фитнес-тестирование</a></li>
 		</ul>
 	</div>
 	<div class="footer-menu-cell">
