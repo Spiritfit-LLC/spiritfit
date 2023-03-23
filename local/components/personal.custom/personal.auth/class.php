@@ -210,7 +210,7 @@ class PersonalAuthComponent extends CBitrixComponent implements Controllerable{
                         ]] /*,'1cdata'=>$result['data']*/];
                     }
                     else{
-                        if (boolval($user['UF_PASSWORD_CORRECT'])){
+                        if (boolval($user['UF_IS_CORRECT'])){
                             return ['result'=>true, 'next_step'=>3, 'reg_code'=>false];
                         }
                         else{
@@ -317,7 +317,6 @@ class PersonalAuthComponent extends CBitrixComponent implements Controllerable{
 
                         $arFields=array(
                             'UF_IS_CORRECT'=>$UF_ISCORRECT,
-                            'UF_PASSWORD_CORRECT'=>false,
                             'NAME'=>$user1Carr['name'],
                             'LAST_NAME'=>$user1Carr['surname'],
                             'EMAIL'=>$user1Carr['email'],

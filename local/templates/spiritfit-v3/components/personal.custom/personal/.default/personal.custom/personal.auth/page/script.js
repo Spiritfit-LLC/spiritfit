@@ -222,6 +222,19 @@ $(document).ready(function(){
             window.location.reload();
         });
     })
+
+    $(".get-form-btn").click(function(e){
+        e.preventDefault();
+
+        var $current_modal=$(this).closest(".popup-modal__personal");
+        var next_modal_id=$(this).attr("href");
+        var $next_modal=$(next_modal_id);
+
+        $current_modal.fadeOut(300, function(){
+            $(this).removeClass("active");
+            $next_modal.addClass("active").fadeIn(300);
+        })
+    });
 });
 
 var pass_show=function(t, input){

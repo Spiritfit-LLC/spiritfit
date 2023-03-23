@@ -23,7 +23,7 @@ global $settings;
                     <li><a href="/training/group-trainings/">Групповые тренировки</a></li>
                     <li><a href="/training/personal-training/">Персональный тренинг</a></li>
                     <li><a href="/training/online-trainings/">Тренировки онлайн</a></li>
-                    <li><a href="/trenirovki/fitnes-testirovanie/">Фитнес-тестирование</a></li>
+                    <li><a href="/training/fitnes-test/">Фитнес-тестирование</a></li>
                     <li><a href="/schedule/">Расписание</a></li>
                 </ul>
             </div>
@@ -31,6 +31,8 @@ global $settings;
                 <div class="footer-menu-title">Услуги</div>
                 <ul>
                     <li><a href="/services/sauna/">Сауны и хаммам</a></li>
+                    <li><a href="/services/nedorogo/">Недорогие абонементы</a></li>
+                    <li><a href="/services/razovoe-poseshchenie-fitnes-zala/">Разовое посещение</a></li>
                 </ul>
             </div>
             <div class="footer-menu-cell">
@@ -250,6 +252,7 @@ $APPLICATION->IncludeComponent("bitrix:b24connector.openline.info","", Array(
 </style>
 <?endif;?>
 <?php endif?>
+
 </body>
 <?
 $inHead = $APPLICATION->GetViewContent('inhead');
